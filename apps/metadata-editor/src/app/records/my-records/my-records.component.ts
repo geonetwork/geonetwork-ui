@@ -6,6 +6,7 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
+  inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
@@ -67,6 +68,14 @@ const FILTER_OWNER = 'owner'
   ],
 })
 export class MyRecordsComponent implements OnInit {
+  private router = inject(Router)
+  protected searchFacade = inject(SearchFacade)
+  private platformService = inject(PlatformServiceInterface)
+  private fieldsService = inject(FieldsService)
+  private overlay = inject(Overlay)
+  private viewContainerRef = inject(ViewContainerRef)
+  private cdr = inject(ChangeDetectorRef)
+
   @ViewChild('importRecordButton', { read: ElementRef })
   private importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
@@ -74,16 +83,6 @@ export class MyRecordsComponent implements OnInit {
   searchFields = ['changeDate']
 
   isImportMenuOpen = false
-
-  constructor(
-    private router: Router,
-    protected searchFacade: SearchFacade,
-    private platformService: PlatformServiceInterface,
-    private fieldsService: FieldsService,
-    private overlay: Overlay,
-    private viewContainerRef: ViewContainerRef,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnInit() {
     this.searchFacade.resetSearch()

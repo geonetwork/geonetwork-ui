@@ -3,19 +3,15 @@ import { lastValueFrom } from 'rxjs'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { BaseConverter } from '../base.converter'
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { Gn4Record } from './types'
 
 @Injectable({
   providedIn: 'root',
 })
 export class Gn4Converter extends BaseConverter<Gn4Record> {
-  constructor(
-    private fieldMapper: Gn4FieldMapper,
-    private orgsService: OrganizationsServiceInterface
-  ) {
-    super()
-  }
+  private fieldMapper = inject(Gn4FieldMapper)
+  private orgsService = inject(OrganizationsServiceInterface)
 
   readRecord(document: Gn4Record): Promise<CatalogRecord> {
     const { _source, ...rootDocument } = document

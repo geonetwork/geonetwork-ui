@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { forkJoin, Observable, of, switchMap } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -10,7 +10,7 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
   providedIn: 'root',
 })
 export class EditorService {
-  constructor(private recordsRepository: RecordsRepositoryInterface) {}
+  private recordsRepository = inject(RecordsRepositoryInterface)
 
   // returns the record as it was when saved, alongside its source
   saveRecord(

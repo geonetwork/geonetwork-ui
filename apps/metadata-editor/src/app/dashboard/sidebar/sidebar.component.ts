@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { DashboardMenuComponent } from '../dashboard-menu/dashboard-menu.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
@@ -44,19 +49,17 @@ import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
   ],
 })
 export class SidebarComponent implements OnInit {
+  platformService = inject(PlatformServiceInterface)
+  private avatarService = inject(AvatarServiceInterface)
+  organisationsService = inject(OrganizationsServiceInterface)
+  private authService = inject(AuthService)
+
   public placeholder$ = this.avatarService.getPlaceholder()
   organisations$: Observable<Organization[]>
 
   get settingsUrl() {
     return this.authService.settingsUrl
   }
-
-  constructor(
-    public platformService: PlatformServiceInterface,
-    private avatarService: AvatarServiceInterface,
-    public organisationsService: OrganizationsServiceInterface,
-    private authService: AuthService
-  ) {}
 
   ngOnInit(): void {
     this.organisations$ = combineLatest(

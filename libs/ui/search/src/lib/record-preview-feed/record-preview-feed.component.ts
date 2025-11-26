@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+} from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   MarkdownParserComponent,
@@ -44,13 +49,17 @@ marker('record.was.created.time')
   ],
 })
 export class RecordPreviewFeedComponent extends RecordPreviewComponent {
+  protected elementRef: ElementRef
+  private translate = inject(TranslateService)
+
   timeFormat = new Duration(this.translate.currentLang, {})
 
-  constructor(
-    protected elementRef: ElementRef,
-    private translate: TranslateService
-  ) {
+  constructor() {
+    const elementRef = inject(ElementRef)
+
     super(elementRef)
+
+    this.elementRef = elementRef
   }
 
   get hasOrganization() {

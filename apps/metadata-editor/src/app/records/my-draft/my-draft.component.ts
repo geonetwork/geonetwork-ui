@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
@@ -16,18 +16,16 @@ import { EditorService } from '@geonetwork-ui/feature/editor'
   imports: [CommonModule, TranslateDirective, ResultsTableComponent],
 })
 export class MyDraftComponent {
+  private router = inject(Router)
+  recordsRepository = inject(RecordsRepositoryInterface)
+  editorService = inject(EditorService)
+
   records$ = this.recordsRepository.draftsChanged$.pipe(
     startWith(void 0),
     switchMap(() => this.recordsRepository.getAllDrafts()),
     startWith([])
   )
   hasDraft = () => true
-
-  constructor(
-    private router: Router,
-    public recordsRepository: RecordsRepositoryInterface,
-    public editorService: EditorService
-  ) {}
 
   editRecord(record: CatalogRecord) {
     this.router.navigate(['/edit', record.uniqueIdentifier])

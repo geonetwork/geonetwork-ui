@@ -1,9 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Inject,
   Input,
-  Optional,
+  inject,
 } from '@angular/core'
 import {
   DataViewPermalinkComponent,
@@ -28,6 +27,10 @@ import { TranslateDirective } from '@ngx-translate/core'
   standalone: true,
 })
 export class DataViewShareComponent {
+  protected wcEmbedderBaseUrl = inject(WEB_COMPONENT_EMBEDDER_URL, {
+    optional: true,
+  })
+
   private _viewType: string
 
   @Input()
@@ -38,9 +41,4 @@ export class DataViewShareComponent {
   get viewType(): string {
     return this._viewType
   }
-  constructor(
-    @Optional()
-    @Inject(WEB_COMPONENT_EMBEDDER_URL)
-    protected wcEmbedderBaseUrl: string
-  ) {}
 }

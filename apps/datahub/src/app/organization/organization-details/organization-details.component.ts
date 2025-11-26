@@ -4,6 +4,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
@@ -68,6 +69,9 @@ import { tablerFolderOpen } from '@ng-icons/tabler-icons'
   ],
 })
 export class OrganizationDetailsComponent implements OnInit, OnDestroy {
+  private searchFacade = inject(SearchFacade)
+  private organizationsService = inject(OrganizationsServiceInterface)
+
   protected readonly ErrorType = ErrorType
   protected readonly ROUTER_ROUTE_SEARCH = ROUTER_ROUTE_SEARCH
 
@@ -101,11 +105,6 @@ export class OrganizationDetailsComponent implements OnInit, OnDestroy {
       ),
       startWith([])
     )
-
-  constructor(
-    private searchFacade: SearchFacade,
-    private organizationsService: OrganizationsServiceInterface
-  ) {}
 
   ngOnInit(): void {
     this.searchFacade.setPageSize(12)

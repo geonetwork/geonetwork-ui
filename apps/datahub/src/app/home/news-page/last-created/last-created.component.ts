@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import {
   FeatureSearchModule,
@@ -18,10 +23,8 @@ import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
   standalone: true,
 })
 export class LastCreatedComponent implements OnInit {
-  constructor(
-    private searchFacade: SearchFacade,
-    private routerFacade: RouterFacade
-  ) {}
+  private searchFacade = inject(SearchFacade)
+  private routerFacade = inject(RouterFacade)
 
   ngOnInit() {
     this.searchFacade

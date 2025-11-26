@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
 import { RouterService } from '../router.service'
 import { RouterReducerState } from '@ngrx/router-store'
@@ -23,6 +23,9 @@ import { expandQueryParams, flattenQueryParams } from './query-params.utils'
 
 @Injectable()
 export class RouterFacade {
+  private store = inject<Store<RouterReducerState>>(Store)
+  private routerService = inject(RouterService)
+
   currentRoute$ = this.store.pipe(select(selectCurrentRoute))
   pathParams$ = this.store.pipe(select(selectRouteParams))
 
@@ -39,11 +42,6 @@ export class RouterFacade {
     service: ROUTER_ROUTE_SERVICE,
     reuse: ROUTER_ROUTE_REUSE,
   }
-
-  constructor(
-    private store: Store<RouterReducerState>,
-    private routerService: RouterService
-  ) {}
 
   goToMetadata(metadata: CatalogRecord) {
     const selectedRoute = this.routeMap[metadata.kind] || ROUTER_ROUTE_DATASET

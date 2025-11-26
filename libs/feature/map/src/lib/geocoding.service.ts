@@ -1,4 +1,4 @@
-import { Injectable, Inject, InjectionToken } from '@angular/core'
+import { Injectable, InjectionToken, inject } from '@angular/core'
 import {
   queryGeoadmin,
   GeoadminOptions,
@@ -27,9 +27,7 @@ export const GEOCODING_PROVIDER = new InjectionToken<GeocodingProvider>(
   providedIn: 'root',
 })
 export class GeocodingService {
-  constructor(
-    @Inject(GEOCODING_PROVIDER) private provider: GeocodingProvider
-  ) {}
+  private provider = inject<GeocodingProvider>(GEOCODING_PROVIDER)
 
   query(text: string): Observable<GeocodingResult[]> {
     let queryObservable: Observable<GeocodingResult[]>

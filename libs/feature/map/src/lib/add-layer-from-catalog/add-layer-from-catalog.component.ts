@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core'
 import {
   FeatureSearchModule,
   FIELDS_BRIEF,
@@ -41,7 +46,7 @@ import { AddLayerRecordPreviewComponent } from './add-layer-record-preview/add-l
   ],
 })
 export class AddLayerFromCatalogComponent implements OnInit {
-  constructor(private searchFacade: SearchFacade) {}
+  private searchFacade = inject(SearchFacade)
 
   ngOnInit() {
     this.searchFacade.init('map-add-layer')

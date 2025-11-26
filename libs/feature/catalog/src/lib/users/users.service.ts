@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { UsersApiService } from '@geonetwork-ui/data-access/gn4'
 import { shareReplay } from 'rxjs/operators'
 
@@ -6,7 +6,7 @@ import { shareReplay } from 'rxjs/operators'
   providedIn: 'root',
 })
 export class UsersService {
-  users$ = this.usersService.getUsers().pipe(shareReplay())
+  private usersService = inject(UsersApiService)
 
-  constructor(private usersService: UsersApiService) {}
+  users$ = this.usersService.getUsers().pipe(shareReplay())
 }

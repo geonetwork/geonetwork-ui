@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core'
+import { Component, EventEmitter, Output, inject } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateDirective } from '@ngx-translate/core'
 import { SelectionService } from '@geonetwork-ui/api/repository'
@@ -13,14 +13,12 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
   imports: [CommonModule, TranslateDirective],
 })
 export class RecordsCountComponent {
+  private searchFacade = inject(SearchFacade)
+  private selectionService = inject(SelectionService)
+
   @Output() recordClick = new EventEmitter<CatalogRecord>()
 
   records$ = this.searchFacade.results$
   recordCount$ = this.searchFacade.resultsHits$
   selectedRecords$ = this.selectionService.selectedRecordsIdentifiers$
-
-  constructor(
-    private searchFacade: SearchFacade,
-    private selectionService: SelectionService
-  ) {}
 }

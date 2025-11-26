@@ -7,6 +7,7 @@ import {
   Input,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
 import { getLinkId, getLinkLabel } from '@geonetwork-ui/util/shared'
@@ -105,6 +106,12 @@ marker('map.select.style')
   ],
 })
 export class MapViewComponent implements AfterViewInit {
+  private mdViewFacade = inject(MdViewFacade)
+  private mapUtils = inject(MapUtilsService)
+  private dataService = inject(DataService)
+  private changeRef = inject(ChangeDetectorRef)
+  private translateService = inject(TranslateService)
+
   @Input() set exceedsLimit(value: boolean) {
     this.excludeWfs$.next(value)
   }
@@ -347,14 +354,6 @@ export class MapViewComponent implements AfterViewInit {
     }),
     shareReplay(1)
   )
-
-  constructor(
-    private mdViewFacade: MdViewFacade,
-    private mapUtils: MapUtilsService,
-    private dataService: DataService,
-    private changeRef: ChangeDetectorRef,
-    private translateService: TranslateService
-  ) {}
 
   async ngAfterViewInit() {
     const map = await this.mapContainer.openlayersMap

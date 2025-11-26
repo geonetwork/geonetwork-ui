@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import {
   SettingsListResponseApiModel,
   SiteApiService,
@@ -17,9 +17,11 @@ import { shareReplay } from 'rxjs/operators'
   imports: [CommonModule, CatalogTitleComponent],
 })
 export class SiteTitleComponent {
+  private siteApiService = inject(SiteApiService)
+
   info$: Observable<SettingsListResponseApiModel>
 
-  constructor(private siteApiService: SiteApiService) {
+  constructor() {
     this.info$ = this.siteApiService
       .getSiteOrPortalDescription()
       .pipe(shareReplay(1))

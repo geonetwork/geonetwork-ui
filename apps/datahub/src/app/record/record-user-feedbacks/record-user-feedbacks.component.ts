@@ -5,6 +5,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core'
 import { catchError, filter, switchMap, takeUntil, map } from 'rxjs/operators'
 import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs'
@@ -70,6 +71,13 @@ type UserFeedbackSortingFunction = (
   ],
 })
 export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
+  private readonly translate = inject(TranslateService)
+  private readonly authService = inject(AuthService)
+  private readonly metadataViewFacade = inject(MdViewFacade)
+  private readonly cdr = inject(ChangeDetectorRef)
+  private readonly mapper = inject(Gn4PlatformMapper)
+  private readonly platformServiceInterface = inject(PlatformServiceInterface)
+
   @Input() organisationName$: Observable<string>
   @Input() metadataUuid: string
 
@@ -114,14 +122,7 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
   isAllUserFeedbackLoading = false
   isAddUserFeedbackLoading = false
 
-  constructor(
-    private readonly translate: TranslateService,
-    private readonly authService: AuthService,
-    private readonly metadataViewFacade: MdViewFacade,
-    private readonly cdr: ChangeDetectorRef,
-    private readonly mapper: Gn4PlatformMapper,
-    private readonly platformServiceInterface: PlatformServiceInterface
-  ) {
+  constructor() {
     this.activeUser$ = this.platformServiceInterface.getMe()
   }
 

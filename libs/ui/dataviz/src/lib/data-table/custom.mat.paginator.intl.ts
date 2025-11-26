@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { MatPaginatorIntl } from '@angular/material/paginator'
 import { TranslateService } from '@ngx-translate/core'
 import { Subject } from 'rxjs'
 
 @Injectable()
 export class CustomMatPaginatorIntl extends MatPaginatorIntl {
+  private translate = inject(TranslateService)
+
   override changes = new Subject<void>()
 
-  constructor(private translate: TranslateService) {
+  constructor() {
     super()
     this.setLabels()
     this.translate.onLangChange.subscribe(() => {

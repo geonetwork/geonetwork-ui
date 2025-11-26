@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { AutocompleteComponent, BadgeComponent } from '@geonetwork-ui/ui/inputs'
@@ -42,6 +43,8 @@ type AutocompleteItem = { title: string; value: Keyword }
   ],
 })
 export class GenericKeywordsComponent {
+  private platformService = inject(PlatformServiceInterface)
+
   @Input() keywords: Keyword[]
   @Input() keywordTypes: KeywordType[]
   @Input() placeholder: string
@@ -63,8 +66,6 @@ export class GenericKeywordsComponent {
       )
     )
   }
-
-  constructor(private platformService: PlatformServiceInterface) {}
 
   handleItemSelection(item: AutocompleteItem) {
     this.addKeyword(item.value)

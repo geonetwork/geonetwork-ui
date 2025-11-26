@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { SiteApiService } from '@geonetwork-ui/data-access/gn4'
 import { Observable, of, switchMap } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
@@ -7,6 +7,8 @@ import { map, shareReplay } from 'rxjs/operators'
   providedIn: 'root',
 })
 export class Gn4SettingsService {
+  private siteApiService = inject(SiteApiService)
+
   public identicon$: Observable<string> = this.getSettingsSetValueByKey(
     'system/users/identicon'
   )
@@ -21,8 +23,6 @@ export class Gn4SettingsService {
   public apiVersion$: Observable<string> = this.getSettingsSetValueByKey(
     'system/platform/version'
   )
-
-  constructor(private siteApiService: SiteApiService) {}
 
   private getSettingsSetValueByKey(key: string) {
     return of(true).pipe(

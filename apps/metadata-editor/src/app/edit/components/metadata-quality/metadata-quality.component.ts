@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MetadataQualityComponent as GnUiMetadataQualityComponent } from '@geonetwork-ui/ui/elements'
 
@@ -12,6 +12,7 @@ import { MetadataQualityComponent as GnUiMetadataQualityComponent } from '@geone
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MetadataQualityComponent {
+  private editorFacade = inject(EditorFacade)
+
   record$ = this.editorFacade.record$
-  constructor(private editorFacade: EditorFacade) {}
 }

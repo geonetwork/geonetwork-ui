@@ -7,6 +7,7 @@ import {
   OnInit,
   Output,
   TemplateRef,
+  inject,
 } from '@angular/core'
 import {
   propagateToDocumentOnly,
@@ -28,6 +29,8 @@ import {
   imports: [],
 })
 export class RecordPreviewComponent implements OnInit, OnDestroy {
+  protected elementRef = inject(ElementRef)
+
   @Input() record: CatalogRecord
   @Input() linkTarget = '_blank'
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
@@ -52,8 +55,6 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   get organization(): Organization {
     return this.record.ownerOrganization
   }
-
-  constructor(protected elementRef: ElementRef) {}
 
   ngOnInit(): void {
     this.abstract = removeWhitespace(stripHtml(this.record?.abstract))

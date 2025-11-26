@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { UiApiService } from '@geonetwork-ui/data-access/gn4'
 import { firstValueFrom, map } from 'rxjs'
@@ -10,10 +10,8 @@ import { firstValueFrom, map } from 'rxjs'
   standalone: false,
 })
 export class MainSearchComponent implements OnInit {
-  constructor(
-    private uiService: UiApiService,
-    private searchFacade: SearchFacade
-  ) {}
+  private uiService = inject(UiApiService)
+  private searchFacade = inject(SearchFacade)
 
   async ngOnInit() {
     const conf = await firstValueFrom(

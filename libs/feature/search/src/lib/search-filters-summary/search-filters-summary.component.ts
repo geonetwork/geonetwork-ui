@@ -1,11 +1,4 @@
-import {
-  Component,
-  Inject,
-  InjectionToken,
-  Input,
-  OnInit,
-  Optional,
-} from '@angular/core'
+import { Component, InjectionToken, Input, OnInit, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { first, map, Observable } from 'rxjs'
 import { SearchFiltersSummaryItemComponent } from '../search-filters-summary-item/search-filters-summary-item.component'
@@ -25,18 +18,19 @@ export const FILTER_SUMMARY_IGNORE_LIST = new InjectionToken<string[]>(
   standalone: true,
 })
 export class SearchFiltersSummaryComponent implements OnInit {
+  private searchFacade = inject(SearchFacade)
+  private searchService = inject(SearchService)
+
   @Input() searchFields: string[] = []
   filterSummaryIgnoreList: string[]
 
   searchFilterActive$: Observable<boolean>
 
-  constructor(
-    private searchFacade: SearchFacade,
-    private searchService: SearchService,
-    @Optional()
-    @Inject(FILTER_SUMMARY_IGNORE_LIST)
-    filterSummaryIgnoreList: string[]
-  ) {
+  constructor() {
+    const filterSummaryIgnoreList = inject(FILTER_SUMMARY_IGNORE_LIST, {
+      optional: true,
+    })
+
     const defaultIgnoreList = ['any']
     this.filterSummaryIgnoreList = [
       ...defaultIgnoreList,

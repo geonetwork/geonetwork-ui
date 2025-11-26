@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import * as MapSelectors from './map.selectors'
 import * as MapActions from './map.actions'
@@ -7,10 +7,10 @@ import { Feature } from 'geojson'
 
 @Injectable()
 export class MapFacade {
+  private readonly store = inject(Store)
+
   context$ = this.store.pipe(select(MapSelectors.getMapContext))
   selectedFeatures$ = this.store.pipe(select(MapSelectors.getSelectedFeatures))
-
-  constructor(private readonly store: Store) {}
 
   applyContext(context: MapContext) {
     this.store.dispatch(MapActions.setContext({ context }))

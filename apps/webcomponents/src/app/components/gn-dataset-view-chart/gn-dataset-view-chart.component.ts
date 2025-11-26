@@ -6,6 +6,7 @@ import {
   Input,
   OnInit,
   ViewEncapsulation,
+  inject,
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
@@ -25,16 +26,17 @@ export class GnDatasetViewChartComponent
   extends BaseComponent
   implements OnInit
 {
+  private changeDetector = inject(ChangeDetectorRef)
+
   @Input() datasetId!: string
   @Input() aggregation: string
   @Input() xProperty: string
   @Input() yProperty: string
   @Input() chartType: string
   link: DatasetOnlineResource
-  constructor(
-    injector: Injector,
-    private changeDetector: ChangeDetectorRef
-  ) {
+  constructor() {
+    const injector = inject(Injector)
+
     super(injector)
   }
   async init() {

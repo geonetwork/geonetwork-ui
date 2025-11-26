@@ -8,6 +8,7 @@ import {
   Input,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core'
 import EmblaCarousel, { EmblaCarouselType } from 'embla-carousel'
 import { CommonModule } from '@angular/common'
@@ -23,6 +24,8 @@ import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.comp
   imports: [CommonModule, PaginationDotsComponent],
 })
 export class CarouselComponent implements AfterViewInit, Paginable {
+  private changeDetector = inject(ChangeDetectorRef)
+
   @ViewChild('carouselOverflowContainer') carouselOverflowContainer: ElementRef
 
   @Input() containerClass = ''
@@ -64,8 +67,6 @@ export class CarouselComponent implements AfterViewInit, Paginable {
     if (this.isLastPage) return
     this.emblaApi.scrollNext()
   }
-
-  constructor(private changeDetector: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.emblaApi = EmblaCarousel(

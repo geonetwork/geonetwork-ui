@@ -4,6 +4,7 @@ import {
   Component,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
@@ -72,6 +73,10 @@ marker('chart.aggregation.count')
   standalone: true,
 })
 export class ChartViewComponent {
+  private dataService = inject(DataService)
+  private changeDetector = inject(ChangeDetectorRef)
+  private translateService = inject(TranslateService)
+
   public featureCatalog$ = new BehaviorSubject<DatasetFeatureCatalog | null>(
     null
   )
@@ -257,12 +262,6 @@ export class ChartViewComponent {
   get isCountAggregation() {
     return this.aggregation$.value === 'count'
   }
-
-  constructor(
-    private dataService: DataService,
-    private changeDetector: ChangeDetectorRef,
-    private translateService: TranslateService
-  ) {}
 
   setProperties(
     dataset: BaseReader,

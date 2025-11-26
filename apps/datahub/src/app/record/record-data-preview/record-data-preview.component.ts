@@ -3,11 +3,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Inject,
   InjectionToken,
   Input,
   OnInit,
-  Optional,
+  inject,
 } from '@angular/core'
 import { MatTabsModule } from '@angular/material/tabs'
 import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
@@ -63,6 +62,13 @@ export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
   ],
 })
 export class RecordDataPreviewComponent implements OnInit {
+  metadataViewFacade = inject(MdViewFacade)
+  private dataService = inject(DataService)
+  protected maxFeatureCount = inject(MAX_FEATURE_COUNT, { optional: true })
+  reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
+  private platformServiceInterface = inject(PlatformServiceInterface)
+  private cdr = inject(ChangeDetectorRef)
+
   @Input()
   set recordUuid(value: string) {
     this.recordUuid$.next(value)
@@ -178,19 +184,6 @@ export class RecordDataPreviewComponent implements OnInit {
       return isAdmin && isPublished
     })
   )
-
-  constructor(
-    public metadataViewFacade: MdViewFacade,
-    private dataService: DataService,
-    @Inject(MAX_FEATURE_COUNT)
-    @Optional()
-    protected maxFeatureCount: number,
-    @Inject(REUSE_FORM_URL)
-    @Optional()
-    public reuseFormUrl: string,
-    private platformServiceInterface: PlatformServiceInterface,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnInit() {
     combineLatest([

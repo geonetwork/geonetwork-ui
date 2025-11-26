@@ -3,6 +3,7 @@ import {
   importProvidersFrom,
   NgModule,
   provideNgReflectAttributes,
+  inject,
 } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
@@ -91,10 +92,10 @@ import { EditorRouterService } from './router.service'
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(
-    private router: Router,
-    private viewportScroller: ViewportScroller
-  ) {
+  private router = inject(Router)
+  private viewportScroller = inject(ViewportScroller)
+
+  constructor() {
     // Disable automatic scroll restoration to avoid race conditions
     this.viewportScroller.setHistoryScrollRestoration('manual')
     handleScrollOnNavigation(this.router, this.viewportScroller)

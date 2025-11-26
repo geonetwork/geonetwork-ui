@@ -7,6 +7,7 @@ import {
   Input,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core'
 
 import { MatNativeDateModule } from '@angular/material/core'
@@ -35,6 +36,9 @@ import { matExpandLess, matExpandMore } from '@ng-icons/material-icons/baseline'
   styleUrls: ['./date-range-dropdown.component.css'],
 })
 export class DateRangeDropdownComponent implements AfterViewChecked {
+  private overlayContainer = inject(OverlayContainer)
+  private cdr = inject(ChangeDetectorRef)
+
   @Input() title: string
   @Input() startDate: Date
   @Input() endDate: Date
@@ -43,11 +47,6 @@ export class DateRangeDropdownComponent implements AfterViewChecked {
 
   @ViewChild('picker') picker: ElementRef
   isPickerDisplayed = false
-
-  constructor(
-    private overlayContainer: OverlayContainer,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngAfterViewChecked() {
     this.checkPickerOverlay()

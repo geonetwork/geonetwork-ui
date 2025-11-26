@@ -11,7 +11,7 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import {
   HttpClient,
   HttpHeaders,
@@ -36,16 +36,17 @@ import { Configuration } from '../configuration'
   providedIn: 'root',
 })
 export class RegistriesApiService {
+  protected httpClient = inject(HttpClient)
+
   protected basePath = 'https://demo.georchestra.org/geonetwork/srv/api'
   public defaultHeaders = new HttpHeaders()
   public configuration = new Configuration()
   public encoder: HttpParameterCodec
 
-  constructor(
-    protected httpClient: HttpClient,
-    @Optional() @Inject(BASE_PATH) basePath: string,
-    @Optional() configuration: Configuration
-  ) {
+  constructor() {
+    const basePath = inject(BASE_PATH, { optional: true })
+    const configuration = inject(Configuration, { optional: true })
+
     if (configuration) {
       this.configuration = configuration
     }

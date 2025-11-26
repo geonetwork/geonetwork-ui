@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import {
   GroupApiModel,
   GroupsApiService,
@@ -62,6 +62,12 @@ interface IncompleteOrganization {
 export class OrganizationsFromMetadataService
   implements OrganizationsServiceInterface
 {
+  private esService = inject(ElasticsearchService)
+  private searchApiService = inject(SearchApiService)
+  private groupsApiService = inject(GroupsApiService)
+  private platformService = inject(PlatformServiceInterface)
+  private translateService = inject(TranslateService)
+
   private groups$: Observable<GroupApiModel[]> = of(true).pipe(
     switchMap(() => this.groupsApiService.getGroups()),
     shareReplay()
@@ -116,14 +122,6 @@ export class OrganizationsFromMetadataService
     }),
     shareReplay()
   )
-
-  constructor(
-    private esService: ElasticsearchService,
-    private searchApiService: SearchApiService,
-    private groupsApiService: GroupsApiService,
-    private platformService: PlatformServiceInterface,
-    private translateService: TranslateService
-  ) {}
 
   private get langIndex() {
     return `lang${toLang3(this.translateService.currentLang)}`

@@ -1,10 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Inject,
   InjectionToken,
   Input,
-  Optional,
+  inject,
 } from '@angular/core'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -40,6 +39,10 @@ export const EXTERNAL_VIEWER_OPEN_NEW_TAB = new InjectionToken<boolean>(
   ],
 })
 export class ExternalViewerButtonComponent {
+  private translateService = inject(TranslateService)
+  private urlTemplate = inject(EXTERNAL_VIEWER_URL_TEMPLATE, { optional: true })
+  private openinNewTab = inject(EXTERNAL_VIEWER_OPEN_NEW_TAB)
+
   @Input() link: DatasetOnlineResource
   @Input() extraClass = ''
 
@@ -64,15 +67,6 @@ export class ExternalViewerButtonComponent {
     }
     return null
   }
-
-  constructor(
-    private translateService: TranslateService,
-    @Inject(EXTERNAL_VIEWER_URL_TEMPLATE)
-    @Optional()
-    private urlTemplate: string,
-    @Inject(EXTERNAL_VIEWER_OPEN_NEW_TAB)
-    private openinNewTab: boolean
-  ) {}
 
   openInExternalViewer() {
     const templateUrl = this.urlTemplate

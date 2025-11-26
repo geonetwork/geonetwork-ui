@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core'
+import { ChangeDetectorRef, Component, inject } from '@angular/core'
 import { MapFacade } from '../+state/map.facade'
 import { MapContextLayerGeojson } from '@geospatial-sdk/core'
 import { firstValueFrom } from 'rxjs'
@@ -15,16 +15,14 @@ const INVALID_FILE_FORMAT_ERROR_MESSAGE = 'Invalid file format'
   imports: [TranslateDirective, TranslatePipe, DragAndDropFileInputComponent],
 })
 export class AddLayerFromFileComponent {
+  private mapFacade = inject(MapFacade)
+  private changeDetectorRef = inject(ChangeDetectorRef)
+
   errorMessage: string | null = null
   successMessage: string | null = null
   loading = false
   readonly acceptedMimeType = ['.geojson']
   readonly maxFileSize = 5000000
-
-  constructor(
-    private mapFacade: MapFacade,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {}
 
   async handleFileChange(file: File) {
     if (!file) {

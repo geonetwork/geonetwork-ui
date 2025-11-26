@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import {
   CatalogRecord,
@@ -59,12 +60,12 @@ import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
   ],
 })
 export class MetadataInfoComponent {
+  private dateService = inject(DateService)
+
   @Input() metadata: Partial<CatalogRecord>
   @Input() incomplete: boolean
   @Output() keyword = new EventEmitter<Keyword>()
   updatedTimes: number
-
-  constructor(private dateService: DateService) {}
 
   get hasUsage() {
     return (

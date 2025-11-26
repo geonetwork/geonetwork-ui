@@ -5,6 +5,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import { GraphicOverview } from '@geonetwork-ui/common/domain/model/record'
 import { ImageInputComponent } from '@geonetwork-ui/ui/elements'
@@ -23,6 +24,11 @@ import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
   imports: [ImageInputComponent],
 })
 export class FormFieldOverviewsComponent {
+  private platformService = inject(PlatformServiceInterface)
+  private notificationsService = inject(NotificationsService)
+  private translateService = inject(TranslateService)
+  private cd = inject(ChangeDetectorRef)
+
   @Input() metadataUuid: string
   @Input() value: Array<GraphicOverview>
   @Output() valueChange: EventEmitter<Array<GraphicOverview>> =
@@ -41,13 +47,6 @@ export class FormFieldOverviewsComponent {
       }
     )
   }
-
-  constructor(
-    private platformService: PlatformServiceInterface,
-    private notificationsService: NotificationsService,
-    private translateService: TranslateService,
-    private cd: ChangeDetectorRef
-  ) {}
 
   handleFileChange(file: File) {
     this.uploadProgress = 0

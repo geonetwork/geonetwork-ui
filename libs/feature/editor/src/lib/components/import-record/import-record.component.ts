@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Output,
+  inject,
 } from '@angular/core'
 
 import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
@@ -61,6 +62,12 @@ type ImportMenuPage = 'mainMenu' | 'importExternalFile'
   ],
 })
 export class ImportRecordComponent {
+  private router = inject(Router)
+  private translateService = inject(TranslateService)
+  private cdr = inject(ChangeDetectorRef)
+  private notificationsService = inject(NotificationsService)
+  private recordsRepository = inject(RecordsRepositoryInterface)
+
   @Output() closeImportMenu = new EventEmitter<void>()
 
   importMenuItems: ImportMenuItems[] = [
@@ -84,14 +91,6 @@ export class ImportRecordComponent {
   isRecordImportInProgress = false
 
   sectionDisplayed: ImportMenuPage = 'mainMenu'
-
-  constructor(
-    private router: Router,
-    private translateService: TranslateService,
-    private cdr: ChangeDetectorRef,
-    private notificationsService: NotificationsService,
-    private recordsRepository: RecordsRepositoryInterface
-  ) {}
 
   displayMainMenu() {
     this.sectionDisplayed = 'mainMenu'

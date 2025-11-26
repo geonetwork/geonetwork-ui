@@ -1,15 +1,13 @@
 /* eslint-disable @angular-eslint/directive-selector */
-import { Directive, ElementRef, OnInit, Renderer2 } from '@angular/core'
+import { Directive, ElementRef, OnInit, Renderer2, inject } from '@angular/core'
 
 @Directive({
   selector: '[gnUiLinkify]',
   standalone: true,
 })
 export class GnUiLinkifyDirective implements OnInit {
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2
-  ) {}
+  private el = inject(ElementRef)
+  private renderer = inject(Renderer2)
 
   ngOnInit() {
     setTimeout(() => {

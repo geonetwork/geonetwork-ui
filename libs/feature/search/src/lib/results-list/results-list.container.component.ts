@@ -1,11 +1,10 @@
 import {
   Component,
   EventEmitter,
-  Inject,
   Input,
   OnInit,
-  Optional,
   Output,
+  inject,
 } from '@angular/core'
 import { combineLatest, Observable, tap } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
@@ -52,6 +51,20 @@ export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
   ],
 })
 export class ResultsListContainerComponent implements OnInit {
+  facade = inject(SearchFacade)
+  private resultsLayoutConfig = inject<ResultsLayoutConfigModel>(
+    RESULTS_LAYOUT_CONFIG
+  )
+  private recordDatasetUrlTemplate = inject(RECORD_DATASET_URL_TOKEN, {
+    optional: true,
+  })
+  private recordServiceUrlTemplate = inject(RECORD_SERVICE_URL_TOKEN, {
+    optional: true,
+  })
+  private recordReuseUrlTemplate = inject(RECORD_REUSE_URL_TOKEN, {
+    optional: true,
+  })
+
   @Input() metadataQualityDisplay: boolean
   @Input() layout: string
   @Input() showMore: ResultsListShowMoreStrategy = 'auto'
@@ -67,21 +80,6 @@ export class ResultsListContainerComponent implements OnInit {
 
   errorTypes = ErrorType
   recordUrlGetter = this.getRecordUrl.bind(this)
-
-  constructor(
-    public facade: SearchFacade,
-    @Inject(RESULTS_LAYOUT_CONFIG)
-    private resultsLayoutConfig: ResultsLayoutConfigModel,
-    @Optional()
-    @Inject(RECORD_DATASET_URL_TOKEN)
-    private recordDatasetUrlTemplate: string,
-    @Optional()
-    @Inject(RECORD_SERVICE_URL_TOKEN)
-    private recordServiceUrlTemplate: string,
-    @Optional()
-    @Inject(RECORD_REUSE_URL_TOKEN)
-    private recordReuseUrlTemplate: string
-  ) {}
 
   ngOnInit(): void {
     this.layoutConfig$ = this.facade.layout$.pipe(

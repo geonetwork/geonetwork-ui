@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 
@@ -10,7 +10,9 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
   imports: [],
 })
 export class TemplatesComponent {
-  constructor(public searchFacade: SearchFacade) {
+  searchFacade = inject(SearchFacade)
+
+  constructor() {
     this.searchFacade.resetSearch()
   }
 }

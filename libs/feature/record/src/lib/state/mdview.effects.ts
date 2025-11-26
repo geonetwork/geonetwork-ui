@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { exhaustMap, mergeMap, of } from 'rxjs'
 import { catchError, filter, map, switchMap } from 'rxjs/operators'
@@ -8,12 +8,10 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { Router } from '@angular/router'
 @Injectable()
 export class MdViewEffects {
-  constructor(
-    private actions$: Actions,
-    private recordsRepository: RecordsRepositoryInterface,
-    private platformServiceInterface: PlatformServiceInterface,
-    private router: Router
-  ) {}
+  private actions$ = inject(Actions)
+  private recordsRepository = inject(RecordsRepositoryInterface)
+  private platformServiceInterface = inject(PlatformServiceInterface)
+  private router = inject(Router)
 
   /*
     Metadata effects

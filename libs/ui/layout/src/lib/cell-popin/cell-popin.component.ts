@@ -8,6 +8,7 @@ import {
   ViewChild,
   Injector,
   ChangeDetectorRef,
+  inject,
 } from '@angular/core'
 
 import { provideIcons, NgIconComponent } from '@ng-icons/core'
@@ -31,6 +32,9 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
   styleUrls: [],
 })
 export class CellPopinComponent implements AfterViewInit, OnDestroy {
+  private scrollDispatcher = inject(ScrollDispatcher)
+  private cdr = inject(ChangeDetectorRef)
+
   @Input() extraClass = ''
   @Input() cdkScrollContainer!: CdkScrollable
   @Input() scrollContainer!: ElementRef
@@ -67,11 +71,6 @@ export class CellPopinComponent implements AfterViewInit, OnDestroy {
   get activePopin(): boolean {
     return this._activePopin
   }
-
-  constructor(
-    private scrollDispatcher: ScrollDispatcher,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngAfterViewInit() {
     if (!this.activePopin) {

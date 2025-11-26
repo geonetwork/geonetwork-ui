@@ -11,6 +11,7 @@ import {
   Output,
   QueryList,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Paginable } from '../paginable.interface'
@@ -26,6 +27,8 @@ type ComponentSize = 'L' | 'M' | 'S' | 'XS'
   imports: [CommonModule, PaginationDotsComponent],
 })
 export class BlockListComponent implements AfterViewInit, Paginable {
+  private changeDetector = inject(ChangeDetectorRef)
+
   pageSize = 4
   @Input() containerClass = ''
   @Input() paginationContainerClass = 'w-full bottom-0 top-auto'
@@ -53,8 +56,6 @@ export class BlockListComponent implements AfterViewInit, Paginable {
   get currentPage() {
     return this.currentPage_ + 1
   }
-
-  constructor(private changeDetector: ChangeDetectorRef) {}
 
   @HostListener('window:resize')
   onResize() {

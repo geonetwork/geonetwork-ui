@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core'
 
 import {
   BadgeComponent,
@@ -15,6 +15,8 @@ import { INSPIRE_TOPICS } from '../../../../fields.config'
   styleUrl: './form-field-topics.component.css',
 })
 export class FormFieldTopicsComponent {
+  private translateService = inject(TranslateService)
+
   topics = []
   @Input() set value(topics: string[]) {
     this.topics = topics
@@ -26,8 +28,6 @@ export class FormFieldTopicsComponent {
       value: topic.value,
     }
   })
-
-  constructor(private translateService: TranslateService) {}
 
   handleItemSelection(selectedItems: string[]) {
     this.topics = selectedItems

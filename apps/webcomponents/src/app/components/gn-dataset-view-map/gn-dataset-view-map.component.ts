@@ -6,6 +6,7 @@ import {
   Input,
   OnInit,
   ViewEncapsulation,
+  inject,
 } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
@@ -23,11 +24,12 @@ import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record
   standalone: false,
 })
 export class GnDatasetViewMapComponent extends BaseComponent implements OnInit {
-  constructor(
-    injector: Injector,
-    private mdViewFacade: MdViewFacade,
-    private changeDetector: ChangeDetectorRef
-  ) {
+  private mdViewFacade = inject(MdViewFacade)
+  private changeDetector = inject(ChangeDetectorRef)
+
+  constructor() {
+    const injector = inject(Injector)
+
     super(injector)
   }
   @Input() datasetId: string

@@ -5,6 +5,7 @@ import {
   Injector,
   Input,
   ViewEncapsulation,
+  inject,
 } from '@angular/core'
 import {
   ResultsListShowMoreStrategy,
@@ -25,6 +26,8 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
   standalone: false,
 })
 export class GnResultsListComponent extends BaseComponent {
+  private changeDetector = inject(ChangeDetectorRef)
+
   @Input() layout = 'CARD'
   @Input() size = '10' // will be converted to number later
   @Input() query: string
@@ -32,10 +35,9 @@ export class GnResultsListComponent extends BaseComponent {
   @Input() catalogUrl: string
   @Input() showMore: ResultsListShowMoreStrategy = 'none'
 
-  constructor(
-    injector: Injector,
-    private changeDetector: ChangeDetectorRef
-  ) {
+  constructor() {
+    const injector = inject(Injector)
+
     super(injector)
   }
 

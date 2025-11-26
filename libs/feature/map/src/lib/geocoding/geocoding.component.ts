@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core'
+import { Component, OnDestroy, inject } from '@angular/core'
 import { catchError, firstValueFrom, from, Subject, takeUntil } from 'rxjs'
 import { debounceTime, switchMap } from 'rxjs/operators'
 import { GeocodingService } from '../geocoding.service'
@@ -16,16 +16,16 @@ import { MapContextView } from '@geospatial-sdk/core'
   imports: [SearchInputComponent, TranslatePipe],
 })
 export class GeocodingComponent implements OnDestroy {
+  private mapFacade = inject(MapFacade)
+  private geocodingService = inject(GeocodingService)
+
   searchText = ''
   results: any[] = []
   searchTextChanged = new Subject<string>()
   destroy$ = new Subject<void>()
   errorMessage: string | null = null
 
-  constructor(
-    private mapFacade: MapFacade,
-    private geocodingService: GeocodingService
-  ) {
+  constructor() {
     this.searchTextChanged
       .pipe(
         debounceTime(300),

@@ -8,6 +8,7 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
+  inject,
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { TranslateDirective } from '@ngx-translate/core'
@@ -60,6 +61,13 @@ import {
   ],
 })
 export class AllRecordsComponent implements OnInit, OnDestroy {
+  private router = inject(Router)
+  searchFacade = inject(SearchFacade)
+  searchService = inject(SearchService)
+  private overlay = inject(Overlay)
+  private viewContainerRef = inject(ViewContainerRef)
+  private cdr = inject(ChangeDetectorRef)
+
   @ViewChild('importRecordButton', { read: ElementRef })
   importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
@@ -69,15 +77,6 @@ export class AllRecordsComponent implements OnInit, OnDestroy {
   subscription: Subscription
 
   isImportMenuOpen = false
-
-  constructor(
-    private router: Router,
-    public searchFacade: SearchFacade,
-    public searchService: SearchService,
-    private overlay: Overlay,
-    private viewContainerRef: ViewContainerRef,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnInit() {
     this.subscription = this.searchFacade.searchFilters$

@@ -1,17 +1,21 @@
 import { OverlayContainer } from '@angular/cdk/overlay'
 import { Platform } from '@angular/cdk/platform'
 
-import { Inject, Injectable, DOCUMENT } from '@angular/core'
+import { Injectable, DOCUMENT, inject } from '@angular/core'
 
 @Injectable()
 export class WebcomponentOverlayContainer extends OverlayContainer {
+  private document: Document
+
   private componentRoot: HTMLElement
 
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    platform: Platform
-  ) {
+  constructor() {
+    const document = inject<Document>(DOCUMENT)
+    const platform = inject(Platform)
+
     super(document, platform)
+
+    this.document = document
   }
 
   setRoot(componentRoot: HTMLElement) {

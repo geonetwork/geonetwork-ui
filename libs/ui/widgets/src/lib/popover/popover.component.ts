@@ -11,6 +11,7 @@ import {
   Renderer2,
   ViewContainerRef,
   EmbeddedViewRef,
+  inject,
 } from '@angular/core'
 import tippy, { Instance } from 'tippy.js'
 
@@ -22,17 +23,15 @@ import tippy, { Instance } from 'tippy.js'
   imports: [],
 })
 export class PopoverComponent implements AfterViewInit, OnChanges, OnDestroy {
+  private viewContainerRef = inject(ViewContainerRef)
+  private renderer = inject(Renderer2)
+
   @ViewChild('popoverContent', { static: false }) popoverContent: ElementRef
   @Input() content: string | TemplateRef<any>
   @Input() theme: 'light' | 'light-border' | 'translucent' | 'material' | ''
 
   private tippyInstance: Instance
   private view: EmbeddedViewRef<any>
-
-  constructor(
-    private viewContainerRef: ViewContainerRef,
-    private renderer: Renderer2
-  ) {}
 
   private getContent(): string | HTMLElement {
     if (this.content instanceof TemplateRef) {

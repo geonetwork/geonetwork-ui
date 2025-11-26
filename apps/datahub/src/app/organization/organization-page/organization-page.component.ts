@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 
 import { OrganizationHeaderComponent } from '../organization-header/organization-header.component'
@@ -28,12 +33,10 @@ import {
   ],
 })
 export class OrganizationPageComponent implements OnInit {
-  organization$: Observable<Organization>
+  private router = inject(RouterFacade)
+  private orgService = inject(OrganizationsServiceInterface)
 
-  constructor(
-    private router: RouterFacade,
-    private orgService: OrganizationsServiceInterface
-  ) {}
+  organization$: Observable<Organization>
 
   ngOnInit(): void {
     this.organization$ = combineLatest([

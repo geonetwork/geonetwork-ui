@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
+  inject,
 } from '@angular/core'
 import { TranslateDirective, TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -42,10 +43,8 @@ type FilterFormat = (typeof FILTER_FORMATS)[number]
   ],
 })
 export class DownloadsListComponent {
-  constructor(
-    private translateService: TranslateService,
-    private changeDetector: ChangeDetectorRef
-  ) {}
+  private translateService = inject(TranslateService)
+  private changeDetector = inject(ChangeDetectorRef)
 
   _list: BlockListComponent
   @Input() links: DatasetDownloadDistribution[]

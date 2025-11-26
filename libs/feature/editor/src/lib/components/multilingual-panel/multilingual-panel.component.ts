@@ -8,6 +8,7 @@ import {
   QueryList,
   ViewChildren,
   ViewContainerRef,
+  inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
@@ -80,6 +81,14 @@ const extraFlagMap: { [key: string]: string } = {
   styleUrl: './multilingual-panel.component.css',
 })
 export class MultilingualPanelComponent implements OnDestroy {
+  facade = inject(EditorFacade)
+  dialog = inject(MatDialog)
+  private translateService = inject(TranslateService)
+  private recordsRepository = inject(RecordsRepositoryInterface)
+  private overlay = inject(Overlay)
+  private viewContainerRef = inject(ViewContainerRef)
+  private cdr = inject(ChangeDetectorRef)
+
   isMultilingual: boolean
   _record: CatalogRecord
   editTranslations: boolean
@@ -104,16 +113,6 @@ export class MultilingualPanelComponent implements OnDestroy {
   supportedLanguages$ = this.recordsRepository
     .getApplicationLanguages()
     .pipe(map((languages) => this.sortLanguages(languages)))
-
-  constructor(
-    public facade: EditorFacade,
-    public dialog: MatDialog,
-    private translateService: TranslateService,
-    private recordsRepository: RecordsRepositoryInterface,
-    private overlay: Overlay,
-    private viewContainerRef: ViewContainerRef,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnDestroy() {
     this.subscription.unsubscribe()

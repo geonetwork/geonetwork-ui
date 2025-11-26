@@ -6,13 +6,13 @@ import {
   Component,
   ContentChild,
   ElementRef,
-  Host,
   Input,
   NgZone,
   OnDestroy,
   OnInit,
   TemplateRef,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { animationFrameScheduler, fromEvent, Subscription } from 'rxjs'
 import { throttleTime } from 'rxjs/operators'
@@ -39,6 +39,10 @@ import { CommonModule } from '@angular/common'
 export class StickyHeaderComponent
   implements AfterViewInit, OnDestroy, OnInit, AfterViewChecked
 {
+  private changeDetector = inject(ChangeDetectorRef)
+  private hostEl = inject(ElementRef, { host: true })
+  private zone = inject(NgZone)
+
   @Input() minHeightPx: number
   @Input() fullHeightPx: number
   @ContentChild(TemplateRef) template: TemplateRef<{ $implicit: number }>
@@ -48,12 +52,6 @@ export class StickyHeaderComponent
   expandRatio: number // 1 means height is full, 0 means height is minimum
   scrollSub: Subscription
   parentScroll: number
-
-  constructor(
-    private changeDetector: ChangeDetectorRef,
-    @Host() private hostEl: ElementRef,
-    private zone: NgZone
-  ) {}
 
   ngAfterViewInit() {
     this.scrollSub = fromEvent(window, 'scroll', {

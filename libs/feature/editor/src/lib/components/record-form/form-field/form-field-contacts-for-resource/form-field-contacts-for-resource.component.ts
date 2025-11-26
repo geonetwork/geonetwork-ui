@@ -6,6 +6,7 @@ import {
   OnChanges,
   OnInit,
   Output,
+  inject,
 } from '@angular/core'
 import {
   Individual,
@@ -64,6 +65,9 @@ import { iconoirPlus } from '@ng-icons/iconoir'
 export class FormFieldContactsForResourceComponent
   implements OnChanges, OnInit
 {
+  private platformServiceInterface = inject(PlatformServiceInterface)
+  private organizationsServiceInterface = inject(OrganizationsServiceInterface)
+
   @Input() value: Individual[]
   @Output() valueChange: EventEmitter<Individual[]> = new EventEmitter()
 
@@ -77,11 +81,6 @@ export class FormFieldContactsForResourceComponent
   roleSectionsToDisplay: Role[] = []
 
   allOrganizations: Map<string, Organization> = new Map()
-
-  constructor(
-    private platformServiceInterface: PlatformServiceInterface,
-    private organizationsServiceInterface: OrganizationsServiceInterface
-  ) {}
 
   ngOnChanges() {
     this.updateContactsForRessource()

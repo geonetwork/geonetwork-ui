@@ -3,6 +3,7 @@ import {
   Component,
   Input,
   OnInit,
+  inject,
 } from '@angular/core'
 import {
   Choice,
@@ -35,6 +36,10 @@ import { CommonModule } from '@angular/common'
   ],
 })
 export class FilterDropdownComponent implements OnInit {
+  private searchFacade = inject(SearchFacade)
+  private searchService = inject(SearchService)
+  private fieldsService = inject(FieldsService)
+
   @Input() fieldName: string
   @Input() title: string
 
@@ -60,12 +65,6 @@ export class FilterDropdownComponent implements OnInit {
       .buildFiltersFromFieldValues({ [this.fieldName]: values as FieldValue[] })
       .subscribe((filters) => this.searchService.updateFilters(filters))
   }
-
-  constructor(
-    private searchFacade: SearchFacade,
-    private searchService: SearchService,
-    private fieldsService: FieldsService
-  ) {}
 
   ngOnInit() {
     this.fieldType = this.fieldsService.getFieldType(this.fieldName)

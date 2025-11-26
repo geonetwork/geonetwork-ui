@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { ActivatedRouteSnapshot } from '@angular/router'
 import { catchError, EMPTY, Observable } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -10,11 +10,9 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
   providedIn: 'root',
 })
 export class EditRecordResolver {
-  constructor(
-    private recordsRepository: RecordsRepositoryInterface,
-    private notificationsService: NotificationsService,
-    private translateService: TranslateService
-  ) {}
+  private recordsRepository = inject(RecordsRepositoryInterface)
+  private notificationsService = inject(NotificationsService)
+  private translateService = inject(TranslateService)
 
   resolve(
     route: ActivatedRouteSnapshot

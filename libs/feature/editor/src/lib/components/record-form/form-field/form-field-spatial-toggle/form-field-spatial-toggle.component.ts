@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
   SwitchToggleComponent,
@@ -17,6 +17,8 @@ import { SPATIAL_SCOPES } from '../../../../fields.config'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormFieldSpatialToggleComponent {
+  private editorFacade = inject(EditorFacade)
+
   allKeywords$ = this.editorFacade.record$.pipe(
     map((record) => record?.keywords)
   )
@@ -35,8 +37,6 @@ export class FormFieldSpatialToggleComponent {
         })
       )
     )
-
-  constructor(private editorFacade: EditorFacade) {}
 
   async onSpatialScopeChange(selectedOption: SwitchToggleOption) {
     // remove all existing spatial scope keywords

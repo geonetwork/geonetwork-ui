@@ -5,7 +5,6 @@ import {
   DestroyRef,
   ElementRef,
   EventEmitter,
-  Inject,
   inject,
   Input,
   OnChanges,
@@ -88,6 +87,13 @@ interface MapViewConstraints {
   ],
 })
 export class MapContainerComponent implements AfterViewInit, OnChanges {
+  private doNotUseDefaultBasemap = inject(DO_NOT_USE_DEFAULT_BASEMAP)
+  private basemapLayers = inject(BASEMAP_LAYERS)
+  private mapViewConstraints = inject<{
+    maxZoom?: number
+    maxExtent?: Extent
+  }>(MAP_VIEW_CONSTRAINTS)
+
   @Input() context: MapContext | null
 
   @ViewChild('map') container: ElementRef
@@ -176,15 +182,6 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
       this._resolvedExtentChange = new EventEmitter<Extent>()
     }
     return this._resolvedExtentChange
-  }
-
-  constructor(
-    @Inject(DO_NOT_USE_DEFAULT_BASEMAP) private doNotUseDefaultBasemap: boolean,
-    @Inject(BASEMAP_LAYERS) private basemapLayers: MapContextLayer[],
-    @Inject(MAP_VIEW_CONSTRAINTS)
-    private mapViewConstraints: MapViewConstraints
-  ) {
-    this.destroyRef = inject(DestroyRef)
   }
 
   calculateCurrentMapExtent(): Extent {

@@ -4,6 +4,7 @@ import {
   Component,
   Injector,
   ViewEncapsulation,
+  inject,
 } from '@angular/core'
 import { BaseComponent } from '../base.component'
 import { RecordsService } from '@geonetwork-ui/feature/catalog'
@@ -21,13 +22,14 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
   standalone: false,
 })
 export class GnFigureDatasetsComponent extends BaseComponent {
+  private changeDetector = inject(ChangeDetectorRef)
+
   catalogRecords: RecordsService
   recordsCount$: Observable<string | number>
 
-  constructor(
-    injector: Injector,
-    private changeDetector: ChangeDetectorRef
-  ) {
+  constructor() {
+    const injector = inject(Injector)
+
     super(injector)
     this.catalogRecords = injector.get(RecordsService)
     this.recordsCount$ = this.catalogRecords.recordsCount$.pipe(

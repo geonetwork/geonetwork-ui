@@ -9,6 +9,7 @@ import {
   OnDestroy,
   ChangeDetectorRef,
   AfterViewInit,
+  inject,
 } from '@angular/core'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
@@ -24,6 +25,8 @@ import { matAdd, matRemove } from '@ng-icons/material-icons/baseline'
   viewProviders: [provideIcons({ matAdd, matRemove })],
 })
 export class ExpandablePanelComponent implements AfterViewInit, OnDestroy {
+  private readonly changeDetector = inject(ChangeDetectorRef)
+
   @Input() title?: string
   @Input() iconColor? = ''
   @ContentChild('titleTemplate') titleTemplate?: TemplateRef<HTMLElement>
@@ -31,8 +34,6 @@ export class ExpandablePanelComponent implements AfterViewInit, OnDestroy {
 
   private _collapsed = true
   private contentObserver?: ResizeObserver
-
-  constructor(private readonly changeDetector: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     if (this.contentDiv) {

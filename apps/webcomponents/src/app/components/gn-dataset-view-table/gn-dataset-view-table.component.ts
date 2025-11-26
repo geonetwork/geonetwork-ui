@@ -6,6 +6,7 @@ import {
   Input,
   OnInit,
   ViewEncapsulation,
+  inject,
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
@@ -25,12 +26,13 @@ export class GnDatasetViewTableComponent
   extends BaseComponent
   implements OnInit
 {
+  private changeDetector = inject(ChangeDetectorRef)
+
   @Input() datasetId!: string
   link: DatasetOnlineResource
-  constructor(
-    injector: Injector,
-    private changeDetector: ChangeDetectorRef
-  ) {
+  constructor() {
+    const injector = inject(Injector)
+
     super(injector)
   }
   async init() {

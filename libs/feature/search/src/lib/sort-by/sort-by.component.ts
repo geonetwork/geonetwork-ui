@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   SortByEnum,
@@ -23,6 +23,9 @@ interface SortChoice {
   imports: [CommonModule, DropdownSelectorComponent, TranslatePipe],
 })
 export class SortByComponent implements OnInit {
+  private facade = inject(SearchFacade)
+  private searchService = inject(SearchService)
+
   @Input() isQualitySortable: boolean
   choices: SortChoice[] = [
     {
@@ -42,11 +45,6 @@ export class SortByComponent implements OnInit {
     filter((sortBy) => !!sortBy),
     map((sortBy) => sortBy)
   )
-
-  constructor(
-    private facade: SearchFacade,
-    private searchService: SearchService
-  ) {}
 
   ngOnInit(): void {
     if (this.isQualitySortable) {

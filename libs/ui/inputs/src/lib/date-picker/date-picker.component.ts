@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import {
   DateAdapter,
@@ -44,13 +45,13 @@ import { TranslateService } from '@ngx-translate/core'
   ],
 })
 export class DatePickerComponent {
+  private dateAdapter = inject<DateAdapter<Date>>(DateAdapter)
+  private translate = inject(TranslateService)
+
   @Input() date: Date
   @Output() dateChange = new EventEmitter<Date>()
 
-  constructor(
-    private dateAdapter: DateAdapter<Date>,
-    private translate: TranslateService
-  ) {
+  constructor() {
     this.dateAdapter.setLocale(this.translate.currentLang)
   }
 }

@@ -7,6 +7,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core'
 
 @Directive({
@@ -16,6 +17,8 @@ import {
 export class AnchorLinkDirective
   implements OnInit, AfterViewChecked, OnDestroy
 {
+  private changeDetector = inject(ChangeDetectorRef)
+
   @Input('gnUiAnchorLink') targetId: string
   @Input('gnUiAnchorLinkDisabledClass') disabledClass: string
   @Input('gnUiAnchorLinkEnabledClass') enabledClass: string
@@ -41,8 +44,6 @@ export class AnchorLinkDirective
   inView = false
   intersectionObserver: IntersectionObserver
   initialized = false
-
-  constructor(private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.observer.observe(document.body, {

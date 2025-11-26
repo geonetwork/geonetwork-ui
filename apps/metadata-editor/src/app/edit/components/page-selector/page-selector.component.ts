@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateDirective } from '@ngx-translate/core'
@@ -15,9 +15,9 @@ import { LetDirective } from '@ngrx/component'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageSelectorComponent {
-  pages$ = this.facade.editorConfig$.pipe(map((config) => config.pages))
+  facade = inject(EditorFacade)
 
-  constructor(public facade: EditorFacade) {}
+  pages$ = this.facade.editorConfig$.pipe(map((config) => config.pages))
 
   pageSectionClickHandler(index: number) {
     this.facade.setCurrentPage(index)

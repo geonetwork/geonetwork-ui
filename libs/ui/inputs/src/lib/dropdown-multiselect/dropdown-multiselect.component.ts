@@ -8,6 +8,7 @@ import {
   QueryList,
   ViewChild,
   ViewChildren,
+  inject,
 } from '@angular/core'
 import {
   CdkConnectedOverlay,
@@ -49,6 +50,8 @@ import {
   standalone: true,
 })
 export class DropdownMultiselectComponent {
+  private scrollStrategies = inject(ScrollStrategyOptions)
+
   @Input() title: string
   @Input() choices: Choice[]
   @Input() selected: unknown[] = []
@@ -109,8 +112,6 @@ export class DropdownMultiselectComponent {
       -1
     )
   }
-
-  constructor(private scrollStrategies: ScrollStrategyOptions) {}
 
   private setFocus() {
     setTimeout(() => {

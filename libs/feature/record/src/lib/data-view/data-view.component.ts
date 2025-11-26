@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import {
   getLinkId,
@@ -41,6 +42,8 @@ import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
   ],
 })
 export class DataViewComponent {
+  private mdViewFacade = inject(MdViewFacade)
+
   @Input() mode: 'table' | 'chart'
   @Input() displaySource = true
   @Input() set exceedsLimit(value: boolean) {
@@ -112,8 +115,6 @@ export class DataViewComponent {
   hidePreview$ = this.excludeWfs$.pipe(
     map((excludeWfs) => this.mode === 'chart' && excludeWfs)
   )
-
-  constructor(private mdViewFacade: MdViewFacade) {}
 
   setChartConfig(event: DatavizChartConfigModel) {
     this.mdViewFacade.setChartConfig(event)

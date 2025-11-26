@@ -1,10 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Inject,
   Input,
-  Optional,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { InternalLinkCardComponent } from '@geonetwork-ui/ui/elements'
@@ -41,6 +40,16 @@ import {
   ],
 })
 export class RecordInternalLinksComponent {
+  private recordDatasetUrlTemplate = inject(RECORD_DATASET_URL_TOKEN, {
+    optional: true,
+  })
+  private recordServiceUrlTemplate = inject(RECORD_SERVICE_URL_TOKEN, {
+    optional: true,
+  })
+  private recordReuseUrlTemplate = inject(RECORD_REUSE_URL_TOKEN, {
+    optional: true,
+  })
+
   @Input() records: CatalogRecord[]
   @Input() title: string
   @Input() titleIsSectionTitle = false
@@ -53,17 +62,7 @@ export class RecordInternalLinksComponent {
   metadataQualityDisplay: boolean
   recordUrlGetter = this.getRecordUrl.bind(this)
 
-  constructor(
-    @Optional()
-    @Inject(RECORD_DATASET_URL_TOKEN)
-    private recordDatasetUrlTemplate: string,
-    @Optional()
-    @Inject(RECORD_SERVICE_URL_TOKEN)
-    private recordServiceUrlTemplate: string,
-    @Optional()
-    @Inject(RECORD_REUSE_URL_TOKEN)
-    private recordReuseUrlTemplate: string
-  ) {
+  constructor() {
     const cfg: MetadataQualityConfig =
       getMetadataQualityConfig() || ({} as MetadataQualityConfig)
     this.metadataQualityDisplay = cfg.ENABLED

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import {
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_ORGANIZATION,
@@ -17,10 +17,8 @@ import {
   providedIn: 'root',
 })
 export class RouterService {
-  constructor(
-    @Inject(ROUTER_CONFIG) protected routerConfig: RouterConfigModel,
-    private router: Router
-  ) {}
+  protected routerConfig = inject<RouterConfigModel>(ROUTER_CONFIG)
+  private router = inject(Router)
 
   initRoutes() {
     this.router.resetConfig(this.buildRoutes())

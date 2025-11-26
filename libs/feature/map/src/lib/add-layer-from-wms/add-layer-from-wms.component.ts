@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core'
 import { WmsEndpoint, WmsLayerSummary } from '@camptocamp/ogc-client'
 import { MapFacade } from '../+state/map.facade'
 import { firstValueFrom, Subject } from 'rxjs'
@@ -22,17 +22,15 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
   ],
 })
 export class AddLayerFromWmsComponent implements OnInit {
+  private mapFacade = inject(MapFacade)
+  private changeDetectorRef = inject(ChangeDetectorRef)
+
   wmsUrl = ''
   loading = false
   layers: WmsLayerSummary[] = []
   wmsEndpoint: WmsEndpoint | null = null
   urlChange = new Subject<string>()
   errorMessage: string | null = null
-
-  constructor(
-    private mapFacade: MapFacade,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {}
 
   ngOnInit() {
     this.urlChange.pipe(debounceTime(700)).subscribe(() => this.loadLayers())

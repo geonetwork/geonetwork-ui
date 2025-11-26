@@ -14,7 +14,7 @@ import {
   toDate,
 } from './atomic-operations'
 import { MetadataUrlService } from './metadata-url.service'
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { getStatusFromStatusCode } from '../iso19139/utils/status.mapper'
 import { getUpdateFrequencyFromFrequencyCode } from '../iso19139/utils/update-frequency.mapper'
 import {
@@ -45,10 +45,8 @@ type EsFieldMapperFn = (
   providedIn: 'root',
 })
 export class Gn4FieldMapper {
-  constructor(
-    private metadataUrlService: MetadataUrlService,
-    private translateService: TranslateService
-  ) {}
+  private metadataUrlService = inject(MetadataUrlService)
+  private translateService = inject(TranslateService)
 
   private get getLocalizedIndexKey() {
     return `lang${toLang3(this.translateService.currentLang)}`

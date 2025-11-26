@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { map, mergeMap, Observable } from 'rxjs'
@@ -22,13 +22,13 @@ import { matCloudDownloadOutline } from '@ng-icons/material-icons/outline'
   ],
 })
 export class GpfApiDlListItemComponent implements OnInit {
+  protected http = inject(HttpClient)
+
   @Input() link
   @Input() color: string
   @Input() format: string
   @Input() isFromWfs: boolean
-
-  constructor(protected http: HttpClient) {}
-  liste$: Observable<{ entry: unknown[] }>
+  liste$: Observable<any>
 
   ngOnInit(): void {
     this.liste$ = this.http
