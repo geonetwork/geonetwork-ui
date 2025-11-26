@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef } from '@angular/core'
+import { Component, inject, Input, TemplateRef } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
@@ -14,14 +14,14 @@ import { ModalDialogComponent } from './modal-dialog.component'
   `,
 })
 class LaunchDialogComponent {
+  private _dialog = inject(MatDialog)
+
   @Input() title = ''
   @Input() body: TemplateRef<unknown>
   @Input() confirmText = ''
   @Input() cancelText = ''
 
   confirmed: boolean
-
-  constructor(private _dialog: MatDialog) {}
 
   launch(): void {
     const dialogRef = this._dialog.open(ModalDialogComponent, {
