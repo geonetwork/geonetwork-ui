@@ -56,7 +56,11 @@ export class DataViewComponent {
       this.linkSelected.emit(this.selectedLink$.value)
     }
   }
-  @Input() set datavizConfig(value: any) {
+  @Input() set datavizConfig(value: {
+    view?: string
+    source?: DatasetOnlineResource
+    chartConfig?: DatavizChartConfigModel
+  }) {
     if ((value && value.view === 'table') || value.view === 'chart') {
       this._selectedView = value.view
     }

@@ -9,6 +9,7 @@ import {
 
 import { provideMockActions } from '@ngrx/effects/testing'
 import { provideMockStore } from '@ngrx/store/testing'
+import { Action } from '@ngrx/store'
 
 import { Observable, of, throwError } from 'rxjs'
 
@@ -45,7 +46,7 @@ const RouterMock = {
 }
 
 describe('MdViewEffects', () => {
-  let actions: Observable<any>
+  let actions: Observable<Action>
   let effects: MdViewEffects
   let repository: RecordsRepositoryInterface
   let platform: PlatformServiceInterface
@@ -337,7 +338,20 @@ describe('MdViewEffects', () => {
 
   describe('loadFeatureCatalog$', () => {
     const featureCatalog = {
-      attributes: [{ name: 'test', title: 'Test' }],
+      featureTypes: [
+        {
+          name: 'test',
+          definition: 'Test definition',
+          attributes: [
+            {
+              name: 'test',
+              definition: 'Test attribute',
+              type: 'string',
+              code: 'test_code',
+            },
+          ],
+        },
+      ],
     }
 
     describe('when api success and feature catalog found', () => {

@@ -2,6 +2,9 @@ import 'cypress-real-events'
 
 beforeEach(() => {
   // GEOSERVER stubs
+  cy.intercept('GET', 'https://data.geopf.fr/tms/1.0.0/PLAN.IGN', {
+    fixture: 'PLAN_IGN.xml',
+  })
   cy.intercept(
     'GET',
     '/geoserver/insee/ows?SERVICE=WMS&REQUEST=GetCapabilities',
@@ -253,9 +256,12 @@ describe('Preview section', () => {
       .find('gn-ui-dropdown-selector')
       .filter(':visible')
       .as('drop')
-    cy.get('@drop').eq(0).selectDropdownOption('pie')
-    cy.get('@drop').eq(2).selectDropdownOption('men')
-    cy.get('@drop').eq(3).selectDropdownOption('average')
+    cy.get('@drop').eq(0).as('chartTypeDropdown')
+    cy.get('@chartTypeDropdown').selectDropdownOption('pie')
+    cy.get('@drop').eq(2).as('chartXDropdown')
+    cy.get('@chartXDropdown').selectDropdownOption('men')
+    cy.get('@drop').eq(3).as('chartAggDropdown')
+    cy.get('@chartAggDropdown').selectDropdownOption('average')
     cy.get('@previewSection')
       .find('gn-ui-chart')
       .invoke('attr', 'ng-reflect-type')
@@ -425,8 +431,10 @@ describe('Preview section', () => {
       .should('not.contain', '#reset-filters-button')
 
     // Choose date span without results
-    cy.get('@startDatePicker').clear().type('1990-01-01{enter}')
-    cy.get('@endDatePicker').clear().type('1995-01-01{enter}')
+    cy.get('@startDatePicker').clear()
+    cy.get('@startDatePicker').type('1990-01-01{enter}')
+    cy.get('@endDatePicker').clear()
+    cy.get('@endDatePicker').type('1995-01-01{enter}')
 
     // it should show a second reset button instead of results
     cy.get('@previewSection')
@@ -435,8 +443,10 @@ describe('Preview section', () => {
       .should('be.visible')
 
     // Delete start and end dates
-    cy.get('@startDatePicker').clear().type('{enter}')
-    cy.get('@endDatePicker').clear().type('{enter}')
+    cy.get('@startDatePicker').clear()
+    cy.get('@startDatePicker').type('{enter}')
+    cy.get('@endDatePicker').clear()
+    cy.get('@endDatePicker').type('{enter}')
 
     // it should display 12 items
     cy.get('@stacItems').should('have.length', 12)
@@ -530,16 +540,16 @@ describe('Preview section', () => {
         cy.get('@previewSection')
           .find('gn-ui-dropdown-selector')
           .eq(0)
-          .selectDropdownOption(
-            'Plan IGN Tuiles vectorielles (TMS)-https://data.geopf.fr/tms/1.0.0'
-          )
-        // TMS styles need time to load
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(1000)
+          .as('layerDropdown')
+        cy.get('@layerDropdown').selectDropdownOption(
+          'Plan IGN Tuiles vectorielles (TMS)-https://data.geopf.fr/tms/1.0.0'
+        )
         cy.get('@previewSection')
           .find('gn-ui-dropdown-selector')
           .eq(1)
-          .selectDropdownOption('4')
+          .should('not.have.attr', 'ng-reflect-disabled', 'true')
+          .as('styleDropdown')
+        cy.get('@styleDropdown').selectDropdownOption('4')
         cy.get('@configTab').find('gn-ui-button').click()
         cy.visit('/dataset/zzz_nl_test_wfs_syth_la_ciotat')
         cy.get('@mapTab').invoke('attr', 'aria-selected').should('eq', 'true')
@@ -569,9 +579,12 @@ describe('Preview section', () => {
           .find('gn-ui-dropdown-selector')
           .filter(':visible')
           .as('drop')
-        cy.get('@drop').eq(0).selectDropdownOption('pie')
-        cy.get('@drop').eq(2).selectDropdownOption('men')
-        cy.get('@drop').eq(3).selectDropdownOption('average')
+        cy.get('@drop').eq(0).as('chartTypeDropdown')
+        cy.get('@chartTypeDropdown').selectDropdownOption('pie')
+        cy.get('@drop').eq(2).as('chartXDropdown')
+        cy.get('@chartXDropdown').selectDropdownOption('men')
+        cy.get('@drop').eq(3).as('chartAggDropdown')
+        cy.get('@chartAggDropdown').selectDropdownOption('average')
         cy.get('@configTab').find('gn-ui-button').click()
         cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
         cy.get('@chartTab').invoke('attr', 'aria-selected').should('eq', 'true')

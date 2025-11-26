@@ -28,7 +28,7 @@ export class GpfApiDlListItemComponent implements OnInit {
   @Input() isFromWfs: boolean
 
   constructor(protected http: HttpClient) {}
-  liste$: Observable<any>
+  liste$: Observable<{ entry: unknown[] }>
 
   ngOnInit(): void {
     this.liste$ = this.http
