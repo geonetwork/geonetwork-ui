@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core'
+import { Injectable } from '@angular/core'
 import {
   GroupApiModel,
   GroupsApiService,
@@ -23,11 +23,6 @@ const IMAGE_URL = '/geonetwork/images/harvesting/'
 export class OrganizationsFromGroupsService
   implements OrganizationsServiceInterface
 {
-  private esService = inject(ElasticsearchService)
-  private searchApiService = inject(SearchApiService)
-  private groupsApiService = inject(GroupsApiService)
-  private translateService = inject(TranslateService)
-
   private groups$: Observable<GroupApiModel[]> = this.groupsApiService
     .getGroups()
     .pipe(shareReplay())
@@ -59,6 +54,15 @@ export class OrganizationsFromGroupsService
   private get lang3() {
     return toLang3(this.translateService.currentLang)
   }
+
+  constructor(
+    /* eslint-disable @angular-eslint/prefer-inject */
+    private esService: ElasticsearchService,
+    private searchApiService: SearchApiService,
+    private groupsApiService: GroupsApiService,
+    private translateService: TranslateService
+    /* eslint-enable @angular-eslint/prefer-inject */
+  ) {}
 
   private mapGroups(groupBuckets: any[], groups: GroupApiModel[]) {
     return groupBuckets

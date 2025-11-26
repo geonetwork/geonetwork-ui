@@ -64,7 +64,9 @@ export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
 export class RecordDataPreviewComponent implements OnInit {
   metadataViewFacade = inject(MdViewFacade)
   private dataService = inject(DataService)
-  protected maxFeatureCount = inject(MAX_FEATURE_COUNT, { optional: true })
+  private maxFeatureCount = Number(
+    inject(MAX_FEATURE_COUNT, { optional: true })
+  )
   reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
   private platformServiceInterface = inject(PlatformServiceInterface)
   private cdr = inject(ChangeDetectorRef)

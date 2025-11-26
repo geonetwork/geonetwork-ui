@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Injector,
   Input,
   ViewEncapsulation,
   inject,
@@ -34,12 +33,6 @@ export class GnResultsListComponent extends BaseComponent {
   @Input() filter: string
   @Input() catalogUrl: string
   @Input() showMore: ResultsListShowMoreStrategy = 'none'
-
-  constructor() {
-    const injector = inject(Injector)
-
-    super(injector)
-  }
 
   private setSearch_() {
     const filter = this.filter

@@ -44,7 +44,7 @@ export class RegistriesApiService {
   public encoder: HttpParameterCodec
 
   constructor() {
-    const basePath = inject(BASE_PATH, { optional: true })
+    let basePath = inject(BASE_PATH, { optional: true })
     const configuration = inject(Configuration, { optional: true })
 
     if (configuration) {

@@ -22,15 +22,13 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
   standalone: false,
 })
 export class GnFigureDatasetsComponent extends BaseComponent {
-  private changeDetector = inject(ChangeDetectorRef)
-
   catalogRecords: RecordsService
   recordsCount$: Observable<string | number>
 
   constructor() {
     const injector = inject(Injector)
 
-    super(injector)
+    super()
     this.catalogRecords = injector.get(RecordsService)
     this.recordsCount$ = this.catalogRecords.recordsCount$.pipe(
       startWith('-'),

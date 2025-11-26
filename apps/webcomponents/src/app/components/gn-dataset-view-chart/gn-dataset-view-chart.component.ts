@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Injector,
   Input,
   OnInit,
   ViewEncapsulation,
@@ -34,11 +33,7 @@ export class GnDatasetViewChartComponent
   @Input() yProperty: string
   @Input() chartType: string
   link: DatasetOnlineResource
-  constructor() {
-    const injector = inject(Injector)
 
-    super(injector)
-  }
   async init() {
     super.init()
     this.link = await this.getRecordLink(this.datasetId, [

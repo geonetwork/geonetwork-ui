@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Injector,
   Input,
   OnInit,
   ViewEncapsulation,
@@ -30,11 +29,7 @@ export class GnDatasetViewTableComponent
 
   @Input() datasetId!: string
   link: DatasetOnlineResource
-  constructor() {
-    const injector = inject(Injector)
 
-    super(injector)
-  }
   async init() {
     super.init()
     this.link = await this.getRecordLink(this.datasetId, [

@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Injector,
   Input,
   OnInit,
   ViewEncapsulation,
@@ -27,13 +26,9 @@ export class GnDatasetViewMapComponent extends BaseComponent implements OnInit {
   private mdViewFacade = inject(MdViewFacade)
   private changeDetector = inject(ChangeDetectorRef)
 
-  constructor() {
-    const injector = inject(Injector)
-
-    super(injector)
-  }
   @Input() datasetId: string
   link: DatasetOnlineResource
+
   async init() {
     super.init()
     this.mdViewFacade.loadFull(this.datasetId)
