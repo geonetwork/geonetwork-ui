@@ -93,6 +93,13 @@ beforeEach(() => {
   )
   cy.intercept(
     'GET',
+    'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10%3A54%3A42.030Z%2F2025-10-29T07%3A12%3A21.025Z&token=prev%3Asentinel2-l2a-sen2cor%3AS2A_20251024T072221024000Z_38LNH_0511_c4fba6046c',
+    {
+      fixture: 'stac-items-page-1.json',
+    }
+  )
+  cy.intercept(
+    'GET',
     'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10%3A54%3A42.030Z%2F2019-12-31T23%3A00%3A00.000Z',
     {
       fixture: 'stac-items-date-modified.json',
