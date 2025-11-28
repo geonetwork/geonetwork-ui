@@ -39,6 +39,7 @@ jest.mock('embla-carousel', () => {
       <div style="width: 50px"></div>
     }
   </gn-ui-carousel>`,
+  standalone: false,
 })
 class CarouselWrapperComponent {
   @Input() blocks = [1, 2, 3]

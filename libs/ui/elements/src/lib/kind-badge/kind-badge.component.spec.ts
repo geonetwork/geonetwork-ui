@@ -18,7 +18,7 @@ describe('KindBadgeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [provideIcons({ matClose }), provideI18n()],
-      declarations: [MockBadgeComponent],
+      imports: [MockBadgeComponent],
     }).compileComponents()
   })
 

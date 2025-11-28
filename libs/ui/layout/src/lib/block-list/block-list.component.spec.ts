@@ -9,6 +9,7 @@ import { By } from '@angular/platform-browser'
       <div class="block" #block style="width: 50px; height: 20px"></div>
     }
   </gn-ui-block-list>`,
+  standalone: false,
 })
 class BlockListWrapperComponent {
   @Input() blocks = Array.from({ length: 24 }, (_, i) => i + 1)
