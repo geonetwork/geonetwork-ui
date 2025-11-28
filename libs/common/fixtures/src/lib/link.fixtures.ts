@@ -87,6 +87,13 @@ export const aSetOfLinksFixture = () => ({
       type: 'download',
       url: new URL('https://my.server/files/abc.XLSX'),
     }) as DatasetDownloadDistribution,
+  dataXml: () =>
+    ({
+      name: 'abc.xml',
+      description: 'Data in XML format',
+      type: 'download',
+      url: new URL('https://my.server/files/abc.xml'),
+    }) as DatasetDownloadDistribution,
   dataJson: () =>
     ({
       name: 'abc.json',
