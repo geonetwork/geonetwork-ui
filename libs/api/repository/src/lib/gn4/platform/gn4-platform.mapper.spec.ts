@@ -5,6 +5,7 @@ import {
 } from '@geonetwork-ui/api/metadata-converter'
 
 import { AvatarServiceInterface } from '../auth'
+import { TestBed } from '@angular/core/testing'
 
 const keywords: KeywordApiResponse[] = [
   {
@@ -70,15 +71,21 @@ const thesaurus: ThesaurusApiResponse[] = [
 ]
 describe('Gn4PlatformMapper', () => {
   let mapper: Gn4PlatformMapper
-  let avatarService: AvatarServiceInterface
 
   beforeEach(() => {
-    avatarService = {
+    const avatarServiceMock = {
       getPlaceholder: jest.fn(),
       getProfileIcon: jest.fn(),
       getProfileIconUrl: jest.fn(),
     }
-    mapper = new Gn4PlatformMapper(avatarService)
+
+    TestBed.configureTestingModule({
+      providers: [
+        Gn4PlatformMapper,
+        { provide: AvatarServiceInterface, useValue: avatarServiceMock },
+      ],
+    })
+    mapper = TestBed.inject(Gn4PlatformMapper)
   })
 
   describe('keywordsFromApi', () => {

@@ -1,10 +1,12 @@
 import { MyOrgUsersComponent } from './my-org-users.component'
 import { of } from 'rxjs'
 import { MyOrgService } from '@geonetwork-ui/feature/catalog'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('MyOrgUsersComponent', () => {
   let component: MyOrgUsersComponent
-  let myOrgService: MyOrgService
+  let fixture: ComponentFixture<MyOrgUsersComponent>
 
   beforeEach(() => {
     const myOrgServiceMock = {
@@ -47,8 +49,16 @@ describe('MyOrgUsersComponent', () => {
       }),
     }
 
-    myOrgService = myOrgServiceMock as any
-    component = new MyOrgUsersComponent(myOrgService)
+    TestBed.configureTestingModule({
+      providers: [
+        provideI18n(),
+        { provide: MyOrgService, useValue: myOrgServiceMock },
+      ],
+    })
+
+    fixture = TestBed.createComponent(MyOrgUsersComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
   })
 
   it('should create', () => {

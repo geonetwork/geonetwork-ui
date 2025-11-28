@@ -5,7 +5,7 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { firstValueFrom, of, throwError } from 'rxjs'
 import { delay } from 'rxjs/operators'
-import { fakeAsync, tick } from '@angular/core/testing'
+import { fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 class Gn4PlatformServiceMock {
@@ -29,9 +29,24 @@ describe('FavoritesService', () => {
   let platform: PlatformServiceInterface
 
   beforeEach(() => {
-    userSelectionsService = new UserSelectionsServiceMock() as any
-    platform = new Gn4PlatformServiceMock() as any
-    service = new FavoritesService(userSelectionsService, platform)
+    const userSelectionsServiceMock =
+      new UserSelectionsServiceMock() as unknown as UserselectionsApiService
+    const platformMock =
+      new Gn4PlatformServiceMock() as unknown as PlatformServiceInterface
+
+    TestBed.configureTestingModule({
+      providers: [
+        FavoritesService,
+        {
+          provide: UserselectionsApiService,
+          useValue: userSelectionsServiceMock,
+        },
+        { provide: PlatformServiceInterface, useValue: platformMock },
+      ],
+    })
+    service = TestBed.inject(FavoritesService)
+    userSelectionsService = TestBed.inject(UserselectionsApiService)
+    platform = TestBed.inject(PlatformServiceInterface)
   })
 
   it('should be created', () => {
@@ -41,8 +56,7 @@ describe('FavoritesService', () => {
   describe('myFavorites$', () => {
     describe('when not authenticated', () => {
       beforeEach(() => {
-        platform.getMe = () => of(null)
-        service = new FavoritesService(userSelectionsService, platform)
+        platform.getMe = jest.fn(() => of(null))
       })
       it('returns an empty array', async () => {
         const uuids = await firstValueFrom(service.myFavoritesUuid$)
@@ -98,8 +112,7 @@ describe('FavoritesService', () => {
     let favorites
     describe('when not authenticated', () => {
       beforeEach(() => {
-        platform.getMe = () => of(null)
-        service = new FavoritesService(userSelectionsService, platform)
+        platform.getMe = jest.fn(() => of(null))
       })
       it('throws an error', async () => {
         expect.assertions(1)
@@ -160,8 +173,7 @@ describe('FavoritesService', () => {
     let favorites
     describe('when not authenticated', () => {
       beforeEach(() => {
-        platform.getMe = () => of(null)
-        service = new FavoritesService(userSelectionsService, platform)
+        platform.getMe = jest.fn(() => of(null))
       })
       it('throws an error', async () => {
         expect.assertions(1)

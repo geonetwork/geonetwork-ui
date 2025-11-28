@@ -2,6 +2,7 @@ import { SelectionsApiService } from '@geonetwork-ui/data-access/gn4'
 import { SelectionService } from './selection.service'
 import { of } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { TestBed } from '@angular/core/testing'
 
 function record(uuid: string): CatalogRecord {
   return {
@@ -28,9 +29,18 @@ describe('SelectionService', () => {
   let service: SelectionService
   let selectionsService: SelectionsApiService
 
-  beforeEach(async () => {
-    selectionsService = new SelectionsServiceMock() as any
-    service = new SelectionService(selectionsService)
+  beforeEach(() => {
+    const selectionsServiceMock =
+      new SelectionsServiceMock() as unknown as SelectionsApiService
+
+    TestBed.configureTestingModule({
+      providers: [
+        SelectionService,
+        { provide: SelectionsApiService, useValue: selectionsServiceMock },
+      ],
+    })
+    service = TestBed.inject(SelectionService)
+    selectionsService = TestBed.inject(SelectionsApiService)
   })
 
   it('should be created', () => {
