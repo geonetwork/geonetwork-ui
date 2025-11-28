@@ -67,9 +67,12 @@ describe('record-actions', () => {
         .click()
       cy.get('[data-test="record-menu-delete-button"]').click()
       cy.get('[data-cy="confirm-button"]').click()
-      cy.get('[data-cy="table-row"]')
-        .contains(recordId)
-        .should('have.length', 0)
+
+      // check that record was deleted (also for case that record was the only one on the page)
+      cy.get('[data-cy="table-row"]').should('satisfy', ($rows) => {
+        return $rows.length === 0 || !$rows.text().includes(recordId)
+      })
+
       cy.get('gn-ui-notification').should('contain', 'Delete success')
 
       // check that draft was deleted

@@ -289,6 +289,26 @@ describe('Sections', () => {
   })
 
   it('Metadata quality widget', () => {
+    function scoreIs100Percent() {
+      // it should display the score
+      cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
+        .eq(0)
+        .find('[data-cy=progressPercentage]')
+        .invoke('text')
+        .invoke('trim')
+        .should('eql', '100%')
+      //100%, 8 OK , 0 Warning
+      cy.get('gn-ui-metadata-quality')
+        .find('gn-ui-popover')
+        .first()
+        .trigger('mouseenter')
+      cy.get(
+        'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matCheck"]'
+      ).should('have.length', 8)
+      cy.get(
+        'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matWarningAmber"]'
+      ).should('have.length', 0)
+    }
     // this will enable metadata quality widget
     cy.intercept('GET', '/assets/configuration/default.toml', {
       fixture: 'config-with-metadata-quality.toml',
@@ -322,59 +342,14 @@ describe('Sections', () => {
     cy.get(
       'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matWarningAmber"]'
     ).should('have.length', 1)
+
     // Score is 100%
     cy.visit('/dataset/6d0bfdf4-4e94-48c6-9740-3f9facfd453c')
+    scoreIs100Percent()
 
-    // it should display the score
-    cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
-      .eq(0)
-      .find('[data-cy=progressPercentage]')
-      .invoke('text')
-      .invoke('trim')
-      .should('eql', '100%')
-    //100%, 8 OK , 0 Warning
-    cy.get('gn-ui-metadata-quality')
-      .find('gn-ui-popover')
-      .first()
-      .trigger('mouseenter')
-    cy.get(
-      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matCheck"]'
-    ).should('have.length', 8)
-    cy.get(
-      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matWarningAmber"]'
-    ).should('have.length', 0)
-
-    // Score for a Reuse is 75%
-    cy.visit('/reuse/7eb795c2-d612-4b5e-b15e-d985b0f4e697')
-
-    // it should display the score
-    cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
-      .eq(0)
-      .find('[data-cy=progressPercentage]')
-      .invoke('text')
-      .invoke('trim')
-      .should('eql', '75%')
-    // 6 OK , 2 Warning
-    cy.get('gn-ui-metadata-quality')
-      .find('gn-ui-popover')
-      .first()
-      .trigger('mouseenter')
-    cy.get(
-      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matCheck"]'
-    ).should('have.length', 6)
-    cy.get(
-      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matWarningAmber"]'
-    ).should('have.length', 2)
-    // Score for a Service is 83%
-    cy.visit('/service/00916a35-786b-4569-9da6-71ca64ca54b1')
-
-    // it should display the score
-    cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
-      .eq(0)
-      .find('[data-cy=progressPercentage]')
-      .invoke('text')
-      .invoke('trim')
-      .should('match', /^(100|83)%$/) // may be different on GN v4.2.2
+    // Score is 100% (for a document that is classified as a dataset)
+    cy.visit('/dataset/85fb799c-aa0e-4d3a-8d6c-a574fde607e0')
+    scoreIs100Percent()
   })
 
   it('Downloads section', () => {

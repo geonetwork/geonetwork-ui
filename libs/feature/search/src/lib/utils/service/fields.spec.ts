@@ -920,27 +920,14 @@ describe('search fields implementations', () => {
       let values: any[]
 
       beforeEach(async () => {
-        jest.spyOn(searchField.repository, 'aggregate').mockReturnValue(
-          of({
-            resourceType: {
-              buckets: [
-                { term: 'dataset', count: 10 },
-                { term: 'series', count: 5 },
-                { term: 'service', count: 7 },
-                { term: 'map', count: 3 },
-              ],
-            },
-          })
-        )
-
         values = await lastValueFrom(searchField.getAvailableValues())
       })
 
-      it('returns the available values mapped by type', () => {
+      it('always returns the three possible values', () => {
         expect(values).toEqual([
-          { label: 'dataset', value: 'dataset', count: 15 },
-          { label: 'service', value: 'service', count: 7 },
-          { label: 'reuse', value: 'reuse', count: 3 },
+          { label: 'dataset', value: 'dataset' },
+          { label: 'service', value: 'service' },
+          { label: 'reuse', value: 'reuse' },
         ])
       })
     })
@@ -958,6 +945,7 @@ describe('search fields implementations', () => {
         expect(filter).toEqual({
           resourceType: {
             dataset: true,
+            document: true,
             series: true,
             featureCatalog: true,
             application: true,
@@ -967,6 +955,7 @@ describe('search fields implementations', () => {
             'map/interactive': true,
             'map/static': true,
             mapDigital: true,
+            mapHardcopy: true,
             staticMap: true,
             interactiveMap: true,
           },
@@ -982,16 +971,26 @@ describe('search fields implementations', () => {
           searchField.getValuesForFilter({
             resourceType: {
               dataset: true,
+              document: true,
               series: true,
               featureCatalog: true,
-              service: false,
+              application: true,
+              map: true,
+              'map-interactive': true,
+              'map-static': true,
+              'map/interactive': true,
+              'map/static': true,
+              mapDigital: true,
+              mapHardcopy: true,
+              staticMap: true,
+              interactiveMap: true,
             },
           })
         )
       })
 
       it('returns mapped values for active filters', () => {
-        expect(values).toEqual(['dataset'])
+        expect(values).toEqual(['dataset', 'reuse'])
       })
     })
   })
