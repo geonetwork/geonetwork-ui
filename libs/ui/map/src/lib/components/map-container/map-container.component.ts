@@ -29,7 +29,6 @@ import {
   MapExtentChangeEvent,
   MapExtentChangeEventType,
   MapContext,
-  MapContextLayer,
   MapContextLayerXyz,
   MapContextView,
   MapEventsByType,
@@ -67,11 +66,6 @@ const DEFAULT_VIEW: MapContextView = {
   zoom: 2,
 }
 
-interface MapViewConstraints {
-  maxZoom?: number
-  maxExtent?: Extent
-}
-
 @Component({
   selector: 'gn-ui-map-container',
   templateUrl: './map-container.component.html',
@@ -93,6 +87,7 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
     maxZoom?: number
     maxExtent?: Extent
   }>(MAP_VIEW_CONSTRAINTS)
+  private destroyRef = inject(DestroyRef)
 
   @Input() context: MapContext | null
 
@@ -100,7 +95,6 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
 
   private olMap: OlMap
   private olMapResolver: (value: OlMap) => void
-  private destroyRef: DestroyRef
 
   displayMessage$: Observable<boolean>
   openlayersMap = new Promise<OlMap>((resolve) => {
