@@ -159,7 +159,17 @@ export class RecordDataPreviewComponent implements OnInit, OnDestroy {
         ? this.platformServiceInterface.getFileContent(configAttachment.url)
         : of(null)
     }),
-    map((config: DatavizConfigModel) => config),
+    map((config) => {
+      return config?.source && typeof config.source.url === 'string'
+        ? ({
+            ...config,
+            source: {
+              ...config.source,
+              url: new URL(config.source.url as string),
+            },
+          } as DatavizConfigModel)
+        : (config as DatavizConfigModel)
+    }),
     catchError(() => of(null))
   )
 

@@ -590,8 +590,8 @@ describe('RecordDataPreviewComponent', () => {
       fixture.detectChanges()
 
       expect(component.datavizConfig.view).toBe('chart')
-      expect(component.datavizConfig.source.url).toBe(
-        'http://example.com/dataset'
+      expect(component.datavizConfig.source.url).toEqual(
+        new URL('http://example.com/dataset')
       )
       expect(component.datavizConfig.chartConfig.xProperty).toBe('prop1')
       expect(component.datavizConfig.chartConfig.yProperty).toBe('prop2')
