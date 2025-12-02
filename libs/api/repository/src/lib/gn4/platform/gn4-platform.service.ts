@@ -1,5 +1,5 @@
 import { HttpClient, HttpEventType } from '@angular/common/http'
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core'
+import { Injectable, InjectionToken, inject } from '@angular/core'
 import {
   KeywordApiResponse,
   ThesaurusApiResponse,
@@ -55,6 +55,18 @@ export const DISABLE_AUTH = new InjectionToken<boolean>('gnDisableAuth', {
 
 @Injectable()
 export class Gn4PlatformService implements PlatformServiceInterface {
+  private meApi = inject(MeApiService)
+  private usersApi = inject(UsersApiService)
+  private mapper = inject(Gn4PlatformMapper)
+  private toolsApiService = inject(ToolsApiService)
+  private registriesApiService = inject(RegistriesApiService)
+  private translateService = inject(TranslateService)
+  private userfeedbackApiService = inject(UserfeedbackApiService)
+  private httpClient = inject(HttpClient)
+  private recordsApiService = inject(RecordsApiService)
+  private settingsService = inject(Gn4SettingsService)
+  private disableAuth = inject(DISABLE_AUTH, { optional: true })
+
   private readonly type = 'GeoNetwork'
   private readonly users$: Observable<UserModel[]>
   private readonly isUserAnonymous$: Observable<boolean>
@@ -88,19 +100,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     return toLang3(this.translateService.currentLang)
   }
 
-  constructor(
-    private meApi: MeApiService,
-    private usersApi: UsersApiService,
-    private mapper: Gn4PlatformMapper,
-    private toolsApiService: ToolsApiService,
-    private registriesApiService: RegistriesApiService,
-    private translateService: TranslateService,
-    private userfeedbackApiService: UserfeedbackApiService,
-    private httpClient: HttpClient,
-    private recordsApiService: RecordsApiService,
-    private settingsService: Gn4SettingsService,
-    @Inject(DISABLE_AUTH) @Optional() private disableAuth: boolean
-  ) {
+  constructor() {
     this.isUserAnonymous$ = this.me$.pipe(
       map((user) => !user || !('id' in user))
     )

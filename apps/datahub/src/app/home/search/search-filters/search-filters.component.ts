@@ -5,6 +5,7 @@ import {
   OnInit,
   QueryList,
   ViewChildren,
+  inject,
 } from '@angular/core'
 import {
   FeatureSearchModule,
@@ -64,6 +65,11 @@ import { getIsMobile } from '@geonetwork-ui/util/shared'
   ],
 })
 export class SearchFiltersComponent implements OnInit {
+  searchFacade = inject(SearchFacade)
+  private searchService = inject(SearchService)
+  private fieldsService = inject(FieldsService)
+  private platformService = inject(PlatformServiceInterface)
+
   @ViewChildren(FilterDropdownComponent)
   filters: QueryList<FilterDropdownComponent>
   searchConfig: { fieldName: string; title: string }[]
@@ -83,13 +89,6 @@ export class SearchFiltersComponent implements OnInit {
     )
 
   isMobile$ = getIsMobile()
-
-  constructor(
-    public searchFacade: SearchFacade,
-    private searchService: SearchService,
-    private fieldsService: FieldsService,
-    private platformService: PlatformServiceInterface
-  ) {}
 
   showAuthRelatedFeatures = this.platformService.supportsAuthentication()
 

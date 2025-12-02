@@ -20,28 +20,29 @@
         datahub.news.figures
       </h2>
       <datahub-key-figures></datahub-key-figures>
-      <div
-        *ngIf="!!getContactMail()"
-        class="py-[37px] px-6 rounded-lg bg-white border mt-5 card-shadow flex flex-col gap-3 border-secondary"
-      >
-        <h2
-          class="text-2xl font-title text-primary leading-7 text-left"
-          translate
-        >
-          datahub.news.contact.title
-        </h2>
+      @if (!!getContactMail()) {
         <div
-          class="flex flex-col gap-3"
-          [innerHtml]="'datahub.news.contact.html' | translate"
-        ></div>
-        <a
-          [href]="'mailto:' + getContactMail()"
-          class="gn-ui-btn-secondary uppercase justify-center"
-          translate
+          class="py-[37px] px-6 rounded-lg bg-white border mt-5 card-shadow flex flex-col gap-3 border-secondary"
         >
-          datahub.news.contact.contactus
-        </a>
-      </div>
+          <h2
+            class="text-2xl font-title text-primary leading-7 text-left"
+            translate
+          >
+            datahub.news.contact.title
+          </h2>
+          <div
+            class="flex flex-col gap-3"
+            [innerHtml]="'datahub.news.contact.html' | translate"
+          ></div>
+          <a
+            [href]="'mailto:' + getContactMail()"
+            class="gn-ui-btn-secondary uppercase justify-center"
+            translate
+          >
+            datahub.news.contact.contactus
+          </a>
+        </div>
+      }
     </div>
   </div>
 </div>

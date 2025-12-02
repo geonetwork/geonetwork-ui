@@ -5,7 +5,6 @@ import {
   DestroyRef,
   ElementRef,
   EventEmitter,
-  Inject,
   inject,
   Input,
   OnChanges,
@@ -30,7 +29,6 @@ import {
   MapExtentChangeEvent,
   MapExtentChangeEventType,
   MapContext,
-  MapContextLayer,
   MapContextLayerXyz,
   MapContextView,
   MapEventsByType,
@@ -68,11 +66,6 @@ const DEFAULT_VIEW: MapContextView = {
   zoom: 2,
 }
 
-interface MapViewConstraints {
-  maxZoom?: number
-  maxExtent?: Extent
-}
-
 @Component({
   selector: 'gn-ui-map-container',
   templateUrl: './map-container.component.html',
@@ -88,13 +81,20 @@ interface MapViewConstraints {
   ],
 })
 export class MapContainerComponent implements AfterViewInit, OnChanges {
+  private doNotUseDefaultBasemap = inject(DO_NOT_USE_DEFAULT_BASEMAP)
+  private basemapLayers = inject(BASEMAP_LAYERS)
+  private mapViewConstraints = inject<{
+    maxZoom?: number
+    maxExtent?: Extent
+  }>(MAP_VIEW_CONSTRAINTS)
+  private destroyRef = inject(DestroyRef)
+
   @Input() context: MapContext | null
 
   @ViewChild('map') container: ElementRef
 
   private olMap: OlMap
   private olMapResolver: (value: OlMap) => void
-  private destroyRef: DestroyRef
 
   displayMessage$: Observable<boolean>
   openlayersMap = new Promise<OlMap>((resolve) => {
@@ -176,15 +176,6 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
       this._resolvedExtentChange = new EventEmitter<Extent>()
     }
     return this._resolvedExtentChange
-  }
-
-  constructor(
-    @Inject(DO_NOT_USE_DEFAULT_BASEMAP) private doNotUseDefaultBasemap: boolean,
-    @Inject(BASEMAP_LAYERS) private basemapLayers: MapContextLayer[],
-    @Inject(MAP_VIEW_CONSTRAINTS)
-    private mapViewConstraints: MapViewConstraints
-  ) {
-    this.destroyRef = inject(DestroyRef)
   }
 
   calculateCurrentMapExtent(): Extent {

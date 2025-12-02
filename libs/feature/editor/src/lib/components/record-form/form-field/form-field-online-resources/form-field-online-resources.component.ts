@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,6 +7,7 @@ import {
   Output,
   TemplateRef,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -49,7 +49,6 @@ type OnlineNotLinkResource =
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     SwitchToggleComponent,
     FileInputComponent,
     OnlineServiceResourceInputComponent,
@@ -62,6 +61,12 @@ type OnlineNotLinkResource =
   ],
 })
 export class FormFieldOnlineResourcesComponent {
+  private notificationsService = inject(NotificationsService)
+  private translateService = inject(TranslateService)
+  private platformService = inject(PlatformServiceInterface)
+  private cd = inject(ChangeDetectorRef)
+  private dialog = inject(MatDialog)
+
   @Input() metadataUuid: string
   @Input() set value(onlineResources: Array<OnlineResource>) {
     this.allResources = onlineResources
@@ -100,14 +105,6 @@ export class FormFieldOnlineResourcesComponent {
   }
 
   protected MAX_UPLOAD_SIZE_MB = MAX_UPLOAD_SIZE_MB
-
-  constructor(
-    private notificationsService: NotificationsService,
-    private translateService: TranslateService,
-    private platformService: PlatformServiceInterface,
-    private cd: ChangeDetectorRef,
-    private dialog: MatDialog
-  ) {}
 
   onSelectedTypeChange(selectedType: unknown) {
     this.selectedType = selectedType as 'download' | 'service'

@@ -7,7 +7,7 @@ import {
   startWith,
   switchMap,
 } from 'rxjs'
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { SearchFacade } from '../state/search.facade'
 import { FieldAvailableValue, FieldValue } from '../utils/service/fields'
@@ -36,16 +36,14 @@ marker('search.filters.recordKind.reuse')
   ],
 })
 export class ResultsHitsContainerComponent implements OnInit {
+  protected searchFacade = inject(SearchFacade)
+  private searchService = inject(SearchService)
+  private fieldsService = inject(FieldsService)
+
   @Input() displayRecordKindFilter = true
   fieldName = 'recordKind'
   filterChoices$: Observable<FieldAvailableValue[]>
   selected$: Observable<FieldValue[]>
-
-  constructor(
-    protected searchFacade: SearchFacade,
-    private searchService: SearchService,
-    private fieldsService: FieldsService
-  ) {}
 
   ngOnInit() {
     this.selected$ = this.searchFacade.searchFilters$.pipe(

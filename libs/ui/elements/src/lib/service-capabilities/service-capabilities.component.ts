@@ -1,5 +1,11 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core'
-import { CommonModule } from '@angular/common'
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  inject,
+} from '@angular/core'
+
 import {
   TranslateDirective,
   TranslatePipe,
@@ -41,7 +47,6 @@ marker(`service.metadata.capabilities.attribution`)
   selector: 'gn-ui-service-capabilities',
   standalone: true,
   imports: [
-    CommonModule,
     TranslateDirective,
     TranslatePipe,
     ButtonComponent,
@@ -61,6 +66,9 @@ marker(`service.metadata.capabilities.attribution`)
   styleUrl: './service-capabilities.component.css',
 })
 export class ServiceCapabilitiesComponent implements OnInit {
+  private cdr = inject(ChangeDetectorRef)
+  private translateService = inject(TranslateService)
+
   @Input() apiLinks = []
   availableLayers = []
   filteredLayers = []
@@ -85,11 +93,6 @@ export class ServiceCapabilitiesComponent implements OnInit {
     'resourceLinks',
     'attribution',
   ]
-
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private translateService: TranslateService
-  ) {}
 
   ngOnInit() {
     this.loadLayers()

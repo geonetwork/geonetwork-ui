@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
   ViewContainerRef,
+  inject,
 } from '@angular/core'
 import { filter, map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
@@ -16,6 +17,8 @@ import { Observable } from 'rxjs'
   standalone: true,
 })
 export class ViewportIntersectorComponent implements OnInit, OnDestroy {
+  private vcRef = inject(ViewContainerRef)
+
   @Output() isInViewport = new EventEmitter<boolean>()
   @Output() entersViewport: Observable<void> = this.isInViewport.pipe(
     filter((inViewport) => inViewport),
@@ -26,8 +29,6 @@ export class ViewportIntersectorComponent implements OnInit, OnDestroy {
     map(() => undefined)
   )
   observer?: IntersectionObserver
-
-  constructor(private vcRef: ViewContainerRef) {}
 
   ngOnInit() {
     const elToObserve = this.vcRef.element.nativeElement

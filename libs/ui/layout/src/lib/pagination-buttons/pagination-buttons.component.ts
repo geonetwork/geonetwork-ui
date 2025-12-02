@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { CommonModule } from '@angular/common'
+
 import { iconoirNavArrowLeft, iconoirNavArrowRight } from '@ng-icons/iconoir'
 import { Paginable } from '../paginable.interface'
 
@@ -10,7 +10,7 @@ import { Paginable } from '../paginable.interface'
   templateUrl: './pagination-buttons.component.html',
   styleUrls: ['./pagination-buttons.component.css'],
   standalone: true,
-  imports: [CommonModule, ButtonComponent, NgIcon],
+  imports: [ButtonComponent, NgIcon],
   viewProviders: [
     provideIcons({
       iconoirNavArrowRight,

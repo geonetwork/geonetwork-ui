@@ -12,6 +12,7 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms'
 import {
@@ -75,6 +76,8 @@ export type AutocompleteItem = unknown
 export class AutocompleteComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
+  private cdRef = inject(ChangeDetectorRef)
+
   @Input() placeholder: string
   @Input() enterButton = false
   @Input() action: (value: string) => Observable<AutocompleteItem[]>
@@ -133,8 +136,6 @@ export class AutocompleteComponent
     }
     return 'border rounded-lg absolute w-8 h-8'
   }
-
-  constructor(private cdRef: ChangeDetectorRef) {}
   ngOnChanges(changes: SimpleChanges): void {
     const { value } = changes
     if (value) {

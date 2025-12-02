@@ -1,16 +1,18 @@
 <div class="relative">
-  <div class="sm:absolute sm:inset-0" *ngIf="!hideButton">
-    <gn-ui-button
-      (buttonClick)="listComponent.goToNextPage()"
-      type="secondary"
-      [disabled]="listComponent.isLastPage"
-      extraClass="lg:m-auto !p-[22px]"
-    >
-      <span class="uppercase font-medium tracking-widest" translate
-        >pagination.nextPage</span
+  @if (!hideButton) {
+    <div class="sm:absolute sm:inset-0">
+      <gn-ui-button
+        (buttonClick)="listComponent.goToNextPage()"
+        type="secondary"
+        [disabled]="listComponent.isLastPage"
+        extraClass="lg:m-auto !p-[22px]"
       >
-    </gn-ui-button>
-  </div>
+        <span class="uppercase font-medium tracking-widest" translate
+          >pagination.nextPage</span
+        >
+      </gn-ui-button>
+    </div>
+  }
   <div
     class="relative pointer-events-none flex flex-row justify-start sm:justify-end"
   >

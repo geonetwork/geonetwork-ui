@@ -1,18 +1,27 @@
 import { SortByEnum } from '@geonetwork-ui/common/domain/model/search'
 import { BehaviorSubject } from 'rxjs'
 import { SearchService } from './search.service'
+import { TestBed } from '@angular/core/testing'
+import { SearchFacade } from '../../state/search.facade'
 
 const state = { Org: 'mel' }
-const facadeMock: any = {
+const facadeMock = {
   setFilters: jest.fn(),
   setSortBy: jest.fn(),
   searchFilters$: new BehaviorSubject(state),
 }
+
 describe('SearchService', () => {
   let service: SearchService
 
   beforeEach(() => {
-    service = new SearchService(facadeMock)
+    TestBed.configureTestingModule({
+      providers: [
+        SearchService,
+        { provide: SearchFacade, useValue: facadeMock },
+      ],
+    })
+    service = TestBed.inject(SearchService)
   })
 
   it('should be created', () => {

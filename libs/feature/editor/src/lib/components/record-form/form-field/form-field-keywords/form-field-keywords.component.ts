@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 import { GenericKeywordsComponent } from '../../../generic-keywords/generic-keywords.component'
@@ -20,9 +20,11 @@ import { SPATIAL_SCOPES } from '../../../../fields.config'
   styleUrls: ['./form-field-keywords.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, GenericKeywordsComponent, TranslatePipe],
+  imports: [GenericKeywordsComponent, TranslatePipe],
 })
 export class FormFieldKeywordsComponent {
+  private editorFacade = inject(EditorFacade)
+
   @Input() value: Keyword[]
   @Output() valueChange: EventEmitter<Keyword[]> = new EventEmitter()
 
@@ -39,8 +41,6 @@ export class FormFieldKeywordsComponent {
       ) || []
     )
   }
-
-  constructor(private editorFacade: EditorFacade) {}
 
   async handleKeywordsChange(keywords: Keyword[]) {
     const filteredKeywords = await firstValueFrom(

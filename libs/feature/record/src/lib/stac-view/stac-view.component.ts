@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  inject,
   OnInit,
   ViewChild,
 } from '@angular/core'
@@ -87,6 +88,11 @@ export interface StacFilterState {
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
 export class StacViewComponent implements OnInit, AfterViewInit {
+  private dataService = inject(DataService)
+  private metadataViewFacade = inject(MdViewFacade)
+  private mapUtils = inject(MapUtilsService)
+  private translateService = inject(TranslateService)
+
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
   initialTemporalExtent: DatasetTemporalExtent | null = null
@@ -160,13 +166,6 @@ export class StacViewComponent implements OnInit, AfterViewInit {
     }),
     shareReplay({ bufferSize: 1, refCount: false })
   )
-
-  constructor(
-    private dataService: DataService,
-    private metadataViewFacade: MdViewFacade,
-    private mapUtils: MapUtilsService,
-    private translateService: TranslateService
-  ) {}
 
   ngOnInit() {
     this.metadataViewFacade.metadata$

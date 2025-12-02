@@ -11,6 +11,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { MatSort, MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
@@ -66,6 +67,10 @@ export interface TableItemModel {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
+  private eltRef = inject(ElementRef)
+  private cdr = inject(ChangeDetectorRef)
+  private translateService = inject(TranslateService)
+
   _featureAttributes = []
   @Input() set featureAttributes(value: { value: string; label: string }[]) {
     this._featureAttributes = value
@@ -89,12 +94,6 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   count: number
   loading$ = new BehaviorSubject<boolean>(false)
   error = null
-
-  constructor(
-    private eltRef: ElementRef,
-    private cdr: ChangeDetectorRef,
-    private translateService: TranslateService
-  ) {}
 
   ngOnInit() {
     this.dataSource = new DataTableDataSource()

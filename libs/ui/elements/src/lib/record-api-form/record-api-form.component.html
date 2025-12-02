@@ -50,17 +50,16 @@
             placeholder=""
           >
           </gn-ui-text-input>
-          <div
-            *ngIf="!supportOffset"
-            class="flex items-center gap-2 text-orange-500 z-10 ml-3"
-          >
-            <span
-              class="material-symbols-outlined"
-              matTooltip="Not supported on this service"
-            >
-              warning
-            </span>
-          </div>
+          @if (!supportOffset) {
+            <div class="flex items-center gap-2 text-orange-500 z-10 ml-3">
+              <span
+                class="material-symbols-outlined"
+                matTooltip="Not supported on this service"
+              >
+                warning
+              </span>
+            </div>
+          }
         </div>
       </div>
       <div class="flex flex-col gap-3">

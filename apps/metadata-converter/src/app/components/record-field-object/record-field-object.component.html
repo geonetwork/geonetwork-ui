@@ -1,33 +1,38 @@
 <gn-ui-record-field-group [label]="label">
   <div class="text-[0.9em]">
-    <div *ngIf="fieldValue" class="relative pr-[2.8em]">
-      <ng-container
-        [ngTemplateOutlet]="itemTemplate"
-        [ngTemplateOutletContext]="{
-          getValue: valueGetter(),
-          setValue: valueSetter(),
-        }"
-      >
-      </ng-container>
-      <gn-ui-button
-        *ngIf="optional"
-        class="absolute top-0 right-1"
-        [type]="'outline'"
-        (buttonClick)="deleteObject()"
-        extraClass="!p-[0.5em]"
-        title="Delete this item"
-      >
-        <ng-icon name="matDeleteForeverSharp"></ng-icon>
-      </gn-ui-button>
-    </div>
-    <div class="p-2" *ngIf="!fieldValue">
-      <gn-ui-button
-        [type]="'primary'"
-        (buttonClick)="createObject()"
-        extraClass="py-[0.5em] px-[1em]"
-      >
-        Create...
-      </gn-ui-button>
-    </div>
+    @if (fieldValue) {
+      <div class="relative pr-[2.8em]">
+        <ng-container
+          [ngTemplateOutlet]="itemTemplate"
+          [ngTemplateOutletContext]="{
+            getValue: valueGetter(),
+            setValue: valueSetter(),
+          }"
+        >
+        </ng-container>
+        @if (optional) {
+          <gn-ui-button
+            class="absolute top-0 right-1"
+            [type]="'outline'"
+            (buttonClick)="deleteObject()"
+            extraClass="!p-[0.5em]"
+            title="Delete this item"
+          >
+            <ng-icon name="matDeleteForeverSharp"></ng-icon>
+          </gn-ui-button>
+        }
+      </div>
+    }
+    @if (!fieldValue) {
+      <div class="p-2">
+        <gn-ui-button
+          [type]="'primary'"
+          (buttonClick)="createObject()"
+          extraClass="py-[0.5em] px-[1em]"
+        >
+          Create...
+        </gn-ui-button>
+      </div>
+    }
   </div>
 </gn-ui-record-field-group>

@@ -3,6 +3,7 @@ import {
   Component,
   Input,
   OnChanges,
+  inject,
 } from '@angular/core'
 import { FigureComponent, TableItemModel } from '@geonetwork-ui/ui/dataviz'
 import { FigureService } from '../figure.service'
@@ -16,6 +17,8 @@ import { FigureService } from '../figure.service'
   imports: [FigureComponent],
 })
 export class FigureContainerComponent implements OnChanges {
+  private service = inject(FigureService)
+
   @Input() dataset: TableItemModel[]
   @Input() expression: string
   @Input() icon: string
@@ -23,8 +26,6 @@ export class FigureContainerComponent implements OnChanges {
   @Input() unit: string
   @Input() digits?: number = 2
   figure: string
-
-  constructor(private service: FigureService) {}
 
   ngOnChanges(): void {
     const figure = this.service

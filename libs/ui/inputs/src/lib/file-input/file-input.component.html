@@ -21,43 +21,43 @@
       [disabled]="isUploadInProgress || disabled"
     />
 
-    <div
-      class="w-14 h-14 rounded-md bg-gray-50 grid"
-      *ngIf="!isUploadInProgress"
-    >
-      <ng-icon
-        *ngIf="!dragFilesOver"
-        class="place-self-center text-primary"
-        name="iconoirCloudUpload"
-      ></ng-icon>
-      <ng-icon
-        *ngIf="dragFilesOver"
-        class="place-self-center text-primary"
-        name="iconoirFramePlusIn"
-      ></ng-icon>
-    </div>
-    <div
-      *ngIf="isUploadInProgress"
-      class="w-14 h-14 grid items-center justify-center relative"
-    >
-      <div class="text-gray-100 absolute">
-        <mat-progress-spinner
-          class="place-self-center"
-          [diameter]="56"
-          mode="determinate"
-          [value]="100"
-        ></mat-progress-spinner>
+    @if (!isUploadInProgress) {
+      <div class="w-14 h-14 rounded-md bg-gray-50 grid">
+        @if (!dragFilesOver) {
+          <ng-icon
+            class="place-self-center text-primary"
+            name="iconoirCloudUpload"
+          ></ng-icon>
+        }
+        @if (dragFilesOver) {
+          <ng-icon
+            class="place-self-center text-primary"
+            name="iconoirFramePlusIn"
+          ></ng-icon>
+        }
       </div>
-      <div class="text-primary absolute">
-        <mat-progress-spinner
-          class="place-self-center"
-          [diameter]="56"
-          mode="determinate"
-          [value]="uploadProgress"
-        ></mat-progress-spinner>
+    }
+    @if (isUploadInProgress) {
+      <div class="w-14 h-14 grid items-center justify-center relative">
+        <div class="text-gray-100 absolute">
+          <mat-progress-spinner
+            class="place-self-center"
+            [diameter]="56"
+            mode="determinate"
+            [value]="100"
+          ></mat-progress-spinner>
+        </div>
+        <div class="text-primary absolute">
+          <mat-progress-spinner
+            class="place-self-center"
+            [diameter]="56"
+            mode="determinate"
+            [value]="uploadProgress"
+          ></mat-progress-spinner>
+        </div>
+        <span class="text-sm text-main font-bold">{{ uploadProgress }}%</span>
       </div>
-      <span class="text-sm text-main font-bold">{{ uploadProgress }}%</span>
-    </div>
+    }
     <div class="flex flex-col items-center gap-1">
       <p class="font-medium">
         {{ getPrimaryText() | translate: { sizeMB: maxSizeMB.toFixed(0) } }}

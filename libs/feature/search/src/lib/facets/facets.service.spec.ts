@@ -5,6 +5,8 @@ import {
 import { ModelBlock, ModelItem } from '@geonetwork-ui/ui/search'
 import { searchStateFiltersFixture } from '../state/fixtures/search-state.fixtures'
 import { FacetsService } from './facets.service'
+import { TestBed } from '@angular/core/testing'
+import { LogService } from '@geonetwork-ui/util/shared'
 
 let requestAggregations
 let responseAggregations
@@ -14,11 +16,18 @@ const logServiceMock = {
   log: jest.fn(),
   error: jest.fn(),
 }
+
 describe('FacetsService', () => {
   let service: FacetsService
 
   beforeEach(() => {
-    service = new FacetsService(logServiceMock)
+    TestBed.configureTestingModule({
+      providers: [
+        FacetsService,
+        { provide: LogService, useValue: logServiceMock },
+      ],
+    })
+    service = TestBed.inject(FacetsService)
   })
 
   it('should be created', () => {

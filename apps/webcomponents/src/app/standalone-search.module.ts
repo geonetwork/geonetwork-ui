@@ -52,7 +52,11 @@ import {
   ],
 })
 export class StandaloneSearchModule implements DoBootstrap {
-  constructor(private injector: Injector) {
+  private injector = inject(Injector)
+
+  constructor() {
+    const injector = this.injector
+
     if ('GNUI' in window) {
       console.error(
         `[geonetwork-ui] a 'GNUI' global already exists, GeoNetwork-UI Standalone Search v${GEONETWORK_UI_VERSION} could not be loaded!`

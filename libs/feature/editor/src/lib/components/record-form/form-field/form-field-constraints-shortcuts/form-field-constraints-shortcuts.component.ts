@@ -3,6 +3,7 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { EditorFacade } from '../../../../+state/editor.facade'
@@ -69,6 +70,8 @@ export type ConstraintChoice =
 export class FormFieldConstraintsShortcutsComponent
   implements OnInit, OnDestroy
 {
+  private editorFacade = inject(EditorFacade)
+
   legalConstraints$ = this.editorFacade.record$.pipe(
     map((record) => record?.legalConstraints ?? [])
   )
@@ -108,8 +111,6 @@ export class FormFieldConstraintsShortcutsComponent
   ]
 
   onDestroy$ = new Subject<void>()
-
-  constructor(private editorFacade: EditorFacade) {}
 
   ngOnInit(): void {
     // hide all constraints if any toggle is activated

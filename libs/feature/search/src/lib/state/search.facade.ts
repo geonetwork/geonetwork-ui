@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { from, Observable, of } from 'rxjs'
 import {
@@ -54,6 +54,11 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Injectable()
 export class SearchFacade {
+  private store = inject<Store<SearchState>>(Store)
+  private filterGeometry = inject<Promise<Geometry>>(FILTER_GEOMETRY, {
+    optional: true,
+  })
+
   results$: Observable<CatalogRecord[]>
   layout$: Observable<string>
   sortBy$: Observable<SortByField>
@@ -75,13 +80,6 @@ export class SearchFacade {
   )
 
   searchId: string
-
-  constructor(
-    private store: Store<SearchState>,
-    @Optional()
-    @Inject(FILTER_GEOMETRY)
-    private filterGeometry: Promise<Geometry>
-  ) {}
 
   init(searchId: string = DEFAULT_SEARCH_KEY): void {
     if (this.searchId)

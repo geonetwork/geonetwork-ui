@@ -13,13 +13,14 @@
   >
     <ng-icon name="matSearch"></ng-icon>
   </div>
-  <button
-    *ngIf="rawChange | async"
-    type="button"
-    class="text-primary-lightest hover:text-primary absolute transition-all duration-100 inset-y-0 right-0 pr-2.5"
-    aria-label="Clear"
-    (click)="clear()"
-  >
-    <ng-icon name="matClose" class="align-middle"></ng-icon>
-  </button>
+  @if (rawChange | async) {
+    <button
+      type="button"
+      class="text-primary-lightest hover:text-primary absolute transition-all duration-100 inset-y-0 right-0 pr-2.5"
+      aria-label="Clear"
+      (click)="clear()"
+    >
+      <ng-icon name="matClose" class="align-middle"></ng-icon>
+    </button>
+  }
 </div>

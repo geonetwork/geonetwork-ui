@@ -1,36 +1,28 @@
 <div class="flex flex-col gap-6">
-  <ng-container
-    *ngFor="
-      let section of facade.currentSections$ | async;
-      trackBy: sectionTracker
-    "
-  >
-    <ng-container *ngIf="!section.hidden">
+  @for (
+    section of facade.currentSections$ | async;
+    track sectionTracker($index, section)
+  ) {
+    @if (!section.hidden) {
       <div class="flex flex-col gap-6 border p-8 rounded-[8px] shadow">
         <div class="flex flex-col gap-2">
-          <div
-            *ngIf="section.labelKey"
-            class="text-2xl font-title text-black"
-            translate
-          >
-            {{ section.labelKey }}
-          </div>
-          <div
-            *ngIf="section.descriptionKey"
-            class="text-gray-800 text-sm"
-            translate
-          >
-            {{ section.descriptionKey }}
-          </div>
+          @if (section.labelKey) {
+            <div class="text-2xl font-title text-black" translate>
+              {{ section.labelKey }}
+            </div>
+          }
+          @if (section.descriptionKey) {
+            <div class="text-gray-800 text-sm" translate>
+              {{ section.descriptionKey }}
+            </div>
+          }
         </div>
         <div class="grid auto-rows-auto grid-cols-2 gap-[32px]">
-          <ng-container
-            *ngFor="
-              let field of section.fieldsWithValues;
-              trackBy: fieldTracker
-            "
-          >
-            <ng-container *ngIf="!field.config.hidden">
+          @for (
+            field of section.fieldsWithValues;
+            track fieldTracker($index, field)
+          ) {
+            @if (!field.config.hidden) {
               <gn-ui-form-field
                 [ngClass]="
                   field.config.gridColumnSpan === 1
@@ -47,10 +39,10 @@
                   handleFieldValueChange(field.config.model!, $event)
                 "
               ></gn-ui-form-field>
-            </ng-container>
-          </ng-container>
+            }
+          }
         </div>
       </div>
-    </ng-container>
-  </ng-container>
+    }
+  }
 </div>

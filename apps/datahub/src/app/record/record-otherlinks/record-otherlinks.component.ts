@@ -4,6 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
@@ -35,6 +36,9 @@ import { getIsMobile } from '@geonetwork-ui/util/shared'
   ],
 })
 export class RecordOtherlinksComponent implements AfterViewInit {
+  facade = inject(MdViewFacade)
+  private changeDetector = inject(ChangeDetectorRef)
+
   otherLinks$ = this.facade.otherLinks$
 
   isMobile$ = getIsMobile()
@@ -45,11 +49,6 @@ export class RecordOtherlinksComponent implements AfterViewInit {
 
   @ViewChild(CarouselComponent) carousel: CarouselComponent
   @ViewChild(BlockListComponent) list: BlockListComponent
-
-  constructor(
-    public facade: MdViewFacade,
-    private changeDetector: ChangeDetectorRef
-  ) {}
 
   updateView() {
     this.changeDetector.detectChanges()

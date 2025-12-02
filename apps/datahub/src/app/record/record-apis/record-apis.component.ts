@@ -4,6 +4,7 @@ import {
   Component,
   OnInit,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { GpfApiDlComponent, MdViewFacade } from '@geonetwork-ui/feature/record'
@@ -53,6 +54,10 @@ marker('record.metadata.api.form.title')
   ],
 })
 export class RecordApisComponent implements OnInit {
+  private facade = inject(MdViewFacade)
+  private changeDetector = inject(ChangeDetectorRef)
+  private dataService = inject(DataService)
+
   @ViewChild(CarouselComponent) carousel: CarouselComponent
   @ViewChild(BlockListComponent) list: BlockListComponent
 
@@ -96,12 +101,6 @@ export class RecordApisComponent implements OnInit {
   }
 
   isMobile$ = getIsMobile()
-
-  constructor(
-    private facade: MdViewFacade,
-    private changeDetector: ChangeDetectorRef,
-    private dataService: DataService
-  ) {}
 
   ngOnInit(): void {
     this.setStyle(undefined)

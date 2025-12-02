@@ -6,6 +6,7 @@ import {
   HostListener,
   Input,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { Router } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -52,6 +53,10 @@ marker('record.metadata.userFeedbacks')
   ],
 })
 export class NavigationBarComponent {
+  private router = inject(Router)
+  private location = inject(Location)
+  private platformServiceInterface = inject(PlatformServiceInterface)
+
   @Input() metadata: DatasetRecord
   @ViewChild('navBar', { static: false }) mobileMenuRef: ElementRef
   displayMobileMenu = false
@@ -91,12 +96,6 @@ export class NavigationBarComponent {
   get isAuthDisabled(): boolean {
     return !this.platformServiceInterface.supportsAuthentication()
   }
-
-  constructor(
-    private router: Router,
-    private location: Location,
-    private platformServiceInterface: PlatformServiceInterface
-  ) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {

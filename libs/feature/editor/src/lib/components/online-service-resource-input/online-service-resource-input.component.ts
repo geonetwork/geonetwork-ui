@@ -6,6 +6,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { MatRadioModule } from '@angular/material/radio'
@@ -69,6 +70,8 @@ marker(
   ],
 })
 export class OnlineServiceResourceInputComponent {
+  private cdr = inject(ChangeDetectorRef)
+
   _service: DatasetServiceDistribution
   @Input() set service(service: DatasetServiceDistribution) {
     this._service = { ...service }
@@ -119,8 +122,6 @@ export class OnlineServiceResourceInputComponent {
       value: 'other',
     },
   ]
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   get activeLayerSuggestion() {
     return !['wps', 'GPFDL', 'esriRest', 'other'].includes(

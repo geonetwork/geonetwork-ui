@@ -15,6 +15,7 @@ import { ExpandablePanelComponent } from './expandable-panel.component'
       </ng-template>
     </gn-ui-expandable-panel>
   `,
+  standalone: false,
 })
 class TestHostComponent {}
 describe('ExpandablePanelComponent: Template title tests', () => {

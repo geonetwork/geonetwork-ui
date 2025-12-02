@@ -12,9 +12,9 @@
     (buttonClick)="listComponent.goToPrevPage()"
   >
     <ng-icon name="matArrowBackIos"></ng-icon>
-    <span *ngIf="displayLabels" class="ml-2" translate
-      >pagination.previousPage</span
-    >
+    @if (displayLabels) {
+      <span class="ml-2" translate>pagination.previousPage</span>
+    }
   </gn-ui-button>
   <gn-ui-button
     data-test="nextButton"
@@ -28,9 +28,9 @@
     [disabled]="listComponent.isLastPage"
     (buttonClick)="listComponent.goToNextPage()"
   >
-    <span *ngIf="displayLabels" class="mr-2" translate
-      >pagination.nextPage</span
-    >
+    @if (displayLabels) {
+      <span class="mr-2" translate>pagination.nextPage</span>
+    }
     <ng-icon name="matArrowForwardIos"></ng-icon>
   </gn-ui-button>
 </div>

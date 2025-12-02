@@ -2,88 +2,92 @@
   <aside class="w-[370px] shrink-0 border-r">
     <md-editor-sidebar></md-editor-sidebar>
   </aside>
-  <div *ngIf="isLoading" class="flex justify-center w-full p-[145px]">
-    <gn-ui-spinning-loader></gn-ui-spinning-loader>
-  </div>
-  <div
-    *ngIf="!isLoading && (facade.canEditRecord$ | async) === true"
-    class="flex flex-col h-full w-full"
-  >
-    <div class="w-full h-auto shrink-0 relative">
-      <md-editor-top-toolbar
-        (openSidePanel)="sidePanelOpen = $event"
-      ></md-editor-top-toolbar>
-      <div class="absolute top-full left-0 w-2/3 z-10 pointer-events-none">
-        <gn-ui-notifications-container></gn-ui-notifications-container>
-      </div>
+  @if (isLoading) {
+    <div class="flex justify-center w-full p-[145px]">
+      <gn-ui-spinning-loader></gn-ui-spinning-loader>
     </div>
-    <div class="flex flex-row flex-1 min-h-0">
-      <div class="grow overflow-auto p-[32px]" #scrollContainer>
-        <div class="container-lg mx-auto flex flex-col gap-[32px]">
-          <div *ngIf="hasRecordChanged$ | async as hasChanged">
-            <div
-              *ngIf="hasChanged.user && hasChanged.date"
-              class="p-4 border border-primary bg-primary-lightest rounded-lg text-center"
-              translate
-              [translateParams]="{
-                date: formatDate(hasChanged.date),
-                user: hasChanged.user,
-              }"
-              data-test="draft-alert"
-            >
-              editor.record.form.draft.updateAlert
-            </div>
-          </div>
-          <md-editor-page-selector></md-editor-page-selector>
-          <gn-ui-record-form></gn-ui-record-form>
-          <div
-            data-test="previousNextPageButtons"
-            class="mt-auto flex flex-row justify-between"
-          >
-            <gn-ui-button
-              type="gray"
-              (buttonClick)="previousPageButtonHandler()"
-              translate
-            >
-              {{
-                (currentPage$ | async) === 0
-                  ? ('editor.record.form.bottomButtons.comeBackLater'
-                    | translate)
-                  : ('editor.record.form.bottomButtons.previous' | translate)
-              }}
-            </gn-ui-button>
-            <gn-ui-button
-              type="primary"
-              *ngIf="(isLastPage$ | async) === false"
-              (buttonClick)="nextPageButtonHandler()"
-            >
-              <span translate>editor.record.form.bottomButtons.next</span>
-            </gn-ui-button>
-          </div>
+  }
+  @if (!isLoading && (facade.canEditRecord$ | async) === true) {
+    <div class="flex flex-col h-full w-full">
+      <div class="w-full h-auto shrink-0 relative">
+        <md-editor-top-toolbar
+          (openSidePanel)="sidePanelOpen = $event"
+        ></md-editor-top-toolbar>
+        <div class="absolute top-full left-0 w-2/3 z-10 pointer-events-none">
+          <gn-ui-notifications-container></gn-ui-notifications-container>
         </div>
       </div>
-      <gn-ui-multilingual-panel
-        *ngIf="sidePanelOpen === 'multilingual'"
-        [record]="facade.record$ | async"
-      >
-      </gn-ui-multilingual-panel>
-      <gn-ui-metadata-quality-panel
-        *ngIf="sidePanelOpen === 'metadataQuality'"
-        [record]="facade.record$ | async"
-        [editorConfig]="facade.editorConfig$ | async"
-      >
-      </gn-ui-metadata-quality-panel>
+      <div class="flex flex-row flex-1 min-h-0">
+        <div class="grow overflow-auto p-[32px]" #scrollContainer>
+          <div class="container-lg mx-auto flex flex-col gap-[32px]">
+            @if (hasRecordChanged$ | async; as hasChanged) {
+              <div>
+                @if (hasChanged.user && hasChanged.date) {
+                  <div
+                    class="p-4 border border-primary bg-primary-lightest rounded-lg text-center"
+                    translate
+                    [translateParams]="{
+                      date: formatDate(hasChanged.date),
+                      user: hasChanged.user,
+                    }"
+                    data-test="draft-alert"
+                  >
+                    editor.record.form.draft.updateAlert
+                  </div>
+                }
+              </div>
+            }
+            <md-editor-page-selector></md-editor-page-selector>
+            <gn-ui-record-form></gn-ui-record-form>
+            <div
+              data-test="previousNextPageButtons"
+              class="mt-auto flex flex-row justify-between"
+            >
+              <gn-ui-button
+                type="gray"
+                (buttonClick)="previousPageButtonHandler()"
+                translate
+              >
+                {{
+                  (currentPage$ | async) === 0
+                    ? ('editor.record.form.bottomButtons.comeBackLater'
+                      | translate)
+                    : ('editor.record.form.bottomButtons.previous' | translate)
+                }}
+              </gn-ui-button>
+              @if ((isLastPage$ | async) === false) {
+                <gn-ui-button
+                  type="primary"
+                  (buttonClick)="nextPageButtonHandler()"
+                >
+                  <span translate>editor.record.form.bottomButtons.next</span>
+                </gn-ui-button>
+              }
+            </div>
+          </div>
+        </div>
+        @if (sidePanelOpen === 'multilingual') {
+          <gn-ui-multilingual-panel [record]="facade.record$ | async">
+          </gn-ui-multilingual-panel>
+        }
+        @if (sidePanelOpen === 'metadataQuality') {
+          <gn-ui-metadata-quality-panel
+            [record]="facade.record$ | async"
+            [editorConfig]="facade.editorConfig$ | async"
+          >
+          </gn-ui-metadata-quality-panel>
+        }
+      </div>
     </div>
-  </div>
-  <div
-    class="flex flex-col h-full w-full"
-    *ngIf="(facade.canEditRecord$ | async) === false"
-  >
-    <header class="shrink-0 border-b border-gray-300">
-      <md-editor-search-header></md-editor-search-header>
-    </header>
-    <div class="flex justify-center pt-20">
-      <md-editor-page-error></md-editor-page-error>
+  }
+  @if ((facade.canEditRecord$ | async) === false) {
+    <div class="flex flex-col h-full w-full">
+      <header class="shrink-0 border-b border-gray-300">
+        <md-editor-search-header></md-editor-search-header>
+      </header>
+      <div class="flex justify-center pt-20">
+        <md-editor-page-error></md-editor-page-error>
+      </div>
     </div>
-  </div>
+  }
 </div>

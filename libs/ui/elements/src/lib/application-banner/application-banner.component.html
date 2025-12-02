@@ -1,25 +1,27 @@
-<div
-  *ngIf="message && bannerOpen"
-  class="absolute left-0 right-0 text-wrap bg-white mt-4"
->
-  <div
-    class="flex flex-row py-3 px-4 gap-3 justify-start border relative"
-    [ngClass]="classList"
-  >
-    <div [ngClass]="message.length > 200 ? 'pt-2.5' : 'pt-1'">
-      <ng-icon [name]="icon"></ng-icon>
-    </div>
-    <div class="flex flex-col justify-start gap-2.5 flex-grow pr-6">
-      <span *ngIf="title" class="font-bold">{{ title }}</span>
-      <span class="font-medium break-words" [innerHTML]="message"></span>
-    </div>
-    <button
-      *ngIf="closeEnabled"
-      class="absolute top-2 right-2"
-      type="button"
-      (click)="closeMessage()"
+@if (message && bannerOpen) {
+  <div class="absolute left-0 right-0 text-wrap bg-white mt-4">
+    <div
+      class="flex flex-row py-3 px-4 gap-3 justify-start border relative"
+      [ngClass]="classList"
     >
-      <ng-icon name="matCloseOutline"> </ng-icon>
-    </button>
+      <div [ngClass]="message.length > 200 ? 'pt-2.5' : 'pt-1'">
+        <ng-icon [name]="icon"></ng-icon>
+      </div>
+      <div class="flex flex-col justify-start gap-2.5 flex-grow pr-6">
+        @if (title) {
+          <span class="font-bold">{{ title }}</span>
+        }
+        <span class="font-medium break-words" [innerHTML]="message"></span>
+      </div>
+      @if (closeEnabled) {
+        <button
+          class="absolute top-2 right-2"
+          type="button"
+          (click)="closeMessage()"
+        >
+          <ng-icon name="matCloseOutline"> </ng-icon>
+        </button>
+      }
+    </div>
   </div>
-</div>
+}

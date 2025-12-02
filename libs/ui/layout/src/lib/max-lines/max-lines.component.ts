@@ -7,6 +7,7 @@ import {
   Input,
   OnDestroy,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslatePipe } from '@ngx-translate/core'
@@ -20,6 +21,8 @@ import { TranslatePipe } from '@ngx-translate/core'
   imports: [CommonModule, TranslatePipe],
 })
 export class MaxLinesComponent implements AfterViewInit, OnDestroy {
+  private cdr = inject(ChangeDetectorRef)
+
   @Input() maxLines = 6
 
   isExpanded = false
@@ -28,8 +31,6 @@ export class MaxLinesComponent implements AfterViewInit, OnDestroy {
   observer: ResizeObserver
 
   @ViewChild('container') container!: ElementRef
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.calculateMaxHeight()

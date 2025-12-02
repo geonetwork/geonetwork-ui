@@ -3,7 +3,7 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import {
   assertValidXml,
   findConverterForDocument,
@@ -59,19 +59,17 @@ export type RecordAsXml = string
 
 @Injectable()
 export class Gn4Repository implements RecordsRepositoryInterface {
+  private httpClient = inject(HttpClient)
+  private gn4SearchApi = inject(SearchApiService)
+  private gn4SearchHelper = inject(ElasticsearchService)
+  private gn4Mapper = inject(Gn4Converter)
+  private gn4RecordsApi = inject(RecordsApiService)
+  private platformService = inject(PlatformServiceInterface)
+  private gn4LanguagesApi = inject(LanguagesApiService)
+  private settingsService = inject(Gn4SettingsService)
+
   _draftsChanged = new Subject<void>()
   draftsChanged$ = this._draftsChanged.asObservable()
-
-  constructor(
-    private httpClient: HttpClient,
-    private gn4SearchApi: SearchApiService,
-    private gn4SearchHelper: ElasticsearchService,
-    private gn4Mapper: Gn4Converter,
-    private gn4RecordsApi: RecordsApiService,
-    private platformService: PlatformServiceInterface,
-    private gn4LanguagesApi: LanguagesApiService,
-    private settingsService: Gn4SettingsService
-  ) {}
 
   search({
     filters,

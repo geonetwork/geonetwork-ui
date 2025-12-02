@@ -9,5 +9,5 @@
 }
 
 mat-spinner {
-  --mdc-circular-progress-active-indicator-color: white;
+  --mat-progress-spinner-active-indicator-color: white;
 }

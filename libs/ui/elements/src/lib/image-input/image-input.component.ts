@@ -7,6 +7,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -66,6 +67,9 @@ import { ImageOverlayPreviewComponent } from '../image-overlay-preview/image-ove
   ],
 })
 export class ImageInputComponent {
+  private http = inject(HttpClient)
+  private cd = inject(ChangeDetectorRef)
+
   private _altText?: string
 
   @Input() previewUrl?: string
@@ -100,11 +104,6 @@ export class ImageInputComponent {
   get isUploadInProgress() {
     return this.uploadProgress !== undefined
   }
-
-  constructor(
-    private http: HttpClient,
-    private cd: ChangeDetectorRef
-  ) {}
 
   getIsActionBlocked() {
     return this.isUploadInProgress || this.disabled

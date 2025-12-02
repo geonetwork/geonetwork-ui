@@ -10,7 +10,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/feature/router"],
       "options": {
-        "jestConfig": "libs/feature/router/jest.config.ts"
+        "jestConfig": "libs/feature/router/jest.config.ts",
+        "tsConfig": "libs/feature/router/tsconfig.spec.json"
       }
     },
     "lint": {

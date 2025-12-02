@@ -19,9 +19,11 @@
         data-cy="download-format"
         >{{ format || ('downloads.format.unknown' | translate) }}</span
       >
-      <span class="text-gray-800 text-xs" *ngIf="isFromApi" translate=""
-        >datahub.search.filter.generatedByAPI</span
-      >
+      @if (isFromApi) {
+        <span class="text-gray-800 text-xs" translate=""
+          >datahub.search.filter.generatedByAPI</span
+        >
+      }
     </div>
   </div>
   <div

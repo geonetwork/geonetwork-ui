@@ -12,10 +12,14 @@
   <p class="text-sm text-gray-600" translate>map.help.addFromFile</p>
 </div>
 
-<div *ngIf="errorMessage" class="text-red-500 mt-2">
-  {{ errorMessage }}
-</div>
+@if (errorMessage) {
+  <div class="text-red-500 mt-2">
+    {{ errorMessage }}
+  </div>
+}
 
-<div *ngIf="successMessage" class="text-green-500 mt-2">
-  {{ successMessage }}
-</div>
+@if (successMessage) {
+  <div class="text-green-500 mt-2">
+    {{ successMessage }}
+  </div>
+}

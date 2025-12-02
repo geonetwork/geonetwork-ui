@@ -3,6 +3,7 @@ import {
   Component,
   Input,
   OnInit,
+  inject,
 } from '@angular/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { BehaviorSubject, combineLatest, map, mergeMap, Observable } from 'rxjs'
@@ -64,6 +65,8 @@ export interface Field {
   ],
 })
 export class GpfApiDlComponent implements OnInit {
+  protected http = inject(HttpClient)
+
   isOpen = false
   collapsed = false
   initialLimit = 50
@@ -79,8 +82,6 @@ export class GpfApiDlComponent implements OnInit {
   bucketPromisesZone: Choice[]
   bucketPromisesFormat: Choice[]
   bucketPromisesCrs: Choice[]
-
-  constructor(protected http: HttpClient) {}
 
   @Input() set apiLink(value: DatasetServiceDistribution) {
     this.apiBaseUrl = value ? value.url.href : undefined

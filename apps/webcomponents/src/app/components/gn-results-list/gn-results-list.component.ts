@@ -2,9 +2,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Injector,
   Input,
   ViewEncapsulation,
+  inject,
 } from '@angular/core'
 import {
   ResultsListShowMoreStrategy,
@@ -22,21 +22,17 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade],
+  standalone: false,
 })
 export class GnResultsListComponent extends BaseComponent {
+  private changeDetector = inject(ChangeDetectorRef)
+
   @Input() layout = 'CARD'
   @Input() size = '10' // will be converted to number later
   @Input() query: string
   @Input() filter: string
   @Input() catalogUrl: string
   @Input() showMore: ResultsListShowMoreStrategy = 'none'
-
-  constructor(
-    injector: Injector,
-    private changeDetector: ChangeDetectorRef
-  ) {
-    super(injector)
-  }
 
   private setSearch_() {
     const filter = this.filter

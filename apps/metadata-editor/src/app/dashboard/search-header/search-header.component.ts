@@ -1,9 +1,9 @@
-import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Output,
+  inject,
 } from '@angular/core'
 import { FuzzySearchComponent } from '@geonetwork-ui/feature/search'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
@@ -16,17 +16,15 @@ import { Router } from '@angular/router'
   styleUrls: ['./search-header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FuzzySearchComponent],
+  imports: [FuzzySearchComponent],
 })
 export class SearchHeaderComponent {
+  private avatarService = inject(AvatarServiceInterface)
+  private router = inject(Router)
+
   public placeholder$ = this.avatarService.getPlaceholder()
   activeBtn = false
   @Output() isSearchActive = new EventEmitter<boolean>()
-
-  constructor(
-    private avatarService: AvatarServiceInterface,
-    private router: Router
-  ) {}
 
   handleItemSelection(item: CatalogRecord) {
     this.router.navigate(['edit', item.uniqueIdentifier])

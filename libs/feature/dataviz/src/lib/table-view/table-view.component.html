@@ -1,26 +1,30 @@
 <div class="w-full h-full flex flex-col">
   <div class="relative h-full">
-    <gn-ui-data-table
-      *ngIf="tableData$ | async as dataset"
-      class="overflow-auto grow"
-      [dataset]="dataset"
-      [featureAttributes]="featureAttributes"
-      (selected)="onTableSelect($event)"
-    ></gn-ui-data-table>
-    <gn-ui-loading-mask
-      *ngIf="loading"
-      class="absolute inset-0"
-      [message]="'table.loading.data' | translate"
-    ></gn-ui-loading-mask>
-    <ng-content *ngIf="error">
-      <div class="border border-gray-300 rounded-lg bg-white h-full"></div>
-      <gn-ui-popup-alert
-        type="warning"
-        icon="matErrorOutlineOutline"
-        class="absolute m-2 inset-0"
-      >
-        <span translate>{{ error }}</span>
-      </gn-ui-popup-alert>
-    </ng-content>
+    @if (tableData$ | async; as dataset) {
+      <gn-ui-data-table
+        class="overflow-auto grow"
+        [dataset]="dataset"
+        [featureAttributes]="featureAttributes"
+        (selected)="onTableSelect($event)"
+      ></gn-ui-data-table>
+    }
+    @if (loading) {
+      <gn-ui-loading-mask
+        class="absolute inset-0"
+        [message]="'table.loading.data' | translate"
+      ></gn-ui-loading-mask>
+    }
+    @if (error) {
+      <ng-content>
+        <div class="border border-gray-300 rounded-lg bg-white h-full"></div>
+        <gn-ui-popup-alert
+          type="warning"
+          icon="matErrorOutlineOutline"
+          class="absolute m-2 inset-0"
+        >
+          <span translate>{{ error }}</span>
+        </gn-ui-popup-alert>
+      </ng-content>
+    }
   </div>
 </div>

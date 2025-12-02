@@ -15,6 +15,7 @@ import { BaseComponent } from '../base.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade],
+  standalone: false,
 })
 export class GnFacetsComponent extends BaseComponent implements OnInit {
   @Input() searchId: string

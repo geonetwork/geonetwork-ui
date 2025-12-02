@@ -7,6 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
     [gnUiEditableLabel]="label"
     (editableLabelChanged)="handleEditableLabelChanged($event)"
   ></span>`,
+  standalone: false,
 })
 class TestWithEditableLabelComponent {
   label = 'This is the text content.'

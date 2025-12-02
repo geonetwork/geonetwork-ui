@@ -1,4 +1,4 @@
-import { Component, Inject, InjectionToken, Optional } from '@angular/core'
+import { Component, InjectionToken, inject } from '@angular/core'
 import { LANGUAGE_STORAGE_KEY } from '@geonetwork-ui/util/i18n'
 import { TranslateService } from '@ngx-translate/core'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
@@ -15,19 +15,15 @@ const DEFAULT_LANGUAGES = ['en', 'fr']
   standalone: true,
 })
 export class LanguageSwitcherComponent {
+  private languagesList = inject(LANGUAGES_LIST, { optional: true })
+  private translate = inject(TranslateService)
+
   languageChoices = (this.languagesList || DEFAULT_LANGUAGES).map(
     (language) => ({
       label: `${language}`.toUpperCase(),
       value: language,
     })
   )
-
-  constructor(
-    @Optional()
-    @Inject(LANGUAGES_LIST)
-    private languagesList: string[],
-    private translate: TranslateService
-  ) {}
 
   get currentLang() {
     return this.translate.currentLang

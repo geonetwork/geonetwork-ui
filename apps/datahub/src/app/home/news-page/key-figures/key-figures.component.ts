@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { catchError, startWith } from 'rxjs/operators'
 import { RecordsService } from '@geonetwork-ui/feature/catalog'
 import { ROUTER_ROUTE_SEARCH } from '@geonetwork-ui/feature/router'
@@ -34,6 +34,9 @@ marker('catalog.figures.organizations')
   ],
 })
 export class KeyFiguresComponent {
+  private catalogRecords = inject(RecordsService)
+  private catalogOrgs = inject(OrganizationsServiceInterface)
+
   recordsCount$ = this.catalogRecords.recordsCount$.pipe(
     startWith('-'),
     catchError(() => of('-'))
@@ -41,9 +44,4 @@ export class KeyFiguresComponent {
   orgsCount$ = this.catalogOrgs.organisationsCount$.pipe(startWith('-'))
   ROUTE_SEARCH = `/${ROUTER_ROUTE_SEARCH}`
   ROUTE_ORGANISATIONS = `/${ROUTER_ROUTE_ORGANIZATIONS}`
-
-  constructor(
-    private catalogRecords: RecordsService,
-    private catalogOrgs: OrganizationsServiceInterface
-  ) {}
 }

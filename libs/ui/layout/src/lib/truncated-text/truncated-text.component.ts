@@ -7,8 +7,9 @@ import {
   NgZone,
   OnDestroy,
   ViewChild,
+  inject,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { iconoirExpand } from '@ng-icons/iconoir'
 import { MatButtonModule } from '@angular/material/button'
@@ -20,7 +21,6 @@ import { CellPopinComponent } from '../cell-popin/cell-popin.component'
   selector: 'gn-ui-truncated-text',
   standalone: true,
   imports: [
-    CommonModule,
     MatButtonModule,
     OverlayModule,
     ButtonComponent,
@@ -32,6 +32,9 @@ import { CellPopinComponent } from '../cell-popin/cell-popin.component'
   styles: [],
 })
 export class TruncatedTextComponent implements AfterViewInit, OnDestroy {
+  private readonly cd = inject(ChangeDetectorRef)
+  private readonly ngZone = inject(NgZone)
+
   @Input() text = ''
   @Input() extraClass = ''
   @Input() scrollContainer!: ElementRef
@@ -44,10 +47,7 @@ export class TruncatedTextComponent implements AfterViewInit, OnDestroy {
   private readonly resizeObserver: ResizeObserver
   private readonly mutationObserver: MutationObserver
 
-  constructor(
-    private readonly cd: ChangeDetectorRef,
-    private readonly ngZone: NgZone
-  ) {
+  constructor() {
     this.resizeObserver = new ResizeObserver(() => {
       this.ngZone.run(() => this.checkTextTruncation())
     })

@@ -7,44 +7,47 @@
   ></gn-ui-text-input>
 </div>
 
-<div *ngIf="errorMessage" class="text-red-500 mt-2">
-  {{ errorMessage }}
-</div>
+@if (errorMessage) {
+  <div class="text-red-500 mt-2">
+    {{ errorMessage }}
+  </div>
+}
 
-<div *ngIf="loading">
-  <p class="loading-message" translate>map.loading.service</p>
-</div>
+@if (loading) {
+  <div>
+    <p class="loading-message" translate>map.loading.service</p>
+  </div>
+}
 
-<ng-container *ngFor="let layer of layers">
-  <div
-    *ngIf="shouldDisplayLayer(layer)"
-    class="flex items-center justify-between my-2 layer-item-tree"
-  >
-    <div class="flex flex-col items-start w-full">
-      <p
-        class="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap"
-        [title]="layer.name"
-      >
-        {{ layer.name }}
-      </p>
-      <div class="flex justify-between items-center w-full">
-        <gn-ui-dropdown-selector
-          [title]="'Add Layer As' | translate"
-          [choices]="getLayerChoices(layer)"
-          (selectValue)="onLayerTypeSelect(layer.name, $event)"
-          [selected]="selectedLayerTypes[layer.name]"
-          extraBtnClass="w-6 h-5 !text-sm !px-2 !py-1"
-        ></gn-ui-dropdown-selector>
-        <gn-ui-button
-          class="layer-add-btn"
-          type="primary"
-          (buttonClick)="addLayer(layer.name, selectedLayerTypes[layer.name])"
-          extraClass="text-sm !px-2 !py-1"
-          translate
+@for (layer of layers; track layer) {
+  @if (shouldDisplayLayer(layer)) {
+    <div class="flex items-center justify-between my-2 layer-item-tree">
+      <div class="flex flex-col items-start w-full">
+        <p
+          class="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap"
+          [title]="layer.name"
         >
-          <span translate>map.layer.add</span>
-        </gn-ui-button>
+          {{ layer.name }}
+        </p>
+        <div class="flex justify-between items-center w-full">
+          <gn-ui-dropdown-selector
+            [title]="'Add Layer As' | translate"
+            [choices]="getLayerChoices(layer)"
+            (selectValue)="onLayerTypeSelect(layer.name, $event)"
+            [selected]="selectedLayerTypes[layer.name]"
+            extraBtnClass="w-6 h-5 !text-sm !px-2 !py-1"
+          ></gn-ui-dropdown-selector>
+          <gn-ui-button
+            class="layer-add-btn"
+            type="primary"
+            (buttonClick)="addLayer(layer.name, selectedLayerTypes[layer.name])"
+            extraClass="text-sm !px-2 !py-1"
+            translate
+          >
+            <span translate>map.layer.add</span>
+          </gn-ui-button>
+        </div>
       </div>
     </div>
-  </div>
-</ng-container>
+  }
+}

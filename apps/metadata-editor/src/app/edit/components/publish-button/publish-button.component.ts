@@ -10,6 +10,7 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
+  inject,
 } from '@angular/core'
 import { MatMenuTrigger } from '@angular/material/menu'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
@@ -55,6 +56,14 @@ export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PublishButtonComponent implements OnDestroy {
+  private facade = inject(EditorFacade)
+  private recordsApiService = inject(RecordsApiService)
+  private platformService = inject(PlatformServiceInterface)
+  private overlay = inject(Overlay)
+  private viewContainerRef = inject(ViewContainerRef)
+  private cdr = inject(ChangeDetectorRef)
+  private dateService = inject(DateService)
+
   subscription = new Subscription()
   status$: Observable<RecordSaveStatus> = combineLatest([
     this.facade.changedSinceSave$,
@@ -83,16 +92,6 @@ export class PublishButtonComponent implements OnDestroy {
 
   isActionMenuOpen = false
   publishWarning = null
-
-  constructor(
-    private facade: EditorFacade,
-    private recordsApiService: RecordsApiService,
-    private platformService: PlatformServiceInterface,
-    private overlay: Overlay,
-    private viewContainerRef: ViewContainerRef,
-    private cdr: ChangeDetectorRef,
-    private dateService: DateService
-  ) {}
 
   ngOnDestroy() {
     this.subscription.unsubscribe()

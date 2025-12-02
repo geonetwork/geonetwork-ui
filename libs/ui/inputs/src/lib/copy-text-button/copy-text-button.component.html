@@ -1,18 +1,20 @@
 <div class="flex">
-  <input
-    *ngIf="displayText && rows <= 1"
-    type="text"
-    class="grow py-2 px-4 bg-gray-200 opacity-50 rounded-l-md border border-gray-300 truncate"
-    value="{{ text }}"
-    readonly
-  />
-  <textarea
-    *ngIf="displayText && rows > 1"
-    [rows]="rows"
-    class="grow py-2 px-4 bg-gray-200 opacity-50 rounded-l-md border border-gray-300 overflow-y-auto h-max"
-    readonly
-    >{{ text }}</textarea
-  >
+  @if (displayText && rows <= 1) {
+    <input
+      type="text"
+      class="grow py-2 px-4 bg-gray-200 opacity-50 rounded-l-md border border-gray-300 truncate"
+      value="{{ text }}"
+      readonly
+    />
+  }
+  @if (displayText && rows > 1) {
+    <textarea
+      [rows]="rows"
+      class="grow py-2 px-4 bg-gray-200 opacity-50 rounded-l-md border border-gray-300 overflow-y-auto h-max"
+      readonly
+      >{{ text }}</textarea
+    >
+  }
   <button
     type="button"
     (click)="copyText($event)"

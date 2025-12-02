@@ -1,2 +1,3 @@
-<gn-ui-downloads-list *ngIf="links$ | async as links" [links]="links">
-</gn-ui-downloads-list>
+@if (links$ | async; as links) {
+  <gn-ui-downloads-list [links]="links"> </gn-ui-downloads-list>
+}

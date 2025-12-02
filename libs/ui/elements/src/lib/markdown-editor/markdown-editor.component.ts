@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -18,7 +17,6 @@ import { MatTooltipModule } from '@angular/material/tooltip'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     MatTooltipModule,
     TextAreaComponent,

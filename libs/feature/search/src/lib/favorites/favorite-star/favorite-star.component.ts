@@ -7,6 +7,7 @@ import {
   Input,
   OnDestroy,
   ViewChild,
+  inject,
 } from '@angular/core'
 import {
   map,
@@ -33,6 +34,12 @@ import { CommonModule } from '@angular/common'
   imports: [CommonModule, StarToggleComponent],
 })
 export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
+  private favoritesService = inject(FavoritesService)
+  private platformService = inject(PlatformServiceInterface)
+  private changeDetector = inject(ChangeDetectorRef)
+  private authService = inject(AuthService)
+  private translateService = inject(TranslateService)
+
   @Input() displayLabel? = false
   @Input() displayCount? = true
   @Input() set record(value) {
@@ -70,14 +77,6 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   get hasFavoriteCount() {
     return this.favoriteCount !== null
   }
-
-  constructor(
-    private favoritesService: FavoritesService,
-    private platformService: PlatformServiceInterface,
-    private changeDetector: ChangeDetectorRef,
-    private authService: AuthService,
-    private translateService: TranslateService
-  ) {}
 
   ngAfterViewInit(): void {
     if (this.supportsAuthentication) {

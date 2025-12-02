@@ -1,29 +1,22 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { CommonModule } from '@angular/common'
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core'
+
 import {
-  AutocompleteComponent,
   BadgeComponent,
   DropdownMultiselectComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { NgIconComponent } from '@ng-icons/core'
-import { INSPIRE_TOPICS } from '../../../../fields.config'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { INSPIRE_TOPICS } from '../../../../fields.config'
 
 @Component({
   selector: 'gn-ui-form-field-topics',
   standalone: true,
-  imports: [
-    CommonModule,
-    AutocompleteComponent,
-    NgIconComponent,
-    BadgeComponent,
-    TranslatePipe,
-    DropdownMultiselectComponent,
-  ],
+  imports: [BadgeComponent, TranslatePipe, DropdownMultiselectComponent],
   templateUrl: './form-field-topics.component.html',
   styleUrl: './form-field-topics.component.css',
 })
 export class FormFieldTopicsComponent {
+  private translateService = inject(TranslateService)
+
   topics = []
   @Input() set value(topics: string[]) {
     this.topics = topics
@@ -35,8 +28,6 @@ export class FormFieldTopicsComponent {
       value: topic.value,
     }
   })
-
-  constructor(private translateService: TranslateService) {}
 
   handleItemSelection(selectedItems: string[]) {
     this.topics = selectedItems

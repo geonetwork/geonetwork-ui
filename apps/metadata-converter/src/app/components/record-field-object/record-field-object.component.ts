@@ -12,6 +12,7 @@ import {
   templateUrl: './record-field-object.component.html',
   styleUrls: ['./record-field-object.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class RecordFieldObjectComponent {
   @Input() label: string

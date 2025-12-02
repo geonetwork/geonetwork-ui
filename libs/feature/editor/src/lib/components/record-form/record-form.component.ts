@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
 import { EditorFieldValue } from '../../models'
 import { FormFieldComponent } from './form-field'
@@ -20,11 +20,11 @@ import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
   imports: [CommonModule, FormFieldComponent, TranslateDirective],
 })
 export class RecordFormComponent {
+  facade = inject(EditorFacade)
+
   recordUniqueIdentifier$ = this.facade.record$.pipe(
     map((record) => record.uniqueIdentifier)
   )
-
-  constructor(public facade: EditorFacade) {}
 
   handleFieldValueChange(model: CatalogRecordKeys, newValue: EditorFieldValue) {
     if (!model) {

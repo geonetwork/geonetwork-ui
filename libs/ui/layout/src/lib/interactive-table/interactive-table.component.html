@@ -1,63 +1,69 @@
 <div class="grid w-full" [ngStyle]="gridStyle">
   <div class="contents w-full">
-    <ng-container *ngFor="let column of columns">
-      <button
-        *ngIf="column.sortable"
-        type="button"
-        class="table-header-cell gap-1"
-        (click)="column.sortable && column.handleSortChange()"
-      >
-        <ng-container *ngTemplateOutlet="column.header"></ng-container>
-        <div class="sort-button flex flex-col" *ngIf="column.sortable">
-          <ng-icon
-            class="text-gray-600 -mb-2"
-            [ngClass]="{ 'text-main': column.activeSort === 'asc' }"
-            name="iconoirNavArrowUp"
-          ></ng-icon>
-          <ng-icon
-            class="text-gray-600"
-            [ngClass]="{ 'text-main': column.activeSort === 'desc' }"
-            name="iconoirNavArrowDown"
-          ></ng-icon>
+    @for (column of columns; track column) {
+      @if (column.sortable) {
+        <button
+          type="button"
+          class="table-header-cell gap-1"
+          (click)="column.sortable && column.handleSortChange()"
+        >
+          <ng-container *ngTemplateOutlet="column.header"></ng-container>
+          @if (column.sortable) {
+            <div class="sort-button flex flex-col">
+              <ng-icon
+                class="text-gray-600 -mb-2"
+                [ngClass]="{ 'text-main': column.activeSort === 'asc' }"
+                name="iconoirNavArrowUp"
+              ></ng-icon>
+              <ng-icon
+                class="text-gray-600"
+                [ngClass]="{ 'text-main': column.activeSort === 'desc' }"
+                name="iconoirNavArrowDown"
+              ></ng-icon>
+            </div>
+          }
+        </button>
+      }
+      @if (!column.sortable) {
+        <div class="table-header-cell">
+          <ng-container *ngTemplateOutlet="column.header"></ng-container>
         </div>
-      </button>
-      <div *ngIf="!column.sortable" class="table-header-cell">
-        <ng-container *ngTemplateOutlet="column.header"></ng-container>
-      </div>
-    </ng-container>
+      }
+    }
   </div>
-  <div
-    class="contents text-gray-900 cursor-pointer group"
-    *ngFor="let item of items"
-    (click)="handleRowClick(item)"
-    data-cy="table-row"
-    [attr.data-cy-title]="item.title"
-    [title]="getItemTitle(item) | translate"
-  >
+  @for (item of items; track item) {
     <div
-      class="relative h-0"
-      [ngStyle]="{ 'grid-column': 'span ' + this.columns.length }"
+      class="contents text-gray-900 cursor-pointer group"
+      (click)="handleRowClick(item)"
+      data-cy="table-row"
+      [attr.data-cy-title]="item.title"
+      [title]="getItemTitle(item) | translate"
     >
-      <!-- this element is only used in keyboard navigation -->
-      <button
-        type="button"
-        class="absolute inset-x-0 h-[50px] bg-transparent pointer-events-none"
-      ></button>
-    </div>
-    <ng-container *ngFor="let column of columns">
       <div
-        class="table-row-cell px-3 py-1.5 flex items-center bg-white transition-colors duration-75 truncate border-b border-gray-200"
-        [ngClass]="{
-          'text-purple-light cursor-default':
-            (canEditItem(item) | async) === false,
-          'group-hover:text-main group-hover:bg-gray-50':
-            canEditItem(item) | async,
-        }"
+        class="relative h-0"
+        [ngStyle]="{ 'grid-column': 'span ' + this.columns.length }"
       >
-        <ng-container
-          *ngTemplateOutlet="column.cell; context: { $implicit: item }"
-        ></ng-container>
+        <!-- this element is only used in keyboard navigation -->
+        <button
+          type="button"
+          class="absolute inset-x-0 h-[50px] bg-transparent pointer-events-none"
+        ></button>
       </div>
-    </ng-container>
-  </div>
+      @for (column of columns; track column) {
+        <div
+          class="table-row-cell px-3 py-1.5 flex items-center bg-white transition-colors duration-75 truncate border-b border-gray-200"
+          [ngClass]="{
+            'text-purple-light cursor-default':
+              (canEditItem(item) | async) === false,
+            'group-hover:text-main group-hover:bg-gray-50':
+              canEditItem(item) | async,
+          }"
+        >
+          <ng-container
+            *ngTemplateOutlet="column.cell; context: { $implicit: item }"
+          ></ng-container>
+        </div>
+      }
+    </div>
+  }
 </div>

@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core'
 import {
   AutocompleteComponent,
@@ -30,6 +31,10 @@ import { CommonModule } from '@angular/common'
   imports: [CommonModule, AutocompleteComponent, TranslatePipe],
 })
 export class FuzzySearchComponent implements OnInit {
+  private searchFacade = inject(SearchFacade)
+  private searchService = inject(SearchService)
+  private recordsRepository = inject(RecordsRepositoryInterface)
+
   @ViewChild(AutocompleteComponent) autocomplete: AutocompleteComponent
   @Input() autoFocus = false
   @Input() forceTrackPosition = false
@@ -46,12 +51,6 @@ export class FuzzySearchComponent implements OnInit {
     this.recordsRepository
       .fuzzySearch(query)
       .pipe(map((result) => result.records))
-
-  constructor(
-    private searchFacade: SearchFacade,
-    private searchService: SearchService,
-    private recordsRepository: RecordsRepositoryInterface
-  ) {}
 
   ngOnInit(): void {
     this.searchInputValue$ = this.searchFacade.searchFilters$.pipe(

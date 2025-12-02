@@ -1,5 +1,10 @@
 import { CommonModule, Location } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  inject,
+} from '@angular/core'
 import { Router } from '@angular/router'
 import {
   DatasetRecord,
@@ -74,6 +79,11 @@ marker('record.metadata.resourceCreated')
   ],
 })
 export class HeaderRecordComponent {
+  facade = inject(MdViewFacade)
+  private router = inject(Router)
+  private location = inject(Location)
+  private platformServiceInterface = inject(PlatformServiceInterface)
+
   @Input() metadata: DatasetRecord | ServiceRecord | ReuseRecord
   backgroundCss =
     getThemeConfig().HEADER_BACKGROUND ||
@@ -106,13 +116,6 @@ export class HeaderRecordComponent {
         : HEADER_HEIGHT_DEFAULT
     )
   )
-
-  constructor(
-    public facade: MdViewFacade,
-    private router: Router,
-    private location: Location,
-    private platformServiceInterface: PlatformServiceInterface
-  ) {}
 
   reuseLinkUrl$ = this.facade.allLinks$.pipe(
     map((links) => {

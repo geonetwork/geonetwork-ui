@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { merge, Observable, of, Subject, throwError } from 'rxjs'
 import { UserselectionsApiService } from '@geonetwork-ui/data-access/gn4'
 import {
@@ -18,6 +18,9 @@ const SELECTION_ID = 0 // hardcoded to always point on the first selection
   providedIn: 'root',
 })
 export class FavoritesService {
+  private userSelectionsService = inject(UserselectionsApiService)
+  private platformService = inject(PlatformServiceInterface)
+
   private myUserId$ = this.platformService
     .getMe()
     .pipe(map((userInfo) => (userInfo ? parseInt(userInfo.id) : null)))
@@ -49,11 +52,6 @@ export class FavoritesService {
   ).pipe(
     shareReplay(1) // new subscriptions should not trigger a new API request!
   )
-
-  constructor(
-    private userSelectionsService: UserselectionsApiService,
-    private platformService: PlatformServiceInterface
-  ) {}
 
   addToFavorites(uuids: string[]): Observable<void> {
     return this.myFavoritesUuid$.pipe(

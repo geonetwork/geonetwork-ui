@@ -6,8 +6,9 @@ import {
   OnInit,
   Output,
   TemplateRef,
+  inject,
 } from '@angular/core'
-import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common'
+import { NgClass, NgTemplateOutlet } from '@angular/common'
 import { fromEvent, Subscription } from 'rxjs'
 import { iconoirBank } from '@ng-icons/iconoir'
 import {
@@ -34,7 +35,6 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
   standalone: true,
   imports: [
     NgClass,
-    NgIf,
     NgIconComponent,
     MetadataQualityComponent,
     NgTemplateOutlet,
@@ -55,6 +55,8 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
   styleUrls: ['./internal-link-card.component.scss'],
 })
 export class InternalLinkCardComponent implements OnInit {
+  protected elementRef = inject(ElementRef)
+
   @Input() record: CatalogRecord
   @Input() linkTarget = '_blank'
   @Input() linkHref: string = null
@@ -74,8 +76,6 @@ export class InternalLinkCardComponent implements OnInit {
   cardClass: string
 
   private _size: CardSize = 'L'
-
-  constructor(protected elementRef: ElementRef) {}
 
   ngOnInit(): void {
     this.abstract = removeWhitespace(stripHtml(this.record?.abstract))

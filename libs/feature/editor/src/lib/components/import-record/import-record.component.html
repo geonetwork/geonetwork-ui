@@ -1,28 +1,31 @@
-<ng-container [ngSwitch]="sectionDisplayed">
-  <ng-container *ngSwitchCase="'mainMenu'">
+@switch (sectionDisplayed) {
+  @case ('mainMenu') {
     <div
       data-test="importMenuMainSection"
       class="mt-2 border border-gray-100 p-2 flex items-center bg-white shadow-2xl rounded-2xl"
     >
       <ul class="flex flex-col gap-2 w-full">
-        <li *ngFor="let menuItem of importMenuItems">
-          <gn-ui-button
-            [attr.data-test]="menuItem.dataTest"
-            type="light"
-            extraClass="flex flex-row items-center gap-2 w-full justify-start"
-            (buttonClick)="menuItem.action()"
-            [disabled]="menuItem.disabled"
-            [title]="
-              (menuItem.disabled ? 'editor.temporary.disabled' : '') | translate
-            "
-            ><ng-icon [name]="menuItem.icon"></ng-icon
-            ><span>{{ menuItem.label }}</span></gn-ui-button
-          >
-        </li>
+        @for (menuItem of importMenuItems; track menuItem) {
+          <li>
+            <gn-ui-button
+              [attr.data-test]="menuItem.dataTest"
+              type="light"
+              extraClass="flex flex-row items-center gap-2 w-full justify-start"
+              (buttonClick)="menuItem.action()"
+              [disabled]="menuItem.disabled"
+              [title]="
+                (menuItem.disabled ? 'editor.temporary.disabled' : '')
+                  | translate
+              "
+              ><ng-icon [name]="menuItem.icon"></ng-icon
+              ><span>{{ menuItem.label }}</span></gn-ui-button
+            >
+          </li>
+        }
       </ul>
     </div>
-  </ng-container>
-  <ng-container *ngSwitchCase="'importExternalFile'">
+  }
+  @case ('importExternalFile') {
     <div
       data-test="importMenuImportExternalFileSection"
       class="p-6 flex flex-col gap-2 mt-2 border border-gray-100 bg-white shadow-2xl rounded-2xl"
@@ -45,5 +48,5 @@
         [disabled]="isRecordImportInProgress"
       ></gn-ui-url-input>
     </div>
-  </ng-container>
-</ng-container>
+  }
+}

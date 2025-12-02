@@ -1,4 +1,4 @@
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core'
+import { Injectable, InjectionToken, inject } from '@angular/core'
 import { toLang2, toLang3 } from '@geonetwork-ui/util/i18n'
 import { TranslateService } from '@ngx-translate/core'
 import { Location } from '@angular/common'
@@ -16,6 +16,12 @@ export const SETTINGS_URL = new InjectionToken<string>('settingsUrl')
   providedIn: 'root',
 })
 export class AuthService {
+  private baseLoginUrlToken = inject(LOGIN_URL, { optional: true })
+  private baseLogoutUrlToken = inject(LOGOUT_URL, { optional: true })
+  private baseSettingsUrlToken = inject(SETTINGS_URL, { optional: true })
+  private translateService = inject(TranslateService)
+  private location = inject(Location)
+
   baseLoginUrl = this.baseLoginUrlToken || DEFAULT_GN4_LOGIN_URL
   baseLogoutUrl = this.baseLogoutUrlToken || DEFAULT_GN4_LOGOUT_URL
   baseSettingsUrl = this.baseSettingsUrlToken || DEFAULT_GN4_SETTINGS_URL
@@ -52,12 +58,4 @@ export class AuthService {
       toLang3(this.translateService.currentLang)
     )
   }
-
-  constructor(
-    @Optional() @Inject(LOGIN_URL) private baseLoginUrlToken: string,
-    @Optional() @Inject(LOGOUT_URL) private baseLogoutUrlToken: string,
-    @Optional() @Inject(SETTINGS_URL) private baseSettingsUrlToken: string,
-    private translateService: TranslateService,
-    private location: Location
-  ) {}
 }

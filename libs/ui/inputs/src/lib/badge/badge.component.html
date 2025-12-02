@@ -7,20 +7,21 @@
   "
 >
   <span><ng-content></ng-content></span>
-  <gn-ui-button
-    type="light"
-    *ngIf="removable"
-    (buttonClick)="removeBadge()"
-    extraClass="text-xs border-0 px-0 py-0"
-    style="
-      --gn-ui-button-padding: 0;
-      --gn-ui-button-font-size: 0.8em;
-      --gn-ui-button-width: 1.4em;
-      --gn-ui-button-height: 1.4em;
-      --gn-ui-button-rounded: 1.4em;
-      --gn-ui-button-background: var(--gn-ui-badge-background-color, white);
-    "
-  >
-    <ng-icon name="matClose"></ng-icon>
-  </gn-ui-button>
+  @if (removable) {
+    <gn-ui-button
+      type="light"
+      (buttonClick)="removeBadge()"
+      extraClass="text-xs border-0 px-0 py-0"
+      style="
+        --gn-ui-button-padding: 0;
+        --gn-ui-button-font-size: 0.8em;
+        --gn-ui-button-width: 1.4em;
+        --gn-ui-button-height: 1.4em;
+        --gn-ui-button-rounded: 1.4em;
+        --gn-ui-button-background: var(--gn-ui-badge-background-color, white);
+      "
+    >
+      <ng-icon name="matClose"></ng-icon>
+    </gn-ui-button>
+  }
 </div>

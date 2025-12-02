@@ -11,6 +11,7 @@ import { FORMATS, getFormatName } from '../../md-formats'
   selector: 'gn-ui-status',
   templateUrl: './status.component.html',
   styleUrls: ['./status.component.css'],
+  standalone: false,
 })
 export class StatusComponent {
   _currentRecord: CatalogRecord

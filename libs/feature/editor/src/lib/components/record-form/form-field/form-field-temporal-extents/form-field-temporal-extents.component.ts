@@ -5,6 +5,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record'
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'
@@ -45,6 +46,8 @@ import { iconoirPlus } from '@ng-icons/iconoir'
   ],
 })
 export class FormFieldTemporalExtentsComponent {
+  private translateService = inject(TranslateService)
+
   extents: DatasetTemporalExtent[] = []
   @Input() set value(v: Array<DatasetTemporalExtent>) {
     this.extents = v
@@ -59,8 +62,6 @@ export class FormFieldTemporalExtentsComponent {
       .get('editor.record.form.temporalExtents.addRange')
       .pipe(map((buttonLabel) => ({ buttonLabel, eventName: 'range' }))),
   ])
-
-  constructor(private translateService: TranslateService) {}
 
   onItemsOrderChange(extents: unknown[]) {
     this.extents = extents as DatasetTemporalExtent[]

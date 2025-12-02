@@ -1,7 +1,7 @@
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { ImageInputComponent } from './image-input.component'
-import { action } from '@storybook/addon-actions'
+import { action } from 'storybook/actions'
 
 export default {
   title: 'Elements/ImageInputComponent',

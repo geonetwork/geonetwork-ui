@@ -9,6 +9,7 @@ import {
   QueryList,
   ViewChildren,
   ViewContainerRef,
+  inject,
 } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -68,6 +69,12 @@ import { Observable, of, take } from 'rxjs'
   ],
 })
 export class ResultsTableComponent {
+  private overlay = inject(Overlay)
+  private viewContainerRef = inject(ViewContainerRef)
+  private cdr = inject(ChangeDetectorRef)
+  private dateService = inject(DateService)
+  private translateService = inject(TranslateService)
+
   @Input() records: CatalogRecord[] = []
   @Input() selectedRecordsIdentifiers: string[] = []
   @Input() sortOrder: SortByField = null
@@ -95,14 +102,6 @@ export class ResultsTableComponent {
   private overlayRef!: OverlayRef
 
   isActionMenuOpen = false
-
-  constructor(
-    private overlay: Overlay,
-    private viewContainerRef: ViewContainerRef,
-    private cdr: ChangeDetectorRef,
-    private dateService: DateService,
-    private translateService: TranslateService
-  ) {}
 
   openActionMenu(item, template) {
     this.isActionMenuOpen = true

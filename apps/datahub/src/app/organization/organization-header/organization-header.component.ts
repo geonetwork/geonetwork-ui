@@ -1,5 +1,10 @@
-import { CommonModule, Location } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { Location } from '@angular/common'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  inject,
+} from '@angular/core'
 import { Router } from '@angular/router'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
@@ -26,7 +31,6 @@ import { TranslateDirective } from '@ngx-translate/core'
   standalone: true,
   imports: [
     TranslateDirective,
-    CommonModule,
     NgIconComponent,
     LanguageSwitcherComponent,
     ButtonComponent,
@@ -39,6 +43,9 @@ import { TranslateDirective } from '@ngx-translate/core'
   ],
 })
 export class OrganizationHeaderComponent {
+  private router = inject(Router)
+  private location = inject(Location)
+
   @Input() organization?: Organization
 
   backgroundCss =
@@ -46,11 +53,6 @@ export class OrganizationHeaderComponent {
     `center /cover url('assets/img/header_bg.webp')`
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
-
-  constructor(
-    private router: Router,
-    private location: Location
-  ) {}
 
   back() {
     this.router.lastSuccessfulNavigation.previousNavigation

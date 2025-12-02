@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import {
   NgIconComponent,
   provideIcons,
@@ -12,13 +12,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 @Component({
   selector: 'md-editor-page-error',
   standalone: true,
-  imports: [
-    CommonModule,
-    NgIconComponent,
-    RouterModule,
-    TranslateDirective,
-    TranslatePipe,
-  ],
+  imports: [NgIconComponent, RouterModule, TranslateDirective, TranslatePipe],
   providers: [
     provideIcons({ iconoirEmojiPuzzled, iconoirJournal }),
     provideNgIconsConfig({

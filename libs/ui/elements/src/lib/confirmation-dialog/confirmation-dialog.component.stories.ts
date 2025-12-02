@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, inject, Input } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
@@ -14,14 +14,14 @@ import { ConfirmationDialogComponent } from './confirmation-dialog.component'
   `,
 })
 class LaunchDialogComponent {
+  private _dialog = inject(MatDialog)
+
   @Input() title = ''
   @Input() message = ''
   @Input() confirmText = ''
   @Input() cancelText = ''
 
   confirmed: boolean
-
-  constructor(private _dialog: MatDialog) {}
 
   launch(): void {
     const dialogRef = this._dialog.open(ConfirmationDialogComponent, {

@@ -1,9 +1,9 @@
-import { Component, OnDestroy } from '@angular/core'
+import { Component, OnDestroy, inject } from '@angular/core'
 import { catchError, firstValueFrom, from, Subject, takeUntil } from 'rxjs'
 import { debounceTime, switchMap } from 'rxjs/operators'
 import { GeocodingService } from '../geocoding.service'
 import { MapFacade } from '../+state/map.facade'
-import { CommonModule } from '@angular/common'
+
 import { SearchInputComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslatePipe } from '@ngx-translate/core'
 import { MapContextView } from '@geospatial-sdk/core'
@@ -13,19 +13,19 @@ import { MapContextView } from '@geospatial-sdk/core'
   templateUrl: './geocoding.component.html',
   styleUrls: ['./geocoding.component.css'],
   standalone: true,
-  imports: [CommonModule, SearchInputComponent, TranslatePipe],
+  imports: [SearchInputComponent, TranslatePipe],
 })
 export class GeocodingComponent implements OnDestroy {
+  private mapFacade = inject(MapFacade)
+  private geocodingService = inject(GeocodingService)
+
   searchText = ''
   results: any[] = []
   searchTextChanged = new Subject<string>()
   destroy$ = new Subject<void>()
   errorMessage: string | null = null
 
-  constructor(
-    private mapFacade: MapFacade,
-    private geocodingService: GeocodingService
-  ) {
+  constructor() {
     this.searchTextChanged
       .pipe(
         debounceTime(300),

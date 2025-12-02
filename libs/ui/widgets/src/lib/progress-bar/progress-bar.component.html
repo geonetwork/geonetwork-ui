@@ -1,6 +1,6 @@
-<ng-container [ngSwitch]="type">
+@switch (type) {
   <!-- Light Theme -->
-  <ng-container *ngSwitchCase="'light'">
+  @case ('light') {
     <div class="flex items-center relative">
       <div
         class="flex-shrink-0 {{ color.text }} font-medium mr-2
@@ -17,10 +17,9 @@
         ></div>
       </div>
     </div>
-  </ng-container>
-
+  }
   <!-- Default / Primary / Secondary Themes -->
-  <ng-container *ngSwitchDefault>
+  @default {
     <div class="flex h-full {{ color.outerBar }} rounded-t-lg rounded-b-lg">
       <div
         [style.width.%]="progress"
@@ -34,5 +33,5 @@
         </div>
       </div>
     </div>
-  </ng-container>
-</ng-container>
+  }
+}

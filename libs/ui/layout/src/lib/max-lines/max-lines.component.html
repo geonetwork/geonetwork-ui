@@ -5,16 +5,18 @@
   [style.maxHeight]="maxHeight"
 >
   <ng-content></ng-content>
+  @if (showToggleButton && !isExpanded) {
+    <div
+      class="absolute inset-x-0 bottom-0 bg-gradient-to-b from-transparent to-white h-10"
+    ></div>
+  }
+</div>
+@if (showToggleButton) {
   <div
-    *ngIf="showToggleButton && !isExpanded"
-    class="absolute inset-x-0 bottom-0 bg-gradient-to-b from-transparent to-white h-10"
-  ></div>
-</div>
-<div
-  *ngIf="showToggleButton"
-  (click)="toggleDisplay()"
-  class="text-primary cursor-pointer pt-2.5"
-  data-cy="readMoreButton"
->
-  {{ (isExpanded ? 'ui.readLess' : 'ui.readMore') | translate }}
-</div>
+    (click)="toggleDisplay()"
+    class="text-primary cursor-pointer pt-2.5"
+    data-cy="readMoreButton"
+  >
+    {{ (isExpanded ? 'ui.readLess' : 'ui.readMore') | translate }}
+  </div>
+}

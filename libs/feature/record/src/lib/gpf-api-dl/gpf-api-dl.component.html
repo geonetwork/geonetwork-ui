@@ -72,21 +72,20 @@
       [attr.title]="'record.metadata.api.form.itemsTooltip' | translate"
       [attr.aria-label]="'record.metadata.api.form.itemsTooltip' | translate"
     >
-      <div
-        *ngFor="let link of listFilteredProduct$ | async"
-        class="mb-2 sm:mb-3"
-      >
-        <gn-ui-gpf-api-dl-list-item
-          [link]="link"
-          color="rgb(124 45 18)"
-          [format]="getLinkFormat(link)"
-          [isFromWfs]="true"
-          [attr.title]="'record.metadata.api.form.productTooltip' | translate"
-          [attr.aria-label]="
-            'record.metadata.api.form.productTooltip' | translate
-          "
-        ></gn-ui-gpf-api-dl-list-item>
-      </div>
+      @for (link of listFilteredProduct$ | async; track link) {
+        <div class="mb-2 sm:mb-3">
+          <gn-ui-gpf-api-dl-list-item
+            [link]="link"
+            color="rgb(124 45 18)"
+            [format]="getLinkFormat(link)"
+            [isFromWfs]="true"
+            [attr.title]="'record.metadata.api.form.productTooltip' | translate"
+            [attr.aria-label]="
+              'record.metadata.api.form.productTooltip' | translate
+            "
+          ></gn-ui-gpf-api-dl-list-item>
+        </div>
+      }
     </div>
   </div>
 

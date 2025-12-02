@@ -5,64 +5,73 @@
     'bg-gray-100 text-black': type === types.DATASET_HAS_NO_LINK,
   }"
 >
-  <div
-    *ngIf="type === types.COULD_NOT_REACH_API"
-    data-test="could-not-reach-api-error"
-  >
-    <div class="relative opacity-40">
-      <ng-icon name="matFace" class="face"></ng-icon>
-      <ng-icon name="matQuestionMark" class="question-mark1"></ng-icon>
-      <ng-icon name="matQuestionMark" class="question-mark2"></ng-icon>
+  @if (type === types.COULD_NOT_REACH_API) {
+    <div data-test="could-not-reach-api-error">
+      <div class="relative opacity-40">
+        <ng-icon name="matFace" class="face"></ng-icon>
+        <ng-icon name="matQuestionMark" class="question-mark1"></ng-icon>
+        <ng-icon name="matQuestionMark" class="question-mark2"></ng-icon>
+      </div>
+      <div translate>search.error.couldNotReachApi</div>
     </div>
-    <div translate>search.error.couldNotReachApi</div>
-  </div>
-  <div
-    *ngIf="type === types.DATASET_HAS_NO_LINK"
-    data-test="dataset-has-no-link-error"
-  >
-    <div class="relative opacity-40">
-      <ng-icon name="matComputerOutline"></ng-icon>
+  }
+  @if (type === types.DATASET_HAS_NO_LINK) {
+    <div data-test="dataset-has-no-link-error">
+      <div class="relative opacity-40">
+        <ng-icon name="matComputerOutline"></ng-icon>
+      </div>
+      <div translate>search.error.recordHasnolink</div>
     </div>
-    <div translate>search.error.recordHasnolink</div>
-  </div>
-  <div *ngIf="type === types.RECEIVED_ERROR" data-test="received-error-error">
-    <div class="relative opacity-40">
-      <ng-icon name="matMoodBad" class="face"></ng-icon>
+  }
+  @if (type === types.RECEIVED_ERROR) {
+    <div data-test="received-error-error">
+      <div class="relative opacity-40">
+        <ng-icon name="matMoodBad" class="face"></ng-icon>
+      </div>
+      <div translate>search.error.receivedError</div>
+      @if (error) {
+        <div>{{ error }}</div>
+      }
     </div>
-    <div translate>search.error.receivedError</div>
-    <div *ngIf="error">{{ error }}</div>
-  </div>
-  <div *ngIf="type === types.ORGANIZATION_HAS_NO_DATASET">
-    <div class="relative opacity-40">
-      <ng-icon name="matComputerOutline" class="computer"></ng-icon>
-      <ng-icon name="matQuestionMark" class="computer-question-mark"> </ng-icon>
+  }
+  @if (type === types.ORGANIZATION_HAS_NO_DATASET) {
+    <div>
+      <div class="relative opacity-40">
+        <ng-icon name="matComputerOutline" class="computer"></ng-icon>
+        <ng-icon name="matQuestionMark" class="computer-question-mark">
+        </ng-icon>
+      </div>
+      <div translate>search.error.organizationHasNoDataset</div>
     </div>
-    <div translate>search.error.organizationHasNoDataset</div>
-  </div>
-  <div
-    *ngIf="type === types.RECORD_NOT_FOUND"
-    data-test="record-not-found-error"
-  >
-    <div class="relative opacity-40">
-      <ng-icon name="matComputerOutline" class="computer"></ng-icon>
-      <ng-icon name="matQuestionMark" class="computer-question-mark"> </ng-icon>
+  }
+  @if (type === types.RECORD_NOT_FOUND) {
+    <div data-test="record-not-found-error">
+      <div class="relative opacity-40">
+        <ng-icon name="matComputerOutline" class="computer"></ng-icon>
+        <ng-icon name="matQuestionMark" class="computer-question-mark">
+        </ng-icon>
+      </div>
+      <div translate [translateParams]="{ id: recordId }">
+        search.error.recordNotFound
+      </div>
+      @if (error) {
+        <div>{{ error }}</div>
+      }
     </div>
-    <div translate [translateParams]="{ id: recordId }">
-      search.error.recordNotFound
+  }
+  @if (type === types.ORGANIZATION_NOT_FOUND) {
+    <div data-test="org-not-found-error">
+      <div class="relative opacity-40">
+        <ng-icon name="matComputerOutline" class="computer"></ng-icon>
+        <ng-icon name="matQuestionMark" class="computer-question-mark">
+        </ng-icon>
+      </div>
+      <div translate [translateParams]="{ id: recordId }">
+        search.error.organizationNotFound
+      </div>
+      @if (error) {
+        <div>{{ error }}</div>
+      }
     </div>
-    <div *ngIf="error">{{ error }}</div>
-  </div>
-  <div
-    *ngIf="type === types.ORGANIZATION_NOT_FOUND"
-    data-test="org-not-found-error"
-  >
-    <div class="relative opacity-40">
-      <ng-icon name="matComputerOutline" class="computer"></ng-icon>
-      <ng-icon name="matQuestionMark" class="computer-question-mark"> </ng-icon>
-    </div>
-    <div translate [translateParams]="{ id: recordId }">
-      search.error.organizationNotFound
-    </div>
-    <div *ngIf="error">{{ error }}</div>
-  </div>
+  }
 </div>

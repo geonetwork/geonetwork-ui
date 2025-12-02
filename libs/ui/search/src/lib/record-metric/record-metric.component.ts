@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,7 +13,7 @@ import { TranslateDirective } from '@ngx-translate/core'
   styleUrls: ['./record-metric.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, TranslateDirective],
+  imports: [TranslateDirective],
 })
 export class RecordMetricComponent implements OnInit {
   @Input() count: number

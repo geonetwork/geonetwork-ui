@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core'
-import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common'
 
 interface ColorScheme {
   outerBar: string
@@ -12,7 +11,7 @@ interface ColorScheme {
   templateUrl: './progress-bar.component.html',
   styleUrls: ['./progress-bar.component.css'],
   standalone: true,
-  imports: [NgSwitch, NgSwitchCase, NgSwitchDefault],
+  imports: [],
 })
 export class ProgressBarComponent {
   @Input() value = 0

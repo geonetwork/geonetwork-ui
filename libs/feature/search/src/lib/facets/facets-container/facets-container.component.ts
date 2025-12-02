@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import {
   FacetListComponent,
   FacetSelectEvent,
@@ -39,13 +39,11 @@ marker('facets.block.title.th_regions_tree.default')
   ],
 })
 export class FacetsContainerComponent implements OnInit {
+  private facets = inject(FacetsService)
+  private searchFacade = inject(SearchFacade)
+
   selectedPaths$: Observable<string[][]>
   models$: Observable<ModelBlock[]>
-
-  constructor(
-    private facets: FacetsService,
-    private searchFacade: SearchFacade
-  ) {}
 
   ngOnInit(): void {
     this.selectedPaths$ = this.searchFacade.searchFilters$.pipe(

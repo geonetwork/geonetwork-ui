@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import { appRoutes } from './app.routes'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
@@ -11,7 +11,7 @@ import {
   providedIn: 'root',
 })
 export class EditorRouterService {
-  constructor(private router: Router) {}
+  private router = inject(Router)
 
   initRoutes() {
     this.router.resetConfig(appRoutes)

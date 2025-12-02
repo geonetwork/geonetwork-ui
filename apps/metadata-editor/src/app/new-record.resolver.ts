@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import {
   CatalogRecord,
   Individual,
@@ -15,11 +15,9 @@ import { NOT_KNOWN_CONSTRAINT } from '@geonetwork-ui/feature/editor'
   providedIn: 'root',
 })
 export class NewRecordResolver {
-  constructor(
-    private platformService: PlatformServiceInterface,
-    private organizationsServiceInterface: OrganizationsServiceInterface,
-    private translateService: TranslateService
-  ) {}
+  private platformService = inject(PlatformServiceInterface)
+  private organizationsServiceInterface = inject(OrganizationsServiceInterface)
+  private translateService = inject(TranslateService)
 
   resolve(): Observable<[CatalogRecord, string, boolean]> {
     return this.getCurrentUserAsPointOfContact().pipe(

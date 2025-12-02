@@ -10,11 +10,11 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
+  inject,
 } from '@angular/core'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 import { ResultsLayoutConfigItem } from '../results-list/results-layout.config'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-results-list-item',
@@ -22,9 +22,10 @@ import { CommonModule } from '@angular/common'
   styleUrls: ['./results-list-item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RecordPreviewComponent],
 })
 export class ResultsListItemComponent implements OnChanges, AfterViewInit {
+  private componentFactoryResolver = inject(ComponentFactoryResolver)
+
   @Input() layoutConfig: ResultsLayoutConfigItem
   @Input() record: CatalogRecord
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
@@ -34,8 +35,6 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
   initialized = false
 
   @ViewChild('card', { read: ViewContainerRef }) cardRef: ViewContainerRef
-
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
   ngAfterViewInit(): void {
     this.initialized = true

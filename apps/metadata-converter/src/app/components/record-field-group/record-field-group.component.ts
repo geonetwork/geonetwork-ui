@@ -5,6 +5,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
   templateUrl: './record-field-group.component.html',
   styleUrls: ['./record-field-group.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class RecordFieldGroupComponent {
   @Input() label: string

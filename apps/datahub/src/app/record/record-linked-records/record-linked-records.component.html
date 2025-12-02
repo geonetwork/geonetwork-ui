@@ -4,23 +4,27 @@
 >
   record.metadata.linked.records
 </h2>
-<datahub-record-internal-links
-  *ngIf="hasSourceDatasets$ | async"
-  [title]="'record.metadata.linked.sourceDatasets' | translate"
-  [records]="sourceDatasets$ | async"
-></datahub-record-internal-links>
-<datahub-record-internal-links
-  *ngIf="hasLinkedDatasets$ | async"
-  [title]="'record.metadata.linked.datasets' | translate"
-  [records]="linkedDatasets$ | async"
-></datahub-record-internal-links>
-<datahub-record-internal-links
-  *ngIf="hasLinkedReuses$ | async"
-  [title]="'record.metadata.linked.reuses' | translate"
-  [records]="linkedReuses$ | async"
-></datahub-record-internal-links>
-<datahub-record-internal-links
-  *ngIf="hasLinkedServices$ | async"
-  [title]="'record.metadata.linked.services' | translate"
-  [records]="linkedServices$ | async"
-></datahub-record-internal-links>
+@if (hasSourceDatasets$ | async) {
+  <datahub-record-internal-links
+    [title]="'record.metadata.linked.sourceDatasets' | translate"
+    [records]="sourceDatasets$ | async"
+  ></datahub-record-internal-links>
+}
+@if (hasLinkedDatasets$ | async) {
+  <datahub-record-internal-links
+    [title]="'record.metadata.linked.datasets' | translate"
+    [records]="linkedDatasets$ | async"
+  ></datahub-record-internal-links>
+}
+@if (hasLinkedReuses$ | async) {
+  <datahub-record-internal-links
+    [title]="'record.metadata.linked.reuses' | translate"
+    [records]="linkedReuses$ | async"
+  ></datahub-record-internal-links>
+}
+@if (hasLinkedServices$ | async) {
+  <datahub-record-internal-links
+    [title]="'record.metadata.linked.services' | translate"
+    [records]="linkedServices$ | async"
+  ></datahub-record-internal-links>
+}

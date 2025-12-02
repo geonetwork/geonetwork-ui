@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  inject,
+} from '@angular/core'
 import {
   MdViewFacade,
   RecordMetaComponent,
@@ -25,9 +30,11 @@ import { CommonModule } from '@angular/common'
   ],
 })
 export class RecordPageComponent implements OnDestroy {
+  mdViewFacade = inject(MdViewFacade)
+
   metadataQualityDisplay: boolean
 
-  constructor(public mdViewFacade: MdViewFacade) {
+  constructor() {
     document.documentElement.classList.add('record-page-active')
     const cfg: MetadataQualityConfig =
       getMetadataQualityConfig() || ({} as MetadataQualityConfig)

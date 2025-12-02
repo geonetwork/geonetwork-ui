@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SelectionsApiService } from '@geonetwork-ui/data-access/gn4'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
@@ -9,11 +9,13 @@ const BUCKET_ID = 'gnui'
   providedIn: 'root',
 })
 export class SelectionService {
+  private selectionsApi = inject(SelectionsApiService)
+
   selectedRecordsIdentifiers$: BehaviorSubject<string[]> = new BehaviorSubject(
     []
   )
 
-  constructor(private selectionsApi: SelectionsApiService) {
+  constructor() {
     this.selectionsApi.get(BUCKET_ID).subscribe((selectedIds) => {
       this.addIdsToSelected(Array.from(selectedIds))
     })

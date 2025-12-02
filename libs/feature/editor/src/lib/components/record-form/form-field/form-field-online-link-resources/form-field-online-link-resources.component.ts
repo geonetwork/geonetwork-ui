@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,6 +7,7 @@ import {
   Output,
   TemplateRef,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import {
@@ -39,7 +39,6 @@ import { OnlineResourceCardComponent } from '../../../online-resource-card/onlin
   standalone: true,
   imports: [
     FileInputComponent,
-    CommonModule,
     SortableListComponent,
     OnlineResourceCardComponent,
     TextInputComponent,
@@ -49,6 +48,12 @@ import { OnlineResourceCardComponent } from '../../../online-resource-card/onlin
   ],
 })
 export class FormFieldOnlineLinkResourcesComponent {
+  private notificationsService = inject(NotificationsService)
+  private translateService = inject(TranslateService)
+  private platformService = inject(PlatformServiceInterface)
+  private cd = inject(ChangeDetectorRef)
+  private dialog = inject(MatDialog)
+
   @Input() metadataUuid: string
   @Input() set value(onlineResources: Array<OnlineResource>) {
     this.allResources = onlineResources
@@ -67,14 +72,6 @@ export class FormFieldOnlineLinkResourcesComponent {
   uploadSubscription: Subscription = null
 
   protected MAX_UPLOAD_SIZE_MB = MAX_UPLOAD_SIZE_MB
-
-  constructor(
-    private notificationsService: NotificationsService,
-    private translateService: TranslateService,
-    private platformService: PlatformServiceInterface,
-    private cd: ChangeDetectorRef,
-    private dialog: MatDialog
-  ) {}
 
   handleFileChange(file: File) {
     this.uploadProgress = 0

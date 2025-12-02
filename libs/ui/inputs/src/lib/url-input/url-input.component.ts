@@ -7,6 +7,7 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '../button/button.component'
@@ -32,6 +33,8 @@ import { iconoirArrowUp, iconoirLink } from '@ng-icons/iconoir'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UrlInputComponent implements OnChanges {
+  private cd = inject(ChangeDetectorRef)
+
   @Input() set value(v: string) {
     // we're making sure to only update the input if the URL representation of it has changed; otherwise we keep it identical
     // to avoid glitches when starting to write a URL and having some characters added/replaced automatically
@@ -57,8 +60,6 @@ export class UrlInputComponent implements OnChanges {
   @Output() uploadClick = new EventEmitter<string>()
 
   inputValue = ''
-
-  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['resetUrlOnChange']) {

@@ -1,120 +1,116 @@
-<div
-  *ngIf="
-    (displayMap$ | async) || (displayData$ | async) || (displayStac$ | async)
-  "
-  id="preview"
->
-  <div class="absolute bg-primary-opacity-10 w-full h-[480px]"></div>
-  <div class="overflow-visible">
-    <div class="container-lg pb-4 px-4 lg:mx-auto">
-      <div>
-        <h2
-          class="gn-ui-section-title transform translate-y-1 sm:translate-y-11 py-4 sm:py-0"
-          translate
-        >
-          record.metadata.preview
-        </h2>
-        <mat-tab-group
-          (selectedIndexChange)="onTabIndexChange($event)"
-          [selectedIndex]="selectedIndex$ | async"
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          mat-align-tabs="start"
-          disableRipple
-        >
-          <mat-tab [disabled]="(displayDatavizConfig$ | async) === false">
-            <ng-template mat-tab-label>
-              <gn-ui-button
-                *ngIf="displayDatavizConfig$ | async"
-                type="primary"
-                [class.opacity-50]="savingStatus === 'saved'"
-                (buttonClick)="saveDatavizConfig()"
-                [disabled]="savingStatus === 'saving'"
-              >
-                <span>{{
-                  'record.metadata.preview.config.' + savingStatus | translate
-                }}</span>
-              </gn-ui-button>
-            </ng-template>
-          </mat-tab>
-          <mat-tab [disabled]="(displayMap$ | async) === false">
-            <ng-template mat-tab-label>
-              <span class="tab-header-label" translate>record.tab.map</span>
-            </ng-template>
-            <div
-              class="block"
-              style="height: 639px"
-              *ngIf="(displayMap$ | async) && (selectedView$ | async) === 'map'"
-            >
-              <gn-ui-map-view
-                [exceedsLimit]="exceedsMaxFeatureCount$ | async"
-                (linkSelected)="onSelectedLinkChange($event)"
-                (styleSelected)="onSelectedTMSStyleChange($event)"
-                [datavizConfig]="datavizConfig"
-                [selectedView]="selectedView$ | async"
-              ></gn-ui-map-view>
-            </div>
-          </mat-tab>
-          <mat-tab [disabled]="(displayData$ | async) === false">
-            <ng-template mat-tab-label>
-              <span class="tab-header-label" translate>record.tab.data</span>
-            </ng-template>
-            <div
-              class="block"
-              *ngIf="
-                (displayData$ | async) && (selectedView$ | async) === 'table'
-              "
-            >
-              <gn-ui-data-view
-                [exceedsLimit]="exceedsMaxFeatureCount$ | async"
-                (linkSelected)="onSelectedLinkChange($event)"
-                [datavizConfig]="datavizConfig"
-                [selectedView]="selectedView$ | async"
-                mode="table"
-              ></gn-ui-data-view>
-            </div>
-          </mat-tab>
-          <mat-tab
-            [disabled]="
-              (displayData$ | async) === false || (isMobile$ | async) === true
-            "
+@if (
+  (displayMap$ | async) || (displayData$ | async) || (displayStac$ | async)
+) {
+  <div id="preview">
+    <div class="absolute bg-primary-opacity-10 w-full h-[480px]"></div>
+    <div class="overflow-visible">
+      <div class="container-lg pb-4 px-4 lg:mx-auto">
+        <div>
+          <h2
+            class="gn-ui-section-title transform translate-y-1 sm:translate-y-11 py-4 sm:py-0"
+            translate
           >
-            <ng-template mat-tab-label>
-              <span class="tab-header-label" translate>record.tab.chart</span>
-            </ng-template>
-            <div
-              class="block"
-              *ngIf="
-                (displayData$ | async) && (selectedView$ | async) === 'chart'
+            record.metadata.preview
+          </h2>
+          <mat-tab-group
+            (selectedIndexChange)="onTabIndexChange($event)"
+            [selectedIndex]="selectedIndex$ | async"
+            animationDuration="200ms"
+            mat-stretch-tabs="false"
+            mat-align-tabs="start"
+            disableRipple
+          >
+            <mat-tab [disabled]="(displayDatavizConfig$ | async) === false">
+              <ng-template mat-tab-label>
+                @if (displayDatavizConfig$ | async) {
+                  <gn-ui-button
+                    type="primary"
+                    [class.opacity-50]="savingStatus === 'saved'"
+                    (buttonClick)="saveDatavizConfig()"
+                    [disabled]="savingStatus === 'saving'"
+                  >
+                    <span>{{
+                      'record.metadata.preview.config.' + savingStatus
+                        | translate
+                    }}</span>
+                  </gn-ui-button>
+                }
+              </ng-template>
+            </mat-tab>
+            <mat-tab [disabled]="(displayMap$ | async) === false">
+              <ng-template mat-tab-label>
+                <span class="tab-header-label" translate>record.tab.map</span>
+              </ng-template>
+              @if ((displayMap$ | async) && (selectedView$ | async) === 'map') {
+                <div class="block" style="height: 639px">
+                  <gn-ui-map-view
+                    [exceedsLimit]="exceedsMaxFeatureCount$ | async"
+                    (linkSelected)="onSelectedLinkChange($event)"
+                    (styleSelected)="onSelectedTMSStyleChange($event)"
+                    [datavizConfig]="datavizConfig"
+                    [selectedView]="selectedView$ | async"
+                  ></gn-ui-map-view>
+                </div>
+              }
+            </mat-tab>
+            <mat-tab [disabled]="(displayData$ | async) === false">
+              <ng-template mat-tab-label>
+                <span class="tab-header-label" translate>record.tab.data</span>
+              </ng-template>
+              @if (
+                (displayData$ | async) && (selectedView$ | async) === 'table'
+              ) {
+                <div class="block">
+                  <gn-ui-data-view
+                    [exceedsLimit]="exceedsMaxFeatureCount$ | async"
+                    (linkSelected)="onSelectedLinkChange($event)"
+                    [datavizConfig]="datavizConfig"
+                    [selectedView]="selectedView$ | async"
+                    mode="table"
+                  ></gn-ui-data-view>
+                </div>
+              }
+            </mat-tab>
+            <mat-tab
+              [disabled]="
+                (displayData$ | async) === false || (isMobile$ | async) === true
               "
             >
-              <gn-ui-data-view
-                [exceedsLimit]="exceedsMaxFeatureCount$ | async"
-                (linkSelected)="onSelectedLinkChange($event)"
-                [datavizConfig]="datavizConfig"
-                [selectedView]="selectedView$ | async"
-                mode="chart"
-              ></gn-ui-data-view>
-            </div>
-          </mat-tab>
-          <mat-tab [disabled]="(displayStac$ | async) === false">
-            <ng-template mat-tab-label>
-              <span class="tab-header-label" translate>record.tab.stac</span>
-            </ng-template>
-            <ng-template matTabContent>
-              <gn-ui-stac-view></gn-ui-stac-view>
-            </ng-template>
-          </mat-tab>
-        </mat-tab-group>
+              <ng-template mat-tab-label>
+                <span class="tab-header-label" translate>record.tab.chart</span>
+              </ng-template>
+              @if (
+                (displayData$ | async) && (selectedView$ | async) === 'chart'
+              ) {
+                <div class="block">
+                  <gn-ui-data-view
+                    [exceedsLimit]="exceedsMaxFeatureCount$ | async"
+                    (linkSelected)="onSelectedLinkChange($event)"
+                    [datavizConfig]="datavizConfig"
+                    [selectedView]="selectedView$ | async"
+                    mode="chart"
+                  ></gn-ui-data-view>
+                </div>
+              }
+            </mat-tab>
+            <mat-tab [disabled]="(displayStac$ | async) === false">
+              <ng-template mat-tab-label>
+                <span class="tab-header-label" translate>record.tab.stac</span>
+              </ng-template>
+              <ng-template matTabContent>
+                <gn-ui-stac-view></gn-ui-stac-view>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div
-  class="container-lg lg:mx-auto mb-10 px-4"
-  *ngIf="(displayViewShare$ | async) && (selectedView$ | async) !== 'stac'"
->
-  <gn-ui-data-view-share
-    [viewType]="selectedView$ | async"
-  ></gn-ui-data-view-share>
-</div>
+}
+@if ((displayViewShare$ | async) && (selectedView$ | async) !== 'stac') {
+  <div class="container-lg lg:mx-auto mb-10 px-4">
+    <gn-ui-data-view-share
+      [viewType]="selectedView$ | async"
+    ></gn-ui-data-view-share>
+  </div>
+}

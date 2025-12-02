@@ -5,6 +5,7 @@ import {
   Input,
   OnInit,
   Output,
+  inject,
 } from '@angular/core'
 import {
   UpdateFrequency,
@@ -33,6 +34,8 @@ const initialListValues = updateFrequencyCodeValues.filter(
   imports: [CheckToggleComponent, DropdownSelectorComponent, TranslatePipe],
 })
 export class FormFieldUpdateFrequencyComponent implements OnInit {
+  private translateService = inject(TranslateService)
+
   @Input() value: UpdateFrequency
   @Output() valueChange: EventEmitter<UpdateFrequency> = new EventEmitter()
 
@@ -41,8 +44,6 @@ export class FormFieldUpdateFrequencyComponent implements OnInit {
   get planned() {
     return this.value && this.value !== 'notPlanned' && this.value !== 'unknown'
   }
-
-  constructor(private translateService: TranslateService) {}
 
   async ngOnInit() {
     this.choices = await this.getInitialChoices()

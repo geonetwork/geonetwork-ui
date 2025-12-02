@@ -2,10 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Injector,
   Input,
   OnInit,
   ViewEncapsulation,
+  inject,
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
@@ -19,23 +19,21 @@ import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade, SearchService],
+  standalone: false,
 })
 export class GnDatasetViewChartComponent
   extends BaseComponent
   implements OnInit
 {
+  private changeDetector = inject(ChangeDetectorRef)
+
   @Input() datasetId!: string
   @Input() aggregation: string
   @Input() xProperty: string
   @Input() yProperty: string
   @Input() chartType: string
   link: DatasetOnlineResource
-  constructor(
-    injector: Injector,
-    private changeDetector: ChangeDetectorRef
-  ) {
-    super(injector)
-  }
+
   async init() {
     super.init()
     this.link = await this.getRecordLink(this.datasetId, [

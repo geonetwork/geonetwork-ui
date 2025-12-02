@@ -26,21 +26,24 @@
         placeholder="...or enter a URL pointing to a metadata record"
       />
       <div class="w-full">
-        <label
-          *ngFor="let format of formats | keyvalue"
-          class="mr-4"
-          [ngClass]="{ 'font-bold': format.key === originalFormat }"
-        >
-          <input
-            type="radio"
-            name="format"
-            [checked]="format.key === currentFormat"
-            [value]="format.key"
-            (change)="onFormatChange($event.target.value)"
-          />
-          {{ format.key }}
-          <span *ngIf="format.key === originalFormat">(native)</span>
-        </label>
+        @for (format of formats | keyvalue; track format) {
+          <label
+            class="mr-4"
+            [ngClass]="{ 'font-bold': format.key === originalFormat }"
+          >
+            <input
+              type="radio"
+              name="format"
+              [checked]="format.key === currentFormat"
+              [value]="format.key"
+              (change)="onFormatChange($event.target.value)"
+            />
+            {{ format.key }}
+            @if (format.key === originalFormat) {
+              <span>(native)</span>
+            }
+          </label>
+        }
       </div>
     </div>
   </header>

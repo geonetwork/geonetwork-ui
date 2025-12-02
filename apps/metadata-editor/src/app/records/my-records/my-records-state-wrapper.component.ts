@@ -4,7 +4,6 @@ import {
   FeatureSearchModule,
   SearchStateContainerDirective,
 } from '@geonetwork-ui/feature/search'
-import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'md-editor-my-records-state-wrapper',
@@ -12,7 +11,6 @@ import { CommonModule } from '@angular/common'
   styles: [],
   standalone: true,
   imports: [
-    CommonModule,
     FeatureSearchModule,
     MyRecordsComponent,
     SearchStateContainerDirective,

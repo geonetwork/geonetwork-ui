@@ -5,6 +5,7 @@ import {
   Input,
   OnChanges,
   OnInit,
+  inject,
 } from '@angular/core'
 import {
   LinkClassifierService,
@@ -28,8 +29,11 @@ import {
 @Component({
   selector: 'wc-base',
   template: `<div></div>`,
+  standalone: false,
 })
 export class BaseComponent implements OnChanges, OnInit {
+  private injector = inject(Injector)
+
   @Input() apiUrl = null
   @Input() proxyPath = null
   @Input() searchId: string
@@ -49,7 +53,9 @@ export class BaseComponent implements OnChanges, OnInit {
   recordsRepository: RecordsRepositoryInterface
   linkClassifier: LinkClassifierService
 
-  constructor(private injector: Injector) {
+  constructor() {
+    const injector = this.injector
+
     this.facade = injector.get(SearchFacade)
     this.translate = injector.get(TranslateService)
     this.searchService = injector.get(SearchApiService)

@@ -5,6 +5,7 @@ import {
   importProvidersFrom,
   Injector,
   NgModule,
+  inject,
 } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -114,7 +115,11 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   // bootstrap: [AppComponent],
 })
 export class WebcomponentsModule implements DoBootstrap {
-  constructor(private injector: Injector) {
+  private injector = inject(Injector)
+
+  constructor() {
+    const injector = this.injector
+
     CUSTOM_ELEMENTS.forEach((ceDefinition) => {
       const angularComponent = ceDefinition[0]
       const ceTagName = ceDefinition[1]

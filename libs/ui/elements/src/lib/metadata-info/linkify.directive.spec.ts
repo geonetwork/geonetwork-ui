@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
 import { Component, DebugElement } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { GnUiLinkifyDirective } from './linkify.directive'
-import { CommonModule } from '@angular/common'
 
 const testingUrls = [
   ['First link http://bla.org no slash', 'http://bla.org'],
@@ -74,16 +73,16 @@ const testWithHTML = {
 }
 
 @Component({
-  template: `<div
-      *ngIf="customInnerHTML"
-      [innerHTML]="customInnerHTML"
-      [gnUiLinkify]
-    ></div>
-    <div *ngIf="!customInnerHTML" [gnUiLinkify]>
-      {{ text }}
-    </div>`,
+  template: `@if (customInnerHTML) {
+      <div [innerHTML]="customInnerHTML" [gnUiLinkify]></div>
+    }
+    @if (!customInnerHTML) {
+      <div [gnUiLinkify]>
+        {{ text }}
+      </div>
+    }`,
   standalone: true,
-  imports: [CommonModule, GnUiLinkifyDirective],
+  imports: [GnUiLinkifyDirective],
 })
 class TestComponent {
   text = ''

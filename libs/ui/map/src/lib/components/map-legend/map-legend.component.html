@@ -1,1 +1,3 @@
-<div *ngIf="legendHTML" [innerHTML]="legendHTML.outerHTML"></div>
+@if (legendHTML) {
+  <div [innerHTML]="legendHTML.outerHTML"></div>
+}

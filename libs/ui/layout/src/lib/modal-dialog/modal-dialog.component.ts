@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Inject,
   TemplateRef,
+  inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
@@ -29,10 +29,8 @@ export interface ModalDialogData {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalDialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<ModalDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ModalDialogData
-  ) {}
+  dialogRef = inject<MatDialogRef<ModalDialogComponent>>(MatDialogRef)
+  data = inject<ModalDialogData>(MAT_DIALOG_DATA)
 
   onConfirm() {
     this.dialogRef.close(true)

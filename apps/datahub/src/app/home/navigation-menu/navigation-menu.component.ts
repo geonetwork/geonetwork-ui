@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   ROUTER_ROUTE_SEARCH,
@@ -47,6 +47,8 @@ marker('datahub.header.organizations')
   ],
 })
 export class NavigationMenuComponent {
+  private routerFacade = inject(RouterFacade)
+
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
   displayMobileMenu = false
   tabLinks = [
@@ -75,8 +77,6 @@ export class NavigationMenuComponent {
   )
 
   isMobile$ = getIsMobile()
-
-  constructor(private routerFacade: RouterFacade) {}
 
   toggleMobileMenu() {
     this.displayMobileMenu = !this.displayMobileMenu
