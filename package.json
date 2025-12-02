@@ -83,7 +83,7 @@
     "@ngx-translate/http-loader": "~16.0.1",
     "@nx/angular": "22.0.4",
     "@rgrove/parse-xml": "4.2.0",
-    "@vendure/ngx-translate-extract": "~9.4.2",
+    "@vendure/ngx-translate-extract": "~10.1.1",
     "alasql": "4.6.0",
     "axios": "1.12.0",
     "basiclightbox": "^5.0.4",
