@@ -28,6 +28,14 @@ npm run build:demo
 
 You'll find the built files in `webcomponents/dist/demo/webcomponents` folder
 
+## Setup
+
+Before running the web components, make sure to install the project dependencies from the root directory:
+
+```shell script
+npm install
+```
+
 ## Run
 
 ### Storybook
