@@ -7,7 +7,11 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core'
-import { SearchFacade, SearchService, SearchStateParams } from '@geonetwork-ui/feature/search'
+import {
+  SearchFacade,
+  SearchService,
+  SearchStateParams,
+} from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
 import { FuzzySearchComponent } from '@geonetwork-ui/feature/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -25,7 +29,10 @@ import { of } from 'rxjs'
   providers: [SearchFacade, SearchService],
   standalone: false,
 })
-export class GnSearchInputComponent extends BaseComponent implements AfterViewInit {
+export class GnSearchInputComponent
+  extends BaseComponent
+  implements AfterViewInit
+{
   @Input() forceTrackPosition = ''
   @Input() openOnSearch: string
   @Input() openOnSelect: string
@@ -96,13 +103,12 @@ export class GnSearchInputComponent extends BaseComponent implements AfterViewIn
           const filterObj = JSON.parse(this.filter)
           const baseUrl = this.openOnSearch.replace(/\$\{search}/, '')
           const searchParams = new URLSearchParams({
-            'query_string': JSON.stringify(filterObj),
-            'any': any
+            query_string: JSON.stringify(filterObj),
+            any: any,
           })
 
           const separator = baseUrl.includes('?') ? '&' : '?'
           landingPage = `${baseUrl}${separator}${searchParams.toString()}`
-
         } catch (e) {
           console.error('Error building search URL:', e)
           landingPage = this.openOnSearch.replace(/\$\{search}/, any)

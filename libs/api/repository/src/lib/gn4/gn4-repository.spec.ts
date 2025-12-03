@@ -616,7 +616,10 @@ describe('Gn4Repository', () => {
       results = await lastValueFrom(repository.fuzzySearch('blargz'))
     })
     it('uses an autocomplete ES payload', () => {
-      expect(gn4Helper.buildAutocompletePayload).toHaveBeenCalledWith('blargz')
+      expect(gn4Helper.buildAutocompletePayload).toHaveBeenCalledWith(
+        'blargz',
+        {}
+      )
     })
     it('returns the given results as records', () => {
       expect(results.count).toBe(1234)
