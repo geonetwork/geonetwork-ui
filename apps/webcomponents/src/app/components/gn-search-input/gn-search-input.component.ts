@@ -31,8 +31,7 @@ import { of } from 'rxjs'
 })
 export class GnSearchInputComponent
   extends BaseComponent
-  implements AfterViewInit
-{
+  implements AfterViewInit {
   @Input() forceTrackPosition = ''
   @Input() openOnSearch: string
   @Input() openOnSelect: string
@@ -40,11 +39,17 @@ export class GnSearchInputComponent
   @Input() filter: string
   @ViewChild('searchInput') searchInput: FuzzySearchComponent
 
-  // Custom autocomplete action that applies config filters as background constraints
+  private complexFilter: any = null
+
   autoCompleteAction = (query: string) => {
     if (!this.facade || !this.recordsRepository) {
       console.warn('SearchFacade or RecordsRepository not initialized yet')
       return of([])
+    }
+
+    if (this.complexFilter) {
+      return this.recordsRepository.fuzzySearch(query, this.complexFilter)
+        .pipe(map((result) => result.records))
     }
 
     return this.facade.configFilters$.pipe(
@@ -81,12 +86,11 @@ export class GnSearchInputComponent
         const parsed = JSON.parse(filter)
 
         if (parsed.query_string && parsed.query_string.query) {
-          // Complex Elasticsearch query
-          this.facade.setConfigFilters(parsed as any)
+          this.complexFilter = parsed
         } else {
-          // Simple FieldFilters object
           const configFilters: FieldFilters = parsed
           this.facade.setConfigFilters(configFilters)
+          this.complexFilter = null
         }
       } catch (e) {
         console.error('Invalid filter format:', e)
