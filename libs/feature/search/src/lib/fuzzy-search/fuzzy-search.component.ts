@@ -13,7 +13,7 @@ import {
   AutocompleteItem,
 } from '@geonetwork-ui/ui/inputs'
 import { firstValueFrom, Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, switchMap } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -40,6 +40,7 @@ export class FuzzySearchComponent implements OnInit {
   @Input() forceTrackPosition = false
   @Input() enterButton = false
   @Input() placeholder?: string
+  @Input() action?: (query: string) => Observable<AutocompleteItem[]> // Add custom action input
   @Output() itemSelected = new EventEmitter<CatalogRecord>()
   @Output() inputSubmitted = new EventEmitter<string>()
   @Output() isSearchActive = new EventEmitter<boolean>()
@@ -47,10 +48,20 @@ export class FuzzySearchComponent implements OnInit {
 
   displayWithFn: (record: CatalogRecord) => string = (record) => record.title
 
-  autoCompleteAction = (query: string) =>
-    this.recordsRepository
-      .fuzzySearch(query)
-      .pipe(map((result) => result.records))
+  // Default action - can be overridden via @Input() action
+  private defaultAutoCompleteAction = (query: string) =>
+    this.searchFacade.configFilters$.pipe(
+      switchMap((configFilters) =>
+        this.recordsRepository
+          .fuzzySearch(query, configFilters)
+          .pipe(map((result) => result.records))
+      )
+    )
+
+  // Use custom action if provided, otherwise use default
+  get autoCompleteAction() {
+    return this.action || this.defaultAutoCompleteAction
+  }
 
   ngOnInit(): void {
     this.searchInputValue$ = this.searchFacade.searchFilters$.pipe(

@@ -175,20 +175,20 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         definition: featureType.definition || '',
         attributes: Array.isArray(featureType.attributeTable)
           ? featureType.attributeTable.map((attr) => {
-              const values = attr.values
-                ?.filter((v) => v.code || v.label)
-                .map((v) => ({
-                  code: v.code,
-                  label: v.label,
-                }))
-              return {
-                name: attr.name,
-                code: attr.code,
-                definition: attr.definition,
-                type: attr.type,
-                ...(values?.length > 0 ? { values } : {}),
-              }
-            })
+            const values = attr.values
+              ?.filter((v) => v.code || v.label)
+              .map((v) => ({
+                code: v.code,
+                label: v.label,
+              }))
+            return {
+              name: attr.name,
+              code: attr.code,
+              definition: attr.definition,
+              type: attr.type,
+              ...(values?.length > 0 ? { values } : {}),
+            }
+          })
           : [],
       })),
     }
@@ -281,12 +281,12 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
-  fuzzySearch(query: string): Observable<SearchResults> {
+  fuzzySearch(query: string, configFilters: FieldFilters = {}): Observable<SearchResults> {
     return this.gn4SearchApi
       .search(
         'bucket',
         null,
-        JSON.stringify(this.gn4SearchHelper.buildAutocompletePayload(query))
+        JSON.stringify(this.gn4SearchHelper.buildAutocompletePayload(query, configFilters))
       )
       .pipe(
         switchMap((results: Gn4SearchResults) =>
@@ -301,8 +301,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   getRecordPublicationStatus(uniqueIdentifier: string): Observable<boolean> {
     return uniqueIdentifier
       ? this.getRecord(uniqueIdentifier).pipe(
-          map((record) => record.extras['isPublishedToAll'] as boolean)
-        )
+        map((record) => record.extras['isPublishedToAll'] as boolean)
+      )
       : of(true)
   }
 

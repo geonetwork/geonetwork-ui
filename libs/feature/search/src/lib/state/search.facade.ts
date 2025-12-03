@@ -30,6 +30,7 @@ import {
   getFavoritesOnly,
   getPageSize,
   getSearchConfigAggregations,
+  getSearchConfigFilters,
   getSearchFilters,
   getSearchResults,
   getSearchResultsAggregations,
@@ -68,6 +69,7 @@ export class SearchFacade {
   pageSize$: Observable<number>
   searchFilters$: Observable<FieldFilters>
   configAggregations$: Observable<AggregationsParams>
+  configFilters$: Observable<FieldFilters>
   resultsAggregations$: Observable<Aggregations>
   resultsHits$: Observable<number>
   favoritesOnly$: Observable<boolean>
@@ -100,6 +102,9 @@ export class SearchFacade {
     this.pageSize$ = this.store.pipe(select(getPageSize, searchId))
     this.configAggregations$ = this.store.pipe(
       select(getSearchConfigAggregations, searchId)
+    )
+    this.configFilters$ = this.store.pipe(
+      select(getSearchConfigFilters, searchId)
     )
     this.resultsAggregations$ = this.store.pipe(
       select(getSearchResultsAggregations, searchId)

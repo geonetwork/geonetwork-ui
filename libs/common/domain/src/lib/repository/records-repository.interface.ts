@@ -25,7 +25,7 @@ export abstract class RecordsRepositoryInterface {
   ): Observable<CatalogRecord[]>
   abstract getSources(record: CatalogRecord): Observable<CatalogRecord[]>
   abstract getSourceOf(record: CatalogRecord): Observable<CatalogRecord[]>
-  abstract fuzzySearch(query: string): Observable<SearchResults>
+  abstract fuzzySearch(query: string, configFilters?: FieldFilters): Observable<SearchResults>
   abstract canDuplicate(record: CatalogRecord): boolean
   abstract canDelete(record: CatalogRecord): Observable<boolean>
   abstract canEditRecord(uniqueIdentifier: string): Observable<boolean>
