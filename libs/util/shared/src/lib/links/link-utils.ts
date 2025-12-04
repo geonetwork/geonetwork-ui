@@ -57,7 +57,14 @@ export const FORMATS = {
     extensions: ['gml'],
     priority: 5,
     color: '#E75113',
-    mimeTypes: ['application/gml+xml', 'text/xml; subtype=gml'],
+    mimeTypes: [
+      'application/gml+xml',
+      'application/vnd.ogc.gml',
+      'text/xml; subtype=gml',
+      'text/xml; subtype=gml/2.1.2',
+      'text/xml; subtype=gml/3.1.1',
+      'text/xml; subtype=gml/3.2.1',
+    ],
   },
   kml: {
     extensions: ['kml', 'kmz'],
@@ -97,7 +104,7 @@ export const FORMATS = {
     extensions: ['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp'],
     priority: 9,
     color: '#C4A98F',
-    mimeTypes: ['image/jpg'],
+    mimeTypes: ['image/jpeg'],
   },
   png: {
     extensions: ['png'],
@@ -129,15 +136,21 @@ export const FORMATS = {
     color: '#C0C9B6',
     mimeTypes: ['text/html'],
   },
+  xml: {
+    extensions: ['xml'],
+    priority: 15,
+    color: '#9B59B6',
+    mimeTypes: ['application/xml', 'text/xml'],
+  },
   fgb: {
     extensions: ['fgb', 'flatgeobuf'],
-    priority: 15,
+    priority: 16,
     color: '#A8111C',
     mimeTypes: ['application/flatgeobuf'],
   },
   jsonfg: {
     extensions: ['jsonfg', 'jsonfgc'],
-    priority: 16,
+    priority: 17,
     color: '#009EE0',
     mimeTypes: [
       'application/vnd.ogc.fg+json',
@@ -146,13 +159,13 @@ export const FORMATS = {
   },
   webp: {
     extensions: ['webp'],
-    priority: 17,
+    priority: 18,
     color: '#5A9E6F',
     mimeTypes: ['image/webp'],
   },
   postgis: {
     extensions: ['postgis'],
-    priority: 18,
+    priority: 19,
     color: '#336791',
     mimeTypes: [],
   },
