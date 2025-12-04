@@ -36,13 +36,9 @@ import { TitleService } from '../../router/datahub-title.service'
 export class OrganizationPageComponent implements OnInit {
   private router = inject(RouterFacade)
   private orgService = inject(OrganizationsServiceInterface)
+  private titleService = inject(TitleService)
 
   organization$: Observable<Organization>
-  constructor(
-    private router: RouterFacade,
-    private orgService: OrganizationsServiceInterface,
-    private titleService: TitleService
-  ) { }
 
   ngOnInit(): void {
     this.organization$ = combineLatest([

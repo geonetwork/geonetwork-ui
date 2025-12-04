@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { Title } from '@angular/platform-browser'
 import { RouterStateSnapshot, TitleStrategy } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
@@ -15,12 +15,12 @@ marker('datahub.pageTitle.organization')
 
 @Injectable()
 export class DatahubTemplatePageTitleStrategy extends TitleStrategy {
-  constructor(
-    private readonly title: Title,
-    private translateService: TranslateService,
-    private platformService: PlatformServiceInterface,
-    private titleService: TitleService
-  ) {
+  private readonly title = inject(Title)
+  private translateService = inject(TranslateService)
+  private platformService = inject(PlatformServiceInterface)
+  private titleService = inject(TitleService)
+
+  constructor() {
     super()
   }
 
@@ -36,15 +36,16 @@ export class DatahubTemplatePageTitleStrategy extends TitleStrategy {
           .get(pageTitle)
           .pipe(catchError(() => of(pageTitle))),
         translatedEntityTitle: this.titleService.title$.pipe(
-          catchError(() => of(null)),
+          catchError(() => of(null))
         ),
-      }).subscribe(({ titlePattern, translatedPageTitle, translatedEntityTitle }) => {
-        const formattedTitle = (titlePattern || '{pageTitle} | Datahub').replace(
-          '{pageTitle}',
-          translatedEntityTitle || translatedPageTitle
-        )
-        this.title.setTitle(formattedTitle)
-      })
+      }).subscribe(
+        ({ titlePattern, translatedPageTitle, translatedEntityTitle }) => {
+          const formattedTitle = (
+            titlePattern || '{pageTitle} | Datahub'
+          ).replace('{pageTitle}', translatedEntityTitle || translatedPageTitle)
+          this.title.setTitle(formattedTitle)
+        }
+      )
     } else {
       this.title.setTitle('Datahub')
     }

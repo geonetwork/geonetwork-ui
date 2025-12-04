@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
+  OnInit,
   inject,
 } from '@angular/core'
 import {
@@ -31,15 +32,13 @@ import { tap } from 'rxjs'
     RecordMetaComponent,
   ],
 })
-export class RecordPageComponent implements OnDestroy {
+export class RecordPageComponent implements OnInit, OnDestroy {
   mdViewFacade = inject(MdViewFacade)
+  titleService = inject(TitleService)
 
   metadataQualityDisplay: boolean
 
-  constructor(
-    private titleService: TitleService,
-    public mdViewFacade: MdViewFacade
-  ) {
+  constructor() {
     document.documentElement.classList.add('record-page-active')
     const cfg: MetadataQualityConfig =
       getMetadataQualityConfig() || ({} as MetadataQualityConfig)
@@ -47,13 +46,15 @@ export class RecordPageComponent implements OnDestroy {
   }
 
   ngOnInit() {
-    this.mdViewFacade.metadata$.pipe(
-      tap(metadata => {
-        if (metadata) {
-          this.titleService.setTitle(metadata.title)
-        }
-      })
-    ).subscribe()
+    this.mdViewFacade.metadata$
+      .pipe(
+        tap((metadata) => {
+          if (metadata) {
+            this.titleService.setTitle(metadata.title)
+          }
+        })
+      )
+      .subscribe()
   }
 
   ngOnDestroy() {
