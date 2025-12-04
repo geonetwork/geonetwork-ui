@@ -198,8 +198,24 @@ describe('ChartViewComponent', () => {
       }
       flushMicrotasks()
     }))
+    it('recreates the dataset reader and sets aggregation to sum', () => {
+      expect(dataService.getDataset).toHaveBeenCalledTimes(1)
+      expect(component.aggregation$.value).toBe('sum')
+    })
+  })
+  describe('when link changes (with aggregation already set)', () => {
+    beforeEach(fakeAsync(() => {
+      jest.clearAllMocks()
+      component.aggregation$.next('average')
+      component.link = {
+        ...aSetOfLinksFixture().dataCsv(),
+        url: new URL('http://changed/'),
+      }
+      flushMicrotasks()
+    }))
     it('recreates the dataset reader', () => {
       expect(dataService.getDataset).toHaveBeenCalledTimes(1)
+      expect(component.aggregation$.value).toBe('average')
     })
   })
 
