@@ -46,10 +46,10 @@ npm link
 In your project:
 
 ```console
-npm link 
+npm link
 ```
 
-__Note for Windows users:__ The Angular CLI has troubles to use linked npm packages.
+**Note for Windows users:** The Angular CLI has troubles to use linked npm packages.
 Please refer to this issue <https://github.com/angular/angular-cli/issues/8284> for a solution / workaround.
 Published packages are not effected by this issue.
 
@@ -58,84 +58,85 @@ Published packages are not effected by this issue.
 In your Angular project:
 
 ```typescript
-
-import { ApplicationConfig } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
-import { provideApi } from '';
+import { ApplicationConfig } from '@angular/core'
+import { provideHttpClient } from '@angular/common/http'
+import { provideApi } from ''
 
 export const appConfig: ApplicationConfig = {
-    providers: [
-        // ...
-        provideHttpClient(),
-        provideApi()
-    ],
-};
+  providers: [
+    // ...
+    provideHttpClient(),
+    provideApi(),
+  ],
+}
 ```
 
 **NOTE**
 If you're still using `AppModule` and haven't [migrated](https://angular.dev/reference/migrations/standalone) yet, you can still import an Angular module:
+
 ```typescript
-import { ApiModule } from '';
+import { ApiModule } from ''
 ```
 
 If different from the generated base path, during app bootstrap, you can provide the base path to your service.
 
 ```typescript
-import { ApplicationConfig } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
-import { provideApi } from '';
+import { ApplicationConfig } from '@angular/core'
+import { provideHttpClient } from '@angular/common/http'
+import { provideApi } from ''
 
 export const appConfig: ApplicationConfig = {
-    providers: [
-        // ...
-        provideHttpClient(),
-        provideApi('http://localhost:9999')
-    ],
-};
+  providers: [
+    // ...
+    provideHttpClient(),
+    provideApi('http://localhost:9999'),
+  ],
+}
 ```
 
 ```typescript
 // with a custom configuration
-import { ApplicationConfig } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
-import { provideApi } from '';
+import { ApplicationConfig } from '@angular/core'
+import { provideHttpClient } from '@angular/common/http'
+import { provideApi } from ''
 
 export const appConfig: ApplicationConfig = {
-    providers: [
-        // ...
-        provideHttpClient(),
-        provideApi({
-            withCredentials: true,
-            username: 'user',
-            password: 'password'
-        })
-    ],
-};
+  providers: [
+    // ...
+    provideHttpClient(),
+    provideApi({
+      withCredentials: true,
+      username: 'user',
+      password: 'password',
+    }),
+  ],
+}
 ```
 
 ```typescript
 // with factory building a custom configuration
-import { ApplicationConfig } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
-import { provideApi, Configuration } from '';
+import { ApplicationConfig } from '@angular/core'
+import { provideHttpClient } from '@angular/common/http'
+import { provideApi, Configuration } from ''
 
 export const appConfig: ApplicationConfig = {
-    providers: [
-        // ...
-        provideHttpClient(),
-        {
-            provide: Configuration,
-            useFactory: (authService: AuthService) => new Configuration({
-                    basePath: 'http://localhost:9999',
-                    withCredentials: true,
-                    username: authService.getUsername(),
-                    password: authService.getPassword(),
-            }),
-            deps: [AuthService],
-            multi: false
-        }
-    ],
-};
+  providers: [
+    // ...
+    provideHttpClient(),
+    {
+      provide: Configuration,
+      useFactory: (authService: AuthService) =>
+        new Configuration({
+          basePath: 'http://localhost:9999',
+          withCredentials: true,
+          username: authService.getUsername(),
+          password: authService.getPassword(),
+        }),
+      deps: [AuthService],
+      multi: false,
+    },
+  ],
+}
 ```
 
 ### Using multiple OpenAPI files / APIs
@@ -145,19 +146,19 @@ you can create an alias name when importing the modules
 in order to avoid naming conflicts:
 
 ```typescript
-import { provideApi as provideUserApi } from 'my-user-api-path';
-import { provideApi as provideAdminApi } from 'my-admin-api-path';
-import { HttpClientModule } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { provideApi as provideUserApi } from 'my-user-api-path'
+import { provideApi as provideAdminApi } from 'my-admin-api-path'
+import { HttpClientModule } from '@angular/common/http'
+import { environment } from '../environments/environment'
 
 export const appConfig: ApplicationConfig = {
-    providers: [
-        // ...
-        provideHttpClient(),
-        provideUserApi(environment.basePath),
-        provideAdminApi(environment.basePath),
-    ],
-};
+  providers: [
+    // ...
+    provideHttpClient(),
+    provideUserApi(environment.basePath),
+    provideAdminApi(environment.basePath),
+  ],
+}
 ```
 
 ### Customizing path parameter encoding
@@ -176,7 +177,7 @@ Example value for use in your Configuration-Provider:
 
 ```typescript
 new Configuration({
-    encodeParam: (param: Param) => myFancyParamEncoder(param),
+  encodeParam: (param: Param) => myFancyParamEncoder(param),
 })
 ```
 
