@@ -1661,6 +1661,7 @@ export class RecordsApiService extends BaseService {
    * @endpoint put /records/duplicate
    * @param sourceUuid UUID of the source record to copy.
    * @param group The group the record is attached to.
+   * @param body
    * @param metadataType The type of record.
    * @param targetUuid Assign a custom UUID. If this UUID already exist an error is returned. This is enabled only if metadata create / generate UUID settings is activated.
    * @param allowEditGroupMembers Is editable by group members with editor profile? If not, only the author and administrator can edit the record.
@@ -1674,6 +1675,7 @@ export class RecordsApiService extends BaseService {
   public create(
     sourceUuid: string,
     group: string,
+    body: object,
     metadataType?:
       | 'METADATA'
       | 'TEMPLATE'
@@ -1696,6 +1698,7 @@ export class RecordsApiService extends BaseService {
   public create(
     sourceUuid: string,
     group: string,
+    body: object,
     metadataType?:
       | 'METADATA'
       | 'TEMPLATE'
@@ -1718,6 +1721,7 @@ export class RecordsApiService extends BaseService {
   public create(
     sourceUuid: string,
     group: string,
+    body: object,
     metadataType?:
       | 'METADATA'
       | 'TEMPLATE'
@@ -1740,6 +1744,7 @@ export class RecordsApiService extends BaseService {
   public create(
     sourceUuid: string,
     group: string,
+    body: object,
     metadataType?:
       | 'METADATA'
       | 'TEMPLATE'
@@ -1767,6 +1772,11 @@ export class RecordsApiService extends BaseService {
     if (group === null || group === undefined) {
       throw new Error(
         'Required parameter group was null or undefined when calling create.'
+      )
+    }
+    if (body === null || body === undefined) {
+      throw new Error(
+        'Required parameter body was null or undefined when calling create.'
       )
     }
 
@@ -1838,6 +1848,17 @@ export class RecordsApiService extends BaseService {
 
     const localVarTransferCache: boolean = options?.transferCache ?? true
 
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json;charset=UTF-8']
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes)
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set(
+        'Content-Type',
+        httpContentTypeSelected
+      )
+    }
+
     let responseType_: 'text' | 'json' | 'blob' = 'json'
     if (localVarHttpHeaderAcceptSelected) {
       if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -1858,6 +1879,7 @@ export class RecordsApiService extends BaseService {
       `${basePath}${localVarPath}`,
       {
         context: localVarHttpContext,
+        body: body,
         params: localVarQueryParameters,
         responseType: <any>responseType_,
         ...(withCredentials ? { withCredentials } : {}),
