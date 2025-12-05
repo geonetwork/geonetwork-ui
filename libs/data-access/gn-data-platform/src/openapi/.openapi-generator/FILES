@@ -1,6 +1,7 @@
 .gitignore
 .openapi-generator-ignore
 README.md
+api.base.service.ts
 api.module.ts
 api/api.ts
 api/dataviz.api.service.ts
@@ -11,4 +12,6 @@ index.ts
 model/createDatavizDto.api.model.ts
 model/dataviz.api.model.ts
 model/models.ts
+param.ts
+provide-api.ts
 variables.ts
