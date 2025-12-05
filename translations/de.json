@@ -57,10 +57,8 @@
   "dataset.error.forbidden": "Der Zugriff auf diese Ressource ist eingeschränkt",
   "dataset.error.http": "Die Daten konnten aufgrund eines HTTP-Fehlers nicht geladen werden: \"{ info }\"",
   "dataset.error.network": "Die Daten konnten aufgrund eines Netzwerkfehlers oder CORS-Beschränkungen nicht geladen werden: \"{ info }\"",
-  "dataset.error.parse": "Die Daten wurden geladen, konnten aber nicht gelesen werden: \"{ info }\"",
   "dataset.error.restrictedAccess": "",
   "dataset.error.unknown": "Die Daten können nicht angezeigt werden: \"{ info }\"",
-  "dataset.error.unsupportedType": "Der folgende Inhaltstyp wird nicht unterstützt: \"{ info }\"",
   "daterange.filter.from": "",
   "daterange.filter.period": "",
   "daterange.filter.to": "",
@@ -642,6 +640,7 @@
   "stac.filter.enable": "",
   "stac.filter.reset": "",
   "stac.results.noResults": "Ihre Suchfilter lieferten keine Ergebnisse",
+  "stac.unreachable.unknown": "Der Dienst konnte nicht erreicht werden",
   "table.loading.data": "Daten werden geladen...",
   "table.object.count": "Objekte in diesem Datensatz",
   "table.paginator.firstPage": "Erste Seite",
@@ -651,6 +650,7 @@
   "table.paginator.previousPage": "Vorherige Seite",
   "table.paginator.rangeLabel": "{startIndex} - {endIndex} von {length}",
   "table.select.data": "Datenquelle",
+  "tms.unreachable.unknown": "Der Dienst konnte nicht erreicht werden",
   "tooltip.html.copy": "HTML kopieren",
   "tooltip.id.copy": "Eindeutige Kennung kopieren",
   "tooltip.url.copy": "URL kopieren",
@@ -661,5 +661,7 @@
   "wfs.geojsongml.notsupported": "Dieser Dienst unterstützt das GeoJSON- oder GML-Format nicht",
   "wfs.unreachable.cors": "Der Dienst konnte aufgrund von CORS-Beschränkungen nicht erreicht werden",
   "wfs.unreachable.http": "Der Dienst hat einen HTTP-Fehler zurückgegeben",
-  "wfs.unreachable.unknown": "Der Dienst konnte nicht erreicht werden"
+  "wfs.unreachable.parse": "Die Daten wurden geladen, konnten aber nicht gelesen werden: \"{ info }\"",
+  "wfs.unreachable.unknown": "Der Dienst konnte nicht erreicht werden",
+  "wfs.unreachable.unsupportedType": "Der folgende Inhaltstyp wird nicht unterstützt: \"{ info }\""
 }

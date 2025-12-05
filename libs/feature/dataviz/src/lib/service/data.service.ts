@@ -33,18 +33,16 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 
+marker('wfs.unreachable.unknown')
 marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')
-marker('dataset.error.forbidden')
-marker('wfs.unreachable.unknown')
+marker('wfs.unreachable.parse')
+marker('wfs.unreachable.unsupportedType')
 marker('wfs.featuretype.notfound')
 marker('wfs.geojsongml.notsupported')
 marker('ogc.unreachable.unknown')
-marker('dataset.error.network')
-marker('dataset.error.http')
-marker('dataset.error.parse')
-marker('dataset.error.unsupportedType')
-marker('dataset.error.unknown')
+marker('tms.unreachable.unknown')
+marker('stac.unreachable.unknown')
 
 interface WfsDownloadUrls {
   all: { [format: string]: string }
@@ -64,21 +62,21 @@ export class DataService {
     ).pipe(
       catchError((error: FetchError | Error) => {
         if (error instanceof Error) {
-          throw new Error(`wfs.unreachable.unknown`)
+          throw new Error('wfs.unreachable.unknown')
         } else {
           if (error.type === 'network') {
-            throw new Error(`wfs.unreachable.cors`)
+            throw new Error('wfs.unreachable.cors')
           }
           if (error.type === 'http') {
-            throw new Error(`wfs.unreachable.http`)
+            throw new Error('wfs.unreachable.http')
           }
           if (error.type === 'parse') {
-            throw new Error(`wfs.unreachable.parse`)
+            throw new Error('wfs.unreachable.parse')
           }
           if (error.type === 'unsupportedType') {
-            throw new Error(`wfs.unreachable.unsupportedType`)
+            throw new Error('wfs.unreachable.unsupportedType')
           } else {
-            throw new Error(`wfs.unreachable.unknown`)
+            throw new Error('wfs.unreachable.unknown')
           }
         }
       })
@@ -254,7 +252,7 @@ export class DataService {
     return await StacEndpoint.getItemsFromUrl(url, options)
       .then((response) => response)
       .catch(() => {
-        throw new Error(`ogc.unreachable.unknown`)
+        throw new Error(`stac.unreachable.unknown`)
       })
   }
 
@@ -266,7 +264,7 @@ export class DataService {
       tmsLink.url.toString().replace(/\/?$/, `/${tmsLink.name}`)
     )
     const tileMaps = await endpoint.allTileMaps.catch(() => {
-      throw new Error(`ogc.unreachable.unknown`)
+      throw new Error(`tms.unreachable.unknown`)
     })
     if (!tileMaps?.length) return null
 

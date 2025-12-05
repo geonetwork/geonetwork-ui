@@ -57,10 +57,8 @@
   "dataset.error.forbidden": "L'accesso a questa risorsa è limitato",
   "dataset.error.http": "Il caricamento dei dati non è riuscito a causa di un errore HTTP: \"{info}\"",
   "dataset.error.network": "Il caricamento dei dati non è riuscito a causa di un errore di rete o di limitazioni CORS: \"{info}\"",
-  "dataset.error.parse": "I dati sono stati caricati ma la decodifica non è riuscita: \"{info}\"",
   "dataset.error.restrictedAccess": "L'accesso a questa risorsa è limitato",
   "dataset.error.unknown": "Impossibile visualizzare i dati: \"{info}\"",
-  "dataset.error.unsupportedType": "Il seguente tipo di contenuto non è supportato: \"{info}\"",
   "daterange.filter.from": "",
   "daterange.filter.period": "",
   "daterange.filter.to": "",
@@ -642,6 +640,7 @@
   "stac.filter.enable": "",
   "stac.filter.reset": "",
   "stac.results.noResults": "",
+  "stac.unreachable.unknown": "Il servizio non è accessibile",
   "table.loading.data": "Caricamento dei dati...",
   "table.object.count": "record in questi dati",
   "table.paginator.firstPage": "Prima pagina",
@@ -651,6 +650,7 @@
   "table.paginator.previousPage": "Pagina precedente",
   "table.paginator.rangeLabel": "{startIndex} - {endIndex} di {total}",
   "table.select.data": "Sorgente dati",
+  "tms.unreachable.unknown": "Il servizio non è accessibile",
   "tooltip.html.copy": "Copiare il HTML",
   "tooltip.id.copy": "Copiare l'identificatore unico",
   "tooltip.url.copy": "Copiare l'URL",
@@ -661,5 +661,7 @@
   "wfs.geojsongml.notsupported": "Il servizio non supporta il formato GeoJSON o GML",
   "wfs.unreachable.cors": "Il servizio non è accessibile a causa di limitazioni CORS",
   "wfs.unreachable.http": "Il servizio ha restituito un errore HTTP",
-  "wfs.unreachable.unknown": "Il servizio non è accessibile"
+  "wfs.unreachable.parse": "I dati sono stati caricati ma la decodifica non è riuscita: \"{info}\"",
+  "wfs.unreachable.unknown": "Il servizio non è accessibile",
+  "wfs.unreachable.unsupportedType": "Il seguente tipo di contenuto non è supportato: \"{info}\""
 }
