@@ -88,10 +88,12 @@ export class DatahubRouterService {
       {
         path: `${ROUTER_ROUTE_SERVICE}/:metadataUuid`,
         component: RecordPageComponent,
+        title: 'datahub.pageTitle.metadata',
       },
       {
         path: `${ROUTER_ROUTE_REUSE}/:metadataUuid`,
         component: RecordPageComponent,
+        title: 'datahub.pageTitle.metadata',
       },
       {
         path: `${ROUTER_ROUTE_ORGANIZATION}/:name`,
