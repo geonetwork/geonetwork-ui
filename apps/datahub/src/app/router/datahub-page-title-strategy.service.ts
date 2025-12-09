@@ -2,16 +2,9 @@ import { inject, Injectable } from '@angular/core'
 import { Title } from '@angular/platform-browser'
 import { RouterStateSnapshot, TitleStrategy } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { catchError, combineLatest, forkJoin, of, take } from 'rxjs'
+import { catchError, combineLatest, of } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { TitleService } from './datahub-title.service'
-
-marker('datahub.pageTitle.home')
-marker('datahub.pageTitle.recordSearch')
-marker('datahub.pageTitle.organizations')
-marker('datahub.pageTitle.metadata')
-marker('datahub.pageTitle.organization')
 
 @Injectable()
 export class DatahubTemplatePageTitleStrategy extends TitleStrategy {
@@ -27,11 +20,7 @@ export class DatahubTemplatePageTitleStrategy extends TitleStrategy {
   override updateTitle(routerState: RouterStateSnapshot) {
     const pageTitle = this.buildTitle(routerState)
 
-    const useEntityTitle =
-      pageTitle === 'datahub.pageTitle.metadata' ||
-      pageTitle === 'datahub.pageTitle.organization'
-
-    if (!useEntityTitle) {
+    if (!(pageTitle === 'entityTitle')) {
       this.titleService.setTitle(null)
     }
 
