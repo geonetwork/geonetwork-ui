@@ -17,7 +17,7 @@ import { RecordMetadataComponent } from '../record-metadata/record-metadata.comp
 import { HeaderRecordComponent } from '../header-record/header-record.component'
 import { CommonModule } from '@angular/common'
 import { TitleService } from '../../router/datahub-title.service'
-import { tap } from 'rxjs'
+import { Subscription, tap } from 'rxjs'
 
 @Component({
   selector: 'datahub-record-page',
@@ -35,7 +35,7 @@ import { tap } from 'rxjs'
 export class RecordPageComponent implements OnInit, OnDestroy {
   mdViewFacade = inject(MdViewFacade)
   titleService = inject(TitleService)
-
+  subscription: Subscription
   metadataQualityDisplay: boolean
 
   constructor() {
@@ -46,7 +46,7 @@ export class RecordPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.mdViewFacade.metadata$
+    this.subscription = this.mdViewFacade.metadata$
       .pipe(
         tap((metadata) => {
           if (metadata) {
@@ -59,5 +59,6 @@ export class RecordPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     document.documentElement.classList.remove('record-page-active')
+    this.subscription.unsubscribe()
   }
 }

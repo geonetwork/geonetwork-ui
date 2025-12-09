@@ -27,6 +27,14 @@ export class DatahubTemplatePageTitleStrategy extends TitleStrategy {
   override updateTitle(routerState: RouterStateSnapshot) {
     const pageTitle = this.buildTitle(routerState)
 
+    const useEntityTitle =
+      pageTitle === 'datahub.pageTitle.metadata' ||
+      pageTitle === 'datahub.pageTitle.organization'
+
+    if (!useEntityTitle) {
+      this.titleService.setTitle(null)
+    }
+
     if (pageTitle !== undefined) {
       combineLatest({
         titlePattern: this.platformService
