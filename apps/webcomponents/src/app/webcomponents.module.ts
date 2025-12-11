@@ -37,6 +37,7 @@ import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { AppComponent } from './app.component'
 import { BaseComponent } from './components/base.component'
+import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { GnAggregatedRecordsComponent } from './components/gn-aggregated-records/gn-aggregated-records.component'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
 import { GnDatasetViewMapComponent } from './components/gn-dataset-view-map/gn-dataset-view-map.component'
@@ -102,6 +103,9 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
       StoreDevtoolsModule.instrument({ connectInZone: true }),
       EffectsModule.forRoot()
     ),
+    // Global providers for shared search state
+    SearchFacade,
+    SearchService,
     {
       provide: OverlayContainer,
       useClass: WebcomponentOverlayContainer,

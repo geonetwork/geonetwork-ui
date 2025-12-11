@@ -16,30 +16,59 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
   styleUrls: ['./gn-search-input.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
-  providers: [SearchFacade, SearchService],
   standalone: false,
 })
 export class GnSearchInputComponent extends BaseComponent {
   @Input() forceTrackPosition = ''
-  @Input() openOnSearch: string
-  @Input() openOnSelect: string
+  @Input({ alias: 'open-on-search' }) openOnSearch: string
+  @Input({ alias: 'open-on-select' }) openOnSelect: string
   @Input() placeholder?: string
   @ViewChild('searchInput') searchInput: FuzzySearchComponent
 
   search(any: string) {
     if (this.openOnSearch) {
-      const landingPage = this.openOnSearch.replace(/\$\{search}/, any)
-      window.open(landingPage, '_self').focus()
+      this.facade.updateFilters({ any })
+
+      const searchTerm = encodeURIComponent(any)
+      const landingPage = this.openOnSearch.replace(
+        /\$\{search}/g,
+        searchTerm
+      ).replace(
+        /\$\{q}/g,
+        searchTerm
+      )
+
+      setTimeout(() => {
+        window.location.href = landingPage
+      }, 100)
+      return
     }
+
+    this.facade.updateFilters({ any })
   }
 
   select(record: CatalogRecord) {
     if (this.openOnSelect) {
+      this.facade.updateFilters({ any: record.title })
+
+      const searchTerm = encodeURIComponent(record.title)
       const landingPage = this.openOnSelect.replace(
-        /\$\{uuid}/,
+        /\$\{uuid}/g,
         record.uniqueIdentifier
+      ).replace(
+        /\$\{search}/g,
+        searchTerm
+      ).replace(
+        /\$\{q}/g,
+        searchTerm
       )
-      window.open(landingPage, '_self').focus()
+
+      setTimeout(() => {
+        window.location.href = landingPage
+      }, 100)
+      return
     }
+
+    this.facade.updateFilters({ any: record.title })
   }
 }
