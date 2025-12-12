@@ -3,11 +3,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Inject,
   InjectionToken,
   Input,
+  OnDestroy,
   OnInit,
-  Optional,
+  inject,
 } from '@angular/core'
 import { MatTabsModule } from '@angular/material/tabs'
 import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
@@ -32,6 +32,7 @@ import {
   map,
   of,
   startWith,
+  Subscription,
   switchMap,
   take,
 } from 'rxjs'
@@ -62,7 +63,16 @@ export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
     TranslatePipe,
   ],
 })
-export class RecordDataPreviewComponent implements OnInit {
+export class RecordDataPreviewComponent implements OnInit, OnDestroy {
+  metadataViewFacade = inject(MdViewFacade)
+  private dataService = inject(DataService)
+  private maxFeatureCount = Number(
+    inject(MAX_FEATURE_COUNT, { optional: true })
+  )
+  reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
+  private platformServiceInterface = inject(PlatformServiceInterface)
+  private cdr = inject(ChangeDetectorRef)
+
   @Input()
   set recordUuid(value: string) {
     this.recordUuid$.next(value)
@@ -87,6 +97,7 @@ export class RecordDataPreviewComponent implements OnInit {
 
   private readonly VIEW_PRIORITY = ['map', 'table', 'stac'] as const
 
+  subscription: Subscription
   selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
   selectedView$ = new BehaviorSubject(null)
   selectedIndex$ = new BehaviorSubject(0)
@@ -148,7 +159,17 @@ export class RecordDataPreviewComponent implements OnInit {
         ? this.platformServiceInterface.getFileContent(configAttachment.url)
         : of(null)
     }),
-    map((config: DatavizConfigModel) => config),
+    map((config) => {
+      return config?.source && typeof config.source.url === 'string'
+        ? ({
+            ...config,
+            source: {
+              ...config.source,
+              url: new URL(config.source.url as string),
+            },
+          } as DatavizConfigModel)
+        : (config as DatavizConfigModel)
+    }),
     catchError(() => of(null))
   )
 
@@ -179,21 +200,8 @@ export class RecordDataPreviewComponent implements OnInit {
     })
   )
 
-  constructor(
-    public metadataViewFacade: MdViewFacade,
-    private dataService: DataService,
-    @Inject(MAX_FEATURE_COUNT)
-    @Optional()
-    protected maxFeatureCount: number,
-    @Inject(REUSE_FORM_URL)
-    @Optional()
-    public reuseFormUrl: string,
-    private platformServiceInterface: PlatformServiceInterface,
-    private cdr: ChangeDetectorRef
-  ) {}
-
   ngOnInit() {
-    combineLatest([
+    this.subscription = combineLatest([
       this.displayMap$,
       this.displayData$,
       this.displayStac$,
@@ -201,7 +209,6 @@ export class RecordDataPreviewComponent implements OnInit {
       this.isMobile$,
     ])
       .pipe(
-        take(1),
         map(([displayMap, displayData, displayStac, config, isMobile]) => {
           const availableViews = this.getAvailableViews(
             displayMap,
@@ -216,6 +223,12 @@ export class RecordDataPreviewComponent implements OnInit {
       .subscribe(({ selectedView, config }) => {
         this.applyViewConfiguration(selectedView, config)
       })
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
   }
 
   private getAvailableViews(
@@ -323,9 +336,6 @@ export class RecordDataPreviewComponent implements OnInit {
   onTabIndexChange(index: number): void {
     const view = this.views[index - 1] ?? 'chart'
     this.selectedView$.next(view)
-    setTimeout(() => {
-      window.dispatchEvent(new Event('resize'))
-    }, 0)
   }
   onSelectedLinkChange(link: DatasetOnlineResource) {
     this.selectedLink$.next(link)

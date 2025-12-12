@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { type Locale } from 'date-fns/locale'
 import { formatDistance } from 'date-fns/formatDistance'
@@ -9,11 +9,11 @@ const DEFAULT_LANGUAGE = 'en'
   providedIn: 'root',
 })
 export class DateService {
+  private translateService = inject(TranslateService)
+
   dateLocales = import('@geonetwork-ui/util/i18n/date-locales').then(
     (obj) => obj.default
   )
-
-  constructor(private translateService: TranslateService) {}
 
   private getDateObject(date: Date | string): Date {
     if (typeof date === 'string') {

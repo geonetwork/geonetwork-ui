@@ -3,8 +3,7 @@ import {
   ROUTER_ROUTE_SEARCH,
   RouterFacade,
 } from '@geonetwork-ui/feature/router'
-import { readFirst } from '@nx/angular/testing'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import {
   ROUTER_ROUTE_NEWS,
   ROUTER_ROUTE_ORGANIZATIONS,
@@ -59,7 +58,7 @@ describe('NavigationMenuComponent', () => {
 
   describe('should display activeLink$', () => {
     it('displays initially activeLabel for news', async () => {
-      const activeLabel = (await readFirst(component.activeLink$)).label
+      const activeLabel = (await firstValueFrom(component.activeLink$)).label
       expect(activeLabel).toEqual('datahub.header.news')
     })
     describe('navigate to search route', () => {
@@ -69,7 +68,7 @@ describe('NavigationMenuComponent', () => {
         })
       })
       it('displays activeLabel for search', async () => {
-        const activeLabel = (await readFirst(component.activeLink$)).label
+        const activeLabel = (await firstValueFrom(component.activeLink$)).label
         expect(activeLabel).toEqual('datahub.header.datasets')
       })
     })
@@ -80,7 +79,7 @@ describe('NavigationMenuComponent', () => {
         })
       })
       it('displays activeLabel for organisations', async () => {
-        const activeLabel = (await readFirst(component.activeLink$)).label
+        const activeLabel = (await firstValueFrom(component.activeLink$)).label
         expect(activeLabel).toEqual('datahub.header.organizations')
       })
     })
@@ -91,7 +90,7 @@ describe('NavigationMenuComponent', () => {
         })
       })
       it('displays empty string as activeLabel', async () => {
-        const activeLabel = (await readFirst(component.activeLink$)).label
+        const activeLabel = (await firstValueFrom(component.activeLink$)).label
         expect(activeLabel).toEqual('')
       })
     })

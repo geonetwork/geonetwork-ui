@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import {
   getLinkId,
@@ -41,6 +42,8 @@ import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
   ],
 })
 export class DataViewComponent {
+  private mdViewFacade = inject(MdViewFacade)
+
   @Input() mode: 'table' | 'chart'
   @Input() displaySource = true
   @Input() set exceedsLimit(value: boolean) {
@@ -56,7 +59,11 @@ export class DataViewComponent {
       this.linkSelected.emit(this.selectedLink$.value)
     }
   }
-  @Input() set datavizConfig(value: any) {
+  @Input() set datavizConfig(value: {
+    view?: string
+    source?: DatasetOnlineResource
+    chartConfig?: DatavizChartConfigModel
+  }) {
     if ((value && value.view === 'table') || value.view === 'chart') {
       this._selectedView = value.view
     }
@@ -108,8 +115,6 @@ export class DataViewComponent {
   hidePreview$ = this.excludeWfs$.pipe(
     map((excludeWfs) => this.mode === 'chart' && excludeWfs)
   )
-
-  constructor(private mdViewFacade: MdViewFacade) {}
 
   setChartConfig(event: DatavizChartConfigModel) {
     this.mdViewFacade.setChartConfig(event)

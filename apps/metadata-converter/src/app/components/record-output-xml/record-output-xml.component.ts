@@ -4,6 +4,7 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core'
   selector: 'gn-ui-record-output-xml',
   templateUrl: './record-output-xml.component.html',
   styleUrls: ['./record-output-xml.component.css'],
+  standalone: false,
 })
 export class RecordOutputXmlComponent {
   @Input() set recordXml(value: string) {

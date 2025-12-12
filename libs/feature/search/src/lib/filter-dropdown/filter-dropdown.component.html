@@ -1,12 +1,12 @@
-<gn-ui-date-range-dropdown
-  *ngIf="fieldType === 'dateRange'; else multiselect"
-  [title]="title"
-  [startDate]="(selectedDateRange$ | async)?.start"
-  [endDate]="(selectedDateRange$ | async)?.end"
-  (startDateChange)="onStartDateChange($event)"
-  (endDateChange)="onEndDateChange($event)"
-></gn-ui-date-range-dropdown>
-<ng-template #multiselect>
+@if (fieldType === 'dateRange') {
+  <gn-ui-date-range-dropdown
+    [title]="title"
+    [startDate]="(selectedDateRange$ | async)?.start"
+    [endDate]="(selectedDateRange$ | async)?.end"
+    (startDateChange)="onStartDateChange($event)"
+    (endDateChange)="onEndDateChange($event)"
+  ></gn-ui-date-range-dropdown>
+} @else {
   <gn-ui-dropdown-multiselect
     class="w-full"
     [title]="title"
@@ -18,4 +18,4 @@
     [attr.data-cy-field]="fieldName"
   >
   </gn-ui-dropdown-multiselect>
-</ng-template>
+}

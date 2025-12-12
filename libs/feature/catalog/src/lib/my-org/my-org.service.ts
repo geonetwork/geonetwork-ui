@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { combineLatest, map, Observable } from 'rxjs'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
@@ -9,6 +9,9 @@ import { shareReplay } from 'rxjs/operators'
   providedIn: 'root',
 })
 export class MyOrgService {
+  private platformService = inject(PlatformServiceInterface)
+  private orgService = inject(OrganizationsServiceInterface)
+
   myOrgData$: Observable<{
     orgName: string
     logoUrl: string
@@ -17,10 +20,7 @@ export class MyOrgService {
     userList: UserModel[]
   }>
 
-  constructor(
-    private platformService: PlatformServiceInterface,
-    private orgService: OrganizationsServiceInterface
-  ) {
+  constructor() {
     this.myOrgData$ = combineLatest([
       this.platformService.getMe(),
       this.platformService.getUsers(),

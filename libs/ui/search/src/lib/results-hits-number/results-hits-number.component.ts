@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import { Component, Input } from '@angular/core'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 
@@ -6,7 +5,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
   selector: 'gn-ui-results-hits-number',
   templateUrl: './results-hits-number.component.html',
   standalone: true,
-  imports: [CommonModule, TranslatePipe, TranslateDirective],
+  imports: [TranslatePipe, TranslateDirective],
 })
 export class ResultsHitsNumberComponent {
   @Input() hits: number

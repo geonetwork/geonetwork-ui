@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  inject,
+} from '@angular/core'
 import { BehaviorSubject, Observable, of } from 'rxjs'
 import {
   catchError,
@@ -37,6 +42,9 @@ import { CommonModule } from '@angular/common'
   standalone: true,
 })
 export class TableViewComponent {
+  private dataService = inject(DataService)
+  private translateService = inject(TranslateService)
+
   featureAttributes = []
   @Input() featureCatalog: DatasetFeatureCatalog
   @Input() cacheActive = true
@@ -71,11 +79,6 @@ export class TableViewComponent {
     startWith(undefined),
     shareReplay(1)
   )
-
-  constructor(
-    private dataService: DataService,
-    private translateService: TranslateService
-  ) {}
 
   getDatasetReader(link: DatasetOnlineResource): Observable<BaseReader> {
     return this.dataService.getDataset(link, this.cacheActive)

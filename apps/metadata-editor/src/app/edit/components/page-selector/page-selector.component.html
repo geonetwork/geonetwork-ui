@@ -2,9 +2,12 @@
   class="w-full flex flex-row items-center gap-[8px]"
   data-test="pageSelectorButtons"
 >
-  <ng-container
-    *ngFor="let page of pages$ | async; let index = index; let isLast = last"
-  >
+  @for (
+    page of pages$ | async;
+    track page;
+    let index = $index;
+    let isLast = $last
+  ) {
     <gn-ui-button
       (buttonClick)="pageSectionClickHandler(index)"
       class="flex flex-row items-center"
@@ -28,9 +31,8 @@
         {{ page.labelKey }}
       </div>
     </gn-ui-button>
-    <div
-      *ngIf="!isLast"
-      class="w-10 mr-[8px] border-t-[2px] border-gray-500"
-    ></div>
-  </ng-container>
+    @if (!isLast) {
+      <div class="w-10 mr-[8px] border-t-[2px] border-gray-500"></div>
+    }
+  }
 </div>

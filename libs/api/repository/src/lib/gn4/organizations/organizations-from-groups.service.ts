@@ -56,10 +56,12 @@ export class OrganizationsFromGroupsService
   }
 
   constructor(
+    /* eslint-disable @angular-eslint/prefer-inject */
     private esService: ElasticsearchService,
     private searchApiService: SearchApiService,
     private groupsApiService: GroupsApiService,
     private translateService: TranslateService
+    /* eslint-enable @angular-eslint/prefer-inject */
   ) {}
 
   private mapGroups(groupBuckets: any[], groups: GroupApiModel[]) {

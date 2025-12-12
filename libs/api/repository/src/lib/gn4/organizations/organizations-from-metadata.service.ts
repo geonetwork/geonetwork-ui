@@ -118,11 +118,13 @@ export class OrganizationsFromMetadataService
   )
 
   constructor(
+    /* eslint-disable @angular-eslint/prefer-inject */
     private esService: ElasticsearchService,
     private searchApiService: SearchApiService,
     private groupsApiService: GroupsApiService,
     private platformService: PlatformServiceInterface,
     private translateService: TranslateService
+    /* eslint-enable @angular-eslint/prefer-inject */
   ) {}
 
   private get langIndex() {

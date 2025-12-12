@@ -505,11 +505,15 @@ export class ResourceTypeLegacyField extends TranslatedSearchField {
 
 export class RecordKindField extends SimpleSearchField {
   TYPE_MAPPING = {
-    dataset: ['dataset', 'series', 'featureCatalog'],
+    dataset: ['dataset', 'series', 'featureCatalog', 'document'],
     service: ['service'],
-    reuse: Object.entries(PossibleResourceTypes)
-      .filter(([_, v]) => v === 'reuse')
-      .map(([k]) => k), // = ['application', 'map', 'staticMap', 'interactiveMap', ...]
+    reuse: [
+      ...Object.entries(PossibleResourceTypes)
+        .filter(([_, v]) => v === 'reuse')
+        .map(([k]) => k), // = ['application', 'map', 'staticMap', 'interactiveMap', ...]
+      'dataset', // allow datasets and documents to be filtered as 'reuse' by cl_presentationForm
+      'document',
+    ],
   }
 
   constructor(injector: Injector) {
@@ -517,38 +521,25 @@ export class RecordKindField extends SimpleSearchField {
   }
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {
-    return this.repository.aggregate(this.getAggregations()).pipe(
-      map(
-        (response) =>
-          (response[this.esFieldName] as AggregationBuckets).buckets || []
-      ),
-      map((buckets: TermBucket[]) => {
-        const counts = buckets.reduce(
-          (acc, { term, count }) => {
-            const value = term.toString()
-            const key = this.TYPE_MAPPING.reuse.includes(value)
-              ? 'reuse'
-              : this.TYPE_MAPPING.dataset.includes(value)
-                ? 'dataset'
-                : value
-
-            acc[key] = (acc[key] || 0) + count
-            return acc
-          },
-          {} as Record<string, number>
-        )
-
-        return Object.keys(this.TYPE_MAPPING).map((type) => ({
-          label: type,
-          value: type,
-          count: counts[type] ?? 0,
-        }))
-      })
-    )
+    // simplified as available values now depend on 'resourceType' and 'cl_presentationForm' fields
+    return of([
+      {
+        label: 'dataset',
+        value: 'dataset',
+      },
+      {
+        label: 'service',
+        value: 'service',
+      },
+      {
+        label: 'reuse',
+        value: 'reuse',
+      },
+    ])
   }
 
   getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
-    const filters = {
+    const filters: FieldFilters = {
       [this.esFieldName]: values.reduce((acc, value) => {
         if (value === '') return { ...acc, [value]: true }
 
@@ -557,6 +548,19 @@ export class RecordKindField extends SimpleSearchField {
 
         return acc
       }, {}),
+    }
+
+    const presentationFormFilter = {}
+    if (values.includes('reuse') && !values.includes('dataset')) {
+      presentationFormFilter['mapDigital'] = true
+      presentationFormFilter['mapHardcopy'] = true
+    } else if (values.includes('dataset') && !values.includes('reuse')) {
+      presentationFormFilter['mapDigital'] = false
+      presentationFormFilter['mapHardcopy'] = false
+    }
+
+    if (Object.keys(presentationFormFilter).length > 0) {
+      filters['cl_presentationForm.key'] = presentationFormFilter
     }
 
     return of(filters)

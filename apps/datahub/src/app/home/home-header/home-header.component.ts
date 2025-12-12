@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  inject,
+} from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   ROUTER_ROUTE_SEARCH,
@@ -68,6 +73,12 @@ marker('datahub.header.popularRecords')
   ],
 })
 export class HomeHeaderComponent {
+  routerFacade = inject(RouterFacade)
+  searchFacade = inject(SearchFacade)
+  private searchService = inject(SearchService)
+  private platformService = inject(PlatformServiceInterface)
+  private fieldsService = inject(FieldsService)
+
   @Input() expandRatio: number
 
   backgroundCss =
@@ -81,14 +92,6 @@ export class HomeHeaderComponent {
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
   bannerKey = 'application-banner'
   translatedBannerMessage$ = this.platformService.translateKey(this.bannerKey)
-
-  constructor(
-    public routerFacade: RouterFacade,
-    public searchFacade: SearchFacade,
-    private searchService: SearchService,
-    private platformService: PlatformServiceInterface,
-    private fieldsService: FieldsService
-  ) {}
 
   displaySortBadges$ = this.routerFacade.currentRoute$.pipe(
     map(

@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core'
 import { Observable } from 'rxjs'
 import { map, share } from 'rxjs/operators'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
@@ -20,13 +27,13 @@ import { TranslatePipe } from '@ngx-translate/core'
   imports: [CommonModule, RecordMetricComponent, TranslatePipe],
 })
 export class RecordsMetricsComponent implements OnInit {
+  private recordsRepository = inject(RecordsRepositoryInterface)
+
   @Input() field: string
   @Input() count = 10
   @Input() queryString = '+isTemplate:n'
   @Output() metricSelect = new EventEmitter<RecordMetric>()
   results$: Observable<TermBucket[]>
-
-  constructor(private recordsRepository: RecordsRepositoryInterface) {}
 
   ngOnInit(): void {
     this.results$ = this.recordsRepository

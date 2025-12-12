@@ -7,6 +7,7 @@ import {
   OnInit,
   Output,
   TemplateRef,
+  inject,
 } from '@angular/core'
 import {
   propagateToDocumentOnly,
@@ -20,13 +21,12 @@ import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-record-preview',
   template: '',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
 })
 export class RecordPreviewComponent implements OnInit, OnDestroy {
   @Input() record: CatalogRecord
@@ -54,7 +54,10 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
     return this.record.ownerOrganization
   }
 
-  constructor(protected elementRef: ElementRef) {}
+  constructor(
+    // eslint-disable-next-line @angular-eslint/prefer-inject
+    protected elementRef: ElementRef
+  ) {}
 
   ngOnInit(): void {
     this.abstract = removeWhitespace(stripHtml(this.record?.abstract))

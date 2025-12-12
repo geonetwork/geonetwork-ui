@@ -11,42 +11,44 @@
     {{ label | translate }}
     <span class="group-hover:text-black">({{ count }})</span>
   </label>
-  <div
-    *ngIf="!inverted"
-    class="shrink-0 cursor-pointer invisible group-hover:visible icon-exclude"
-    style="min-width: 20px"
-    (click)="toggleInverted()"
-  >
-    <!-- minus svg -->
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
+  @if (!inverted) {
+    <div
+      class="shrink-0 cursor-pointer invisible group-hover:visible icon-exclude"
+      style="min-width: 20px"
+      (click)="toggleInverted()"
     >
-      <path
-        fill-rule="evenodd"
-        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-        clip-rule="evenodd"
-      />
-    </svg>
-  </div>
-  <div
-    *ngIf="inverted"
-    class="shrink-0 cursor-pointer invisible group-hover:visible icon-include"
-    style="min-width: 20px"
-    (click)="toggleInverted()"
-  >
-    <!-- check svg -->
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
+      <!-- minus svg -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </div>
+  }
+  @if (inverted) {
+    <div
+      class="shrink-0 cursor-pointer invisible group-hover:visible icon-include"
+      style="min-width: 20px"
+      (click)="toggleInverted()"
     >
-      <path
-        fill-rule="evenodd"
-        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-        clip-rule="evenodd"
-      />
-    </svg>
-  </div>
+      <!-- check svg -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </div>
+  }
 </div>

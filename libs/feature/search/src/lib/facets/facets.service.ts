@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { LogService, parse, PARSE_DELIMITER } from '@geonetwork-ui/util/shared'
 import { FacetPath, ModelBlock, ModelItem } from '@geonetwork-ui/ui/search'
 import {
@@ -10,7 +10,7 @@ import {
   providedIn: 'root',
 })
 export class FacetsService {
-  constructor(private logger: LogService) {}
+  private logger = inject(LogService)
 
   createFacetModel(
     requestAggregations,

@@ -1,67 +1,71 @@
-<div
-  class="border border-gray-400 rounded-sm m-2 shadow-sm bg-white"
-  *ngIf="!isMissing"
->
-  <label class="block leading-tight text-right relative">
-    <span
-      class="absolute top-[0.25em] right-[0.5em] text-[0.9em] text-gray-700 uppercase pointer-events-none"
-      >{{ label }}</span
-    >
-    <input
-      *ngIf="isSimpleText"
-      type="text"
-      [readonly]="readonly"
-      [ngModel]="fieldValue"
-      (ngModelChange)="fieldValueChange.next($event)"
-    />
-    <input
-      *ngIf="isURL"
-      type="text"
-      [readonly]="readonly"
-      [ngModel]="fieldValue.toString()"
-      (ngModelChange)="fieldValueChange.next(toURL($event))"
-    />
-    <textarea
-      rows="4"
-      *ngIf="isRichText"
-      [readonly]="readonly"
-      [ngModel]="fieldValue"
-      (ngModelChange)="fieldValueChange.next($event)"
-    ></textarea>
-    <input
-      *ngIf="isDate"
-      type="datetime-local"
-      [readonly]="readonly"
-      [ngModel]="fieldValue?.toISOString().substring(0, 16)"
-      (ngModelChange)="fieldValueChange.next(toDate($event))"
-    />
-    <select
-      *ngIf="hasOptions"
-      [ngModel]="fieldValue"
-      (ngModelChange)="fieldValueChange.next($event)"
-    >
-      <option
-        *ngFor="let option of options"
-        [selected]="option === fieldValue"
-        [ngValue]="option"
+@if (!isMissing) {
+  <div class="border border-gray-400 rounded-sm m-2 shadow-sm bg-white">
+    <label class="block leading-tight text-right relative">
+      <span
+        class="absolute top-[0.25em] right-[0.5em] text-[0.9em] text-gray-700 uppercase pointer-events-none"
+        >{{ label }}</span
       >
-        {{ option }}
-      </option>
-    </select>
-    <input
-      *ngIf="isNumber"
-      type="number"
-      [readonly]="readonly"
-      [ngModel]="fieldValue"
-      (ngModelChange)="fieldValueChange.next(toNumber($event))"
-    />
-  </label>
-</div>
-<gn-ui-button
-  *ngIf="isMissing"
-  [type]="'outline'"
-  (buttonClick)="addValue()"
-  extraClass="m-2 py-[0.5em] px-[1em]"
->
-  <span><span class="opacity-70">Add value for</span> {{ label }}</span>
-</gn-ui-button>
+      @if (isSimpleText) {
+        <input
+          type="text"
+          [readonly]="readonly"
+          [ngModel]="fieldValue"
+          (ngModelChange)="fieldValueChange.next($event)"
+        />
+      }
+      @if (isURL) {
+        <input
+          type="text"
+          [readonly]="readonly"
+          [ngModel]="fieldValue.toString()"
+          (ngModelChange)="fieldValueChange.next(toURL($event))"
+        />
+      }
+      @if (isRichText) {
+        <textarea
+          rows="4"
+          [readonly]="readonly"
+          [ngModel]="fieldValue"
+          (ngModelChange)="fieldValueChange.next($event)"
+        ></textarea>
+      }
+      @if (isDate) {
+        <input
+          type="datetime-local"
+          [readonly]="readonly"
+          [ngModel]="fieldValue?.toISOString().substring(0, 16)"
+          (ngModelChange)="fieldValueChange.next(toDate($event))"
+        />
+      }
+      @if (hasOptions) {
+        <select
+          [ngModel]="fieldValue"
+          (ngModelChange)="fieldValueChange.next($event)"
+        >
+          @for (option of options; track option) {
+            <option [selected]="option === fieldValue" [ngValue]="option">
+              {{ option }}
+            </option>
+          }
+        </select>
+      }
+      @if (isNumber) {
+        <input
+          type="number"
+          [readonly]="readonly"
+          [ngModel]="fieldValue"
+          (ngModelChange)="fieldValueChange.next(toNumber($event))"
+        />
+      }
+    </label>
+  </div>
+}
+@if (isMissing) {
+  <gn-ui-button
+    [type]="'outline'"
+    (buttonClick)="addValue()"
+    extraClass="m-2 py-[0.5em] px-[1em]"
+  >
+    <span><span class="opacity-70">Add value for</span> {{ label }}</span>
+  </gn-ui-button>
+}

@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser'
 
 @Component({
   template: '<gn-ui-popup-alert>{{message}}</gn-ui-popup-alert>',
+  standalone: false,
 })
 class PopupAlertWrapperComponent {
   @Input() message

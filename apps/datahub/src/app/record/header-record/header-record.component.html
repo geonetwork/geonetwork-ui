@@ -34,22 +34,24 @@
               >
             </gn-ui-button>
             <div class="flex flex-row content-center gap-3">
-              <gn-ui-favorite-star
-                *ngIf="metadata?.uniqueIdentifier && !isAuthDisabled"
-                [record]="metadata"
-                [displayLabel]="(isMobile$ | async) ? false : true"
-                [displayCount]="false"
-                class="flex text-background content-center"
-                [buttonType]="'outline'"
-                [style.--gn-ui-button-color]="foregroundColor"
-                [style.--gn-ui-button-background]="'none'"
-                [style.--color-gray-300]="foregroundColor"
-              ></gn-ui-favorite-star>
-              <gn-ui-language-switcher
-                *ngIf="showLanguageSwitcher"
-                [style.--color-main]="foregroundColor"
-                [style.--color-gray-300]="foregroundColor"
-              ></gn-ui-language-switcher>
+              @if (metadata?.uniqueIdentifier && !isAuthDisabled) {
+                <gn-ui-favorite-star
+                  [record]="metadata"
+                  [displayLabel]="(isMobile$ | async) ? false : true"
+                  [displayCount]="false"
+                  class="flex text-background content-center"
+                  [buttonType]="'outline'"
+                  [style.--gn-ui-button-color]="foregroundColor"
+                  [style.--gn-ui-button-background]="'none'"
+                  [style.--color-gray-300]="foregroundColor"
+                ></gn-ui-favorite-star>
+              }
+              @if (showLanguageSwitcher) {
+                <gn-ui-language-switcher
+                  [style.--color-main]="foregroundColor"
+                  [style.--color-gray-300]="foregroundColor"
+                ></gn-ui-language-switcher>
+              }
             </div>
           </div>
           <div
@@ -57,30 +59,32 @@
           >
             <div class="sm:col-span-2 justify-center">
               <div class="flex flex-col gap-3">
-                <h1
-                  *ngIf="metadata"
-                  class="font-title text-[28px] max-w-screen-sm line-clamp-3"
-                  [style.color]="foregroundColor"
-                >
-                  {{ metadata.title }}
-                </h1>
-                <a
-                  *ngIf="
-                    metadata.kind === 'reuse' &&
-                    (reuseLinkUrl$ | async) as reuseLink
-                  "
-                  [href]="reuseLink"
-                  class="h-8 max-w-60 w-fit py-1 px-2 gn-ui-btn-primary"
-                  target="_blank"
-                >
-                  <span class="mt-1">{{
-                    'reuse.metadata.access' | translate
-                  }}</span>
-                  <ng-icon
-                    class="ml-2 text-[0.9em]"
-                    name="iconoirOpenNewWindow"
-                  ></ng-icon
-                ></a>
+                @if (metadata) {
+                  <h1
+                    class="font-title text-[28px] max-w-screen-sm line-clamp-3"
+                    [style.color]="foregroundColor"
+                  >
+                    {{ metadata.title }}
+                  </h1>
+                }
+                @if (
+                  metadata.kind === 'reuse' && (reuseLinkUrl$ | async);
+                  as reuseLink
+                ) {
+                  <a
+                    [href]="reuseLink"
+                    class="h-8 max-w-60 w-fit py-1 px-2 gn-ui-btn-primary"
+                    target="_blank"
+                  >
+                    <span class="mt-1">{{
+                      'reuse.metadata.access' | translate
+                    }}</span>
+                    <ng-icon
+                      class="ml-2 text-[0.9em]"
+                      name="iconoirOpenNewWindow"
+                    ></ng-icon
+                  ></a>
+                }
                 <div
                   class="flex flex-row flex-wrap items-center gap-4"
                   [style.color]="foregroundColor"
@@ -94,51 +98,52 @@
                     [styling]="'default'"
                     [record]="metadata"
                   ></gn-ui-geo-data-badge>
-                  <div
-                    *ngIf="
-                      resourceDate &&
-                      resourceDate.date &&
-                      metadata.kind !== 'service'
-                    "
-                  >
-                    <p class="text-sm">
-                      <span translate>{{ resourceDate.label }}</span
-                      >&nbsp;
-                      <span [gnUiHumanizeDate]="resourceDate.date"></span>
-                    </p>
-                  </div>
-                  <div
-                    *ngIf="metadata.kind === 'dataset' && metadata.status"
-                    class="flex flex-row gap-4 text-sm"
-                  >
-                    <p>•</p>
-                    <p
-                      [innerHTML]="
-                        'domain.record.status.' + metadata.status | translate
-                      "
-                    ></p>
-                  </div>
+                  @if (
+                    resourceDate &&
+                    resourceDate.date &&
+                    metadata.kind !== 'service'
+                  ) {
+                    <div>
+                      <p class="text-sm">
+                        <span translate>{{ resourceDate.label }}</span
+                        >&nbsp;
+                        <span [gnUiHumanizeDate]="resourceDate.date"></span>
+                      </p>
+                    </div>
+                  }
+                  @if (metadata.kind === 'dataset' && metadata.status) {
+                    <div class="flex flex-row gap-4 text-sm">
+                      <p>•</p>
+                      <p
+                        [innerHTML]="
+                          'domain.record.status.' + metadata.status | translate
+                        "
+                      ></p>
+                    </div>
+                  }
                 </div>
               </div>
             </div>
-            <gn-ui-image-overlay-preview
-              class="block h-[228px] w-full self-center"
-              [imageUrl]="thumbnailUrl$ | async"
-              (isPlaceholderShown)="showOverlay = !$event"
-              *ngIf="(thumbnailUrl$ | async) && showOverlay"
-            >
-            </gn-ui-image-overlay-preview>
+            @if ((thumbnailUrl$ | async) && showOverlay) {
+              <gn-ui-image-overlay-preview
+                class="block h-[228px] w-full self-center"
+                [imageUrl]="thumbnailUrl$ | async"
+                (isPlaceholderShown)="showOverlay = !$event"
+              >
+              </gn-ui-image-overlay-preview>
+            }
           </div>
         </div>
       </div>
-      <datahub-navigation-bar
-        *ngIf="(facade.isMetadataLoading$ | async) === false"
-        [metadata]="metadata"
-        [style.display]="-1 + (1 - expandRatio) * 2 < 1 ? 'none' : 'block'"
-        [style.pointer-events]="
-          -1 + (1 - expandRatio) * 2 < 1 ? 'none' : 'auto'
-        "
-      ></datahub-navigation-bar>
+      @if ((facade.isMetadataLoading$ | async) === false) {
+        <datahub-navigation-bar
+          [metadata]="metadata"
+          [style.display]="-1 + (1 - expandRatio) * 2 < 1 ? 'none' : 'block'"
+          [style.pointer-events]="
+            -1 + (1 - expandRatio) * 2 < 1 ? 'none' : 'auto'
+          "
+        ></datahub-navigation-bar>
+      }
     </header>
   </ng-template>
 </gn-ui-sticky-header>

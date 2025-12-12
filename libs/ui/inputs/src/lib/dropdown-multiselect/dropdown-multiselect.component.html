@@ -12,20 +12,22 @@
     <div class="text-left font-medium truncate py-1">
       {{ title }}
     </div>
-    <div
-      *ngIf="hasSelectedChoices"
-      class="gn-ui-multiselect-counter shrink-0 rounded-full font-bold text-[12px] w-5 h-5 flex items-center justify-center mr-1 selected-count"
-    >
-      {{ selected.length }}
-    </div>
+    @if (hasSelectedChoices) {
+      <div
+        class="gn-ui-multiselect-counter shrink-0 rounded-full font-bold text-[12px] w-5 h-5 flex items-center justify-center mr-1 selected-count"
+      >
+        {{ selected.length }}
+      </div>
+    }
   </div>
   <button class="h-6 w-6" data-cy="clearSelection">
-    <ng-icon
-      class="shrink-0 opacity-40 mr-1.5 hover:opacity-80 transition-colors clear-btn"
-      *ngIf="hasSelectedChoices && !overlayOpen"
-      (click)="clearSelection($event)"
-      name="matClose"
-    ></ng-icon>
+    @if (hasSelectedChoices && !overlayOpen) {
+      <ng-icon
+        class="shrink-0 opacity-40 mr-1.5 hover:opacity-80 transition-colors clear-btn"
+        (click)="clearSelection($event)"
+        name="matClose"
+      ></ng-icon>
+    }
   </button>
   <ng-icon
     [name]="overlayOpen ? 'matExpandLess' : 'matExpandMore'"
@@ -61,59 +63,64 @@
     <div
       class="border border-gray-300 rounded mb-2 mx-2 min-h-[44px] flex flex-row gap-[2px] flex-wrap p-2 focus-within:rounded focus-within:border-2 focus-within:border-primary"
     >
-      <button
-        type="button"
-        *ngFor="let selected of selectedChoices"
-        [title]="selected.label"
-        class="max-w-full bg-main text-white rounded pr-[7px] flex gap-1 items-center opacity-70 hover:opacity-100 focus:opacity-100 transition-opacity mb-1"
-        (click)="select(selected, false)"
-      >
-        <div class="text-sm truncate leading-[26px] px-2">
-          {{ selected.label }}
-        </div>
-        <div
-          class="flex items-center justify-center rounded-full bg-white text-main h-[13px] w-[13px] pt-px -mt-px shrink-0"
-        >
-          <ng-icon
-            name="matClose"
-            class="!h-[12px] !w-[11px] text-[12px]"
-          ></ng-icon>
-        </div>
-      </button>
-
-      <div *ngIf="allowSearch" class="w-[50%] relative grow shrink">
-        <input
-          #searchFieldInput
-          class="w-full px-2 truncate text-[14px] h-full overlaySearchInput focus:outline-none"
-          [(ngModel)]="searchInputValue"
-          [placeholder]="'multiselect.filter.placeholder' | translate"
-        />
+      @for (selected of selectedChoices; track selected) {
         <button
-          *ngIf="!!searchInputValue"
-          class="absolute top-1/2 -translate-y-1/2 right-0 px-[7px] leading-tight clear-search-input mr-2"
-          (click)="clearSearchInputValue($event)"
+          type="button"
+          [title]="selected.label"
+          class="max-w-full bg-main text-white rounded pr-[7px] flex gap-1 items-center opacity-70 hover:opacity-100 focus:opacity-100 transition-opacity mb-1"
+          (click)="select(selected, false)"
         >
-          <ng-icon class="!h-[10px] !w-[12px] text-[12px]" name="matClose">
-          </ng-icon>
+          <div class="text-sm truncate leading-[26px] px-2">
+            {{ selected.label }}
+          </div>
+          <div
+            class="flex items-center justify-center rounded-full bg-white text-main h-[13px] w-[13px] pt-px -mt-px shrink-0"
+          >
+            <ng-icon
+              name="matClose"
+              class="!h-[12px] !w-[11px] text-[12px]"
+            ></ng-icon>
+          </div>
         </button>
-      </div>
+      }
+
+      @if (allowSearch) {
+        <div class="w-[50%] relative grow shrink">
+          <input
+            #searchFieldInput
+            class="w-full px-2 truncate text-[14px] h-full overlaySearchInput focus:outline-none"
+            [(ngModel)]="searchInputValue"
+            [placeholder]="'multiselect.filter.placeholder' | translate"
+          />
+          @if (!!searchInputValue) {
+            <button
+              class="absolute top-1/2 -translate-y-1/2 right-0 px-[7px] leading-tight clear-search-input mr-2"
+              (click)="clearSearchInputValue($event)"
+            >
+              <ng-icon class="!h-[10px] !w-[12px] text-[12px]" name="matClose">
+              </ng-icon>
+            </button>
+          }
+        </div>
+      }
     </div>
 
-    <label
-      *ngFor="let choice of filteredChoicesByText"
-      [title]="choice.label"
-      class="flex px-5 py-1 w-full text-gray-900 cursor-pointer hover:text-primary-darkest hover:bg-gray-50 focus-within:text-primary-darkest focus-within:bg-gray-50 transition-colors"
-    >
-      <input
-        class="w-[18px] h-[18px] align-text-top shrink-0"
-        type="checkbox"
-        #checkBox
-        [checked]="isSelected(choice)"
-        (change)="select(choice, checkBox.checked)"
-      />
-      <span class="ml-[8px] text-[14px] truncate">
-        {{ choice.label }}
-      </span>
-    </label>
+    @for (choice of filteredChoicesByText; track choice) {
+      <label
+        [title]="choice.label"
+        class="flex px-5 py-1 w-full text-gray-900 cursor-pointer hover:text-primary-darkest hover:bg-gray-50 focus-within:text-primary-darkest focus-within:bg-gray-50 transition-colors"
+      >
+        <input
+          class="w-[18px] h-[18px] align-text-top shrink-0"
+          type="checkbox"
+          #checkBox
+          [checked]="isSelected(choice)"
+          (change)="select(choice, checkBox.checked)"
+        />
+        <span class="ml-[8px] text-[14px] truncate">
+          {{ choice.label }}
+        </span>
+      </label>
+    }
   </div>
 </ng-template>

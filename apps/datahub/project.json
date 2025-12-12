@@ -109,7 +109,8 @@
           "buildTarget": "datahub:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -131,7 +132,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/datahub"],
       "options": {
-        "jestConfig": "apps/datahub/jest.config.ts"
+        "jestConfig": "apps/datahub/jest.config.ts",
+        "tsConfig": "apps/datahub/tsconfig.spec.json"
       }
     },
     "docker-build": {

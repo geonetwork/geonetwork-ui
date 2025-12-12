@@ -6,6 +6,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { FilesDropDirective } from '../files-drop/files-drop.directive'
@@ -45,6 +46,8 @@ import { iconoirCloudUpload, iconoirFramePlusIn } from '@ng-icons/iconoir'
   ],
 })
 export class FileInputComponent {
+  private cd = inject(ChangeDetectorRef)
+
   @Input() maxSizeMB: number
   @Input() uploadProgress?: number
   @Output() fileChange: EventEmitter<File> = new EventEmitter()
@@ -57,8 +60,6 @@ export class FileInputComponent {
   get isUploadInProgress() {
     return this.uploadProgress !== undefined
   }
-
-  constructor(private cd: ChangeDetectorRef) {}
 
   getPrimaryText() {
     if (this.uploadProgress) {

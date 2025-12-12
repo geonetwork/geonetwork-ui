@@ -5,6 +5,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core'
 @Component({
   selector: 'gn-ui-inline-filter',
   template: '',
+  standalone: true,
 })
 class MockInlineFilterComponent {
   @Input() choices: any[] = []
@@ -18,7 +19,7 @@ describe('ResultsHitsSearchKindComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MockInlineFilterComponent],
+      imports: [MockInlineFilterComponent],
     }).compileComponents()
   })
 

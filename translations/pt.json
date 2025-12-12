@@ -1,5 +1,4 @@
 {
-  "": "",
   "Add Layer As": "",
   "Enter to search": "",
   "button.login": "",
@@ -601,6 +600,7 @@
   "search.filters.producerOrg": "",
   "search.filters.publicationYear": "",
   "search.filters.publisherOrg": "",
+  "search.filters.recordKind": "",
   "search.filters.recordKind.all": "Todos",
   "search.filters.recordKind.dataset": "",
   "search.filters.recordKind.reuse": "",
@@ -639,6 +639,7 @@
   "service.metadata.spatialExtent": "",
   "share.tab.permalink": "",
   "share.tab.webComponent": "",
+  "stac.filter.enable": "",
   "stac.filter.reset": "",
   "stac.results.noResults": "",
   "table.loading.data": "",

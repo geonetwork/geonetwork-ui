@@ -1,10 +1,9 @@
 <div class="flex flex-row items-center">
-  <span
-    class="align-text-top mr-1.5 mt-0.5"
-    data-test="favorite-count"
-    *ngIf="hasFavoriteCount && displayCount"
-    >{{ favoriteCount }}</span
-  >
+  @if (hasFavoriteCount && displayCount) {
+    <span class="align-text-top mr-1.5 mt-0.5" data-test="favorite-count">{{
+      favoriteCount
+    }}</span>
+  }
   <gn-ui-star-toggle
     [toggled]="isFavorite$ | async"
     (newValue)="toggleFavorite($event)"

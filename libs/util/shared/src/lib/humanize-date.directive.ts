@@ -1,4 +1,11 @@
-import { Renderer2, Directive, ElementRef, Input, OnInit } from '@angular/core'
+import {
+  Renderer2,
+  Directive,
+  ElementRef,
+  Input,
+  OnInit,
+  inject,
+} from '@angular/core'
 import { DateService } from './services/date.service'
 
 @Directive({
@@ -6,13 +13,11 @@ import { DateService } from './services/date.service'
   standalone: true,
 })
 export class GnUiHumanizeDateDirective implements OnInit {
-  @Input() gnUiHumanizeDate: Date | string
+  private dateService = inject(DateService)
+  private el = inject(ElementRef)
+  private renderer = inject(Renderer2)
 
-  constructor(
-    private dateService: DateService,
-    private el: ElementRef,
-    private renderer: Renderer2
-  ) {}
+  @Input() gnUiHumanizeDate: Date | string
 
   async ngOnInit() {
     await this.updateElement()

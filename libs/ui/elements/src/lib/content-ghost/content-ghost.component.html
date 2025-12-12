@@ -1,5 +1,10 @@
-<div
-  *ngIf="!showContent"
-  class="ghost bg-gray-100 rounded-lg relative overflow-hidden {{ ghostClass }}"
-></div>
-<ng-content *ngIf="showContent"></ng-content>
+@if (!showContent) {
+  <div
+    class="ghost bg-gray-100 rounded-lg relative overflow-hidden {{
+      ghostClass
+    }}"
+  ></div>
+}
+@if (showContent) {
+  <ng-content></ng-content>
+}

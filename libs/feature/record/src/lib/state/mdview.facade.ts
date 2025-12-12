@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import {
   catchError,
@@ -31,12 +31,10 @@ import { DataService } from '@geonetwork-ui/feature/dataviz'
  * To clear the current record use the `close()` method.
  */
 export class MdViewFacade {
-  constructor(
-    private store: Store,
-    public linkClassifier: LinkClassifierService,
-    private avatarService: AvatarServiceInterface,
-    public dataService: DataService
-  ) {}
+  private store = inject(Store)
+  linkClassifier = inject(LinkClassifierService)
+  private avatarService = inject(AvatarServiceInterface)
+  dataService = inject(DataService)
 
   isPresent$ = this.store.pipe(
     select(MdViewSelectors.getMetadataUuid),

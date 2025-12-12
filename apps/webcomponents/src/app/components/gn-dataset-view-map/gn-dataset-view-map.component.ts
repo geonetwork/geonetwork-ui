@@ -2,10 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Injector,
   Input,
   OnInit,
   ViewEncapsulation,
+  inject,
 } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
@@ -20,17 +20,15 @@ import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade],
+  standalone: false,
 })
 export class GnDatasetViewMapComponent extends BaseComponent implements OnInit {
-  constructor(
-    injector: Injector,
-    private mdViewFacade: MdViewFacade,
-    private changeDetector: ChangeDetectorRef
-  ) {
-    super(injector)
-  }
+  private mdViewFacade = inject(MdViewFacade)
+  private changeDetector = inject(ChangeDetectorRef)
+
   @Input() datasetId: string
   link: DatasetOnlineResource
+
   async init() {
     super.init()
     this.mdViewFacade.loadFull(this.datasetId)

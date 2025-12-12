@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { SourcesApiService } from '@geonetwork-ui/data-access/gn4'
 import { Observable } from 'rxjs'
 import { filter, map, shareReplay } from 'rxjs/operators'
@@ -10,14 +10,12 @@ import { toLang3 } from '@geonetwork-ui/util/i18n'
   providedIn: 'root',
 })
 export class SourcesService {
+  private sourcesApiService = inject(SourcesApiService)
+  private translateService = inject(TranslateService)
+
   sources$: Observable<CatalogSource[]> = (
     this.sourcesApiService.getSubPortals1() as Observable<CatalogSource[]>
   ).pipe(shareReplay())
-
-  constructor(
-    private sourcesApiService: SourcesApiService,
-    private translateService: TranslateService
-  ) {}
 
   getSourceLabel(uuid: string): Observable<string> {
     return this.sources$.pipe(

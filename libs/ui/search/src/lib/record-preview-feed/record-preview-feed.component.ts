@@ -1,20 +1,25 @@
-import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core'
-import { RecordPreviewComponent } from '../record-preview/record-preview.component'
-import { TranslateDirective, TranslateService } from '@ngx-translate/core'
-import Duration from 'duration-relativetimeformat'
+import { CommonModule } from '@angular/common'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+} from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import {
+  MarkdownParserComponent,
+  ThumbnailComponent,
+} from '@geonetwork-ui/ui/elements'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
+import { matFace } from '@ng-icons/material-icons/baseline'
 import {
   matCloudDownloadOutline,
   matHomeWorkOutline,
   matMapOutline,
 } from '@ng-icons/material-icons/outline'
-import { matFace } from '@ng-icons/material-icons/baseline'
-import {
-  MarkdownParserComponent,
-  ThumbnailComponent,
-} from '@geonetwork-ui/ui/elements'
-import { CommonModule } from '@angular/common'
+import { TranslateDirective, TranslateService } from '@ngx-translate/core'
+import Duration from 'duration-relativetimeformat'
+import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 
 marker('record.was.created.time')
 
@@ -26,7 +31,6 @@ marker('record.was.created.time')
   standalone: true,
   imports: [
     CommonModule,
-    RecordPreviewComponent,
     NgIcon,
     ThumbnailComponent,
     MarkdownParserComponent,
@@ -45,13 +49,17 @@ marker('record.was.created.time')
   ],
 })
 export class RecordPreviewFeedComponent extends RecordPreviewComponent {
+  protected elementRef: ElementRef
+  private translate = inject(TranslateService)
+
   timeFormat = new Duration(this.translate.currentLang, {})
 
-  constructor(
-    protected elementRef: ElementRef,
-    private translate: TranslateService
-  ) {
+  constructor() {
+    const elementRef = inject(ElementRef)
+
     super(elementRef)
+
+    this.elementRef = elementRef
   }
 
   get hasOrganization() {

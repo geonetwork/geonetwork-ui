@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { getFileFormat, getLinkPriority } from '@geonetwork-ui/util/shared'
 import { forkJoin, of } from 'rxjs'
@@ -20,10 +20,8 @@ import { DownloadsListComponent } from '@geonetwork-ui/ui/elements'
   imports: [CommonModule, DownloadsListComponent],
 })
 export class RecordDownloadsComponent {
-  constructor(
-    public facade: MdViewFacade,
-    private dataService: DataService
-  ) {}
+  facade = inject(MdViewFacade)
+  private dataService = inject(DataService)
 
   error: string = null
 

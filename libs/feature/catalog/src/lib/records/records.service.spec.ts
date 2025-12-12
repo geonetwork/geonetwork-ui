@@ -1,6 +1,7 @@
 import { RecordsService } from './records.service'
 import { of } from 'rxjs'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { TestBed } from '@angular/core/testing'
 
 class RecordsRepositoryMock {
   getMatchesCount = jest.fn(() => of(123))
@@ -11,8 +12,18 @@ describe('RecordsService', () => {
   let repository: RecordsRepositoryInterface
 
   beforeEach(() => {
-    repository = new RecordsRepositoryMock() as any
-    service = new RecordsService(repository)
+    repository =
+      new RecordsRepositoryMock() as unknown as RecordsRepositoryInterface
+
+    TestBed.configureTestingModule({
+      providers: [
+        RecordsService,
+        { provide: RecordsRepositoryInterface, useValue: repository },
+      ],
+    })
+    service = TestBed.inject(RecordsService)
+
+    jest.clearAllMocks()
   })
 
   it('should be created', () => {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { SearchFacade } from '../../state/search.facade'
 import {
   FieldFilters,
@@ -16,7 +16,7 @@ export interface SearchServiceI {
 
 @Injectable()
 export class SearchService implements SearchServiceI {
-  constructor(private facade: SearchFacade) {}
+  private facade = inject(SearchFacade)
 
   setSortAndFilters(filters: FieldFilters, sort: SortByField) {
     this.setFilters(filters)

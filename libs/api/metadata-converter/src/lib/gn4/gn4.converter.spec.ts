@@ -3510,13 +3510,13 @@ describe('Gn4Converter', () => {
       })
 
       describe('full record type foo (dummy data)', () => {
-        it('sets the kind as a dataset and does not add reuseType property', async () => {
+        it('sets the kind as a reuse and reuseType to map since cl_presentationForm includes mapDigital', async () => {
           const record = await service.readRecord(
             elasticReuseMetadataHitsFixture().hits.hits[3] as Gn4Record
           )
 
-          expect(record.kind).toEqual('dataset')
-          expect(record).not.toHaveProperty('reuseType')
+          expect(record.kind).toEqual('reuse')
+          expect(record['reuseType']).toEqual('map')
         })
       })
     })

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import {
   ChangeDetectorRef,
   Component,
@@ -6,6 +5,7 @@ import {
   Input,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu'
@@ -20,7 +20,6 @@ type ActionMenuPage = 'mainMenu' | 'deleteMenu' | 'rollbackMenu'
   styleUrls: ['./action-menu.component.css'],
   standalone: true,
   imports: [
-    CommonModule,
     ButtonComponent,
     MatMenuModule,
     MatDialogModule,
@@ -29,6 +28,9 @@ type ActionMenuPage = 'mainMenu' | 'deleteMenu' | 'rollbackMenu'
   ],
 })
 export class ActionMenuComponent {
+  dialog = inject(MatDialog)
+  private cdr = inject(ChangeDetectorRef)
+
   @Input() canDuplicate = true
   @Input() isDuplicating: boolean
   @Input() canDelete = true
@@ -42,11 +44,6 @@ export class ActionMenuComponent {
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger
 
   sectionDisplayed: ActionMenuPage = 'mainMenu'
-
-  constructor(
-    public dialog: MatDialog,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   displayMainMenu() {
     this.sectionDisplayed = 'mainMenu'

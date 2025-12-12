@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { map } from 'rxjs'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
@@ -19,6 +19,8 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecordLinkedRecordsComponent {
+  protected metadataViewFacade = inject(MdViewFacade)
+
   sourceDatasets$ = this.metadataViewFacade.sources$
   linkedDatasets$ = this.metadataViewFacade.sourceOf$.pipe(
     map((records) => records?.filter((record) => record?.kind === 'dataset'))
@@ -29,8 +31,6 @@ export class RecordLinkedRecordsComponent {
   linkedServices$ = this.metadataViewFacade.sourceOf$.pipe(
     map((records) => records?.filter((record) => record?.kind === 'service'))
   )
-
-  constructor(protected metadataViewFacade: MdViewFacade) {}
 
   get hasSourceDatasets$() {
     return this.sourceDatasets$.pipe(map((records) => records?.length > 0))

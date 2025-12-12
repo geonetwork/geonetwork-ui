@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { TranslateDirective } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { MyOrgService } from '@geonetwork-ui/feature/catalog'
@@ -18,7 +18,7 @@ import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
   ],
 })
 export class MyOrgUsersComponent {
-  orgData$ = this.myOrgRecordsService.myOrgData$
+  private myOrgRecordsService = inject(MyOrgService)
 
-  constructor(private myOrgRecordsService: MyOrgService) {}
+  orgData$ = this.myOrgRecordsService.myOrgData$
 }

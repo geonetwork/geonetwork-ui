@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core'
+import { Injectable, Injector, inject } from '@angular/core'
 import {
   AbstractSearchField,
   AvailableServicesField,
@@ -34,6 +34,7 @@ marker('search.filters.publicationYear')
 marker('search.filters.organization')
 marker('search.filters.representationType')
 marker('search.filters.resourceType')
+marker('search.filters.recordKind')
 marker('search.filters.standard')
 marker('search.filters.topic')
 marker('search.filters.contact')
@@ -46,6 +47,8 @@ marker('search.filters.changeDate')
   providedIn: 'root',
 })
 export class FieldsService {
+  protected injector = inject(Injector)
+
   protected fields = {
     organization: new OrganizationSearchField(this.injector),
     format: new SimpleSearchField('format', this.injector, 'asc'),
@@ -97,8 +100,6 @@ export class FieldsService {
   get supportedFields() {
     return Object.keys(this.fields)
   }
-
-  constructor(protected injector: Injector) {}
 
   getAvailableValues(fieldName: string) {
     if (this.supportedFields.indexOf(fieldName) === -1)

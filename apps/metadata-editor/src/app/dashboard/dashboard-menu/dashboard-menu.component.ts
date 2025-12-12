@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { TranslateDirective } from '@ngx-translate/core'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
@@ -53,11 +53,11 @@ import {
   ],
 })
 export class DashboardMenuComponent {
+  private recordsRepository = inject(RecordsRepositoryInterface)
+
   draftsCount$ = this.recordsRepository.draftsChanged$.pipe(
     startWith(0),
     switchMap(() => this.recordsRepository.getDraftsCount())
   )
   activeLink = false
-
-  constructor(private recordsRepository: RecordsRepositoryInterface) {}
 }

@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Output,
+  inject,
 } from '@angular/core'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatTooltipModule } from '@angular/material/tooltip'
@@ -77,6 +78,10 @@ import { matCircle } from '@ng-icons/material-icons/baseline'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopToolbarComponent {
+  dialog = inject(MatDialog)
+  private translateService = inject(TranslateService)
+  private editorFacade = inject(EditorFacade)
+
   @Output() openSidePanel = new EventEmitter<
     null | 'multilingual' | 'metadataQuality'
   >()
@@ -107,12 +112,6 @@ export class TopToolbarComponent {
     map((record) => record.otherLanguages.length)
   )
   record$ = this.editorFacade.record$
-
-  constructor(
-    public dialog: MatDialog,
-    private translateService: TranslateService,
-    private editorFacade: EditorFacade
-  ) {}
 
   confirmUndo() {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

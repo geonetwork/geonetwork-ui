@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   OgcApiCollectionInfo,
@@ -56,7 +56,7 @@ interface WfsDownloadUrls {
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private proxy: ProxyService) {}
+  private proxy = inject(ProxyService)
 
   getWfsEndpoint(wfsUrl: string): Observable<WfsEndpoint> {
     return from(

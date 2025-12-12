@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core'
@@ -8,7 +7,7 @@ import { TranslateModule, TranslatePipe } from '@ngx-translate/core'
   templateUrl: './facet-item.component.html',
   styleUrls: ['./facet-item.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule, TranslatePipe],
+  imports: [FormsModule, TranslateModule, TranslatePipe],
 })
 export class FacetItemComponent {
   @Input() label: string

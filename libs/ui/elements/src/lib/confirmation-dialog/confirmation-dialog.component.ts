@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
@@ -23,11 +23,13 @@ export interface ConfirmationDialogData {
   imports: [MatDialogModule, ButtonComponent],
 })
 export class ConfirmationDialogComponent {
+  dialogRef = inject<MatDialogRef<ConfirmationDialogComponent>>(MatDialogRef)
+  data = inject<ConfirmationDialogData>(MAT_DIALOG_DATA)
+
   focusCancel = null
-  constructor(
-    public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmationDialogData
-  ) {
+  constructor() {
+    const data = this.data
+
     this.focusCancel = data.focusCancel ? true : null
   }
 

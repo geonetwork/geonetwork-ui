@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { NotificationsService } from '../notifications.service'
 import { NotificationComponent } from '@geonetwork-ui/ui/elements'
@@ -36,7 +36,7 @@ import {
   ],
 })
 export class NotificationsContainerComponent {
-  constructor(protected notificationsService: NotificationsService) {}
+  protected notificationsService = inject(NotificationsService)
 
   trackById(index: number, notification: { id: number }) {
     return notification.id

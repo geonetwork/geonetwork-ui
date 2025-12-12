@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import {
   DatasetSpatialExtent,
   Keyword,
@@ -40,6 +40,10 @@ type KeywordWithExtent = Keyword & {
   ],
 })
 export class FormFieldSpatialExtentComponent {
+  private platformService = inject(PlatformServiceInterface)
+  private editorFacade = inject(EditorFacade)
+  private translateService = inject(TranslateService)
+
   spatialExtents$ = this.editorFacade.record$.pipe(
     map((record) => ('spatialExtents' in record ? record?.spatialExtents : []))
   )
@@ -103,12 +107,6 @@ export class FormFieldSpatialExtentComponent {
     }),
     shareReplay(1)
   )
-
-  constructor(
-    private platformService: PlatformServiceInterface,
-    private editorFacade: EditorFacade,
-    private translateService: TranslateService
-  ) {}
 
   async handleKeywordDelete(keyword: Keyword) {
     const spatialExtents = await firstValueFrom(this.spatialExtents$)

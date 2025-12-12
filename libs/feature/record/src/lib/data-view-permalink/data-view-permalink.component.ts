@@ -1,10 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Inject,
   InjectionToken,
   Input,
-  Optional,
+  inject,
 } from '@angular/core'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { BehaviorSubject, combineLatest, map } from 'rxjs'
@@ -27,6 +26,13 @@ export const WEB_COMPONENT_EMBEDDER_URL = new InjectionToken<string>(
   imports: [CommonModule, CopyTextButtonComponent, TranslatePipe],
 })
 export class DataViewPermalinkComponent {
+  private config = inject<Configuration>(Configuration)
+  private proxyPath = inject(PROXY_PATH, { optional: true })
+  protected wcEmbedderBaseUrl = inject(WEB_COMPONENT_EMBEDDER_URL, {
+    optional: true,
+  })
+  private facade = inject(MdViewFacade)
+
   viewType$ = new BehaviorSubject<string>('map')
   @Input()
   set viewType(value: string) {
@@ -71,15 +77,4 @@ export class DataViewPermalinkComponent {
       return url.toString()
     })
   )
-
-  constructor(
-    @Inject(Configuration) private config: Configuration,
-    @Optional()
-    @Inject(PROXY_PATH)
-    private proxyPath: string,
-    @Optional()
-    @Inject(WEB_COMPONENT_EMBEDDER_URL)
-    protected wcEmbedderBaseUrl: string,
-    private facade: MdViewFacade
-  ) {}
 }

@@ -69,7 +69,8 @@
           "buildTarget": "metadata-converter:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -90,7 +91,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/metadata-converter"],
       "options": {
-        "jestConfig": "apps/metadata-converter/jest.config.ts"
+        "jestConfig": "apps/metadata-converter/jest.config.ts",
+        "tsConfig": "apps/metadata-converter/tsconfig.spec.json"
       }
     }
   }

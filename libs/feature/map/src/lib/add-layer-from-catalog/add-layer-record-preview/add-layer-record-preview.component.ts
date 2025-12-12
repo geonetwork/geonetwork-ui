@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+} from '@angular/core'
 import { RecordPreviewComponent } from '@geonetwork-ui/ui/search'
 import {
   getLinkLabel,
@@ -14,7 +19,6 @@ import {
 import { MapContextLayer } from '@geospatial-sdk/core'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-add-layer-record-preview',
@@ -22,21 +26,25 @@ import { CommonModule } from '@angular/common'
   styleUrls: ['./add-layer-record-preview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [ThumbnailComponent, ButtonComponent, CommonModule],
+  imports: [ThumbnailComponent, ButtonComponent],
 })
 export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
+  protected elementRef: ElementRef
+  private linkClassifier = inject(LinkClassifierService)
+  private mapFacade = inject(MapFacade)
+
   get mapLinks(): DatasetOnlineResource[] {
     return (this.record as DatasetRecord).onlineResources.filter((link) =>
       this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
     ) as DatasetOnlineResource[]
   }
 
-  constructor(
-    protected elementRef: ElementRef,
-    private linkClassifier: LinkClassifierService,
-    private mapFacade: MapFacade
-  ) {
+  constructor() {
+    const elementRef = inject(ElementRef)
+
     super(elementRef)
+
+    this.elementRef = elementRef
   }
 
   async handleLinkClick(link: DatasetOnlineResource) {

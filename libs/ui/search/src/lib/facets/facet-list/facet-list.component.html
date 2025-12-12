@@ -1,8 +1,9 @@
-<gn-ui-facet-block
-  *ngFor="let model of models; trackBy: trackByIndexKey"
-  [model]="model"
-  [selectedPaths]="getBlockSelectedPaths(model)"
-  (itemChange)="onItemChange($event)"
-  (filterChange)="onFilterChange(model.key, $event)"
-  (more)="onMore(model.key)"
-></gn-ui-facet-block>
+@for (model of models; track trackByIndexKey($index, model)) {
+  <gn-ui-facet-block
+    [model]="model"
+    [selectedPaths]="getBlockSelectedPaths(model)"
+    (itemChange)="onItemChange($event)"
+    (filterChange)="onFilterChange(model.key, $event)"
+    (more)="onMore(model.key)"
+  ></gn-ui-facet-block>
+}

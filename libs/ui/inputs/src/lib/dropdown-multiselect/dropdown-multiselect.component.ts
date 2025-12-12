@@ -8,6 +8,7 @@ import {
   QueryList,
   ViewChild,
   ViewChildren,
+  inject,
 } from '@angular/core'
 import {
   CdkConnectedOverlay,
@@ -26,7 +27,7 @@ import { ButtonComponent } from '../button/button.component'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { FormsModule } from '@angular/forms'
 import { TranslatePipe } from '@ngx-translate/core'
-import { CommonModule } from '@angular/common'
+
 import {
   matClose,
   matExpandLess,
@@ -38,14 +39,7 @@ import {
   templateUrl: './dropdown-multiselect.component.html',
   styleUrls: ['./dropdown-multiselect.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    ButtonComponent,
-    NgIcon,
-    OverlayModule,
-    FormsModule,
-    TranslatePipe,
-  ],
+  imports: [ButtonComponent, NgIcon, OverlayModule, FormsModule, TranslatePipe],
   providers: [
     provideIcons({
       matClose,
@@ -56,6 +50,8 @@ import {
   standalone: true,
 })
 export class DropdownMultiselectComponent {
+  private scrollStrategies = inject(ScrollStrategyOptions)
+
   @Input() title: string
   @Input() choices: Choice[]
   @Input() selected: unknown[] = []
@@ -116,8 +112,6 @@ export class DropdownMultiselectComponent {
       -1
     )
   }
-
-  constructor(private scrollStrategies: ScrollStrategyOptions) {}
 
   private setFocus() {
     setTimeout(() => {

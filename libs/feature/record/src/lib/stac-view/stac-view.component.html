@@ -1,14 +1,16 @@
 <div class="mt-6 bg-white border border-gray-300 overflow-hidden rounded-lg">
   <div
-    class="w-full min-h-[366px] flex md:flex-row flex-col border-b border-gray-300"
+    class="w-full h-[700px] md:h-[366px] flex md:flex-row flex-col border-b border-gray-300"
   >
-    <div class="md:w-1/2 w-full flex-1 flex flex-col">
+    @let filterState = filterState$ | async;
+
+    <div class="w-full md:w-5/12 h-[366px] flex flex-col">
       <gn-ui-date-range-inputs
-        [temporalExtent]="currentTemporalExtent$ | async"
+        [temporalExtent]="filterState.temporalExtent"
         (temporalExtentChange)="onTemporalExtentChange($event)"
       ></gn-ui-date-range-inputs>
 
-      <div class="mt-auto mb-8 mx-8" *ngIf="isFilterModified">
+      <div class="mt-auto mb-8 mx-8" *ngIf="isFilterModified$ | async">
         <gn-ui-button
           id="reset-filters-button"
           type="light"
@@ -20,8 +22,25 @@
       </div>
     </div>
 
-    <div class="md:w-1/2 w-full min-h-[280px] flex items-center justify-center">
-      <span>Map...</span>
+    <div class="w-full md:w-7/12 h-[334px] md:h-[366px] flex flex-col">
+      <gn-ui-map-container
+        #mapContainer
+        [context]="mapContext$ | async"
+        (extentChange)="onSpatialExtentChange($event)"
+        (resolvedExtentChange)="onResolvedMapExtentChange($event)"
+        class="w-full h-full"
+      >
+        <div
+          class="bg-white rounded-xl shadow-xl absolute left-1/2 transform -translate-x-1/2 bottom-0 mb-2.5 px-4 py-2 z-10 max-w-[90%] w-max"
+        >
+          <gn-ui-check-toggle
+            [value]="filterState.isSpatialExtentFilterEnabled"
+            (toggled)="onSpatialFilterToggle($event)"
+            [label]="'stac.filter.enable' | translate"
+            [color]="'primary'"
+          ></gn-ui-check-toggle>
+        </div>
+      </gn-ui-map-container>
     </div>
   </div>
   <div
@@ -42,7 +61,7 @@
     </div>
     <ng-template #noResultsOrError>
       <gn-ui-popup-alert
-        *ngIf="error"
+        *ngIf="error$ | async as error"
         type="warning"
         icon="matErrorOutlineOutline"
         class="absolute left-0 top-0 w-full block"
@@ -50,7 +69,7 @@
         <span translate>{{ error }}</span>
       </gn-ui-popup-alert>
       <div
-        *ngIf="!error"
+        *ngIf="(error$ | async) === null"
         class="flex items-center justify-center flex-col h-full gap-[10px]"
       >
         <h2 class="text-center text-xl" translate>stac.results.noResults</h2>

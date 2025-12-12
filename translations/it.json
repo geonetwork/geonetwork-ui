@@ -1,5 +1,4 @@
 {
-  "": "",
   "Add Layer As": "",
   "Enter to search": "",
   "button.login": "Login",
@@ -601,6 +600,7 @@
   "search.filters.producerOrg": "Produttore",
   "search.filters.publicationYear": "Anno di pubblicazione",
   "search.filters.publisherOrg": "Distributore",
+  "search.filters.recordKind": "",
   "search.filters.recordKind.all": "Tutti",
   "search.filters.recordKind.dataset": "Dataset",
   "search.filters.recordKind.reuse": "Riutilizzi",
@@ -639,6 +639,7 @@
   "service.metadata.spatialExtent": "Estensione spaziale",
   "share.tab.permalink": "Condividere",
   "share.tab.webComponent": "Incorporare",
+  "stac.filter.enable": "",
   "stac.filter.reset": "",
   "stac.results.noResults": "",
   "table.loading.data": "Caricamento dei dati...",

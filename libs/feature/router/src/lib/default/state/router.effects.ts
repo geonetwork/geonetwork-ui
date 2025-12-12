@@ -1,5 +1,5 @@
 import { Location } from '@angular/common'
-import { Inject, Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { ActivatedRouteSnapshot, Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
 import {
@@ -23,15 +23,13 @@ import { RouterService } from '../router.service'
 
 @Injectable()
 export class RouterEffects {
-  constructor(
-    private _actions$: Actions,
-    private _router: Router,
-    private _location: Location,
-    private facade: RouterFacade,
-    @Inject(ROUTER_CONFIG) private routerConfig: RouterConfigModel,
-    private fieldsService: FieldsService,
-    private routerService: RouterService
-  ) {}
+  private _actions$ = inject(Actions)
+  private _router = inject(Router)
+  private _location = inject(Location)
+  private facade = inject(RouterFacade)
+  private routerConfig = inject<RouterConfigModel>(ROUTER_CONFIG)
+  private fieldsService = inject(FieldsService)
+  private routerService = inject(RouterService)
 
   navigate$ = createEffect(
     () =>

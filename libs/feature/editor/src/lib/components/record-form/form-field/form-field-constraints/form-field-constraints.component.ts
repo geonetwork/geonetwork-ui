@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'
 import { ConstraintCardComponent } from '../../../constraint-card/constraint-card.component'
 import {
@@ -33,7 +33,6 @@ marker('editor.record.form.constraint.header.otherConstraints')
 @Component({
   selector: 'gn-ui-form-field-constraints',
   imports: [
-    CommonModule,
     SortableListComponent,
     ConstraintCardComponent,
     ButtonComponent,

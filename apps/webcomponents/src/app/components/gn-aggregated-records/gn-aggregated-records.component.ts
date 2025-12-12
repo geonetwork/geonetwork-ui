@@ -12,6 +12,7 @@ import { BaseComponent } from '../base.component'
   styleUrls: ['./gn-aggregated-records.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
+  standalone: false,
 })
 export class GnAggregatedRecordsComponent extends BaseComponent {
   @Input() apiUrl = '/'

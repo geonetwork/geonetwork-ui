@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { buffer, combineLatestWith, debounceTime, from, of, tap } from 'rxjs'
@@ -49,20 +49,18 @@ import { valid as validGeoJson } from 'geojson-validation'
 
 @Injectable()
 export class SearchEffects {
+  private actions$ = inject(Actions)
+  private store$ = inject<Store<SearchState>>(Store)
+  private recordsRepository = inject(RecordsRepositoryInterface)
+  private favoritesService = inject(FavoritesService)
+  private platformService = inject(PlatformServiceInterface)
+  private filterGeometry = inject<Promise<Geometry>>(FILTER_GEOMETRY, {
+    optional: true,
+  })
+
   filterGeometry$ = this.filterGeometry
     ? from(this.filterGeometry).pipe(shareReplay())
     : undefined
-
-  constructor(
-    private actions$: Actions,
-    private store$: Store<SearchState>,
-    private recordsRepository: RecordsRepositoryInterface,
-    private favoritesService: FavoritesService,
-    private platformService: PlatformServiceInterface,
-    @Optional()
-    @Inject(FILTER_GEOMETRY)
-    private filterGeometry: Promise<Geometry>
-  ) {}
 
   resetPagination$ = createEffect(() =>
     this.actions$.pipe(

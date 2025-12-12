@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { PreviousNextButtonsComponent } from './previous-next-buttons.component'
 import { By } from '@angular/platform-browser'
-import { DebugElement } from '@angular/core'
+import { DebugElement, provideNgReflectAttributes } from '@angular/core'
 import { Paginable } from '../paginable.interface'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
@@ -22,7 +22,7 @@ describe('PreviousNextButtonsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [provideI18n()],
+      providers: [provideNgReflectAttributes(), provideI18n()],
     }).compileComponents()
   })
 

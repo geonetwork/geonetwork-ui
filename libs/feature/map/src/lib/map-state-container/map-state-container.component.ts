@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { Observable } from 'rxjs'
 import { MapFacade } from '../+state/map.facade'
 import { MapContext } from '@geospatial-sdk/core'
@@ -15,9 +15,9 @@ import { Feature } from 'geojson'
   imports: [MapContainerComponent, CommonModule],
 })
 export class MapStateContainerComponent {
-  context$: Observable<MapContext> = this.mapFacade.context$
+  private mapFacade = inject(MapFacade)
 
-  constructor(private mapFacade: MapFacade) {}
+  context$: Observable<MapContext> = this.mapFacade.context$
 
   handleFeaturesClicked(features: Feature[]) {
     if (!features.length) {

@@ -1,11 +1,12 @@
 <div class="flex flex-col sm:flex-row sm:items-center relative w-full">
-  <span
-    *ngIf="showTitle"
-    class="tracking-wide text-sm mb-2 sm:mb-0 sm:mr-2 whitespace-nowrap"
-    [attr.for]="id"
-  >
-    {{ title }}
-  </span>
+  @if (showTitle) {
+    <span
+      class="tracking-wide text-sm mb-2 sm:mb-0 sm:mr-2 whitespace-nowrap"
+      [attr.for]="id"
+    >
+      {{ title }}
+    </span>
+  }
   <gn-ui-button
     type="outline"
     class="grow min-w-0"
@@ -52,25 +53,26 @@
     [attr.aria-label]="title"
     (keydown)="handleOverlayKeydown($event)"
   >
-    <button
-      #choiceInputs
-      type="button"
-      *ngFor="let choice of choices"
-      [title]="choice.label | translate"
-      class="flex px-5 py-1 w-full text-start cursor-pointer transition-colors"
-      [ngClass]="
-        isSelected(choice)
-          ? 'text-white bg-primary hover:text-white hover:bg-primary-darker focus:text-white focus:bg-primary-darker'
-          : 'text-gray-900 hover:text-primary-darkest hover:bg-gray-50 focus:text-primary-darkest focus:bg-gray-50'
-      "
-      (click)="onSelectValue(choice)"
-      (keydown)="selectIfEnter($event, choice)"
-      [attr.data-cy-value]="choice.value.toString()"
-      [attr.data-cy-active]="isSelected(choice) ? 'true' : undefined"
-    >
-      <span class="text-[14px]">
-        {{ choice.label | translate }}
-      </span>
-    </button>
+    @for (choice of choices; track choice) {
+      <button
+        #choiceInputs
+        type="button"
+        [title]="choice.label | translate"
+        class="flex px-5 py-1 w-full text-start cursor-pointer transition-colors"
+        [ngClass]="
+          isSelected(choice)
+            ? 'text-white bg-primary hover:text-white hover:bg-primary-darker focus:text-white focus:bg-primary-darker'
+            : 'text-gray-900 hover:text-primary-darkest hover:bg-gray-50 focus:text-primary-darkest focus:bg-gray-50'
+        "
+        (click)="onSelectValue(choice)"
+        (keydown)="selectIfEnter($event, choice)"
+        [attr.data-cy-value]="choice.value.toString()"
+        [attr.data-cy-active]="isSelected(choice) ? 'true' : undefined"
+      >
+        <span class="text-[14px]">
+          {{ choice.label | translate }}
+        </span>
+      </button>
+    }
   </div>
 </ng-template>

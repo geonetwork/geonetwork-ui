@@ -3,6 +3,8 @@
   [class.active]="toggled"
   (click)="toggle()"
 >
-  <ng-icon *ngIf="icon" class="align-middle mr-2" [name]="icon"></ng-icon>
+  @if (icon) {
+    <ng-icon class="align-middle mr-2" [name]="icon"></ng-icon>
+  }
   <span>{{ label | translate }}</span>
 </button>

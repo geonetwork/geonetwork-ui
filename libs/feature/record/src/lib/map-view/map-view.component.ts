@@ -7,6 +7,7 @@ import {
   Input,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
 import { getLinkId, getLinkLabel } from '@geonetwork-ui/util/shared'
@@ -27,7 +28,6 @@ import {
   map,
   shareReplay,
   switchMap,
-  take,
   tap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
@@ -106,6 +106,12 @@ marker('map.select.style')
   ],
 })
 export class MapViewComponent implements AfterViewInit {
+  private mdViewFacade = inject(MdViewFacade)
+  private mapUtils = inject(MapUtilsService)
+  private dataService = inject(DataService)
+  private changeRef = inject(ChangeDetectorRef)
+  private translateService = inject(TranslateService)
+
   @Input() set exceedsLimit(value: boolean) {
     this.excludeWfs$.next(value)
   }
@@ -118,7 +124,11 @@ export class MapViewComponent implements AfterViewInit {
   @Input() set selectedView(value: string) {
     this.selectedView$.next(value)
   }
-  @Input() set datavizConfig(value: any) {
+  @Input() set datavizConfig(value: {
+    view?: string
+    styleTMSIndex?: number
+    source?: DatasetOnlineResource
+  }) {
     if (value && value.view === 'map') {
       this.selectedView$.next(value.view)
       if (value.styleTMSIndex) {
@@ -344,14 +354,6 @@ export class MapViewComponent implements AfterViewInit {
     }),
     shareReplay(1)
   )
-
-  constructor(
-    private mdViewFacade: MdViewFacade,
-    private mapUtils: MapUtilsService,
-    private dataService: DataService,
-    private changeRef: ChangeDetectorRef,
-    private translateService: TranslateService
-  ) {}
 
   async ngAfterViewInit() {
     const map = await this.mapContainer.openlayersMap

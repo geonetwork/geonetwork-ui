@@ -7,31 +7,30 @@
       >editor.record.form.metadataQuality.title</span
     >
   </div>
-  <div
-    *ngFor="let properties of propertiesByPage; let i = index"
-    class="flex flex-col gap-2"
-  >
-    <gn-ui-button
-      *ngFor="let property of properties"
-      [extraClass]="getExtraClass(property.value)"
-      type="outline"
-      attr.data-cy="md-quality-btn-{{ property.label }}"
-    >
-      <span>{{ property.label | translate }}</span>
-      <div class="flex flex-row gap-2 items-center">
-        <ng-icon
-          *ngIf="property.value; else notChecked"
-          class="text-primary"
-          name="iconoirBadgeCheck"
-        ></ng-icon>
-        <ng-template #notChecked>
-          <ng-icon class="text-neutral-300" name="iconoirSystemShut"></ng-icon>
-        </ng-template>
-      </div>
-    </gn-ui-button>
-    <hr
-      *ngIf="i !== propertiesByPage.length - 1"
-      class="border-gray-300 w-11/12 mx-auto"
-    />
-  </div>
+  @for (properties of propertiesByPage; track properties; let i = $index) {
+    <div class="flex flex-col gap-2">
+      @for (property of properties; track property) {
+        <gn-ui-button
+          [extraClass]="getExtraClass(property.value)"
+          type="outline"
+          attr.data-cy="md-quality-btn-{{ property.label }}"
+        >
+          <span>{{ property.label | translate }}</span>
+          <div class="flex flex-row gap-2 items-center">
+            @if (property.value) {
+              <ng-icon class="text-primary" name="iconoirBadgeCheck"></ng-icon>
+            } @else {
+              <ng-icon
+                class="text-neutral-300"
+                name="iconoirSystemShut"
+              ></ng-icon>
+            }
+          </div>
+        </gn-ui-button>
+      }
+      @if (i !== propertiesByPage.length - 1) {
+        <hr class="border-gray-300 w-11/12 mx-auto" />
+      }
+    </div>
+  }
 </div>

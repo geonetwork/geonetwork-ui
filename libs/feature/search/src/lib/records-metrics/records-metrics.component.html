@@ -1,10 +1,12 @@
 <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-  <div *ngFor="let category of results$ | async">
-    <gn-ui-record-metric
-      [label]="category.term | translate"
-      [count]="category.count"
-      [icon]="''"
-      (click)="metricSelect.emit(category)"
-    ></gn-ui-record-metric>
-  </div>
+  @for (category of results$ | async; track category) {
+    <div>
+      <gn-ui-record-metric
+        [label]="category.term | translate"
+        [count]="category.count"
+        [icon]="''"
+        (click)="metricSelect.emit(category)"
+      ></gn-ui-record-metric>
+    </div>
+  }
 </div>

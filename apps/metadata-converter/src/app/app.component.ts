@@ -9,6 +9,7 @@ import { FORMATS, getFormatName } from './md-formats'
   selector: 'gn-ui-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('status') statusComponent: StatusComponent

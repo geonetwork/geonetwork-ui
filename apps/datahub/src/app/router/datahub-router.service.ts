@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { Router, Routes } from '@angular/router'
 import {
   ROUTER_ROUTE_DATASET,
@@ -27,7 +27,7 @@ import {
   providedIn: 'root',
 })
 export class DatahubRouterService {
-  constructor(private router: Router) {}
+  private router = inject(Router)
 
   initRoutes() {
     this.router.resetConfig(this.buildRoutes())

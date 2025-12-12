@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { CommonModule, DatePipe } from '@angular/common'
 import {
   catchError,
@@ -35,6 +35,12 @@ interface DisplayedValue {
   providers: [DatePipe],
 })
 export class SearchFiltersSummaryItemComponent implements OnInit {
+  private searchFacade = inject(SearchFacade)
+  private searchService = inject(SearchService)
+  private fieldsService = inject(FieldsService)
+  private datePipe = inject(DatePipe)
+  private translate = inject(TranslateService)
+
   @Input() fieldName: string
   fieldType: FieldType
   translatedLabel: string
@@ -53,14 +59,6 @@ export class SearchFiltersSummaryItemComponent implements OnInit {
     ),
     catchError(() => of([]))
   ) as Observable<DisplayedValue[]>
-
-  constructor(
-    private searchFacade: SearchFacade,
-    private searchService: SearchService,
-    private fieldsService: FieldsService,
-    private datePipe: DatePipe,
-    private translate: TranslateService
-  ) {}
 
   ngOnInit() {
     this.fieldType = this.fieldsService.getFieldType(this.fieldName)

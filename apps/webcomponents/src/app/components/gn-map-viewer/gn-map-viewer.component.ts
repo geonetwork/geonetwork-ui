@@ -13,5 +13,6 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
   encapsulation: ViewEncapsulation.ShadowDom,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [SearchFacade],
+  standalone: false,
 })
 export class GnMapViewerComponent extends BaseComponent {}

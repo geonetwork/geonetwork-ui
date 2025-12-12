@@ -4,6 +4,7 @@ import {
   Component,
   Injector,
   ViewEncapsulation,
+  inject,
 } from '@angular/core'
 import { BaseComponent } from '../base.component'
 import { RecordsService } from '@geonetwork-ui/feature/catalog'
@@ -18,16 +19,16 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade],
+  standalone: false,
 })
 export class GnFigureDatasetsComponent extends BaseComponent {
   catalogRecords: RecordsService
   recordsCount$: Observable<string | number>
 
-  constructor(
-    injector: Injector,
-    private changeDetector: ChangeDetectorRef
-  ) {
-    super(injector)
+  constructor() {
+    const injector = inject(Injector)
+
+    super()
     this.catalogRecords = injector.get(RecordsService)
     this.recordsCount$ = this.catalogRecords.recordsCount$.pipe(
       startWith('-'),

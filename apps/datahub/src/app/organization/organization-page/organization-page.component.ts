@@ -1,6 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { CommonModule } from '@angular/common'
+
 import { OrganizationHeaderComponent } from '../organization-header/organization-header.component'
 import { OrganizationDetailsComponent } from '../organization-details/organization-details.component'
 import { combineLatest, Observable, of, switchMap } from 'rxjs'
@@ -20,7 +25,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     OrganizationHeaderComponent,
     OrganizationDetailsComponent,
     LetDirective,
@@ -29,12 +33,10 @@ import {
   ],
 })
 export class OrganizationPageComponent implements OnInit {
-  organization$: Observable<Organization>
+  private router = inject(RouterFacade)
+  private orgService = inject(OrganizationsServiceInterface)
 
-  constructor(
-    private router: RouterFacade,
-    private orgService: OrganizationsServiceInterface
-  ) {}
+  organization$: Observable<Organization>
 
   ngOnInit(): void {
     this.organization$ = combineLatest([

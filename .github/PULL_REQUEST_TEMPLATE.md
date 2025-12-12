@@ -30,7 +30,7 @@ If the changes incur visual changes, please include screenshots or an animated s
 - [ ] If **new UI components** 🕹️ are introduced: corresponding stories in Storybook were created
 - [ ] If **breaking changes** 🪚 are introduced: add the `breaking change` label
 - [ ] If **bugs** 🐞 are fixed: add the `backport <release branch>` label
-- [ ] The [documentation website](docs) 📚 has received the love it deserves
+- [ ] The [documentation website](https://geonetwork.github.io/geonetwork-ui/main/docs/) 📚 has received the love it deserves
 
 <!--
 Please only check items relevant to your contribution. Thank you very much for your time and efforts!

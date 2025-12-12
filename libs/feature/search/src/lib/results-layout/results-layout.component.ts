@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import {
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigModel,
@@ -15,18 +15,17 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
   imports: [CommonModule, TranslatePipe, DropdownSelectorComponent],
 })
 export class ResultsLayoutComponent {
+  searchFacade = inject(SearchFacade)
+  private resultsLayoutConfig = inject<ResultsLayoutConfigModel>(
+    RESULTS_LAYOUT_CONFIG
+  )
+
   choices = Object.keys(this.resultsLayoutConfig).map((v) => {
     return {
       label: v,
       value: v,
     }
   })
-
-  constructor(
-    public searchFacade: SearchFacade,
-    @Inject(RESULTS_LAYOUT_CONFIG)
-    private resultsLayoutConfig: ResultsLayoutConfigModel
-  ) {}
 
   change(layout: string) {
     this.searchFacade.setResultsLayout(layout)

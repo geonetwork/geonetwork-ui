@@ -5,13 +5,11 @@ import { By } from '@angular/platform-browser'
 
 @Component({
   template: `<gn-ui-block-list>
-    <div
-      class="block"
-      *ngFor="let block of blocks"
-      #block
-      style="width: 50px; height: 20px"
-    ></div>
+    @for (block of blocks; track block) {
+      <div class="block" #block style="width: 50px; height: 20px"></div>
+    }
   </gn-ui-block-list>`,
+  standalone: false,
 })
 class BlockListWrapperComponent {
   @Input() blocks = Array.from({ length: 24 }, (_, i) => i + 1)

@@ -2,10 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Inject,
   Input,
-  Optional,
   Output,
+  inject,
 } from '@angular/core'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
@@ -39,15 +38,11 @@ import { Paginable, PaginationComponent } from '@geonetwork-ui/ui/layout'
   ],
 })
 export class OrganisationsComponent implements Paginable {
+  private organisationsService = inject(OrganizationsServiceInterface)
+  private urlTemplate = inject(ORGANIZATION_PAGE_URL_TOKEN, { optional: true })
+
   @Input() itemsOnPage = 12
   @Output() orgSelect = new EventEmitter<Organization>()
-
-  constructor(
-    private organisationsService: OrganizationsServiceInterface,
-    @Optional()
-    @Inject(ORGANIZATION_PAGE_URL_TOKEN)
-    private urlTemplate: string
-  ) {}
 
   totalPages: number
   currentPage$ = new BehaviorSubject(1)

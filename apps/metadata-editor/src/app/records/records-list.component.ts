@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common'
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -16,6 +15,7 @@ export const allSearchFields = [
   'changeDate',
   'userinfo',
   'cl_status',
+  'cl_presentationForm',
   'isPublishedToAll',
   'link',
   'owner',
@@ -29,18 +29,12 @@ export const allSearchFields = [
   templateUrl: './records-list.component.html',
   styleUrls: ['./records-list.component.css'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ResultsTableContainerComponent,
-    PaginationButtonsComponent,
-  ],
+  imports: [ResultsTableContainerComponent, PaginationButtonsComponent],
 })
 export class RecordsListComponent implements OnInit, Paginable {
-  constructor(
-    private router: Router,
-    public searchFacade: SearchFacade,
-    private searchService: SearchService
-  ) {}
+  private router = inject(Router)
+  searchFacade = inject(SearchFacade)
+  private searchService = inject(SearchService)
 
   isDuplicating = false
 

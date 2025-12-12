@@ -15,30 +15,32 @@
     >
       <ng-icon name="iconoirNavArrowLeft" [strokeWidth]="3"></ng-icon>
     </gn-ui-button>
-    <ng-container *ngFor="let page of visiblePages" [ngSwitch]="page">
-      <ng-container *ngSwitchCase="listComponent.currentPage">
-        <div
-          class="gn-ui-btn-black bg-gray-950 border-gray-950 pointer-events-none select-none"
-          [attr.data-test]="'page-' + page"
-        >
-          {{ page }}
-        </div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'...'">
-        <span class="mx-[5px] text-gray-950" [attr.data-test]="'page-' + page"
-          >...</span
-        >
-      </ng-container>
-      <ng-container *ngSwitchDefault>
-        <gn-ui-button
-          type="light"
-          extraClass="text-gray-950"
-          (buttonClick)="listComponent.goToPage(page)"
-          [attr.data-test]="'page-' + page"
-          >{{ page }}</gn-ui-button
-        >
-      </ng-container>
-    </ng-container>
+    @for (page of visiblePages; track page) {
+      @switch (page) {
+        @case (listComponent.currentPage) {
+          <div
+            class="gn-ui-btn-black bg-gray-950 border-gray-950 pointer-events-none select-none"
+            [attr.data-test]="'page-' + page"
+          >
+            {{ page }}
+          </div>
+        }
+        @case ('...') {
+          <span class="mx-[5px] text-gray-950" [attr.data-test]="'page-' + page"
+            >...</span
+          >
+        }
+        @default {
+          <gn-ui-button
+            type="light"
+            extraClass="text-gray-950"
+            (buttonClick)="listComponent.goToPage(page)"
+            [attr.data-test]="'page-' + page"
+            >{{ page }}</gn-ui-button
+          >
+        }
+      }
+    }
     <gn-ui-button
       type="light"
       [disabled]="listComponent.isLastPage"

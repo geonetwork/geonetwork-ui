@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core'
+import { ModuleWithProviders, NgModule, inject } from '@angular/core'
 import { RouteReuseStrategy } from '@angular/router'
 import { EffectsModule } from '@ngrx/effects'
 import {
@@ -32,7 +32,9 @@ import { ROUTER_CONFIG, RouterConfigModel } from './router.config'
   ],
 })
 export class DefaultRouterModule {
-  constructor(private routerService: RouterService) {
+  private routerService = inject(RouterService)
+
+  constructor() {
     this.routerService.initRoutes()
   }
 

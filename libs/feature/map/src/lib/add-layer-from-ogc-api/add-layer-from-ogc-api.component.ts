@@ -5,6 +5,7 @@ import {
   Input,
   OnInit,
   Output,
+  inject,
 } from '@angular/core'
 import { OgcApiEndpoint } from '@camptocamp/ogc-client'
 import { debounceTime, Subject } from 'rxjs'
@@ -15,7 +16,7 @@ import {
   DropdownSelectorComponent,
   TextInputComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { CommonModule } from '@angular/common'
+
 import { MapContextLayer, MapContextLayerOgcApi } from '@geospatial-sdk/core'
 
 @Component({
@@ -24,7 +25,6 @@ import { MapContextLayer, MapContextLayerOgcApi } from '@geospatial-sdk/core'
   styleUrls: ['./add-layer-from-ogc-api.component.css'],
   standalone: true,
   imports: [
-    CommonModule,
     TextInputComponent,
     DropdownSelectorComponent,
     TranslatePipe,
@@ -32,6 +32,8 @@ import { MapContextLayer, MapContextLayerOgcApi } from '@geospatial-sdk/core'
   ],
 })
 export class AddLayerFromOgcApiComponent implements OnInit {
+  private changeDetectorRef = inject(ChangeDetectorRef)
+
   @Input() ogcUrl: string
   @Output() layerAdded = new EventEmitter<MapContextLayer>()
 
@@ -40,8 +42,6 @@ export class AddLayerFromOgcApiComponent implements OnInit {
   layers: any[] = []
   errorMessage: string | null = null
   selectedLayerTypes: { [key: string]: DropdownChoice['value'] } = {}
-
-  constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.urlChange.pipe(debounceTime(700)).subscribe(() => {

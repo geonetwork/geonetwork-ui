@@ -4,19 +4,18 @@
   data-cy="expandable-panel-header"
 >
   <div class="grow py-2.5">
-    <ng-container *ngIf="titleTemplate; else simpleTitle">
+    @if (titleTemplate) {
       <div data-cy="expandable-panel-custom-title">
         <ng-container *ngTemplateOutlet="titleTemplate"></ng-container>
       </div>
-    </ng-container>
-    <ng-template #simpleTitle>
+    } @else {
       <div
         class="font-medium text-black text-sm"
         data-cy="expandable-panel-title"
       >
         {{ title }}
       </div>
-    </ng-template>
+    }
   </div>
   <div
     class="w-8 opacity-25 text-primary group-hover:opacity-100 transition-opacity flex items-center shrink-0"
@@ -27,12 +26,13 @@
     ></ng-icon>
   </div>
 </div>
-<div
-  class="content overflow-hidden transition-all duration-300"
-  [ngClass]="collapsed ? 'ease-out' : 'ease-in'"
-  #contentDiv
-  *ngIf="!collapsed"
-  data-cy="expandable-panel-content"
->
-  <ng-content></ng-content>
-</div>
+@if (!collapsed) {
+  <div
+    class="content overflow-hidden transition-all duration-300"
+    [ngClass]="collapsed ? 'ease-out' : 'ease-in'"
+    #contentDiv
+    data-cy="expandable-panel-content"
+  >
+    <ng-content></ng-content>
+  </div>
+}

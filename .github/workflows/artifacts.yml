@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: 20.18.1
+  NODE_VERSION: 20.19.0
   # a list of apps to build and publish on releases
   APP_NAMES: datahub,metadata-editor
 

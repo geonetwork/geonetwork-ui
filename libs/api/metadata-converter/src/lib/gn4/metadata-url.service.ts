@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { TranslateService } from '@ngx-translate/core'
 import { toLang3 } from '@geonetwork-ui/util/i18n'
@@ -7,10 +7,8 @@ import { toLang3 } from '@geonetwork-ui/util/i18n'
   providedIn: 'root',
 })
 export class MetadataUrlService {
-  constructor(
-    private translate: TranslateService,
-    @Inject(Configuration) private apiConfiguration: Configuration
-  ) {}
+  private translate = inject(TranslateService)
+  private apiConfiguration = inject<Configuration>(Configuration)
 
   getUrl(uuid: string, apiPath: string = this.apiConfiguration.basePath) {
     const prefix = `${apiPath}/../`

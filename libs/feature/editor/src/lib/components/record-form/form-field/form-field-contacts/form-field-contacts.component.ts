@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -9,6 +8,7 @@ import {
   OnDestroy,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import {
@@ -39,7 +39,6 @@ import { SortableListComponent } from '@geonetwork-ui/ui/layout'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     AutocompleteComponent,
     TranslateDirective,
     TranslatePipe,
@@ -48,6 +47,10 @@ import { SortableListComponent } from '@geonetwork-ui/ui/layout'
   ],
 })
 export class FormFieldContactsComponent implements OnDestroy, OnChanges {
+  private platformServiceInterface = inject(PlatformServiceInterface)
+  private organizationsServiceInterface = inject(OrganizationsServiceInterface)
+  private changeDetectorRef = inject(ChangeDetectorRef)
+
   @Input() value: Individual[]
   @Output() valueChange: EventEmitter<Individual[]> = new EventEmitter()
 
@@ -59,11 +62,7 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
 
   allOrganizations: Map<string, Organization> = new Map()
 
-  constructor(
-    private platformServiceInterface: PlatformServiceInterface,
-    private organizationsServiceInterface: OrganizationsServiceInterface,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
+  constructor() {
     this.allUsers$ = this.platformServiceInterface.getUsers()
   }
 

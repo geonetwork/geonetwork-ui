@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core'
+import { Injectable, Injector, inject } from '@angular/core'
 import type { Geometry } from 'geojson'
 import {
   ES_QUERY_FIELDS_PRIORITY,
@@ -43,6 +43,9 @@ export type DateRange = { start?: Date; end?: Date }
   providedIn: 'root',
 })
 export class ElasticsearchService {
+  private translateService = inject(TranslateService)
+  private injector = inject(Injector)
+
   // runtime fields are computed using a Painless script
   // see: https://www.elastic.co/guide/en/elasticsearch/reference/current/runtime-mapping-fields.html
   private runtimeFields: Record<string, string> = {}
@@ -52,11 +55,6 @@ export class ElasticsearchService {
     const mdLangValue = this.injector.get(METADATA_LANGUAGE, null)
     return typeof mdLangValue === 'function' ? mdLangValue() : mdLangValue
   }
-
-  constructor(
-    private translateService: TranslateService,
-    private injector: Injector
-  ) {}
 
   getSearchRequestBody(
     aggregations: any = {},

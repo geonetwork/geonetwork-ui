@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 
 import { select, Store } from '@ngrx/store'
 import { DashboardMenuItem } from '../dashboard.model'
@@ -9,11 +9,11 @@ import { getActiveMenu } from './dashboard.selectors'
   providedIn: 'root',
 })
 export class DashboardFacade {
+  private store = inject(Store)
+
   activeMenu$ = this.store.pipe(select(getActiveMenu))
 
   setActiveMenu(activeMenu: DashboardMenuItem) {
     this.store.dispatch(SetActiveMenu({ activeMenu }))
   }
-
-  constructor(private store: Store) {}
 }

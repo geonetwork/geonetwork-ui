@@ -1,5 +1,4 @@
 {
-  "": "",
   "Add Layer As": "",
   "Enter to search": "",
   "button.login": "Se connecter",
@@ -601,6 +600,7 @@
   "search.filters.producerOrg": "Producteur",
   "search.filters.publicationYear": "Année de publication",
   "search.filters.publisherOrg": "Distributeur",
+  "search.filters.recordKind": "Type",
   "search.filters.recordKind.all": "Tous",
   "search.filters.recordKind.dataset": "Jeux de données",
   "search.filters.recordKind.reuse": "Réutilisations",
@@ -639,6 +639,7 @@
   "service.metadata.spatialExtent": "Etendue spatiale",
   "share.tab.permalink": "Partager",
   "share.tab.webComponent": "Intégrer",
+  "stac.filter.enable": "Activer le filtre dynamique sur l’emprise spatiale",
   "stac.filter.reset": "Réinitialiser les filtres",
   "stac.results.noResults": "Vos filtres ne permettent pas d’afficher de résultats",
   "table.loading.data": "Chargement des données...",

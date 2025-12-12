@@ -12,6 +12,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
     </div>
   `,
   styles: [],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   metadata: CatalogRecord

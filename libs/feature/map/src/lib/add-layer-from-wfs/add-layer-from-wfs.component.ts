@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core'
 import { WfsEndpoint, WfsFeatureTypeBrief } from '@camptocamp/ogc-client'
 import { firstValueFrom, Subject } from 'rxjs'
 import { MapFacade } from '../+state/map.facade'
@@ -6,7 +6,6 @@ import { debounceTime } from 'rxjs/operators'
 import { MapContextLayer } from '@geospatial-sdk/core'
 import { ButtonComponent, TextInputComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-add-layer-from-wfs',
@@ -18,21 +17,18 @@ import { CommonModule } from '@angular/common'
     ButtonComponent,
     TranslateDirective,
     TranslatePipe,
-    CommonModule,
   ],
 })
 export class AddLayerFromWfsComponent implements OnInit {
+  private mapFacade = inject(MapFacade)
+  private changeDetectorRef = inject(ChangeDetectorRef)
+
   wfsUrl = ''
   loading = false
   layers: WfsFeatureTypeBrief[] = []
   wfsEndpoint: WfsEndpoint | null = null
   urlChange = new Subject<string>()
   errorMessage: string | null = null
-
-  constructor(
-    private mapFacade: MapFacade,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {}
 
   ngOnInit() {
     this.urlChange.pipe(debounceTime(700)).subscribe(() => this.loadLayers())

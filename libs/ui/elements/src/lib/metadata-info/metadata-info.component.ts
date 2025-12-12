@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core'
 import {
   CatalogRecord,
@@ -27,7 +28,7 @@ import { matMailOutline } from '@ng-icons/material-icons/outline'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { GnUiLinkifyDirective } from './linkify.directive'
 import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
-import { CommonModule } from '@angular/common'
+
 import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
 
 @Component({
@@ -37,7 +38,6 @@ import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     TranslateDirective,
     TranslatePipe,
     MarkdownParserComponent,
@@ -60,12 +60,12 @@ import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
   ],
 })
 export class MetadataInfoComponent {
+  private dateService = inject(DateService)
+
   @Input() metadata: Partial<CatalogRecord>
   @Input() incomplete: boolean
   @Output() keyword = new EventEmitter<Keyword>()
   updatedTimes: number
-
-  constructor(private dateService: DateService) {}
 
   get hasUsage() {
     return (

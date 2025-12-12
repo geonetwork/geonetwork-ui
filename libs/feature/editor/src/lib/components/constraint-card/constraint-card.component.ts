@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import { FormFieldRichComponent } from '../record-form/form-field/form-field-rich/form-field-rich.component'
 import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import { MatIconModule } from '@angular/material/icon'
@@ -23,7 +23,6 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
   selector: 'gn-ui-constraint-card',
   standalone: true,
   imports: [
-    CommonModule,
     FormFieldRichComponent,
     UrlInputComponent,
     ButtonComponent,

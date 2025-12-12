@@ -108,7 +108,6 @@ describe('RecordUserFeedbacksComponent', () => {
     }))
     it('should fetch user feedbacks and sort them correctly', async () => {
       component.ngOnInit()
-      await fixture.whenStable()
       expect(component.userFeedbacksParents.length).toBe(4)
       expect(
         component.userFeedBacksAnswers.get(someUserFeedbacksFixture()[0].uuid)

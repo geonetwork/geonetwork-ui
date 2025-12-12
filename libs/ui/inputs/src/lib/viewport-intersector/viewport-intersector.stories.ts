@@ -1,6 +1,6 @@
 import { componentWrapperDecorator, Meta, StoryObj } from '@storybook/angular'
 import { ViewportIntersectorComponent } from './viewport-intersector.component'
-import { action } from '@storybook/addon-actions'
+import { action } from 'storybook/actions'
 
 export default {
   title: 'Inputs/ViewportIntersectorComponent',

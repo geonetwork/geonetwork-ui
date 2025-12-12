@@ -7,6 +7,7 @@ import {
   OnChanges,
   Output,
   Renderer2,
+  inject,
 } from '@angular/core'
 
 @Directive({
@@ -14,15 +15,13 @@ import {
   standalone: true,
 })
 export class EditableLabelDirective implements OnChanges, AfterViewInit {
+  private el = inject(ElementRef)
+  private renderer = inject(Renderer2)
+
   @Input() gnUiEditableLabel?: string
   @Output() editableLabelChanged = new EventEmitter<string>()
 
   appendedInput: HTMLInputElement
-
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2
-  ) {}
 
   ngOnChanges() {
     if (this.appendedInput) {

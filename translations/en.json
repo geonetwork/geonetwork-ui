@@ -1,5 +1,4 @@
 {
-  "": "",
   "Add Layer As": "",
   "Enter to search": "",
   "button.login": "Log in",
@@ -601,6 +600,7 @@
   "search.filters.producerOrg": "Producer",
   "search.filters.publicationYear": "Publication year",
   "search.filters.publisherOrg": "Publisher",
+  "search.filters.recordKind": "Type",
   "search.filters.recordKind.all": "All",
   "search.filters.recordKind.dataset": "Datasets",
   "search.filters.recordKind.reuse": "Reuses",
@@ -639,6 +639,7 @@
   "service.metadata.spatialExtent": "Spatial extent",
   "share.tab.permalink": "Share",
   "share.tab.webComponent": "Integrate",
+  "stac.filter.enable": "Enable dynamic filter on spatial extent",
   "stac.filter.reset": "Reset filters",
   "stac.results.noResults": "Your search filters did not match any items",
   "table.loading.data": "Loading data...",

@@ -5,6 +5,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -64,6 +65,13 @@ marker('editor.record.form.bottomButtons.next')
   ],
 })
 export class EditPageComponent implements OnInit, OnDestroy {
+  private route = inject(ActivatedRoute)
+  protected facade = inject(EditorFacade)
+  private notificationsService = inject(NotificationsService)
+  private translateService = inject(TranslateService)
+  private router = inject(Router)
+  private dateService = inject(DateService)
+
   subscription = new Subscription()
 
   currentPage$ = this.facade.currentPage$
@@ -80,15 +88,6 @@ export class EditPageComponent implements OnInit, OnDestroy {
   sidePanelOpen: 'multilingual' | 'metadataQuality' | null = null
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef<HTMLElement>
-
-  constructor(
-    private route: ActivatedRoute,
-    protected facade: EditorFacade,
-    private notificationsService: NotificationsService,
-    private translateService: TranslateService,
-    private router: Router,
-    private dateService: DateService
-  ) {}
 
   ngOnInit(): void {
     const [currentRecord, currentRecordSource] =

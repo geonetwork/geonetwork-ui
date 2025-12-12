@@ -8,46 +8,49 @@
     </h3>
     <span class="px-3">({{ apiLinksCount$ | async }})</span>
   </div>
-  <gn-ui-previous-next-buttons
-    *ngIf="(isMobile$ | async) === true && carousel?.pagesCount > 1"
-    [listComponent]="carousel"
-  ></gn-ui-previous-next-buttons>
-  <gn-ui-previous-next-buttons
-    *ngIf="(isMobile$ | async) === false && list?.pagesCount > 1"
-    [listComponent]="list"
-  ></gn-ui-previous-next-buttons>
+  @if ((isMobile$ | async) === true && carousel?.pagesCount > 1) {
+    <gn-ui-previous-next-buttons
+      [listComponent]="carousel"
+    ></gn-ui-previous-next-buttons>
+  }
+  @if ((isMobile$ | async) === false && list?.pagesCount > 1) {
+    <gn-ui-previous-next-buttons
+      [listComponent]="list"
+    ></gn-ui-previous-next-buttons>
+  }
 </div>
-<gn-ui-carousel
-  *ngIf="(isMobile$ | async) === true"
-  (currentStepChange)="updateView()"
-  containerClass="gap-4 pt-5 pb-7"
-  #carousel
->
-  <gn-ui-api-card
-    *ngFor="let link of apiLinks$ | async"
-    [title]="link.name"
-    [link]="link"
-    [currentLink]="selectedApiLink"
-    size="S"
-    (openRecordApiForm)="openRecordApiForm($event)"
+@if ((isMobile$ | async) === true) {
+  <gn-ui-carousel
+    (currentStepChange)="updateView()"
+    containerClass="gap-4 pt-5 pb-7"
+    #carousel
   >
-  </gn-ui-api-card>
-</gn-ui-carousel>
-<gn-ui-block-list
-  #blockList
-  *ngIf="(isMobile$ | async) === false"
-  containerClass="gap-4 pt-5 pb-7"
->
-  <gn-ui-api-card
-    #block
-    *ngFor="let link of apiLinks$ | async"
-    [title]="link.name"
-    [link]="link"
-    [currentLink]="selectedApiLink"
-    [size]="blockList.subComponentSize"
-    (openRecordApiForm)="openRecordApiForm($event)"
-  ></gn-ui-api-card>
-</gn-ui-block-list>
+    @for (link of apiLinks$ | async; track link) {
+      <gn-ui-api-card
+        [title]="link.name"
+        [link]="link"
+        [currentLink]="selectedApiLink"
+        size="S"
+        (openRecordApiForm)="openRecordApiForm($event)"
+      >
+      </gn-ui-api-card>
+    }
+  </gn-ui-carousel>
+}
+@if ((isMobile$ | async) === false) {
+  <gn-ui-block-list #blockList containerClass="gap-4 pt-5 pb-7">
+    @for (link of apiLinks$ | async; track link) {
+      <gn-ui-api-card
+        #block
+        [title]="link.name"
+        [link]="link"
+        [currentLink]="selectedApiLink"
+        [size]="blockList.subComponentSize"
+        (openRecordApiForm)="openRecordApiForm($event)"
+      ></gn-ui-api-card>
+    }
+  </gn-ui-block-list>
+}
 <div
   class="content transition-all duration-300 w-screen mx-auto -ml-[calc(50vw-50%)] overflow-hidden"
   [ngClass]="selectedApiLink ? 'ease-in' : 'ease-out'"
@@ -57,17 +60,15 @@
   <div class="bg-primary-opacity-10 py-8">
     <div class="flex flex-col px-4 gap-8 container-lg lg:mx-auto">
       <div class="flex flex-wrap justify-between sm:mb-2 ng-star-inserted">
-        <p
-          class="text-[21px] text-title font-title"
-          *ngIf="selectedApiLink?.accessServiceProtocol"
-          translate
-        >
-          {{
-            selectedApiLink?.accessServiceProtocol === 'GPFDL'
-              ? 'record.metadata.api.form.title.gpf'
-              : 'record.metadata.api.form.title'
-          }}
-        </p>
+        @if (selectedApiLink?.accessServiceProtocol) {
+          <p class="text-[21px] text-title font-title" translate>
+            {{
+              selectedApiLink?.accessServiceProtocol === 'GPFDL'
+                ? 'record.metadata.api.form.title.gpf'
+                : 'record.metadata.api.form.title'
+            }}
+          </p>
+        }
         <button
           type="button"
           class="flex items-center gap-0.5 text-primary group"
@@ -87,14 +88,14 @@
         </button>
       </div>
 
-      <gn-ui-gpf-api-dl
-        *ngIf="selectedApiLink?.accessServiceProtocol === 'GPFDL'"
-        [apiLink]="selectedApiLink"
-      ></gn-ui-gpf-api-dl>
-      <gn-ui-record-api-form
-        *ngIf="selectedApiLink?.accessServiceProtocol !== 'GPFDL'"
-        [apiLink]="selectedApiLink"
-      ></gn-ui-record-api-form>
+      @if (selectedApiLink?.accessServiceProtocol === 'GPFDL') {
+        <gn-ui-gpf-api-dl [apiLink]="selectedApiLink"></gn-ui-gpf-api-dl>
+      }
+      @if (selectedApiLink?.accessServiceProtocol !== 'GPFDL') {
+        <gn-ui-record-api-form
+          [apiLink]="selectedApiLink"
+        ></gn-ui-record-api-form>
+      }
     </div>
   </div>
 </div>

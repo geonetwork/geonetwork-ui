@@ -18,17 +18,18 @@
       [selected]="xProperty$.value"
       [title]="'chart.dropdown.xProperty' | translate"
     ></gn-ui-dropdown-selector>
-    <ng-container *ngIf="yChoices$ | async as yChoices">
-      <gn-ui-dropdown-selector
-        class="basis-1/4"
-        *ngIf="!isCountAggregation"
-        [choices]="yChoices"
-        (selectValue)="yProperty$.next($event)"
-        [selected]="yProperty$.value"
-        [title]="'chart.dropdown.yProperty' | translate"
-        class="select-y-prop"
-      ></gn-ui-dropdown-selector>
-    </ng-container>
+    @if (yChoices$ | async; as yChoices) {
+      @if (!isCountAggregation) {
+        <gn-ui-dropdown-selector
+          class="basis-1/4"
+          [choices]="yChoices"
+          (selectValue)="yProperty$.next($event)"
+          [selected]="yProperty$.value"
+          [title]="'chart.dropdown.yProperty' | translate"
+          class="select-y-prop"
+        ></gn-ui-dropdown-selector>
+      }
+    }
     <gn-ui-dropdown-selector
       class="basis-1/4"
       [choices]="aggregationChoices"
@@ -41,26 +42,29 @@
   <div
     class="relative h-full mt-2 bg-white border border-gray-300 rounded-lg overflow-hidden"
   >
-    <gn-ui-chart
-      *ngIf="!error"
-      [data]="chartData$ | async"
-      [type]="chartType$.value"
-      [prettyLabel]="prettyLabel$ | async"
-      [labelProperty]="labelProperty"
-      [valueProperty]="valueProperty"
-    ></gn-ui-chart>
-    <gn-ui-loading-mask
-      *ngIf="loading"
-      class="absolute inset-0"
-      [message]="'chart.loading.data' | translate"
-    ></gn-ui-loading-mask>
-    <gn-ui-popup-alert
-      *ngIf="error"
-      type="warning"
-      icon="matErrorOutlineOutline"
-      class="absolute m-2 inset-0"
-    >
-      <span>{{ error }}</span>
-    </gn-ui-popup-alert>
+    @if (!error) {
+      <gn-ui-chart
+        [data]="chartData$ | async"
+        [type]="chartType$.value"
+        [prettyLabel]="prettyLabel$ | async"
+        [labelProperty]="labelProperty"
+        [valueProperty]="valueProperty"
+      ></gn-ui-chart>
+    }
+    @if (loading) {
+      <gn-ui-loading-mask
+        class="absolute inset-0"
+        [message]="'chart.loading.data' | translate"
+      ></gn-ui-loading-mask>
+    }
+    @if (error) {
+      <gn-ui-popup-alert
+        type="warning"
+        icon="matErrorOutlineOutline"
+        class="absolute m-2 inset-0"
+      >
+        <span>{{ error }}</span>
+      </gn-ui-popup-alert>
+    }
   </div>
 </div>

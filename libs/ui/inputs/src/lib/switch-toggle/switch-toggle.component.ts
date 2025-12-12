@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -21,7 +20,7 @@ export type SwitchToggleOption = {
   styleUrls: ['./switch-toggle.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [MatButtonToggleModule, CommonModule, TranslatePipe],
+  imports: [MatButtonToggleModule, TranslatePipe],
 })
 export class SwitchToggleComponent {
   @Input() options: SwitchToggleOption[]

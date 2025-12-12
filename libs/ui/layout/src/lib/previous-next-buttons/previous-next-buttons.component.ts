@@ -10,7 +10,7 @@ import {
 } from '@ng-icons/material-icons/baseline'
 import { Paginable } from '../paginable.interface'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { CommonModule } from '@angular/common'
+
 import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({
@@ -18,7 +18,7 @@ import { TranslateDirective } from '@ngx-translate/core'
   templateUrl: './previous-next-buttons.component.html',
   styleUrls: ['./previous-next-buttons.component.css'],
   standalone: true,
-  imports: [CommonModule, ButtonComponent, NgIconComponent, TranslateDirective],
+  imports: [ButtonComponent, NgIconComponent, TranslateDirective],
   providers: [
     provideIcons({ matArrowBackIos, matArrowForwardIos }),
     provideNgIconsConfig({

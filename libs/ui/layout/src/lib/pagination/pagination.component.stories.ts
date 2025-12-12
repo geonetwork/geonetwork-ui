@@ -10,6 +10,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  inject,
 } from '@angular/core'
 import { Paginable } from '../paginable.interface'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
@@ -36,9 +37,9 @@ import { provideI18n } from '@geonetwork-ui/util/i18n'
   standalone: true,
 })
 export class MockListComponent implements Paginable {
+  private changeDetector = inject(ChangeDetectorRef)
   currentPage = 1
   pagesCount = 8
-  constructor(private changeDetector: ChangeDetectorRef) {}
   get isFirstPage() {
     return this.currentPage == 1
   }

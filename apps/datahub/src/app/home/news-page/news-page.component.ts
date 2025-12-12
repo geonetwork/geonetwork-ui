@@ -6,7 +6,7 @@ import {
   FeatureSearchModule,
   SearchStateContainerDirective,
 } from '@geonetwork-ui/feature/search'
-import { CommonModule } from '@angular/common'
+
 import { LastCreatedComponent } from './last-created/last-created.component'
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
@@ -20,7 +20,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     KeyFiguresComponent,
     TranslatePipe,
     TranslateDirective,

@@ -311,11 +311,16 @@ describe('RecordDataPreviewComponent', () => {
       it('stac tab is selected', () => {
         expect(tabGroup.componentInstance.selectedIndex).toBe(4)
       })
-      it('renders the STAC view component', () => {
-        expect(
-          fixture.debugElement.query(By.directive(StacViewComponent))
-        ).toBeTruthy()
-      })
+      it('renders the STAC view component', fakeAsync(() => {
+        // Wait for all async operations to complete (including lazy-loaded content)
+        fixture.whenStable().then(() => {
+          fixture.detectChanges()
+
+          expect(
+            fixture.debugElement.query(By.directive(StacViewComponent))
+          ).toBeTruthy()
+        })
+      }))
       it('does NOT render the permalink component', () => {
         expect(
           fixture.debugElement.query(By.directive(DataViewShareComponent))
@@ -585,8 +590,8 @@ describe('RecordDataPreviewComponent', () => {
       fixture.detectChanges()
 
       expect(component.datavizConfig.view).toBe('chart')
-      expect(component.datavizConfig.source.url).toBe(
-        'http://example.com/dataset'
+      expect(component.datavizConfig.source.url).toEqual(
+        new URL('http://example.com/dataset')
       )
       expect(component.datavizConfig.chartConfig.xProperty).toBe('prop1')
       expect(component.datavizConfig.chartConfig.yProperty).toBe('prop2')
@@ -691,6 +696,52 @@ describe('RecordDataPreviewComponent', () => {
         expect(component.selectedView$.value).toBe('table')
       }))
     })
+    describe('Map takes a while to load but config view is map', () => {
+      it('should display table at first and switch to map after resolving', fakeAsync(() => {
+        const configContent = {
+          view: 'map',
+          source: {
+            url: new URL('http://abcd.com/'),
+            name: 'layer2',
+            type: 'service',
+            accessServiceProtocol: 'wms',
+          },
+          chartConfig: null,
+          styleTMSIndex: 0,
+        }
+        platformServiceInterface.getRecordAttachments = jest
+          .fn()
+          .mockReturnValue(
+            of([
+              {
+                fileName: 'datavizConfig.json',
+                url: new URL(
+                  'http://example.com/attachment/datavizConfig.json'
+                ),
+              },
+            ])
+          )
+        platformServiceInterface.getFileContent = jest
+          .fn()
+          .mockReturnValue(of(configContent))
+
+        facade.dataLinks$.next(['link'])
+        fixture.detectChanges()
+        tick()
+
+        expect(component.selectedIndex$.value).toBe(2)
+        expect(component.selectedView$.value).toBe('table')
+
+        component.ngOnInit()
+
+        facade.mapApiLinks$.next(['link'])
+        fixture.detectChanges()
+        tick(3000)
+
+        expect(component.selectedIndex$.value).toBe(1)
+        expect(component.selectedView$.value).toBe('map')
+      }))
+    })
     describe('Map takes a while to load but config view is table', () => {
       it('should ignore the map resolving and display table', fakeAsync(() => {
         const configContent = {
@@ -723,6 +774,9 @@ describe('RecordDataPreviewComponent', () => {
         facade.dataLinks$.next(['link'])
         fixture.detectChanges()
         tick()
+
+        expect(component.selectedIndex$.value).toBe(2)
+        expect(component.selectedView$.value).toBe('table')
 
         component.ngOnInit()
 

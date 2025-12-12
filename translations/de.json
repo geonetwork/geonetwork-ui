@@ -1,5 +1,4 @@
 {
-  "": "",
   "Add Layer As": "",
   "Enter to search": "",
   "button.login": "Anmelden",
@@ -640,6 +639,8 @@
   "share.tab.permalink": "Teilen",
   "share.tab.webComponent": "Integrieren",
   "stac.filter.reset": "Filter zurücksetzen",
+  "stac.filter.enable": "",
+  "stac.filter.reset": "",
   "stac.results.noResults": "Ihre Suchfilter lieferten keine Ergebnisse",
   "table.loading.data": "Daten werden geladen...",
   "table.object.count": "Objekte in diesem Datensatz",

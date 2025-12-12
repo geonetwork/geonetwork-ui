@@ -1,9 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Inject,
   Input,
-  Optional,
+  inject,
 } from '@angular/core'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { MdViewFacade } from '../state'
@@ -22,6 +21,10 @@ import { GEONETWORK_UI_TAG_NAME, PROXY_PATH } from '@geonetwork-ui/util/shared'
   imports: [CommonModule, CopyTextButtonComponent, TranslatePipe],
 })
 export class DataViewWebComponentComponent {
+  private config = inject<Configuration>(Configuration)
+  private proxyPath = inject(PROXY_PATH, { optional: true })
+  private facade = inject(MdViewFacade)
+
   viewType$ = new BehaviorSubject<string>('map')
   @Input()
   set viewType(value: string) {
@@ -110,12 +113,4 @@ export class DataViewWebComponentComponent {
       }
     })
   )
-
-  constructor(
-    @Inject(Configuration) private config: Configuration,
-    @Optional()
-    @Inject(PROXY_PATH)
-    private proxyPath: string,
-    private facade: MdViewFacade
-  ) {}
 }

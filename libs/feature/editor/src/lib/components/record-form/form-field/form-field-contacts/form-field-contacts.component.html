@@ -9,15 +9,13 @@
   >
   </gn-ui-autocomplete>
 
-  <ng-container *ngIf="contacts.length > 0; else noContact">
-    <ng-container *ngIf="contacts.length === 1">
-      <ng-container *ngFor="let contact of contacts; let index = index">
-        <gn-ui-contact-card
-          [contact]="contact"
-        ></gn-ui-contact-card> </ng-container
-    ></ng-container>
-
-    <ng-container *ngIf="contacts.length > 1">
+  @if (contacts.length > 0) {
+    @if (contacts.length === 1) {
+      @for (contact of contacts; track contact; let index = $index) {
+        <gn-ui-contact-card [contact]="contact"></gn-ui-contact-card>
+      }
+    }
+    @if (contacts.length > 1) {
       <gn-ui-sortable-list
         [items]="contacts"
         (itemsOrderChange)="handleContactsChanged($event)"
@@ -26,15 +24,13 @@
       <ng-template #contactTemplate let-contact>
         <gn-ui-contact-card [contact]="contact"></gn-ui-contact-card>
       </ng-template>
-    </ng-container>
-  </ng-container>
+    }
+  } @else {
+    <div
+      class="p-4 text-sm border border-primary bg-primary-lightest rounded-lg"
+      translate
+    >
+      editor.record.form.field.contacts.noContact
+    </div>
+  }
 </div>
-
-<ng-template #noContact>
-  <div
-    class="p-4 text-sm border border-primary bg-primary-lightest rounded-lg"
-    translate
-  >
-    editor.record.form.field.contacts.noContact
-  </div>
-</ng-template>

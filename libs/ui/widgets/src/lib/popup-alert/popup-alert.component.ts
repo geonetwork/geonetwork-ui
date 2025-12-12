@@ -6,6 +6,7 @@ import {
   Input,
   OnInit,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
@@ -30,14 +31,14 @@ import { matErrorOutlineOutline } from '@ng-icons/material-icons/outline'
   ],
 })
 export class PopupAlertComponent implements OnInit {
+  private changeDetector = inject(ChangeDetectorRef)
+
   @Input() icon: string
   @Input() type: 'danger' | 'warning' | 'info' = 'info'
   @Input() position: 'top' | 'bottom' = 'top'
   @ViewChild('content') content: ElementRef
   expanded = false
   timeout = null
-
-  constructor(private changeDetector: ChangeDetectorRef) {}
 
   get showDuration() {
     const chars = this.content.nativeElement.innerHTML.length

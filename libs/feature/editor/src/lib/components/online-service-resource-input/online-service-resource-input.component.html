@@ -2,14 +2,15 @@
   <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
     editor.record.form.field.onlineResource.edit.protocol
   </h3>
-  <span
-    *ngIf="protocolHint"
-    class="material-symbols-outlined m-2 gn-ui-icon-small"
-    [matTooltip]="protocolHint"
-    matTooltipPosition="above"
-  >
-    help
-  </span>
+  @if (protocolHint) {
+    <span
+      class="material-symbols-outlined m-2 gn-ui-icon-small"
+      [matTooltip]="protocolHint"
+      matTooltipPosition="above"
+    >
+      help
+    </span>
+  }
 </div>
 <div class="flex flex-row items-center gap-4 h-[48px]">
   <mat-radio-group
@@ -19,12 +20,11 @@
     [disabled]="disabled"
     (change)="resetAllFormFields()"
   >
-    <mat-radio-button
-      *ngFor="let protocolOption of protocolOptions"
-      [value]="protocolOption.value"
-    >
-      {{ protocolOption.label | translate }}
-    </mat-radio-button>
+    @for (protocolOption of protocolOptions; track protocolOption) {
+      <mat-radio-button [value]="protocolOption.value">
+        {{ protocolOption.label | translate }}
+      </mat-radio-button>
+    }
   </mat-radio-group>
 </div>
 
@@ -38,54 +38,61 @@
     [showValidateButton]="activeLayerSuggestion"
     [resetUrlOnChange]="resetUrlOnChange"
   >
-    <ng-content *ngIf="activeLayerSuggestion">
-      <ng-icon name="iconoirRefresh"></ng-icon>
-    </ng-content>
+    @if (activeLayerSuggestion) {
+      <ng-content>
+        <ng-icon name="iconoirRefresh"></ng-icon>
+      </ng-content>
+    }
   </gn-ui-url-input>
 
-  <p class="text-sm text-red-500 pl-4" *ngIf="errorMessage" translate>
-    editor.record.form.field.onlineResource.edit.identifier.error
-  </p>
+  @if (errorMessage) {
+    <p class="text-sm text-red-500 pl-4" translate>
+      editor.record.form.field.onlineResource.edit.identifier.error
+    </p>
+  }
 
-  <gn-ui-text-input
-    class="grow border-b border-gray-300 pb-4"
-    [(value)]="_service.identifierInService"
-    [placeholder]="getIdentifierPlaceholder() | translate"
-    data-cy="identifier-in-service"
-    [disabled]="disabled"
-    *ngIf="
-      !activeLayerSuggestion ||
-      (_service.url && errorMessage) ||
-      (modifyMode && (layers$ | async).length === 0)
-    "
-  ></gn-ui-text-input>
-  <gn-ui-autocomplete
-    class="border-b border-gray-300 pb-4"
-    [placeholder]="
-      'editor.record.form.field.onlineResource.edit.identifier.select.label'
-        | translate
-    "
-    [action]="autoCompleteAction"
-    (itemSelected)="handleSelectValue($event)"
-    [displayWithFn]="displayWithFn"
-    [minCharacterCount]="0"
-    [clearOnSelection]="false"
-    *ngIf="activeLayerSuggestion && (layers$ | async)?.length > 0"
-  >
-  </gn-ui-autocomplete>
-  <gn-ui-button
-    (buttonClick)="submit()"
-    [disabled]="disabled || !_service.identifierInService"
-    type="primary"
-    *ngIf="
-      !modifyMode &&
-      ((activeLayerSuggestion && (layers$ | async)) ||
-        !activeLayerSuggestion ||
-        (_service.url && errorMessage))
-    "
-  >
-    <span class="text-white font-bold" translate>
-      editor.record.form.field.onlineResource.edit.identifier.submit</span
+  @if (
+    !activeLayerSuggestion ||
+    (_service.url && errorMessage) ||
+    (modifyMode && (layers$ | async).length === 0)
+  ) {
+    <gn-ui-text-input
+      class="grow border-b border-gray-300 pb-4"
+      [(value)]="_service.identifierInService"
+      [placeholder]="getIdentifierPlaceholder() | translate"
+      data-cy="identifier-in-service"
+      [disabled]="disabled"
+    ></gn-ui-text-input>
+  }
+  @if (activeLayerSuggestion && (layers$ | async)?.length > 0) {
+    <gn-ui-autocomplete
+      class="border-b border-gray-300 pb-4"
+      [placeholder]="
+        'editor.record.form.field.onlineResource.edit.identifier.select.label'
+          | translate
+      "
+      [action]="autoCompleteAction"
+      (itemSelected)="handleSelectValue($event)"
+      [displayWithFn]="displayWithFn"
+      [minCharacterCount]="0"
+      [clearOnSelection]="false"
     >
-  </gn-ui-button>
+    </gn-ui-autocomplete>
+  }
+  @if (
+    !modifyMode &&
+    ((activeLayerSuggestion && (layers$ | async)) ||
+      !activeLayerSuggestion ||
+      (_service.url && errorMessage))
+  ) {
+    <gn-ui-button
+      (buttonClick)="submit()"
+      [disabled]="disabled || !_service.identifierInService"
+      type="primary"
+    >
+      <span class="text-white font-bold" translate>
+        editor.record.form.field.onlineResource.edit.identifier.submit</span
+      >
+    </gn-ui-button>
+  }
 </div>

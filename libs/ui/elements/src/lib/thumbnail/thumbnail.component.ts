@@ -3,16 +3,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Inject,
   InjectionToken,
   Input,
   OnChanges,
   OnInit,
-  Optional,
   SimpleChanges,
   ViewChild,
   Output,
   EventEmitter,
+  inject,
 } from '@angular/core'
 
 export const THUMBNAIL_PLACEHOLDER = new InjectionToken<string>(
@@ -36,6 +35,10 @@ const DEFAULT_PLACEHOLDER =
   imports: [CommonModule],
 })
 export class ThumbnailComponent implements OnInit, OnChanges {
+  private optionalPlaceholderUrl = inject(THUMBNAIL_PLACEHOLDER, {
+    optional: true,
+  })
+
   @Input() thumbnailUrl: string | string[]
   @Input() fit: FitOptions | FitOptions[] = 'cover'
   @ViewChild('imageElement') imgElement: ElementRef<HTMLImageElement>
@@ -48,12 +51,6 @@ export class ThumbnailComponent implements OnInit, OnChanges {
     return this.imgUrl === this.placeholderUrl
   }
   private images: ThumbnailImageObject[] = []
-
-  constructor(
-    @Optional()
-    @Inject(THUMBNAIL_PLACEHOLDER)
-    private optionalPlaceholderUrl: string
-  ) {}
 
   ngOnInit() {
     this.updateImageList()

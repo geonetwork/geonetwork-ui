@@ -133,7 +133,7 @@ describe('organizations', () => {
     it('should go to next page with arrow', () => {
       cy.then(() => {
         cy.get('@pagination').find('[data-cy=next-page]').click()
-        cy.get('@organizations').should('have.length', 10)
+        cy.get('@organizations').should('have.length', 11)
       })
     })
     it('should go back to the first page with arrow', () => {

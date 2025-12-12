@@ -1,5 +1,10 @@
 import { ViewportScroller } from '@angular/common'
-import { importProvidersFrom, NgModule } from '@angular/core'
+import {
+  importProvidersFrom,
+  NgModule,
+  provideNgReflectAttributes,
+  inject,
+} from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { Router, RouterModule } from '@angular/router'
@@ -61,6 +66,7 @@ import { EditorRouterService } from './router.service'
     SearchRouterContainerDirective,
   ],
   providers: [
+    provideNgReflectAttributes(),
     { provide: RouterService, useClass: EditorRouterService },
     importProvidersFrom(FeatureSearchModule),
     importProvidersFrom(FeatureRecordModule),
@@ -86,10 +92,10 @@ import { EditorRouterService } from './router.service'
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(
-    private router: Router,
-    private viewportScroller: ViewportScroller
-  ) {
+  private router = inject(Router)
+  private viewportScroller = inject(ViewportScroller)
+
+  constructor() {
     // Disable automatic scroll restoration to avoid race conditions
     this.viewportScroller.setHistoryScrollRestoration('manual')
     handleScrollOnNavigation(this.router, this.viewportScroller)

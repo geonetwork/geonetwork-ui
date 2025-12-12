@@ -10,13 +10,14 @@
   >
     results.records.hits.displayedOn
   </div>
-  <div
-    *ngIf="(selectedRecords$ | async).length as selectedRecordCount"
-    class="ml-2 text-gray-600"
-    data-test="selected-count"
-    translate
-    [translateParams]="{ amount: selectedRecordCount }"
-  >
-    results.records.hits.selected
-  </div>
+  @if ((selectedRecords$ | async).length; as selectedRecordCount) {
+    <div
+      class="ml-2 text-gray-600"
+      data-test="selected-count"
+      translate
+      [translateParams]="{ amount: selectedRecordCount }"
+    >
+      results.records.hits.selected
+    </div>
+  }
 </div>

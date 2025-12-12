@@ -1,25 +1,24 @@
 <div class="flex flex-row justify-between mb-11">
   <h2 class="gn-ui-section-title" translate>record.metadata.userFeedbacks</h2>
   <div class="pt-9">
-    <gn-ui-dropdown-selector
-      *ngIf="userFeedbacksParents && userFeedbacksParents.length > 1"
-      [title]="'record.metadata.userFeedbacks.sortSelector.label' | translate"
-      (selectValue)="changeSort($event)"
-      [choices]="sortingStrategyList"
-      [selected]="selectedSortingStrategy$ | async"
-    >
-    </gn-ui-dropdown-selector>
+    @if (userFeedbacksParents && userFeedbacksParents.length > 1) {
+      <gn-ui-dropdown-selector
+        [title]="'record.metadata.userFeedbacks.sortSelector.label' | translate"
+        (selectValue)="changeSort($event)"
+        [choices]="sortingStrategyList"
+        [selected]="selectedSortingStrategy$ | async"
+      >
+      </gn-ui-dropdown-selector>
+    }
   </div>
 </div>
 
-<ng-container *ngIf="isAllUserFeedbackLoading; else userFeedbacksSection">
+@if (isAllUserFeedbackLoading) {
   <div class="flex justify-center h-[300px] pt-[145px]">
     <gn-ui-spinning-loader></gn-ui-spinning-loader>
   </div>
-</ng-container>
-
-<ng-template #userFeedbacksSection>
-  <ng-container *ngIf="activeUser; else anonymousUser">
+} @else {
+  @if (activeUser) {
     <div class="flex flex-col h-auto w-full">
       <div class="flex flex-row items-center w-full h-auto gap-3 px-6">
         <ng-icon class="grow-0" name="matEditOutline"></ng-icon>
@@ -34,36 +33,29 @@
           class="grow"
           extraClass="bg-transparent border-0 placeholder-primary-darker text-primary-darker h-9"
         ></gn-ui-text-area>
-        <div
-          *ngIf="!isNewCommentEmpty"
-          id="new-comment-buttons"
-          class="flex flex-row justify-end"
-        >
-          <gn-ui-button
-            [disabled]="isAddUserFeedbackLoading"
-            [type]="'outline'"
-            (buttonClick)="publishNewComment()"
-            title="Publish"
-            extraClass="!p-[0.5em] text-primary-darker border-primary-darker h-9"
-          >
-            <ng-icon
-              class="grow-0"
-              *ngIf="!isAddUserFeedbackLoading"
-              name="matSendOutline"
+        @if (!isNewCommentEmpty) {
+          <div id="new-comment-buttons" class="flex flex-row justify-end">
+            <gn-ui-button
+              [disabled]="isAddUserFeedbackLoading"
+              [type]="'outline'"
+              (buttonClick)="publishNewComment()"
+              title="Publish"
+              extraClass="!p-[0.5em] text-primary-darker border-primary-darker h-9"
             >
-            </ng-icon>
-            <ng-container *ngIf="isAddUserFeedbackLoading">
-              <div class="flex justify-center w-full">
-                <gn-ui-spinning-loader></gn-ui-spinning-loader>
-              </div>
-            </ng-container>
-          </gn-ui-button>
-        </div>
+              @if (!isAddUserFeedbackLoading) {
+                <ng-icon class="grow-0" name="matSendOutline"> </ng-icon>
+              }
+              @if (isAddUserFeedbackLoading) {
+                <div class="flex justify-center w-full">
+                  <gn-ui-spinning-loader></gn-ui-spinning-loader>
+                </div>
+              }
+            </gn-ui-button>
+          </div>
+        }
       </div>
     </div>
-  </ng-container>
-
-  <ng-template #anonymousUser>
+  } @else {
     <div class="flex flex-row items-center gap-3 w-full h-auto px-6">
       <ng-icon
         class="grow-0"
@@ -76,32 +68,36 @@
             : 'record.metadata.userFeedbacks.authDisabled'
         "
       ></span>
-      <a
-        *ngIf="showAuthUI"
-        [href]="loginUrl"
-        class="gn-ui-btn-primary uppercase flex flex-row items-center gap-2 ml-auto"
-        translate
-      >
-        <ng-icon class="grow-0" name="matAccountBoxOutline"></ng-icon>
-        button.login
-      </a>
+      @if (showAuthUI) {
+        <a
+          [href]="loginUrl"
+          class="gn-ui-btn-primary uppercase flex flex-row items-center gap-2 ml-auto"
+          translate
+        >
+          <ng-icon class="grow-0" name="matAccountBoxOutline"></ng-icon>
+          button.login
+        </a>
+      }
     </div>
-  </ng-template>
-
-  <div class="mt-4" *ngIf="userFeedbacksParents && userFeedbacksParents.length">
-    <div
-      class="mb-4 w-full"
-      *ngFor="let userFeedbackParent of userFeedbacksParents"
-    >
-      <gn-ui-user-feedback-item
-        [userFeedbackParent]="userFeedbackParent"
-        [userFeedBacksAnswers]="
-          userFeedBacksAnswers.get(userFeedbackParent.uuid)
-        "
-        [activeUser]="activeUser"
-        [isAddUserFeedbackLoading]="isAddUserFeedbackLoading"
-        (newUserFeedbackAnswer)="onNewUserFeedbackAnswer($event)"
-      ></gn-ui-user-feedback-item>
+  }
+  @if (userFeedbacksParents && userFeedbacksParents.length) {
+    <div class="mt-4">
+      @for (
+        userFeedbackParent of userFeedbacksParents;
+        track userFeedbackParent
+      ) {
+        <div class="mb-4 w-full">
+          <gn-ui-user-feedback-item
+            [userFeedbackParent]="userFeedbackParent"
+            [userFeedBacksAnswers]="
+              userFeedBacksAnswers.get(userFeedbackParent.uuid)
+            "
+            [activeUser]="activeUser"
+            [isAddUserFeedbackLoading]="isAddUserFeedbackLoading"
+            (newUserFeedbackAnswer)="onNewUserFeedbackAnswer($event)"
+          ></gn-ui-user-feedback-item>
+        </div>
+      }
     </div>
-  </div>
-</ng-template>
+  }
+}

@@ -2,10 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Inject,
   Input,
-  Optional,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
@@ -85,6 +84,13 @@ import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
   ],
 })
 export class RecordMetadataComponent {
+  metadataViewFacade = inject(MdViewFacade)
+  private searchService = inject(SearchService)
+  private sourceService = inject(SourcesService)
+  private orgsService = inject(OrganizationsServiceInterface)
+  private readonly platformServiceInterface = inject(PlatformServiceInterface)
+  reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
+
   @Input() metadataQualityDisplay: boolean
   @ViewChild('userFeedbacks') userFeedbacks: ElementRef<HTMLElement>
 
@@ -233,16 +239,7 @@ export class RecordMetadataComponent {
 
   errorTypes = ErrorType
 
-  constructor(
-    public metadataViewFacade: MdViewFacade,
-    private searchService: SearchService,
-    private sourceService: SourcesService,
-    private orgsService: OrganizationsServiceInterface,
-    private readonly platformServiceInterface: PlatformServiceInterface,
-    @Inject(REUSE_FORM_URL)
-    @Optional()
-    public reuseFormUrl: string
-  ) {
+  constructor() {
     this.activeUser$ = this.platformServiceInterface.getMe()
   }
 

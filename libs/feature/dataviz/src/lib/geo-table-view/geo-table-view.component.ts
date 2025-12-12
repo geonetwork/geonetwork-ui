@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  inject,
 } from '@angular/core'
 import {
   DataTableComponent,
@@ -30,6 +31,8 @@ import { BaseReader } from '@geonetwork-ui/data-fetcher'
   standalone: true,
 })
 export class GeoTableViewComponent implements OnInit, OnDestroy {
+  private changeRef = inject(ChangeDetectorRef)
+
   @Input() dataset: BaseReader
   @ViewChild('table') uiTable: DataTableComponent
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
@@ -39,8 +42,6 @@ export class GeoTableViewComponent implements OnInit, OnDestroy {
   selectionId: TableItemId
   selection: Feature
   private subscription = new Subscription()
-
-  constructor(private changeRef: ChangeDetectorRef) {}
 
   async ngOnInit() {
     this.mapContext = await this.initMapContext()

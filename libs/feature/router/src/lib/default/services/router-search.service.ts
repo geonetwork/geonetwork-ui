@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import {
   FieldsService,
   SearchFacade,
@@ -15,11 +15,9 @@ import { sortByToString } from '@geonetwork-ui/util/shared'
 
 @Injectable()
 export class RouterSearchService implements SearchServiceI {
-  constructor(
-    private searchFacade: SearchFacade,
-    private facade: RouterFacade,
-    private fieldsService: FieldsService
-  ) {}
+  private searchFacade = inject(SearchFacade)
+  private facade = inject(RouterFacade)
+  private fieldsService = inject(FieldsService)
 
   setSortAndFilters(filters: FieldFilters, sortBy: SortByField) {
     this.fieldsService

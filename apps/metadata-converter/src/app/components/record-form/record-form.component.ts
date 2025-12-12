@@ -18,6 +18,7 @@ import {
   selector: 'gn-ui-record-form',
   templateUrl: './record-form.component.html',
   styleUrls: ['./record-form.component.css'],
+  standalone: false,
 })
 export class RecordFormComponent implements AfterViewInit {
   @Input() record: CatalogRecord

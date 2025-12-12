@@ -1,10 +1,18 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core'
+import {
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  inject,
+} from '@angular/core'
 
 @Directive({
   selector: 'img[gnUiImageFallback]',
   standalone: true,
 })
 export class ImageFallbackDirective {
+  private el = inject(ElementRef)
+
   @Input() fallbackUrl: string
   @HostListener('error')
   useFallback() {
@@ -16,5 +24,4 @@ export class ImageFallbackDirective {
       this.el.nativeElement.src = fallbackUrl
     }
   }
-  constructor(private el: ElementRef) {}
 }

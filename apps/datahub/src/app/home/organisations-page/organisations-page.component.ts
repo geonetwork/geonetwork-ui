@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { OrganisationsComponent } from '@geonetwork-ui/feature/catalog'
@@ -12,7 +12,7 @@ import { OrganisationsComponent } from '@geonetwork-ui/feature/catalog'
   imports: [OrganisationsComponent],
 })
 export class OrganisationsPageComponent {
-  constructor(private routerFacade: RouterFacade) {}
+  private routerFacade = inject(RouterFacade)
 
   onOrganizationSelection(organisation: Organization) {
     this.routerFacade.goToOrganization(organisation.name)

@@ -190,6 +190,11 @@ describe('link utils', () => {
         expect(getFileFormat(aSetOfLinksFixture().dataXlsx())).toEqual('excel')
       })
     })
+    describe('for an xml FILE link', () => {
+      it('returns xml format', () => {
+        expect(getFileFormat(aSetOfLinksFixture().dataXml())).toEqual('xml')
+      })
+    })
     describe('for a pdf FILE link', () => {
       it('returns pdf format', () => {
         expect(getFileFormat(aSetOfLinksFixture().dataPdf())).toEqual('pdf')
@@ -216,6 +221,17 @@ describe('link utils', () => {
       ],
       ['csv', 'csv', 'application/csv'],
       ['svg', 'svg', 'image/svg+xml'],
+      ['xml', 'xml', 'application/xml'],
+      ['xml', 'xml', 'text/xml'],
+      ['shp', 'shp', 'x-gis/x-shapefile'],
+      ['json', 'json', 'application/json'],
+      ['kml', 'kml', 'application/vnd.google-earth.kml+xml'],
+      ['gml', 'gml', 'application/gml+xml'],
+      ['gml', 'gml', 'text/xml; subtype=gml'],
+      ['gpkg', 'gpkg', 'application/geopackage+sqlite3'],
+      ['pdf', 'pdf', 'application/pdf'],
+      ['jpg', 'jpg', 'image/jpeg'],
+      ['zip', 'zip', 'application/zip'],
     ]
 
     describe.each(toTest)(
@@ -303,6 +319,8 @@ describe('link utils', () => {
       ['KML', 'kml'],
       ['excel2007', 'excel'],
       ['XLS', 'excel'],
+      ['xml', 'xml'],
+      ['text/xml', 'xml'],
       ['gml2', 'gml'],
       ['gml3', 'gml'],
       ['text/xml; subtype=gml/3.1.1', 'gml'],
@@ -412,6 +430,27 @@ describe('link utils', () => {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       )
       expect([excel1, excel2]).toEqual(['excel', 'excel'])
+    })
+    it('returns xml for mimetype', () => {
+      const xml1 = mimeTypeToFormat('application/xml')
+      const xml2 = mimeTypeToFormat('text/xml')
+      expect([xml1, xml2]).toEqual(['xml', 'xml'])
+    })
+    it('returns gml for mimetype', () => {
+      const gml1 = mimeTypeToFormat('application/gml+xml')
+      const gml2 = mimeTypeToFormat('application/vnd.ogc.gml')
+      const gml3 = mimeTypeToFormat('text/xml; subtype=gml')
+      const gml4 = mimeTypeToFormat('text/xml; subtype=gml/2.1.2')
+      const gml5 = mimeTypeToFormat('text/xml; subtype=gml/3.1.1')
+      const gml6 = mimeTypeToFormat('text/xml; subtype=gml/3.2.1')
+      expect([gml1, gml2, gml3, gml4, gml5, gml6]).toEqual([
+        'gml',
+        'gml',
+        'gml',
+        'gml',
+        'gml',
+        'gml',
+      ])
     })
   })
 
