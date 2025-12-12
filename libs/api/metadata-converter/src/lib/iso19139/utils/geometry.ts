@@ -1,6 +1,6 @@
 import { XmlElement } from '@rgrove/parse-xml'
 import { Geometry } from 'geojson'
-import GML32 from 'ol/format/GML32'
+import GML32 from 'ol/format/GML32.js'
 import GeoJSON from 'ol/format/GeoJSON'
 import { parse } from 'ol/xml'
 import {
