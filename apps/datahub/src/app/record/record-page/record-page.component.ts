@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
+  OnInit,
   inject,
 } from '@angular/core'
 import {
@@ -15,6 +16,8 @@ import {
 import { RecordMetadataComponent } from '../record-metadata/record-metadata.component'
 import { HeaderRecordComponent } from '../header-record/header-record.component'
 import { CommonModule } from '@angular/common'
+import { TitleService } from '../../router/datahub-title.service'
+import { Subscription, tap } from 'rxjs'
 
 @Component({
   selector: 'datahub-record-page',
@@ -29,9 +32,10 @@ import { CommonModule } from '@angular/common'
     RecordMetaComponent,
   ],
 })
-export class RecordPageComponent implements OnDestroy {
+export class RecordPageComponent implements OnInit, OnDestroy {
   mdViewFacade = inject(MdViewFacade)
-
+  titleService = inject(TitleService)
+  subscription: Subscription
   metadataQualityDisplay: boolean
 
   constructor() {
@@ -40,7 +44,21 @@ export class RecordPageComponent implements OnDestroy {
       getMetadataQualityConfig() || ({} as MetadataQualityConfig)
     this.metadataQualityDisplay = cfg.ENABLED
   }
+
+  ngOnInit() {
+    this.subscription = this.mdViewFacade.metadata$
+      .pipe(
+        tap((metadata) => {
+          if (metadata) {
+            this.titleService.setTitle(metadata.title)
+          }
+        })
+      )
+      .subscribe()
+  }
+
   ngOnDestroy() {
     document.documentElement.classList.remove('record-page-active')
+    this.subscription.unsubscribe()
   }
 }

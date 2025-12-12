@@ -1,14 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-
 import { RecordPageComponent } from './record-page.component'
-import { MockBuilder } from 'ng-mocks'
+import { MockBuilder, MockProvider } from 'ng-mocks'
 import { SAMPLE_RECORD } from '@geonetwork-ui/common/fixtures'
-import { BehaviorSubject } from 'rxjs'
-
-class MdViewFacadeMock {
-  metadata$ = new BehaviorSubject(SAMPLE_RECORD)
-}
+import { of } from 'rxjs'
+import { TitleService } from '../../router/datahub-title.service'
 
 describe('RecordPageComponent', () => {
   let component: RecordPageComponent
@@ -19,10 +15,10 @@ describe('RecordPageComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        {
-          provide: MdViewFacade,
-          useClass: MdViewFacadeMock,
-        },
+        MockProvider(MdViewFacade, {
+          metadata$: of(SAMPLE_RECORD),
+        }),
+        MockProvider(TitleService),
       ],
     }).compileComponents()
   })
@@ -38,5 +34,13 @@ describe('RecordPageComponent', () => {
   })
   it('has id="record-page" at root for related records scroll', () => {
     expect(fixture.nativeElement.children[0].id).toBe('record-page')
+  })
+  it('should set the page title', () => {
+    const titleService = TestBed.inject(TitleService)
+
+    jest.spyOn(titleService, 'setTitle')
+    component.ngOnInit()
+
+    expect(titleService.setTitle).toHaveBeenCalledWith(SAMPLE_RECORD.title)
   })
 })
