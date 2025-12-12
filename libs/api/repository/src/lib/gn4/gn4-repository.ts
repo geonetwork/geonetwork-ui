@@ -384,7 +384,6 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         false,
         {
           httpHeaderAccept: 'application/json',
-          httpContentTypeSelected: 'application/json;charset=UTF-8',
         }
       )
       .pipe(
