@@ -1,6 +1,6 @@
-import Collection from 'ol/Collection'
+import Collection from 'ol/Collection.js'
 import { defaults, DragPan, Interaction, MouseWheelZoom } from 'ol/interaction'
-import MapBrowserEvent from 'ol/MapBrowserEvent'
+import MapBrowserEvent from 'ol/MapBrowserEvent.js'
 import {
   mouseOnly,
   noModifierKeys,

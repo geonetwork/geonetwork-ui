@@ -40,7 +40,7 @@ import {
   createMapFromContext,
   listen,
 } from '@geospatial-sdk/openlayers'
-import type OlMap from 'ol/Map'
+import type OlMap from 'ol/Map.js'
 import type { Feature } from 'geojson'
 import {
   BASEMAP_LAYERS,

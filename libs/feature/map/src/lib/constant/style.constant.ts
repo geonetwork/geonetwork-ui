@@ -1,5 +1,6 @@
 import { Circle, Fill, Stroke } from 'ol/style'
-import Style, { createDefaultStyle, StyleFunction } from 'ol/style/Style'
+import { createDefaultStyle, StyleFunction } from 'ol/style/Style'
+import Style from 'ol/style/Style.js'
 
 export const defaultStyle: StyleFunction = createDefaultStyle
 

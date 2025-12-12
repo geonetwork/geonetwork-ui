@@ -3,8 +3,8 @@ import { getThemeConfig, isConfigLoaded } from '@geonetwork-ui/util/app-config'
 import chroma from 'chroma-js'
 import { Fill, Stroke, Style } from 'ol/style'
 import { StyleLike } from 'ol/style/Style'
-import CircleStyle from 'ol/style/Circle'
-import Feature from 'ol/Feature'
+import CircleStyle from 'ol/style/Circle.js'
+import Feature from 'ol/Feature.js'
 
 export interface CreateStyleOptions {
   color: string
