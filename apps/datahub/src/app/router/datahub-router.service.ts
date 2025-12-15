@@ -22,6 +22,11 @@ import {
   SortByEnum,
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('datahub.pageTitle.home')
+marker('datahub.pageTitle.recordSearch')
+marker('datahub.pageTitle.organizations')
 
 @Injectable({
   providedIn: 'root',
@@ -39,9 +44,11 @@ export class DatahubRouterService {
         path: ROUTER_ROUTE_HOME,
         redirectTo: ``,
         pathMatch: 'prefix',
+        title: 'datahub.pageTitle.home',
       },
       {
         path: '',
+        title: 'datahub.pageTitle.home',
         component: HomePageComponent,
         data: {
           shouldDetach: true,
@@ -58,6 +65,7 @@ export class DatahubRouterService {
             data: {
               shouldDetach: true,
             },
+            title: 'datahub.pageTitle.home',
           },
           {
             path: ROUTER_ROUTE_SEARCH,
@@ -65,6 +73,7 @@ export class DatahubRouterService {
             data: {
               shouldDetach: true,
             },
+            title: 'datahub.pageTitle.recordSearch',
           },
           {
             path: ROUTER_ROUTE_ORGANIZATIONS,
@@ -72,20 +81,24 @@ export class DatahubRouterService {
             data: {
               shouldDetach: true,
             },
+            title: 'datahub.pageTitle.organizations',
           },
         ],
       },
       {
         path: `${ROUTER_ROUTE_DATASET}/:metadataUuid`,
         component: RecordPageComponent,
+        title: 'entityTitle',
       },
       {
         path: `${ROUTER_ROUTE_SERVICE}/:metadataUuid`,
         component: RecordPageComponent,
+        title: 'entityTitle',
       },
       {
         path: `${ROUTER_ROUTE_REUSE}/:metadataUuid`,
         component: RecordPageComponent,
+        title: 'entityTitle',
       },
       {
         path: `${ROUTER_ROUTE_ORGANIZATION}/:name`,
@@ -93,6 +106,7 @@ export class DatahubRouterService {
         data: {
           shouldDetach: true,
         },
+        title: 'entityTitle',
       },
       { path: '**', redirectTo: '', pathMatch: 'full' },
     ]

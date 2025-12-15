@@ -9,7 +9,7 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { OrganizationHeaderComponent } from '../organization-header/organization-header.component'
 import { OrganizationDetailsComponent } from '../organization-details/organization-details.component'
 import { combineLatest, Observable, of, switchMap } from 'rxjs'
-import { filter } from 'rxjs/operators'
+import { filter, tap } from 'rxjs/operators'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { LetDirective } from '@ngrx/component'
@@ -17,6 +17,7 @@ import {
   FeatureSearchModule,
   SearchStateContainerDirective,
 } from '@geonetwork-ui/feature/search'
+import { TitleService } from '../../router/datahub-title.service'
 
 @Component({
   selector: 'datahub-organization-page',
@@ -35,6 +36,7 @@ import {
 export class OrganizationPageComponent implements OnInit {
   private router = inject(RouterFacade)
   private orgService = inject(OrganizationsServiceInterface)
+  private titleService = inject(TitleService)
 
   organization$: Observable<Organization>
 
@@ -50,6 +52,11 @@ export class OrganizationPageComponent implements OnInit {
             organization.name.replaceAll('/', '') === pathParams['name']
         )
         return of(organization)
+      }),
+      tap((organization) => {
+        if (organization) {
+          this.titleService.setTitle(organization.name)
+        }
       })
     )
   }
