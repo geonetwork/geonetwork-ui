@@ -53,7 +53,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { matSwipeOutline } from '@ng-icons/material-icons/outline'
-import { transformExtent } from 'ol/proj'
+import { transformExtent } from 'ol/proj.js'
 
 const DEFAULT_BASEMAP_LAYER: MapContextLayerXyz = {
   type: 'xyz',

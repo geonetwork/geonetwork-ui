@@ -22,7 +22,7 @@ import { Component, Input } from '@angular/core'
 import { MapContext } from '@geospatial-sdk/core'
 import { MapContainerComponent } from '@geonetwork-ui/ui/map'
 import { Collection } from 'ol'
-import { Interaction } from 'ol/interaction'
+import { Interaction } from 'ol/interaction.js'
 
 const STAC_ITEMS_PER_PAGE = 12
 

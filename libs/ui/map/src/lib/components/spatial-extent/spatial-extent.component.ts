@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Geometry } from 'geojson'
-import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
+import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON.js'
 import GeoJSON from 'ol/format/GeoJSON.js'
-import { Polygon } from 'ol/geom'
+import { Polygon } from 'ol/geom.js'
 import {
   createViewFromLayer,
   MapContext,

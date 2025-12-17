@@ -1,7 +1,7 @@
 import { BaseFileReader } from './base-file'
 import { DataItem, PropertyInfo } from '../model'
 import { fetchDataAsText, processItemProperties } from '../utils'
-import { GeoJSON, WFS } from 'ol/format'
+import { GeoJSON, WFS } from 'ol/format.js'
 import { WfsVersion } from '@camptocamp/ogc-client'
 
 export function parseGml(

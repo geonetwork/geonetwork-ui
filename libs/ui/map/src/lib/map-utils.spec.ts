@@ -4,7 +4,7 @@ import {
   DragRotate,
   MouseWheelZoom,
   PinchRotate,
-} from 'ol/interaction'
+} from 'ol/interaction.js'
 import Map from 'ol/Map.js'
 import MapBrowserEvent from 'ol/MapBrowserEvent.js'
 import {
