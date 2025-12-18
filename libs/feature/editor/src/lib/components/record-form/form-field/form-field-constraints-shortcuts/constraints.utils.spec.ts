@@ -3,7 +3,7 @@ import {
   matchesNoKnownConstraint,
   NOT_APPLICABLE_CONSTRAINT,
   NOT_KNOWN_CONSTRAINT,
-} from './constraints.utils'
+} from './constraints.utils.js'
 
 describe('constraints utils', () => {
   describe('matchesNoApplicableConstraint', () => {

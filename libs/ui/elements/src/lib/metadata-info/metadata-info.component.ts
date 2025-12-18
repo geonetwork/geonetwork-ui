@@ -9,9 +9,9 @@ import {
 import {
   CatalogRecord,
   Keyword,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { DateService, getTemporalRangeUnion } from '@geonetwork-ui/util/shared'
-import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
+import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component.js'
 import {
   ExpandablePanelComponent,
   MaxLinesComponent,
@@ -21,12 +21,12 @@ import {
   BadgeComponent,
   CopyTextButtonComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
+import { ContentGhostComponent } from '../content-ghost/content-ghost.component.js'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 import { matMailOutline } from '@ng-icons/material-icons/outline'
-import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
-import { GnUiLinkifyDirective } from './linkify.directive'
+import { ThumbnailComponent } from '../thumbnail/thumbnail.component.js'
+import { GnUiLinkifyDirective } from './linkify.directive.js'
 import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
 
 import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'

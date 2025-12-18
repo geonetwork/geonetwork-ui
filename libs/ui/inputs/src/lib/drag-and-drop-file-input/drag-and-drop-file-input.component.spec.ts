@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { DragAndDropFileInputComponent } from './drag-and-drop-file-input.component'
+import { DragAndDropFileInputComponent } from './drag-and-drop-file-input.component.js'
 
 describe('DragAndDropFileInputComponent', () => {
   let component: DragAndDropFileInputComponent

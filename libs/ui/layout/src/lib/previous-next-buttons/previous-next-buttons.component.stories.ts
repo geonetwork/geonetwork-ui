@@ -1,6 +1,6 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import { PreviousNextButtonsComponent } from './previous-next-buttons.component'
-import { MockListComponent } from '../pagination/pagination.component.stories'
+import { PreviousNextButtonsComponent } from './previous-next-buttons.component.js'
+import { MockListComponent } from '../pagination/pagination.component.stories.js'
 
 export default {
   title: 'Layout/Pagination/PreviousNextButtonsComponent',

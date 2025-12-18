@@ -5,7 +5,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { ContactCardComponent } from './contact-card.component'
+import { ContactCardComponent } from './contact-card.component.js'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 import { CommonModule } from '@angular/common'

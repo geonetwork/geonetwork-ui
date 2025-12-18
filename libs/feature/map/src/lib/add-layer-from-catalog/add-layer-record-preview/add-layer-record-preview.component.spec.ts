@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { AddLayerRecordPreviewComponent } from './add-layer-record-preview.component'
-import { MapFacade } from '../../+state/map.facade'
+import { AddLayerRecordPreviewComponent } from './add-layer-record-preview.component.js'
+import { MapFacade } from '../../+state/map.facade.js'
 import {
   aSetOfLinksFixture,
   datasetRecordsFixture,
@@ -8,7 +8,7 @@ import {
 } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 
 describe('AddLayerRecordPreviewComponent', () => {

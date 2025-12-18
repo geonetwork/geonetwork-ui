@@ -6,7 +6,7 @@ import {
   tick,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { ThumbnailComponent } from './thumbnail.component'
+import { ThumbnailComponent } from './thumbnail.component.js'
 
 describe('ThumbnailComponent', () => {
   let component: ThumbnailComponent

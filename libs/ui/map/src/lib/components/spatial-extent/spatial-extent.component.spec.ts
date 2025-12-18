@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { SpatialExtentComponent } from './spatial-extent.component'
+import { SpatialExtentComponent } from './spatial-extent.component.js'
 import { MockBuilder } from 'ng-mocks'
 import { firstValueFrom } from 'rxjs'
 import { createViewFromLayer } from '@geospatial-sdk/core'

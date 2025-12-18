@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { MaxLinesComponent } from './max-lines.component'
+import { MaxLinesComponent } from './max-lines.component.js'
 import { Component } from '@angular/core'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

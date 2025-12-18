@@ -7,10 +7,10 @@ import {
 import {
   DataViewPermalinkComponent,
   WEB_COMPONENT_EMBEDDER_URL,
-} from '../data-view-permalink/data-view-permalink.component'
+} from '../data-view-permalink/data-view-permalink.component.js'
 import { MatTabsModule } from '@angular/material/tabs'
 
-import { DataViewWebComponentComponent } from '../data-view-web-component/data-view-web-component.component'
+import { DataViewWebComponentComponent } from '../data-view-web-component/data-view-web-component.component.js'
 import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({

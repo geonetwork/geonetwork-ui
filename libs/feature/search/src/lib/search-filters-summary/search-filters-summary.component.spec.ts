@@ -2,12 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import {
   FILTER_SUMMARY_IGNORE_LIST,
   SearchFiltersSummaryComponent,
-} from './search-filters-summary.component'
+} from './search-filters-summary.component.js'
 import { MockProvider } from 'ng-mocks'
-import { SearchService } from '../utils/service/search.service'
-import { SearchFacade } from '../state/search.facade'
+import { SearchService } from '../utils/service/search.service.js'
+import { SearchFacade } from '../state/search.facade.js'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
-import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search/index.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class SearchFacadeMock {

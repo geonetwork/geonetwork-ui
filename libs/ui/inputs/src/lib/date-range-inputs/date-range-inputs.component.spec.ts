@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { DateRangeInputsComponent } from './date-range-inputs.component'
+import { DateRangeInputsComponent } from './date-range-inputs.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DateRangeInputsComponent', () => {

@@ -11,8 +11,8 @@ import {
   getLinkPriority,
   mimeTypeToFormat,
   wmsLayerFlatten,
-} from './link-utils'
-import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
+} from './link-utils.js'
+import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 const mockWmsLayer = [
   {

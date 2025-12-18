@@ -1,14 +1,14 @@
 import { inject, Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
-import * as EditorActions from './editor.actions'
-import * as EditorSelectors from './editor.selectors'
+import * as EditorActions from './editor.actions.js'
+import * as EditorSelectors from './editor.selectors.js'
 import {
   CatalogRecord,
   LanguageCode,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { filter } from 'rxjs'
 import { Actions, ofType } from '@ngrx/effects'
-import { EditorFieldIdentification } from '../models'
+import { EditorFieldIdentification } from '../models/index.js'
 
 @Injectable()
 export class EditorFacade {

@@ -1,10 +1,10 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { SearchFacade } from '../state/search.facade'
+import { SearchFacade } from '../state/search.facade.js'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { of } from 'rxjs'
-import { ResultsLayoutComponent } from './results-layout.component'
+import { ResultsLayoutComponent } from './results-layout.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 

@@ -4,7 +4,7 @@ import { MockProvider } from 'ng-mocks'
 import {
   CatalogRecord,
   Individual,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { NewRecordResolver } from './new-record.resolver.js'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'

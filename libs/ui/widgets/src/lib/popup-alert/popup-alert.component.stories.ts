@@ -1,5 +1,5 @@
 import { componentWrapperDecorator, Meta, StoryObj } from '@storybook/angular'
-import { PopupAlertComponent } from './popup-alert.component'
+import { PopupAlertComponent } from './popup-alert.component.js'
 
 export default {
   title: 'Widgets/PopupAlertComponent',

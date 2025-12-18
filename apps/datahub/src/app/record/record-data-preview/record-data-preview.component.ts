@@ -11,7 +11,7 @@ import {
 } from '@angular/core'
 import { MatTabsModule } from '@angular/material/tabs'
 import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { StacViewComponent } from '@geonetwork-ui/feature/record'

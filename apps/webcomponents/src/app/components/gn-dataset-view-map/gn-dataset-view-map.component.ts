@@ -11,7 +11,7 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component.js'
 import { LinkUsage } from '@geonetwork-ui/util/shared'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 @Component({
   selector: 'wc-gn-dataset-view-map',

@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   inject,
+  Input,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
@@ -25,11 +25,11 @@ import {
 import {
   SortByEnum,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants.js'
 import { lastValueFrom, of } from 'rxjs'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { CommonModule } from '@angular/common'

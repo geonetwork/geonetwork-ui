@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store'
-import { SearchStateParams } from './reducer'
+import { SearchStateParams } from './reducer.js'
 import {
   Aggregation,
   Aggregations,
@@ -7,8 +7,8 @@ import {
   FieldFilters,
   FieldName,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const ADD_SEARCH = '[Search] Add search instance'
 export const SET_FILTERS = '[Search] Set Filters'

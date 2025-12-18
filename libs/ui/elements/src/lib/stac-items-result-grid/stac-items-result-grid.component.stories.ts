@@ -1,6 +1,6 @@
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { StacItemsResultGridComponent } from './stac-items-result-grid.component'
+import { StacItemsResultGridComponent } from './stac-items-result-grid.component.js'
 
 export default {
   title: 'Elements/StacItemsResultGridComponent',

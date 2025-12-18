@@ -5,7 +5,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { GeoTableViewComponent } from './geo-table-view.component'
+import { GeoTableViewComponent } from './geo-table-view.component.js'
 import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { provideHttpClient } from '@angular/common/http'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

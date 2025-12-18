@@ -7,8 +7,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { firstValueFrom, of } from 'rxjs'
 import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
-import { OrganisationsComponent } from './organisations.component'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { OrganisationsComponent } from './organisations.component.js'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
 import { MockBuilder } from 'ng-mocks'
 import {
   OrganisationPreviewComponent,

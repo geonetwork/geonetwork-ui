@@ -4,10 +4,10 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { FacetListComponent } from './facet-list.component'
-import { blockModelFixture } from '../fixtures'
-import { FacetItemComponent } from '../facet-item/facet-item.component'
-import { FacetBlockComponent } from '../facet-block/facet-block.component'
+import { FacetListComponent } from './facet-list.component.js'
+import { blockModelFixture } from '../fixtures.js'
+import { FacetItemComponent } from '../facet-item/facet-item.component.js'
+import { FacetBlockComponent } from '../facet-block/facet-block.component.js'
 import { FormsModule } from '@angular/forms'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

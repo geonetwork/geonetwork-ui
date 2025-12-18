@@ -1,4 +1,4 @@
-import { Gn4PlatformMapper } from './gn4-platform.mapper'
+import { Gn4PlatformMapper } from './gn4-platform.mapper.js'
 import {
   KeywordApiResponse,
   ThesaurusApiResponse,

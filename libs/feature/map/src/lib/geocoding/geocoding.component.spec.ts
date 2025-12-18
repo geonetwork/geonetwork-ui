@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { GeocodingComponent } from './geocoding.component'
-import { GeocodingService } from '../geocoding.service'
+import { GeocodingComponent } from './geocoding.component.js'
+import { GeocodingService } from '../geocoding.service.js'
 import { of } from 'rxjs'
 import { MockBuilder, MockProvider } from 'ng-mocks'
-import { MapFacade } from '../+state/map.facade'
+import { MapFacade } from '../+state/map.facade.js'
 
 describe('GeocodingComponent', () => {
   let component: GeocodingComponent

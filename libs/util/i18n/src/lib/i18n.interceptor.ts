@@ -4,7 +4,7 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http'
-import { DEFAULT_LANG } from './i18n.constants'
+import { DEFAULT_LANG } from './i18n.constants.js'
 import { Observable } from 'rxjs'
 import { Injectable, Injector, inject } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'

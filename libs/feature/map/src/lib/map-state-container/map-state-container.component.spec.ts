@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MapStateContainerComponent } from './map-state-container.component'
-import { MapFacade } from '../+state/map.facade'
+import { MapStateContainerComponent } from './map-state-container.component.js'
+import { MapFacade } from '../+state/map.facade.js'
 import { of } from 'rxjs'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { mapCtxLayerXyzFixture } from '@geonetwork-ui/common/fixtures'

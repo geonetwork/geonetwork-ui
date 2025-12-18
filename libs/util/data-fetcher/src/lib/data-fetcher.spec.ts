@@ -4,9 +4,9 @@
 import fetchMock from 'fetch-mock-jest'
 import fs from 'fs'
 import path from 'path'
-import { readDataset } from './data-fetcher'
-import { CsvReader } from './readers/csv'
-import { GeojsonReader } from './readers/geojson'
+import { readDataset } from './data-fetcher.js'
+import { CsvReader } from './readers/csv.js'
+import { GeojsonReader } from './readers/geojson.js'
 import { sharedFetch, useCache, WfsEndpoint } from '@camptocamp/ogc-client'
 
 jest.mock('@camptocamp/ogc-client', () => ({

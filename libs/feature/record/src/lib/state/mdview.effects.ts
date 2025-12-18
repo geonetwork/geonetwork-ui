@@ -2,9 +2,9 @@ import { Injectable, inject } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { exhaustMap, mergeMap, of } from 'rxjs'
 import { catchError, filter, map, switchMap } from 'rxjs/operators'
-import * as MdViewActions from './mdview.actions'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import * as MdViewActions from './mdview.actions.js'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { Router } from '@angular/router'
 @Injectable()
 export class MdViewEffects {

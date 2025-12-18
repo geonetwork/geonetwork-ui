@@ -1,6 +1,6 @@
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { MetadataDoiComponent } from './metadata-doi.component'
+import { MetadataDoiComponent } from './metadata-doi.component.js'
 
 export default {
   title: 'Elements/MetadataDoiComponent',

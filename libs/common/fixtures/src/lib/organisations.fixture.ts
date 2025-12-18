@@ -1,4 +1,4 @@
-import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import { Organization } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const createOrganizationFixture = (
   overrides: Partial<Organization> = {}

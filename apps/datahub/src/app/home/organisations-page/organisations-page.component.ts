@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
-import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import { Organization } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { OrganisationsComponent } from '@geonetwork-ui/feature/catalog'
 

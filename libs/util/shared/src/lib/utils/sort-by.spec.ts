@@ -1,4 +1,4 @@
-import { sortByFromString, sortByToString, sortByToStrings } from './sort-by'
+import { sortByFromString, sortByToString, sortByToStrings } from './sort-by.js'
 
 describe('sortBy utils', () => {
   describe('sortByToStrings', () => {

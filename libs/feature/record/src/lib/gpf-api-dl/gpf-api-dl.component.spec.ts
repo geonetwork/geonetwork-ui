@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { firstValueFrom } from 'rxjs'
 import { Choice } from '@geonetwork-ui/ui/inputs'
-import { GpfApiDlComponent as GpfApiDlComponent } from './gpf-api-dl.component'
+import { GpfApiDlComponent as GpfApiDlComponent } from './gpf-api-dl.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { MockBuilder } from 'ng-mocks'
 

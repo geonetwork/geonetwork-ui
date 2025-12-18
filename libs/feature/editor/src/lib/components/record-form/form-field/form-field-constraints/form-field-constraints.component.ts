@@ -8,11 +8,11 @@ import {
 } from '@angular/core'
 
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'
-import { ConstraintCardComponent } from '../../../constraint-card/constraint-card.component'
+import { ConstraintCardComponent } from '../../../constraint-card/constraint-card.component.js'
 import {
   CatalogRecordKeys,
   Constraint,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { TranslatePipe } from '@ngx-translate/core'

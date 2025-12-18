@@ -1,3 +1,3 @@
-export * from './dataviz.api.service'
-import { DatavizApiService } from './dataviz.api.service'
+export * from './dataviz.api.service.js'
+import { DatavizApiService } from './dataviz.api.service.js'
 export const APIS = [DatavizApiService]

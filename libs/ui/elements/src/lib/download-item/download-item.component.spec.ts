@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { DownloadItemComponent } from './download-item.component'
+import { DownloadItemComponent } from './download-item.component.js'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

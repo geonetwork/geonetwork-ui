@@ -1,5 +1,5 @@
-import { getTemporalRangeUnion } from './temporal-extent-union'
-import { DateService } from '../services'
+import { getTemporalRangeUnion } from './temporal-extent-union.js'
+import { DateService } from '../services/index.js'
 
 // Create a minimal DateService mock by casting
 const dateServiceMock = {

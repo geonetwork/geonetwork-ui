@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { ResultsTableComponent } from './results-table.component'
+import { ResultsTableComponent } from './results-table.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('ResultsTableComponent', () => {

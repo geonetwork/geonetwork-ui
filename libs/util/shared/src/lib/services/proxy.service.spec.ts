@@ -1,4 +1,4 @@
-import { PROXY_PATH, ProxyService } from './proxy.service'
+import { PROXY_PATH, ProxyService } from './proxy.service.js'
 import { TestBed } from '@angular/core/testing'
 import { MockProvider } from 'ng-mocks'
 import { Location } from '@angular/common'

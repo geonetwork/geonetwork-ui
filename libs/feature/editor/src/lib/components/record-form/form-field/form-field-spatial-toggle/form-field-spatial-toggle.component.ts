@@ -4,9 +4,9 @@ import {
   SwitchToggleComponent,
   SwitchToggleOption,
 } from '@geonetwork-ui/ui/inputs'
-import { EditorFacade } from '../../../../+state/editor.facade'
+import { EditorFacade } from '../../../../+state/editor.facade.js'
 import { firstValueFrom, map, Observable } from 'rxjs'
-import { SPATIAL_SCOPES } from '../../../../fields.config'
+import { SPATIAL_SCOPES } from '../../../../fields.config.js'
 
 @Component({
   selector: 'gn-ui-form-field-spatial-toggle',

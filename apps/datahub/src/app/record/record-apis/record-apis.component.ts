@@ -6,7 +6,7 @@ import {
   ViewChild,
   inject,
 } from '@angular/core'
-import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { GpfApiDlComponent, MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   BlockListComponent,

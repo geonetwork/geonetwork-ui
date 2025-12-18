@@ -17,7 +17,7 @@ import {
   TranslatePipe,
   TranslateService,
 } from '@ngx-translate/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   NgIconComponent,
   provideIcons,
@@ -29,10 +29,10 @@ import {
   iconoirSettings,
 } from '@ng-icons/iconoir'
 import { matMoreHorizOutline } from '@ng-icons/material-icons/outline'
-import { EditorFacade } from '../../+state/editor.facade'
+import { EditorFacade } from '../../+state/editor.facade.js'
 import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
 import { MatDialog } from '@angular/material/dialog'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { map, Subscription } from 'rxjs'
 import { Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'

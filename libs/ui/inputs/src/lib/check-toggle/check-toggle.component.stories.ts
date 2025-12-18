@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/angular'
-import { CheckToggleComponent } from './check-toggle.component'
+import { CheckToggleComponent } from './check-toggle.component.js'
 
 export default {
   title: 'Inputs/CheckToggleComponent',

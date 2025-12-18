@@ -108,7 +108,7 @@ or display full metadata records.** For example:
 ```typescript
 import { Component } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/search'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record.js'
 
 @Component({
   // ...

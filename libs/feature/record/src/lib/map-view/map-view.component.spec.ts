@@ -12,10 +12,10 @@ import {
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
-import { MdViewFacade } from '../state/mdview.facade'
+import { MdViewFacade } from '../state/mdview.facade.js'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { of, Subject, throwError } from 'rxjs'
-import { MapViewComponent } from './map-view.component'
+import { MapViewComponent } from './map-view.component.js'
 import { TranslateService } from '@ngx-translate/core'
 import { delay } from 'rxjs/operators'
 import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
@@ -30,7 +30,7 @@ import {
   prioritizePageScroll,
 } from '@geonetwork-ui/ui/map'
 import { MockBuilder, MockProvider } from 'ng-mocks'
-import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
+import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component.js'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 

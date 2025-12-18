@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FormFieldWrapperComponent } from './form-field-wrapper.component'
+import { FormFieldWrapperComponent } from './form-field-wrapper.component.js'
 
 describe('FormFieldWrapperComponent', () => {
   let component: FormFieldWrapperComponent

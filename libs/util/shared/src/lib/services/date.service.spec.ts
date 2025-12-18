@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { DateService } from './date.service'
+import { DateService } from './date.service.js'
 import { TranslateService } from '@ngx-translate/core'
 
 describe('DateService', () => {

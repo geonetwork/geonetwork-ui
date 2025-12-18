@@ -1,6 +1,6 @@
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { map } from 'rxjs/operators'
-import { dropEmptyTranslations } from './translate.loader.utils'
+import { dropEmptyTranslations } from './translate.loader.utils.js'
 
 /**
  * This loader will rely on JSON files in the app assets

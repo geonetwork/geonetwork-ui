@@ -4,11 +4,11 @@
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'
-import { WfsReader, getWfsEndpoint } from './wfs'
+import { WfsReader, getWfsEndpoint } from './wfs.js'
 import { WfsEndpoint, useCache } from '@camptocamp/ogc-client'
-import { GeojsonReader } from './geojson'
-import { GmlReader } from './gml'
-import { FetchError } from '../model'
+import { GeojsonReader } from './geojson.js'
+import { GmlReader } from './gml.js'
+import { FetchError } from '../model.js'
 
 const urlGeojson =
   'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson'

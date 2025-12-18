@@ -20,21 +20,21 @@ import {
   HttpEvent,
   HttpParameterCodec,
 } from '@angular/common/http'
-import { CustomHttpParameterCodec } from '../encoder'
+import { CustomHttpParameterCodec } from '../encoder.js'
 import { Observable } from 'rxjs'
 
-import { OwnerResponseApiModel } from '../model/models'
-import { PasswordResetDtoApiModel } from '../model/models'
-import { PasswordUpdateParameterApiModel } from '../model/models'
-import { TransferRequestApiModel } from '../model/models'
-import { UserApiModel } from '../model/models'
-import { UserDtoApiModel } from '../model/models'
-import { UserGroupApiModel } from '../model/models'
-import { UserGroupsResponseApiModel } from '../model/models'
-import { UserRegisterDtoApiModel } from '../model/models'
+import { OwnerResponseApiModel } from '../model/models.js'
+import { PasswordResetDtoApiModel } from '../model/models.js'
+import { PasswordUpdateParameterApiModel } from '../model/models.js'
+import { TransferRequestApiModel } from '../model/models.js'
+import { UserApiModel } from '../model/models.js'
+import { UserDtoApiModel } from '../model/models.js'
+import { UserGroupApiModel } from '../model/models.js'
+import { UserGroupsResponseApiModel } from '../model/models.js'
+import { UserRegisterDtoApiModel } from '../model/models.js'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
-import { Configuration } from '../configuration'
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables.js'
+import { Configuration } from '../configuration.js'
 
 @Injectable({
   providedIn: 'root',

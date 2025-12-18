@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { GeoDataBadgeComponent } from './geo-data-badge.component'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { GeoDataBadgeComponent } from './geo-data-badge.component.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

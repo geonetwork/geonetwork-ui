@@ -1,4 +1,4 @@
-import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   ChangeDetectionStrategy,
   Component,

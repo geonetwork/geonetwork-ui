@@ -4,7 +4,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { ConstraintCardComponent } from './constraint-card.component'
+import { ConstraintCardComponent } from './constraint-card.component.js'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 import { CommonModule } from '@angular/common'

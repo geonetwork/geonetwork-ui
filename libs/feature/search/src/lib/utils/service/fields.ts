@@ -3,9 +3,9 @@ import { map } from 'rxjs/operators'
 import { Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import {
   AggregationBuckets,
   AggregationsParams,
@@ -13,7 +13,7 @@ import {
   FieldFilterByExpression,
   FieldFilters,
   TermBucket,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 import {
   DateRange,
   ElasticsearchService,

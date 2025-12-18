@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { NotificationsService } from '../notifications.service'
+import { NotificationsService } from '../notifications.service.js'
 import { NotificationComponent } from '@geonetwork-ui/ui/elements'
 import {
   animate,

@@ -4,7 +4,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { NotificationComponent } from './notification.component'
+import { NotificationComponent } from './notification.component.js'
 
 export default {
   title: 'Elements/NotificationComponent',

@@ -7,13 +7,13 @@ import {
   Output,
   QueryList,
 } from '@angular/core'
-import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component'
+import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component.js'
 import { CommonModule } from '@angular/common'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { iconoirNavArrowDown, iconoirNavArrowUp } from '@ng-icons/iconoir'
 import { TranslatePipe } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { Observable, of } from 'rxjs'
 
 marker('editor.record.lock.resourceType')

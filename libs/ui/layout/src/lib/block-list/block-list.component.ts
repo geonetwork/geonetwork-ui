@@ -14,8 +14,8 @@ import {
   inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { Paginable } from '../paginable.interface'
-import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.component'
+import { Paginable } from '../paginable.interface.js'
+import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.component.js'
 
 type ComponentSize = 'L' | 'M' | 'S' | 'XS'
 @Component({

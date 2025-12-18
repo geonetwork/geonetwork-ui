@@ -1,10 +1,10 @@
-import { DataItem, PropertyInfo } from '../model'
+import { DataItem, PropertyInfo } from '../model.js'
 import {
   fetchDataAsText,
   jsonToGeojsonFeature,
   processItemProperties,
-} from '../utils'
-import { BaseFileReader } from './base-file'
+} from '../utils.js'
+import { BaseFileReader } from './base-file.js'
 
 /**
  * This parser only supports arrays of simple flat objects with properties

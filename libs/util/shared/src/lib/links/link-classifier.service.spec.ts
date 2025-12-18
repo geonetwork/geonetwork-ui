@@ -1,4 +1,4 @@
-import { LinkClassifierService, LinkUsage } from './link-classifier.service'
+import { LinkClassifierService, LinkUsage } from './link-classifier.service.js'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 
 describe('LinkClassifierService', () => {

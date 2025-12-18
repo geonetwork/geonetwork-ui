@@ -5,7 +5,7 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { StickyHeaderComponent } from './sticky-header.component'
+import { StickyHeaderComponent } from './sticky-header.component.js'
 import { importProvidersFrom } from '@angular/core'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

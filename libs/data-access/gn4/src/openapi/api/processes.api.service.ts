@@ -20,15 +20,15 @@ import {
   HttpEvent,
   HttpParameterCodec,
 } from '@angular/common/http'
-import { CustomHttpParameterCodec } from '../encoder'
+import { CustomHttpParameterCodec } from '../encoder.js'
 import { Observable } from 'rxjs'
 
-import { MetadataReplacementProcessingReportApiModel } from '../model/models'
-import { ProcessingReportApiModel } from '../model/models'
-import { XsltMetadataProcessingReportApiModel } from '../model/models'
+import { MetadataReplacementProcessingReportApiModel } from '../model/models.js'
+import { ProcessingReportApiModel } from '../model/models.js'
+import { XsltMetadataProcessingReportApiModel } from '../model/models.js'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
-import { Configuration } from '../configuration'
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables.js'
+import { Configuration } from '../configuration.js'
 
 @Injectable({
   providedIn: 'root',

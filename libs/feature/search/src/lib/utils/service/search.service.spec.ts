@@ -1,8 +1,8 @@
-import { SortByEnum } from '@geonetwork-ui/common/domain/model/search'
+import { SortByEnum } from '@geonetwork-ui/common/domain/model/search/index.js'
 import { BehaviorSubject } from 'rxjs'
-import { SearchService } from './search.service'
+import { SearchService } from './search.service.js'
 import { TestBed } from '@angular/core/testing'
-import { SearchFacade } from '../../state/search.facade'
+import { SearchFacade } from '../../state/search.facade.js'
 
 const state = { Org: 'mel' }
 const facadeMock = {

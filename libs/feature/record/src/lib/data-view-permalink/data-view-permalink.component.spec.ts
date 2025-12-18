@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import {
   DataViewPermalinkComponent,
   WEB_COMPONENT_EMBEDDER_URL,
-} from './data-view-permalink.component'
+} from './data-view-permalink.component.js'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
-import { MdViewFacade } from '../state'
+import { MdViewFacade } from '../state/index.js'
 import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { MockBuilder } from 'ng-mocks'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

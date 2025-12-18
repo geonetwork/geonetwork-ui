@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { CellPopinComponent } from './cell-popin.component'
+import { CellPopinComponent } from './cell-popin.component.js'
 
 describe('CellPopinComponent', () => {
   let component: CellPopinComponent

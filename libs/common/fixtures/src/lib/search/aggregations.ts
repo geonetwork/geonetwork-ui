@@ -2,7 +2,7 @@ import {
   AggregationParams,
   Aggregations,
   AggregationsParams,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 
 export const TERMS_AGGREGATION: AggregationParams = {
   type: 'terms',

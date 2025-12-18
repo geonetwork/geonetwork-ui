@@ -1,4 +1,4 @@
-import { UserFeedback } from '@geonetwork-ui/common/domain/model/record'
+import { UserFeedback } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const userFeedbackFixture = (): UserFeedback => ({
   uuid: '4ad03fb7-1728-424c-bdaa-aedd531b07a8',

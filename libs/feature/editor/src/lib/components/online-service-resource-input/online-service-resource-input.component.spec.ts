@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { OnlineServiceResourceInputComponent } from './online-service-resource-input.component'
+import { OnlineServiceResourceInputComponent } from './online-service-resource-input.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('OnlineServiceResourceInputComponent', () => {

@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AttributeTableApiModel } from './attributeTable.api.model'
+import { AttributeTableApiModel } from './attributeTable.api.model.js'
 
 export interface FeatureTypeApiModel {
   attributeTable?: AttributeTableApiModel

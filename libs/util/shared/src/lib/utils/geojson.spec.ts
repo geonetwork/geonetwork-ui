@@ -1,4 +1,4 @@
-import { getGeometryBoundingBox, getGeometryFromGeoJSON } from './geojson'
+import { getGeometryBoundingBox, getGeometryFromGeoJSON } from './geojson.js'
 import {
   GeometryCollection,
   LineString,

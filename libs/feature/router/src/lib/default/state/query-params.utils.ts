@@ -3,7 +3,7 @@ import {
   formatDate,
   isDateRange,
 } from '@geonetwork-ui/api/repository'
-import { ROUTE_PARAMS, SearchRouteParams } from '../constants'
+import { ROUTE_PARAMS, SearchRouteParams } from '../constants.js'
 
 export function flattenQueryParams(
   params: SearchRouteParams

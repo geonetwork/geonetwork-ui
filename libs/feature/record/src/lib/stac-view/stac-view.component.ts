@@ -10,11 +10,11 @@ import {
 import {
   DatasetRecord,
   DatasetTemporalExtent,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   ButtonComponent,
-  DateRangeInputsComponent,
   CheckToggleComponent,
+  DateRangeInputsComponent,
 } from '@geonetwork-ui/ui/inputs'
 import {
   MapContainerComponent,
@@ -45,12 +45,12 @@ import {
   tap,
 } from 'rxjs'
 import { GetCollectionItemsOptions, StacItem } from '@camptocamp/ogc-client'
-import { MdViewFacade } from '../state'
+import { MdViewFacade } from '../state/index.js'
 import {
+  areFilterStatesEqual,
   areSpatialExtentsEqual,
   areTemporalExtentsEqual,
-  areFilterStatesEqual,
-} from './utils'
+} from './utils.js'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
 import { PreviousNextButtonsComponent } from '@geonetwork-ui/ui/layout'
 import { FetchError } from '@geonetwork-ui/data-fetcher'

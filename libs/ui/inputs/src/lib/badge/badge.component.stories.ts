@@ -1,5 +1,5 @@
 import { Meta, moduleMetadata, applicationConfig } from '@storybook/angular'
-import { BadgeComponent } from './badge.component'
+import { BadgeComponent } from './badge.component.js'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import {
   matDownloading,

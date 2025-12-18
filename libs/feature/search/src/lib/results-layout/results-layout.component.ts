@@ -3,7 +3,7 @@ import {
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigModel,
 } from '@geonetwork-ui/ui/search'
-import { SearchFacade } from '../state/search.facade'
+import { SearchFacade } from '../state/search.facade.js'
 import { CommonModule } from '@angular/common'
 import { TranslatePipe } from '@ngx-translate/core'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'

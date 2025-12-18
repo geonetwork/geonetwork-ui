@@ -1,11 +1,11 @@
-import { ElasticsearchService } from './elasticsearch.service'
+import { ElasticsearchService } from './elasticsearch.service.js'
 import {
   datasetRecordsFixture,
   elasticAggsResponseFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
 import { TestBed } from '@angular/core/testing'
-import { METADATA_LANGUAGE } from '../../metadata-language.token'
+import { METADATA_LANGUAGE } from '../../metadata-language.token.js'
 import { TranslateService } from '@ngx-translate/core'
 
 class TranslateServiceMock {

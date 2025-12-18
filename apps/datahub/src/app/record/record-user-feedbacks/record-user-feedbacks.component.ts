@@ -12,9 +12,9 @@ import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs'
 import {
   UserFeedback,
   UserFeedbackViewModel,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/index.js'
 import {
   ButtonComponent,
   DropdownChoice,

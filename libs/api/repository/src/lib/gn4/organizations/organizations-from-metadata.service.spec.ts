@@ -5,16 +5,16 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { firstValueFrom, lastValueFrom, of } from 'rxjs'
 import { take } from 'rxjs/operators'
-import { OrganizationsFromMetadataService } from './organizations-from-metadata.service'
+import { OrganizationsFromMetadataService } from './organizations-from-metadata.service.js'
 import {
   CatalogRecord,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   elasticFullResponseFixture,
   groupsFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { TranslateService } from '@ngx-translate/core'
 
 const sampleOrgA: Organization = {

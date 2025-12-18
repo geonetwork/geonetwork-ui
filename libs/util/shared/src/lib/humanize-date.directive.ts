@@ -6,7 +6,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core'
-import { DateService } from './services/date.service'
+import { DateService } from './services/date.service.js'
 
 @Directive({
   selector: '[gnUiHumanizeDate]',

@@ -1,4 +1,4 @@
-import { stripHtml } from './strip-html'
+import { stripHtml } from './strip-html.js'
 
 describe('strip HTML', () => {
   describe('when HTML tags', () => {

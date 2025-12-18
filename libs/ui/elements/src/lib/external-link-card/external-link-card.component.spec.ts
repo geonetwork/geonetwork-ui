@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ExternalLinkCardComponent } from './external-link-card.component'
+import { ExternalLinkCardComponent } from './external-link-card.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 

@@ -1,4 +1,4 @@
-import { noDuplicateFileName } from './no-duplicate-file-name'
+import { noDuplicateFileName } from './no-duplicate-file-name.js'
 
 describe('noDuplicateFileName', () => {
   it('should return the original file name if it does not exist in the fileNameList', () => {

@@ -1,5 +1,5 @@
-import { MapUtilsService } from './map-utils.service'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { MapUtilsService } from './map-utils.service.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 describe('MapUtilsService', () => {
   let service: MapUtilsService

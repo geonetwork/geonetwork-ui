@@ -1,1 +1,1 @@
-export * from './editor.fixtures'
+export * from './editor.fixtures.js'

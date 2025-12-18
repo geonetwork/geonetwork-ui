@@ -17,7 +17,7 @@ import {
 import {
   UserFeedback,
   UserFeedbackViewModel,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

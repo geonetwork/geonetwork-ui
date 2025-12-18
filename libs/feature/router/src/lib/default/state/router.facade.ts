@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
-import { RouterService } from '../router.service'
+import { RouterService } from '../router.service.js'
 import { RouterReducerState } from '@ngrx/router-store'
 import { select, Store } from '@ngrx/store'
 import { distinctUntilChanged, filter, map, take } from 'rxjs/operators'
@@ -10,16 +10,16 @@ import {
   ROUTER_ROUTE_SERVICE,
   ROUTER_ROUTE_REUSE,
   SearchRouteParams,
-} from '../constants'
+} from '../constants.js'
 import {
   backAction,
   forwardAction,
   goAction,
   RouterGoActionPayload,
-} from './router.actions'
-import { selectCurrentRoute, selectRouteParams } from './router.selectors'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { expandQueryParams, flattenQueryParams } from './query-params.utils'
+} from './router.actions.js'
+import { selectCurrentRoute, selectRouteParams } from './router.selectors.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { expandQueryParams, flattenQueryParams } from './query-params.utils.js'
 
 @Injectable()
 export class RouterFacade {

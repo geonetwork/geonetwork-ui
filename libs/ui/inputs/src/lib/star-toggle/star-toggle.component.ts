@@ -11,7 +11,7 @@ import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
 import { matStar, matStarBorder } from '@ng-icons/material-icons/baseline'
-import { ButtonComponent } from '../button/button.component'
+import { ButtonComponent } from '../button/button.component.js'
 import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({

@@ -1,7 +1,7 @@
 import { SelectionsApiService } from '@geonetwork-ui/data-access/gn4'
-import { SelectionService } from './selection.service'
+import { SelectionService } from './selection.service.js'
 import { of } from 'rxjs'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { TestBed } from '@angular/core/testing'
 
 function record(uuid: string): CatalogRecord {

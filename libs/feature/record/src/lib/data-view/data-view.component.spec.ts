@@ -6,8 +6,8 @@ import {
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { Subject } from 'rxjs'
-import { MdViewFacade } from '../state'
-import { DataViewComponent } from './data-view.component'
+import { MdViewFacade } from '../state/index.js'
+import { DataViewComponent } from './data-view.component.js'
 import {
   someDataLinksFixture,
   someGeoDatalinksFixture,

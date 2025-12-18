@@ -20,9 +20,9 @@ import tippy from 'tippy.js'
 import { TranslateService } from '@ngx-translate/core'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { Observable, Subscription } from 'rxjs'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { AuthService, FavoritesService } from '@geonetwork-ui/api/repository'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { CommonModule } from '@angular/common'
 
 @Component({

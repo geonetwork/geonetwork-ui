@@ -2,7 +2,7 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
-import { ResultsHitsNumberComponent } from './results-hits-number.component'
+import { ResultsHitsNumberComponent } from './results-hits-number.component.js'
 import { TranslateTestingModule } from 'ngx-translate-testing'
 
 describe('ResultsHitsNumberComponent', () => {

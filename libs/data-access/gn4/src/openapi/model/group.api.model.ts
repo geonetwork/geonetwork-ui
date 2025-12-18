@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MetadataCategoryApiModel } from './metadataCategory.api.model'
+import { MetadataCategoryApiModel } from './metadataCategory.api.model.js'
 
 /**
  * Group details

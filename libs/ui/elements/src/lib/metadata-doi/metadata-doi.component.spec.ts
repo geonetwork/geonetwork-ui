@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { MetadataDoiComponent } from './metadata-doi.component'
+import { MetadataDoiComponent } from './metadata-doi.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('MetadataDoiComponent', () => {

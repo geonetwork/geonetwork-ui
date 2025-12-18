@@ -3,15 +3,15 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing'
 import {
   initialMetadataViewState,
   METADATA_VIEW_FEATURE_STATE_KEY,
-} from './mdview.reducer'
-import { MdViewFacade } from './mdview.facade'
-import * as MdViewActions from './mdview.actions'
+} from './mdview.reducer.js'
+import { MdViewFacade } from './mdview.facade.js'
+import * as MdViewActions from './mdview.actions.js'
 import { hot } from 'jasmine-marbles'
 import {
   datasetRecordsFixture,
   userFeedbackFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model.js'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 import { TestScheduler } from 'rxjs/testing'
 import { firstValueFrom } from 'rxjs'

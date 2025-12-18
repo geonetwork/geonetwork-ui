@@ -1,10 +1,10 @@
-import { Injectable, inject } from '@angular/core'
-import { forkJoin, Observable, of, switchMap } from 'rxjs'
+import { inject, Injectable } from '@angular/core'
+import { Observable, switchMap } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { EditorConfig } from '../models/'
-import { evaluate } from '../expressions'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { EditorConfig } from '../models/index.js'
+import { evaluate } from '../expressions.js'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 
 @Injectable({
   providedIn: 'root',

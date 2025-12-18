@@ -20,11 +20,11 @@ import {
   HttpEvent,
   HttpParameterCodec,
 } from '@angular/common/http'
-import { CustomHttpParameterCodec } from '../encoder'
+import { CustomHttpParameterCodec } from '../encoder.js'
 import { Observable } from 'rxjs'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
-import { Configuration } from '../configuration'
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables.js'
+import { Configuration } from '../configuration.js'
 
 @Injectable({
   providedIn: 'root',

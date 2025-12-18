@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MarkdownParserComponent } from './markdown-parser.component'
+import { MarkdownParserComponent } from './markdown-parser.component.js'
 
 describe('MarkdownParserComponent', () => {
   let component: MarkdownParserComponent

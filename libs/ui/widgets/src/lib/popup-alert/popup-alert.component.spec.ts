@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { PopupAlertComponent } from './popup-alert.component'
+import { PopupAlertComponent } from './popup-alert.component.js'
 import { Component, Input } from '@angular/core'
 import { By } from '@angular/platform-browser'
 

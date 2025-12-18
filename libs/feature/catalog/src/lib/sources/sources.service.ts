@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core'
 import { SourcesApiService } from '@geonetwork-ui/data-access/gn4'
 import { Observable } from 'rxjs'
 import { filter, map, shareReplay } from 'rxjs/operators'
-import { CatalogSource } from './sources.model'
+import { CatalogSource } from './sources.model.js'
 import { TranslateService } from '@ngx-translate/core'
 import { toLang3 } from '@geonetwork-ui/util/i18n'
 

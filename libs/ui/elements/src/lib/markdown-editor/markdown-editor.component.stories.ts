@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/angular'
-import { MarkdownEditorComponent } from './markdown-editor.component'
+import { MarkdownEditorComponent } from './markdown-editor.component.js'
 
 const textContent = ` 
 # SUPPORTED MARKDOWN CONTENT

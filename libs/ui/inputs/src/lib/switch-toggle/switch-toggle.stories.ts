@@ -4,7 +4,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { SwitchToggleComponent } from './switch-toggle.component'
+import { SwitchToggleComponent } from './switch-toggle.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {

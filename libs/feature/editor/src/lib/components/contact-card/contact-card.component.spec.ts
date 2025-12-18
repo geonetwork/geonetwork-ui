@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ContactCardComponent } from './contact-card.component'
+import { ContactCardComponent } from './contact-card.component.js'
 import {
   Individual,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { CommonModule } from '@angular/common'
 import {
   AutocompleteComponent,

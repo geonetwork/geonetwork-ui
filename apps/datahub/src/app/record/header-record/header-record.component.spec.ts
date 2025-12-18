@@ -1,7 +1,7 @@
 import { Location } from '@angular/common'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   datasetRecordsFixture,
   SAMPLE_RECORD,

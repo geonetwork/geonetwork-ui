@@ -10,7 +10,7 @@ import { OrganizationHeaderComponent } from '../organization-header/organization
 import { OrganizationDetailsComponent } from '../organization-details/organization-details.component.js'
 import { combineLatest, Observable, of, switchMap } from 'rxjs'
 import { filter, tap } from 'rxjs/operators'
-import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import { Organization } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { LetDirective } from '@ngrx/component'
 import {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
-import { FileTranslateLoader } from './file.translate.loader'
+import { FileTranslateLoader } from './file.translate.loader.js'
 import {
   TranslateCompiler,
   TranslateDefaultParser,

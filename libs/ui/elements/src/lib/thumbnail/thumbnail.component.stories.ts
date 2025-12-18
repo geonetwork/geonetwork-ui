@@ -4,7 +4,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { ThumbnailComponent } from './thumbnail.component'
+import { ThumbnailComponent } from './thumbnail.component.js'
 
 export default {
   title: 'Elements/ThumbnailComponent',

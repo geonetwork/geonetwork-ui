@@ -1,5 +1,5 @@
 import { Observable, Observer, Subscription } from 'rxjs'
-import { AbstractAction } from '../../state/actions'
+import { AbstractAction } from '../../state/actions.js'
 import { mergeMap } from 'rxjs/operators'
 
 /**

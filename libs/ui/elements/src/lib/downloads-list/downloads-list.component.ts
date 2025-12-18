@@ -12,10 +12,10 @@ import {
   getFileFormat,
   getIsMobile,
 } from '@geonetwork-ui/util/shared'
-import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { DownloadItemComponent } from '../download-item/download-item.component'
+import { DownloadItemComponent } from '../download-item/download-item.component.js'
 import {
   BlockListComponent,
   PreviousNextButtonsComponent,

@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
   inject,
+  OnInit,
 } from '@angular/core'
 import {
   FeatureSearchModule,
@@ -16,7 +16,7 @@ import {
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,
 } from '@geonetwork-ui/ui/search'
-import { AddLayerRecordPreviewComponent } from './add-layer-record-preview/add-layer-record-preview.component'
+import { AddLayerRecordPreviewComponent } from './add-layer-record-preview/add-layer-record-preview.component.js'
 
 @Component({
   selector: 'gn-ui-add-layer-from-catalog',

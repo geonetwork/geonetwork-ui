@@ -4,7 +4,7 @@ import {
   Meta,
   StoryObj,
 } from '@storybook/angular'
-import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
+import { DropdownMultiselectComponent } from './dropdown-multiselect.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {

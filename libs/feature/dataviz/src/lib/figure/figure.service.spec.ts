@@ -2,9 +2,9 @@ import { TestBed } from '@angular/core/testing'
 import {
   someFigureItemFixture,
   someHabFigureItemFixture,
-} from './figure.fixtures'
+} from './figure.fixtures.js'
 
-import { FigureService } from './figure.service'
+import { FigureService } from './figure.service.js'
 
 describe('FigureServiceService', () => {
   let service: FigureService

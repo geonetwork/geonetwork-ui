@@ -7,9 +7,9 @@ import {
   Output,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { Constraint } from '@geonetwork-ui/common/domain/model/record'
+import { Constraint } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
-import { AVAILABLE_LICENSES } from '../../../../fields.config'
+import { AVAILABLE_LICENSES } from '../../../../fields.config.js'
 
 type Licence = {
   label: string

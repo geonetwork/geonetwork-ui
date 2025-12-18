@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { Observable } from 'rxjs'
-import { MapFacade } from '../+state/map.facade'
+import { MapFacade } from '../+state/map.facade.js'
 import { MapContext } from '@geospatial-sdk/core'
 import { MapContainerComponent } from '@geonetwork-ui/ui/map'
 import { CommonModule } from '@angular/common'

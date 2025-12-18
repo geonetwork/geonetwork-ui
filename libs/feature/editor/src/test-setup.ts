@@ -4,7 +4,7 @@ import { ngMocks } from 'ng-mocks'
 import { CommonModule } from '@angular/common'
 import { BrowserModule } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
-import { EditorFacade } from './lib/+state/editor.facade'
+import { EditorFacade } from './lib/+state/editor.facade.js'
 import { EMPTY } from 'rxjs'
 
 setupZoneTestEnv({ teardown: { destroyAfterEach: false } })

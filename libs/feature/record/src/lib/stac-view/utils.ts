@@ -1,6 +1,6 @@
-import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { Extent } from '@geospatial-sdk/core/dist/model'
-import { StacFilterState } from './stac-view.component'
+import { StacFilterState } from './stac-view.component.js'
 
 export function areTemporalExtentsEqual(
   previous: DatasetTemporalExtent | null,

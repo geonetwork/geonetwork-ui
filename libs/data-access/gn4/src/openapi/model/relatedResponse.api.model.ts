@@ -9,19 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { FcatApiModel } from './fcat.api.model'
-import { SourceApiModel } from './source.api.model'
-import { RelatedApiModel } from './related.api.model'
-import { HasfeaturecatsApiModel } from './hasfeaturecats.api.model'
-import { HassourceApiModel } from './hassource.api.model'
-import { ParentApiModel } from './parent.api.model'
-import { ThumbnailApiModel } from './thumbnail.api.model'
-import { SiblingsApiModel } from './siblings.api.model'
-import { OnlineApiModel } from './online.api.model'
-import { ServiceApiModel } from './service.api.model'
-import { AssociatedApiModel } from './associated.api.model'
-import { DatasetApiModel } from './dataset.api.model'
-import { ChildrenApiModel } from './children.api.model'
+import { FcatApiModel } from './fcat.api.model.js'
+import { SourceApiModel } from './source.api.model.js'
+import { RelatedApiModel } from './related.api.model.js'
+import { HasfeaturecatsApiModel } from './hasfeaturecats.api.model.js'
+import { HassourceApiModel } from './hassource.api.model.js'
+import { ParentApiModel } from './parent.api.model.js'
+import { ThumbnailApiModel } from './thumbnail.api.model.js'
+import { SiblingsApiModel } from './siblings.api.model.js'
+import { OnlineApiModel } from './online.api.model.js'
+import { ServiceApiModel } from './service.api.model.js'
+import { AssociatedApiModel } from './associated.api.model.js'
+import { DatasetApiModel } from './dataset.api.model.js'
+import { ChildrenApiModel } from './children.api.model.js'
 
 export interface RelatedResponseApiModel {
   children?: ChildrenApiModel

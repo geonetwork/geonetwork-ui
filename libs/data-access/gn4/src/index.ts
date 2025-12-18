@@ -1,2 +1,2 @@
-export * from './openapi/'
-export * from './fixtures/'
+export * from './openapi/index.js'
+export * from './fixtures/index.js'

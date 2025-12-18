@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { FormatterDataApiModel } from './formatterData.api.model'
+import { FormatterDataApiModel } from './formatterData.api.model.js'
 
 export interface FormatterDataResponseApiModel {
   formatters?: Array<FormatterDataApiModel>

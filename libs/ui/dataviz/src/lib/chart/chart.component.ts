@@ -7,7 +7,7 @@ import {
   OnChanges,
   ViewChild,
 } from '@angular/core'
-import { InputChartType } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { InputChartType } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model.js'
 import {
   ArcElement,
   BarController,

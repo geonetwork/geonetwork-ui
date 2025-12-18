@@ -1,6 +1,6 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import { PaginationButtonsComponent } from './pagination-buttons.component'
-import { MockListComponent } from '../pagination/pagination.component.stories'
+import { PaginationButtonsComponent } from './pagination-buttons.component.js'
+import { MockListComponent } from '../pagination/pagination.component.stories.js'
 
 export default {
   title: 'Layout/Pagination/PaginationButtonsComponent',

@@ -15,10 +15,10 @@ import {
   TranslatedSearchField,
   RecordKindField,
   UserSearchField,
-} from './fields'
+} from './fields.js'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search/index.js'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { DateRange } from '@geonetwork-ui/api/repository'
 

@@ -1,8 +1,8 @@
-import { BaseReader } from './base'
-import { DataItem, DatasetInfo, PropertyInfo } from '../model'
-import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils'
-import { generateSqlQuery } from '../sql-utils'
-import { BaseCacheReader } from './base-cache'
+import { BaseReader } from './base.js'
+import { DataItem, DatasetInfo, PropertyInfo } from '../model.js'
+import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils.js'
+import { generateSqlQuery } from '../sql-utils.js'
+import { BaseCacheReader } from './base-cache.js'
 
 type ParseResult = {
   items: DataItem[]

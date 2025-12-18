@@ -10,7 +10,7 @@ import {
   DatasetRecord,
   ReuseRecord,
   ServiceRecord,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'

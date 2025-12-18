@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/angular'
-import { TextInputComponent } from './text-input.component'
+import { TextInputComponent } from './text-input.component.js'
 
 export default {
   title: 'Inputs/TextInputComponent',

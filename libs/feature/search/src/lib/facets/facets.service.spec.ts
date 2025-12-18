@@ -3,8 +3,8 @@ import {
   elasticAggsResponseFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { ModelBlock, ModelItem } from '@geonetwork-ui/ui/search'
-import { searchStateFiltersFixture } from '../state/fixtures/search-state.fixtures'
-import { FacetsService } from './facets.service'
+import { searchStateFiltersFixture } from '../state/fixtures/search-state.fixtures.js'
+import { FacetsService } from './facets.service.js'
 import { TestBed } from '@angular/core/testing'
 import { LogService } from '@geonetwork-ui/util/shared'
 

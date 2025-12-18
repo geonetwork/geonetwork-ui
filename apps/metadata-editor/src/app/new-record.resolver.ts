@@ -3,7 +3,7 @@ import {
   CatalogRecord,
   Individual,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { Observable, of } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'

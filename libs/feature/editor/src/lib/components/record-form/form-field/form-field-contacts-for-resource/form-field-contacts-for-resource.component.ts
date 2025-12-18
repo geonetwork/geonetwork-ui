@@ -14,10 +14,10 @@ import {
   Role,
   RoleLabels,
   RoleValues,
-} from '@geonetwork-ui/common/domain/model/record'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/index.js'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'
 import {
   AutocompleteComponent,
@@ -32,7 +32,7 @@ import {
   switchMap,
 } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { ContactCardComponent } from '../../../contact-card/contact-card.component'
+import { ContactCardComponent } from '../../../contact-card/contact-card.component.js'
 import {
   NgIconComponent,
   provideIcons,

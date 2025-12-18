@@ -6,10 +6,10 @@ import {
   OnChanges,
   Output,
 } from '@angular/core'
-import { Constraint } from '@geonetwork-ui/common/domain/model/record'
+import { Constraint } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslatePipe } from '@ngx-translate/core'
-import { OPEN_DATA_LICENSE } from './../../../../fields.config'
+import { OPEN_DATA_LICENSE } from './../../../../fields.config.js'
 
 @Component({
   selector: 'gn-ui-form-field-open-data',

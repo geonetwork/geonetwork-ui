@@ -14,7 +14,7 @@ import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import {
   Individual,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import {
   debounceTime,
@@ -24,10 +24,10 @@ import {
   Subscription,
   switchMap,
 } from 'rxjs'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { ContactCardComponent } from '../../../contact-card/contact-card.component'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/index.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
+import { ContactCardComponent } from '../../../contact-card/contact-card.component.js'
 import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'

@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RecordsMetricsComponent } from './records-metrics.component'
+import { RecordsMetricsComponent } from './records-metrics.component.js'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { SAMPLE_AGGREGATIONS_RESULTS } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class RecordsRepositoryMock {

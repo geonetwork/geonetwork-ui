@@ -1,6 +1,6 @@
-import { DEFAULT_SEARCH_KEY } from './actions'
-import { initialState } from './reducer'
-import * as fromSelectors from './selectors'
+import { DEFAULT_SEARCH_KEY } from './actions.js'
+import { initialState } from './reducer.js'
+import * as fromSelectors from './selectors.js'
 import {
   SAMPLE_AGGREGATIONS_PARAMS,
   SAMPLE_AGGREGATIONS_RESULTS,

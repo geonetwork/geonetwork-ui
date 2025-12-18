@@ -1,5 +1,5 @@
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { DragAndDropFileInputComponent } from './drag-and-drop-file-input.component'
+import { DragAndDropFileInputComponent } from './drag-and-drop-file-input.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {

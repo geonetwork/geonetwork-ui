@@ -12,7 +12,7 @@ import {
   mapCtxLayerXyzFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { applyContextDiffToMap } from '@geospatial-sdk/openlayers'
-import { MapContainerComponent } from './map-container.component'
+import { MapContainerComponent } from './map-container.component.js'
 import { computeMapContextDiff } from '@geospatial-sdk/core'
 
 jest.mock('@geospatial-sdk/core', () => ({

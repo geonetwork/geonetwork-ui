@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ReplaceEntryChangeApiModel } from './replaceEntryChange.api.model'
+import { ReplaceEntryChangeApiModel } from './replaceEntryChange.api.model.js'
 
 export interface ReplaceReportApiModel {
   message?: string

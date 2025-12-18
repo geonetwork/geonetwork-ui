@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core'
 import { action } from 'storybook/actions'
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular'
-import { EditableLabelDirective } from './editable-label.directive'
+import { EditableLabelDirective } from './editable-label.directive.js'
 
 @Component({
   selector: 'gn-ui-editable-label-story',

@@ -3,14 +3,14 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import {
   DatasetSpatialExtent,
   Keyword,
-} from '@geonetwork-ui/common/domain/model/record'
-import { GenericKeywordsComponent } from '../../../generic-keywords/generic-keywords.component'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { GenericKeywordsComponent } from '../../../generic-keywords/generic-keywords.component.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { firstValueFrom, map, shareReplay } from 'rxjs'
-import { EditorFacade } from '../../../../+state/editor.facade'
+import { EditorFacade } from '../../../../+state/editor.facade.js'
 import { switchMap } from 'rxjs/operators'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
-import { SPATIAL_SCOPES } from '../../../../fields.config'
+import { SPATIAL_SCOPES } from '../../../../fields.config.js'
 import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
 
 // This intermediary type will let us keep track of which keyword is bound to

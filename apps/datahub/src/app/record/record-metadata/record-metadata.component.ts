@@ -23,7 +23,7 @@ import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/orga
 import {
   Keyword,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { CommonModule } from '@angular/common'
 import { MatTabsModule } from '@angular/material/tabs'
@@ -44,7 +44,7 @@ import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component.js'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/index.js'
 import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
 
 @Component({

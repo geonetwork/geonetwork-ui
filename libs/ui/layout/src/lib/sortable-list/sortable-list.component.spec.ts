@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { SortableListComponent } from './sortable-list.component'
+import { SortableListComponent } from './sortable-list.component.js'
 
 describe('SortableListComponent', () => {
   let component: SortableListComponent

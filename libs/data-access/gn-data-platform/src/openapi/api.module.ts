@@ -4,10 +4,10 @@ import {
   SkipSelf,
   Optional,
 } from '@angular/core'
-import { Configuration } from './configuration'
+import { Configuration } from './configuration.js'
 import { HttpClient } from '@angular/common/http'
 
-import { DatavizApiService } from './api/dataviz.api.service'
+import { DatavizApiService } from './api/dataviz.api.service.js'
 
 @NgModule({
   imports: [],

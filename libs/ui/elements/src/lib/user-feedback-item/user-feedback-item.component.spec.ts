@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { UserFeedbackItemComponent } from './user-feedback-item.component'
+import { UserFeedbackItemComponent } from './user-feedback-item.component.js'
 import { ChangeDetectionStrategy } from '@angular/core'
 import { someUserFeedbacksFixture } from '@geonetwork-ui/common/fixtures'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

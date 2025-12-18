@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MetadataResourceExternalManagementPropertiesApiModel } from './metadataResourceExternalManagementProperties.api.model'
+import { MetadataResourceExternalManagementPropertiesApiModel } from './metadataResourceExternalManagementProperties.api.model.js'
 
 export interface MetadataResourceApiModel {
   metadataId?: number

@@ -4,7 +4,7 @@ import {
   EXTERNAL_VIEWER_OPEN_NEW_TAB,
   EXTERNAL_VIEWER_URL_TEMPLATE,
   ExternalViewerButtonComponent,
-} from './external-viewer-button.component'
+} from './external-viewer-button.component.js'
 import { MockBuilder } from 'ng-mocks'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { EffectsModule } from '@ngrx/effects'
 import { Store, StoreModule } from '@ngrx/store'
-import { MapFacade } from './map.facade'
-import * as MapActions from './map.actions'
-import { MAP_FEATURE_KEY, mapReducer, MapState } from './map.reducer'
+import { MapFacade } from './map.facade.js'
+import * as MapActions from './map.actions.js'
+import { MAP_FEATURE_KEY, mapReducer, MapState } from './map.reducer.js'
 import { mapCtxLayerWmsFixture } from '@geonetwork-ui/common/fixtures'
 
 interface TestSchema {

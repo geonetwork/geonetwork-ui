@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AddressApiModel } from './address.api.model'
+import { AddressApiModel } from './address.api.model.js'
 
 export interface UserDtoApiModel {
   id?: string

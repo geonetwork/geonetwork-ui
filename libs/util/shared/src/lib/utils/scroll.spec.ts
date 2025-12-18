@@ -1,4 +1,4 @@
-import { handleScrollOnNavigation } from './scroll'
+import { handleScrollOnNavigation } from './scroll.js'
 import { ViewportScroller } from '@angular/common'
 import { Router, Scroll, NavigationEnd, Event } from '@angular/router'
 import { Subject } from 'rxjs'

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { OrganisationsFilterComponent } from './organisations-filter.component'
+import { OrganisationsFilterComponent } from './organisations-filter.component.js'
 import { MockBuilder } from 'ng-mocks'
 
 describe('OrganisationsOrderComponent', () => {

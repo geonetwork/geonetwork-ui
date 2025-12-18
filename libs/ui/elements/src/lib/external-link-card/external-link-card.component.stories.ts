@@ -4,7 +4,7 @@ import {
   Meta,
   StoryObj,
 } from '@storybook/angular'
-import { ExternalLinkCardComponent } from './external-link-card.component'
+import { ExternalLinkCardComponent } from './external-link-card.component.js'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MapServerApiModel } from './mapServer.api.model'
+import { MapServerApiModel } from './mapServer.api.model.js'
 
 export interface AnonymousMapserverApiModel {
   username?: string

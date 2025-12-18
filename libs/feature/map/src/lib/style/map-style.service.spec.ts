@@ -4,7 +4,7 @@ import chroma from 'chroma-js'
 import Feature from 'ol/Feature.js'
 import { LineString, Point, Polygon } from 'ol/geom.js'
 import Style, { StyleFunction } from 'ol/style/Style.js'
-import { MapStyleService, StyleByGeometryType } from './map-style.service'
+import { MapStyleService, StyleByGeometryType } from './map-style.service.js'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({

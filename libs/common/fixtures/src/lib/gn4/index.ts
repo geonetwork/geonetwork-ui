@@ -1,1 +1,1 @@
-export * from './groups.fixtures'
+export * from './groups.fixtures.js'

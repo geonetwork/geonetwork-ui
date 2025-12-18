@@ -1,8 +1,8 @@
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { RecordPreviewListComponent } from './record-preview-list.component'
+import { RecordPreviewListComponent } from './record-preview-list.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export default {
   title: 'Search/RecordPreviewListComponent',

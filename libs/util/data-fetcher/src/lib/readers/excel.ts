@@ -1,10 +1,10 @@
-import { DataItem, PropertyInfo } from '../model'
+import { DataItem, PropertyInfo } from '../model.js'
 import {
   fetchDataAsArrayBuffer,
   jsonToGeojsonFeature,
   processItemProperties,
-} from '../utils'
-import { BaseFileReader } from './base-file'
+} from '../utils.js'
+import { BaseFileReader } from './base-file.js'
 
 /**
  * This will read the first sheet of the excel workbook and expect the first

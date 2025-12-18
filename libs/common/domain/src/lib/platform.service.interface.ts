@@ -1,6 +1,6 @@
 import type { Observable } from 'rxjs'
-import type { UserModel } from './model/user/user.model'
-import type { Organization } from './model/record/organization.model'
+import type { UserModel } from './model/user/user.model.js'
+import type { Organization } from './model/record/organization.model.js'
 import { CatalogRecord, Keyword, UserFeedback } from './model/record/index.js'
 import { KeywordType } from './model/thesaurus/index.js'
 

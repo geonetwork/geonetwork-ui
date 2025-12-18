@@ -9,9 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserSecurityApiModel } from './userSecurity.api.model'
-import { GrantedAuthorityApiModel } from './grantedAuthority.api.model'
-import { AddressApiModel } from './address.api.model'
+import { UserSecurityApiModel } from './userSecurity.api.model.js'
+import { GrantedAuthorityApiModel } from './grantedAuthority.api.model.js'
+import { AddressApiModel } from './address.api.model.js'
 
 export interface UserApiModel {
   security?: UserSecurityApiModel

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ImageOverlayPreviewComponent } from './image-overlay-preview.component'
+import { ImageOverlayPreviewComponent } from './image-overlay-preview.component.js'
 
 describe('ImageOverlayPreviewComponent', () => {
   let component: ImageOverlayPreviewComponent

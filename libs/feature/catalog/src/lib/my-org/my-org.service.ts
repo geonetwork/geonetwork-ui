@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
 import { combineLatest, map, Observable } from 'rxjs'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { shareReplay } from 'rxjs/operators'
 
 @Injectable({

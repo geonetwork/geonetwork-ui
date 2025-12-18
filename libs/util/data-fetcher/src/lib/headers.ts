@@ -1,4 +1,4 @@
-import { AllMimeTypes, DatasetHeaders, SupportedTypes } from './model'
+import { AllMimeTypes, DatasetHeaders, SupportedTypes } from './model.js'
 
 export function parseHeaders(httpHeaders: Headers): DatasetHeaders {
   const result: DatasetHeaders = {}

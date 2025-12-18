@@ -1,15 +1,15 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { SearchFacade } from '../../state/search.facade'
+import { SearchFacade } from '../../state/search.facade.js'
 import {
   emptyBlockModelFixture,
   itemModelFixture,
 } from '@geonetwork-ui/ui/search'
 import { of } from 'rxjs'
-import { searchStateFiltersFixture } from '../../state/fixtures/search-state.fixtures'
-import { FacetsService } from '../facets.service'
+import { searchStateFiltersFixture } from '../../state/fixtures/search-state.fixtures.js'
+import { FacetsService } from '../facets.service.js'
 
-import { FacetsContainerComponent } from './facets-container.component'
+import { FacetsContainerComponent } from './facets-container.component.js'
 
 const mockStateFilters = { ...searchStateFiltersFixture().simpleTerms }
 const searchFacadeMock = {

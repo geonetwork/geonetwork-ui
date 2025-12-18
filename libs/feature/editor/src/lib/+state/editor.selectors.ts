@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
-import { EDITOR_FEATURE_KEY, EditorState } from './editor.reducer'
-import { EditorSectionWithValues } from './editor.models'
+import { EDITOR_FEATURE_KEY, EditorState } from './editor.reducer.js'
+import { EditorSectionWithValues } from './editor.models.js'
 
 export const selectEditorState =
   createFeatureSelector<EditorState>(EDITOR_FEATURE_KEY)

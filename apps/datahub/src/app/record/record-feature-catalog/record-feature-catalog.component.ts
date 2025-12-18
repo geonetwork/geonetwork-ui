@@ -4,7 +4,7 @@ import { TranslateDirective } from '@ngx-translate/core'
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { Observable } from 'rxjs'
 import { FeatureCatalogListComponent } from '@geonetwork-ui/ui/elements'

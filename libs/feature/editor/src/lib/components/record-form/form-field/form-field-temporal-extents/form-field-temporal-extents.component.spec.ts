@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents.component'
+import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FormFieldTemporalExtentsComponent', () => {

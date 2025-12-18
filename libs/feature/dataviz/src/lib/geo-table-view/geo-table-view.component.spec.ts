@@ -1,7 +1,7 @@
 import { ChangeDetectorRef } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
-import { GeoTableViewComponent } from './geo-table-view.component'
+import { GeoTableViewComponent } from './geo-table-view.component.js'
 import { MockBuilder } from 'ng-mocks'
 
 // FIXME: these tests should be restored once there is a possibility to clone

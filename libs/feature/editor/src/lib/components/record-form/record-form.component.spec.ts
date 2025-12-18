@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { EditorFacade } from '../../+state/editor.facade'
-import { RecordFormComponent } from './record-form.component'
+import { EditorFacade } from '../../+state/editor.facade.js'
+import { RecordFormComponent } from './record-form.component.js'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 
 describe('RecordFormComponent', () => {

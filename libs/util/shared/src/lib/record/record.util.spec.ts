@@ -1,5 +1,5 @@
 import { multilingualDatasetFixture } from '@geonetwork-ui/common/fixtures'
-import { updateLanguages } from './record.util'
+import { updateLanguages } from './record.util.js'
 
 describe('record utils', () => {
   describe('updateRecordLanguages', () => {

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { RecordMetricComponent } from './record-metric.component'
+import { RecordMetricComponent } from './record-metric.component.js'
 import { By } from '@angular/platform-browser'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

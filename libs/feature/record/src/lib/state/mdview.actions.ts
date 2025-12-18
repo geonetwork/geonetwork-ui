@@ -1,10 +1,10 @@
-import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model.js'
 import { createAction, props } from '@ngrx/store'
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
   UserFeedback,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 /*
   Metadata actions

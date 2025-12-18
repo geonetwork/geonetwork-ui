@@ -33,7 +33,7 @@ import {
 } from '@ng-icons/iconoir'
 import { TranslatePipe } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
-import { ImageOverlayPreviewComponent } from '../image-overlay-preview/image-overlay-preview.component'
+import { ImageOverlayPreviewComponent } from '../image-overlay-preview/image-overlay-preview.component.js'
 
 @Component({
   selector: 'gn-ui-image-input',

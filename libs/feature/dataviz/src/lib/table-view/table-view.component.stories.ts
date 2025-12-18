@@ -7,7 +7,7 @@ import {
   Meta,
   StoryObj,
 } from '@storybook/angular'
-import { TableViewComponent } from './table-view.component'
+import { TableViewComponent } from './table-view.component.js'
 import { importProvidersFrom } from '@angular/core'
 
 export default {

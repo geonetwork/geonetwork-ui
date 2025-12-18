@@ -3,9 +3,9 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   SortByEnum,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
-import { SearchFacade } from '../state/search.facade'
-import { SearchService } from '../utils/service/search.service'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
+import { SearchFacade } from '../state/search.facade.js'
+import { SearchService } from '../utils/service/search.service.js'
 import { filter, map } from 'rxjs/operators'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MetadataQualityComponent } from './metadata-quality.component'
+import { MetadataQualityComponent } from './metadata-quality.component.js'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
@@ -7,7 +7,7 @@ import {
   CatalogRecord,
   ReuseRecord,
   ServiceRecord,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 describe('MetadataQualityComponent', () => {
   let component: MetadataQualityComponent

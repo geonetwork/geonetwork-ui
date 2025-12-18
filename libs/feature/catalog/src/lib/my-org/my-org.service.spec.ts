@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing'
-import { MyOrgService } from './my-org.service'
+import { MyOrgService } from './my-org.service.js'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
 import { BehaviorSubject, of } from 'rxjs'
 import { UserApiModel } from '@geonetwork-ui/data-access/gn4'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model.js'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TranslateService } from '@ngx-translate/core'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 
 const translateServiceMock = {
   currentLang: 'fr',

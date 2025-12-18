@@ -3,13 +3,13 @@ import {
   Individual,
   Organization,
   Role,
-} from '@geonetwork-ui/common/domain/model/record'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/index.js'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { MockBuilder, MockProviders } from 'ng-mocks'
 import { BehaviorSubject } from 'rxjs'
-import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource.component'
+import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const organizationBarbie: Organization = {

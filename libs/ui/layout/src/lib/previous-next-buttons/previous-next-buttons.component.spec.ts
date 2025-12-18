@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { PreviousNextButtonsComponent } from './previous-next-buttons.component'
+import { PreviousNextButtonsComponent } from './previous-next-buttons.component.js'
 import { By } from '@angular/platform-browser'
 import { DebugElement, provideNgReflectAttributes } from '@angular/core'
-import { Paginable } from '../paginable.interface'
+import { Paginable } from '../paginable.interface.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class MockPaginable implements Paginable {

@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { RecordPreviewCardComponent } from '../record-preview-card/record-preview-card.component'
-import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component'
-import { DEFAULT_RESULTS_LAYOUT_CONFIG } from '../results-list/results-layout.config'
+import { RecordPreviewCardComponent } from '../record-preview-card/record-preview-card.component.js'
+import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component.js'
+import { DEFAULT_RESULTS_LAYOUT_CONFIG } from '../results-list/results-layout.config.js'
 
-import { ResultsListItemComponent } from './results-list-item.component'
+import { ResultsListItemComponent } from './results-list-item.component.js'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('ResultsListItemComponent', () => {

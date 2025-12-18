@@ -9,7 +9,7 @@ import {
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFiltersComponent } from './search-filters.component.js'
 import { By } from '@angular/platform-browser'
-import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search/index.js'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

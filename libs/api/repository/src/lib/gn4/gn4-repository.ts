@@ -3,7 +3,7 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http'
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import {
   assertValidXml,
   findConverterForDocument,
@@ -11,24 +11,24 @@ import {
   Gn4SearchResults,
   Iso19139Converter,
 } from '@geonetwork-ui/api/metadata-converter'
-import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
+import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error/index.js'
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
   DatasetFeatureType,
   LanguageCode,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   Aggregations,
   AggregationsParams,
   FieldFilters,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 import {
   SearchParams,
   SearchResults,
-} from '@geonetwork-ui/common/domain/model/search/search.model'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+} from '@geonetwork-ui/common/domain/model/search/search.model.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import {
   LanguagesApiService,
   RecordsApiService,
@@ -49,7 +49,7 @@ import { catchError, map, tap } from 'rxjs/operators'
 import { lt } from 'semver'
 import { ElasticsearchService } from './elasticsearch/index.js'
 import { toLang2 } from '@geonetwork-ui/util/i18n'
-import { Gn4SettingsService } from './settings/gn4-settings.service'
+import { Gn4SettingsService } from './settings/gn4-settings.service.js'
 
 const minPublicationApiVersion = '4.2.5'
 

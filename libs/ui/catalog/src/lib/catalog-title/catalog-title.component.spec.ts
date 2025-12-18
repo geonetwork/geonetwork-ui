@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { CatalogTitleComponent } from './catalog-title.component'
+import { CatalogTitleComponent } from './catalog-title.component.js'
 import { MockBuilder } from 'ng-mocks'
 
 describe('CatalogTitleComponent', () => {

@@ -7,12 +7,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { LinkClassifierService } from '@geonetwork-ui/util/shared'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
-import { DownloadsListComponent } from './downloads-list.component'
+import { DownloadsListComponent } from './downloads-list.component.js'
 import {
   DatasetDownloadDistribution,
   ServiceProtocol,
-} from '@geonetwork-ui/common/domain/model/record'
-import { DownloadItemComponent } from '../download-item/download-item.component'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { DownloadItemComponent } from '../download-item/download-item.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DownloadsListComponent', () => {

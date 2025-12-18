@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { LayersPanelComponent } from './layers-panel.component'
+import { LayersPanelComponent } from './layers-panel.component.js'
 import { of } from 'rxjs'
 import { MockBuilder, MockProvider } from 'ng-mocks'
-import { MapFacade } from '../+state/map.facade'
+import { MapFacade } from '../+state/map.facade.js'
 import { mapCtxFixture } from '@geonetwork-ui/common/fixtures'
 
 describe('LayersPanelComponent', () => {

@@ -17,10 +17,10 @@ import {
   ViewChildren,
 } from '@angular/core'
 import { firstValueFrom } from 'rxjs'
-import { DropdownChoice } from './dropdown-selector.model'
+import { DropdownChoice } from './dropdown-selector.model.js'
 import { CommonModule } from '@angular/common'
 import { TranslatePipe } from '@ngx-translate/core'
-import { ButtonComponent } from '../button/button.component'
+import { ButtonComponent } from '../button/button.component.js'
 import {
   NgIconComponent,
   provideIcons,

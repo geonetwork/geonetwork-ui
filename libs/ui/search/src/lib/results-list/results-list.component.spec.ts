@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ResultsListComponent } from './results-list.component'
+import { ResultsListComponent } from './results-list.component.js'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('ResultsListComponent', () => {

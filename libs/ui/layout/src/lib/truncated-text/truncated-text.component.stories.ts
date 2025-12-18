@@ -1,5 +1,5 @@
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { TruncatedTextComponent } from './truncated-text.component'
+import { TruncatedTextComponent } from './truncated-text.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const meta: Meta<TruncatedTextComponent> = {

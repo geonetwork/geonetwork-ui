@@ -1,4 +1,4 @@
-import { removeSearchParams } from './url'
+import { removeSearchParams } from './url.js'
 
 describe('URL utils', () => {
   describe('removeSearchParams', () => {

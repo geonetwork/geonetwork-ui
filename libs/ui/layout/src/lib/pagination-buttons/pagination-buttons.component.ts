@@ -3,7 +3,7 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 
 import { iconoirNavArrowLeft, iconoirNavArrowRight } from '@ng-icons/iconoir'
-import { Paginable } from '../paginable.interface'
+import { Paginable } from '../paginable.interface.js'
 
 @Component({
   selector: 'gn-ui-pagination-buttons',

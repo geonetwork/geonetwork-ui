@@ -17,11 +17,11 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { KindBadgeComponent } from '../kind-badge/kind-badge.component'
-import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
-import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component'
-import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { KindBadgeComponent } from '../kind-badge/kind-badge.component.js'
+import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component.js'
+import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component.js'
+import { ThumbnailComponent } from '../thumbnail/thumbnail.component.js'
 import {
   removeWhitespace,
   stripHtml,

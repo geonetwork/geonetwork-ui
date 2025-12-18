@@ -1,4 +1,4 @@
-import { ThemeService } from './theme.service'
+import { ThemeService } from './theme.service.js'
 
 function getCssVars() {
   const style = document.documentElement.style

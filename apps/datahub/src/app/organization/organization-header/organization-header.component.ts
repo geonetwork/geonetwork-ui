@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core'
 import { Router } from '@angular/router'
-import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import { Organization } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { ErrorType } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'

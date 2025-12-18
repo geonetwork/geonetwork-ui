@@ -1,6 +1,6 @@
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { ResultsHitsNumberComponent } from './results-hits-number.component'
+import { ResultsHitsNumberComponent } from './results-hits-number.component.js'
 
 export default {
   title: 'Search/ResultsHitsNumberComponent',

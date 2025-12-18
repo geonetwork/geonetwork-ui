@@ -5,14 +5,14 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { PaginationComponent } from './pagination.component'
+import { PaginationComponent } from './pagination.component.js'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   inject,
 } from '@angular/core'
-import { Paginable } from '../paginable.interface'
+import { Paginable } from '../paginable.interface.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 @Component({

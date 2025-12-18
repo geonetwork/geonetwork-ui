@@ -1,4 +1,4 @@
-import { FavoritesService } from './favorites.service'
+import { FavoritesService } from './favorites.service.js'
 import {
   MeResponseApiModel,
   UserselectionsApiService,
@@ -6,7 +6,7 @@ import {
 import { firstValueFrom, of, throwError } from 'rxjs'
 import { delay } from 'rxjs/operators'
 import { fakeAsync, TestBed, tick } from '@angular/core/testing'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 
 class UserSelectionsServiceMock {
   getSelectionRecords = jest.fn(() => of(['abcd', 'efgh', 'ijkl']))

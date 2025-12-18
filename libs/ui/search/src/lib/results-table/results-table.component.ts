@@ -11,11 +11,11 @@ import {
   ViewContainerRef,
   inject,
 } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   FieldSort,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 import {
   BadgeComponent,
   ButtonComponent,
@@ -38,7 +38,7 @@ import {
   TranslatePipe,
   TranslateService,
 } from '@ngx-translate/core'
-import { ActionMenuComponent } from './action-menu/action-menu.component'
+import { ActionMenuComponent } from './action-menu/action-menu.component.js'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { iconoirLock, iconoirTranslate, iconoirUser } from '@ng-icons/iconoir'
 import { CdkOverlayOrigin, Overlay, OverlayRef } from '@angular/cdk/overlay'

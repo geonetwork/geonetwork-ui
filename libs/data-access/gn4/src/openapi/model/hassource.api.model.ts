@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { RelatedMetadataItemApiModel } from './relatedMetadataItem.api.model'
+import { RelatedMetadataItemApiModel } from './relatedMetadataItem.api.model.js'
 
 export interface HassourceApiModel {
   item?: Array<RelatedMetadataItemApiModel>

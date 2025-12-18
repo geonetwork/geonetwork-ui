@@ -1,5 +1,5 @@
 import { HttpClient, HttpEventType } from '@angular/common/http'
-import { Injectable, InjectionToken, inject } from '@angular/core'
+import { inject, Injectable, InjectionToken } from '@angular/core'
 import {
   KeywordApiResponse,
   ThesaurusApiResponse,
@@ -9,13 +9,13 @@ import {
   Keyword,
   Organization,
   UserFeedback,
-} from '@geonetwork-ui/common/domain/model/record'
-import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus/index.js'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model.js'
 import {
   PlatformServiceInterface,
   UploadEvent,
-} from '@geonetwork-ui/common/domain/platform.service.interface'
+} from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import {
   MeApiService,
   RecordsApiService,
@@ -44,8 +44,8 @@ import {
   tap,
 } from 'rxjs/operators'
 import { ltr } from 'semver'
-import { Gn4SettingsService } from '../settings/gn4-settings.service'
-import { Gn4PlatformMapper } from './gn4-platform.mapper'
+import { Gn4SettingsService } from '../settings/gn4-settings.service.js'
+import { Gn4PlatformMapper } from './gn4-platform.mapper.js'
 
 const minApiVersion = '4.2.2'
 

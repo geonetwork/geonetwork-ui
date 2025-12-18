@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 
-import { AvatarComponent } from './avatar.component'
+import { AvatarComponent } from './avatar.component.js'
 
 describe('AvatarComponent', () => {
   let component: AvatarComponent

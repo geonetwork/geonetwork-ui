@@ -9,9 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MetadataLinkApiModel } from './metadataLink.api.model'
-import { LinkStatusApiModel } from './linkStatus.api.model'
-import { ISODateApiModel } from './iSODate.api.model'
+import { MetadataLinkApiModel } from './metadataLink.api.model.js'
+import { LinkStatusApiModel } from './linkStatus.api.model.js'
+import { ISODateApiModel } from './iSODate.api.model.js'
 
 export interface LinkApiModel {
   records?: Set<MetadataLinkApiModel>

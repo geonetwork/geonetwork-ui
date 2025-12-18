@@ -1,6 +1,6 @@
 import { Directive, Input, OnInit, inject } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { RouterSearchService } from '../services/router-search.service'
+import { RouterSearchService } from '../services/router-search.service.js'
 
 @Directive({
   selector: '[gnUiSearchRouterContainer]',

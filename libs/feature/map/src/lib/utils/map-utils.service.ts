@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { extend } from 'ol/extent.js'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { BoundingBox, getGeometryBoundingBox } from '@geonetwork-ui/util/shared'
 
 @Injectable({

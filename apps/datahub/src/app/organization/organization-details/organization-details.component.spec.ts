@@ -7,7 +7,7 @@ import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import {
   CatalogRecord,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { RouterModule } from '@angular/router'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FormFieldSimpleComponent } from './form-field-simple.component'
+import { FormFieldSimpleComponent } from './form-field-simple.component.js'
 
 describe('FormFieldSimpleComponent', () => {
   let component: FormFieldSimpleComponent

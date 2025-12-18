@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ApplicationBannerComponent } from './application-banner.component'
+import { ApplicationBannerComponent } from './application-banner.component.js'
 
 describe('ApplicationBannerComponent', () => {
   let component: ApplicationBannerComponent

@@ -20,15 +20,15 @@ import {
   HttpEvent,
   HttpParameterCodec,
 } from '@angular/common/http'
-import { CustomHttpParameterCodec } from '../encoder'
+import { CustomHttpParameterCodec } from '../encoder.js'
 import { Observable } from 'rxjs'
 
-import { BatchEditingApiModel } from '../model/models'
-import { CodelistApiModel } from '../model/models'
-import { ElementApiModel } from '../model/models'
+import { BatchEditingApiModel } from '../model/models.js'
+import { CodelistApiModel } from '../model/models.js'
+import { ElementApiModel } from '../model/models.js'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
-import { Configuration } from '../configuration'
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables.js'
+import { Configuration } from '../configuration.js'
 
 @Injectable({
   providedIn: 'root',

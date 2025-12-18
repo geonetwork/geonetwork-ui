@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent.component'
+import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent.component.js'
 import { BehaviorSubject, from, of } from 'rxjs'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import {
   CatalogRecord,
   Keyword,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { MockBuilder, MockProvider } from 'ng-mocks'
-import { EditorFacade } from '../../../../+state/editor.facade'
+import { EditorFacade } from '../../../../+state/editor.facade.js'
 import {
   datasetRecordsFixture,
   NATIONAL_KEYWORD,

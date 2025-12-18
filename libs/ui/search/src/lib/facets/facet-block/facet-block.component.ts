@@ -19,8 +19,8 @@ import {
   FacetSelectEvent,
   ModelBlock,
   ModelItem,
-} from '../facets.model'
-import { FacetItemComponent } from '../facet-item/facet-item.component'
+} from '../facets.model.js'
+import { FacetItemComponent } from '../facet-item/facet-item.component.js'
 
 import { FormsModule } from '@angular/forms'
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core'

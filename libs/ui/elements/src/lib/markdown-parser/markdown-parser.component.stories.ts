@@ -1,5 +1,5 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import { MarkdownParserComponent } from './markdown-parser.component'
+import { MarkdownParserComponent } from './markdown-parser.component.js'
 
 export default {
   title: 'Elements/MarkdownParserComponent',

@@ -5,14 +5,14 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { ImportRecordComponent } from './import-record.component'
+import { ImportRecordComponent } from './import-record.component.js'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { of } from 'rxjs'
 
 class MockRecordsRepository {

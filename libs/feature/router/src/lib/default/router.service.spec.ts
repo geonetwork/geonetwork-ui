@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 
-import { RouterService } from './router.service'
-import { ROUTER_CONFIG } from './router.config'
-import { ROUTER_ROUTE_ORGANIZATION } from './constants'
+import { RouterService } from './router.service.js'
+import { ROUTER_CONFIG } from './router.config.js'
+import { ROUTER_ROUTE_ORGANIZATION } from './constants.js'
 
 const SearchRouteComponent = {
   name: 'searchRoute',

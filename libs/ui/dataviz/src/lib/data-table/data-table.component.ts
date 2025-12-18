@@ -20,14 +20,14 @@ import {
   TranslatePipe,
   TranslateService,
 } from '@ngx-translate/core'
-import { DataTableDataSource } from './data-table.data.source'
+import { DataTableDataSource } from './data-table.data.source.js'
 import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
 import {
   MatPaginator,
   MatPaginatorIntl,
   MatPaginatorModule,
 } from '@angular/material/paginator'
-import { CustomMatPaginatorIntl } from './custom.mat.paginator.intl'
+import { CustomMatPaginatorIntl } from './custom.mat.paginator.intl.js'
 import { CommonModule } from '@angular/common'
 import { BehaviorSubject, filter, firstValueFrom } from 'rxjs'
 import {

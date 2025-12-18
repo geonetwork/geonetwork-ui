@@ -5,13 +5,13 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-import { RecordPreviewFeedComponent } from './record-preview-feed.component'
+import { RecordPreviewFeedComponent } from './record-preview-feed.component.js'
 import { importProvidersFrom } from '@angular/core'
 import { action } from 'storybook/actions'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matStar } from '@ng-icons/material-icons/baseline'
 

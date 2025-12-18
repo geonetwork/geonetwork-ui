@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TruncatedTextComponent } from './truncated-text.component'
+import { TruncatedTextComponent } from './truncated-text.component.js'
 import { By } from '@angular/platform-browser'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import {
   someFigureItemFixture,
   someHabFigureItemFixture,
-} from '../figure.fixtures'
-import { FigureContainerComponent } from './figure-container.component'
+} from '../figure.fixtures.js'
+import { FigureContainerComponent } from './figure-container.component.js'
 import { MockBuilder } from 'ng-mocks'
-import { FigureService } from '../figure.service'
+import { FigureService } from '../figure.service.js'
 
 describe('FigureContainerComponent', () => {
   let component: FigureContainerComponent

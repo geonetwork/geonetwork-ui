@@ -1,6 +1,10 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
-import { DEFAULT_SEARCH_KEY } from './actions'
-import { SEARCH_FEATURE_KEY, SearchState, SearchStateSearch } from './reducer'
+import { DEFAULT_SEARCH_KEY } from './actions.js'
+import {
+  SEARCH_FEATURE_KEY,
+  SearchState,
+  SearchStateSearch,
+} from './reducer.js'
 
 export const getSearchState =
   createFeatureSelector<SearchState>(SEARCH_FEATURE_KEY)

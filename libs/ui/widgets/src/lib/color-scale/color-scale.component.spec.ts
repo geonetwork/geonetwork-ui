@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ColorScaleComponent } from './color-scale.component'
+import { ColorScaleComponent } from './color-scale.component.js'
 
 describe('ColorScaleComponent', () => {
   let component: ColorScaleComponent

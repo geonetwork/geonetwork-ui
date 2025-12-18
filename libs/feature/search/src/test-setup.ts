@@ -3,12 +3,12 @@ import '../../../../jest.setup'
 
 import { CommonModule } from '@angular/common'
 import { BrowserModule } from '@angular/platform-browser'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { TranslateModule } from '@ngx-translate/core'
 import { ngMocks } from 'ng-mocks'
 import { BehaviorSubject } from 'rxjs'
-import { SearchFacade } from './lib/state/search.facade'
-import { SearchService } from './lib/utils/service/search.service'
+import { SearchFacade } from './lib/state/search.facade.js'
+import { SearchService } from './lib/utils/service/search.service.js'
 
 setupZoneTestEnv({ teardown: { destroyAfterEach: false } })
 

@@ -4,7 +4,7 @@ import {
   DatasetSpatialExtent,
   Keyword,
   ServiceRecord,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const datasetRecordsFixture: () => CatalogRecord[] = () => [
   {

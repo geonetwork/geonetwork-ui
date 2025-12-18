@@ -1,5 +1,5 @@
-import { MapPartialState } from './map.reducer'
-import * as MapSelectors from './map.selectors'
+import { MapPartialState } from './map.reducer.js'
+import * as MapSelectors from './map.selectors.js'
 import {
   mapCtxLayerGeojsonFixture,
   mapCtxLayerWmsFixture,

@@ -5,7 +5,7 @@ import {
   tick,
 } from '@angular/core/testing'
 
-import { StickyHeaderComponent } from './sticky-header.component'
+import { StickyHeaderComponent } from './sticky-header.component.js'
 import { Component, DebugElement } from '@angular/core'
 import { By } from '@angular/platform-browser'
 

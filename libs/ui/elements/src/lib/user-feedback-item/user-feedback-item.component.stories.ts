@@ -3,7 +3,7 @@ import {
   componentWrapperDecorator,
   StoryObj,
 } from '@storybook/angular'
-import { UserFeedbackItemComponent } from './user-feedback-item.component'
+import { UserFeedbackItemComponent } from './user-feedback-item.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {

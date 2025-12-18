@@ -1,4 +1,4 @@
-import { FieldName } from '@geonetwork-ui/common/domain/model/search'
+import { FieldName } from '@geonetwork-ui/common/domain/model/search/index.js'
 
 export const DEFAULT_PAGE_SIZE = 10
 

@@ -1,5 +1,5 @@
-import { isDateRange, formatDate } from './date-range.utils'
-import { FieldFilter } from '@geonetwork-ui/common/domain/model/search'
+import { isDateRange, formatDate } from './date-range.utils.js'
+import { FieldFilter } from '@geonetwork-ui/common/domain/model/search/index.js'
 
 describe('date-range.utils', () => {
   describe('isDateRange', () => {

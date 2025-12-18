@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { LANGUAGE_STORAGE_KEY } from '@geonetwork-ui/util/i18n'
 import { TranslateService } from '@ngx-translate/core'
-import { LanguageSwitcherComponent } from './language-switcher.component'
+import { LanguageSwitcherComponent } from './language-switcher.component.js'
 import { MockBuilder } from 'ng-mocks'
 
 class TranslateServiceMock {

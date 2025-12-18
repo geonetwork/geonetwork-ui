@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { FacetSelectEvent, ModelBlock } from '../facets.model'
+import { FacetSelectEvent, ModelBlock } from '../facets.model.js'
 // Revisit facets: these should not use the ES formats!
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { EsRequestAggTerm } from '@geonetwork-ui/api/metadata-converter'
-import { FacetBlockComponent } from '../facet-block/facet-block.component'
+import { FacetBlockComponent } from '../facet-block/facet-block.component.js'
 
 import { FormsModule } from '@angular/forms'
 import { TranslateModule } from '@ngx-translate/core'

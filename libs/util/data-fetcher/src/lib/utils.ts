@@ -5,9 +5,9 @@ import {
   PropertyInfo,
   SupportedType,
   SupportedTypes,
-} from './model'
+} from './model.js'
 import { sharedFetch, useCache } from '@camptocamp/ogc-client'
-import { parseHeaders } from './headers'
+import { parseHeaders } from './headers.js'
 import { parse as parseDate } from 'date-fns/parse'
 import { parseISO as parseIsoDate } from 'date-fns/parseISO'
 

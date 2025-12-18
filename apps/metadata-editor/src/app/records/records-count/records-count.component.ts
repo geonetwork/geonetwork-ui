@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { TranslateDirective } from '@ngx-translate/core'
 import { SelectionService } from '@geonetwork-ui/api/repository'
 import { CommonModule } from '@angular/common'

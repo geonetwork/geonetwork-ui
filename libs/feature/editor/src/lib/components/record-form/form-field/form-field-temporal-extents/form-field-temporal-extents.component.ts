@@ -7,7 +7,7 @@ import {
   Output,
   inject,
 } from '@angular/core'
-import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'
 import {
   ButtonComponent,

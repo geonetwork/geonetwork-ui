@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core'
 import { WmsEndpoint, WmsLayerSummary } from '@camptocamp/ogc-client'
-import { MapFacade } from '../+state/map.facade'
+import { MapFacade } from '../+state/map.facade.js'
 import { firstValueFrom, Subject } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
 import { MapContextLayer } from '@geospatial-sdk/core'

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core'
 import { StoreModule } from '@ngrx/store'
-import * as fromMap from './+state/map.reducer'
-import { MapFacade } from './+state/map.facade'
-import { GEOCODING_PROVIDER, GeocodingProvider } from './geocoding.service'
+import * as fromMap from './+state/map.reducer.js'
+import { MapFacade } from './+state/map.facade.js'
+import { GEOCODING_PROVIDER, GeocodingProvider } from './geocoding.service.js'
 
 @NgModule({
   imports: [

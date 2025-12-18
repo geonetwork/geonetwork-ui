@@ -1,4 +1,4 @@
-import { CsvReader, parseCsv } from './csv'
+import { CsvReader, parseCsv } from './csv.js'
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'

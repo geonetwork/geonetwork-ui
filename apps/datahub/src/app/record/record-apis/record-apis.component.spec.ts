@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordApisComponent } from './record-apis.component.js'
-import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject } from 'rxjs'
 import { MockBuilder } from 'ng-mocks'

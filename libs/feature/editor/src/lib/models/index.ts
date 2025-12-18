@@ -1,1 +1,1 @@
-export * from './editor-config.model'
+export * from './editor-config.model.js'

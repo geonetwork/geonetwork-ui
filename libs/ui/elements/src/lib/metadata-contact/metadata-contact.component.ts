@@ -9,8 +9,8 @@ import {
   CatalogRecord,
   Individual,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
-import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { ThumbnailComponent } from '../thumbnail/thumbnail.component.js'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import {
   matMailOutline,

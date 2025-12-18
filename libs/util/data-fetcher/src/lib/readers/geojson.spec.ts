@@ -1,4 +1,4 @@
-import { GeojsonReader, parseGeojson } from './geojson'
+import { GeojsonReader, parseGeojson } from './geojson.js'
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'

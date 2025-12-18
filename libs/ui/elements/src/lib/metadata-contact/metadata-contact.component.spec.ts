@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { MetadataContactComponent } from './metadata-contact.component'
+import { MetadataContactComponent } from './metadata-contact.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('MetadataContactComponent', () => {

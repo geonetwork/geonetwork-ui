@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { GmlReader, parseGml } from './gml'
+import { GmlReader, parseGml } from './gml.js'
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'

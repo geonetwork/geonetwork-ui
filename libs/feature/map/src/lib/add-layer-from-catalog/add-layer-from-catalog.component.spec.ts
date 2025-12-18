@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { AddLayerFromCatalogComponent } from './add-layer-from-catalog.component'
+import { AddLayerFromCatalogComponent } from './add-layer-from-catalog.component.js'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 

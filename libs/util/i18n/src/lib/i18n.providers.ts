@@ -14,13 +14,13 @@ import {
   LANGUAGE_STORAGE_KEY,
   TRANSLATE_DEBUG_CONFIG,
   TRANSLATE_DEFAULT_CONFIG,
-} from './i18n.constants'
+} from './i18n.constants.js'
 import {
   HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http'
-import { I18nInterceptor } from './i18n.interceptor'
+import { I18nInterceptor } from './i18n.interceptor.js'
 
 function i18nInitializerFromLocalStorageFactory(translate: TranslateService) {
   return () => {

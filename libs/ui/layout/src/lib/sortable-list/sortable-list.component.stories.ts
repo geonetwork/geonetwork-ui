@@ -6,7 +6,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { SortableListComponent } from './sortable-list.component'
+import { SortableListComponent } from './sortable-list.component.js'
 import {
   DatePickerComponent,
   DateRangePickerComponent,

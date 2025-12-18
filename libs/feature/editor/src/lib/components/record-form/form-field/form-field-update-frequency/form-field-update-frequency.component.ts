@@ -12,7 +12,7 @@ import {
   UpdateFrequencyCode,
   updateFrequencyCodeValues,
   UpdateFrequencyCustom,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   CheckToggleComponent,
   DropdownChoice,

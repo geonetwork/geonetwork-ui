@@ -1,11 +1,11 @@
 import { Action, createReducer, on } from '@ngrx/store'
-import * as MetadataViewActions from './mdview.actions'
-import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import * as MetadataViewActions from './mdview.actions.js'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model.js'
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
   UserFeedback,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const METADATA_VIEW_FEATURE_STATE_KEY = 'metadataView'
 

@@ -1,6 +1,6 @@
-import { DataItem, PropertyInfo } from '../model'
-import { fetchDataAsText, processItemProperties } from '../utils'
-import { BaseFileReader } from './base-file'
+import { DataItem, PropertyInfo } from '../model.js'
+import { fetchDataAsText, processItemProperties } from '../utils.js'
+import { BaseFileReader } from './base-file.js'
 
 /**
  * This parser supports both Geojson Feature collections or arrays

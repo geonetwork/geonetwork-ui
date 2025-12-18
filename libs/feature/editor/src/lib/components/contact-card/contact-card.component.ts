@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { Individual } from '@geonetwork-ui/common/domain/model/record'
+import { Individual } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 
 @Component({

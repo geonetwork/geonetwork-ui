@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common'
 import {
   CatalogRecord,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { MaxLinesComponent } from '@geonetwork-ui/ui/layout'
 import { LetDirective } from '@ngrx/component'

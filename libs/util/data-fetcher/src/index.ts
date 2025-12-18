@@ -1,4 +1,4 @@
-export * from './lib/data-fetcher'
+export * from './lib/data-fetcher.js'
 export {
   SupportedType,
   SupportedTypes,
@@ -6,8 +6,8 @@ export {
   FetchError,
   FieldAggregation,
   PropertyInfo,
-} from './lib/model'
-export { getJsonDataItemsProxy } from './lib/utils'
-export { BaseReader } from './lib/readers/base'
-export { BaseFileReader } from './lib/readers/base-file'
-export { GeojsonReader } from './lib/readers/geojson'
+} from './lib/model.js'
+export { getJsonDataItemsProxy } from './lib/utils.js'
+export { BaseReader } from './lib/readers/base.js'
+export { BaseFileReader } from './lib/readers/base-file.js'
+export { GeojsonReader } from './lib/readers/geojson.js'

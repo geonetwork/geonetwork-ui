@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
-import { UserPreviewComponent } from './user-preview.component'
+import { UserPreviewComponent } from './user-preview.component.js'
 import { MockBuilder } from 'ng-mocks'
-import { AvatarComponent } from '../avatar/avatar.component'
+import { AvatarComponent } from '../avatar/avatar.component.js'
 import { MatTooltip } from '@angular/material/tooltip'
 
 const user = barbieUserFixture()

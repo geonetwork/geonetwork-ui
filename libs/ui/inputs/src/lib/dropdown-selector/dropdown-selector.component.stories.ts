@@ -5,7 +5,7 @@ import {
   Meta,
   StoryObj,
 } from '@storybook/angular'
-import { DropdownSelectorComponent } from './dropdown-selector.component'
+import { DropdownSelectorComponent } from './dropdown-selector.component.js'
 
 export default {
   title: 'Inputs/DropdownSelectorComponent',

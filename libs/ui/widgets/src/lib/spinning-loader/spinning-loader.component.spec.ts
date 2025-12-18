@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SpinningLoaderComponent } from './spinning-loader.component'
+import { SpinningLoaderComponent } from './spinning-loader.component.js'
 
 describe('SpinningLoaderComponent', () => {
   let component: SpinningLoaderComponent

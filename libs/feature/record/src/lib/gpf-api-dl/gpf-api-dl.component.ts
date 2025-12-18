@@ -5,14 +5,14 @@ import {
   OnInit,
   inject,
 } from '@angular/core'
-import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { BehaviorSubject, combineLatest, map, mergeMap, Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { Choice, DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import axios from 'axios'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { GpfApiDlListItemComponent } from '../gpf-api-dl-list-item/gpf-api-dl-list-item.component'
+import { GpfApiDlListItemComponent } from '../gpf-api-dl-list-item/gpf-api-dl-list-item.component.js'
 
 export interface Label {
   label: string

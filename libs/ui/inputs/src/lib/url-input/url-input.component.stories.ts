@@ -10,7 +10,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { matStar } from '@ng-icons/material-icons/baseline'
-import { UrlInputComponent } from './url-input.component'
+import { UrlInputComponent } from './url-input.component.js'
 
 export default {
   title: 'Inputs/UrlInputComponent',

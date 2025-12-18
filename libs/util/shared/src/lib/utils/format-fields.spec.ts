@@ -1,4 +1,4 @@
-import { formatUserInfo } from './format-fields'
+import { formatUserInfo } from './format-fields.js'
 
 describe('formatUserInfo', () => {
   it('should format user info correctly', () => {

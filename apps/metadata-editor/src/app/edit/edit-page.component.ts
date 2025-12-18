@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common'
 import {
   Component,
   ElementRef,
+  inject,
   OnDestroy,
   OnInit,
   ViewChild,
-  inject,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { ActivatedRoute, Router } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
+import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error/index.js'
 import {
   EditorFacade,
   MetadataQualityPanelComponent,

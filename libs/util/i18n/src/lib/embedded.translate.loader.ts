@@ -1,6 +1,6 @@
 import { TranslateLoader } from '@ngx-translate/core'
 import { map, Observable, of } from 'rxjs'
-import { dropEmptyTranslations } from './translate.loader.utils'
+import { dropEmptyTranslations } from './translate.loader.utils.js'
 import de from '../../../../../translations/de.json'
 import en from '../../../../../translations/en.json'
 import es from '../../../../../translations/es.json'

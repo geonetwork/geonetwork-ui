@@ -1,4 +1,4 @@
-import { DateService } from '../services'
+import { DateService } from '../services/index.js'
 
 export function getTemporalRangeUnion(
   ranges: {

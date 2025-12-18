@@ -2,9 +2,9 @@ import {
   getJsonDataItemsProxy,
   jsonToGeojsonFeature,
   processItemProperties,
-} from './utils'
-import { DataItem } from './model'
-import { SAMPLE_DATA } from '../fixtures/sample'
+} from './utils.js'
+import { DataItem } from './model.js'
+import { SAMPLE_DATA } from '../fixtures/sample.js'
 
 describe('data-fetcher utils', () => {
   describe('jsonToGeojsonFeature', () => {

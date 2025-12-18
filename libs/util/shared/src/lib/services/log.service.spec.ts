@@ -1,4 +1,4 @@
-import { LogService } from './log.service'
+import { LogService } from './log.service.js'
 
 const originalWarn = console.warn
 const originalLog = console.log

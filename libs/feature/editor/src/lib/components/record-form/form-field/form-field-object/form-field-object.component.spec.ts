@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FormFieldObjectComponent } from './form-field-object.component'
+import { FormFieldObjectComponent } from './form-field-object.component.js'
 
 describe('FormFieldObjectComponent', () => {
   let component: FormFieldObjectComponent

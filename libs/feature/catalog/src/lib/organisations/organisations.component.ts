@@ -6,13 +6,13 @@ import {
   Output,
   inject,
 } from '@angular/core'
-import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import { Organization } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { map, startWith, tap } from 'rxjs/operators'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { SortByField } from '@geonetwork-ui/common/domain/model/search'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
+import { SortByField } from '@geonetwork-ui/common/domain/model/search/index.js'
 import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
-import { ORGANIZATION_PAGE_URL_TOKEN } from '../organization-url.token'
+import { ORGANIZATION_PAGE_URL_TOKEN } from '../organization-url.token.js'
 import { ContentGhostComponent } from '@geonetwork-ui/ui/elements'
 import { CommonModule } from '@angular/common'
 import {

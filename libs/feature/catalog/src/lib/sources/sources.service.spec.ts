@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing'
-import { SourcesService } from './sources.service'
+import { SourcesService } from './sources.service.js'
 import { SourcesApiService } from '@geonetwork-ui/data-access/gn4'
-import { someSourcesFixture } from './sources.fixture'
+import { someSourcesFixture } from './sources.fixture.js'
 import { Observable } from 'rxjs'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

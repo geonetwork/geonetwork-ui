@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing'
-import { FileWithOverridesTranslateLoader } from './file-with-overrides.translate.loader'
+import { FileWithOverridesTranslateLoader } from './file-with-overrides.translate.loader.js'
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing'
 import { HttpClient } from '@angular/common/http'
-import * as AppConfig from '../app-config'
-import { loadAppConfig } from '../app-config'
-import { appConfigWithTranslationFixture } from '../fixtures'
+import * as AppConfig from '../app-config.js'
+import { loadAppConfig } from '../app-config.js'
+import { appConfigWithTranslationFixture } from '../fixtures.js'
 import fetchMock from 'fetch-mock-jest'
 
 describe('FileTranslateLoader', () => {

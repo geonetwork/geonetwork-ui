@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { CheckToggleComponent } from './check-toggle.component'
+import { CheckToggleComponent } from './check-toggle.component.js'
 
 describe('CheckToggleComponent', () => {
   let component: CheckToggleComponent

@@ -7,7 +7,7 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
-import { UserPreviewComponent } from './user-preview.component'
+import { UserPreviewComponent } from './user-preview.component.js'
 
 export default {
   title: 'Elements/UserPreviewComponent',

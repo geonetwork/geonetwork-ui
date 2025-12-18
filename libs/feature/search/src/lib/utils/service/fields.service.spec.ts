@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing'
-import { FieldsService } from './fields.service'
+import { FieldsService } from './fields.service.js'
 import { EMPTY, lastValueFrom, of } from 'rxjs'
 import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class RecordsRepositoryMock {

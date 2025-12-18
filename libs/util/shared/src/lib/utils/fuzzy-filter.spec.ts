@@ -1,4 +1,4 @@
-import { createFuzzyFilter } from './fuzzy-filter'
+import { createFuzzyFilter } from './fuzzy-filter.js'
 
 const TEST_CASES = [
   {

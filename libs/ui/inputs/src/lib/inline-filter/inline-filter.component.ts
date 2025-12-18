@@ -6,7 +6,7 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core'
-import { Choice } from './inline-filter.model'
+import { Choice } from './inline-filter.model.js'
 import { CommonModule } from '@angular/common'
 
 @Component({

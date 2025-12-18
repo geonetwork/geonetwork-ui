@@ -1,4 +1,4 @@
-import { ModelBlock, ModelItem } from '../facets.model'
+import { ModelBlock, ModelItem } from '../facets.model.js'
 
 export const blockModelFixture = (): ModelBlock => ({
   key: 'tag',

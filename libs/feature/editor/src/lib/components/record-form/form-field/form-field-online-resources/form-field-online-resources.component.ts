@@ -16,8 +16,8 @@ import {
   DatasetServiceDistribution,
   OnlineResource,
   ServiceEndpoint,
-} from '@geonetwork-ui/common/domain/model/record'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import {
   FileInputComponent,
@@ -33,9 +33,9 @@ import {
 } from '@geonetwork-ui/ui/layout'
 import { TranslateDirective, TranslateService } from '@ngx-translate/core'
 import { Subscription } from 'rxjs'
-import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
-import { OnlineResourceCardComponent } from '../../../online-resource-card/online-resource-card.component'
-import { OnlineServiceResourceInputComponent } from '../../../online-service-resource-input/online-service-resource-input.component'
+import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config.js'
+import { OnlineResourceCardComponent } from '../../../online-resource-card/online-resource-card.component.js'
+import { OnlineServiceResourceInputComponent } from '../../../online-service-resource-input/online-service-resource-input.component.js'
 
 type OnlineNotLinkResource =
   | DatasetDownloadDistribution

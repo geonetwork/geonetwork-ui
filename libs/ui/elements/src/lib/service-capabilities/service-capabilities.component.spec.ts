@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ServiceCapabilitiesComponent } from './service-capabilities.component'
+import { ServiceCapabilitiesComponent } from './service-capabilities.component.js'
 import { WfsFeatureTypeFull, WmsLayerFull } from '@camptocamp/ogc-client'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

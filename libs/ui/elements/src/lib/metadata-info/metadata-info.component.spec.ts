@@ -3,14 +3,14 @@ import { By } from '@angular/platform-browser'
 import {
   DatasetRecord,
   ServiceRecord,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   datasetRecordsFixture,
   simpleServiceRecordFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 import { TranslateTestingModule } from 'ngx-translate-testing'
-import { MetadataInfoComponent } from './metadata-info.component'
+import { MetadataInfoComponent } from './metadata-info.component.js'
 
 describe('MetadataInfoComponent', () => {
   let component: MetadataInfoComponent

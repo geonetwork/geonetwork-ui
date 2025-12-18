@@ -36,7 +36,7 @@ import {
 import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
-import { ButtonComponent } from '../button/button.component'
+import { ButtonComponent } from '../button/button.component.js'
 import {
   NgIconComponent,
   provideIcons,

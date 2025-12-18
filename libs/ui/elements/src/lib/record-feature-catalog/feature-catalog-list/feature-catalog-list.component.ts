@@ -4,7 +4,7 @@ import { TranslatePipe } from '@ngx-translate/core'
 import {
   DatasetFeatureAttribute,
   DatasetFeatureCatalog,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import {

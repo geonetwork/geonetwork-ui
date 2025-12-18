@@ -1,15 +1,15 @@
-import * as fromActions from './actions'
-import { DEFAULT_SEARCH_KEY } from './actions'
+import * as fromActions from './actions.js'
+import { DEFAULT_SEARCH_KEY } from './actions.js'
 import {
   Aggregations,
   AggregationsParams,
   FieldFilters,
   FieldName,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
-import { DEFAULT_PAGE_SIZE, FIELDS_SUMMARY } from '../constants'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
+import { DEFAULT_PAGE_SIZE, FIELDS_SUMMARY } from '../constants.js'
 import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
 

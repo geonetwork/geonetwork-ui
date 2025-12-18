@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MapLegendComponent } from './map-legend.component'
+import { MapLegendComponent } from './map-legend.component.js'
 import { MapContext } from '@geospatial-sdk/core'
 import { createLegendFromLayer } from '@geospatial-sdk/legend'
 

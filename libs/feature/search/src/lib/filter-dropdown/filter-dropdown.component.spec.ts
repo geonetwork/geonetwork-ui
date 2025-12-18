@@ -7,10 +7,10 @@ import {
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { BehaviorSubject, EMPTY, of, throwError } from 'rxjs'
-import { SearchFacade } from '../state/search.facade'
-import { FieldsService } from '../utils/service/fields.service'
-import { SearchService } from '../utils/service/search.service'
-import { FilterDropdownComponent } from './filter-dropdown.component'
+import { SearchFacade } from '../state/search.facade.js'
+import { FieldsService } from '../utils/service/fields.service.js'
+import { SearchService } from '../utils/service/search.service.js'
+import { FilterDropdownComponent } from './filter-dropdown.component.js'
 import {
   DateRangeDropdownComponent,
   DropdownMultiselectComponent,

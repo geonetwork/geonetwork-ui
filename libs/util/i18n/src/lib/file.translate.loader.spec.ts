@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { FileTranslateLoader } from './file.translate.loader'
+import { FileTranslateLoader } from './file.translate.loader.js'
 import {
   HttpClientTestingModule,
   HttpTestingController,

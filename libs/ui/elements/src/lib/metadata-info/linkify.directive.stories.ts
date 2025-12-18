@@ -1,5 +1,5 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import { GnUiLinkifyDirective } from './linkify.directive'
+import { GnUiLinkifyDirective } from './linkify.directive.js'
 
 export default {
   title: 'Elements/GnUiLinkifyDirective',

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FormFieldFileComponent } from './form-field-file.component'
+import { FormFieldFileComponent } from './form-field-file.component.js'
 import { FormControl } from '@angular/forms'
 
 describe('FormFieldFileComponent', () => {

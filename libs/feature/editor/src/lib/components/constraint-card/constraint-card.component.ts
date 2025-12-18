@@ -6,11 +6,11 @@ import {
   Output,
 } from '@angular/core'
 
-import { FormFieldRichComponent } from '../record-form/form-field/form-field-rich/form-field-rich.component'
+import { FormFieldRichComponent } from '../record-form/form-field/form-field-rich/form-field-rich.component.js'
 import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import { MatIconModule } from '@angular/material/icon'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { Constraint } from '@geonetwork-ui/common/domain/model/record'
+import { Constraint } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   NgIconComponent,
   provideIcons,
