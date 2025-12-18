@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { APP_ID, NgModule } from '@angular/core'
 import { TransferHttpCacheModule } from '@nguniversal/common'
 
-import { AppComponent } from './app.component'
+import { AppComponent } from './app.component.js'
 
 @NgModule({
   declarations: [AppComponent],
