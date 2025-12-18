@@ -37,6 +37,13 @@ By default, the version of GeoNetwork used as a backend is 4.2.5. You can specif
 $ GEONETWORK_VERSION=4.2.2 docker compose up -d
 ```
 
+Note: If you want to run GN 4.2 on a recent ubuntu kernel or similar and you run into `main ERROR Could not reconfigure JMX java.lang.NullPointerException"` you may want to add some JAVA_OPTS to the GN service of the docker composition to bypass the issue during dev:
+
+    -Dcom.sun.management.jmxremote=false
+    -Dcom.sun.management.jmxremote.authenticate=false
+    -Dcom.sun.management.jmxremote.ssl=false
+    -XX:-UseContainerSupport
+
 ## Access services
 
 GeoNetwork can be accessed on http://localhost:8080/geonetwork.
