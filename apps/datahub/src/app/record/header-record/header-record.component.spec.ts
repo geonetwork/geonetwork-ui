@@ -10,7 +10,7 @@ import {
   HEADER_HEIGHT_DEFAULT,
   HEADER_HEIGHT_MOBILE_THUMBNAIL,
   HeaderRecordComponent,
-} from './header-record.component'
+} from './header-record.component.js'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject } from 'rxjs'

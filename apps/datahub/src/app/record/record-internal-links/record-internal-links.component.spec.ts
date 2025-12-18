@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RecordInternalLinksComponent } from './record-internal-links.component'
+import { RecordInternalLinksComponent } from './record-internal-links.component.js'
 import { MockBuilder } from 'ng-mocks'
 
 describe('RecordInternalLinksComponent', () => {

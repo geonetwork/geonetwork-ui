@@ -1,4 +1,4 @@
-import { AuthGuardService } from './auth-guard.service'
+import { AuthGuardService } from './auth-guard.service.js'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { AuthService } from '@geonetwork-ui/api/repository'
 import { TestBed } from '@angular/core/testing'

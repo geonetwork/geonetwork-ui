@@ -1,4 +1,4 @@
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const OPENDATASWISS_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier:

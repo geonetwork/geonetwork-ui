@@ -2,7 +2,7 @@ import {
   UpdateFrequency,
   UpdateFrequencyCode,
   updateFrequencyCodeValues,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export function getUpdateFrequencyFromFrequencyCode(
   frequencyCode: string

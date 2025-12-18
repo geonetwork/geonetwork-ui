@@ -5,7 +5,7 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import { Injectable, inject } from '@angular/core'
-import { AvatarServiceInterface } from '../auth'
+import { AvatarServiceInterface } from '../auth/index.js'
 import { map } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
 import {

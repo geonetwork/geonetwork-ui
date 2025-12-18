@@ -1,5 +1,5 @@
-import { FieldName } from './field.model'
-import { FieldFilters } from './filter.model'
+import { FieldName } from './field.model.js'
+import { FieldFilters } from './filter.model.js'
 
 export interface TermsAggregationParams {
   type: 'terms'

@@ -1,1 +1,1 @@
-export * from './dcat-ap.converter'
+export * from './dcat-ap.converter.js'

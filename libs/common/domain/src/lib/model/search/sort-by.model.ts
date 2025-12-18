@@ -1,4 +1,4 @@
-import { SortByField } from './search.model'
+import { SortByField } from './search.model.js'
 
 export const SortByEnum: Record<string, SortByField> = {
   CREATE_DATE: ['desc', 'createDate'],

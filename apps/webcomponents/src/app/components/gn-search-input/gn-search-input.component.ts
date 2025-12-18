@@ -6,7 +6,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { BaseComponent } from '../base.component'
+import { BaseComponent } from '../base.component.js'
 import { FuzzySearchComponent } from '@geonetwork-ui/feature/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 

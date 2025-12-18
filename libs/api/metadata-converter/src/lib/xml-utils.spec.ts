@@ -7,8 +7,8 @@ import {
   readText,
   renameElements,
   xmlToString,
-} from './xml-utils'
-import { simpleDatasetRecordAsXmlFixture } from '@geonetwork-ui/common/fixtures'
+} from './xml-utils.js'
+import { simpleDatasetRecordAsXmlFixture } from '@geonetwork-ui/common/fixtures/index.js'
 
 describe('xml utils', () => {
   describe('xmlToString', () => {

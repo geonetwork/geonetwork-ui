@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TemplatesComponent } from './templates.component'
+import { TemplatesComponent } from './templates.component.js'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { Component } from '@angular/core'
-import { RecordsListComponent } from '../records-list.component'
+import { RecordsListComponent } from '../records-list.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 @Component({

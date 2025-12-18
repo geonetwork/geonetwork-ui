@@ -47,7 +47,7 @@ import {
 } from 'rxjs'
 import { catchError, map, tap } from 'rxjs/operators'
 import { lt } from 'semver'
-import { ElasticsearchService } from './elasticsearch'
+import { ElasticsearchService } from './elasticsearch/index.js'
 import { toLang2 } from '@geonetwork-ui/util/i18n'
 import { Gn4SettingsService } from './settings/gn4-settings.service'
 

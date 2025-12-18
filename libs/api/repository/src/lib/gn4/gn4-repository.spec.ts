@@ -1,10 +1,10 @@
-import { Gn4Repository } from './gn4-repository'
+import { Gn4Repository } from './gn4-repository.js'
 import {
   RecordsApiService,
   SearchApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { firstValueFrom, lastValueFrom, of, throwError } from 'rxjs'
-import { ElasticsearchService } from './elasticsearch'
+import { ElasticsearchService } from './elasticsearch/index.js'
 import { fakeAsync, TestBed, tick } from '@angular/core/testing'
 import {
   EsSearchResponse,

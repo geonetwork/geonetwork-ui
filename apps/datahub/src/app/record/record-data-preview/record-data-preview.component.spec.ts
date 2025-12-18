@@ -9,7 +9,7 @@ import { BehaviorSubject, of, throwError } from 'rxjs'
 import {
   MAX_FEATURE_COUNT,
   RecordDataPreviewComponent,
-} from './record-data-preview.component'
+} from './record-data-preview.component.js'
 import {
   DataViewComponent,
   DataViewShareComponent,

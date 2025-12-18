@@ -1,7 +1,31 @@
 {
   "extends": ["../../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
+  "plugins": ["import"],
   "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "import/extensions": [
+          "error",
+          "always",
+          {
+            "ignorePackages": true,
+            "pathGroupOverrides": [
+              {
+                // ask for file extensions when importing from OL (since we can do granular imports inside the lib)
+                "pattern": "ol/{*,*/**}",
+                "action": "enforce"
+              },
+              {
+                // ask for file extensions when importing from @geonetowork-ui
+                "pattern": "@geonetowork-ui/{*,*/**}",
+                "action": "enforce"
+              }
+            ]
+          }
+        ]}
+    },
     {
       "files": ["*.ts"],
       "rules": {

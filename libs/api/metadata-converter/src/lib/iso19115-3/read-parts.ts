@@ -6,7 +6,7 @@ import {
   findParent,
   readAttribute,
   XmlElement,
-} from '../xml-utils'
+} from '../xml-utils.js'
 import {
   ChainableFunction,
   combine,
@@ -16,7 +16,7 @@ import {
   map,
   mapArray,
   pipe,
-} from '../function-utils'
+} from '../function-utils.js'
 import {
   extractCharacterString,
   extractDatasetOnlineResources,
@@ -27,7 +27,7 @@ import {
   extractServiceOnlineResources,
   extractUrl,
   findIdentification,
-} from '../iso19139/read-parts'
+} from '../iso19139/read-parts.js'
 import {
   Individual,
   LanguageCode,
@@ -38,11 +38,11 @@ import {
   RecordTranslations,
   ReuseType,
   Role,
-} from '@geonetwork-ui/common/domain/model/record'
-import { matchMimeType } from '../common/distribution.mapper'
-import { fullNameToParts } from '../iso19139/utils/individual-name'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { matchMimeType } from '../common/distribution.mapper.js'
+import { fullNameToParts } from '../iso19139/utils/individual-name.js'
 import { toLang2 } from '@geonetwork-ui/util/i18n/language-codes'
-import { getResourceType, getReuseType } from '../common/resource-types'
+import { getResourceType, getReuseType } from '../common/resource-types.js'
 
 export function readKind(rootEl: XmlElement): RecordKind {
   return pipe(

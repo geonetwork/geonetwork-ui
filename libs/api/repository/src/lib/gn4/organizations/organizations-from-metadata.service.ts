@@ -13,7 +13,7 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { ElasticsearchService } from '../elasticsearch'
+import { ElasticsearchService } from '../elasticsearch/index.js'
 import {
   getAsArray,
   getAsUrl,

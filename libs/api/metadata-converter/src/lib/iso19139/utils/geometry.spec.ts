@@ -1,6 +1,6 @@
 import { Geometry } from 'geojson'
-import { getRootElement, parseXmlString, xmlToString } from '../../xml-utils'
-import { readGeometry, writeGeometry } from './geometry'
+import { getRootElement, parseXmlString, xmlToString } from '../../xml-utils.js'
+import { readGeometry, writeGeometry } from './geometry.js'
 
 describe('geometry utils', () => {
   describe('readGeometry', () => {

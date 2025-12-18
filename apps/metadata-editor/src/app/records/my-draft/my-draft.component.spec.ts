@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { cold, hot } from 'jasmine-marbles'
 import { MockBuilder, MockProvider } from 'ng-mocks'
-import { MyDraftComponent } from './my-draft.component'
+import { MyDraftComponent } from './my-draft.component.js'
 import { EditorService } from '@geonetwork-ui/feature/editor'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

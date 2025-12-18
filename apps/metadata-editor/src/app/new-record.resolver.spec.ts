@@ -5,7 +5,7 @@ import {
   CatalogRecord,
   Individual,
 } from '@geonetwork-ui/common/domain/model/record'
-import { NewRecordResolver } from './new-record.resolver'
+import { NewRecordResolver } from './new-record.resolver.js'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'

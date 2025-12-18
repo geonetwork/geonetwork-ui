@@ -1,7 +1,7 @@
-import { FieldFilters } from './filter.model'
-import { CatalogRecord } from '../record'
+import { FieldFilters } from './filter.model.js'
+import { CatalogRecord } from '../record/index.js'
 import { Geometry } from 'geojson'
-import { FieldName } from './field.model'
+import { FieldName } from './field.model.js'
 
 export type FieldSort = ['desc' | 'asc', FieldName]
 export type SortByField = FieldSort | FieldSort[] // several sort criteria can be used!

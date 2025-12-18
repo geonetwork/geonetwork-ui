@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { PageSelectorComponent } from './page-selector.component'
+import { PageSelectorComponent } from './page-selector.component.js'
 import { editorConfigFixture } from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject } from 'rxjs'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'

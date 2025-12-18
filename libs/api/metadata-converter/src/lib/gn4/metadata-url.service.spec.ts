@@ -1,8 +1,8 @@
 import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone'
 import { TestBed } from '@angular/core/testing'
 import { TranslateService } from '@ngx-translate/core'
-import { MetadataUrlService } from './metadata-url.service'
-import { Configuration } from '@geonetwork-ui/data-access/gn4'
+import { MetadataUrlService } from './metadata-url.service.js'
+import { Configuration } from '@geonetwork-ui/data-access/gn4/index.js'
 
 setupZoneTestEnv()
 

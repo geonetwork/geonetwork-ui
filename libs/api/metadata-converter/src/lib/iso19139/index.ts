@@ -1,1 +1,1 @@
-export * from './iso19139.converter'
+export * from './iso19139.converter.js'

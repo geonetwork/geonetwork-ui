@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
-import { repositoryMockFactory } from '../../test/repository.mock.spec'
-import { DatavizService } from './dataviz.service'
-import { Dataviz } from './entities/dataviz.entity'
+import { repositoryMockFactory } from '../../test/repository.mock.spec.js'
+import { DatavizService } from './dataviz.service.js'
+import { Dataviz } from './entities/dataviz.entity.js'
 
 describe('DatavizService', () => {
   let service: DatavizService

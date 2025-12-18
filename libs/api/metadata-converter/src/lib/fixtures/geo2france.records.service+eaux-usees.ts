@@ -1,4 +1,4 @@
-import { ServiceRecord } from '@geonetwork-ui/common/domain/model/record'
+import { ServiceRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const GEO2FRANCE_SERVICE_EAUXUSEES_RECORD: ServiceRecord = {
   uniqueIdentifier: 'be052079-f1f6-4f6f-a722-cbf11deb40eb',

@@ -17,8 +17,8 @@ import {
   ServiceRecord,
   UpdateFrequencyCode,
   UpdateFrequencyCustom,
-} from '@geonetwork-ui/common/domain/model/record'
-import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus/index.js'
 import { format } from 'date-fns/format'
 import { Geometry } from 'geojson'
 import {
@@ -29,7 +29,7 @@ import {
   noop,
   pipe,
   tap,
-} from '../function-utils'
+} from '../function-utils.js'
 import {
   allChildrenElement,
   appendChildren,
@@ -49,12 +49,12 @@ import {
   setTextContent,
   writeAttribute,
   XmlElement,
-} from '../xml-utils'
-import { readKind } from './read-parts'
-import { writeGeometry } from './utils/geometry'
-import { namePartsToFull } from './utils/individual-name'
+} from '../xml-utils.js'
+import { readKind } from './read-parts.js'
+import { writeGeometry } from './utils/geometry.js'
+import { namePartsToFull } from './utils/individual-name.js'
 import { toLang3 } from '@geonetwork-ui/util/i18n/language-codes'
-import { kindToCodeListValue } from '../common/resource-types'
+import { kindToCodeListValue } from '../common/resource-types.js'
 
 function writeLocalizedElement(
   writeFn: ChainableFunction<XmlElement, XmlElement>,

@@ -3,8 +3,8 @@ import {
   loadGraph,
   readLocalizedValue,
   writeLocalizedLiteral,
-} from './graph-utils'
-import { DCAT, DCTERMS, RDF } from '../namespaces'
+} from './graph-utils.js'
+import { DCAT, DCTERMS, RDF } from '../namespaces.js'
 
 function graphToXml(dataStore: Store) {
   return dataStore

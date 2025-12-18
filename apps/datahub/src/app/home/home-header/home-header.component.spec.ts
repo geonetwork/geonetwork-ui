@@ -10,8 +10,8 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
-import { ROUTER_ROUTE_NEWS } from '../../router/constants'
-import { HomeHeaderComponent } from './home-header.component'
+import { ROUTER_ROUTE_NEWS } from '../../router/constants.js'
+import { HomeHeaderComponent } from './home-header.component.js'
 import { SortByEnum } from '@geonetwork-ui/common/domain/model/search'
 import { _setLanguages } from '@geonetwork-ui/util/app-config'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'

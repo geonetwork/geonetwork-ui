@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { MyRecordsComponent } from './my-records.component'
+import { MyRecordsComponent } from './my-records.component.js'
 import {
   FeatureSearchModule,
   SearchStateContainerDirective,

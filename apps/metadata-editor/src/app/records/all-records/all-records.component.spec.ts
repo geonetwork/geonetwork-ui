@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy } from '@angular/core'
 import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 import { ActivatedRoute, Router } from '@angular/router'
-import { AllRecordsComponent } from './all-records.component'
+import { AllRecordsComponent } from './all-records.component.js'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   MockBuilder,
@@ -16,7 +16,7 @@ import {
   MockProviders,
   NG_MOCKS_ROOT_PROVIDERS,
 } from 'ng-mocks'
-import { EditorRouterService } from '../../router.service'
+import { EditorRouterService } from '../../router.service.js'
 import { Overlay } from '@angular/cdk/overlay'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

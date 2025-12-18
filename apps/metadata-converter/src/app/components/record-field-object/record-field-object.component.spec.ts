@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RecordFieldObjectComponent } from './record-field-object.component'
+import { RecordFieldObjectComponent } from './record-field-object.component.js'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('RecordFieldObjectComponent', () => {

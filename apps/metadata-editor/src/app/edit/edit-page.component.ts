@@ -29,12 +29,12 @@ import {
 } from '@ngx-translate/core'
 import { combineLatest, filter, firstValueFrom, Subscription, take } from 'rxjs'
 import { map, skip } from 'rxjs/operators'
-import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
-import { PageSelectorComponent } from './components/page-selector/page-selector.component'
-import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component'
+import { SidebarComponent } from '../dashboard/sidebar/sidebar.component.js'
+import { PageSelectorComponent } from './components/page-selector/page-selector.component.js'
+import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component.js'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
-import { SearchHeaderComponent } from '../dashboard/search-header/search-header.component'
-import { PageErrorComponent } from './components/page-error/page-error.component'
+import { SearchHeaderComponent } from '../dashboard/search-header/search-header.component.js'
+import { PageErrorComponent } from './components/page-error/page-error.component.js'
 import { DateService } from '@geonetwork-ui/util/shared'
 
 marker('editor.record.form.bottomButtons.comeBackLater')

@@ -1,4 +1,4 @@
-import { ServiceRecord } from '@geonetwork-ui/common/domain/model/record'
+import { ServiceRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const WALLONIE_SERVICE_NAPITSWALLONIA_RECORD: ServiceRecord = {
   uniqueIdentifier: 'fe1c1a3d-c75b-435c-a1d1-48426818f54d',

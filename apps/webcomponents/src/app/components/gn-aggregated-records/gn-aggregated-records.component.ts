@@ -4,7 +4,7 @@ import {
   Input,
   ViewEncapsulation,
 } from '@angular/core'
-import { BaseComponent } from '../base.component'
+import { BaseComponent } from '../base.component.js'
 
 @Component({
   selector: 'wc-gn-aggregated-records',

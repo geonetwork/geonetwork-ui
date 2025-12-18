@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { OrganizationHeaderComponent } from './organization-header.component'
+import { OrganizationHeaderComponent } from './organization-header.component.js'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({

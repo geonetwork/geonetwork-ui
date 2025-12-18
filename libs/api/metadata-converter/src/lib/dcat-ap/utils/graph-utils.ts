@@ -1,12 +1,12 @@
 import { lit, Literal, parse, Statement, Store } from 'rdflib'
 import { Quad_Object, Quad_Predicate, Quad_Subject } from 'rdflib/lib/tf-types'
 import { ContentType } from 'rdflib/lib/types'
-import { BASE_URI } from './uri'
+import { BASE_URI } from './uri.js'
 import {
   FieldTranslation,
   LanguageCode,
   ModelTranslations,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 /**
  * This will find all literal nodes matching the criteria

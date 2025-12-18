@@ -1,8 +1,8 @@
 import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone'
 import { TestBed } from '@angular/core/testing'
-import { elasticLinkFixture } from '@geonetwork-ui/common/fixtures'
-import { Gn4FieldMapper } from './gn4.field.mapper'
-import { MetadataUrlService } from './metadata-url.service'
+import { elasticLinkFixture } from '@geonetwork-ui/common/fixtures/index.js'
+import { Gn4FieldMapper } from './gn4.field.mapper.js'
+import { MetadataUrlService } from './metadata-url.service.js'
 import { TranslateService } from '@ngx-translate/core'
 
 setupZoneTestEnv()

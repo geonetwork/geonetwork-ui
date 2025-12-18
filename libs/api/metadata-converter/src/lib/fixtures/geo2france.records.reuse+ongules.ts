@@ -1,4 +1,4 @@
-import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record'
+import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const GEO2FRANCE_REUSE_ONGULES_RECORD: ReuseRecord = {
   uniqueIdentifier: '7eb795c2-d612-4b5e-b15e-d985b0f4e697',

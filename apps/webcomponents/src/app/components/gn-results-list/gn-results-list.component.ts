@@ -12,7 +12,7 @@ import {
   SearchStateParams,
 } from '@geonetwork-ui/feature/search'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
-import { BaseComponent } from '../base.component'
+import { BaseComponent } from '../base.component.js'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({

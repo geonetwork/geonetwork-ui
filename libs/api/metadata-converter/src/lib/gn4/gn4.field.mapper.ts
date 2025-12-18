@@ -12,27 +12,27 @@ import {
   selectTranslatedValue,
   SourceWithUnknownProps,
   toDate,
-} from './atomic-operations'
-import { MetadataUrlService } from './metadata-url.service'
+} from './atomic-operations.js'
+import { MetadataUrlService } from './metadata-url.service.js'
 import { Injectable, inject } from '@angular/core'
-import { getStatusFromStatusCode } from '../iso19139/utils/status.mapper'
-import { getUpdateFrequencyFromFrequencyCode } from '../iso19139/utils/update-frequency.mapper'
+import { getStatusFromStatusCode } from '../iso19139/utils/status.mapper.js'
+import { getUpdateFrequencyFromFrequencyCode } from '../iso19139/utils/update-frequency.mapper.js'
 import {
   CatalogRecord,
   Constraint,
   DatasetSpatialExtent,
   OnlineResource,
   OnlineResourceType,
-} from '@geonetwork-ui/common/domain/model/record'
-import { matchProtocol } from '../common/distribution.mapper'
-import { Thesaurus } from './types'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { matchProtocol } from '../common/distribution.mapper.js'
+import { Thesaurus } from './types/index.js'
 import {
   getResourceType,
   getReusePresentationForm,
   getReuseType,
-} from '../common/resource-types'
+} from '../common/resource-types.js'
 import { TranslateService } from '@ngx-translate/core'
-import { toLang2, toLang3 } from '@geonetwork-ui/util/i18n'
+import { toLang2, toLang3 } from '@geonetwork-ui/util/i18n/language-codes'
 
 type ESResponseSource = SourceWithUnknownProps
 

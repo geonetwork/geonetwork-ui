@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { DashboardMenuComponent } from '../dashboard-menu/dashboard-menu.component'
+import { DashboardMenuComponent } from '../dashboard-menu/dashboard-menu.component.js'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   AuthService,

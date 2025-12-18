@@ -8,7 +8,7 @@ import {
   inject,
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { BaseComponent } from '../base.component'
+import { BaseComponent } from '../base.component.js'
 import { LinkUsage } from '@geonetwork-ui/util/shared'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 

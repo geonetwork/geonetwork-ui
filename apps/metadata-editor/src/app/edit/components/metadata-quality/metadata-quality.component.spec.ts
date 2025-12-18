@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BehaviorSubject } from 'rxjs'
-import { MetadataQualityComponent } from './metadata-quality.component'
+import { MetadataQualityComponent } from './metadata-quality.component.js'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 
 class EditorFacadeMock {

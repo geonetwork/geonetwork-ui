@@ -1,8 +1,8 @@
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { NamedNode, Statement, Store, sym } from 'rdflib'
-import { DCAT, DCTERMS, FOAF, RDF } from './namespaces'
-import { writeLiteral, writeLocalizedLiteral } from './utils/graph-utils'
-import { BASE_URI } from './utils/uri'
+import { DCAT, DCTERMS, FOAF, RDF } from './namespaces.js'
+import { writeLiteral, writeLocalizedLiteral } from './utils/graph-utils.js'
+import { BASE_URI } from './utils/uri.js'
 
 /**
  * This will create the dcat:Catalog node if not present, and link it to the record

@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { OrganizationPageComponent } from './organization-page.component'
+import { OrganizationPageComponent } from './organization-page.component.js'
 import { of } from 'rxjs'
 import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { TitleService } from '../../router/datahub-title.service'
+import { TitleService } from '../../router/datahub-title.service.js'
 
 const expectedOrganization = someOrganizationsFixture()[0]
 

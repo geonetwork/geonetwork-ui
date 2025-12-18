@@ -7,7 +7,7 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { BehaviorSubject, of } from 'rxjs'
-import { SearchFiltersComponent } from './search-filters.component'
+import { SearchFiltersComponent } from './search-filters.component.js'
 import { By } from '@angular/platform-browser'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'

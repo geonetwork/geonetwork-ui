@@ -1,4 +1,4 @@
-import { OrganizationTranslations } from './translation.model'
+import { OrganizationTranslations } from './translation.model.js'
 
 export interface Organization {
   name: string

@@ -5,10 +5,10 @@ import {
   LanguageCode,
   RecordTranslations,
   ServiceRecord,
-} from '@geonetwork-ui/common/domain/model/record'
-import { BaseConverter, MetadataMapperContext } from '../base.converter'
-import { isEqual } from '../convert-utils'
-import { isFieldTranslatable } from '../translate-utils'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { BaseConverter, MetadataMapperContext } from '../base.converter.js'
+import { isEqual } from '../convert-utils.js'
+import { isFieldTranslatable } from '../translate-utils.js'
 import {
   readAbstract,
   readContacts,
@@ -27,14 +27,18 @@ import {
   readTitle,
   readTopics,
   readUniqueIdentifier,
-} from './read-parts'
-import { writeAbstract, writeTitle, writeUniqueIdentifier } from './write-parts'
+} from './read-parts.js'
+import {
+  writeAbstract,
+  writeTitle,
+  writeUniqueIdentifier,
+} from './write-parts.js'
 import { graph, NamedNode, Statement, Store, sym } from 'rdflib'
-import { DCAT, RDF } from './namespaces'
-import { BASE_URI } from './utils/uri'
+import { DCAT, RDF } from './namespaces.js'
+import { BASE_URI } from './utils/uri.js'
 import type { ContentType } from 'rdflib/lib/types'
-import { loadGraph } from './utils/graph-utils'
-import { exportGraphToXml } from './utils/serialize-to-xml'
+import { loadGraph } from './utils/graph-utils.js'
+import { exportGraphToXml } from './utils/serialize-to-xml.js'
 
 export class DcatApConverter extends BaseConverter<string> {
   protected readers: Record<

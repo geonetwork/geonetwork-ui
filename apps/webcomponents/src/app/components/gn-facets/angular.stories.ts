@@ -1,6 +1,6 @@
 import { Meta, moduleMetadata } from '@storybook/angular'
-import { GnFacetsComponent } from './gn-facets.component'
-import { WebcomponentsModule } from '../../webcomponents.module'
+import { GnFacetsComponent } from './gn-facets.component.js'
+import { WebcomponentsModule } from '../../webcomponents.module.js'
 
 export default {
   title: 'Angular Components/GnFacets',

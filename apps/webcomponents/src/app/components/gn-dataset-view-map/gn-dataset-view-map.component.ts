@@ -9,7 +9,7 @@ import {
 } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { BaseComponent } from '../base.component'
+import { BaseComponent } from '../base.component.js'
 import { LinkUsage } from '@geonetwork-ui/util/shared'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 

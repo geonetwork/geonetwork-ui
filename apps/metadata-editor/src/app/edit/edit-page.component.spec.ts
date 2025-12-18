@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { EditPageComponent } from './edit-page.component'
+import { EditPageComponent } from './edit-page.component.js'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   datasetRecordsFixture,

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core'
 import { Router } from '@angular/router'
-import { appRoutes } from './app.routes'
+import { appRoutes } from './app.routes.js'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import {
   SortByEnum,

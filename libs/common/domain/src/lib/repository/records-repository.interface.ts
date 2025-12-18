@@ -5,12 +5,12 @@ import {
   FieldFilters,
   SearchParams,
   SearchResults,
-} from '../model/search'
+} from '../model/search/index.js'
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
   LanguageCode,
-} from '../model/record'
+} from '../model/record/index.js'
 
 export abstract class RecordsRepositoryInterface {
   abstract search(params: SearchParams): Observable<SearchResults>

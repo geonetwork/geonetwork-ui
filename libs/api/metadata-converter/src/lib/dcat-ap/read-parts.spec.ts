@@ -1,8 +1,8 @@
-import { DcatApConverter } from './dcat-ap.converter'
-import { loadGraph } from './utils/graph-utils'
+import { DcatApConverter } from './dcat-ap.converter.js'
+import { loadGraph } from './utils/graph-utils.js'
 import { graph, NamedNode } from 'rdflib'
-import { DCAT, RDF } from './namespaces'
-import { mapOnlineResource, readDefaultLanguage } from './read-parts'
+import { DCAT, RDF } from './namespaces.js'
+import { mapOnlineResource, readDefaultLanguage } from './read-parts.js'
 
 describe('read parts', () => {
   describe('find Dataset if not part of a record', () => {

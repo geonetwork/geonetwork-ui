@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
-import { KeyFiguresComponent } from './key-figures/key-figures.component'
+import { KeyFiguresComponent } from './key-figures/key-figures.component.js'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import {
   FeatureSearchModule,
   SearchStateContainerDirective,
 } from '@geonetwork-ui/feature/search'
 
-import { LastCreatedComponent } from './last-created/last-created.component'
+import { LastCreatedComponent } from './last-created/last-created.component.js'
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
   RESULTS_LAYOUT_CONFIG,

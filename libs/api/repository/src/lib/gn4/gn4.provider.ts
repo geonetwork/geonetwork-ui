@@ -6,14 +6,14 @@ import {
 } from './platform/gn4-platform.service'
 import { Gn4PlatformMapper } from './platform/gn4-platform.mapper'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { Gn4Repository } from './gn4-repository'
-import { AvatarServiceInterface, GravatarService } from './auth'
+import { Gn4Repository } from './gn4-repository.js'
+import { AvatarServiceInterface, GravatarService } from './auth/index.js'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   ORGANIZATIONS_STRATEGY,
   organizationsServiceFactory,
-} from './organizations'
-import { ElasticsearchService } from './elasticsearch'
+} from './organizations/index.js'
+import { ElasticsearchService } from './elasticsearch/index.js'
 import {
   GroupsApiService,
   SearchApiService,

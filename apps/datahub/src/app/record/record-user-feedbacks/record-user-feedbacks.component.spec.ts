@@ -4,7 +4,7 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing'
-import { RecordUserFeedbacksComponent } from './record-user-feedbacks.component'
+import { RecordUserFeedbacksComponent } from './record-user-feedbacks.component.js'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject, of, Subject } from 'rxjs'
 import { ChangeDetectionStrategy } from '@angular/core'

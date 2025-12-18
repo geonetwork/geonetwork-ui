@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { NewsPageComponent } from './news-page.component'
+import { NewsPageComponent } from './news-page.component.js'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import { TranslateTestingModule } from 'ngx-translate-testing'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'

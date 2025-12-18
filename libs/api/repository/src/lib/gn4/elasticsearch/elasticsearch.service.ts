@@ -4,7 +4,7 @@ import {
   ES_QUERY_FIELDS_PRIORITY,
   ES_SOURCE_SUMMARY,
   EsQueryFieldsPriorityType,
-} from './constant'
+} from './constant.js'
 import {
   Aggregation,
   AggregationParams,

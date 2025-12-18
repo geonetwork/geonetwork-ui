@@ -18,7 +18,7 @@ import {
   MetadataQualityConfig,
   SearchConfig,
 } from '@geonetwork-ui/util/app-config'
-import { SearchFiltersComponent } from '../search-filters/search-filters.component'
+import { SearchFiltersComponent } from '../search-filters/search-filters.component.js'
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
   RESULTS_LAYOUT_CONFIG,

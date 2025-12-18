@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { map } from 'rxjs'
-import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
+import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component.js'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 

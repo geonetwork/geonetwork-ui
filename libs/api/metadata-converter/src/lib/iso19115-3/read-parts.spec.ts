@@ -1,15 +1,15 @@
-import { getRootElement, parseXmlString } from '../xml-utils'
+import { getRootElement, parseXmlString } from '../xml-utils.js'
 import {
   readContacts,
   readContactsForResource,
   readOwnerOrganization,
-} from './read-parts'
+} from './read-parts.js'
 import {
   Individual,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
-import { readKeywords } from '../iso19139/read-parts'
-import { readDefaultLanguage, readOtherLanguages } from './read-parts'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { readKeywords } from '../iso19139/read-parts.js'
+import { readDefaultLanguage, readOtherLanguages } from './read-parts.js'
 
 describe('read parts', () => {
   describe('readContacts, readContactsForResource, readOwnerOrganization', () => {

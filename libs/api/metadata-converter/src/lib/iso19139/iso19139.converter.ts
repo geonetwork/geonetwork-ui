@@ -7,18 +7,18 @@ import {
   RecordTranslations,
   ReuseRecord,
   ServiceRecord,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { XmlElement } from '@rgrove/parse-xml'
-import { BaseConverter } from '../base.converter'
-import { isEqual } from '../convert-utils'
-import { isFieldTranslatable } from '../translate-utils'
+import { BaseConverter } from '../base.converter.js'
+import { isEqual } from '../convert-utils.js'
+import { isFieldTranslatable } from '../translate-utils.js'
 import {
   createDocument,
   createElement,
   getRootElement,
   parseXmlString,
   xmlToString,
-} from '../xml-utils'
+} from '../xml-utils.js'
 import {
   readAbstract,
   readContacts,
@@ -49,7 +49,7 @@ import {
   readTitle,
   readUniqueIdentifier,
   readUpdateFrequency,
-} from './read-parts'
+} from './read-parts.js'
 import {
   writeAbstract,
   writeContacts,
@@ -79,7 +79,7 @@ import {
   writeTopics,
   writeUniqueIdentifier,
   writeUpdateFrequency,
-} from './write-parts'
+} from './write-parts.js'
 
 export class Iso19139Converter extends BaseConverter<string> {
   protected readers: Record<

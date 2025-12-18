@@ -4,7 +4,7 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { TranslateService } from '@ngx-translate/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { ElasticsearchService } from '../elasticsearch'
+import { ElasticsearchService } from '../elasticsearch/index.js'
 import { OrganizationsStrategy } from './organization-strategy.token'
 import { OrganizationsFromGroupsService } from './organizations-from-groups.service'
 import { OrganizationsFromMetadataService } from './organizations-from-metadata.service'

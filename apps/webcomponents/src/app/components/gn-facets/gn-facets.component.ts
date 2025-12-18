@@ -6,7 +6,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { BaseComponent } from '../base.component'
+import { BaseComponent } from '../base.component.js'
 
 @Component({
   selector: 'wc-gn-facets-component',

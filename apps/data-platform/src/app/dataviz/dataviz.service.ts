@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { CreateDatavizDto } from './dto/create-dataviz.dto'
-import { UpdateDatavizDto } from './dto/update-dataviz.dto'
-import { Dataviz } from './entities/dataviz.entity'
+import { CreateDatavizDto } from './dto/create-dataviz.dto.js'
+import { UpdateDatavizDto } from './dto/update-dataviz.dto.js'
+import { Dataviz } from './entities/dataviz.entity.js'
 
 @Injectable()
 export class DatavizService {

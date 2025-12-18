@@ -1,4 +1,4 @@
-import { Constraint } from '@geonetwork-ui/common/domain/model/record'
+import { Constraint } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export function readLicenseFromString(text: string): Constraint {
   const isPddl = /pddl|public domain dedication and licence/i.test(text)

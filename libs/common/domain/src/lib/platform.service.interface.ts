@@ -1,9 +1,8 @@
 import type { Observable } from 'rxjs'
 import type { UserModel } from './model/user/user.model'
 import type { Organization } from './model/record/organization.model'
-import { CatalogRecord, Keyword, UserFeedback } from './model/record'
-import { KeywordType } from './model/thesaurus'
-import { DatavizConfigModel } from './model/dataviz/dataviz-configuration.model'
+import { CatalogRecord, Keyword, UserFeedback } from './model/record/index.js'
+import { KeywordType } from './model/thesaurus/index.js'
 
 export interface RecordAttachment {
   url: URL

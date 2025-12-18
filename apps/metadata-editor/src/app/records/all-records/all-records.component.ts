@@ -13,15 +13,15 @@ import {
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { TranslateDirective } from '@ngx-translate/core'
 import { Router } from '@angular/router'
-import { RecordsCountComponent } from '../records-count/records-count.component'
+import { RecordsCountComponent } from '../records-count/records-count.component.js'
 import { Observable, Subscription } from 'rxjs'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { CdkOverlayOrigin, Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
-import { RecordsListComponent } from '../records-list.component'
+import { RecordsListComponent } from '../records-list.component.js'
 import { map, take } from 'rxjs/operators'
-import { SearchFiltersComponent } from '../../dashboard/search-filters/search-filters.component'
+import { SearchFiltersComponent } from '../../dashboard/search-filters/search-filters.component.js'
 import {
   NgIconComponent,
   provideIcons,

@@ -4,8 +4,8 @@ import { RouterStateSnapshot } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 import { of, throwError, BehaviorSubject } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { TitleService } from './datahub-title.service'
-import { DatahubTemplatePageTitleStrategy } from './datahub-page-title-strategy.service'
+import { TitleService } from './datahub-title.service.js'
+import { DatahubTemplatePageTitleStrategy } from './datahub-page-title-strategy.service.js'
 import { MockProvider } from 'ng-mocks'
 
 const RouterStateSnapshotMock = {

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { RecordsCountComponent } from './records-count.component'
+import { RecordsCountComponent } from './records-count.component.js'
 import { By } from '@angular/platform-browser'
 import { BehaviorSubject } from 'rxjs'
 import { SearchFacade } from '@geonetwork-ui/feature/search'

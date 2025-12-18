@@ -1,25 +1,25 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { DcatApConverter } from './dcat-ap.converter'
-import { EU_SURVEY_DATASET_RECORD } from '../fixtures/eu.dcat-ap.records'
+import { DcatApConverter } from './dcat-ap.converter.js'
+import { EU_SURVEY_DATASET_RECORD } from '../fixtures/eu.dcat-ap.records.js'
 // @ts-ignore
-import EU_SURVEY_DATASET from '../fixtures/eu.dcat-ap.survey.xml'
+import EU_SURVEY_DATASET from '../fixtures/eu.dcat-ap.survey.xml.js'
 // @ts-ignore
-import SEXTANT_BATHYMETRY_DATASET from '../fixtures/sextant.dcat.bathymetry.xml'
+import SEXTANT_BATHYMETRY_DATASET from '../fixtures/sextant.dcat.bathymetry.xml.js'
 // @ts-ignore
-import OPENDATASWISS_DATASET from '../fixtures/opendataswiss.dcat-ap.dataset.xml'
+import OPENDATASWISS_DATASET from '../fixtures/opendataswiss.dcat-ap.dataset.xml.js'
 // @ts-ignore
-import VLAANDEREN_DATASET from '../fixtures/vlaanderen.dcat-ap.dataset.xml'
+import VLAANDEREN_DATASET from '../fixtures/vlaanderen.dcat-ap.dataset.xml.js'
 // @ts-ignore
-import GENERIC_DATASET_PLUS_EU_SURVEY_DATASET from '../fixtures/generic-dataset+eu.dcat-ap.survey.xml'
+import GENERIC_DATASET_PLUS_EU_SURVEY_DATASET from '../fixtures/generic-dataset+eu.dcat-ap.survey.xml.js'
 // @ts-ignore
-import GENERIC_DATASET from '../fixtures/generic-dataset.dcat-ap.xml'
-import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
+import GENERIC_DATASET from '../fixtures/generic-dataset.dcat-ap.xml.js'
+import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records.js'
 import { graph, parse } from 'rdflib'
-import { SEXTANT_BATHYMETRY_DATASET_RECORD } from '../fixtures/sextant.records'
-import { OPENDATASWISS_DATASET_RECORD } from '../fixtures/opendataswiss.records'
-import { VLAANDEREN_DATASET_RECORD } from '../fixtures/vlaanderen.dcat-ap.records'
-import { exportGraphToXml } from './utils/serialize-to-xml'
-import { parseXmlString, xmlToString } from '../xml-utils'
+import { SEXTANT_BATHYMETRY_DATASET_RECORD } from '../fixtures/sextant.records.js'
+import { OPENDATASWISS_DATASET_RECORD } from '../fixtures/opendataswiss.records.js'
+import { VLAANDEREN_DATASET_RECORD } from '../fixtures/vlaanderen.dcat-ap.records.js'
+import { exportGraphToXml } from './utils/serialize-to-xml.js'
+import { parseXmlString, xmlToString } from '../xml-utils.js'
 
 // this makes the xml go through the same formatting as the converter
 async function formatRdf(rdfString: string) {

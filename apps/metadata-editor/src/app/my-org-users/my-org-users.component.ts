@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core'
 import { TranslateDirective } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { MyOrgService } from '@geonetwork-ui/feature/catalog'
-import { UsersListComponent } from './users-list.component'
+import { UsersListComponent } from './users-list.component.js'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 
 @Component({

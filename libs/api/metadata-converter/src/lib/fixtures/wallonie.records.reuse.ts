@@ -1,4 +1,4 @@
-import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record'
+import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const WALLONIE_REUSE_SPW_RECORD: ReuseRecord = {
   uniqueIdentifier: '83809bcd-1763-4d28-b820-2b9828083ba5',

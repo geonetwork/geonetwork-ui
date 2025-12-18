@@ -1,6 +1,6 @@
 import { enableProdMode } from '@angular/core'
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
-import { WebcomponentsModule } from './app/webcomponents.module'
+import { WebcomponentsModule } from './app/webcomponents.module.js'
 
 enableProdMode()
 

@@ -6,7 +6,7 @@ import {
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { MockBuilder, MockProvider, MockProviders } from 'ng-mocks'
-import { SidebarComponent } from './sidebar.component'
+import { SidebarComponent } from './sidebar.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import fetchMock from 'fetch-mock-jest'
 

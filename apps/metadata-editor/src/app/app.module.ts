@@ -31,11 +31,11 @@ import {
 } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
-import { AppComponent } from './app.component'
-import { appRoutes } from './app.routes'
-import { extModules } from './build-specifics'
-import { DashboardPageComponent } from './dashboard/dashboard-page.component'
-import { EditorRouterService } from './router.service'
+import { AppComponent } from './app.component.js'
+import { appRoutes } from './app.routes.js'
+import { extModules } from './build-specifics.js'
+import { DashboardPageComponent } from './dashboard/dashboard-page.component.js'
+import { EditorRouterService } from './router.service.js'
 
 @NgModule({
   declarations: [AppComponent],

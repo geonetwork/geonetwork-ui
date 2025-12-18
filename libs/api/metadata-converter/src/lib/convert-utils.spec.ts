@@ -1,4 +1,4 @@
-import { isEqual } from './convert-utils'
+import { isEqual } from './convert-utils.js'
 
 describe('convert utils', () => {
   describe('isEqual', () => {

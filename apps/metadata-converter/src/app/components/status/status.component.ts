@@ -5,7 +5,7 @@ import {
   findConverterForDocument,
   Iso191153Converter,
 } from '@geonetwork-ui/api/metadata-converter'
-import { FORMATS, getFormatName } from '../../md-formats'
+import { FORMATS, getFormatName } from '../../md-formats.js'
 
 @Component({
   selector: 'gn-ui-status',

@@ -1,4 +1,4 @@
-import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
+import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records.js'
 import {
   writeContacts,
   writeContactsForResource,
@@ -10,15 +10,15 @@ import {
   writeResourcePublished,
   writeResourceUpdated,
   writeSpatialRepresentation,
-} from './write-parts'
+} from './write-parts.js'
 import {
   createElement,
   getRootElement,
   parseXmlString,
   xmlToString,
-} from '../xml-utils'
+} from '../xml-utils.js'
 import { XmlElement } from '@rgrove/parse-xml'
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 describe('write parts', () => {
   let rootEl: XmlElement

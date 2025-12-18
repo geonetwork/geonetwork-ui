@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { EditRecordResolver } from './edit-record.resolver'
+import { EditRecordResolver } from './edit-record.resolver.js'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { of, throwError } from 'rxjs'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'

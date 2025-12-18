@@ -1,4 +1,4 @@
-import { fullNameToParts, namePartsToFull } from './individual-name'
+import { fullNameToParts, namePartsToFull } from './individual-name.js'
 
 describe('individual name utils', () => {
   it('fullNameToParts', () => {

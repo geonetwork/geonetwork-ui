@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
-import { HomePageComponent } from '../home/home-page/home-page.component'
-import { NewsPageComponent } from '../home/news-page/news-page.component'
-import { OrganisationsPageComponent } from '../home/organisations-page/organisations-page.component'
-import { SearchPageComponent } from '../home/search/search-page/search-page.component'
-import { RecordPageComponent } from '../record/record-page/record-page.component'
+import { HomePageComponent } from '../home/home-page/home-page.component.js'
+import { NewsPageComponent } from '../home/news-page/news-page.component.js'
+import { OrganisationsPageComponent } from '../home/organisations-page/organisations-page.component.js'
+import { SearchPageComponent } from '../home/search/search-page/search-page.component.js'
+import { RecordPageComponent } from '../record/record-page/record-page.component.js'
 
-import { DatahubRouterService } from './datahub-router.service'
+import { DatahubRouterService } from './datahub-router.service.js'
 import { ROUTER_ROUTE_ORGANIZATION } from '@geonetwork-ui/feature/router'
-import { OrganizationPageComponent } from '../organization/organization-page/organization-page.component'
+import { OrganizationPageComponent } from '../organization/organization-page/organization-page.component.js'
 
 const RouterMock = {
   resetConfig: jest.fn(),

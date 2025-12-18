@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { of } from 'rxjs'
-import { OrganizationDetailsComponent } from './organization-details.component'
+import { OrganizationDetailsComponent } from './organization-details.component.js'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import {

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RecordApisComponent } from './record-apis.component'
+import { RecordApisComponent } from './record-apis.component.js'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject } from 'rxjs'

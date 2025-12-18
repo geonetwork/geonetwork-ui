@@ -9,7 +9,7 @@ import {
   XmlProcessingInstruction,
   XmlText,
 } from '@rgrove/parse-xml'
-import { ChainableFunction, fallback } from './function-utils'
+import { ChainableFunction, fallback } from './function-utils.js'
 
 export { XmlDocument, XmlElement } from '@rgrove/parse-xml'
 

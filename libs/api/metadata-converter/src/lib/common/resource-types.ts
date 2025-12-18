@@ -2,7 +2,7 @@ import {
   CatalogRecord,
   RecordKind,
   ReuseType,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const PossibleResourceTypes = {
   application: 'reuse',

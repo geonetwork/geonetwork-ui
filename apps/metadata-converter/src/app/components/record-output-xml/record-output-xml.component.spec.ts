@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { RecordOutputXmlComponent } from './record-output-xml.component'
+import { RecordOutputXmlComponent } from './record-output-xml.component.js'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('RecordOutputXmlComponent', () => {

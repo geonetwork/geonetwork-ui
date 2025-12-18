@@ -1,4 +1,4 @@
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export class MetadataMapperContext {
   readonly location?

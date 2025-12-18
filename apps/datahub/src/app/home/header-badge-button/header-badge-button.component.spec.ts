@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { HeaderBadgeButtonComponent } from './header-badge-button.component'
+import { HeaderBadgeButtonComponent } from './header-badge-button.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('HeaderBadgeButtonComponent', () => {

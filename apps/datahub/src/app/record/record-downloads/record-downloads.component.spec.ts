@@ -5,7 +5,7 @@ import {
   tick,
 } from '@angular/core/testing'
 import { BehaviorSubject, of, throwError } from 'rxjs'
-import { RecordDownloadsComponent } from './record-downloads.component'
+import { RecordDownloadsComponent } from './record-downloads.component.js'
 import { By } from '@angular/platform-browser'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
