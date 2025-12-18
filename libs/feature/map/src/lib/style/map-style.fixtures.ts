@@ -1,4 +1,4 @@
-import { Circle, Fill, Stroke, Style } from 'ol/style'
+import { Circle, Fill, Stroke, Style } from 'ol/style.js'
 
 const colorPrimary = 'blue'
 const colorSecondary = 'red'

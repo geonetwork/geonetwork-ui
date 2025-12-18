@@ -40,7 +40,7 @@ import {
   createMapFromContext,
   listen,
 } from '@geospatial-sdk/openlayers'
-import type OlMap from 'ol/Map'
+import type OlMap from 'ol/Map.js'
 import type { Feature } from 'geojson'
 import {
   BASEMAP_LAYERS,
@@ -53,7 +53,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { matSwipeOutline } from '@ng-icons/material-icons/outline'
-import { transformExtent } from 'ol/proj'
+import { transformExtent } from 'ol/proj.js'
 
 const DEFAULT_BASEMAP_LAYER: MapContextLayerXyz = {
   type: 'xyz',

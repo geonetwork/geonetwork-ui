@@ -34,8 +34,8 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
 import { getGeometryBoundingBox } from '@geonetwork-ui/util/shared'
-import { getLength as getGeodesicLength } from 'ol/sphere'
-import { LineString } from 'ol/geom'
+import { getLength as getGeodesicLength } from 'ol/sphere.js'
+import { LineString } from 'ol/geom.js'
 
 export type DateRange = { start?: Date; end?: Date }
 

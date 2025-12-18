@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import chroma from 'chroma-js'
-import Style, { StyleFunction } from 'ol/style/Style'
+import Feature from 'ol/Feature.js'
+import { LineString, Point, Polygon } from 'ol/geom.js'
+import Style, { StyleFunction } from 'ol/style/Style.js'
 import { MapStyleService, StyleByGeometryType } from './map-style.service'
-import Feature from 'ol/Feature'
-import { LineString, Point, Polygon } from 'ol/geom'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({

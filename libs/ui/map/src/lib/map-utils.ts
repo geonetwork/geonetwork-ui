@@ -1,12 +1,17 @@
-import Collection from 'ol/Collection'
-import { defaults, DragPan, Interaction, MouseWheelZoom } from 'ol/interaction'
-import MapBrowserEvent from 'ol/MapBrowserEvent'
+import Collection from 'ol/Collection.js'
 import {
   mouseOnly,
   noModifierKeys,
   platformModifierKeyOnly,
   primaryAction,
-} from 'ol/events/condition'
+} from 'ol/events/condition.js'
+import {
+  defaults,
+  DragPan,
+  Interaction,
+  MouseWheelZoom,
+} from 'ol/interaction.js'
+import MapBrowserEvent from 'ol/MapBrowserEvent.js'
 
 export function prioritizePageScroll(interactions: Collection<Interaction>) {
   interactions.clear()

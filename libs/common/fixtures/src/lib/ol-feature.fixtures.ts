@@ -1,5 +1,5 @@
-import Feature from 'ol/Feature'
-import { Geometry } from 'ol/geom'
+import Feature from 'ol/Feature.js'
+import { Geometry } from 'ol/geom.js'
 
 export const openLayerFeatureFixture = (): Feature => {
   const feature = new Feature()
