@@ -200,11 +200,11 @@ export class ChartComponent implements OnChanges, AfterViewInit {
         ) {
           if (secondaryProperty) {
             return {
-              y: target[index][property],
-              x: target[index][secondaryProperty],
+              y: target[index][property] || '',
+              x: target[index][secondaryProperty] || '',
             }
           } else {
-            return target[index][property]
+            return target[index][property] || ''
           }
         }
         return target[index]

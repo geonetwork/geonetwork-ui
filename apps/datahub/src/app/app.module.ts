@@ -7,7 +7,7 @@ import {
 } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
-import { Router, RouterModule } from '@angular/router'
+import { Router, RouterModule, TitleStrategy } from '@angular/router'
 import {
   LOGIN_URL,
   METADATA_LANGUAGE,
@@ -78,6 +78,7 @@ import {
 } from './record/record-data-preview/record-data-preview.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
+import { DatahubTemplatePageTitleStrategy } from './router/datahub-page-title-strategy.service'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -115,6 +116,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   ],
   providers: [
     provideNgReflectAttributes(),
+    {
+      provide: TitleStrategy,
+      useClass: DatahubTemplatePageTitleStrategy,
+    },
     { provide: RouterService, useClass: DatahubRouterService },
     importProvidersFrom(FeatureSearchModule),
     importProvidersFrom(FeatureRecordModule),

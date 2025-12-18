@@ -19,9 +19,11 @@ const expectedRoutes = [
     path: 'home',
     redirectTo: '',
     pathMatch: 'prefix',
+    title: 'datahub.pageTitle.home',
   },
   {
     path: '',
+    title: 'datahub.pageTitle.home',
     component: HomePageComponent,
     data: {
       shouldDetach: true,
@@ -38,6 +40,7 @@ const expectedRoutes = [
         data: {
           shouldDetach: true,
         },
+        title: 'datahub.pageTitle.home',
       },
       {
         path: 'search',
@@ -45,6 +48,7 @@ const expectedRoutes = [
         data: {
           shouldDetach: true,
         },
+        title: 'datahub.pageTitle.recordSearch',
       },
       {
         path: 'organisations',
@@ -52,20 +56,24 @@ const expectedRoutes = [
         data: {
           shouldDetach: true,
         },
+        title: 'datahub.pageTitle.organizations',
       },
     ],
   },
   {
     path: `dataset/:metadataUuid`,
     component: RecordPageComponent,
+    title: 'entityTitle',
   },
   {
     path: `service/:metadataUuid`,
     component: RecordPageComponent,
+    title: 'entityTitle',
   },
   {
     path: `reuse/:metadataUuid`,
     component: RecordPageComponent,
+    title: 'entityTitle',
   },
   {
     path: `${ROUTER_ROUTE_ORGANIZATION}/:name`,
@@ -73,6 +81,7 @@ const expectedRoutes = [
     data: {
       shouldDetach: true,
     },
+    title: 'entityTitle',
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ]

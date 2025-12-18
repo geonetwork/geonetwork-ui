@@ -389,3 +389,9 @@ If the translation key `application-banner` is available (not empty), the Geonet
 - `application-banner` (optional)
 
   To configure your banner content, go to the Geonetwork backoffice > Settings > Languages & translations page, and add a new translation key `application-banner`. To remove/deactivate the banner, you need to remove the translation key in the Geonetwork backoffice.
+
+#### Page titles
+
+By default the datahub creates a page title for each page following the pattern `{pageTitle} | Datahub`. This pattern can be overridden by adding a translation key `datahub-page-title-pattern` in geonetwork with a new pattern as value, eg. `MyDatahubApp - {pageTitle}`. Be sure to provide values for all languages you need.
+
+The `pageTitle` within this pattern may be a metadata record title, an organisation title or a gn-ui translation key for one of the datahub pages (`datahub.pageTitle.home`, `datahub.pageTitle.organizations`, `datahub.pageTitle.recordSearch`). These can thus be overridden within the `default.toml` configuration like any other translation key.
