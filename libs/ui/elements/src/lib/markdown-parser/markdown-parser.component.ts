@@ -9,6 +9,7 @@ import { marked } from 'marked'
   standalone: true,
 })
 export class MarkdownParserComponent {
+  // Note: long <a href/> urls within the markdown textContent can cause layout issues
   @Input() textContent: string
   @Input() whitoutStyles?: boolean
 
