@@ -22,7 +22,8 @@
       >
         {{ record.title }}
       </h4>
-      <div class="grow">
+      <!-- force max width here as long a-href urls within the markdown parser can cause layout issues -->
+      <div class="grow max-w-[248px] sm:max-w-full">
         <gn-ui-markdown-parser
           data-cy="recordAbstract"
           [textContent]="abstract"
