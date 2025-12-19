@@ -25,6 +25,7 @@ import {
   standaloneConfigurationObject,
   TextLanguage,
 } from '../configuration'
+import { SearchFacadeRegistry } from '../services/search-facade-registry.service'
 
 @Component({
   selector: 'wc-base',
@@ -52,10 +53,12 @@ export class BaseComponent implements OnChanges, OnInit {
   searchService: SearchApiService
   recordsRepository: RecordsRepositoryInterface
   linkClassifier: LinkClassifierService
+  private searchFacadeRegistry: SearchFacadeRegistry
 
   constructor() {
     const injector = this.injector
 
+    this.searchFacadeRegistry = injector.get(SearchFacadeRegistry)
     this.facade = injector.get(SearchFacade)
     this.translate = injector.get(TranslateService)
     this.searchService = injector.get(SearchApiService)
@@ -104,7 +107,10 @@ export class BaseComponent implements OnChanges, OnInit {
       this.mainFont,
       this.titleFont
     )
-    this.facade.init(this.searchId)
+
+    // Use SearchFacadeRegistry to ensure shared SearchFacade instance
+    this.facade = this.searchFacadeRegistry.initializeOrGetFacade(this.facade, this.searchId)
+
     this.copyFontFacesToDocument()
     this.isInitialized = true
   }
