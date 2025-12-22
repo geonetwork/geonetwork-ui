@@ -1,4 +1,4 @@
-import * as ngPackage from 'ng-packagr'
+import { ngPackagr } from 'ng-packagr'
 import baseTsConfig from '../tsconfig.base.json' with { type: 'json' }
 import fs from 'fs/promises'
 import { createReadStream, createWriteStream, existsSync, mkdirSync } from 'fs'
@@ -6,6 +6,8 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { Transform } from 'stream'
 import { listDirectoryFiles, rewriteFiles } from '../tools/file-utils.js'
+import { InjectionToken } from '@angular/core'
+import { PACKAGE_TRANSFORM } from 'ng-packagr/src/lib/ng-package/package.di.js'
 
 const PATH_ALIASES = baseTsConfig.compilerOptions.paths
 
@@ -189,12 +191,23 @@ async function copySourceDirectories() {
   await copyDirectory(TRANSLATIONS_SOURCE_PATH, TRANSLATIONS_DEST_PATH)
 }
 
+const TRANSFORM = new InjectionToken('transform')
+
 copySourceDirectories()
   .then(() =>
-    ngPackage
-      .ngPackagr()
+    ngPackagr()
       .forProject(path.join(CURRENT_DIR_PATH, 'ng-package.json'))
       .withTsConfig(path.join(CURRENT_DIR_PATH, 'tsconfig.json'))
+      // .withBuildTransform(TRANSFORM)
+      .withProviders([
+        // {
+        //   provide: TRANSFORM,
+        //   useValue: (buildGraph) => {
+        //     return buildGraph
+        //   },
+        // },
+        PACKAGE_TRANSFORM,
+      ])
       .build()
   )
   .then(async () => {
