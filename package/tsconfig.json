@@ -5,7 +5,8 @@
   ],
   "compilerOptions": {
     "useDefineForClassFields": false,
-    "declarationMap": true
+    "declarationMap": true,
+    "noEmit": false
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
