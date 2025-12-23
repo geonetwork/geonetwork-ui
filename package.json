@@ -93,7 +93,7 @@
     "document-register-element": "^1.14.10",
     "duration-relativetimeformat": "^2.0.4",
     "embla-carousel": "8.5.1",
-    "express": "4.21.2",
+    "express": "4.22.0",
     "flag-icons": "^7.3.2",
     "geojson-validation": "^1.0.2",
     "marked": "15.0.4",
