@@ -1,5 +1,5 @@
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { SpinningLoaderComponent } from './spinning-loader.component'
+import { SpinningLoaderComponent } from './spinning-loader.component.js'
 import { importProvidersFrom } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 

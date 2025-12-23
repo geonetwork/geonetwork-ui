@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { OnlineResourceCardComponent } from './online-resource-card.component'
+import { OnlineResourceCardComponent } from './online-resource-card.component.js'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

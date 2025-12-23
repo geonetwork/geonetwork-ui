@@ -2,9 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  inject,
   Input,
   Output,
-  inject,
 } from '@angular/core'
 import {
   getLinkId,
@@ -13,9 +13,9 @@ import {
 } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
-import { MdViewFacade } from '../state'
-import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { MdViewFacade } from '../state/index.js'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model.js'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import {
   ChartViewComponent,

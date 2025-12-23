@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core'
 import { provideIcons } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
 import { iconoirNavArrowLeft, iconoirNavArrowRight } from '@ng-icons/iconoir'
-import { Paginable } from '../paginable.interface'
+import { Paginable } from '../paginable.interface.js'
 
 @Component({
   selector: 'gn-ui-pagination-dots',

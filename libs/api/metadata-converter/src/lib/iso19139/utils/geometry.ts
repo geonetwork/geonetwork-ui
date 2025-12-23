@@ -8,7 +8,7 @@ import {
   getRootElement,
   parseXmlString,
   xmlToString,
-} from '../../xml-utils'
+} from '../../xml-utils.js'
 
 export function readGeometry(el: XmlElement): Geometry {
   const xmlDoc = createDocument(el)

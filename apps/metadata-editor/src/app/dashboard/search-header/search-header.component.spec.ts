@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SearchHeaderComponent } from './search-header.component'
+import { SearchHeaderComponent } from './search-header.component.js'
 import { of } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'

@@ -2,9 +2,9 @@ import { createAction, props } from '@ngrx/store'
 import {
   CatalogRecord,
   LanguageCode,
-} from '@geonetwork-ui/common/domain/model/record'
-import { SaveRecordError } from './editor.models'
-import { EditorFieldIdentification } from '../models'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { SaveRecordError } from './editor.models.js'
+import { EditorFieldIdentification } from '../models/index.js'
 
 export const openRecord = createAction(
   '[Editor] Open record',

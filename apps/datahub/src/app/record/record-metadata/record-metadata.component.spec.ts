@@ -11,17 +11,17 @@ import {
   MetadataInfoComponent,
 } from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, of } from 'rxjs'
-import { RecordMetadataComponent } from './record-metadata.component'
+import { RecordMetadataComponent } from './record-metadata.component.js'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { MockBuilder } from 'ng-mocks'
-import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
-import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
-import { RecordApisComponent } from '../record-apis/record-apis.component'
-import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
+import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component.js'
+import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component.js'
+import { RecordApisComponent } from '../record-apis/record-apis.component.js'
+import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { REUSE_FORM_URL } from '../record-data-preview/record-data-preview.component'
+import { REUSE_FORM_URL } from '../record-data-preview/record-data-preview.component.js'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const SAMPLE_RECORD = {

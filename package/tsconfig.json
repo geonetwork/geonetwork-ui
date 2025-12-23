@@ -1,11 +1,12 @@
 {
   "extends": [
-    "../node_modules/ng-packagr/src/lib/ts/conf/tsconfig.ngc.json",
-    "../tsconfig.base.json"
+    "../tsconfig.base.json",
+    "../node_modules/ng-packagr/src/lib/ts/conf/tsconfig.ngc.json"
   ],
   "compilerOptions": {
     "useDefineForClassFields": false,
-    "declarationMap": true
+    "declarationMap": true,
+    "noEmit": false
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,

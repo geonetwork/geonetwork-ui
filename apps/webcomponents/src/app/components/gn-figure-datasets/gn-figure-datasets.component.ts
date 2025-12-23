@@ -6,7 +6,7 @@ import {
   ViewEncapsulation,
   inject,
 } from '@angular/core'
-import { BaseComponent } from '../base.component'
+import { BaseComponent } from '../base.component.js'
 import { RecordsService } from '@geonetwork-ui/feature/catalog'
 import { catchError, startWith } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'

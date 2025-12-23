@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
-import GEOCAT_CH_DATASET from '../fixtures/geocat-ch.iso19139.dataset.xml'
+import GEOCAT_CH_DATASET from '../fixtures/geocat-ch.iso19139.dataset.xml.js'
 // @ts-ignore
 import { XmlElement } from '@rgrove/parse-xml'
 // @ts-ignore
-import GEOCAT_CH_SERVICE from '../fixtures/geocat-ch.iso19139.service.xml'
-import { pipe } from '../function-utils'
+import GEOCAT_CH_SERVICE from '../fixtures/geocat-ch.iso19139.service.xml.js'
+import { pipe } from '../function-utils.js'
 import {
   appendChildren,
   findNestedElement,
   getRootElement,
   parseXmlString,
   removeChildrenByName,
-} from '../xml-utils'
+} from '../xml-utils.js'
 import {
   findIdentification,
   getUpdateFrequencyFromCustomPeriod,
@@ -23,7 +23,7 @@ import {
   readOwnerOrganization,
   readSpatialExtents,
   readTemporalExtents,
-} from './read-parts'
+} from './read-parts.js'
 
 describe('read parts', () => {
   let recordRootEl: XmlElement

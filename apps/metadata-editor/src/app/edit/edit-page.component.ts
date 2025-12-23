@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common'
 import {
   Component,
   ElementRef,
+  inject,
   OnDestroy,
   OnInit,
   ViewChild,
-  inject,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { ActivatedRoute, Router } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
+import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error/index.js'
 import {
   EditorFacade,
   MetadataQualityPanelComponent,
@@ -29,12 +29,12 @@ import {
 } from '@ngx-translate/core'
 import { combineLatest, filter, firstValueFrom, Subscription, take } from 'rxjs'
 import { map, skip } from 'rxjs/operators'
-import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
-import { PageSelectorComponent } from './components/page-selector/page-selector.component'
-import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component'
+import { SidebarComponent } from '../dashboard/sidebar/sidebar.component.js'
+import { PageSelectorComponent } from './components/page-selector/page-selector.component.js'
+import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component.js'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
-import { SearchHeaderComponent } from '../dashboard/search-header/search-header.component'
-import { PageErrorComponent } from './components/page-error/page-error.component'
+import { SearchHeaderComponent } from '../dashboard/search-header/search-header.component.js'
+import { PageErrorComponent } from './components/page-error/page-error.component.js'
 import { DateService } from '@geonetwork-ui/util/shared'
 
 marker('editor.record.form.bottomButtons.comeBackLater')

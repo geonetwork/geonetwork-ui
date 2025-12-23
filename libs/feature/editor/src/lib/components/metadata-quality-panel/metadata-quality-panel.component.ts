@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import {
   getAllKeysValidator,
@@ -13,7 +13,7 @@ import {
 } from '@ng-icons/core'
 import { iconoirBadgeCheck, iconoirSystemShut } from '@ng-icons/iconoir'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { EditorConfig } from '../../models'
+import { EditorConfig } from '../../models/index.js'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 //forced translations that are not available in fields.config.ts

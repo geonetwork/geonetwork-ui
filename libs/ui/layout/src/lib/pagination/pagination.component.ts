@@ -8,7 +8,7 @@ import {
 } from '@ng-icons/material-icons/baseline'
 
 import { TranslateDirective } from '@ngx-translate/core'
-import { Paginable } from '../paginable.interface'
+import { Paginable } from '../paginable.interface.js'
 
 @Component({
   selector: 'gn-ui-pagination',

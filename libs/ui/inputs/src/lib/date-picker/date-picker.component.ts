@@ -12,7 +12,7 @@ import {
   MatNativeDateModule,
 } from '@angular/material/core'
 import { MatDatepickerModule } from '@angular/material/datepicker'
-import { ButtonComponent } from '../button/button.component'
+import { ButtonComponent } from '../button/button.component.js'
 import {
   NgIconComponent,
   provideIcons,

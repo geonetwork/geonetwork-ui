@@ -5,7 +5,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { ApplicationBannerComponent } from './application-banner.component'
+import { ApplicationBannerComponent } from './application-banner.component.js'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 

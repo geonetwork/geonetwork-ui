@@ -5,7 +5,7 @@ import {
   Output,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { SortByField } from '@geonetwork-ui/common/domain/model/search'
+import { SortByField } from '@geonetwork-ui/common/domain/model/search/index.js'
 import { debounceTime, Subject } from 'rxjs'
 import {
   DropdownSelectorComponent,

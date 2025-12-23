@@ -1,4 +1,4 @@
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const VLAANDEREN_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: 'f3bd3e9b-cec1-38de-bb16-d063edace486',

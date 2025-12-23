@@ -6,11 +6,11 @@ import {
   Output,
   inject,
 } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { SearchFacade } from '../state/search.facade'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { SearchFacade } from '../state/search.facade.js'
 import { SelectionService } from '@geonetwork-ui/api/repository'
-import { SearchService } from '../utils/service/search.service'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { SearchService } from '../utils/service/search.service.js'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { ResultsTableComponent } from '@geonetwork-ui/ui/search'
 import { CommonModule } from '@angular/common'
 import { Observable, Subscription } from 'rxjs'

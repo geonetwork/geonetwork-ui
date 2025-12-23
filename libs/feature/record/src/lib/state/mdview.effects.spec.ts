@@ -13,12 +13,12 @@ import { Action } from '@ngrx/store'
 
 import { Observable, of, throwError } from 'rxjs'
 
-import * as MdViewActions from './mdview.actions'
-import { MdViewEffects } from './mdview.effects'
+import * as MdViewActions from './mdview.actions.js'
+import { MdViewEffects } from './mdview.effects.js'
 import { hot } from 'jasmine-marbles'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { Router } from '@angular/router'
 
 const full = {

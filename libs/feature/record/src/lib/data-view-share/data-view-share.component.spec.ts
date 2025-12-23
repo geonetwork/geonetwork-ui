@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { DataViewShareComponent } from './data-view-share.component'
+import { DataViewShareComponent } from './data-view-share.component.js'
 import {
   DataViewPermalinkComponent,
   WEB_COMPONENT_EMBEDDER_URL,
-} from '../data-view-permalink/data-view-permalink.component'
+} from '../data-view-permalink/data-view-permalink.component.js'
 import { By } from '@angular/platform-browser'
 import { MockBuilder } from 'ng-mocks'
-import { DataViewWebComponentComponent } from '../data-view-web-component/data-view-web-component.component'
+import { DataViewWebComponentComponent } from '../data-view-web-component/data-view-web-component.component.js'
 
 const baseUrl = 'https://example.com/wc-embedder'
 describe('DataViewShareComponent', () => {

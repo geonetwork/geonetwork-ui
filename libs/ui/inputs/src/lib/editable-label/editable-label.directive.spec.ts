@@ -1,4 +1,4 @@
-import { EditableLabelDirective } from './editable-label.directive'
+import { EditableLabelDirective } from './editable-label.directive.js'
 import { Component } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 

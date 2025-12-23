@@ -1,4 +1,4 @@
-import { LanguageCode2 } from './language-codes'
+import { LanguageCode2 } from './language-codes.js'
 import {
   ar,
   az,

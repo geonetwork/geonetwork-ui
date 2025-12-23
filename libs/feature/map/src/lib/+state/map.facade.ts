@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core'
 import { select, Store } from '@ngrx/store'
-import * as MapSelectors from './map.selectors'
-import * as MapActions from './map.actions'
+import * as MapSelectors from './map.selectors.js'
+import * as MapActions from './map.actions.js'
 import { MapContext } from '@geospatial-sdk/core'
 import { Feature } from 'geojson'
 

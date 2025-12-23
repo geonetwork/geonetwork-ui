@@ -7,7 +7,7 @@ import {
   FieldName,
   FieldSort,
   PropertyInfo,
-} from '../model'
+} from '../model.js'
 
 export class BaseReader {
   protected selected: FieldName[] = null

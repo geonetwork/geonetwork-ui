@@ -1,12 +1,12 @@
 import { Action } from '@ngrx/store'
-import * as EditorActions from './editor.actions'
+import * as EditorActions from './editor.actions.js'
 import {
   editorReducer,
   EditorState,
   initialEditorState,
-} from './editor.reducer'
+} from './editor.reducer.js'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 describe('Editor Reducer', () => {
   describe('valid Editor actions', () => {

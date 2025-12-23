@@ -4,18 +4,18 @@ import {
   elasticHitsOnlyFixture,
   elasticServiceMetadataHistsFixture,
   elasticReuseMetadataHitsFixture,
-} from '@geonetwork-ui/common/fixtures'
-import { Gn4Converter } from './gn4.converter'
+} from '@geonetwork-ui/common/fixtures/index.js'
+import { Gn4Converter } from './gn4.converter.js'
 import { of } from 'rxjs'
 import { TestBed } from '@angular/core/testing'
-import { MetadataUrlService } from './metadata-url.service'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { MetadataUrlService } from './metadata-url.service.js'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface/index.js'
 import {
   CatalogRecord,
   DatasetRecord,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { TranslateService } from '@ngx-translate/core'
-import { Gn4Record } from '../gn4/types/metadata.model'
+import { Gn4Record } from '../gn4/types/metadata.model.js'
 
 setupZoneTestEnv()
 

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 
-import { MetadataCatalogComponent } from './metadata-catalog.component'
+import { MetadataCatalogComponent } from './metadata-catalog.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('MetadataCatalogComponent', () => {

@@ -1,13 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   InjectionToken,
   Input,
-  inject,
 } from '@angular/core'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { BehaviorSubject, combineLatest, map } from 'rxjs'
-import { MdViewFacade } from '../state'
+import { MdViewFacade } from '../state/index.js'
 import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { TranslatePipe } from '@ngx-translate/core'

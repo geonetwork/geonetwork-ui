@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing'
-import { DataService } from './data.service'
+import { DataService } from './data.service.js'
 import { openDataset } from '@geonetwork-ui/data-fetcher'
 import { PROXY_PATH } from '@geonetwork-ui/util/shared'
 import { lastValueFrom } from 'rxjs'
 import { MockProvider } from 'ng-mocks'
 import { Location } from '@angular/common'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 const newEndpointCall = jest.fn()
 

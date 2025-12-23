@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MyRecordsComponent } from './my-records.component'
+import { MyRecordsComponent } from './my-records.component.js'
 import {
   FieldsService,
   SearchFacade,
@@ -8,7 +8,7 @@ import {
 import { ChangeDetectionStrategy } from '@angular/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
-import { EditorRouterService } from '../../router.service'
+import { EditorRouterService } from '../../router.service.js'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { MockBuilder, MockInstance, MockProviders } from 'ng-mocks'
 import { ActivatedRoute, Router } from '@angular/router'

@@ -1,4 +1,4 @@
-import { getAsUrl, mapKeywords } from './atomic-operations'
+import { getAsUrl, mapKeywords } from './atomic-operations.js'
 
 describe('atomic operations', () => {
   describe('getAsUrl', () => {

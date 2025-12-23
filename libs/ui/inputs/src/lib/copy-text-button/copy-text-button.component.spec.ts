@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { CopyTextButtonComponent } from './copy-text-button.component'
+import { CopyTextButtonComponent } from './copy-text-button.component.js'
 
 const clipboardMock = {
   writeText: jest.fn(),

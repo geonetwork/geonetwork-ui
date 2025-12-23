@@ -5,8 +5,8 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { DatePickerComponent } from '../date-picker/date-picker.component'
-import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record/metadata.model'
+import { DatePickerComponent } from '../date-picker/date-picker.component.js'
+import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record/metadata.model.js'
 import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({

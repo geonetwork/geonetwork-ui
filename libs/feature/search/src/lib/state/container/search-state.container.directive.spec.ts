@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing'
-import { SearchStateContainerDirective } from './search-state.container.directive'
-import { SearchFacade } from '../search.facade'
+import { SearchStateContainerDirective } from './search-state.container.directive.js'
+import { SearchFacade } from '../search.facade.js'
 
 const searchFacadeMock = {
   init: jest.fn(),

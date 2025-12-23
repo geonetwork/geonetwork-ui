@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   inject,
+  Input,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
@@ -25,19 +25,19 @@ import {
 import {
   SortByEnum,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 import { map } from 'rxjs/operators'
-import { ROUTER_ROUTE_NEWS } from '../../router/constants'
+import { ROUTER_ROUTE_NEWS } from '../../router/constants.js'
 import { lastValueFrom, of } from 'rxjs'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { CommonModule } from '@angular/common'
 import { ApplicationBannerComponent } from '@geonetwork-ui/ui/elements'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
+import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component.js'
 import { RouterLink } from '@angular/router'
-import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.component'
+import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.component.js'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matStarOutline } from '@ng-icons/material-icons/outline'

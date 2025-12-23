@@ -3,11 +3,11 @@ import {
   EditorConfig,
   EditorField,
   EditorSection,
-} from './models/editor-config.model'
+} from './models/editor-config.model.js'
 import {
   INSPIRE_topic,
   Keyword,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 /**
  * This file contains the configuration of the fields that will be displayed in the editor.

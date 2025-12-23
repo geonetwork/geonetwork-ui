@@ -6,7 +6,7 @@ import { catchError, map, switchMap } from 'rxjs/operators'
 import {
   DatasetOnlineResource,
   DatasetServiceDistribution,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { CommonModule } from '@angular/common'
 import { DownloadsListComponent } from '@geonetwork-ui/ui/elements'

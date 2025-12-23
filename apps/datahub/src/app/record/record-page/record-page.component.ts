@@ -13,10 +13,10 @@ import {
   getMetadataQualityConfig,
   MetadataQualityConfig,
 } from '@geonetwork-ui/util/app-config'
-import { RecordMetadataComponent } from '../record-metadata/record-metadata.component'
-import { HeaderRecordComponent } from '../header-record/header-record.component'
+import { RecordMetadataComponent } from '../record-metadata/record-metadata.component.js'
+import { HeaderRecordComponent } from '../header-record/header-record.component.js'
 import { CommonModule } from '@angular/common'
-import { TitleService } from '../../router/datahub-title.service'
+import { TitleService } from '../../router/datahub-title.service.js'
 import { Subscription, tap } from 'rxjs'
 
 @Component({

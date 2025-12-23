@@ -1,5 +1,5 @@
-import * as MapActions from './map.actions'
-import { initialMapState, mapReducer, MapState } from './map.reducer'
+import * as MapActions from './map.actions.js'
+import { initialMapState, mapReducer, MapState } from './map.reducer.js'
 import { MapContextLayer } from '@geospatial-sdk/core'
 import { mapCtxLayerWmsFixture } from '@geonetwork-ui/common/fixtures'
 

@@ -2,8 +2,8 @@ import { importProvidersFrom } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Meta, StoryObj, applicationConfig } from '@storybook/angular'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { DateRangeInputsComponent } from './date-range-inputs.component'
-import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record/metadata.model'
+import { DateRangeInputsComponent } from './date-range-inputs.component.js'
+import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record/metadata.model.js'
 
 export default {
   title: 'Inputs/DateRangeInputsComponent',

@@ -5,8 +5,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
   someHabTableItemFixture,
   tableItemsFixture,
-} from './data-table.fixtures'
-import { DataTableComponent } from './data-table.component'
+} from './data-table.fixtures.js'
+import { DataTableComponent } from './data-table.component.js'
 import { By } from '@angular/platform-browser'
 import {
   BaseFileReader,

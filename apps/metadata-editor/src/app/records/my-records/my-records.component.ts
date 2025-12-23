@@ -10,7 +10,7 @@ import {
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
-import { RecordsListComponent } from '../records-list.component'
+import { RecordsListComponent } from '../records-list.component.js'
 import {
   FeatureSearchModule,
   FieldsService,
@@ -21,10 +21,10 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { Router } from '@angular/router'
 import { Overlay, OverlayModule, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
-import { RecordsCountComponent } from '../records-count/records-count.component'
+import { RecordsCountComponent } from '../records-count/records-count.component.js'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
-import { SearchFiltersComponent } from '../../dashboard/search-filters/search-filters.component'
+import { SearchFiltersComponent } from '../../dashboard/search-filters/search-filters.component.js'
 import {
   NgIconComponent,
   provideIcons,

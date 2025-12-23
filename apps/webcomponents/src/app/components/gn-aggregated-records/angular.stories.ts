@@ -1,7 +1,7 @@
 import { applicationConfig, Meta, moduleMetadata } from '@storybook/angular'
-import { GnAggregatedRecordsComponent } from './gn-aggregated-records.component'
+import { GnAggregatedRecordsComponent } from './gn-aggregated-records.component.js'
 import { importProvidersFrom } from '@angular/core'
-import { WebcomponentsModule } from '../../webcomponents.module'
+import { WebcomponentsModule } from '../../webcomponents.module.js'
 
 export default {
   title: 'Angular Components/GnAggregatedRecordsComponent',

@@ -1,6 +1,6 @@
 import { Directive, Input, OnInit, inject } from '@angular/core'
-import { SearchService } from '../../utils/service/search.service'
-import { SearchFacade } from '../search.facade'
+import { SearchService } from '../../utils/service/search.service.js'
+import { SearchFacade } from '../search.facade.js'
 
 @Directive({
   selector: '[gnUiSearchStateContainer]',

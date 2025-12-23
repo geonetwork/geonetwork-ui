@@ -5,7 +5,7 @@ import {
   DropdownMultiselectComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
-import { INSPIRE_TOPICS } from '../../../../fields.config'
+import { INSPIRE_TOPICS } from '../../../../fields.config.js'
 
 @Component({
   selector: 'gn-ui-form-field-topics',

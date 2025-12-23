@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { PaginationDotsComponent } from './pagination-dots.component'
+import { PaginationDotsComponent } from './pagination-dots.component.js'
 import { By } from '@angular/platform-browser'
-import { Paginable } from '../paginable.interface'
+import { Paginable } from '../paginable.interface.js'
 
 class MockPaginable implements Paginable {
   currentPage = 4

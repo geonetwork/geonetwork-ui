@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { InlineFilterComponent } from './inline-filter.component'
-import { Choice } from './inline-filter.model'
+import { InlineFilterComponent } from './inline-filter.component.js'
+import { Choice } from './inline-filter.model.js'
 
 describe('InlineFilterComponent', () => {
   let component: InlineFilterComponent

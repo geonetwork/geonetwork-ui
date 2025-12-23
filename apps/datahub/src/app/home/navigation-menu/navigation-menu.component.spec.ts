@@ -7,9 +7,9 @@ import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import {
   ROUTER_ROUTE_NEWS,
   ROUTER_ROUTE_ORGANIZATIONS,
-} from '../../router/constants'
+} from '../../router/constants.js'
 
-import { NavigationMenuComponent } from './navigation-menu.component'
+import { NavigationMenuComponent } from './navigation-menu.component.js'
 import { MockBuilder } from 'ng-mocks'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({

@@ -12,9 +12,9 @@ import {
   ViewContainerRef,
   inject,
 } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { RecordPreviewComponent } from '../record-preview/record-preview.component'
-import { ResultsLayoutConfigItem } from '../results-list/results-layout.config'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { RecordPreviewComponent } from '../record-preview/record-preview.component.js'
+import { ResultsLayoutConfigItem } from '../results-list/results-layout.config.js'
 
 @Component({
   selector: 'gn-ui-results-list-item',

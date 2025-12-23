@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { SearchFiltersComponent } from './search-filters.component'
+import { SearchFiltersComponent } from './search-filters.component.js'
 import { MockBuilder } from 'ng-mocks'
 import { By } from '@angular/platform-browser'
 import { SearchFiltersSummaryComponent } from '@geonetwork-ui/feature/search'

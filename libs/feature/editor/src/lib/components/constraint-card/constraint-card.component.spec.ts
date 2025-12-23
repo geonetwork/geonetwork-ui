@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ConstraintCardComponent } from './constraint-card.component'
+import { ConstraintCardComponent } from './constraint-card.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('ConstraintCardComponent', () => {

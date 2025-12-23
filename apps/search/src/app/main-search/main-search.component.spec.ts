@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
-import { AppComponent } from '../app.component'
+import { AppComponent } from '../app.component.js'
 
 const searchFacadeMock = {
   setConfigAggregations: jest.fn(),

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { SearchPageComponent } from './search-page.component'
+import { SearchPageComponent } from './search-page.component.js'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { MockBuilder } from 'ng-mocks'

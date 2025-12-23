@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ViewportIntersectorComponent } from './viewport-intersector.component'
+import { ViewportIntersectorComponent } from './viewport-intersector.component.js'
 
 describe('ViewportIntersectorComponent', () => {
   let component: ViewportIntersectorComponent

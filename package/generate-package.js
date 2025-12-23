@@ -127,16 +127,16 @@ copySourceDirectories()
   )
   .then(async () => {
     console.log('Copying config files and source files to package...')
-    await copyFile(
+    await fs.cp(
       path.join(PROJECT_ROOT_PATH, 'tailwind.base.css'),
       PACKAGE_DIST_PATH
     )
-    await copyFile(
+    await fs.cp(
       path.join(PROJECT_ROOT_PATH, 'tailwind.base.config.js'),
       PACKAGE_DIST_PATH
     )
-    await copyFile(path.join(CURRENT_DIR_PATH, 'style.css'), PACKAGE_DIST_PATH)
-    await copyFile(path.join(CURRENT_DIR_PATH, 'index.ts'), PACKAGE_DIST_PATH)
+    await fs.cp(path.join(CURRENT_DIR_PATH, 'style.css'), PACKAGE_DIST_PATH)
+    await fs.cp(path.join(CURRENT_DIR_PATH, 'index.ts'), PACKAGE_DIST_PATH)
     await fs.cp(
       path.join(CURRENT_DIR_PATH, 'README.package.md'),
       path.join(PACKAGE_DIST_PATH, 'README.md')

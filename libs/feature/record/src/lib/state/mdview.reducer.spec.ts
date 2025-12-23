@@ -1,12 +1,12 @@
-import * as MdViewActions from './mdview.actions'
-import { initialMetadataViewState, reducer } from './mdview.reducer'
+import * as MdViewActions from './mdview.actions.js'
+import { initialMetadataViewState, reducer } from './mdview.reducer.js'
 import {
   datasetRecordsFixture,
   someUserFeedbacksFixture,
   userFeedbackFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { Action } from '@ngrx/store'
-import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model.js'
 
 const chartConfigMock: DatavizChartConfigModel = {
   aggregation: 'sum',

@@ -20,19 +20,19 @@ import {
   HttpEvent,
   HttpParameterCodec,
 } from '@angular/common/http'
-import { CustomHttpParameterCodec } from '../encoder'
+import { CustomHttpParameterCodec } from '../encoder.js'
 import { Observable } from 'rxjs'
 
-import { LogFileResponseApiModel } from '../model/models'
-import { ProxyConfigurationApiModel } from '../model/models'
-import { SettingApiModel } from '../model/models'
-import { SettingsListResponseApiModel } from '../model/models'
-import { SiteInformationApiModel } from '../model/models'
-import { StatusApiModel } from '../model/models'
-import { SystemInfoApiModel } from '../model/models'
+import { LogFileResponseApiModel } from '../model/models.js'
+import { ProxyConfigurationApiModel } from '../model/models.js'
+import { SettingApiModel } from '../model/models.js'
+import { SettingsListResponseApiModel } from '../model/models.js'
+import { SiteInformationApiModel } from '../model/models.js'
+import { StatusApiModel } from '../model/models.js'
+import { SystemInfoApiModel } from '../model/models.js'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
-import { Configuration } from '../configuration'
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables.js'
+import { Configuration } from '../configuration.js'
 
 @Injectable({
   providedIn: 'root',

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { DatavizChartModel } from '../dataviz.model'
+import { DatavizChartModel } from '../dataviz.model.js'
 
 export class CreateDatavizDto {
   @ApiProperty({

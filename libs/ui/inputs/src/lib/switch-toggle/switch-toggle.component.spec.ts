@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SwitchToggleComponent } from './switch-toggle.component'
+import { SwitchToggleComponent } from './switch-toggle.component.js'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { CommonModule } from '@angular/common'
 

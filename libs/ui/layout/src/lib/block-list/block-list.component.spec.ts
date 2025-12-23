@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { BlockListComponent } from './block-list.component'
+import { BlockListComponent } from './block-list.component.js'
 import { Component, Input } from '@angular/core'
 import { By } from '@angular/platform-browser'
 

@@ -5,7 +5,7 @@ import {
   inject,
 } from '@angular/core'
 import { Observable } from 'rxjs'
-import { SourcesService } from '../sources/sources.service'
+import { SourcesService } from '../sources/sources.service.js'
 import { CommonModule } from '@angular/common'
 
 @Component({

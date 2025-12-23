@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RecordPreviewRowComponent } from './record-preview-row.component'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { RecordPreviewRowComponent } from './record-preview-row.component.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 describe('RecordPreviewDatahubComponent', () => {
   let component: RecordPreviewRowComponent

@@ -1,2 +1,2 @@
-export * from './mdview.facade'
-export * as MdViewActions from './mdview.actions'
+export * from './mdview.facade.js'
+export * as MdViewActions from './mdview.actions.js'

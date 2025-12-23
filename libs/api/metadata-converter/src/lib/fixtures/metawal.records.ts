@@ -1,7 +1,7 @@
 import {
   DatasetRecord,
   ServiceRecord,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const METAWAL_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: '2d974612-70b1-4662-a9f4-c43cbe453773',

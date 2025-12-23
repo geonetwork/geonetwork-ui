@@ -4,7 +4,7 @@ import {
   HttpTestingController,
   provideHttpClientTesting,
 } from '@angular/common/http/testing'
-import { ImageInputComponent } from './image-input.component'
+import { ImageInputComponent } from './image-input.component.js'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('ImageInputComponent', () => {

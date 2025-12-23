@@ -10,7 +10,7 @@ import {
   OnlineLinkResource,
   Organization,
   ServiceEndpoint,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 type TranslatedRecordObjects =
   | BaseRecord

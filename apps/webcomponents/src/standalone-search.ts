@@ -1,4 +1,4 @@
-import { StandaloneSearchModule } from './app/standalone-search.module'
+import { StandaloneSearchModule } from './app/standalone-search.module.js'
 import { enableProdMode } from '@angular/core'
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 

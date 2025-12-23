@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { OrganisationPreviewComponent } from './organisation-preview.component'
+import { OrganisationPreviewComponent } from './organisation-preview.component.js'
 import { MockBuilder } from 'ng-mocks'
 
 const organisationMock = {

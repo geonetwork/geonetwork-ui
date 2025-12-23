@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'

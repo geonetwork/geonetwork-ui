@@ -9,10 +9,10 @@ import {
   inject,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { FilesDropDirective } from '../files-drop/files-drop.directive'
+import { FilesDropDirective } from '../files-drop/files-drop.directive.js'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { UrlInputComponent } from '../url-input/url-input.component'
+import { UrlInputComponent } from '../url-input/url-input.component.js'
 import {
   NgIconComponent,
   provideIcons,

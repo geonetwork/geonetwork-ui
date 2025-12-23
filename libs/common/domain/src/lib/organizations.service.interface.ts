@@ -1,6 +1,10 @@
 import { Observable } from 'rxjs'
-import { BaseRecord, CatalogRecord, Organization } from './model/record'
-import { FieldFilters } from './model/search'
+import {
+  BaseRecord,
+  CatalogRecord,
+  Organization,
+} from './model/record/index.js'
+import { FieldFilters } from './model/search/index.js'
 
 export abstract class OrganizationsServiceInterface {
   public abstract organisations$: Observable<Organization[]>

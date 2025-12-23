@@ -4,7 +4,7 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing'
-import { RecordUserFeedbacksComponent } from './record-user-feedbacks.component'
+import { RecordUserFeedbacksComponent } from './record-user-feedbacks.component.js'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject, of, Subject } from 'rxjs'
 import { ChangeDetectionStrategy } from '@angular/core'
@@ -17,7 +17,7 @@ import {
 import {
   UserFeedback,
   UserFeedbackViewModel,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

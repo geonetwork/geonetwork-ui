@@ -1,9 +1,9 @@
 import { enableProdMode } from '@angular/core'
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 
-import { AppModule } from './app/app.module'
-import { environment } from './environments/environment'
-import { loadAppConfig, getGlobalConfig } from '@geonetwork-ui/util/app-config'
+import { AppModule } from './app/app.module.js'
+import { environment } from './environments/environment.js'
+import { getGlobalConfig, loadAppConfig } from '@geonetwork-ui/util/app-config'
 import { enableFallbackWithoutWorker } from '@camptocamp/ogc-client'
 
 if (environment.production) {

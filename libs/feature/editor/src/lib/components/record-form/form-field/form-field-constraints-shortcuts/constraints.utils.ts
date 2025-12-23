@@ -1,4 +1,4 @@
-import { Constraint } from '@geonetwork-ui/common/domain/model/record'
+import { Constraint } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const NOT_APPLICABLE_CONSTRAINT: Constraint = {
   text: 'No conditions apply to access and use',

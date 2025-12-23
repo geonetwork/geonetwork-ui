@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { DatePickerComponent } from './date-picker.component'
+import { DatePickerComponent } from './date-picker.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DatePickerComponent', () => {

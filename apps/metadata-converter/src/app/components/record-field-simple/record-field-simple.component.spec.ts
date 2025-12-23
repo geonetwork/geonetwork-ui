@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { RecordFieldSimpleComponent } from './record-field-simple.component'
+import { RecordFieldSimpleComponent } from './record-field-simple.component.js'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('RecordFieldSimpleComponent', () => {

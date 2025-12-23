@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FormFieldKeywordsComponent } from './form-field-keywords.component'
+import { FormFieldKeywordsComponent } from './form-field-keywords.component.js'
 import { of } from 'rxjs'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { Keyword } from '@geonetwork-ui/common/domain/model/record'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
+import { Keyword } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { MockBuilder } from 'ng-mocks'
-import { EditorFacade } from '../../../../+state/editor.facade'
+import { EditorFacade } from '../../../../+state/editor.facade.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const placeKeywords: Keyword[] = [

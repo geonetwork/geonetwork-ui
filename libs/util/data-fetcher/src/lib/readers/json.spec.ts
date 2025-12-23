@@ -1,4 +1,4 @@
-import { JsonReader, parseJson } from './json'
+import { JsonReader, parseJson } from './json.js'
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'

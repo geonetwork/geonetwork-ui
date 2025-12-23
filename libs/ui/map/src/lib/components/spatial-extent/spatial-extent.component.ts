@@ -9,10 +9,10 @@ import {
   MapContext,
   MapContextLayer,
 } from '@geospatial-sdk/core'
-import { MapContainerComponent } from '../map-container/map-container.component'
+import { MapContainerComponent } from '../map-container/map-container.component.js'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
-import { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 @Component({
   selector: 'gn-ui-spatial-extent',

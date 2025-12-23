@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
-import { DatavizChartModel } from '../dataviz.model'
+import { DatavizChartModel } from '../dataviz.model.js'
 
 @Entity()
 export class Dataviz {

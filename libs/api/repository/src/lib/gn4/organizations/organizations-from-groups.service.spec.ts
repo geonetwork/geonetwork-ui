@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 import { firstValueFrom, of } from 'rxjs'
-import { OrganizationsFromGroupsService } from './organizations-from-groups.service'
+import { OrganizationsFromGroupsService } from './organizations-from-groups.service.js'
 import {
   GroupsApiService,
   SearchApiService,
@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core'
 import {
   CatalogRecord,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   elasticFullResponseFixture,
   groupsFixture,

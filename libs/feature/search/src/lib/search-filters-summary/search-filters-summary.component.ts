@@ -1,11 +1,11 @@
 import { Component, InjectionToken, Input, OnInit, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { first, map, Observable } from 'rxjs'
-import { SearchFiltersSummaryItemComponent } from '../search-filters-summary-item/search-filters-summary-item.component'
+import { SearchFiltersSummaryItemComponent } from '../search-filters-summary-item/search-filters-summary-item.component.js'
 import { TranslatePipe } from '@ngx-translate/core'
-import { SearchFacade } from '../state/search.facade'
-import { SearchService } from '../utils/service/search.service'
-import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
+import { SearchFacade } from '../state/search.facade.js'
+import { SearchService } from '../utils/service/search.service.js'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search/index.js'
 
 export const FILTER_SUMMARY_IGNORE_LIST = new InjectionToken<string[]>(
   'FILTER_SUMMARY_IGNORE_LIST'

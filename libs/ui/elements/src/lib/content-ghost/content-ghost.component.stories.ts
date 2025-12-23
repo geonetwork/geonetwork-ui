@@ -1,5 +1,5 @@
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { ContentGhostComponent } from './content-ghost.component'
+import { ContentGhostComponent } from './content-ghost.component.js'
 import { importProvidersFrom } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 

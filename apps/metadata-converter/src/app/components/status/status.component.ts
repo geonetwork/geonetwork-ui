@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   BaseConverter,
   findConverterForDocument,
   Iso191153Converter,
 } from '@geonetwork-ui/api/metadata-converter'
-import { FORMATS, getFormatName } from '../../md-formats'
+import { FORMATS, getFormatName } from '../../md-formats.js'
 
 @Component({
   selector: 'gn-ui-status',

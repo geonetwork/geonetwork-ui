@@ -18,34 +18,33 @@ import {
   Keyword,
   OnlineResource,
   UpdateFrequency,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 import { TranslatePipe } from '@ngx-translate/core'
-import {
-  FormFieldDateComponent,
-  FormFieldLicenseComponent,
-  FormFieldTemporalExtentsComponent,
-} from '.'
+import { FormFieldDateComponent } from './form-field-date/form-field-date.component.js'
+
 import {
   FieldModelSpecifier,
   FormFieldComponentName,
   FormFieldConfig,
-} from '../../../models'
-import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource/form-field-contacts-for-resource.component'
-import { FormFieldContactsComponent } from './form-field-contacts/form-field-contacts.component'
-import { FormFieldKeywordsComponent } from './form-field-keywords/form-field-keywords.component'
-import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-resources/form-field-online-link-resources.component'
-import { FormFieldOnlineResourcesComponent } from './form-field-online-resources/form-field-online-resources.component'
-import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component'
-import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
-import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
-import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
-import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
-import { FormFieldConstraintsShortcutsComponent } from './form-field-constraints-shortcuts/form-field-constraints-shortcuts.component'
-import { FormFieldConstraintsComponent } from './form-field-constraints/form-field-constraints.component'
+} from '../../../models/index.js'
+import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource/form-field-contacts-for-resource.component.js'
+import { FormFieldContactsComponent } from './form-field-contacts/form-field-contacts.component.js'
+import { FormFieldKeywordsComponent } from './form-field-keywords/form-field-keywords.component.js'
+import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-resources/form-field-online-link-resources.component.js'
+import { FormFieldOnlineResourcesComponent } from './form-field-online-resources/form-field-online-resources.component.js'
+import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component.js'
+import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component.js'
+import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component.js'
+import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component.js'
+import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component.js'
+import { FormFieldConstraintsShortcutsComponent } from './form-field-constraints-shortcuts/form-field-constraints-shortcuts.component.js'
+import { FormFieldConstraintsComponent } from './form-field-constraints/form-field-constraints.component.js'
 import { TextFieldModule } from '@angular/cdk/text-field'
-import { FormFieldSpatialToggleComponent } from './form-field-spatial-toggle/form-field-spatial-toggle.component'
-import { FormFieldTopicsComponent } from './form-field-topics/form-field-topics.component'
+import { FormFieldSpatialToggleComponent } from './form-field-spatial-toggle/form-field-spatial-toggle.component.js'
+import { FormFieldTopicsComponent } from './form-field-topics/form-field-topics.component.js'
+import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents/form-field-temporal-extents.component.js'
+import { FormFieldLicenseComponent } from './form-field-license/form-field-license.component.js'
 
 @Component({
   selector: 'gn-ui-form-field',

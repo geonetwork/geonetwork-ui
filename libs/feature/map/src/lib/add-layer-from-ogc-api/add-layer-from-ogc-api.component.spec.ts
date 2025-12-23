@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api.component'
+import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api.component.js'
 import { MockBuilder } from 'ng-mocks'
 
 jest.mock('@camptocamp/ogc-client', () => ({

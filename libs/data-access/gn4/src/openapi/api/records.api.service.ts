@@ -20,33 +20,33 @@ import {
   HttpEvent,
   HttpParameterCodec,
 } from '@angular/common/http'
-import { CustomHttpParameterCodec } from '../encoder'
+import { CustomHttpParameterCodec } from '../encoder.js'
 import { Observable } from 'rxjs'
 
 import {
   AssociatedRecordApiModel,
   BatchEditParameterApiModel,
-} from '../model/models'
-import { ExtentDtoApiModel } from '../model/models'
-import { FeatureResponseApiModel } from '../model/models'
-import { IProcessingReportApiModel } from '../model/models'
-import { MetadataBatchApproveParameterApiModel } from '../model/models'
-import { MetadataBatchSubmitParameterApiModel } from '../model/models'
-import { MetadataCategoryApiModel } from '../model/models'
-import { MetadataProcessingReportApiModel } from '../model/models'
-import { MetadataResourceApiModel } from '../model/models'
-import { MetadataStatusParameterApiModel } from '../model/models'
-import { PublicationOptionApiModel } from '../model/models'
-import { RelatedResponseApiModel } from '../model/models'
-import { ReportsApiModel } from '../model/models'
-import { SavedQueryApiModel } from '../model/models'
-import { SharingParameterApiModel } from '../model/models'
-import { SharingResponseApiModel } from '../model/models'
-import { SimpleMetadataProcessingReportApiModel } from '../model/models'
-import { SuggestionTypeApiModel } from '../model/models'
+} from '../model/models.js'
+import { ExtentDtoApiModel } from '../model/models.js'
+import { FeatureResponseApiModel } from '../model/models.js'
+import { IProcessingReportApiModel } from '../model/models.js'
+import { MetadataBatchApproveParameterApiModel } from '../model/models.js'
+import { MetadataBatchSubmitParameterApiModel } from '../model/models.js'
+import { MetadataCategoryApiModel } from '../model/models.js'
+import { MetadataProcessingReportApiModel } from '../model/models.js'
+import { MetadataResourceApiModel } from '../model/models.js'
+import { MetadataStatusParameterApiModel } from '../model/models.js'
+import { PublicationOptionApiModel } from '../model/models.js'
+import { RelatedResponseApiModel } from '../model/models.js'
+import { ReportsApiModel } from '../model/models.js'
+import { SavedQueryApiModel } from '../model/models.js'
+import { SharingParameterApiModel } from '../model/models.js'
+import { SharingResponseApiModel } from '../model/models.js'
+import { SimpleMetadataProcessingReportApiModel } from '../model/models.js'
+import { SuggestionTypeApiModel } from '../model/models.js'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
-import { Configuration } from '../configuration'
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables.js'
+import { Configuration } from '../configuration.js'
 
 @Injectable({
   providedIn: 'root',

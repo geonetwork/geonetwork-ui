@@ -5,7 +5,7 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { OrganisationsFilterComponent } from './organisations-filter.component'
+import { OrganisationsFilterComponent } from './organisations-filter.component.js'
 
 export default {
   title: 'Catalog/OrganisationsFilterComponent',

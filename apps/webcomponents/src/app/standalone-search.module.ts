@@ -23,7 +23,7 @@ import { provideHttpClient } from '@angular/common/http'
 import {
   StandaloneConfiguration,
   standaloneConfigurationObject,
-} from './configuration'
+} from './configuration.js'
 
 @NgModule({
   providers: [

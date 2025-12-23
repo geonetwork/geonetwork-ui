@@ -4,8 +4,8 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { InteractiveTableComponent } from './interactive-table.component'
-import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component'
+import { InteractiveTableComponent } from './interactive-table.component.js'
+import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component.js'
 import { CommonModule } from '@angular/common'
 import { action } from 'storybook/actions'
 import { TranslateModule } from '@ngx-translate/core'

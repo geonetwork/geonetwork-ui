@@ -1,5 +1,5 @@
 import { firstValueFrom } from 'rxjs'
-import { EmbeddedTranslateLoader } from './embedded.translate.loader'
+import { EmbeddedTranslateLoader } from './embedded.translate.loader.js'
 
 jest.mock(
   '../../../../../translations/en.json',

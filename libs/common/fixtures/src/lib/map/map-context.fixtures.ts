@@ -1,4 +1,4 @@
-import { polygonFeatureCollectionFixture } from '../geojson.fixtures'
+import { polygonFeatureCollectionFixture } from '../geojson.fixtures.js'
 import { Extent } from 'ol/extent.js'
 import type {
   MapContext,

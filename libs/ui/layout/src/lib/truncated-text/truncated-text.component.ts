@@ -15,7 +15,7 @@ import { iconoirExpand } from '@ng-icons/iconoir'
 import { MatButtonModule } from '@angular/material/button'
 import { CdkScrollable, OverlayModule } from '@angular/cdk/overlay'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { CellPopinComponent } from '../cell-popin/cell-popin.component'
+import { CellPopinComponent } from '../cell-popin/cell-popin.component.js'
 
 @Component({
   selector: 'gn-ui-truncated-text',

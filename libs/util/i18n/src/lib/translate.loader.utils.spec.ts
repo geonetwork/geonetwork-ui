@@ -1,4 +1,4 @@
-import { dropEmptyTranslations } from './translate.loader.utils'
+import { dropEmptyTranslations } from './translate.loader.utils.js'
 
 const FR = {
   'first.label': '',

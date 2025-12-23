@@ -2,16 +2,16 @@ import { inject, Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { debounceTime, EMPTY, filter, of, withLatestFrom } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
-import * as EditorActions from './editor.actions'
-import { EditorService } from '../services/editor.service'
+import * as EditorActions from './editor.actions.js'
+import { EditorService } from '../services/editor.service.js'
 import { Action, Store } from '@ngrx/store'
 import {
   selectEditorConfig,
   selectRecord,
   selectRecordSource,
-} from './editor.selectors'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+} from './editor.selectors.js'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 
 @Injectable()
 export class EditorEffects {

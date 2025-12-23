@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormFieldOverviewsComponent } from './form-field-overviews.component'
+import { FormFieldOverviewsComponent } from './form-field-overviews.component.js'
 import { BehaviorSubject, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import {
   PlatformServiceInterface,
   RecordAttachment,
-} from '@geonetwork-ui/common/domain/platform.service.interface'
+} from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 let uploadSubject: Subject<any>

@@ -15,7 +15,7 @@
 
 import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector.js'
 import './commands'
-import { VIEWPORT_SIZE } from '../../../../tools/e2e/settings'
+import { VIEWPORT_SIZE } from '../../../../tools/e2e/settings.js'
 
 installLogsCollector()
 

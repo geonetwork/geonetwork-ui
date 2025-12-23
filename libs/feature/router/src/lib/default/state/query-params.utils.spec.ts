@@ -1,5 +1,5 @@
-import { ROUTE_PARAMS } from '../constants'
-import { expandQueryParams, flattenQueryParams } from './query-params.utils'
+import { ROUTE_PARAMS } from '../constants.js'
+import { expandQueryParams, flattenQueryParams } from './query-params.utils.js'
 
 describe('query params utilities', () => {
   describe('flattenQueryParams', () => {

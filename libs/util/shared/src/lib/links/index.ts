@@ -1,2 +1,2 @@
-export * from './link-utils'
-export * from './link-classifier.service'
+export * from './link-utils.js'
+export * from './link-classifier.service.js'

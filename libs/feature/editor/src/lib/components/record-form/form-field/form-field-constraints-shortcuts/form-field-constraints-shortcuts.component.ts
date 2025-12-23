@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { EditorFacade } from '../../../../+state/editor.facade'
+import { EditorFacade } from '../../../../+state/editor.facade.js'
 import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslatePipe } from '@ngx-translate/core'
 import {
@@ -19,13 +19,13 @@ import {
   takeUntil,
 } from 'rxjs'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { Constraint } from '@geonetwork-ui/common/domain/model/record'
+import { Constraint } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   matchesNoApplicableConstraint,
   matchesNoKnownConstraint,
   NOT_APPLICABLE_CONSTRAINT,
   NOT_KNOWN_CONSTRAINT,
-} from './constraints.utils'
+} from './constraints.utils.js'
 import {
   NgIconComponent,
   provideIcons,

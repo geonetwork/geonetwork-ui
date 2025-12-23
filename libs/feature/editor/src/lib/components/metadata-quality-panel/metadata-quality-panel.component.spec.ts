@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MetadataQualityPanelComponent } from './metadata-quality-panel.component'
+import { MetadataQualityPanelComponent } from './metadata-quality-panel.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { EditorConfig } from '../../models'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { EditorConfig } from '../../models/index.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 const EDITOR_CONFIG_MOCK: EditorConfig = {
   pages: [

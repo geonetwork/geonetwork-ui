@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MetadataQualityItemComponent } from './metadata-quality-item.component'
+import { MetadataQualityItemComponent } from './metadata-quality-item.component.js'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy } from '@angular/core'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

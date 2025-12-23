@@ -5,7 +5,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { LoadingMaskComponent } from './loading-mask.component'
+import { LoadingMaskComponent } from './loading-mask.component.js'
 import { MatProgressSpinner } from '@angular/material/progress-spinner'
 import { importProvidersFrom } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { elasticSummaryHitsFixture } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
-import { LastCreatedComponent } from './last-created.component'
+import { LastCreatedComponent } from './last-created.component.js'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { MockBuilder } from 'ng-mocks'

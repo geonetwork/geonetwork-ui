@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/collections'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { DataItem } from '@geonetwork-ui/data-fetcher'
 import { map } from 'rxjs/operators'
-import { TableItemModel } from './data-table.component'
+import { TableItemModel } from './data-table.component.js'
 
 export class DataTableDataSource implements DataSource<TableItemModel> {
   private dataItems$ = new BehaviorSubject<DataItem[]>([])

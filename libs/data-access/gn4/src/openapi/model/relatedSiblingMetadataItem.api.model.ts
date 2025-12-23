@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DescriptionApiModel } from './description.api.model'
-import { MultilingualValueApiModel } from './multilingualValue.api.model'
+import { DescriptionApiModel } from './description.api.model.js'
+import { MultilingualValueApiModel } from './multilingualValue.api.model.js'
 
 export interface RelatedSiblingMetadataItemApiModel {
   id?: string

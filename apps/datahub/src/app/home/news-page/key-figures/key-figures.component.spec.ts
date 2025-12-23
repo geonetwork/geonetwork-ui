@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { KeyFiguresComponent } from './key-figures.component'
+import { KeyFiguresComponent } from './key-figures.component.js'
 import { BehaviorSubject, of } from 'rxjs'
 import { RecordsService } from '@geonetwork-ui/feature/catalog'
 import { By } from '@angular/platform-browser'

@@ -20,19 +20,19 @@ import {
   SetSortBy,
   SetSpatialFilterEnabled,
   UpdateFilters,
-} from './actions'
+} from './actions.js'
 import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { Store, StoreModule } from '@ngrx/store'
 import { getTestScheduler, hot } from 'jasmine-marbles'
 import { firstValueFrom, Observable, of, throwError } from 'rxjs'
-import { SearchEffects } from './effects'
+import { SearchEffects } from './effects.js'
 import {
   initialState,
   reducer,
   SEARCH_FEATURE_KEY,
   SearchState,
-} from './reducer'
+} from './reducer.js'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import {
   datasetRecordsFixture,
@@ -42,11 +42,11 @@ import {
 } from '@geonetwork-ui/common/fixtures'
 import { HttpErrorResponse } from '@angular/common/http'
 import { delay } from 'rxjs/operators'
-import { FILTER_GEOMETRY } from '../filter-geometry.token'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { FILTER_GEOMETRY } from '../filter-geometry.token.js'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
 import { FavoritesService } from '@geonetwork-ui/api/repository'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
 const stateWithSearches = {

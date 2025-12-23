@@ -1,7 +1,7 @@
 import { of } from 'rxjs'
 import { delay, map } from 'rxjs/operators'
-import { RequestMoreResults } from '../../state/actions'
-import { switchMapWithSearchId } from './search.operator'
+import { RequestMoreResults } from '../../state/actions.js'
+import { switchMapWithSearchId } from './search.operator.js'
 import { fakeAsync, tick } from '@angular/core/testing'
 
 describe('switchMapWithSearchId', () => {

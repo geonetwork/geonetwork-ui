@@ -3,7 +3,7 @@ import {
   DatasetRecord,
   Individual,
   LanguageCode,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   allChildrenElement,
   appendChildren,
@@ -22,7 +22,7 @@ import {
   setTextContent,
   writeAttribute,
   XmlElement,
-} from '../xml-utils'
+} from '../xml-utils.js'
 import {
   fallback,
   filterArray,
@@ -31,7 +31,7 @@ import {
   mapArray,
   noop,
   pipe,
-} from '../function-utils'
+} from '../function-utils.js'
 import {
   appendKeywords,
   appendOnlineResource,
@@ -46,11 +46,11 @@ import {
   writeDateTime,
   writeLinkage,
   writeLocalizedCharacterString,
-} from '../iso19139/write-parts'
-import { findIdentification } from '../iso19139/read-parts'
-import { namePartsToFull } from '../iso19139/utils/individual-name'
+} from '../iso19139/write-parts.js'
+import { findIdentification } from '../iso19139/read-parts.js'
+import { namePartsToFull } from '../iso19139/utils/individual-name.js'
 import { toLang3 } from '@geonetwork-ui/util/i18n/language-codes'
-import { kindToCodeListValue } from '../common/resource-types'
+import { kindToCodeListValue } from '../common/resource-types.js'
 
 export function writeUniqueIdentifier(
   record: CatalogRecord,

@@ -4,7 +4,7 @@ import {
   parseConfigSection,
   parseMultiConfigSection,
   parseTranslationsConfigSection,
-} from './parse-utils'
+} from './parse-utils.js'
 import {
   CustomTranslations,
   CustomTranslationsAllLanguages,
@@ -14,11 +14,11 @@ import {
   MetadataQualityConfig,
   SearchConfig,
   ThemeConfig,
-} from './model'
+} from './model.js'
 import { TranslateCompiler, TranslateLoader } from '@ngx-translate/core'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 import { HttpClient } from '@angular/common/http'
-import { FileWithOverridesTranslateLoader } from './i18n/file-with-overrides.translate.loader'
+import { FileWithOverridesTranslateLoader } from './i18n/file-with-overrides.translate.loader.js'
 
 const MISSING_CONFIG_ERROR = `Application configuration was not initialized correctly.
 This error might show up in case of an invalid/malformed configuration file.

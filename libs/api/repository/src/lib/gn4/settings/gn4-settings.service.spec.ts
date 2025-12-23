@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 
-import { Gn4SettingsService } from './gn4-settings.service'
+import { Gn4SettingsService } from './gn4-settings.service.js'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('Gn4SettingsService', () => {

@@ -5,7 +5,7 @@ import { Router } from '@angular/router'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { NavigationBarComponent } from './navigation-bar.component'
+import { NavigationBarComponent } from './navigation-bar.component.js'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getGlobalConfig() {

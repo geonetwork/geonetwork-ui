@@ -1,4 +1,4 @@
-import { Organization } from './organization.model'
+import { Organization } from './organization.model.js'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 export const RoleValues = [

@@ -1,11 +1,11 @@
 import { EndpointError, WfsEndpoint, WfsVersion } from '@camptocamp/ogc-client'
-import { DataItem, DatasetInfo, FetchError, PropertyInfo } from '../model'
-import { fetchDataAsText } from '../utils'
-import { GmlReader, parseGml } from './gml'
-import { GeojsonReader, parseGeojson } from './geojson'
-import { BaseCacheReader } from './base-cache'
-import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils'
-import { generateSqlQuery } from '../sql-utils'
+import { DataItem, DatasetInfo, FetchError, PropertyInfo } from '../model.js'
+import { fetchDataAsText } from '../utils.js'
+import { GmlReader, parseGml } from './gml.js'
+import { GeojsonReader, parseGeojson } from './geojson.js'
+import { BaseCacheReader } from './base-cache.js'
+import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils.js'
+import { generateSqlQuery } from '../sql-utils.js'
 
 export async function getWfsEndpoint(wfsUrl: string): Promise<WfsEndpoint> {
   try {

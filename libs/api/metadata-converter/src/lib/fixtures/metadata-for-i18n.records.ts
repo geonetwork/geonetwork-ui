@@ -1,4 +1,4 @@
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: '9e1ea778-d0ce-4b49-90b7-37bc0e448300',

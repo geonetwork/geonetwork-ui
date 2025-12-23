@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { InteractiveTableComponent } from './interactive-table.component'
+import { InteractiveTableComponent } from './interactive-table.component.js'
 import { Component, DebugElement, EventEmitter, Output } from '@angular/core'
 import { By } from '@angular/platform-browser'
-import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component'
+import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 @Component({

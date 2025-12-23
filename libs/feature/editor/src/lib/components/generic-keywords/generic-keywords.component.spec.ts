@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { GenericKeywordsComponent } from './generic-keywords.component'
+import { GenericKeywordsComponent } from './generic-keywords.component.js'
 import { of } from 'rxjs'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
-import { Keyword } from '@geonetwork-ui/common/domain/model/record'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
+import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus/index.js'
+import { Keyword } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 
 describe('GenericKeywordsComponent', () => {

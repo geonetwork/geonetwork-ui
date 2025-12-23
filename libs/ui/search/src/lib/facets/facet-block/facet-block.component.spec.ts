@@ -8,9 +8,9 @@ import {
 import { FormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
-import { FacetItemComponent } from '../facet-item/facet-item.component'
-import { blockModelFixture, emptyBlockModelFixture } from '../fixtures'
-import { FacetBlockComponent } from './facet-block.component'
+import { FacetItemComponent } from '../facet-item/facet-item.component.js'
+import { blockModelFixture, emptyBlockModelFixture } from '../fixtures.js'
+import { FacetBlockComponent } from './facet-block.component.js'
 
 describe('FacetBlockComponent', () => {
   let component: FacetBlockComponent

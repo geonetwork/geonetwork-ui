@@ -23,10 +23,10 @@ import {
   SpatialRepresentationType,
   UpdateFrequency,
   UpdateFrequencyCustom,
-} from '@geonetwork-ui/common/domain/model/record'
-import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus/index.js'
 import { Geometry } from 'geojson'
-import { matchMimeType, matchProtocol } from '../common/distribution.mapper'
+import { matchMimeType, matchProtocol } from '../common/distribution.mapper.js'
 import {
   ChainableFunction,
   combine,
@@ -37,7 +37,7 @@ import {
   map,
   mapArray,
   pipe,
-} from '../function-utils'
+} from '../function-utils.js'
 import {
   findChildElement,
   findChildrenElement,
@@ -48,15 +48,15 @@ import {
   readAttribute,
   readText,
   XmlElement,
-} from '../xml-utils'
-import { readGeometry } from './utils/geometry'
-import { fullNameToParts } from './utils/individual-name'
-import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
-import { getRoleFromRoleCode } from './utils/role.mapper'
-import { getStatusFromStatusCode } from './utils/status.mapper'
-import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
+} from '../xml-utils.js'
+import { readGeometry } from './utils/geometry.js'
+import { fullNameToParts } from './utils/individual-name.js'
+import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper.js'
+import { getRoleFromRoleCode } from './utils/role.mapper.js'
+import { getStatusFromStatusCode } from './utils/status.mapper.js'
+import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper.js'
 import { toLang2 } from '@geonetwork-ui/util/i18n/language-codes'
-import { getResourceType, getReuseType } from '../common/resource-types'
+import { getResourceType, getReuseType } from '../common/resource-types.js'
 
 export function extractCharacterString(): ChainableFunction<
   XmlElement,

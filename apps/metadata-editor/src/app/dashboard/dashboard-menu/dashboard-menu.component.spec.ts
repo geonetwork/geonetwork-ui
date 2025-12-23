@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { cold, hot } from 'jasmine-marbles'
 import { MockBuilder, MockProviders } from 'ng-mocks'
-import { DashboardMenuComponent } from './dashboard-menu.component'
+import { DashboardMenuComponent } from './dashboard-menu.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DashboardMenuComponent', () => {

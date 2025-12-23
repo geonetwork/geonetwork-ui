@@ -2,10 +2,10 @@ import { FieldsService, SearchFacade } from '@geonetwork-ui/feature/search'
 import {
   SortByEnum,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 import { BehaviorSubject, of } from 'rxjs'
-import { RouterFacade } from '../state/router.facade'
-import { RouterSearchService } from './router-search.service'
+import { RouterFacade } from '../state/router.facade.js'
+import { RouterSearchService } from './router-search.service.js'
 import { TestBed } from '@angular/core/testing'
 
 let state = {}

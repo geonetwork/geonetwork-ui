@@ -1,1 +1,1 @@
-export * from './thesaurus.model'
+export * from './thesaurus.model.js'

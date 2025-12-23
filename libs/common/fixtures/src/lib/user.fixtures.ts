@@ -1,4 +1,4 @@
-import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model.js'
 
 export const createUserFixture = (
   overrides: Partial<UserModel> = {}

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { OrganisationsPageComponent } from './organisations-page.component'
+import { OrganisationsPageComponent } from './organisations-page.component.js'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
 import { MockBuilder } from 'ng-mocks'

@@ -1,7 +1,7 @@
 import { Location } from '@angular/common'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   datasetRecordsFixture,
   SAMPLE_RECORD,
@@ -10,7 +10,7 @@ import {
   HEADER_HEIGHT_DEFAULT,
   HEADER_HEIGHT_MOBILE_THUMBNAIL,
   HeaderRecordComponent,
-} from './header-record.component'
+} from './header-record.component.js'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject } from 'rxjs'

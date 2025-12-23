@@ -4,7 +4,10 @@ import {
   SearchFacade,
   SearchService,
 } from '@geonetwork-ui/feature/search'
-import { allSearchFields, RecordsListComponent } from './records-list.component'
+import {
+  allSearchFields,
+  RecordsListComponent,
+} from './records-list.component.js'
 import { By } from '@angular/platform-browser'
 import { Router } from '@angular/router'
 import { BehaviorSubject } from 'rxjs'

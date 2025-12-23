@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FigureComponent } from './figure.component'
+import { FigureComponent } from './figure.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matPerson } from '@ng-icons/material-icons/baseline'

@@ -7,13 +7,13 @@ import {
   Output,
   inject,
 } from '@angular/core'
-import { GraphicOverview } from '@geonetwork-ui/common/domain/model/record'
+import { GraphicOverview } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { ImageInputComponent } from '@geonetwork-ui/ui/elements'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
 import { Subscription } from 'rxjs'
-import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
+import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config.js'
 
 @Component({
   selector: 'gn-ui-form-field-overviews',

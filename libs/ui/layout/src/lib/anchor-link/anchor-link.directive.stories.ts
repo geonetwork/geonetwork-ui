@@ -1,5 +1,5 @@
 import { componentWrapperDecorator, Meta, StoryObj } from '@storybook/angular'
-import { AnchorLinkDirective } from './anchor-link.directive'
+import { AnchorLinkDirective } from './anchor-link.directive.js'
 
 export default {
   title: 'Layout/AnchorLinkDirective',

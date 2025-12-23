@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RecordPreviewComponent } from './record-preview.component'
+import { RecordPreviewComponent } from './record-preview.component.js'
 
 describe('RecordResultsComponent', () => {
   let component: RecordPreviewComponent

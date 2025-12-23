@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { InternalLinkCardComponent } from './internal-link-card.component'
+import { InternalLinkCardComponent } from './internal-link-card.component.js'
 import { By } from '@angular/platform-browser'
 import {
   ChangeDetectionStrategy,
@@ -10,7 +10,7 @@ import {
 import {
   CatalogRecord,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import {
   matEmailOutline,

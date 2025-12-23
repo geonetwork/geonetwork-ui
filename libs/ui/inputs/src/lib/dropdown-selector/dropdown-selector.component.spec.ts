@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { DropdownSelectorComponent } from './dropdown-selector.component'
+import { DropdownSelectorComponent } from './dropdown-selector.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DropdownSelectorComponent', () => {

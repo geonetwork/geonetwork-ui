@@ -4,7 +4,7 @@ import {
   FieldGroupBy,
   FieldName,
   FieldSort,
-} from './model'
+} from './model.js'
 
 function filterToSql(filter: FieldFilter): string {
   const operator = filter[0]

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency.component'
+import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency.component.js'
 import { provideTranslateService } from '@ngx-translate/core'
 
 describe('FormFieldUpdateFrequencyComponent', () => {

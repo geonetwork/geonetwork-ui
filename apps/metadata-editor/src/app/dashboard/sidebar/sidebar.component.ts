@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { DashboardMenuComponent } from '../dashboard-menu/dashboard-menu.component'
+import { DashboardMenuComponent } from '../dashboard-menu/dashboard-menu.component.js'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   AuthService,
@@ -15,7 +15,7 @@ import {
 import { UserPreviewComponent } from '@geonetwork-ui/ui/elements'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { combineLatest, Observable } from 'rxjs'
-import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import { Organization } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { RouterLink } from '@angular/router'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'

@@ -1,5 +1,5 @@
-import { generateSqlQuery } from './sql-utils'
-import { SAMPLE_DATA } from '../fixtures/sample'
+import { generateSqlQuery } from './sql-utils.js'
+import { SAMPLE_DATA } from '../fixtures/sample.js'
 
 describe('data-fetcher utils', () => {
   let sampleItems

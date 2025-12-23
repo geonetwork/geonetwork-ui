@@ -11,7 +11,7 @@ import {
   dragPanCondition,
   mouseWheelZoomCondition,
   prioritizePageScroll,
-} from './map-utils'
+} from './map-utils.js'
 
 class ResizeObserverMock {
   observe = jest.fn()

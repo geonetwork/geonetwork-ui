@@ -21,7 +21,7 @@ The `generate-package.js` file does:
   ```
   becomes:
   ```ts
-  import { UiLayoutModule } from '../../../libs/ui/layout'
+  import { UiLayoutModule } from '../../../libs/ui/layout/index.js'
   ```
   (this is needed because [`ng-packagr` does not support Typescript path aliases](https://github.com/ng-packagr/ng-packagr/pull/1502#issuecomment-572079617))
 - launch a compilation of the copied sources using [`ng-packagr`](https://github.com/ng-packagr/ng-packagr); this is necessary because Angular libraries have to be published according to the [Angular Package Format](https://angular.io/guide/angular-package-format)

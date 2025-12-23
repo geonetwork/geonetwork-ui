@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { ImageFallbackDirective } from './image-fallback.directive'
+import { ImageFallbackDirective } from './image-fallback.directive.js'
 
 @Component({
   template: ` <img

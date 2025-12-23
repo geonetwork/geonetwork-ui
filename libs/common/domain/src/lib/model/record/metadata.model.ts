@@ -1,8 +1,8 @@
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import type { Individual } from './contact.model'
-import type { Organization } from './organization.model'
+import type { Individual } from './contact.model.js'
+import type { Organization } from './organization.model.js'
 import type { Geometry } from 'geojson'
-import { KeywordType, ThesaurusModel } from '../thesaurus'
+import { KeywordType, ThesaurusModel } from '../thesaurus/index.js'
 import {
   ConstraintTranslations,
   KeywordTranslations,
@@ -10,7 +10,7 @@ import {
   OnlineResourceTranslations,
   RecordTranslations,
   SpatialExtentTranslations,
-} from './translation.model'
+} from './translation.model.js'
 
 type Uuid = string
 

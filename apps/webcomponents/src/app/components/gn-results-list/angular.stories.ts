@@ -1,7 +1,7 @@
 import { Meta, moduleMetadata } from '@storybook/angular'
 import { DEFAULT_RESULTS_LAYOUT_CONFIG } from '@geonetwork-ui/ui/search'
-import { GnResultsListComponent } from './gn-results-list.component'
-import { WebcomponentsModule } from '../../webcomponents.module'
+import { GnResultsListComponent } from './gn-results-list.component.js'
+import { WebcomponentsModule } from '../../webcomponents.module.js'
 
 export default {
   title: 'Angular Components/GnResultsListComponent',

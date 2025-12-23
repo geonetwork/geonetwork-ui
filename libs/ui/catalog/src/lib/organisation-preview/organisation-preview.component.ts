@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import { Organization } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { tablerFolderOpen } from '@ng-icons/tabler-icons'

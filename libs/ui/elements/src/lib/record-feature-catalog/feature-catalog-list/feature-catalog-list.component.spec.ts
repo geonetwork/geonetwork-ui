@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FeatureCatalogListComponent } from './feature-catalog-list.component'
+import { FeatureCatalogListComponent } from './feature-catalog-list.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FeatureCatalogListComponent', () => {

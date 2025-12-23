@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FileInputComponent } from './file-input.component'
+import { FileInputComponent } from './file-input.component.js'
 import { By } from '@angular/platform-browser'
-import { UrlInputComponent } from '../url-input/url-input.component'
+import { UrlInputComponent } from '../url-input/url-input.component.js'
 import { ChangeDetectionStrategy } from '@angular/core'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

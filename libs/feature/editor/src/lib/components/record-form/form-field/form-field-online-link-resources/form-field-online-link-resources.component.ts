@@ -13,8 +13,8 @@ import { MatDialog } from '@angular/material/dialog'
 import {
   OnlineLinkResource,
   OnlineResource,
-} from '@geonetwork-ui/common/domain/model/record'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import {
   FileInputComponent,
@@ -28,8 +28,8 @@ import {
 } from '@geonetwork-ui/ui/layout'
 import { TranslateDirective, TranslateService } from '@ngx-translate/core'
 import { Subscription } from 'rxjs'
-import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
-import { OnlineResourceCardComponent } from '../../../online-resource-card/online-resource-card.component'
+import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config.js'
+import { OnlineResourceCardComponent } from '../../../online-resource-card/online-resource-card.component.js'
 
 @Component({
   selector: 'gn-ui-form-field-online-link-resources',

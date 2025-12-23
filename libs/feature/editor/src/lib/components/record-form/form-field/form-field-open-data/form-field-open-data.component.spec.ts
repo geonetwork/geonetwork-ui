@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormFieldOpenDataComponent } from './form-field-open-data.component'
+import { FormFieldOpenDataComponent } from './form-field-open-data.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 jest.mock('./../../../../fields.config', () => {

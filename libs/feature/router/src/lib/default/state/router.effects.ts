@@ -9,17 +9,17 @@ import {
   SetFilters,
   SetSortBy,
 } from '@geonetwork-ui/feature/search'
-import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search/index.js'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@ngrx/router-store/data-persistence'
 import { of, pairwise, startWith } from 'rxjs'
 import { map, mergeMap, tap } from 'rxjs/operators'
-import * as RouterActions from './router.actions'
-import { RouterFacade } from './router.facade'
-import { ROUTE_PARAMS } from '../constants'
+import * as RouterActions from './router.actions.js'
+import { RouterFacade } from './router.facade.js'
+import { ROUTE_PARAMS } from '../constants.js'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
-import { ROUTER_CONFIG, RouterConfigModel } from '../router.config'
-import { RouterService } from '../router.service'
+import { ROUTER_CONFIG, RouterConfigModel } from '../router.config.js'
+import { RouterService } from '../router.service.js'
 
 @Injectable()
 export class RouterEffects {

@@ -1,17 +1,17 @@
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import {
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_ORGANIZATION,
+  ROUTER_ROUTE_REUSE,
   ROUTER_ROUTE_SEARCH,
   ROUTER_ROUTE_SERVICE,
-  ROUTER_ROUTE_REUSE,
-} from '.'
+} from './constants.js'
 import { Router, Routes } from '@angular/router'
-import { ROUTER_CONFIG, RouterConfigModel } from './router.config'
+import { ROUTER_CONFIG, RouterConfigModel } from './router.config.js'
 import {
   SortByEnum,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 
 @Injectable({
   providedIn: 'root',

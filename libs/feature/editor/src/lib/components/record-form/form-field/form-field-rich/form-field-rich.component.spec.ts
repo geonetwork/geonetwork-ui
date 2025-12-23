@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormFieldRichComponent } from './form-field-rich.component'
+import { FormFieldRichComponent } from './form-field-rich.component.js'
 
 describe('FormFieldRichComponent', () => {
   let component: FormFieldRichComponent

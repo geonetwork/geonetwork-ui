@@ -9,8 +9,8 @@ import {
 import {
   UserFeedback,
   UserFeedbackViewModel,
-} from '@geonetwork-ui/common/domain/model/record'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/index.js'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent, TextAreaComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslatePipe } from '@ngx-translate/core'

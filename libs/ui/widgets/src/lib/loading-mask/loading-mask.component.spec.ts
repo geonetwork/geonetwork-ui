@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { LoadingMaskComponent } from './loading-mask.component'
+import { LoadingMaskComponent } from './loading-mask.component.js'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 describe('LoadingMaskComponent', () => {

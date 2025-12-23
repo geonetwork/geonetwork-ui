@@ -9,9 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { FeatureTypeApiModel } from './featureType.api.model'
-import { DescriptionApiModel } from './description.api.model'
-import { MultilingualValueApiModel } from './multilingualValue.api.model'
+import { FeatureTypeApiModel } from './featureType.api.model.js'
+import { DescriptionApiModel } from './description.api.model.js'
+import { MultilingualValueApiModel } from './multilingualValue.api.model.js'
 
 export interface FCRelatedMetadataItemApiModel {
   id?: string

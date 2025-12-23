@@ -14,12 +14,12 @@ import {
   tap,
 } from 'rxjs/operators'
 import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
-import { DataService } from '../service/data.service'
+import { DataService } from '../service/data.service.js'
 import { DataTableComponent } from '@geonetwork-ui/ui/dataviz'
 import {
   DatasetFeatureCatalog,
   DatasetOnlineResource,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import {
   LoadingMaskComponent,

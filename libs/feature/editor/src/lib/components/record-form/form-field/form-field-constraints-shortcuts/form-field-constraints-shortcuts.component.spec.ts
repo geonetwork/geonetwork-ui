@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormFieldConstraintsShortcutsComponent } from './form-field-constraints-shortcuts.component'
+import { FormFieldConstraintsShortcutsComponent } from './form-field-constraints-shortcuts.component.js'
 import { MockBuilder, MockProvider } from 'ng-mocks'
-import { EditorFacade } from '../../../../+state/editor.facade'
+import { EditorFacade } from '../../../../+state/editor.facade.js'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import {
   NOT_APPLICABLE_CONSTRAINT,
   NOT_KNOWN_CONSTRAINT,
-} from './constraints.utils'
+} from './constraints.utils.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FormFieldConstraintsShortcutsComponent', () => {

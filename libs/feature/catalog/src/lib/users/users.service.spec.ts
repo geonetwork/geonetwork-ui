@@ -3,7 +3,7 @@ import { UsersApiService } from '@geonetwork-ui/data-access/gn4'
 import { someUsersFixture } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 
-import { UsersService } from './users.service'
+import { UsersService } from './users.service.js'
 
 class UsersApiServiceMock {
   getUsers = jest.fn(() => of(someUsersFixture()))

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 
-import { FacetItemComponent } from './facet-item.component'
+import { FacetItemComponent } from './facet-item.component.js'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('FacetItemComponent', () => {

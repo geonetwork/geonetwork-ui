@@ -1,5 +1,5 @@
-import { NotificationsService } from './notifications.service'
-import { NotificationContent } from './notification.model'
+import { NotificationsService } from './notifications.service.js'
+import { NotificationContent } from './notification.model.js'
 import { fakeAsync, tick } from '@angular/core/testing'
 import { firstValueFrom, take } from 'rxjs'
 

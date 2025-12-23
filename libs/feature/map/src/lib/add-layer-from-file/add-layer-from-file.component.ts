@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core'
-import { MapFacade } from '../+state/map.facade'
+import { MapFacade } from '../+state/map.facade.js'
 import { MapContextLayerGeojson } from '@geospatial-sdk/core'
 import { firstValueFrom } from 'rxjs'
 import { DragAndDropFileInputComponent } from '@geonetwork-ui/ui/inputs'

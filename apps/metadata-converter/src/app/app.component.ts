@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { StatusComponent } from './components/status/status.component'
-import { RecordOutputXmlComponent } from './components/record-output-xml/record-output-xml.component'
-import { RecordFormComponent } from './components/record-form/record-form.component'
-import { FORMATS, getFormatName } from './md-formats'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { StatusComponent } from './components/status/status.component.js'
+import { RecordOutputXmlComponent } from './components/record-output-xml/record-output-xml.component.js'
+import { RecordFormComponent } from './components/record-form/record-form.component.js'
+import { FORMATS, getFormatName } from './md-formats.js'
 
 @Component({
   selector: 'gn-ui-root',

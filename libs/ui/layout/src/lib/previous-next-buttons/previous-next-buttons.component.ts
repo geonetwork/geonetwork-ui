@@ -8,7 +8,7 @@ import {
   matArrowBackIos,
   matArrowForwardIos,
 } from '@ng-icons/material-icons/baseline'
-import { Paginable } from '../paginable.interface'
+import { Paginable } from '../paginable.interface.js'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 import { TranslateDirective } from '@ngx-translate/core'

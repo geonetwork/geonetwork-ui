@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RecordMetaComponent } from './record-meta.component'
+import { RecordMetaComponent } from './record-meta.component.js'
 
 describe('RecordMetaComponent', () => {
   let component: RecordMetaComponent

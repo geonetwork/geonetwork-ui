@@ -1,7 +1,7 @@
-import { Iso19139Converter } from './iso19139'
-import { BaseConverter } from './base.converter'
-import { Iso191153Converter } from './iso19115-3'
-import { DcatApConverter } from './dcat-ap'
+import { Iso19139Converter } from './iso19139/index.js'
+import { BaseConverter } from './base.converter.js'
+import { Iso191153Converter } from './iso19115-3/index.js'
+import { DcatApConverter } from './dcat-ap/index.js'
 
 export function findConverterForDocument(
   document: string

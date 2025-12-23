@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { NotificationContent } from './notification.model'
+import { NotificationContent } from './notification.model.js'
 import { BehaviorSubject } from 'rxjs'
 
 type NotificationWithIdentity = NotificationContent & { id: number }

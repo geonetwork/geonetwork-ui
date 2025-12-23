@@ -1,11 +1,11 @@
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { Router } from '@angular/router'
-import { appRoutes } from './app.routes'
+import { appRoutes } from './app.routes.js'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import {
   SortByEnum,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 
 @Injectable({
   providedIn: 'root',

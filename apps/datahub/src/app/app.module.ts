@@ -68,17 +68,17 @@ import {
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { environment } from '../environments/environment'
-import { AppComponent } from './app.component'
-import { SearchPageComponent } from './home/search/search-page/search-page.component'
-import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
+import { environment } from '../environments/environment.js'
+import { AppComponent } from './app.component.js'
+import { SearchPageComponent } from './home/search/search-page/search-page.component.js'
+import { OrganizationPageComponent } from './organization/organization-page/organization-page.component.js'
 import {
   MAX_FEATURE_COUNT,
   REUSE_FORM_URL,
-} from './record/record-data-preview/record-data-preview.component'
-import { RecordPageComponent } from './record/record-page/record-page.component'
-import { DatahubRouterService } from './router/datahub-router.service'
-import { DatahubTemplatePageTitleStrategy } from './router/datahub-page-title-strategy.service'
+} from './record/record-data-preview/record-data-preview.component.js'
+import { RecordPageComponent } from './record/record-page/record-page.component.js'
+import { DatahubRouterService } from './router/datahub-router.service.js'
+import { DatahubTemplatePageTitleStrategy } from './router/datahub-page-title-strategy.service.js'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 

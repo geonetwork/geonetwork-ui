@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { RecordLinkedRecordsComponent } from './record-linked-records.component'
+import { RecordLinkedRecordsComponent } from './record-linked-records.component.js'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject } from 'rxjs'

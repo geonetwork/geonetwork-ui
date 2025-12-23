@@ -5,7 +5,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { MaxLinesComponent } from './max-lines.component'
+import { MaxLinesComponent } from './max-lines.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {

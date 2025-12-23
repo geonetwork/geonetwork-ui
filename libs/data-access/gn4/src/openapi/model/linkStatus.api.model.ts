@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ISODateApiModel } from './iSODate.api.model'
+import { ISODateApiModel } from './iSODate.api.model.js'
 
 export interface LinkStatusApiModel {
   id?: number

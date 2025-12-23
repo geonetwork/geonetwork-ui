@@ -1,31 +1,31 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Iso191153Converter } from './iso19115-3.converter'
-import { parseXmlString, xmlToString } from '../xml-utils'
+import { Iso191153Converter } from './iso19115-3.converter.js'
+import { parseXmlString, xmlToString } from '../xml-utils.js'
 // @ts-ignore
-import GENERIC_DATASET from '../fixtures/generic-dataset.iso19115-3.xml'
+import GENERIC_DATASET from '../fixtures/generic-dataset.iso19115-3.xml.js'
 // @ts-ignore
-import GENERIC_DATASET_PLUS_METAWAL_DATASET from '../fixtures/generic-dataset+metawal.iso19115-3.xml'
+import GENERIC_DATASET_PLUS_METAWAL_DATASET from '../fixtures/generic-dataset+metawal.iso19115-3.xml.js'
 // @ts-ignore
-import METAWAL_DATASET from '../fixtures/metawal.iso19115-3.dataset.xml'
+import METAWAL_DATASET from '../fixtures/metawal.iso19115-3.dataset.xml.js'
 // @ts-ignore
-import METAWAL_SERVICE from '../fixtures/metawal.iso19115-3.service.xml'
+import METAWAL_SERVICE from '../fixtures/metawal.iso19115-3.service.xml.js'
 // @ts-ignore
-import SEXTANT_CURRENTS_DATASET from '../fixtures/sextant.iso19115-3.dataset.xml'
+import SEXTANT_CURRENTS_DATASET from '../fixtures/sextant.iso19115-3.dataset.xml.js'
 // @ts-ignore
-import { WALLONIE_SERVICE_NAPITSWALLONIA_RECORD } from '../fixtures/wallonie.records.service+napitswallonia'
+import { WALLONIE_SERVICE_NAPITSWALLONIA_RECORD } from '../fixtures/wallonie.records.service+napitswallonia.js'
 // @ts-ignore
-import WALLONIE_SERVICE_NAPITSWALLONIA from '../fixtures/wallonie.iso19115-3.service+napitswallonia.xml'
+import WALLONIE_SERVICE_NAPITSWALLONIA from '../fixtures/wallonie.iso19115-3.service+napitswallonia.xml.js'
 // @ts-ignore
-import WALLONIE_REUSE_SPW from '../fixtures/wallonie.iso19115-3.reuse+spw.xml'
+import WALLONIE_REUSE_SPW from '../fixtures/wallonie.iso19115-3.reuse+spw.xml.js'
 // @ts-ignore
-import { WALLONIE_REUSE_SPW_RECORD } from '../fixtures/wallonie.records.reuse'
+import { WALLONIE_REUSE_SPW_RECORD } from '../fixtures/wallonie.records.reuse.js'
 
 import {
   METAWAL_DATASET_RECORD,
   METAWAL_SERVICE_RECORD,
-} from '../fixtures/metawal.records'
-import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
-import { SEXTANT_CURRENTS_DATASET_RECORD } from '../fixtures/sextant.records'
+} from '../fixtures/metawal.records.js'
+import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records.js'
+import { SEXTANT_CURRENTS_DATASET_RECORD } from '../fixtures/sextant.records.js'
 
 // this makes the xml go through the same formatting as the converter
 function formatXml(xmlString: string) {

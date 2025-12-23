@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { PaginationComponent } from './pagination.component'
+import { PaginationComponent } from './pagination.component.js'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { Paginable } from '../paginable.interface'
+import { Paginable } from '../paginable.interface.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class MockPaginable implements Paginable {

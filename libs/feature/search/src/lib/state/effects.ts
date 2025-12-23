@@ -35,16 +35,16 @@ import {
   SetResultsAggregations,
   SetResultsHits,
   UPDATE_FILTERS,
-} from './actions'
-import { SearchState, SearchStateSearch } from './reducer'
-import { getSearchStateSearch } from './selectors'
+} from './actions.js'
+import { SearchState, SearchStateSearch } from './reducer.js'
+import { getSearchStateSearch } from './selectors.js'
 import { HttpErrorResponse } from '@angular/common/http'
-import { switchMapWithSearchId } from '../utils/operators/search.operator'
+import { switchMapWithSearchId } from '../utils/operators/search.operator.js'
 import { Geometry } from 'geojson'
-import { FILTER_GEOMETRY } from '../filter-geometry.token'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { FILTER_GEOMETRY } from '../filter-geometry.token.js'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { FavoritesService } from '@geonetwork-ui/api/repository'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { valid as validGeoJson } from 'geojson-validation'
 
 @Injectable()

@@ -10,7 +10,7 @@ import {
   DatasetRecord,
   ReuseRecord,
   ServiceRecord,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
@@ -32,7 +32,7 @@ import {
 import { matArrowBack, matCreditCard } from '@ng-icons/material-icons/baseline'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { combineLatest, map } from 'rxjs'
-import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
+import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component.js'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'

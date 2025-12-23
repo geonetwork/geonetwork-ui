@@ -1,8 +1,8 @@
 import { Component, OnDestroy, inject } from '@angular/core'
 import { catchError, firstValueFrom, from, Subject, takeUntil } from 'rxjs'
 import { debounceTime, switchMap } from 'rxjs/operators'
-import { GeocodingService } from '../geocoding.service'
-import { MapFacade } from '../+state/map.facade'
+import { GeocodingService } from '../geocoding.service.js'
+import { MapFacade } from '../+state/map.facade.js'
 
 import { SearchInputComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslatePipe } from '@ngx-translate/core'

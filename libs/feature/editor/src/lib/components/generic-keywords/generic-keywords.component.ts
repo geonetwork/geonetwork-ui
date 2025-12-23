@@ -2,15 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  inject,
   Input,
   Output,
-  inject,
 } from '@angular/core'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { AutocompleteComponent, BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { map } from 'rxjs'
-import { Keyword } from '@geonetwork-ui/common/domain/model/record'
-import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
+import { Keyword } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus/index.js'
 import { TranslatePipe } from '@ngx-translate/core'
 import {
   NgIconComponent,

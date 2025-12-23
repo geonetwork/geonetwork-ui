@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { AddLayerFromFileComponent } from './add-layer-from-file.component'
-import { MapFacade } from '../+state/map.facade'
+import { AddLayerFromFileComponent } from './add-layer-from-file.component.js'
+import { MapFacade } from '../+state/map.facade.js'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { of } from 'rxjs'
 import { mapCtxFixture } from '@geonetwork-ui/common/fixtures'

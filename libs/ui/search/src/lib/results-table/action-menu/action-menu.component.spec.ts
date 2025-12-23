@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ActionMenuComponent } from './action-menu.component'
+import { ActionMenuComponent } from './action-menu.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('ActionMenuComponent', () => {

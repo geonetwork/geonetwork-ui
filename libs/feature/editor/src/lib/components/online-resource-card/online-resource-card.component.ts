@@ -10,7 +10,7 @@ import {
   DatasetDownloadDistribution,
   OnlineLinkResource,
   OnlineResource,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { bytesToMegabytes, getFileFormat } from '@geonetwork-ui/util/shared'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import {

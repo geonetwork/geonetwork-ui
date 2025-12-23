@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { ExcelReader, parseExcel } from './excel'
+import { ExcelReader, parseExcel } from './excel.js'
 import fetchMock from 'fetch-mock-jest'
 import { useCache } from '@camptocamp/ogc-client'
 

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { DatavizModule } from './dataviz/dataviz.module'
+import { DatavizModule } from './dataviz/dataviz.module.js'
 
 @Module({
   imports: [

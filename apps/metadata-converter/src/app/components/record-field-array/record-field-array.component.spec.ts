@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { RecordFieldArrayComponent } from './record-field-array.component'
+import { RecordFieldArrayComponent } from './record-field-array.component.js'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('RecordFieldArrayComponent', () => {

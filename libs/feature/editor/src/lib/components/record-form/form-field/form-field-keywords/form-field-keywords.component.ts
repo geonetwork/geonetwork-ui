@@ -2,17 +2,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  inject,
   Input,
   Output,
-  inject,
 } from '@angular/core'
-import { Keyword } from '@geonetwork-ui/common/domain/model/record'
-import { GenericKeywordsComponent } from '../../../generic-keywords/generic-keywords.component'
+import { Keyword } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { GenericKeywordsComponent } from '../../../generic-keywords/generic-keywords.component.js'
 import { TranslatePipe } from '@ngx-translate/core'
-import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
-import { EditorFacade } from '../../../../+state/editor.facade'
+import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus/index.js'
+import { EditorFacade } from '../../../../+state/editor.facade.js'
 import { firstValueFrom, map } from 'rxjs'
-import { SPATIAL_SCOPES } from '../../../../fields.config'
+import { SPATIAL_SCOPES } from '../../../../fields.config.js'
 
 @Component({
   selector: 'gn-ui-form-field-keywords',

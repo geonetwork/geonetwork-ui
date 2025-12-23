@@ -6,11 +6,11 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing'
-import { TableViewComponent } from './table-view.component'
+import { TableViewComponent } from './table-view.component.js'
 import { delay, firstValueFrom, of, throwError } from 'rxjs'
 import { ChangeDetectionStrategy } from '@angular/core'
 import { By } from '@angular/platform-browser'
-import { DataService } from '../service/data.service'
+import { DataService } from '../service/data.service.js'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
 import { MockBuilder } from 'ng-mocks'

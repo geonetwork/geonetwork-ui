@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { charItemFixture } from './chart.fixtures'
-import { ChartComponent } from './chart.component'
+import { charItemFixture } from './chart.fixtures.js'
+import { ChartComponent } from './chart.component.js'
 import { Chart } from 'chart.js'
 import { ChangeDetectionStrategy } from '@angular/core'
 

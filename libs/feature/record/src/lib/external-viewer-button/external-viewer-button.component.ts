@@ -1,11 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   InjectionToken,
   Input,
-  inject,
 } from '@angular/core'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { getFileFormat } from '@geonetwork-ui/util/shared'

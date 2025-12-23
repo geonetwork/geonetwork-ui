@@ -1,5 +1,5 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import { FormFieldWrapperComponent } from './form-field-wrapper.component'
+import { FormFieldWrapperComponent } from './form-field-wrapper.component.js'
 import { TranslateModule } from '@ngx-translate/core'
 
 export default {

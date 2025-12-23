@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { DateRangeDropdownComponent } from './date-range-dropdown.component'
+import { DateRangeDropdownComponent } from './date-range-dropdown.component.js'
 
 describe('DateRangeDropdownComponent', () => {
   let component: DateRangeDropdownComponent

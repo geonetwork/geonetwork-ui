@@ -2,12 +2,12 @@ import {
   EDITOR_FEATURE_KEY,
   EditorPartialState,
   initialEditorState,
-} from './editor.reducer'
-import * as EditorSelectors from './editor.selectors'
+} from './editor.reducer.js'
+import * as EditorSelectors from './editor.selectors.js'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { DEFAULT_CONFIGURATION } from '../fields.config'
-import { EditorSectionWithValues } from './editor.models'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DEFAULT_CONFIGURATION } from '../fields.config.js'
+import { EditorSectionWithValues } from './editor.models.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 describe('Editor Selectors', () => {
   let state: EditorPartialState

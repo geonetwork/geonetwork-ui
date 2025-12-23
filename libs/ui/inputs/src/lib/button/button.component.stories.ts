@@ -4,7 +4,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { ButtonComponent } from './button.component'
+import { ButtonComponent } from './button.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'

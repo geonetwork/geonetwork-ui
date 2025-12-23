@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
-import { HomeHeaderComponent } from '../home-header/home-header.component'
+import { HomeHeaderComponent } from '../home-header/home-header.component.js'
 import { RouterOutlet } from '@angular/router'
 
 @Component({

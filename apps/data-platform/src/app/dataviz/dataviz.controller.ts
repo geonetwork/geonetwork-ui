@@ -14,10 +14,10 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger'
-import { DatavizService } from './dataviz.service'
-import { CreateDatavizDto } from './dto/create-dataviz.dto'
-import { UpdateDatavizDto } from './dto/update-dataviz.dto'
-import { Dataviz } from './entities/dataviz.entity'
+import { DatavizService } from './dataviz.service.js'
+import { CreateDatavizDto } from './dto/create-dataviz.dto.js'
+import { UpdateDatavizDto } from './dto/update-dataviz.dto.js'
+import { Dataviz } from './entities/dataviz.entity.js'
 
 @ApiTags('Dataviz')
 @Controller('dataviz')

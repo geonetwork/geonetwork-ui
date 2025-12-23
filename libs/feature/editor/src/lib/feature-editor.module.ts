@@ -2,9 +2,9 @@ import { provideHttpClient } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
-import { EditorEffects } from './+state/editor.effects'
-import { EditorFacade } from './+state/editor.facade'
-import * as fromEditor from './+state/editor.reducer'
+import { EditorEffects } from './+state/editor.effects.js'
+import { EditorFacade } from './+state/editor.facade.js'
+import * as fromEditor from './+state/editor.reducer.js'
 
 @NgModule({
   imports: [

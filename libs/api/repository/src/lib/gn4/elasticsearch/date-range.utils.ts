@@ -1,4 +1,4 @@
-import { FieldFilter } from '@geonetwork-ui/common/domain/model/search'
+import { FieldFilter } from '@geonetwork-ui/common/domain/model/search/index.js'
 
 export function isDateRange(filter: FieldFilter): boolean {
   if (!filter) return false

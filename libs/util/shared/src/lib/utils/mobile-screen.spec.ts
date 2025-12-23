@@ -1,4 +1,4 @@
-import { getIsMobile } from './mobile-screen'
+import { getIsMobile } from './mobile-screen.js'
 import { firstValueFrom } from 'rxjs'
 import { take, toArray } from 'rxjs/operators'
 

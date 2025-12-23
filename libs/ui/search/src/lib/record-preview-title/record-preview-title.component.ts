@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-import { RecordPreviewComponent } from '../record-preview/record-preview.component'
+import { RecordPreviewComponent } from '../record-preview/record-preview.component.js'
 
 @Component({
   selector: 'gn-ui-record-preview-title',

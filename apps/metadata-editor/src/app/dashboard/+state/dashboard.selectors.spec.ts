@@ -1,4 +1,4 @@
-import { getActiveMenu } from './dashboard.selectors'
+import { getActiveMenu } from './dashboard.selectors.js'
 
 describe('Dashboard Selectors', () => {
   let state

@@ -4,9 +4,9 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { FacetBlockComponent } from './facet-block.component'
-import { blockModelFixture } from '../fixtures'
-import { FacetItemComponent } from '../facet-item/facet-item.component'
+import { FacetBlockComponent } from './facet-block.component.js'
+import { blockModelFixture } from '../fixtures.js'
+import { FacetItemComponent } from '../facet-item/facet-item.component.js'
 import { FormsModule } from '@angular/forms'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

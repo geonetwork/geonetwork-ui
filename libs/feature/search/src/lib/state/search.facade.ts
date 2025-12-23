@@ -22,8 +22,8 @@ import {
   SetSpatialFilterEnabled,
   UpdateConfigAggregations,
   UpdateFilters,
-} from './actions'
-import { SearchError, SearchState, SearchStateParams } from './reducer'
+} from './actions.js'
+import { SearchError, SearchState, SearchStateParams } from './reducer.js'
 import {
   currentPage,
   getError,
@@ -39,8 +39,8 @@ import {
   getSearchSortBy,
   getSpatialFilterEnabled,
   totalPages,
-} from './selectors'
-import { FILTER_GEOMETRY } from '../filter-geometry.token'
+} from './selectors.js'
+import { FILTER_GEOMETRY } from '../filter-geometry.token.js'
 import { Geometry } from 'geojson'
 import { catchError, map, shareReplay } from 'rxjs/operators'
 import {
@@ -49,8 +49,8 @@ import {
   FieldFilters,
   FieldName,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 @Injectable()
 export class SearchFacade {

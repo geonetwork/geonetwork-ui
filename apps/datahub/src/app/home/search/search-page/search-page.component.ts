@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
   inject,
+  OnInit,
 } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import {
@@ -11,14 +11,14 @@ import {
   ResultsListContainerComponent,
   SearchFacade,
 } from '@geonetwork-ui/feature/search'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   getMetadataQualityConfig,
   getOptionalSearchConfig,
   MetadataQualityConfig,
   SearchConfig,
 } from '@geonetwork-ui/util/app-config'
-import { SearchFiltersComponent } from '../search-filters/search-filters.component'
+import { SearchFiltersComponent } from '../search-filters/search-filters.component.js'
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
   RESULTS_LAYOUT_CONFIG,

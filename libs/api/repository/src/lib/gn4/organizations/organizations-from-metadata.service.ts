@@ -7,13 +7,13 @@ import {
 import {
   FieldFilterByValues,
   FieldFilters,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 import {
   CatalogRecord,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { ElasticsearchService } from '../elasticsearch'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
+import { ElasticsearchService } from '../elasticsearch/index.js'
 import {
   getAsArray,
   getAsUrl,
@@ -34,7 +34,7 @@ import {
   withLatestFrom,
 } from 'rxjs/operators'
 import { toLang3 } from '@geonetwork-ui/util/i18n'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 import { coerce, satisfies, valid } from 'semver'
 import { TranslateService } from '@ngx-translate/core'
 

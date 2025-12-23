@@ -1,1 +1,1 @@
-export * from './aggregations-model-response'
+export * from './aggregations-model-response.js'

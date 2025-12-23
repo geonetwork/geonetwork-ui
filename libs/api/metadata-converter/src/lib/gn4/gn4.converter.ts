@@ -1,10 +1,10 @@
-import { Gn4FieldMapper } from './gn4.field.mapper'
+import { Gn4FieldMapper } from './gn4.field.mapper.js'
 import { lastValueFrom } from 'rxjs'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { BaseConverter } from '../base.converter'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { BaseConverter } from '../base.converter.js'
 import { Injectable } from '@angular/core'
-import { Gn4Record } from './types'
+import { Gn4Record } from './types/index.js'
 
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { PaginationButtonsComponent } from './pagination-buttons.component'
-import { Paginable } from '../paginable.interface'
+import { PaginationButtonsComponent } from './pagination-buttons.component.js'
+import { Paginable } from '../paginable.interface.js'
 
 class MockPaginable implements Paginable {
   currentPage = 1

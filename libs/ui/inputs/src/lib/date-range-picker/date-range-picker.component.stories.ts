@@ -1,7 +1,7 @@
 import { importProvidersFrom } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Meta, StoryObj, applicationConfig } from '@storybook/angular'
-import { DateRangePickerComponent } from './date-range-picker.component'
+import { DateRangePickerComponent } from './date-range-picker.component.js'
 
 export default {
   title: 'Inputs/DateRangePickerComponent',

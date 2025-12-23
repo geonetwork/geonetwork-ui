@@ -1,1 +1,1 @@
-export * from './map-context.fixtures'
+export * from './map-context.fixtures.js'

@@ -16,15 +16,15 @@ import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { TranslateService } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { OverlayContainer } from '@angular/cdk/overlay'
-import { WebcomponentOverlayContainer } from '../webcomponent-overlay-container'
+import { WebcomponentOverlayContainer } from '../webcomponent-overlay-container.js'
 import {
   MetadataLanguage,
   standaloneConfigurationObject,
   TextLanguage,
-} from '../configuration'
+} from '../configuration.js'
 
 @Component({
   selector: 'wc-base',

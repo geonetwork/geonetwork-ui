@@ -1,4 +1,4 @@
-import { AnchorLinkDirective } from './anchor-link.directive'
+import { AnchorLinkDirective } from './anchor-link.directive.js'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Component } from '@angular/core'
 import { By } from '@angular/platform-browser'

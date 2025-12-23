@@ -3,7 +3,7 @@ import {
   DatasetOnlineResource,
   ServiceOnlineResource,
   ServiceProtocol,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   OgcApiEndpoint,
   WfsEndpoint,

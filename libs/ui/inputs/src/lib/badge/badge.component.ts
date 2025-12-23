@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { ButtonComponent } from '../button/button.component'
+import { ButtonComponent } from '../button/button.component.js'
 import {
   NgIconComponent,
   provideIcons,

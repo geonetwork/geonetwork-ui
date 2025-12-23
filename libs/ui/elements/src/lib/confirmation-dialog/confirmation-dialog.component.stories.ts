@@ -2,7 +2,7 @@ import { Component, inject, Input } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import { ConfirmationDialogComponent } from './confirmation-dialog.component'
+import { ConfirmationDialogComponent } from './confirmation-dialog.component.js'
 
 @Component({
   selector: 'gn-ui-launcher',

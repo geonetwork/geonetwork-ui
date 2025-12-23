@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { SettingApiModel } from './setting.api.model'
+import { SettingApiModel } from './setting.api.model.js'
 
 export interface SettingsListResponseApiModel {
   settings?: Array<SettingApiModel>

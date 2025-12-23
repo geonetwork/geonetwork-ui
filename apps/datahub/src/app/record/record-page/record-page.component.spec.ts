@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { RecordPageComponent } from './record-page.component'
+import { RecordPageComponent } from './record-page.component.js'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { SAMPLE_RECORD } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
-import { TitleService } from '../../router/datahub-title.service'
+import { TitleService } from '../../router/datahub-title.service.js'
 
 describe('RecordPageComponent', () => {
   let component: RecordPageComponent

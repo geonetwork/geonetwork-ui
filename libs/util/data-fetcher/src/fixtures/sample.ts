@@ -1,4 +1,4 @@
-import { DataItem } from '../lib/model'
+import { DataItem } from '../lib/model.js'
 
 export const SAMPLE_DATA: DataItem[] = [
   {

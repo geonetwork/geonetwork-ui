@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { RecordPreviewTitleComponent } from './record-preview-title.component'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { RecordPreviewTitleComponent } from './record-preview-title.component.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 describe('RecordPreviewTextComponent', () => {
   let component: RecordPreviewTitleComponent

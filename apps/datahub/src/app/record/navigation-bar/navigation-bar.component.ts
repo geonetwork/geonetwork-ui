@@ -10,7 +10,7 @@ import {
 } from '@angular/core'
 import { Router } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'

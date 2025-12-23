@@ -1,1 +1,1 @@
-export * from './publication-version.error'
+export * from './publication-version.error.js'

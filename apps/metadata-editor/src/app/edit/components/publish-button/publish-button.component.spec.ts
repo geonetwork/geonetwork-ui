@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { PublishButtonComponent } from './publish-button.component'
+import { PublishButtonComponent } from './publish-button.component.js'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { BehaviorSubject, firstValueFrom, of, Subject } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'

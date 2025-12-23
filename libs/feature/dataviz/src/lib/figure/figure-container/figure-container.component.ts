@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core'
 import { FigureComponent, TableItemModel } from '@geonetwork-ui/ui/dataviz'
-import { FigureService } from '../figure.service'
+import { FigureService } from '../figure.service.js'
 
 @Component({
   selector: 'gn-ui-figure-container',

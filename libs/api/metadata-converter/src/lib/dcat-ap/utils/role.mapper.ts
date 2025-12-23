@@ -1,4 +1,4 @@
-import { Role } from '@geonetwork-ui/common/domain/model/record'
+import { Role } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export function getRoleFromRoleCode(roleCode: string): Role {
   if (!roleCode) return 'unspecified'

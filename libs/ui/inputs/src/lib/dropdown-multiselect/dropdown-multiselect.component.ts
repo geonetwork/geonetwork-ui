@@ -18,12 +18,12 @@ import {
   ScrollStrategyOptions,
 } from '@angular/cdk/overlay'
 import { take } from 'rxjs/operators'
-import { Choice } from './dropdown-multiselect.model'
+import { Choice } from './dropdown-multiselect.model.js'
 import {
   createFuzzyFilter,
   propagateToDocumentOnly,
 } from '@geonetwork-ui/util/shared'
-import { ButtonComponent } from '../button/button.component'
+import { ButtonComponent } from '../button/button.component.js'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { FormsModule } from '@angular/forms'
 import { TranslatePipe } from '@ngx-translate/core'

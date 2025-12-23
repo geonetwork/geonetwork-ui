@@ -1,4 +1,4 @@
-import { SearchRouteReuseStrategy } from './SearchRouteReuseStrategy'
+import { SearchRouteReuseStrategy } from './SearchRouteReuseStrategy.js'
 
 const handle = {
   id: 'DetachedRouteHandle',

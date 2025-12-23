@@ -5,13 +5,13 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { FigureContainerComponent } from './figure-container.component'
+import { FigureContainerComponent } from './figure-container.component.js'
 import { importProvidersFrom } from '@angular/core'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
   someFigureItemFixture,
   someHabFigureItemFixture,
-} from '../figure.fixtures'
+} from '../figure.fixtures.js'
 
 export default {
   title: 'Dataviz/FigureContainerComponent',

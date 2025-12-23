@@ -5,9 +5,9 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing'
-import { ChartViewComponent } from './chart-view.component'
+import { ChartViewComponent } from './chart-view.component.js'
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
-import { DataService } from '../service/data.service'
+import { DataService } from '../service/data.service.js'
 import { firstValueFrom, of, throwError } from 'rxjs'
 import { By } from '@angular/platform-browser'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'

@@ -9,7 +9,7 @@ import { BehaviorSubject, of, throwError } from 'rxjs'
 import {
   MAX_FEATURE_COUNT,
   RecordDataPreviewComponent,
-} from './record-data-preview.component'
+} from './record-data-preview.component.js'
 import {
   DataViewComponent,
   DataViewShareComponent,
@@ -23,8 +23,8 @@ import { StacViewComponent } from '@geonetwork-ui/feature/record'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { SAMPLE_RECORD } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 describe('RecordDataPreviewComponent', () => {
   let component: RecordDataPreviewComponent

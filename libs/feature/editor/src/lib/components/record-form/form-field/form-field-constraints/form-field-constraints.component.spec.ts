@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FormFieldConstraintsComponent } from './form-field-constraints.component'
+import { FormFieldConstraintsComponent } from './form-field-constraints.component.js'
 import { MockBuilder, MockInstance, MockProvider } from 'ng-mocks'
-import { EditorFacade } from '../../../../+state/editor.facade'
+import { EditorFacade } from '../../../../+state/editor.facade.js'
 import { BehaviorSubject, of } from 'rxjs'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

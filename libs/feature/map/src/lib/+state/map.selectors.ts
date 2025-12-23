@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
-import { MAP_FEATURE_KEY, MapState } from './map.reducer'
+import { MAP_FEATURE_KEY, MapState } from './map.reducer.js'
 
 // Lookup the 'Map' feature state managed by NgRx
 export const getMapState = createFeatureSelector<MapState>(MAP_FEATURE_KEY)

@@ -7,9 +7,9 @@ import {
 import {
   FieldFilters,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
-import { ROUTE_PARAMS, SearchRouteParams } from '../constants'
-import { RouterFacade } from '../state/router.facade'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
+import { ROUTE_PARAMS, SearchRouteParams } from '../constants.js'
+import { RouterFacade } from '../state/router.facade.js'
 import { firstValueFrom } from 'rxjs'
 import { sortByToString } from '@geonetwork-ui/util/shared'
 

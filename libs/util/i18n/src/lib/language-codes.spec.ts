@@ -1,4 +1,4 @@
-import { toLang2, toLang3 } from './language-codes'
+import { toLang2, toLang3 } from './language-codes.js'
 
 describe('Language codes utils', () => {
   describe('toLang3', () => {

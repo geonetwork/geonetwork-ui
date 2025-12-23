@@ -10,7 +10,7 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs/operators'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 
 const SELECTION_ID = 0 // hardcoded to always point on the first selection
 

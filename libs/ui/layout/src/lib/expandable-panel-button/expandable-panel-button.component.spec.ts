@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ExpandablePanelButtonComponent } from './expandable-panel-button.component'
+import { ExpandablePanelButtonComponent } from './expandable-panel-button.component.js'
 
 describe('ExpandablePanelButtonComponent', () => {
   let component: ExpandablePanelButtonComponent

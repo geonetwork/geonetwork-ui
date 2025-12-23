@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AssociatedSiblingMetadataItemApiModel } from './associatedSiblingMetadataItem.api.model'
+import { AssociatedSiblingMetadataItemApiModel } from './associatedSiblingMetadataItem.api.model.js'
 
 export interface AssociatedApiModel {
   item?: Array<AssociatedSiblingMetadataItemApiModel>

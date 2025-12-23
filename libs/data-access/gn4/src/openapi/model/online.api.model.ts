@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { RelatedLinkItemApiModel } from './relatedLinkItem.api.model'
+import { RelatedLinkItemApiModel } from './relatedLinkItem.api.model.js'
 
 export interface OnlineApiModel {
   item?: Array<RelatedLinkItemApiModel>

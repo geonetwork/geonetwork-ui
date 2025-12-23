@@ -4,7 +4,7 @@ import { FacetPath, ModelBlock, ModelItem } from '@geonetwork-ui/ui/search'
 import {
   FieldFilter,
   FieldFilters,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 
 @Injectable({
   providedIn: 'root',

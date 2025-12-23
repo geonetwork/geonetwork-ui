@@ -1,8 +1,8 @@
 import { BlankNode, Literal, NamedNode, Statement, Store, sym } from 'rdflib'
 import { XmlElement, XmlText } from '@rgrove/parse-xml'
-import { DCAT, FOAF, RDF } from '../namespaces'
-import { createDocument, NAMESPACES, xmlToString } from '../../xml-utils'
-import { BASE_URI } from './uri'
+import { DCAT, FOAF, RDF } from '../namespaces.js'
+import { createDocument, NAMESPACES, xmlToString } from '../../xml-utils.js'
+import { BASE_URI } from './uri.js'
 
 function fullNameToXml(dataStore: Store, fullName: string): [string, string] {
   for (const key in NAMESPACES) {

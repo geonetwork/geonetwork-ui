@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { DatavizController } from './dataviz.controller'
-import { DatavizService } from './dataviz.service'
+import { DatavizController } from './dataviz.controller.js'
+import { DatavizService } from './dataviz.service.js'
 
 class DatavizServiceMock {}
 

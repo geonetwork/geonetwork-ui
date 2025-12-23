@@ -4,7 +4,7 @@ import { RouterStateSnapshot, TitleStrategy } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 import { catchError, combineLatest, of } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { TitleService } from './datahub-title.service'
+import { TitleService } from './datahub-title.service.js'
 
 @Injectable()
 export class DatahubTemplatePageTitleStrategy extends TitleStrategy {

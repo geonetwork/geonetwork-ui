@@ -1,5 +1,5 @@
 import { provideHttpClient } from '@angular/common/http'
-import { CHART_TYPE_VALUES } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { CHART_TYPE_VALUES } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model.js'
 import {
   applicationConfig,
   componentWrapperDecorator,
@@ -7,7 +7,7 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { ChartComponent } from './chart.component'
+import { ChartComponent } from './chart.component.js'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 

@@ -1,8 +1,8 @@
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { MetadataInfoComponent } from './metadata-info.component'
+import { MetadataInfoComponent } from './metadata-info.component.js'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export default {
   title: 'Elements/MetadataInfoComponent',

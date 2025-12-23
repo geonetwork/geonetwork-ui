@@ -8,10 +8,10 @@ import {
   UsersApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { TestBed } from '@angular/core/testing'
-import { Gn4PlatformService, DISABLE_AUTH } from './gn4-platform.service'
+import { Gn4PlatformService, DISABLE_AUTH } from './gn4-platform.service.js'
 import { firstValueFrom, lastValueFrom, of, Subject, throwError } from 'rxjs'
-import { AvatarServiceInterface } from '../auth/avatar.service.interface'
-import { Gn4PlatformMapper } from './gn4-platform.mapper'
+import { AvatarServiceInterface } from '../auth/avatar.service.interface.js'
+import { Gn4PlatformMapper } from './gn4-platform.mapper.js'
 import {
   datasetRecordsFixture,
   someUserFeedbacksFixture,
@@ -19,9 +19,9 @@ import {
 } from '@geonetwork-ui/common/fixtures'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { HttpClient, HttpEventType } from '@angular/common/http'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { TranslateService } from '@ngx-translate/core'
-import { Gn4SettingsService } from '../settings/gn4-settings.service'
+import { Gn4SettingsService } from '../settings/gn4-settings.service.js'
 
 let geonetworkVersion: string
 

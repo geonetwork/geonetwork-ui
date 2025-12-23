@@ -6,8 +6,8 @@ import {
   ResultsListComponent,
 } from '@geonetwork-ui/ui/search'
 import { BehaviorSubject, of } from 'rxjs'
-import { SearchFacade } from '../state/search.facade'
-import { ResultsListContainerComponent } from './results-list.container.component'
+import { SearchFacade } from '../state/search.facade.js'
+import { ResultsListContainerComponent } from './results-list.container.component.js'
 import {
   ButtonComponent,
   ViewportIntersectorComponent,
@@ -17,10 +17,10 @@ import {
   RECORD_DATASET_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
-} from '../record-url.token'
+} from '../record-url.token.js'
 import { ErrorComponent } from '@geonetwork-ui/ui/elements'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
-import { FavoriteStarComponent } from '../favorites/favorite-star/favorite-star.component'
+import { FavoriteStarComponent } from '../favorites/favorite-star/favorite-star.component.js'
 import { TranslateModule } from '@ngx-translate/core'
 
 class SearchFacadeMock {

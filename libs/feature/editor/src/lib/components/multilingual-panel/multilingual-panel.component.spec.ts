@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MultilingualPanelComponent } from './multilingual-panel.component'
+import { MultilingualPanelComponent } from './multilingual-panel.component.js'
 import { of } from 'rxjs'
-import { EditorFacade } from '../../+state/editor.facade'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { EditorFacade } from '../../+state/editor.facade.js'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class RecordsRepositoryMock {

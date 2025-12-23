@@ -1,4 +1,4 @@
-import { parse } from './parse'
+import { parse } from './parse.js'
 
 describe('utils.parse', () => {
   it('getter and setter', () => {

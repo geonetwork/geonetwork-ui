@@ -1,7 +1,7 @@
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
-import { CheckboxComponent } from './checkbox.component'
+import { CheckboxComponent } from './checkbox.component.js'
 
 export default {
   title: 'Inputs/CheckboxComponent',

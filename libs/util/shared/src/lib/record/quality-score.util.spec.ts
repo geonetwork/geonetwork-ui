@@ -1,10 +1,10 @@
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 import {
   ValidatorMapperKeys,
   getAllKeysValidator,
   getQualityValidators,
-} from './quality-score.util'
+} from './quality-score.util.js'
 
 describe('Metadata Validators', () => {
   const mockRecord: Partial<CatalogRecord> = {

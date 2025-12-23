@@ -1,44 +1,44 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Iso19139Converter } from './iso19139.converter'
-import { parseXmlString, xmlToString } from '../xml-utils'
-import { GEO2FRANCE_PLU_DATASET_RECORD } from '../fixtures/geo2france.records'
-import { GEO2FRANCE_REUSE_ONGULES_RECORD } from '../fixtures/geo2france.records.reuse+ongules'
-import { GEO2FRANCE_REUSE_ROILAYE_RECORD } from '../fixtures/geo2france.records.reuse+roilaye'
-import { GEORHENA_REUSE_SOLAIRE_RECORD } from '../fixtures/georhena.records'
+import { Iso19139Converter } from './iso19139.converter.js'
+import { parseXmlString, xmlToString } from '../xml-utils.js'
+import { GEO2FRANCE_PLU_DATASET_RECORD } from '../fixtures/geo2france.records.js'
+import { GEO2FRANCE_REUSE_ONGULES_RECORD } from '../fixtures/geo2france.records.reuse+ongules.js'
+import { GEO2FRANCE_REUSE_ROILAYE_RECORD } from '../fixtures/geo2france.records.reuse+roilaye.js'
+import { GEORHENA_REUSE_SOLAIRE_RECORD } from '../fixtures/georhena.records.js'
 import {
   GEOCAT_CH_DATASET_RECORD,
   GEOCAT_CH_SERVICE_RECORD,
-} from '../fixtures/geocat-ch.records'
-import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
+} from '../fixtures/geocat-ch.records.js'
+import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records.js'
 import {
   METADATA_FOR_I18N_DATASET_RECORD,
   METADATA_FOR_I18N_NO_OTHERLANGUAGE,
-} from '../fixtures/metadata-for-i18n.records'
-import METADATA_FOR_I18N_XML from '../fixtures/metadata-for-i18n.dataset.xml'
-import METADATA_FOR_I18N_NO_OTHERLANGUAGE_XML from '../fixtures/metadata-for-i18n-no-otherlanguage.dataset.xml'
+} from '../fixtures/metadata-for-i18n.records.js'
+import METADATA_FOR_I18N_XML from '../fixtures/metadata-for-i18n.dataset.xml.js'
+import METADATA_FOR_I18N_NO_OTHERLANGUAGE_XML from '../fixtures/metadata-for-i18n-no-otherlanguage.dataset.xml.js'
 // @ts-ignore
-import GEO2FRANCE_PLU_DATASET from '../fixtures/geo2france.iso19139.plu.xml'
+import GEO2FRANCE_PLU_DATASET from '../fixtures/geo2france.iso19139.plu.xml.js'
 // @ts-ignore
-import { GEO2FRANCE_SERVICE_EAUXUSEES_RECORD } from '../fixtures/geo2france.records.service+eaux-usees'
+import { GEO2FRANCE_SERVICE_EAUXUSEES_RECORD } from '../fixtures/geo2france.records.service+eaux-usees.js'
 // @ts-ignore
-import GEO2FRANCE_SERVICE_EAUXUSEES from '../fixtures/geo2france.iso19139.service+eaux-usees.xml'
+import GEO2FRANCE_SERVICE_EAUXUSEES from '../fixtures/geo2france.iso19139.service+eaux-usees.xml.js'
 // @ts-ignore
-import GEO2FRANCE_REUSE_ONGULES from '../fixtures/geo2france.iso19139.reuse+ongules.xml'
+import GEO2FRANCE_REUSE_ONGULES from '../fixtures/geo2france.iso19139.reuse+ongules.xml.js'
 // @ts-ignore
-import GEO2FRANCE_REUSE_ONGULES_DUMMY from '../fixtures/geo2france.iso19139.reuse+ongules_dummy.xml'
+import GEO2FRANCE_REUSE_ONGULES_DUMMY from '../fixtures/geo2france.iso19139.reuse+ongules_dummy.xml.js'
 // @ts-ignore
-import GEO2FRANCE_REUSE_ROILAYE from '../fixtures/geo2france.iso19139.reuse+roilaye.xml'
+import GEO2FRANCE_REUSE_ROILAYE from '../fixtures/geo2france.iso19139.reuse+roilaye.xml.js'
 // @ts-ignore
-import GEORHENA_REUSE_SOLAIRE from '../fixtures/georhena.iso19139.reuse+solaire.xml'
+import GEORHENA_REUSE_SOLAIRE from '../fixtures/georhena.iso19139.reuse+solaire.xml.js'
 // @ts-ignore
-import GENERIC_DATASET_PLUS_GEO2FRANCE_DATASET from '../fixtures/generic-dataset+geo2france-plu.iso19139.xml'
+import GENERIC_DATASET_PLUS_GEO2FRANCE_DATASET from '../fixtures/generic-dataset+geo2france-plu.iso19139.xml.js'
 // @ts-ignore
-import GEOCAT_CH_DATASET from '../fixtures/geocat-ch.iso19139.dataset.xml'
+import GEOCAT_CH_DATASET from '../fixtures/geocat-ch.iso19139.dataset.xml.js'
 // @ts-ignore
-import GEOCAT_CH_SERVICE from '../fixtures/geocat-ch.iso19139.service.xml'
+import GEOCAT_CH_SERVICE from '../fixtures/geocat-ch.iso19139.service.xml.js'
 // @ts-ignore
-import GENERIC_DATASET from '../fixtures/generic-dataset.iso19139.xml'
-import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record'
+import GENERIC_DATASET from '../fixtures/generic-dataset.iso19139.xml.js'
+import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 // this makes the xml go through the same formatting as the converter
 function formatXml(xmlString: string) {

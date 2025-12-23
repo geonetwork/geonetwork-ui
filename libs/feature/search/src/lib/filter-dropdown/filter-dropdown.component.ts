@@ -12,14 +12,14 @@ import {
 } from '@geonetwork-ui/ui/inputs'
 import { Observable, of, switchMap } from 'rxjs'
 import { catchError, filter, map, startWith } from 'rxjs/operators'
-import { SearchFacade } from '../state/search.facade'
-import { SearchService } from '../utils/service/search.service'
-import { FieldsService } from '../utils/service/fields.service'
+import { SearchFacade } from '../state/search.facade.js'
+import { SearchService } from '../utils/service/search.service.js'
+import { FieldsService } from '../utils/service/fields.service.js'
 import {
   FieldAvailableValue,
   FieldType,
   FieldValue,
-} from '../utils/service/fields'
+} from '../utils/service/fields.js'
 import { DateRange } from '@geonetwork-ui/api/repository'
 import { CommonModule } from '@angular/common'
 

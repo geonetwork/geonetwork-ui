@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { SearchRouterContainerDirective } from './search-router.container.directive'
+import { SearchRouterContainerDirective } from './search-router.container.directive.js'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 const searchFacadeMock = {

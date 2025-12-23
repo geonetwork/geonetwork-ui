@@ -1,4 +1,4 @@
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const GEO2FRANCE_PLU_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: '7d002c4c-92ef-4b9f-a568-d732f740b99e',

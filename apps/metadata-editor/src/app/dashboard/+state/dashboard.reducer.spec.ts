@@ -1,9 +1,9 @@
-import { SetActiveMenu } from './dashboard.actions'
-import * as fromReducer from './dashboard.reducer'
+import { SetActiveMenu } from './dashboard.actions.js'
+import * as fromReducer from './dashboard.reducer.js'
 import {
   EditorDashboardState,
   initialEditorDashboardState,
-} from './dashboard.reducer'
+} from './dashboard.reducer.js'
 
 describe('Dashboard Reducer', () => {
   describe('unknown action', () => {

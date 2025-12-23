@@ -1,4 +1,4 @@
-import { LayerConfig } from './model'
+import { LayerConfig } from './model.js'
 import { MapContextLayer } from '@geospatial-sdk/core'
 
 export function getMapContextLayerFromConfig(

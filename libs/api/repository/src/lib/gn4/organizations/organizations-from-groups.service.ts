@@ -8,13 +8,13 @@ import { forkJoin, Observable, of } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
 import { TranslateService } from '@ngx-translate/core'
 import { toLang3 } from '@geonetwork-ui/util/i18n'
-import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search/index.js'
 import {
   CatalogRecord,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { ElasticsearchService } from '../elasticsearch'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
+import { ElasticsearchService } from '../elasticsearch/index.js'
 import { getAsUrl, MetadataObject } from '@geonetwork-ui/api/metadata-converter'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'

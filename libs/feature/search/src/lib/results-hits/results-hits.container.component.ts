@@ -9,10 +9,10 @@ import {
 } from 'rxjs'
 import { Component, Input, OnInit, inject } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { SearchFacade } from '../state/search.facade'
-import { FieldAvailableValue, FieldValue } from '../utils/service/fields'
-import { SearchService } from '../utils/service/search.service'
-import { FieldsService } from '../utils/service/fields.service'
+import { SearchFacade } from '../state/search.facade.js'
+import { FieldAvailableValue, FieldValue } from '../utils/service/fields.js'
+import { SearchService } from '../utils/service/search.service.js'
+import { FieldsService } from '../utils/service/fields.service.js'
 import {
   ResultsHitsNumberComponent,
   ResultsHitsSearchKindComponent,

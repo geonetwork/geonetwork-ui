@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common'
 import {
   CatalogRecord,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { MaxLinesComponent } from '@geonetwork-ui/ui/layout'
 import { LetDirective } from '@ngrx/component'
@@ -34,7 +34,7 @@ import { ROUTER_ROUTE_SEARCH } from '@geonetwork-ui/feature/router'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { map, startWith } from 'rxjs/operators'
-import { RecordInternalLinksComponent } from '../../record/record-internal-links/record-internal-links.component'
+import { RecordInternalLinksComponent } from '../../record/record-internal-links/record-internal-links.component.js'
 import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
 import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { tablerFolderOpen } from '@ng-icons/tabler-icons'

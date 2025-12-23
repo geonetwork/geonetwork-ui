@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing'
-import { DuplicateRecordResolver } from './duplicate-record.resolver'
+import { DuplicateRecordResolver } from './duplicate-record.resolver.js'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { of, throwError } from 'rxjs'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { ActivatedRouteSnapshot, convertToParamMap } from '@angular/router'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

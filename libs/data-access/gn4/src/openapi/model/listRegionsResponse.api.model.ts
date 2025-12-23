@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { CategoryResponseApiModel } from './categoryResponse.api.model'
-import { RegionResponseApiModel } from './regionResponse.api.model'
+import { CategoryResponseApiModel } from './categoryResponse.api.model.js'
+import { RegionResponseApiModel } from './regionResponse.api.model.js'
 
 export interface ListRegionsResponseApiModel {
   region?: Array<RegionResponseApiModel>

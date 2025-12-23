@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing'
-import { EditorService } from './editor.service'
+import { EditorService } from './editor.service.js'
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { DEFAULT_CONFIGURATION } from '../fields.config'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { DEFAULT_CONFIGURATION } from '../fields.config.js'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { firstValueFrom, of } from 'rxjs'
 
 const SAMPLE_RECORD: CatalogRecord = datasetRecordsFixture()[0]

@@ -1,41 +1,23 @@
 import { ViewportScroller } from '@angular/common'
-import {
-  importProvidersFrom,
-  NgModule,
-  provideNgReflectAttributes,
-  inject,
-} from '@angular/core'
+import { importProvidersFrom, inject, NgModule, provideNgReflectAttributes, } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { Router, RouterModule } from '@angular/router'
-import {
-  LOGIN_URL,
-  LOGOUT_URL,
-  provideGn4,
-  provideRepositoryUrl,
-  SETTINGS_URL,
-} from '@geonetwork-ui/api/repository'
+import { LOGIN_URL, LOGOUT_URL, provideGn4, provideRepositoryUrl, SETTINGS_URL, } from '@geonetwork-ui/api/repository'
 import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
-import {
-  DefaultRouterModule,
-  RouterService,
-  SearchRouterContainerDirective,
-} from '@geonetwork-ui/feature/router'
+import { DefaultRouterModule, RouterService, SearchRouterContainerDirective, } from '@geonetwork-ui/feature/router'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import {
-  handleScrollOnNavigation,
-  ThemeService,
-} from '@geonetwork-ui/util/shared'
+import { handleScrollOnNavigation, ThemeService, } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
-import { AppComponent } from './app.component'
-import { appRoutes } from './app.routes'
-import { extModules } from './build-specifics'
-import { DashboardPageComponent } from './dashboard/dashboard-page.component'
-import { EditorRouterService } from './router.service'
+import { AppComponent } from './app.component.js'
+import { appRoutes } from './app.routes.js'
+import { extModules } from './build-specifics/index.js'
+import { DashboardPageComponent } from './dashboard/dashboard-page.component.js'
+import { EditorRouterService } from './router.service.js'
 
 @NgModule({
   declarations: [AppComponent],

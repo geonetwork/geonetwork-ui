@@ -6,7 +6,7 @@ import {
 } from '@storybook/angular'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
-import { OnlineResourceCardComponent } from './online-resource-card.component'
+import { OnlineResourceCardComponent } from './online-resource-card.component.js'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

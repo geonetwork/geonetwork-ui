@@ -1,5 +1,5 @@
-import { Individual } from '@geonetwork-ui/common/domain/model/record'
-import { barbieIncOrganizationFixture } from './organisations.fixture'
+import { Individual } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { barbieIncOrganizationFixture } from './organisations.fixture.js'
 
 export const createIndividualFixture = (
   overrides: Partial<Individual> = {}

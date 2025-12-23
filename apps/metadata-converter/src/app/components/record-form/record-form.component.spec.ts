@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { RecordFormComponent } from './record-form.component'
+import { RecordFormComponent } from './record-form.component.js'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('RecordFormComponent', () => {

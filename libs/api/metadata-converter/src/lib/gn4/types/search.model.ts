@@ -1,4 +1,4 @@
-import { Gn4Record } from './metadata.model'
+import { Gn4Record } from './metadata.model.js'
 
 export interface SearchFilters {
   any?: string

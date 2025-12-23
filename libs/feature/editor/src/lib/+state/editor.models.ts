@@ -1,4 +1,8 @@
-import { EditorField, EditorFieldValue, EditorSection } from '../models'
+import {
+  EditorField,
+  EditorFieldValue,
+  EditorSection,
+} from '../models/index.js'
 
 export type SaveRecordError = Error
 

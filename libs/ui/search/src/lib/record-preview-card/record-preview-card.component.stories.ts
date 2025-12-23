@@ -1,10 +1,10 @@
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { RecordPreviewCardComponent } from './record-preview-card.component'
+import { RecordPreviewCardComponent } from './record-preview-card.component.js'
 import { importProvidersFrom } from '@angular/core'
 import { provideHttpClient } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export default {
   title: 'Search/RecordPreviewCardComponent',

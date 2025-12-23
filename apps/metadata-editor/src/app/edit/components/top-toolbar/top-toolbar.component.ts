@@ -19,8 +19,8 @@ import {
 } from '@ngx-translate/core'
 import { combineLatest, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { PublishButtonComponent } from '../publish-button/publish-button.component'
-import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component'
+import { PublishButtonComponent } from '../publish-button/publish-button.component.js'
+import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component.js'
 import {
   NgIconComponent,
   provideIcons,

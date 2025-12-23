@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing'
-import { GravatarService } from './gravatar.service'
+import { GravatarService } from './gravatar.service.js'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { Gn4SettingsService } from '../settings/gn4-settings.service'
+import { Gn4SettingsService } from '../settings/gn4-settings.service.js'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
 
 class Gn4SettingsServiceMock {

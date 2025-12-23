@@ -20,17 +20,17 @@ import {
   HttpEvent,
   HttpParameterCodec,
 } from '@angular/common/http'
-import { CustomHttpParameterCodec } from '../encoder'
+import { CustomHttpParameterCodec } from '../encoder.js'
 import { Observable } from 'rxjs'
 
-import { CrsApiModel } from '../model/models'
-import { InlineObject1ApiModel } from '../model/models'
-import { InlineObject4ApiModel } from '../model/models'
-import { SimpleMetadataProcessingReportApiModel } from '../model/models'
-import { ThesaurusInfoApiModel } from '../model/models'
+import { CrsApiModel } from '../model/models.js'
+import { InlineObject1ApiModel } from '../model/models.js'
+import { InlineObject4ApiModel } from '../model/models.js'
+import { SimpleMetadataProcessingReportApiModel } from '../model/models.js'
+import { ThesaurusInfoApiModel } from '../model/models.js'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
-import { Configuration } from '../configuration'
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables.js'
+import { Configuration } from '../configuration.js'
 
 @Injectable({
   providedIn: 'root',

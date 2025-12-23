@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core'
 import {
   DatasetOnlineResource,
   ServiceOnlineResource,
-} from '@geonetwork-ui/common/domain/model/record'
-import { getFileFormat } from './link-utils'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { getFileFormat } from './link-utils.js'
 
 export enum LinkUsage {
   API = 'api',

@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
+import { DropdownMultiselectComponent } from './dropdown-multiselect.component.js'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
-import { ButtonComponent } from '../button/button.component'
+import { ButtonComponent } from '../button/button.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DropdownMultiselectComponent', () => {

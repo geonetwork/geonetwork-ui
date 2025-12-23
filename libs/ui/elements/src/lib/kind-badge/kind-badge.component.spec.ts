@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { provideIcons } from '@ng-icons/core'
 import { matClose } from '@ng-icons/material-icons/baseline'
 import { Component } from '@angular/core'
-import { KindBadgeComponent } from './kind-badge.component'
+import { KindBadgeComponent } from './kind-badge.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 @Component({

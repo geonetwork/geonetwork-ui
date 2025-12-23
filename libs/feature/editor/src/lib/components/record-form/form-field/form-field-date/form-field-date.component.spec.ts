@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormControl } from '@angular/forms'
-import { FormFieldDateComponent } from './form-field-date.component'
+import { FormFieldDateComponent } from './form-field-date.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FormFieldResourceUpdatedComponent', () => {

@@ -7,7 +7,7 @@ import {
   inject,
 } from '@angular/core'
 import { Meta } from '@angular/platform-browser'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 @Component({
   selector: 'gn-ui-record-meta',

@@ -30,12 +30,12 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators'
-import { MdViewFacade } from '../state/mdview.facade'
+import { MdViewFacade } from '../state/mdview.facade.js'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import {
   DatasetOnlineResource,
   DatasetServiceDistribution,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   createViewFromLayer,
   MapContext,
@@ -65,7 +65,7 @@ import {
   TranslatePipe,
   TranslateService,
 } from '@ngx-translate/core'
-import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
+import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component.js'
 import {
   LoadingMaskComponent,
   PopupAlertComponent,

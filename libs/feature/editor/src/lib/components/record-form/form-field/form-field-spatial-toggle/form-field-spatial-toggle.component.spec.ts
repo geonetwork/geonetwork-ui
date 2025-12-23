@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FormFieldSpatialToggleComponent } from './form-field-spatial-toggle.component'
+import { FormFieldSpatialToggleComponent } from './form-field-spatial-toggle.component.js'
 import { MockProvider } from 'ng-mocks'
-import { EditorFacade } from '../../../../+state/editor.facade'
+import { EditorFacade } from '../../../../+state/editor.facade.js'
 import { BehaviorSubject, firstValueFrom, from } from 'rxjs'
 import {
   NATIONAL_KEYWORD,
@@ -12,7 +12,7 @@ import {
 import {
   CatalogRecord,
   Keyword,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FormFieldSpatialToggleComponent', () => {

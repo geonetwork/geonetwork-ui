@@ -1,4 +1,4 @@
-import { MyOrgUsersComponent } from './my-org-users.component'
+import { MyOrgUsersComponent } from './my-org-users.component.js'
 import { of } from 'rxjs'
 import { MyOrgService } from '@geonetwork-ui/feature/catalog'
 import { ComponentFixture, TestBed } from '@angular/core/testing'

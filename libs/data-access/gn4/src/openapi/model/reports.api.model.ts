@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ReportApiModel } from './report.api.model'
+import { ReportApiModel } from './report.api.model.js'
 
 export interface ReportsApiModel {
   report?: Array<ReportApiModel>

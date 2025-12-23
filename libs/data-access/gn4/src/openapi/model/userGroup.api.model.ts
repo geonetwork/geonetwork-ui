@@ -9,9 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserApiModel } from './user.api.model'
-import { UserGroupIdApiModel } from './userGroupId.api.model'
-import { GroupApiModel } from './group.api.model'
+import { UserApiModel } from './user.api.model.js'
+import { UserGroupIdApiModel } from './userGroupId.api.model.js'
+import { GroupApiModel } from './group.api.model.js'
 
 export interface UserGroupApiModel {
   user?: UserApiModel

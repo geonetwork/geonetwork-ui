@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { PopoverComponent } from './popover.component'
+import { PopoverComponent } from './popover.component.js'
 import { ElementRef } from '@angular/core'
 
 describe('PopoverComponent', () => {

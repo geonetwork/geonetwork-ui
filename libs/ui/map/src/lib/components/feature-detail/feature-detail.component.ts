@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import type { Feature } from 'geojson'
-import { DatasetFeatureCatalog } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetFeatureCatalog } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 const geometryKeys = ['geometry', 'the_geom']
 

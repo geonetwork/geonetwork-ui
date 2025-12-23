@@ -1,7 +1,7 @@
 import {
   CatalogRecord,
   DatasetRecord,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const SEXTANT_BATHYMETRY_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: '370ab490-e8b4-11df-b733-005056987263',

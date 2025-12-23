@@ -2,18 +2,18 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  inject,
   Input,
   ViewEncapsulation,
-  inject,
 } from '@angular/core'
 import {
   ResultsListShowMoreStrategy,
   SearchFacade,
   SearchStateParams,
 } from '@geonetwork-ui/feature/search'
-import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
-import { BaseComponent } from '../base.component'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search/index.js'
+import { BaseComponent } from '../base.component.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 @Component({
   selector: 'wc-gn-results-list-component',

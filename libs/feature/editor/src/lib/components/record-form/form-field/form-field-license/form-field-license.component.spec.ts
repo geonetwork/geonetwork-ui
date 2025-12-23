@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FormFieldLicenseComponent } from './form-field-license.component'
+import { FormFieldLicenseComponent } from './form-field-license.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FormFieldLicenseComponent', () => {

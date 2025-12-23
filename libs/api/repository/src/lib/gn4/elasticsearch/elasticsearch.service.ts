@@ -4,7 +4,7 @@ import {
   ES_QUERY_FIELDS_PRIORITY,
   ES_SOURCE_SUMMARY,
   EsQueryFieldsPriorityType,
-} from './constant'
+} from './constant.js'
 import {
   Aggregation,
   AggregationParams,
@@ -14,8 +14,8 @@ import {
   FilterQuery,
   FiltersAggregationParams,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
-import { METADATA_LANGUAGE } from '../../metadata-language.token'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
+import { METADATA_LANGUAGE } from '../../metadata-language.token.js'
 import {
   AggregationResult,
   EsSearchParams,
@@ -27,11 +27,11 @@ import {
   TermsAggregationResult,
 } from '@geonetwork-ui/api/metadata-converter'
 import { toLang3 } from '@geonetwork-ui/util/i18n'
-import { formatDate, isDateRange } from './date-range.utils'
+import { formatDate, isDateRange } from './date-range.utils.js'
 import {
   CatalogRecord,
   LanguageCode,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { TranslateService } from '@ngx-translate/core'
 import { getGeometryBoundingBox } from '@geonetwork-ui/util/shared'
 import { getLength as getGeodesicLength } from 'ol/sphere.js'

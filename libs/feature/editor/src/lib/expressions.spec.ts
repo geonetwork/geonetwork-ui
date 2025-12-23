@@ -1,4 +1,4 @@
-import { evaluate, ExpressionEvaluator } from './expressions'
+import { evaluate, ExpressionEvaluator } from './expressions.js'
 
 const originalDate = window.Date
 window.Date = function () {

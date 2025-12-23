@@ -1,4 +1,4 @@
-import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record'
+import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const GEO2FRANCE_REUSE_ROILAYE_RECORD: ReuseRecord = {
   uniqueIdentifier: '982b6e7d-61f5-43b3-983d-ebae8bc3892d',

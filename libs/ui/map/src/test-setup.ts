@@ -5,7 +5,7 @@ import {
   BASEMAP_LAYERS,
   DO_NOT_USE_DEFAULT_BASEMAP,
   MAP_VIEW_CONSTRAINTS,
-} from './lib/components/map-container/map-settings.token'
+} from './lib/components/map-container/map-settings.token.js'
 
 setupZoneTestEnv({ teardown: { destroyAfterEach: false } })
 

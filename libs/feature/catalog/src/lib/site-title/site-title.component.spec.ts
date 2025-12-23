@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SiteApiService, siteFixture } from '@geonetwork-ui/data-access/gn4'
 import { BehaviorSubject } from 'rxjs'
 
-import { SiteTitleComponent } from './site-title.component'
+import { SiteTitleComponent } from './site-title.component.js'
 
 class SiteApiServiceMock {
   getSiteOrPortalDescription = jest.fn(() => new BehaviorSubject(siteFixture()))

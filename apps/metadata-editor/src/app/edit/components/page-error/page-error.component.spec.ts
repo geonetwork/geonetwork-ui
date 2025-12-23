@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { PageErrorComponent } from './page-error.component'
+import { PageErrorComponent } from './page-error.component.js'
 import { ActivatedRoute } from '@angular/router'
 import { MockProviders } from 'ng-mocks'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

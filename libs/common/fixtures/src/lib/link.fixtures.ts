@@ -3,7 +3,7 @@ import {
   DatasetServiceDistribution,
   OnlineLinkResource,
   ServiceEndpoint,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export const someDataLinksFixture = () => [
   aSetOfLinksFixture().dataXls(),

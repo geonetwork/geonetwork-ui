@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { Component, Input } from '@angular/core'
 import { TranslateDirective } from '@ngx-translate/core'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/index.js'
 import {
   InteractiveTableColumnComponent,
   InteractiveTableComponent,

@@ -1,4 +1,4 @@
-import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 // Expressions should be enclosed in `${}` to be recognized as such
 // eg. ${dateNow()}

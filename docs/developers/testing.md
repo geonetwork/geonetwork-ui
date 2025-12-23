@@ -96,8 +96,8 @@ One of the advantages of the Angular [dependency injection](https://angular.io/g
 This can be done by specifying providers in `TestBed.configureTestingModule`:
 
 ```ts
-import { MyService } from './my-service'
-import { MyComponent } from './my-component.component'
+import { MyService } from './my-service.js'
+import { MyComponent } from './my-component.component.js'
 // ...
 
 class MyServiceMock {

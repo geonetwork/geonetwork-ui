@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { RecordFieldGroupComponent } from './record-field-group.component'
+import { RecordFieldGroupComponent } from './record-field-group.component.js'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('RecordFieldObjectComponent', () => {

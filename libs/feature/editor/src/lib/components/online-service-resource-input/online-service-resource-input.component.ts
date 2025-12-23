@@ -15,7 +15,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   DatasetServiceDistribution,
   ServiceProtocol,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   AutocompleteComponent,
   ButtonComponent,

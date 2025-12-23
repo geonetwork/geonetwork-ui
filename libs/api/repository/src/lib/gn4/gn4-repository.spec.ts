@@ -1,10 +1,10 @@
-import { Gn4Repository } from './gn4-repository'
+import { Gn4Repository } from './gn4-repository.js'
 import {
   RecordsApiService,
   SearchApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { firstValueFrom, lastValueFrom, of, throwError } from 'rxjs'
-import { ElasticsearchService } from './elasticsearch'
+import { ElasticsearchService } from './elasticsearch/index.js'
 import { fakeAsync, TestBed, tick } from '@angular/core/testing'
 import {
   EsSearchResponse,
@@ -13,29 +13,29 @@ import {
 import {
   Aggregations,
   SearchResults,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 import {
   datasetRecordsFixture,
+  duplicateDatasetRecordAsXmlFixture,
   simpleDatasetRecordAsXmlFixture,
   simpleDatasetRecordFixture,
   simpleDatasetRecordWithFcatsFixture,
-  duplicateDatasetRecordAsXmlFixture,
   simpleServiceRecordFixture,
 } from '@geonetwork-ui/common/fixtures'
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { map } from 'rxjs/operators'
 import { HttpErrorResponse } from '@angular/common/http'
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
+import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error/index.js'
 import { TranslateService } from '@ngx-translate/core'
-import { Gn4SettingsService } from './settings/gn4-settings.service'
+import { Gn4SettingsService } from './settings/gn4-settings.service.js'
 
 class Gn4MetadataMapperMock {
   readRecords = jest.fn((records) =>

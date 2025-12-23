@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MockBuilder, MockProvider } from 'ng-mocks'
-import { ConfirmationDialogComponent } from './confirmation-dialog.component'
+import { ConfirmationDialogComponent } from './confirmation-dialog.component.js'
 
 describe('ConfirmationDialogComponent', () => {
   let component: ConfirmationDialogComponent

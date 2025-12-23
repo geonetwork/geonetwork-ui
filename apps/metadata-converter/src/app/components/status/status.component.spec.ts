@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { StatusComponent } from './status.component'
+import { StatusComponent } from './status.component.js'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('StatusComponent', () => {

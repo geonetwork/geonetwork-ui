@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { AddLayerFromWfsComponent } from './add-layer-from-wfs.component'
-import { MapFacade } from '../+state/map.facade'
+import { AddLayerFromWfsComponent } from './add-layer-from-wfs.component.js'
+import { MapFacade } from '../+state/map.facade.js'
 import { By } from '@angular/platform-browser'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { of } from 'rxjs'

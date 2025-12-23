@@ -9,9 +9,9 @@ import {
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,
-} from './results-layout.config'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { ResultsListItemComponent } from '../results-list-item/results-list-item.component'
+} from './results-layout.config.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
+import { ResultsListItemComponent } from '../results-list-item/results-list-item.component.js'
 import { CommonModule } from '@angular/common'
 
 @Component({

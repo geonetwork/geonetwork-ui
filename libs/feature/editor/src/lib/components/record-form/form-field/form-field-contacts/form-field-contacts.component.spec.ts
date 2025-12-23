@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormFieldContactsComponent } from './form-field-contacts.component'
+import { FormFieldContactsComponent } from './form-field-contacts.component.js'
 import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
 import { BehaviorSubject, of } from 'rxjs'
 import {
   Individual,
   Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { MockBuilder, MockInstance, MockProvider } from 'ng-mocks'
 import {
   barbieIncOrganizationFixture,

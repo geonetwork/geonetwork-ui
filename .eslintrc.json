@@ -1,7 +1,7 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nx", "no-only-tests"],
+  "plugins": ["@nx", "no-only-tests", "eslint-plugin-import"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -58,6 +58,25 @@
                 "sourceTag": "type:api",
                 "onlyDependOnLibsWithTags": ["type:api", "scope:shared"],
                 "bannedExternalImports": ["*app-config"]
+              }
+            ]
+          }
+        ],
+        "import/extensions": [
+          "error",
+          "always",
+          {
+            "ignorePackages": true,
+            "pathGroupOverrides": [
+              {
+                // ask for file extensions when importing from OL (since we can do granular imports inside the lib)
+                "pattern": "ol/{*,*/**}",
+                "action": "enforce"
+              },
+              {
+                // also ask for this alias as it allows granular imports
+                "pattern": "@geonetwork-ui/common/domain/{*,*/**}",
+                "action": "enforce"
               }
             ]
           }

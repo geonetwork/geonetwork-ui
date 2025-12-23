@@ -30,8 +30,8 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators'
 import {
   DatasetOnlineResource,
   DatasetServiceDistribution,
-} from '@geonetwork-ui/common/domain/model/record'
-import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model.js'
 
 marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')

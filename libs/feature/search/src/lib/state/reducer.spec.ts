@@ -5,16 +5,16 @@ import {
   SAMPLE_AGGREGATIONS_RESULTS,
   TERMS_AGGREGATION,
 } from '@geonetwork-ui/common/fixtures'
-import { DEFAULT_PAGE_SIZE } from '../constants'
-import * as fromActions from './actions'
-import { DEFAULT_SEARCH_KEY } from './actions'
+import { DEFAULT_PAGE_SIZE } from '../constants.js'
+import * as fromActions from './actions.js'
+import { DEFAULT_SEARCH_KEY } from './actions.js'
 import {
   initialState,
   reducer,
   reducerSearch,
   SearchStateParams,
-} from './reducer'
-import { TermsAggregationParams } from '@geonetwork-ui/common/domain/model/search'
+} from './reducer.js'
+import { TermsAggregationParams } from '@geonetwork-ui/common/domain/model/search/index.js'
 
 const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 

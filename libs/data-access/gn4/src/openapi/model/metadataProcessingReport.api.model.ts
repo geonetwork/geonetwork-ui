@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { InfoReportApiModel } from './infoReport.api.model'
-import { ReportApiModel } from './report.api.model'
+import { InfoReportApiModel } from './infoReport.api.model.js'
+import { ReportApiModel } from './report.api.model.js'
 
 export interface MetadataProcessingReportApiModel {
   errors?: Array<ReportApiModel>

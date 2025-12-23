@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { JsonNodeApiModel } from './jsonNode.api.model'
+import { JsonNodeApiModel } from './jsonNode.api.model.js'
 
 export interface AssociatedRecordApiModel {
   origin?: string

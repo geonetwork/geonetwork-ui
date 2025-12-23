@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
-import { AvatarComponent } from '../avatar/avatar.component'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model.js'
+import { AvatarComponent } from '../avatar/avatar.component.js'
 import { MatTooltipModule } from '@angular/material/tooltip'
 
 @Component({

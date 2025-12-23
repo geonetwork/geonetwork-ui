@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { InteractiveTableColumnComponent } from './interactive-table-column.component'
+import { InteractiveTableColumnComponent } from './interactive-table-column.component.js'
 
 describe('InteractiveTableColumnComponent', () => {
   let component: InteractiveTableColumnComponent

@@ -1,6 +1,6 @@
 import { NamedNode, Statement, Store } from 'rdflib'
-import { DCAT, DCTERMS, FOAF, LOCN, RDF, SKOS, VCARD } from './namespaces'
-import { readLocalizedValue } from './utils/graph-utils'
+import { DCAT, DCTERMS, FOAF, LOCN, RDF, SKOS, VCARD } from './namespaces.js'
+import { readLocalizedValue } from './utils/graph-utils.js'
 import {
   DatasetDownloadDistribution,
   DatasetServiceDistribution,
@@ -13,11 +13,11 @@ import {
   OnlineResourceTranslations,
   Organization,
   RecordTranslations,
-} from '@geonetwork-ui/common/domain/model/record'
-import { getAsValidUrl } from '../common/url'
-import { fullNameToParts } from '../iso19139/utils/individual-name'
-import { readLicenseFromString } from '../common/license'
-import { matchProtocol } from '../common/distribution.mapper'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
+import { getAsValidUrl } from '../common/url.js'
+import { fullNameToParts } from '../iso19139/utils/individual-name.js'
+import { readLicenseFromString } from '../common/license.js'
+import { matchProtocol } from '../common/distribution.mapper.js'
 import { toLang2 } from '@geonetwork-ui/util/i18n/language-codes'
 
 function getDatasetNode(dataStore: Store, recordNode: NamedNode): NamedNode {

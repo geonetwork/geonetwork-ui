@@ -14,7 +14,7 @@ import {
   TranslateService,
 } from '@ngx-translate/core'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { Router } from '@angular/router'
 import {
   NgIconComponent,

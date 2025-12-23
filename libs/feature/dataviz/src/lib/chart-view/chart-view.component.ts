@@ -28,15 +28,15 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators'
-import { DataService } from '../service/data.service'
+import { DataService } from '../service/data.service.js'
 import {
   DatavizChartConfigModel,
   InputChartType,
-} from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+} from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model.js'
 import {
   DatasetFeatureCatalog,
   DatasetOnlineResource,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { ChartComponent } from '@geonetwork-ui/ui/dataviz'

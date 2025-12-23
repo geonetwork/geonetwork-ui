@@ -7,7 +7,7 @@ import {
 import {
   AutocompleteComponent,
   AutocompleteItem,
-} from './autocomplete.component'
+} from './autocomplete.component.js'
 import { Observable, of, throwError } from 'rxjs'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'

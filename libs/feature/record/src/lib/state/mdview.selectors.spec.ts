@@ -1,4 +1,4 @@
-import * as MdViewSelectors from './mdview.selectors'
+import * as MdViewSelectors from './mdview.selectors.js'
 
 const relatedRecord = {
   title: 'title',

@@ -4,7 +4,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { RecordMetricComponent } from './record-metric.component'
+import { RecordMetricComponent } from './record-metric.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 

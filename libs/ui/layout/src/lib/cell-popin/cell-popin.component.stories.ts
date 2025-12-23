@@ -1,5 +1,5 @@
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { CellPopinComponent } from './cell-popin.component'
+import { CellPopinComponent } from './cell-popin.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const meta: Meta<CellPopinComponent> = {

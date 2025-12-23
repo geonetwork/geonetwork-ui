@@ -2,7 +2,7 @@ import {
   parseConfigSection,
   parseTranslationsConfigSection,
   parseMultiConfigSection,
-} from './parse-utils'
+} from './parse-utils.js'
 import fetchMock from 'fetch-mock-jest'
 
 describe('parse utils', () => {

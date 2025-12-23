@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
+import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component.js'
 import { TextAreaComponent } from '@geonetwork-ui/ui/inputs'
 import { MatTooltipModule } from '@angular/material/tooltip'
 

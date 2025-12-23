@@ -7,7 +7,7 @@ import {
   getOptionalSearchConfig,
   getThemeConfig,
   loadAppConfig,
-} from './app-config'
+} from './app-config.js'
 import {
   malformedConfigFixture,
   minimalAppConfigFixture,
@@ -15,7 +15,7 @@ import {
   okAppConfigFixture,
   unrecognizedKeysConfigFixture,
   wrongLanguageCodeConfigFixture,
-} from './fixtures'
+} from './fixtures.js'
 
 describe('app config utils', () => {
   beforeEach(() => {

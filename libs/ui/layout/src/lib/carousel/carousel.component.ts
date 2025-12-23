@@ -12,8 +12,8 @@ import {
 } from '@angular/core'
 import EmblaCarousel, { EmblaCarouselType } from 'embla-carousel'
 import { CommonModule } from '@angular/common'
-import { Paginable } from '../paginable.interface'
-import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.component'
+import { Paginable } from '../paginable.interface.js'
+import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.component.js'
 
 @Component({
   selector: 'gn-ui-carousel',

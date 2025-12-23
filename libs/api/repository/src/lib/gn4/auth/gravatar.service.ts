@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core'
-import { AvatarServiceInterface } from './avatar.service.interface'
-import { Gn4SettingsService } from '../settings/gn4-settings.service'
+import { AvatarServiceInterface } from './avatar.service.interface.js'
+import { Gn4SettingsService } from '../settings/gn4-settings.service.js'
 import { map } from 'rxjs/operators'
 import { firstValueFrom, Observable } from 'rxjs'
 

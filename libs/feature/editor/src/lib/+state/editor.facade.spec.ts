@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { EffectsModule } from '@ngrx/effects'
 import { Store, StoreModule } from '@ngrx/store'
-import * as EditorActions from './editor.actions'
-import { EditorFacade } from './editor.facade'
+import * as EditorActions from './editor.actions.js'
+import { EditorFacade } from './editor.facade.js'
 import {
   EDITOR_FEATURE_KEY,
   EditorState,
   initialEditorState,
-} from './editor.reducer'
+} from './editor.reducer.js'
 import { provideMockStore } from '@ngrx/store/testing'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 

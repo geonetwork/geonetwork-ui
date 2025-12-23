@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { StacItemsResultGridComponent } from './stac-items-result-grid.component'
+import { StacItemsResultGridComponent } from './stac-items-result-grid.component.js'
 
 describe('StacItemsResultGridComponent', () => {
   let component: StacItemsResultGridComponent

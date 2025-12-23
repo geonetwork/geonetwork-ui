@@ -1,6 +1,6 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 import { loadAppConfig } from '@geonetwork-ui/util/app-config'
-import { AppModule } from './app/app.module'
+import { AppModule } from './app/app.module.js'
 
 loadAppConfig().then(() => {
   platformBrowserDynamic()

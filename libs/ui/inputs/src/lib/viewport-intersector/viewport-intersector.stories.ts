@@ -1,5 +1,5 @@
 import { componentWrapperDecorator, Meta, StoryObj } from '@storybook/angular'
-import { ViewportIntersectorComponent } from './viewport-intersector.component'
+import { ViewportIntersectorComponent } from './viewport-intersector.component.js'
 import { action } from 'storybook/actions'
 
 export default {

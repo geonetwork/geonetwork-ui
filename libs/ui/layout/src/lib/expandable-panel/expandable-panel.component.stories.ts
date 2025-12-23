@@ -4,7 +4,7 @@ import {
   Meta,
   StoryObj,
 } from '@storybook/angular'
-import { ExpandablePanelComponent } from './expandable-panel.component'
+import { ExpandablePanelComponent } from './expandable-panel.component.js'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { GnUiHumanizeDateDirective } from './humanize-date.directive'
-import { DateService } from './services/date.service'
+import { GnUiHumanizeDateDirective } from './humanize-date.directive.js'
+import { DateService } from './services/date.service.js'
 
 @Component({
   template: `

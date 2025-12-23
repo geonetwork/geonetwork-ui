@@ -3,7 +3,7 @@ import { MimeType, OgcApiEndpoint, WfsEndpoint } from '@camptocamp/ogc-client'
 import {
   DatasetServiceDistribution,
   ServiceProtocol,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, filter, map, switchMap } from 'rxjs'
 import {

@@ -1,4 +1,4 @@
-import { parseHeaders } from './headers'
+import { parseHeaders } from './headers.js'
 
 describe('headers', () => {
   describe('parseHeaders', () => {

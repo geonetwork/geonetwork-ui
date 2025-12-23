@@ -1,3 +1,3 @@
-export * from './gn4.converter'
-export * from './atomic-operations'
-export * from './types'
+export * from './gn4.converter.js'
+export * from './atomic-operations.js'
+export * from './types/index.js'

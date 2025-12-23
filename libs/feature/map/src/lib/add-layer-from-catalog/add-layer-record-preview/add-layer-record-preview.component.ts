@@ -11,11 +11,11 @@ import {
   LinkUsage,
 } from '@geonetwork-ui/util/shared'
 import { firstValueFrom, Observable, of, throwError } from 'rxjs'
-import { MapFacade } from '../../+state/map.facade'
+import { MapFacade } from '../../+state/map.facade.js'
 import {
   DatasetOnlineResource,
   DatasetRecord,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { MapContextLayer } from '@geospatial-sdk/core'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'

@@ -6,10 +6,10 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { DataTableComponent } from './data-table.component'
+import { DataTableComponent } from './data-table.component.js'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
-import { tableItemsFixture } from './data-table.fixtures'
+import { tableItemsFixture } from './data-table.fixtures.js'
 import {
   BaseFileReader,
   DataItem,

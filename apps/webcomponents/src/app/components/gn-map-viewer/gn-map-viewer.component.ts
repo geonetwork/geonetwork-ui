@@ -3,7 +3,7 @@ import {
   Component,
   ViewEncapsulation,
 } from '@angular/core'
-import { BaseComponent } from '../base.component'
+import { BaseComponent } from '../base.component.js'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 @Component({

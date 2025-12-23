@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { FeatureDetailComponent } from './feature-detail.component'
+import { FeatureDetailComponent } from './feature-detail.component.js'
 import { MockBuilder } from 'ng-mocks'
 
 describe('FeatureDetailComponent', () => {

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { EditPageComponent } from './edit-page.component'
+import { EditPageComponent } from './edit-page.component.js'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   datasetRecordsFixture,
@@ -10,7 +10,7 @@ import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MockBuilder } from 'ng-mocks'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
+import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error/index.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const getRoute = () => ({

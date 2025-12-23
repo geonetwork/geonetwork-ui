@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store'
 import {
   EDITOR_DASHBOARD_FEATURE_STATE_KEY,
   EditorDashboardState,
-} from './dashboard.reducer'
+} from './dashboard.reducer.js'
 
 export const getMdViewState = createFeatureSelector<EditorDashboardState>(
   EDITOR_DASHBOARD_FEATURE_STATE_KEY

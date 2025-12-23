@@ -4,7 +4,7 @@ import {
   Meta,
   StoryObj,
 } from '@storybook/angular'
-import { MapContainerComponent } from './map-container.component'
+import { MapContainerComponent } from './map-container.component.js'
 import { mapCtxFixture } from '@geonetwork-ui/common/fixtures'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

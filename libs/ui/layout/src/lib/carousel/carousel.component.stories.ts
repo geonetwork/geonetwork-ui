@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular'
-import { CarouselComponent } from './carousel.component'
+import { CarouselComponent } from './carousel.component.js'
 import { componentWrapperDecorator } from '@storybook/angular'
 
 const meta: Meta<CarouselComponent> = {

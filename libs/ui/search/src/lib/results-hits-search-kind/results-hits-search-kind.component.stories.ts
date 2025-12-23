@@ -5,7 +5,7 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { ResultsHitsSearchKindComponent } from './results-hits-search-kind.component'
+import { ResultsHitsSearchKindComponent } from './results-hits-search-kind.component.js'
 import { KindBadgeComponent } from '@geonetwork-ui/ui/elements'
 
 export default {

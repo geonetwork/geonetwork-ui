@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
 import { Component, DebugElement } from '@angular/core'
 import { By } from '@angular/platform-browser'
-import { GnUiLinkifyDirective } from './linkify.directive'
+import { GnUiLinkifyDirective } from './linkify.directive.js'
 
 const testingUrls = [
   ['First link http://bla.org no slash', 'http://bla.org'],

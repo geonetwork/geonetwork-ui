@@ -1,5 +1,5 @@
 import { map } from 'rxjs/operators'
-import { getCustomTranslations } from '../app-config'
+import { getCustomTranslations } from '../app-config.js'
 import { FileTranslateLoader } from '@geonetwork-ui/util/i18n'
 
 /**

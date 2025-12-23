@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SearchFiltersSummaryItemComponent } from './search-filters-summary-item.component'
+import { SearchFiltersSummaryItemComponent } from './search-filters-summary-item.component.js'
 import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
 import { MockBuilder, MockProvider } from 'ng-mocks'
-import { SearchFacade } from '../state/search.facade'
-import { SearchService } from '../utils/service/search.service'
-import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
+import { SearchFacade } from '../state/search.facade.js'
+import { SearchService } from '../utils/service/search.service.js'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search/index.js'
 import { DatePipe } from '@angular/common'
 import { TranslateService } from '@ngx-translate/core'
-import { FieldsService } from '../utils/service/fields.service'
-import { FieldType } from '../utils/service/fields'
+import { FieldsService } from '../utils/service/fields.service.js'
+import { FieldType } from '../utils/service/fields.js'
 
 const FIELD_VALUES_FROM_FILTERS_MOCK = {
   organization: [],

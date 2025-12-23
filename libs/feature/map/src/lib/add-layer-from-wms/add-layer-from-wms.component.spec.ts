@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { AddLayerFromWmsComponent } from './add-layer-from-wms.component'
-import { MapFacade } from '../+state/map.facade'
+import { AddLayerFromWmsComponent } from './add-layer-from-wms.component.js'
+import { MapFacade } from '../+state/map.facade.js'
 import { By } from '@angular/platform-browser'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { of } from 'rxjs'

@@ -12,18 +12,18 @@ import {
   SimpleSearchField,
   TranslatedSearchField,
   UserSearchField,
-} from './fields'
+} from './fields.js'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface.js'
+import { Organization } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   ElasticsearchService,
   METADATA_LANGUAGE,
 } from '@geonetwork-ui/api/repository'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface.js'
 
 class ElasticsearchServiceMock {
   registerRuntimeField = jest.fn()

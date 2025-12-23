@@ -8,8 +8,8 @@ import {
 import {
   MetadataQualityItem,
   MetadataQualityItemComponent,
-} from '../metadata-quality-item/metadata-quality-item.component'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+} from '../metadata-quality-item/metadata-quality-item.component.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   PopoverComponent,
   ProgressBarComponent,

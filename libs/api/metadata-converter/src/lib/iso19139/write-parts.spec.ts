@@ -1,12 +1,12 @@
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { XmlElement } from '@rgrove/parse-xml'
-import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
+import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records.js'
 import {
   createElement,
   getRootElement,
   parseXmlString,
   xmlToString,
-} from '../xml-utils'
+} from '../xml-utils.js'
 import {
   getISODuration,
   writeContacts,
@@ -24,7 +24,7 @@ import {
   writeSpatialExtents,
   writeSpatialRepresentation,
   writeTemporalExtents,
-} from './write-parts'
+} from './write-parts.js'
 
 describe('write parts', () => {
   let rootEl: XmlElement

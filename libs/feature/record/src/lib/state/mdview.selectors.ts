@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store'
 import {
   METADATA_VIEW_FEATURE_STATE_KEY,
   MetadataViewState,
-} from './mdview.reducer'
+} from './mdview.reducer.js'
 
 export const getMdViewState = createFeatureSelector<MetadataViewState>(
   METADATA_VIEW_FEATURE_STATE_KEY

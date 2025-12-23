@@ -4,15 +4,15 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing'
-import { StacViewComponent } from './stac-view.component'
+import { StacViewComponent } from './stac-view.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
-  DatasetTemporalExtent,
   DatasetRecord,
-} from '@geonetwork-ui/common/domain/model/record'
+  DatasetTemporalExtent,
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { of } from 'rxjs'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { MdViewFacade } from '../state'
+import { MdViewFacade } from '../state/index.js'
 import { TranslateService } from '@ngx-translate/core'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 import { MockBuilder, MockProvider, ngMocks } from 'ng-mocks'

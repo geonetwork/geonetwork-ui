@@ -1,4 +1,4 @@
-import { DatasetOnlineResource } from '../record'
+import { DatasetOnlineResource } from '../record/index.js'
 
 export type AggregationTypes = 'count' | 'sum' | 'min' | 'max' | 'average'
 

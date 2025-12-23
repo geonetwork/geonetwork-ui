@@ -1,4 +1,4 @@
-import { ErrorComponent, ErrorType } from './error.component'
+import { ErrorComponent, ErrorType } from './error.component.js'
 import {
   applicationConfig,
   componentWrapperDecorator,

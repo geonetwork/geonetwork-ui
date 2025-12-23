@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core'
 import { WfsEndpoint, WfsFeatureTypeBrief } from '@camptocamp/ogc-client'
 import { firstValueFrom, Subject } from 'rxjs'
-import { MapFacade } from '../+state/map.facade'
+import { MapFacade } from '../+state/map.facade.js'
 import { debounceTime } from 'rxjs/operators'
 import { MapContextLayer } from '@geospatial-sdk/core'
 import { ButtonComponent, TextInputComponent } from '@geonetwork-ui/ui/inputs'

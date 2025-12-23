@@ -2,7 +2,7 @@ import { Component, inject, Input, TemplateRef } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import { ModalDialogComponent } from './modal-dialog.component'
+import { ModalDialogComponent } from './modal-dialog.component.js'
 
 @Component({
   selector: 'gn-ui-launcher',

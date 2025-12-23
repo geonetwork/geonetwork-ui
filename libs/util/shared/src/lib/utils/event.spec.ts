@@ -1,4 +1,4 @@
-import { propagateToDocumentOnly } from './event'
+import { propagateToDocumentOnly } from './event.js'
 
 describe('propagateToDocumentOnly', () => {
   let childComponent: HTMLElement

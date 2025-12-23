@@ -1,5 +1,5 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import { CatalogTitleComponent } from './catalog-title.component'
+import { CatalogTitleComponent } from './catalog-title.component.js'
 
 export default {
   title: 'Catalog/CatalogTitleComponent',

@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core'
 
 import { select, Store } from '@ngrx/store'
-import { DashboardMenuItem } from '../dashboard.model'
-import { SetActiveMenu } from './dashboard.actions'
-import { getActiveMenu } from './dashboard.selectors'
+import { DashboardMenuItem } from '../dashboard.model.js'
+import { SetActiveMenu } from './dashboard.actions.js'
+import { getActiveMenu } from './dashboard.selectors.js'
 
 @Injectable({
   providedIn: 'root',

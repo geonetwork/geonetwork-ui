@@ -5,7 +5,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { FileInputComponent } from './file-input.component'
+import { FileInputComponent } from './file-input.component.js'
 import { action } from 'storybook/actions'
 
 export default {

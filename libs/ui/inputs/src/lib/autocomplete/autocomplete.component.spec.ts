@@ -5,7 +5,7 @@ import { of, Subscription, throwError } from 'rxjs'
 import {
   AutocompleteComponent,
   AutocompleteItem,
-} from './autocomplete.component'
+} from './autocomplete.component.js'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
 import { provideI18n } from '@geonetwork-ui/util/i18n'

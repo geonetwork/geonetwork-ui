@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { OrganisationsResultComponent } from './organisations-result.component'
+import { OrganisationsResultComponent } from './organisations-result.component.js'
 import { MockBuilder } from 'ng-mocks'
 
 describe('OrganisationsResultComponent', () => {

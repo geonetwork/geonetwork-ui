@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MockBuilder } from 'ng-mocks'
-import { DashboardPageComponent } from './dashboard-page.component'
+import { DashboardPageComponent } from './dashboard-page.component.js'
 
 describe('DashboardPageComponent', () => {
   let component: DashboardPageComponent

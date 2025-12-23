@@ -1,1 +1,1 @@
-export * from './aggregations'
+export * from './aggregations.js'

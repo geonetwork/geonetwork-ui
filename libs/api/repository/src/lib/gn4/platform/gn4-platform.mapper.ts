@@ -3,21 +3,21 @@ import {
   UserApiModel,
   UserFeedbackDTOApiModel,
 } from '@geonetwork-ui/data-access/gn4'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
-import { Injectable, inject } from '@angular/core'
-import { AvatarServiceInterface } from '../auth'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model.js'
+import { inject, Injectable } from '@angular/core'
+import { AvatarServiceInterface } from '../auth/index.js'
 import { map } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
 import {
   Keyword,
   UserFeedback,
   UserFeedbackViewModel,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   KeywordApiResponse,
   ThesaurusApiResponse,
 } from '@geonetwork-ui/api/metadata-converter'
-import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
+import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus/index.js'
 
 @Injectable()
 export class Gn4PlatformMapper {

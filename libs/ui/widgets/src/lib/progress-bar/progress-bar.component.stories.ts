@@ -1,5 +1,5 @@
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { ProgressBarComponent } from './progress-bar.component'
+import { ProgressBarComponent } from './progress-bar.component.js'
 import { importProvidersFrom } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 

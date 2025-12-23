@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { CarouselComponent } from './carousel.component'
+import { CarouselComponent } from './carousel.component.js'
 import { Component, Input } from '@angular/core'
 import { By } from '@angular/platform-browser'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

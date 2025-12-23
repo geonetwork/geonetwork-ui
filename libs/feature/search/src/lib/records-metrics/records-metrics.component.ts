@@ -8,12 +8,12 @@ import {
 } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map, share } from 'rxjs/operators'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import {
   AggregationBuckets,
   Aggregations,
   TermBucket,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 import { RecordMetric } from '@geonetwork-ui/api/metadata-converter'
 import { RecordMetricComponent } from '@geonetwork-ui/ui/search'
 import { CommonModule } from '@angular/common'

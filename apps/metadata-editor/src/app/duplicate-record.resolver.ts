@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core'
 import { ActivatedRouteSnapshot } from '@angular/router'
 import { catchError, EMPTY, Observable } from 'rxjs'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'

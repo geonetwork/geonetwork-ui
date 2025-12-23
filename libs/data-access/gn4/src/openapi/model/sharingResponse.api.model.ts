@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { GroupPrivilegeApiModel } from './groupPrivilege.api.model'
+import { GroupPrivilegeApiModel } from './groupPrivilege.api.model.js'
 
 export interface SharingResponseApiModel {
   privileges?: Array<GroupPrivilegeApiModel>

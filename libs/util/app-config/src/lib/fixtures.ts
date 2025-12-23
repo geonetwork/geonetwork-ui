@@ -1,4 +1,4 @@
-import { MapConfig } from './model'
+import { MapConfig } from './model.js'
 
 export const okAppConfigFixture = () => `
 [global]

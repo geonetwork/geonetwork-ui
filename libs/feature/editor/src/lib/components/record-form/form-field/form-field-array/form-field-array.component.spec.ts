@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FormFieldArrayComponent } from './form-field-array.component'
+import { FormFieldArrayComponent } from './form-field-array.component.js'
 
 describe('FormFieldArrayComponent', () => {
   let component: FormFieldArrayComponent

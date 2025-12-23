@@ -1,7 +1,7 @@
 import {
   CatalogRecord,
   RecordKind,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 
 type TValidatorMapper = {
   [key: string]: (metadata: Partial<CatalogRecord>) => boolean

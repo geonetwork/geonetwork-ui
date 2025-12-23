@@ -1,6 +1,6 @@
-import { RecordsService } from './records.service'
+import { RecordsService } from './records.service.js'
 import { of } from 'rxjs'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { TestBed } from '@angular/core/testing'
 
 class RecordsRepositoryMock {

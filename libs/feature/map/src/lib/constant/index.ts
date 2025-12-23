@@ -1,1 +1,1 @@
-export * from './projections'
+export * from './projections.js'

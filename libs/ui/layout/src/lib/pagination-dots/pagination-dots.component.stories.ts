@@ -4,8 +4,8 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { PaginationDotsComponent } from './pagination-dots.component'
-import { MockListComponent } from '../pagination/pagination.component.stories'
+import { PaginationDotsComponent } from './pagination-dots.component.js'
+import { MockListComponent } from '../pagination/pagination.component.stories.js'
 
 export default {
   title: 'Layout/Pagination/PaginationDotsComponent',

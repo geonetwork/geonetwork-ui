@@ -1,5 +1,5 @@
 import { Meta, moduleMetadata } from '@storybook/angular'
-import { PopoverComponent } from './popover.component'
+import { PopoverComponent } from './popover.component.js'
 import { CommonModule } from '@angular/common'
 
 export default {

@@ -1,5 +1,5 @@
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { StarToggleComponent } from './star-toggle.component'
+import { StarToggleComponent } from './star-toggle.component.js'
 import { action } from 'storybook/actions'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 

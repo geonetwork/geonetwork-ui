@@ -194,7 +194,7 @@ In the src/app/app.module.ts:
 
 ```
 import { BASE_PATH } from '';
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.js';
 
 @NgModule({
   declarations: [

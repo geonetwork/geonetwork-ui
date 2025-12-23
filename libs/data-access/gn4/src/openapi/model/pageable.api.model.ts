@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { SortApiModel } from './sort.api.model'
+import { SortApiModel } from './sort.api.model.js'
 
 export interface PageableApiModel {
   paged?: boolean

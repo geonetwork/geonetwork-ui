@@ -7,12 +7,12 @@ import {
   StoreRouterConnectingModule,
 } from '@ngrx/router-store'
 import { StoreModule } from '@ngrx/store'
-import { ROUTER_STATE_KEY } from './constants'
-import { RouterService } from './router.service'
-import { SearchRouteReuseStrategy } from './SearchRouteReuseStrategy'
-import { RouterFacade } from './state/router.facade'
-import { RouterEffects } from './state/router.effects'
-import { ROUTER_CONFIG, RouterConfigModel } from './router.config'
+import { ROUTER_STATE_KEY } from './constants.js'
+import { RouterService } from './router.service.js'
+import { SearchRouteReuseStrategy } from './SearchRouteReuseStrategy.js'
+import { RouterFacade } from './state/router.facade.js'
+import { RouterEffects } from './state/router.effects.js'
+import { ROUTER_CONFIG, RouterConfigModel } from './router.config.js'
 
 @NgModule({
   imports: [

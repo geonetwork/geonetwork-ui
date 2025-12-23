@@ -1,4 +1,4 @@
-import { BaseReader } from './base'
+import { BaseReader } from './base.js'
 
 export abstract class BaseCacheReader extends BaseReader {
   constructor(

@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core'
-import { SearchFacade } from '../../state/search.facade'
+import { SearchFacade } from '../../state/search.facade.js'
 import {
   FieldFilters,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 import { first, map } from 'rxjs/operators'
 
 export interface SearchServiceI {

@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ElementApiModel } from './element.api.model'
+import { ElementApiModel } from './element.api.model.js'
 
 export interface AttributeTableApiModel {
   element?: Array<ElementApiModel>

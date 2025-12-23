@@ -8,7 +8,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { ChartViewComponent } from './chart-view.component'
+import { ChartViewComponent } from './chart-view.component.js'
 import { ChartComponent } from '@geonetwork-ui/ui/dataviz'
 import { importProvidersFrom } from '@angular/core'
 

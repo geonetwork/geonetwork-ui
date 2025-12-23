@@ -1,10 +1,10 @@
-import { Gn4PlatformMapper } from './gn4-platform.mapper'
+import { Gn4PlatformMapper } from './gn4-platform.mapper.js'
 import {
   KeywordApiResponse,
   ThesaurusApiResponse,
 } from '@geonetwork-ui/api/metadata-converter'
 
-import { AvatarServiceInterface } from '../auth'
+import { AvatarServiceInterface } from '../auth/index.js'
 import { TestBed } from '@angular/core/testing'
 
 const keywords: KeywordApiResponse[] = [

@@ -8,8 +8,8 @@ import {
 } from '@angular/core'
 import { combineLatest, Observable, tap } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
-import { SearchFacade } from '../state/search.facade'
-import { SearchError } from '../state/reducer'
+import { SearchFacade } from '../state/search.facade.js'
+import { SearchError } from '../state/reducer.js'
 import { ErrorComponent, ErrorType } from '@geonetwork-ui/ui/elements'
 import {
   RESULTS_LAYOUT_CONFIG,
@@ -21,14 +21,14 @@ import {
   RECORD_DATASET_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
-} from '../record-url.token'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+} from '../record-url.token.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   ButtonComponent,
   ViewportIntersectorComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
-import { FavoriteStarComponent } from '../favorites/favorite-star/favorite-star.component'
+import { FavoriteStarComponent } from '../favorites/favorite-star/favorite-star.component.js'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
 

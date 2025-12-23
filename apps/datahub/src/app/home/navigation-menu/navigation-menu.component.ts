@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators'
 import {
   ROUTER_ROUTE_NEWS,
   ROUTER_ROUTE_ORGANIZATIONS,
-} from '../../router/constants'
+} from '../../router/constants.js'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { CommonModule } from '@angular/common'
 import { RouterLink } from '@angular/router'

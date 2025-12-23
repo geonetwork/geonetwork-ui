@@ -1,27 +1,27 @@
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { Router, Routes } from '@angular/router'
 import {
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_ORGANIZATION,
+  ROUTER_ROUTE_REUSE,
   ROUTER_ROUTE_SEARCH,
   ROUTER_ROUTE_SERVICE,
-  ROUTER_ROUTE_REUSE,
 } from '@geonetwork-ui/feature/router'
-import { HomePageComponent } from '../home/home-page/home-page.component'
-import { NewsPageComponent } from '../home/news-page/news-page.component'
-import { OrganisationsPageComponent } from '../home/organisations-page/organisations-page.component'
-import { SearchPageComponent } from '../home/search/search-page/search-page.component'
-import { RecordPageComponent } from '../record/record-page/record-page.component'
+import { HomePageComponent } from '../home/home-page/home-page.component.js'
+import { NewsPageComponent } from '../home/news-page/news-page.component.js'
+import { OrganisationsPageComponent } from '../home/organisations-page/organisations-page.component.js'
+import { SearchPageComponent } from '../home/search/search-page/search-page.component.js'
+import { RecordPageComponent } from '../record/record-page/record-page.component.js'
 import {
   ROUTER_ROUTE_HOME,
   ROUTER_ROUTE_NEWS,
   ROUTER_ROUTE_ORGANIZATIONS,
-} from './constants'
-import { OrganizationPageComponent } from '../organization/organization-page/organization-page.component'
+} from './constants.js'
+import { OrganizationPageComponent } from '../organization/organization-page/organization-page.component.js'
 import {
   SortByEnum,
   SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
+} from '@geonetwork-ui/common/domain/model/search/index.js'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 marker('datahub.pageTitle.home')

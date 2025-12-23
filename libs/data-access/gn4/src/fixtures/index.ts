@@ -1,2 +1,2 @@
-export * from './site.fixtures'
-export * from './ui.fixtures'
+export * from './site.fixtures.js'
+export * from './ui.fixtures.js'

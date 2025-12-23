@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store'
-import * as MapActions from './map.actions'
+import * as MapActions from './map.actions.js'
 import { MapContext } from '@geospatial-sdk/core'
 import { Feature } from 'geojson'
 

@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
-import { EditorFacade } from '../../+state/editor.facade'
-import { EditorFieldValue } from '../../models'
-import { FormFieldComponent } from './form-field'
+import { EditorFacade } from '../../+state/editor.facade.js'
+import { EditorFieldValue } from '../../models/index.js'
+import { FormFieldComponent } from './form-field/index.js'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
   EditorFieldWithValue,
   EditorSectionWithValues,
-} from '../../+state/editor.models'
+} from '../../+state/editor.models.js'
 import { map } from 'rxjs'
-import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 @Component({
   selector: 'gn-ui-record-form',

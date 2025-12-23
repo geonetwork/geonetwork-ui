@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { StarToggleComponent } from './star-toggle.component'
+import { StarToggleComponent } from './star-toggle.component.js'
 
 describe('StarToggleComponent', () => {
   let component: StarToggleComponent

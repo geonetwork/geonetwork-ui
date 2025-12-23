@@ -2,15 +2,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import { BehaviorSubject, of } from 'rxjs'
-import { SearchFacade } from '../state/search.facade'
-import { SearchService } from '../utils/service/search.service'
-import { FuzzySearchComponent } from './fuzzy-search.component'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { SearchFacade } from '../state/search.facade.js'
+import { SearchService } from '../utils/service/search.service.js'
+import { FuzzySearchComponent } from './fuzzy-search.component.js'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 import {
   datasetRecordsFixture,
   searchResultsFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class SearchFacadeMock {

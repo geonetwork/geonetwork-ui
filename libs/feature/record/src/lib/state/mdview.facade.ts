@@ -10,14 +10,14 @@ import {
   switchMap,
   toArray,
 } from 'rxjs/operators'
-import * as MdViewActions from './mdview.actions'
-import * as MdViewSelectors from './mdview.selectors'
+import * as MdViewActions from './mdview.actions.js'
+import * as MdViewSelectors from './mdview.selectors.js'
 import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
-import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model.js'
 import {
   CatalogRecord,
   UserFeedback,
-} from '@geonetwork-ui/common/domain/model/record'
+} from '@geonetwork-ui/common/domain/model/record/index.js'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 import { OgcApiRecord } from '@camptocamp/ogc-client'
 import { from, of } from 'rxjs'

@@ -4,16 +4,16 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { DEFAULT_RESULTS_LAYOUT_CONFIG } from './results-layout.config'
-import { ResultsListComponent } from './results-list.component'
-import { RecordPreviewListComponent } from '../record-preview-list/record-preview-list.component'
-import { RecordPreviewCardComponent } from '../record-preview-card/record-preview-card.component'
-import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component'
-import { RecordPreviewTitleComponent } from '../record-preview-title/record-preview-title.component'
-import { ResultsListItemComponent } from '../results-list-item/results-list-item.component'
+import { DEFAULT_RESULTS_LAYOUT_CONFIG } from './results-layout.config.js'
+import { ResultsListComponent } from './results-list.component.js'
+import { RecordPreviewListComponent } from '../record-preview-list/record-preview-list.component.js'
+import { RecordPreviewCardComponent } from '../record-preview-card/record-preview-card.component.js'
+import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component.js'
+import { RecordPreviewTitleComponent } from '../record-preview-title/record-preview-title.component.js'
+import { ResultsListItemComponent } from '../results-list-item/results-list-item.component.js'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/index.js'
 
 export default {
   title: 'Search/ResultsListComponent',

@@ -19,7 +19,7 @@ import {
 } from '@ng-icons/material-icons/outline'
 import { TranslateDirective, TranslateService } from '@ngx-translate/core'
 import Duration from 'duration-relativetimeformat'
-import { RecordPreviewComponent } from '../record-preview/record-preview.component'
+import { RecordPreviewComponent } from '../record-preview/record-preview.component.js'
 
 marker('record.was.created.time')
 

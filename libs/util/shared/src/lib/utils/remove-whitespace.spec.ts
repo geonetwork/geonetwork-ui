@@ -1,4 +1,4 @@
-import { removeWhitespace } from './remove-whitespace'
+import { removeWhitespace } from './remove-whitespace.js'
 
 describe('#removeWhitespace', () => {
   it('returns undefined input is not defined', () => {
