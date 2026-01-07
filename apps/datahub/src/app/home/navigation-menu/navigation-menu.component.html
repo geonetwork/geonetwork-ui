@@ -1,4 +1,15 @@
 @if ((isMobile$ | async) === false) {
+  <ng-container *ngTemplateOutlet="tabLinksButtons"></ng-container>
+}
+@if ((isMobile$ | async) === true) {
+  <div
+    class="fixed bottom-0 text-white bg-secondary w-full flex justify-around"
+  >
+    <ng-container *ngTemplateOutlet="tabLinksButtons"></ng-container>
+  </div>
+}
+
+<ng-template #tabLinksButtons>
   @for (l of tabLinks; track l) {
     <button
       [routerLink]="l.link"
@@ -7,46 +18,11 @@
           ? 'decoration-primary'
           : 'decoration-transparent hover:decoration-primary transition-colors'
       "
-      class="sm:py-4 uppercase truncate underline decoration-4 underline-offset-[19px]"
+      class="py-4 uppercase truncate underline decoration-4 underline-offset-[19px]"
       [style.color]="foregroundColor"
       translate
     >
       {{ l.label }}
     </button>
   }
-}
-@if ((isMobile$ | async) === true) {
-  <button
-    (click)="toggleMobileMenu()"
-    class="uppercase truncate text-white bg-primary w-full flex justify-start cursor-pointer z-50"
-  >
-    <button
-      type="button"
-      class="h-12 inline-flex items-center justify-center align-middle pl-6 rounded-md shrink-0"
-    >
-      <ng-icon class="align-middle" name="matMenuOutline"></ng-icon>
-    </button>
-    @if (displayMobileMenu) {
-      <div class="shrink truncate">
-        @for (l of tabLinks; track l) {
-          <div>
-            <button
-              [routerLink]="l.link"
-              class="block pl-5 pr-3 py-3 rounded-md text-[18px] font-medium uppercase tracking-wider w-full text-left truncate"
-              translate
-            >
-              {{ l.label }}
-            </button>
-          </div>
-        }
-      </div>
-    }
-    @if (!displayMobileMenu) {
-      <button
-        class="block pl-5 pr-3 py-3 rounded-md text-[18px] font-medium uppercase tracking-wider shrink truncate"
-      >
-        {{ (activeLink$ | async).label | translate }}
-      </button>
-    }
-  </button>
-}
+</ng-template>
