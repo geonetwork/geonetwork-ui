@@ -7,8 +7,6 @@ import {
 import { Configuration } from './configuration'
 import { HttpClient } from '@angular/common/http'
 
-import { DatavizApiService } from './api/dataviz.api.service'
-
 @NgModule({
   imports: [],
   declarations: [],
