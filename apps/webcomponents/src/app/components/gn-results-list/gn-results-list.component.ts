@@ -14,6 +14,7 @@ import {
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { BaseComponent } from '../base.component'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { first } from 'rxjs/operators'
 
 @Component({
   selector: 'wc-gn-results-list-component',
@@ -21,7 +22,6 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
   styleUrls: ['./gn-results-list.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
-  providers: [SearchFacade],
   standalone: false,
 })
 export class GnResultsListComponent extends BaseComponent {
@@ -34,30 +34,59 @@ export class GnResultsListComponent extends BaseComponent {
   @Input() catalogUrl: string
   @Input() showMore: ResultsListShowMoreStrategy = 'none'
 
+  ngOnInit() {
+    super.ngOnInit()
+
+    this.facade.searchFilters$.subscribe(filters => {
+      this.changeDetector.detectChanges()
+    })
+
+    this.facade.results$.subscribe(results => {
+      this.changeDetector.detectChanges()
+    })
+
+    this.facade.isLoading$.subscribe(loading => {
+      this.changeDetector.detectChanges()
+    })
+  }
+
   private setSearch_() {
     const filter = this.filter
     const query = this.query
-    const searchActionPayload: SearchStateParams = {
-      pageSize: parseInt(this.size),
-      currentPage: 0,
-      filters: {},
-    }
-    if (query) {
-      try {
-        // we assume it's an object
-        searchActionPayload.filters = JSON.parse(query)
-      } catch (e) {
-        // we assume it's a string
-        searchActionPayload.filters = {
-          any: query,
-        }
-      }
-    }
+
     if (filter) {
       const configFilters: FieldFilters = JSON.parse(filter)
       this.facade.setConfigFilters(configFilters)
     }
-    this.facade.setSearch(searchActionPayload)
+
+    this.facade.setPageSize(parseInt(this.size))
+
+    if (query) {
+      this.facade.searchFilters$.pipe(
+        first()
+      ).subscribe(currentFilters => {
+        const hasExistingFilters = Object.keys(currentFilters).length > 0 &&
+          Object.values(currentFilters).some(value => value !== '' && value !== null && value !== undefined)
+
+        if (!hasExistingFilters) {
+          try {
+            const filters = JSON.parse(query)
+            this.facade.setFilters(filters)
+          } catch (e) {
+            this.facade.setFilters({ any: query })
+          }
+        }
+      })
+    } else if (!query) {
+      this.facade.searchFilters$.pipe(
+        first()
+      ).subscribe(currentFilters => {
+        const hasExistingFilters = Object.keys(currentFilters).length > 0
+        if (!hasExistingFilters) {
+          this.facade.setFilters({})
+        }
+      })
+    }
   }
 
   init(): void {
@@ -78,12 +107,19 @@ export class GnResultsListComponent extends BaseComponent {
         /{uuid}/,
         metadata.uniqueIdentifier
       )
-      window.open(landingPage, '_blank').focus()
+      const newWindow = window.open(landingPage, '_blank')
+      if (newWindow) {
+        newWindow.focus()
+      }
     }
   }
 
   changes(): void {
     super.changes()
-    this.setSearch_()
+    if (this.filter) {
+      const configFilters: FieldFilters = JSON.parse(this.filter)
+      this.facade.setConfigFilters(configFilters)
+    }
+    this.facade.setPageSize(parseInt(this.size))
   }
 }
