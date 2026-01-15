@@ -662,7 +662,7 @@
   "wfs.feature.limit": "",
   "wfs.featuretype.notfound": "V službe nebol nájdený žiadny zodpovedajúci typ funkcie",
   "wfs.geojsongml.notsupported": "Táto služba nepodporuje formát GeoJSON alebo GML",
-  "wfs.unreachable.cors": "Službu nemožno dosiahnuť z dôvodu obmedzení CORS",
+  "wfs.unreachable.cors": "Vzdialená služba nie je nakonfigurovaná tak, aby povoľovala spotrebu dát (CORS)",
   "wfs.unreachable.http": "Služba vrátila chybu HTTP",
   "wfs.unreachable.unknown": "So službou sa nedalo spojiť"
 }
