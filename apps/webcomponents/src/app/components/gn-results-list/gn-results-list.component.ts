@@ -75,10 +75,13 @@ export class GnResultsListComponent extends BaseComponent {
   onMdClick(metadata: CatalogRecord) {
     if (this.catalogUrl) {
       const landingPage = this.catalogUrl.replace(
-        /{uuid}/,
+        /{uuid}/g,
         metadata.uniqueIdentifier
       )
-      window.open(landingPage, '_blank').focus()
+      const newWindow = window.open(landingPage, '_blank')
+      if (newWindow) {
+        newWindow.focus()
+      }
     }
   }
 
