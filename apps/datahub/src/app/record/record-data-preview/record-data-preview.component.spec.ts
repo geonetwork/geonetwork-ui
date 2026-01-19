@@ -496,6 +496,23 @@ describe('RecordDataPreviewComponent', () => {
         done()
       })
     })
+    it('should emit false if display is map only', (done) => {
+      ;(platformServiceInterface.getMe as jest.Mock).mockReturnValue(
+        of({ profile: 'Administrator', username: 'admin' })
+      )
+      fixture = TestBed.createComponent(RecordDataPreviewComponent)
+      component = fixture.componentInstance
+      facade.metadata$.next({
+        ...SAMPLE_RECORD,
+        extras: { ownerInfo: 'someone|other', isPublishedToAll: true },
+      })
+      facade.mapApiLinks$.next(['link'])
+      fixture.detectChanges()
+      component.displayDatavizConfig$.subscribe((result) => {
+        expect(result).toBe(false)
+        done()
+      })
+    })
   })
   describe('Config saving', () => {
     const chartConf = {

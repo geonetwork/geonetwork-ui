@@ -189,14 +189,16 @@ export class RecordDataPreviewComponent implements OnInit, OnDestroy {
   displayDatavizConfig$ = combineLatest([
     this.platformServiceInterface.getMe(),
     this.metadataViewFacade.metadata$,
+    this.displayMap$,
+    this.displayData$,
   ]).pipe(
-    map(([userInfo, metadata]) => {
+    map(([userInfo, metadata, displayMap, displayData]) => {
       const isAdmin =
         userInfo?.profile === 'Administrator' ||
         userInfo?.username ===
           (metadata?.extras?.ownerInfo as string).split('|')[0]
       const isPublished = metadata?.extras?.isPublishedToAll
-      return isAdmin && isPublished
+      return isAdmin && isPublished && !(displayMap && !displayData)
     })
   )
 
