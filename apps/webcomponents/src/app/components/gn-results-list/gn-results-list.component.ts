@@ -21,7 +21,6 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
   styleUrls: ['./gn-results-list.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
-  providers: [SearchFacade],
   standalone: false,
 })
 export class GnResultsListComponent extends BaseComponent {

@@ -5,7 +5,6 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
 import { FuzzySearchComponent } from '@geonetwork-ui/feature/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -16,7 +15,6 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
   styleUrls: ['./gn-search-input.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
-  providers: [SearchFacade, SearchService],
   standalone: false,
 })
 export class GnSearchInputComponent extends BaseComponent {
@@ -33,9 +31,9 @@ export class GnSearchInputComponent extends BaseComponent {
         .replace(/\$\{search}/g, searchTerm)
         .replace(/\$\{q}/g, searchTerm)
 
-      setTimeout(() => {
-        window.location.href = landingPage
-      }, 100)
+      window.location.href = landingPage
+    } else {
+      this.facade.setFilters({ any })
     }
   }
 
@@ -47,9 +45,7 @@ export class GnSearchInputComponent extends BaseComponent {
         .replace(/\$\{search}/g, searchTerm)
         .replace(/\$\{q}/g, searchTerm)
 
-      setTimeout(() => {
-        window.location.href = landingPage
-      }, 100)
+      window.location.href = landingPage
     }
   }
 }
