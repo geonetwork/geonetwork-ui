@@ -1,0 +1,33 @@
+name: Artifacts
+run-name: 📦 Generate GN4 + DCAT-AP docker image
+
+on: push
+
+concurrency:
+  group: gn4-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-gn4-docker:
+    name: Build custom docker image for GeoNetwork 4
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.checks.outputs.ref }} # use the PR head ref if applicable; otherwise keep default behaviour
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Build GN4 docker image
+        working-directory: support-services/gn4
+        run: docker build . -t geonetwork/geonetwork-dcat-ap:latest
+
+      - name: Push GN4 docker image
+        run: docker push geonetwork/geonetwork-dcat-ap:latest
