@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Will print a version tag taking into account the current project version and whether it's a dev version
-# on main branch: 1.0.0-dev.1234abcd (commit tag)
+# on 2.8.x branch: 1.0.0-dev.1234abcd (commit tag)
 # on feature branch: 1.0.0-dev.branch-name
 # on git tag: 1.0.0 (git tag)
 
@@ -16,8 +16,8 @@ if [ -n "${gitTag}" ]; then
   exit 0
 fi
 
-# main branch
-if [ "${gitBranch}" == "main" ]; then
+# 2.8.x branch
+if [ "${gitBranch}" == "2.8.x" ]; then
   echo "${npmVersion}.${gitRef}"
   exit 0
 fi

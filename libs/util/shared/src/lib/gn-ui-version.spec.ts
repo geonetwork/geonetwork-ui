@@ -32,7 +32,7 @@ describe('GN UI version exports', () => {
       currentVersion = '4.5.6-dev'
       // eslint-disable-next-line @nx/enforce-module-boundaries
       const module = await import('@geonetwork-ui/util/shared')
-      expect(module.GEONETWORK_UI_TAG_NAME).toBe('main')
+      expect(module.GEONETWORK_UI_TAG_NAME).toBe('2.8.x')
     })
     it('returns the full version (stable version)', async () => {
       currentVersion = '4.5.6'
