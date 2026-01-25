@@ -29,6 +29,7 @@ import {
   filter,
   finalize,
   map,
+  shareReplay,
   switchMap,
   take,
   tap,
@@ -139,9 +140,8 @@ export class AutocompleteComponent
   ngOnChanges(changes: SimpleChanges): void {
     const { value } = changes
     if (value) {
-      const previousTextValue = this.displayWithFnInternal(value.previousValue)
       const currentTextValue = this.displayWithFnInternal(value.currentValue)
-      if (previousTextValue !== currentTextValue) {
+      if (currentTextValue !== this.control.value) {
         if (currentTextValue) {
           this.searchActive = true
           this.isSearchActive.emit(true)
@@ -160,8 +160,8 @@ export class AutocompleteComponent
       this.inputCleared.pipe(map(() => '')),
       this.control.valueChanges.pipe(
         filter((value) => typeof value === 'string'),
-        distinctUntilChanged(),
-        debounceTime(400)
+        debounceTime(400),
+        distinctUntilChanged()
       )
     )
 
@@ -181,7 +181,8 @@ export class AutocompleteComponent
         this.searching = true
         this.error = null
       }),
-      switchMap((value) => this.action(value)),
+      switchMap((value) => this.action(value)), // this can trigger http requests
+      shareReplay(1), // share the loaded suggestions to avoid multiple requests
       tap((suggestions) => {
         // forcing the panel to open if there are suggestions
         if (suggestions.length > 0 && !this.searchActive) {
@@ -288,6 +289,7 @@ export class AutocompleteComponent
 
   clear(): void {
     this.inputRef.nativeElement.value = ''
+    this.control.setValue('')
     this.searchActive = false
     this.isSearchActive.emit(false)
     this.inputCleared.emit()

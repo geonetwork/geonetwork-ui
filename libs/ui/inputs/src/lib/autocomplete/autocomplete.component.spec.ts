@@ -243,14 +243,19 @@ describe('AutocompleteComponent', () => {
           },
         }
         component.displayWithFn = (item) => item.title
+        fixture.detectChanges()
         component.ngOnChanges(simpleChanges)
       })
       it('set control value', () => {
         expect(component.control.value).toEqual({ title: 'hello' })
       })
+      it('set input value', () => {
+        expect(component.inputRef.nativeElement.value).toEqual('hello')
+      })
     })
     describe('when changed', () => {
       beforeEach(() => {
+        component.control.setValue('hello')
         const simpleChanges: any = {
           value: {
             previousValue: { title: 'hello' },
@@ -258,15 +263,20 @@ describe('AutocompleteComponent', () => {
           },
         }
         component.displayWithFn = (item) => item.title
+        fixture.detectChanges()
         component.ngOnChanges(simpleChanges)
       })
       it('set control value', () => {
         expect(component.control.value).toEqual({ title: 'good bye' })
       })
+      it('set input value', () => {
+        expect(component.inputRef.nativeElement.value).toEqual('good bye')
+      })
     })
-    describe('when ref changed but same text', () => {
-      let anyEmitted
+    describe('when changed but same text', () => {
       beforeEach(() => {
+        jest.spyOn(component, 'updateInputValue')
+        component.control.setValue('good bye')
         const simpleChanges: any = {
           value: {
             previousValue: { title: 'good bye' },
@@ -274,14 +284,11 @@ describe('AutocompleteComponent', () => {
           },
         }
         component.displayWithFn = (item) => item.title
-        component.inputSubmitted.subscribe((event) => (anyEmitted = event))
+        fixture.detectChanges()
         component.ngOnChanges(simpleChanges)
       })
-      it('does not set control value', () => {
-        expect(component.control.value).toBeNull()
-      })
-      it('does not emit any value', () => {
-        expect(anyEmitted).toBeUndefined()
+      it('does not update input value', () => {
+        expect(component.updateInputValue).not.toHaveBeenCalled()
       })
     })
     describe('when not set on init (firstChange == true)', () => {
