@@ -54,10 +54,41 @@ describe('header', () => {
       cy.get('gn-ui-fuzzy-search').type('velo')
       cy.get('mat-option').should('have.text', ' Accroches vélos MEL ')
     })
-    it('should go to the dataset page when clicking on the autocomplete result', () => {
+    it('should go to the dataset page when clicking on the autocomplete result for a dataset', () => {
       cy.get('gn-ui-fuzzy-search').type('velo')
       cy.get('mat-option').should('have.text', ' Accroches vélos MEL ').click()
       cy.url().should('include', '/dataset/')
+    })
+    it('should go to the dataset page when clicking on the autocomplete result for a service', () => {
+      cy.get('gn-ui-fuzzy-search').type('Orthophotos')
+      cy.get('mat-option')
+        .should(
+          'have.text',
+          ' Orthophotos 2021 - Service de visualisation REST '
+        )
+        .click()
+      cy.url().should('include', '/service/')
+    })
+    it('should go to the dataset page when clicking on the autocomplete result for a reuse', () => {
+      cy.get('gn-ui-fuzzy-search').type('ongulés')
+      cy.get('mat-option')
+        .should(
+          'have.text',
+          ' Carte dynamique sur la répartition des ongulés sauvages en France '
+        )
+        .click()
+      cy.url().should('include', '/reuse/')
+    })
+    it('should go to the dataset page when clicking on the autocomplete result for a reuse (presentation form)', () => {
+      cy.get('gn-ui-fuzzy-search').type('SL047')
+      cy.get('mat-option')
+        .eq(1)
+        .should(
+          'have.text',
+          ' Test dataset as map - ENS SL047 - Pelouses sèches de la combe de Vaux (plan de situation) '
+        )
+        .click()
+      cy.url().should('include', '/reuse/')
     })
     it('should display the search results on click on icon and close suggestions', () => {
       cy.get('gn-ui-fuzzy-search').type('velo')

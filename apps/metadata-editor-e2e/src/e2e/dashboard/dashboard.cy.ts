@@ -537,22 +537,22 @@ describe('editing restrictions as non admin', () => {
     // it should not have edit rights on other organization records
     cy.get('gn-ui-results-table')
       .find('[data-cy="table-row"]')
-      .eq(1)
-      .as('firstDatasetRecord')
-    cy.get('@firstDatasetRecord')
+      .eq(2)
+      .as('secondDatasetRecord')
+    cy.get('@secondDatasetRecord')
       .children('div')
       .eq(4)
       .find('span')
       .invoke('text')
       .should('eq', 'admin admin')
-    cy.get('@firstDatasetRecord').should(
+    cy.get('@secondDatasetRecord').should(
       'have.attr',
       'title',
       'You are not an editor of the allowed groups'
     )
-    cy.get('@firstDatasetRecord').children('div').eq(2).click()
+    cy.get('@secondDatasetRecord').children('div').eq(2).click()
     cy.url().should('include', '/catalog/')
-    cy.get('@firstDatasetRecord')
+    cy.get('@secondDatasetRecord')
       .find('[data-test="record-menu-button"]')
       .click()
     cy.get('[data-test="record-menu-delete-button"]')
