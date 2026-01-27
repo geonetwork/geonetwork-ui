@@ -28,28 +28,26 @@ export class GnSearchInputComponent extends BaseComponent {
 
   search(any: string) {
     if (this.openOnSearch) {
+      this.searchInput?.autocomplete?.triggerRef?.closePanel()
       const searchTerm = encodeURIComponent(any)
       const landingPage = this.openOnSearch
         .replace(/\$\{search}/g, searchTerm)
         .replace(/\$\{q}/g, searchTerm)
 
-      setTimeout(() => {
-        window.location.href = landingPage
-      }, 100)
+      window.location.href = landingPage
     }
   }
 
   select(record: CatalogRecord) {
     if (this.openOnSelect) {
+      this.searchInput?.autocomplete?.triggerRef?.closePanel()
       const searchTerm = encodeURIComponent(record.title)
       const landingPage = this.openOnSelect
         .replace(/\$\{uuid}/g, record.uniqueIdentifier)
         .replace(/\$\{search}/g, searchTerm)
         .replace(/\$\{q}/g, searchTerm)
 
-      setTimeout(() => {
-        window.location.href = landingPage
-      }, 100)
+      window.location.href = landingPage
     }
   }
 }
