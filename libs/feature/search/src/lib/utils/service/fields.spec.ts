@@ -933,15 +933,61 @@ describe('search fields implementations', () => {
     })
 
     describe('#getFiltersForValues', () => {
-      let filter: any
-
-      beforeEach(async () => {
-        filter = await lastValueFrom(
+      it('returns filters with real elastic search values - dataset and reuse', async () => {
+        const filter = await lastValueFrom(
           searchField.getFiltersForValues(['dataset', 'reuse'])
         )
+
+        expect(filter).toEqual({
+          resourceType: {
+            dataset: true,
+            document: true,
+            series: true,
+            featureCatalog: true,
+            application: true,
+            map: true,
+            'map-interactive': true,
+            'map-static': true,
+            'map/interactive': true,
+            'map/static': true,
+            mapDigital: true,
+            mapHardcopy: true,
+            staticMap: true,
+            interactiveMap: true,
+          },
+        })
       })
 
-      it('returns filters with real elastic search values', () => {
+      it('returns filters with real elastic search values - dataset only', async () => {
+        const filter = await lastValueFrom(
+          searchField.getFiltersForValues(['dataset'])
+        )
+
+        expect(filter).toEqual({
+          resourceType: {
+            dataset: true,
+            document: true,
+            series: true,
+            featureCatalog: true,
+            application: true,
+            map: true,
+            'map-interactive': true,
+            'map-static': true,
+            'map/interactive': true,
+            'map/static': true,
+            mapDigital: true,
+            mapHardcopy: true,
+            staticMap: true,
+            interactiveMap: true,
+          },
+        })
+      })
+
+      it('returns filters with real elastic search values - reuse only', async () => {
+        const filter = await lastValueFrom(
+          searchField.getFiltersForValues(['reuse'])
+        )
+
         expect(filter).toEqual({
           resourceType: {
             dataset: true,

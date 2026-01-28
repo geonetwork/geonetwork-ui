@@ -159,6 +159,7 @@ export class SearchEffects {
                 ...state.config.filters,
                 ...state.params.filters,
               }
+              console.log('effects.ts - loadResults$ - filters', filters)
               const results$ = this.recordsRepository.search({
                 filters,
                 offset: currentPage * pageSize,

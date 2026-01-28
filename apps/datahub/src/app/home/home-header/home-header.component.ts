@@ -127,6 +127,10 @@ export class HomeHeaderComponent {
         customSearchParameters.filters
       )
     )
+    console.log(
+      'home-header.component.ts - clearSearchAndFilterAndSort - searchFilters',
+      searchFilters
+    )
     if (customSearchParameters.sort) {
       const sortBy = sortByFromString(customSearchParameters.sort)
       this.searchService.setSortAndFilters(searchFilters, sortBy)
