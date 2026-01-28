@@ -36,7 +36,7 @@ export abstract class AbstractSearchField {
   abstract getAvailableValues(): Observable<FieldAvailableValue[] | DateRange[]>
   abstract getFiltersForValues(
     values: FieldValue[] | DateRange[]
-  ): Observable<FieldFilters>
+  ): Observable<FieldFilters | string>
   abstract getValuesForFilter(
     filters: FieldFilters
   ): Observable<FieldValue[] | FieldValue | DateRange>
@@ -89,7 +89,7 @@ export class SimpleSearchField implements AbstractSearchField {
   }
   getFiltersForValues(
     values: FieldValue[] | DateRange[]
-  ): Observable<FieldFilters> {
+  ): Observable<FieldFilters | string> {
     // FieldValue[]
     if (this.getType() === 'values') {
       return of({
@@ -511,8 +511,8 @@ export class RecordKindField extends SimpleSearchField {
       ...Object.entries(PossibleResourceTypes)
         .filter(([_, v]) => v === 'reuse')
         .map(([k]) => k), // = ['application', 'map', 'staticMap', 'interactiveMap', ...]
-      'dataset', // allow datasets and documents to be filtered as 'reuse' by cl_presentationForm
-      'document',
+      //'dataset', // allow datasets and documents to be filtered as 'reuse' by cl_presentationForm
+      //'document',
     ],
   }
 
@@ -538,7 +538,7 @@ export class RecordKindField extends SimpleSearchField {
     ])
   }
 
-  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
+  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters | string> {
     const filters: FieldFilters = {
       [this.esFieldName]: values.reduce((acc, value) => {
         if (value === '') return { ...acc, [value]: true }
@@ -552,8 +552,15 @@ export class RecordKindField extends SimpleSearchField {
 
     const presentationFormFilter = {}
     if (values.includes('reuse') && !values.includes('dataset')) {
-      presentationFormFilter['mapDigital'] = true
-      presentationFormFilter['mapHardcopy'] = true
+      console.log('fields.ts - getFiltersForValues - reuse only')
+      /* return of(
+        `(resourceType:("dataset" OR "document") AND cl_presentationForm.key:("mapDigital" OR "mapHardcopy")) OR resourceType:("application" OR "interactiveMap" OR "map" OR "map/static" OR "map/interactive" OR "map-interactive" OR "map-static" OR "mapDigital" OR "mapHardcopy" OR "staticMap")`
+      ) */
+      //presentationFormFilter['mapDigital'] = true
+      //presentationFormFilter['mapHardcopy'] = true
+      filters['resourceType'] = {}
+      filters['gn-ui-crossFieldFilter'] =
+        `(resourceType:("dataset" OR "document") AND cl_presentationForm.key:("mapDigital" OR "mapHardcopy")) OR resourceType:("application" OR "interactiveMap" OR "map" OR "map/static" OR "map/interactive" OR "map-interactive" OR "map-static" OR "mapDigital" OR "mapHardcopy" OR "staticMap")`
     } else if (values.includes('dataset') && !values.includes('reuse')) {
       presentationFormFilter['mapDigital'] = false
       presentationFormFilter['mapHardcopy'] = false

@@ -138,9 +138,19 @@ export class FieldsService {
       )
     })
     return forkJoin(filtersByField$).pipe(
-      map((filters) =>
-        filters.reduce((prev, curr) => ({ ...prev, ...curr }), {})
-      )
+      map((filters) => {
+        console.log(
+          'fields.service.ts buildFiltersFromFieldValues - filters',
+          filters
+        )
+        if (typeof filters === 'string') {
+          return filters
+        }
+        return (filters as FieldFilters[]).reduce(
+          (prev, curr) => ({ ...prev, ...curr }),
+          {}
+        )
+      })
     )
   }
 
