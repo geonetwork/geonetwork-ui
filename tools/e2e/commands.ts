@@ -253,7 +253,10 @@ Cypress.Commands.add('editor_createRecordCopy', (uuidToCopy, titleToCopy) => {
 
   // Clear any existing copy of the test record
   cy.visit('/catalog/search')
-  cy.get('gn-ui-fuzzy-search input').type(`${recordTitle}{enter}`)
+  cy.wait(400) // wait for the autocomplete debounce ?
+  cy.get('gn-ui-fuzzy-search input').type(
+    `{selectall}{del}${recordTitle}{enter}`
+  )
   cy.get('[data-cy="table-row"]')
     .should('have.length.lt', 10) // making sure the records were updated
     .then((rows$) => {
