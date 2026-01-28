@@ -21,25 +21,33 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 })
 export class GnSearchInputComponent extends BaseComponent {
   @Input() forceTrackPosition = ''
-  @Input() openOnSearch: string
-  @Input() openOnSelect: string
+  @Input({ alias: 'open-on-search' }) openOnSearch: string
+  @Input({ alias: 'open-on-select' }) openOnSelect: string
   @Input() placeholder?: string
   @ViewChild('searchInput') searchInput: FuzzySearchComponent
 
   search(any: string) {
     if (this.openOnSearch) {
-      const landingPage = this.openOnSearch.replace(/\$\{search}/, any)
-      window.open(landingPage, '_self').focus()
+      this.searchInput?.autocomplete?.triggerRef?.closePanel()
+      const searchTerm = encodeURIComponent(any)
+      const landingPage = this.openOnSearch
+        .replace(/\$\{search}/g, searchTerm)
+        .replace(/\$\{q}/g, searchTerm)
+
+      window.location.href = landingPage
     }
   }
 
   select(record: CatalogRecord) {
     if (this.openOnSelect) {
-      const landingPage = this.openOnSelect.replace(
-        /\$\{uuid}/,
-        record.uniqueIdentifier
-      )
-      window.open(landingPage, '_self').focus()
+      this.searchInput?.autocomplete?.triggerRef?.closePanel()
+      const searchTerm = encodeURIComponent(record.title)
+      const landingPage = this.openOnSelect
+        .replace(/\$\{uuid}/g, record.uniqueIdentifier)
+        .replace(/\$\{search}/g, searchTerm)
+        .replace(/\$\{q}/g, searchTerm)
+
+      window.location.href = landingPage
     }
   }
 }
