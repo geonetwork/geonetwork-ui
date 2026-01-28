@@ -933,21 +933,61 @@ describe('search fields implementations', () => {
     })
 
     describe('#getFiltersForValues', () => {
-      let filter: any
-
-      beforeEach(async () => {
-        filter = await lastValueFrom(
+      it('returns filters with real elastic search values - dataset and reuse', async () => {
+        const filter = await lastValueFrom(
           searchField.getFiltersForValues(['dataset', 'reuse'])
         )
-      })
 
-      it('returns filters with real elastic search values', () => {
         expect(filter).toEqual({
           resourceType: {
             dataset: true,
             document: true,
             series: true,
             featureCatalog: true,
+            application: true,
+            map: true,
+            'map-interactive': true,
+            'map-static': true,
+            'map/interactive': true,
+            'map/static': true,
+            mapDigital: true,
+            mapHardcopy: true,
+            staticMap: true,
+            interactiveMap: true,
+          },
+        })
+      })
+
+      it('returns filters with real elastic search values - dataset only', async () => {
+        const filter = await lastValueFrom(
+          searchField.getFiltersForValues(['dataset'])
+        )
+
+        expect(filter).toEqual({
+          'cl_presentationForm.key': {
+            mapDigital: false,
+            mapHardcopy: false,
+          },
+          resourceType: {
+            dataset: true,
+            document: true,
+            series: true,
+            featureCatalog: true,
+          },
+        })
+      })
+
+      it('returns filters with real elastic search values - reuse only', async () => {
+        const filter = await lastValueFrom(
+          searchField.getFiltersForValues(['reuse'])
+        )
+
+        expect(filter).toEqual({
+          'gn-ui-crossFieldFilter':
+            '(resourceType:("dataset" OR "document") AND cl_presentationForm.key:("mapDigital" OR "mapHardcopy")) OR resourceType:("application" OR "interactiveMap" OR "map" OR "map/static" OR "map/interactive" OR "map-interactive" OR "map-static" OR "mapDigital" OR "mapHardcopy" OR "staticMap")',
+          resourceType: {
+            dataset: true,
+            document: true,
             application: true,
             map: true,
             'map-interactive': true,

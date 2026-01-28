@@ -80,12 +80,11 @@ describe('header', () => {
       cy.url().should('include', '/reuse/')
     })
     it('should go to the dataset page when clicking on the autocomplete result for a reuse (presentation form)', () => {
-      cy.get('gn-ui-fuzzy-search').type('SL047')
+      cy.get('gn-ui-fuzzy-search').type('e6fb02ee')
       cy.get('mat-option')
-        .eq(1)
         .should(
           'have.text',
-          ' Test dataset as map - ENS SL047 - Pelouses sèches de la combe de Vaux (plan de situation) '
+          ' Test dataset as map e6fb02ee - ENS SL047 - Pelouses sèches de la combe de Vaux (plan de situation) '
         )
         .click()
       cy.url().should('include', '/reuse/')
