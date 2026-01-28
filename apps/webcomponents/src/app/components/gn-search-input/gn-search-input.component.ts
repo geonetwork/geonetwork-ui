@@ -30,6 +30,8 @@ export class GnSearchInputComponent extends BaseComponent {
     if (this.openOnSearch) {
       const landingPage = this.openOnSearch.replace(/\$\{search}/, any)
       window.open(landingPage, '_self').focus()
+    } else {
+      this.facade.setFilters({ any })
     }
   }
 
