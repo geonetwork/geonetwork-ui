@@ -25,8 +25,7 @@ describe('gn-search-input-and-results', () => {
       cy.get('mat-option').should('have.text', ' Accroches vélos MEL ').click()
       cy.url().should('include', '/dataset/')
     })
-    // FIXME
-    it.skip('should display the search results on click on icon and close suggestions', () => {
+    it('should display the search results on click on icon and close suggestions', () => {
       cy.get('gn-ui-fuzzy-search').type('velo')
       cy.get('mat-option').should('have.length.above', 0)
       cy.get('ng-icon')
@@ -41,8 +40,7 @@ describe('gn-search-input-and-results', () => {
         .should('contain', 'Accroches vélos MEL')
       cy.screenshot({ capture: 'viewport' })
     })
-    // FIXME
-    it.skip('should display the search results on enter touch and close suggestions', () => {
+    it('should display the search results on enter touch and close suggestions', () => {
       cy.get('gn-ui-fuzzy-search').type('velo{enter}')
       cy.get('gn-ui-record-preview-row').should('have.length', 1)
       cy.get('mat-option').should('have.length', 0)
