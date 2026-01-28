@@ -13,6 +13,7 @@ import {
   FieldFilters,
   FilterQuery,
   FiltersAggregationParams,
+  QueryString,
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
 import { METADATA_LANGUAGE } from '../../metadata-language.token'
@@ -261,10 +262,12 @@ export class ElasticsearchService {
         })
         .join(' OR ')
     }
-    const queryString =
+    console.log('filtersToQuery - filters', filters)
+    let queryString =
       typeof filters === 'string'
         ? filters
         : Object.keys(filters)
+            .filter((fieldname) => fieldname !== 'gn-ui-crossFieldFilter')
             .filter((fieldname) => !isDateRange(filters[fieldname]))
             .filter(
               (fieldname) =>
@@ -275,6 +278,17 @@ export class ElasticsearchService {
               (fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`
             )
             .join(' AND ')
+    console.log('filtersToQuery - queryString - before', queryString)
+    console.log(
+      'filtersToQuery - filters - gn-ui-crossFieldFilter',
+      filters['gn-ui-crossFieldFilter']
+    )
+    if (filters['gn-ui-crossFieldFilter']) {
+      queryString = queryString.concat(
+        ' AND (' + filters['gn-ui-crossFieldFilter'] + ')'
+      )
+      console.log('filtersToQuery - queryString - after', queryString)
+    }
     const queryRange = Object.entries(filters)
       .filter(([, value]) => isDateRange(value))
       .map(([searchField, dateRange]) => {
@@ -344,7 +358,11 @@ export class ElasticsearchService {
         },
       })
     }
+    console.log('fieldSearchFilters', fieldSearchFilters)
     const queryFilters = this.filtersToQuery(fieldSearchFilters)
+    console.log('queryFilters', queryFilters)
+    /* ;(queryFilters[0] as any).query_string.query =
+      `(resourceType:("dataset" OR "document") AND cl_presentationForm.key:("mapDigital" OR "mapHardcopy")) OR resourceType:("application" OR "interactiveMap" OR "map" OR "map/static" OR "map/interactive" OR "map-interactive" OR "map-static" OR "mapDigital" OR "mapHardcopy" OR "staticMap")` */
     if (queryFilters) {
       filter.push(...queryFilters)
     }

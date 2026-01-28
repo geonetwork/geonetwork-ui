@@ -300,14 +300,15 @@ describe('datasets', () => {
           "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (10)",
           'DREAL (1)',
           "DREAL HdF (Direction Régionale de l'Environnement de l'Aménagement et du Logement des Hauts de France) (1)",
-          'Fédération Départementale de la Chasse (1)',
-          'Fédération Nationale de la Chasse (1)',
+          'Fédération Départementale de la Chasse (2)',
+          'Fédération Nationale de la Chasse (2)',
           'Géo2France (1)',
           "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (12)",
           'Métropole Européenne de Lille (2)',
           'Moi même (1)',
-          'Office France de la Biodiversité (1)',
+          'Office France de la Biodiversité (2)',
           'Région Hauts-de-France (1)',
+          'Réseau 66fae6c2 sauvages OFB-FNC-FDC (1)',
           'Réseau Ongulés sauvages OFB-FNC-FDC (1)',
           'Service public de Wallonie (SPW) (12)',
           "Société Publique de Gestion de l'Eau (SPGE) (1)",
@@ -391,7 +392,7 @@ describe('datasets', () => {
         cy.get('@optionsLabel')
           .invoke('slice', 0, 3)
           .should('eql', [
-            'Administrative units (1)',
+            'Administrative units (2)',
             'Environmental monitoring facilities (2)',
             'Land use (1)',
           ])
