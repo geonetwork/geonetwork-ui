@@ -29,16 +29,19 @@
       </div>
       @if (shownOrganization?.website) {
         <div>
-          <a
-            [href]="shownOrganization.website"
-            target="_blank"
-            class="contact-website text-sm cursor-pointer hover:underline transition-all"
-            >{{ shownOrganization.website }}
+          <div class="flex items-center mt-1">
             <ng-icon
-              class="!w-[12px] !h-[12px] opacity-75 shrink-0"
+              class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
               name="matOpenInNew"
             ></ng-icon>
-          </a>
+            <a
+              [href]="shownOrganization.website"
+              target="_blank"
+              class="contact-website text-sm cursor-pointer hover:underline transition-all ml-2"
+            >
+              {{ shownOrganization.website }}
+            </a>
+          </div>
         </div>
       }
     </div>
