@@ -153,17 +153,12 @@ describe('Preview section', () => {
       .children('div')
       .eq(3)
       .as('chartTab')
-    cy.get('@previewSection')
-      .find('.mat-mdc-tab-labels')
-      .children('div')
-      .eq(4)
-      .as('stacTab')
 
     // it should display the tabs
     cy.get('@previewSection')
       .find('.mat-mdc-tab-labels')
       .children('div')
-      .should('have.length', 5)
+      .should('have.length', 4)
 
     // it should display the dataset dropdown with at least 1 option
     cy.get('@previewSection')
@@ -522,11 +517,6 @@ describe('Preview section', () => {
         .children('div')
         .eq(3)
         .as('chartTab')
-      cy.get('@previewSection')
-        .find('.mat-mdc-tab-labels')
-        .children('div')
-        .eq(4)
-        .as('stacTab')
     })
     it('should NOT show the config saving btn when logged out', () => {
       cy.get('@configTab').find('gn-ui-button').should('not.exist')
