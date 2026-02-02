@@ -288,9 +288,8 @@ describe('RecordDataPreviewComponent', () => {
 
         stacTab = fixture.debugElement.queryAll(By.directive(MatTab))[4]
       }))
-      it('renders STAC tab and is disabled', () => {
-        expect(stacTab).toBeDefined()
-        expect(stacTab.componentInstance.disabled).toBe(true)
+      it('does not render STAC tab', () => {
+        expect(stacTab).toBeUndefined()
       })
     })
     describe('when only a STAC link present', () => {
@@ -304,9 +303,8 @@ describe('RecordDataPreviewComponent', () => {
         stacTab = fixture.debugElement.queryAll(By.directive(MatTab))[4]
         tabGroup = fixture.debugElement.queryAll(By.directive(MatTabGroup))[0]
       }))
-      it('renders STAC tab and is enabled', () => {
+      it('renders STAC tab', () => {
         expect(stacTab).toBeDefined()
-        expect(stacTab.componentInstance.disabled).toBe(false)
       })
       it('stac tab is selected', () => {
         expect(tabGroup.componentInstance.selectedIndex).toBe(4)

@@ -93,14 +93,18 @@
                 </div>
               }
             </mat-tab>
-            <mat-tab [disabled]="(displayStac$ | async) === false">
-              <ng-template mat-tab-label>
-                <span class="tab-header-label" translate>record.tab.stac</span>
-              </ng-template>
-              <ng-template matTabContent>
-                <gn-ui-stac-view></gn-ui-stac-view>
-              </ng-template>
-            </mat-tab>
+            @if ((displayStac$ | async) === true) {
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <span class="tab-header-label" translate
+                    >record.tab.stac</span
+                  >
+                </ng-template>
+                <ng-template matTabContent>
+                  <gn-ui-stac-view></gn-ui-stac-view>
+                </ng-template>
+              </mat-tab>
+            }
           </mat-tab-group>
         </div>
       </div>
