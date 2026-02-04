@@ -261,10 +261,11 @@ export class ElasticsearchService {
         })
         .join(' OR ')
     }
-    const queryString =
+    let queryString =
       typeof filters === 'string'
         ? filters
         : Object.keys(filters)
+            .filter((fieldname) => fieldname !== 'gn-ui-crossFieldFilter')
             .filter((fieldname) => !isDateRange(filters[fieldname]))
             .filter(
               (fieldname) =>
@@ -275,6 +276,9 @@ export class ElasticsearchService {
               (fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`
             )
             .join(' AND ')
+    if (filters['gn-ui-crossFieldFilter']) {
+      queryString = `${queryString} AND (${filters['gn-ui-crossFieldFilter']})`
+    }
     const queryRange = Object.entries(filters)
       .filter(([, value]) => isDateRange(value))
       .map(([searchField, dateRange]) => {
