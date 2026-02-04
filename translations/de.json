@@ -382,6 +382,7 @@
   "multiselect.filter.placeholder": "Suche",
   "nav.back": "Zurück",
   "navbar.mobile.menuTitle": "Schnellzugriff",
+  "ogc.geojson.notsupported": "Dieser OGC API-Dienst unterstützt das GeoJSON-Format nicht.",
   "ogc.unreachable.unknown": "Der Dienst konnte nicht erreicht werden",
   "organisation.filter.placeholder": "Ergebnisse filtern",
   "organisation.sort.sortBy": "Sortieren nach:",

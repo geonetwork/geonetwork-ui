@@ -128,6 +128,11 @@ jest.mock('@camptocamp/ogc-client', () => ({
           bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
         })
       }
+      if (this.url.indexOf('nojson') > -1) {
+        return Promise.resolve({
+          bulkDownloadLinks: { csv: 'http://csv' },
+        })
+      }
       return Promise.resolve({
         bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
       })
@@ -779,6 +784,24 @@ describe('DataService', () => {
             )
           )
           await expect(result.read()).resolves.toEqual(SAMPLE_GEOJSON.features)
+        })
+      })
+      describe('GeoJSON not supported by OGC API Features', () => {
+        it('returns an observable that errors with a relevant error', async () => {
+          try {
+            await lastValueFrom(
+              service.getDataset(
+                {
+                  type: 'service',
+                  accessServiceProtocol: 'ogcFeatures',
+                  url: new URL('https://my.ogc.api/features_nojson'),
+                },
+                cacheActive
+              )
+            )
+          } catch (e) {
+            expect(e).toEqual('ogc.geojson.notsupported')
+          }
         })
       })
     })
