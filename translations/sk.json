@@ -387,6 +387,7 @@
   "multiselect.filter.placeholder": "Hľadať",
   "nav.back": "Späť",
   "navbar.mobile.menuTitle": "",
+  "ogc.geojson.notsupported": "",
   "ogc.unreachable.unknown": "So službou sa nedalo spojiť",
   "organisation.filter.placeholder": "Filtrovať výsledky",
   "organisation.sort.sortBy": "Zoradiť podľa:",

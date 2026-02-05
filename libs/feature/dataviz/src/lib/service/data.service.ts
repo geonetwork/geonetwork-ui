@@ -39,6 +39,7 @@ marker('dataset.error.forbidden')
 marker('wfs.unreachable.unknown')
 marker('wfs.featuretype.notfound')
 marker('wfs.geojsongml.notsupported')
+marker('ogc.geojson.notsupported')
 marker('ogc.unreachable.unknown')
 marker('dataset.error.network')
 marker('dataset.error.http')
@@ -372,13 +373,19 @@ export class DataService {
     ) {
       return from(this.getDownloadUrlsFromOgcApi(link.url.href)).pipe(
         switchMap((collectionInfo) => {
-          const geojsonUrl = collectionInfo.jsonDownloadLink
-          return openDataset(geojsonUrl, 'geojson', undefined, cacheActive)
-        }),
-        tap((url) => {
-          if (url === null) {
-            throw new Error('wfs.geojsongml.notsupported')
+          const isMimeTypeJson = (mimeType: string): boolean => {
+            return mimeType.toLowerCase().indexOf('json') > -1
           }
+          const geojsonUrl =
+            collectionInfo.bulkDownloadLinks[
+              Object.keys(collectionInfo.bulkDownloadLinks).find((mimeType) =>
+                isMimeTypeJson(mimeType)
+              )
+            ]
+          if (!geojsonUrl) {
+            return throwError(() => 'ogc.geojson.notsupported')
+          }
+          return openDataset(geojsonUrl, 'geojson', undefined, cacheActive)
         })
       )
     }
