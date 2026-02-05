@@ -8,7 +8,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { filter } from 'rxjs'
 import { Actions, ofType } from '@ngrx/effects'
-import { EditorFieldIdentification } from '../models'
+import { EditorConfig, EditorFieldIdentification } from '../models'
 
 @Injectable()
 export class EditorFacade {
@@ -67,6 +67,10 @@ export class EditorFacade {
     this.store.dispatch(
       EditorActions.updateRecordLanguages({ defaultLanguage, otherLanguages })
     )
+  }
+
+  setConfiguration(configuration: EditorConfig) {
+    this.store.dispatch(EditorActions.setEditorConfiguration({ configuration }))
   }
 
   setCurrentPage(page: number) {

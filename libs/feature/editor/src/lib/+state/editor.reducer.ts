@@ -81,6 +81,10 @@ const reducer = createReducer(
     ...state,
     changedSinceSave: true,
   })),
+  on(EditorActions.setEditorConfiguration, (state, { configuration }) => ({
+    ...state,
+    editorConfig: configuration,
+  })),
   on(EditorActions.setCurrentPage, (state, { page }) => ({
     ...state,
     currentPage: page,
