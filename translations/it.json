@@ -663,7 +663,7 @@
   "wfs.feature.limit": "Troppi oggetti per visualizzare il WFS layer!",
   "wfs.featuretype.notfound": "La classe di oggetto non è stata trovata nel servizio",
   "wfs.geojsongml.notsupported": "Il servizio non supporta il formato GeoJSON o GML",
-  "wfs.unreachable.cors": "Il servizio non è accessibile a causa di limitazioni CORS",
+  "wfs.unreachable.cors": "Il servizio remoto non è configurato per consentire il consumo di dati (CORS)",
   "wfs.unreachable.http": "Il servizio ha restituito un errore HTTP",
   "wfs.unreachable.unknown": "Il servizio non è accessibile"
 }
