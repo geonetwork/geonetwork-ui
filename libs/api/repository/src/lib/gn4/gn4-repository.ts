@@ -373,6 +373,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       .create(
         uniqueIdentifier,
         '2',
+        {},
         'METADATA',
         '',
         false,
@@ -384,7 +385,6 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         false,
         {
           httpHeaderAccept: 'application/json',
-          httpContentTypeSelected: 'application/json;charset=UTF-8',
         }
       )
       .pipe(
