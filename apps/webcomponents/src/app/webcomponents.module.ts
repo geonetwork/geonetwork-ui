@@ -28,6 +28,8 @@ import {
   FuzzySearchComponent,
   RecordsMetricsComponent,
   ResultsListContainerComponent,
+  SearchFacade,
+  SearchService,
 } from '@geonetwork-ui/feature/search'
 import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
@@ -102,6 +104,8 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
       StoreDevtoolsModule.instrument({ connectInZone: true }),
       EffectsModule.forRoot()
     ),
+    SearchFacade,
+    SearchService,
     {
       provide: OverlayContainer,
       useClass: WebcomponentOverlayContainer,
