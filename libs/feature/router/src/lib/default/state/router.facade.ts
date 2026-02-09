@@ -31,7 +31,9 @@ export class RouterFacade {
 
   searchParams$ = this.currentRoute$.pipe(
     filter((route) => !!route),
-    filter((route) => route.url[0]?.path.startsWith(ROUTER_ROUTE_SEARCH)),
+    filter((route) =>
+      route.url[0]?.path.startsWith(this.routerService.getSearchRoute())
+    ),
     map((route) => route.queryParams),
     distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
     map(expandQueryParams)
