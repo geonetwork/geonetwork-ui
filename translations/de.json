@@ -663,7 +663,7 @@
   "wfs.feature.limit": "Zu viele Features, um den WFS-Layer anzuzeigen!",
   "wfs.featuretype.notfound": "Kein passender Feature-Typ wurde im Dienst gefunden",
   "wfs.geojsongml.notsupported": "Dieser Dienst unterstützt das GeoJSON- oder GML-Format nicht",
-  "wfs.unreachable.cors": "Der Dienst konnte aufgrund von CORS-Beschränkungen nicht erreicht werden",
+  "wfs.unreachable.cors": "Der Remote-Dienst ist nicht für den Datenempfang (CORS) konfiguriert",
   "wfs.unreachable.http": "Der Dienst hat einen HTTP-Fehler zurückgegeben",
   "wfs.unreachable.unknown": "Der Dienst konnte nicht erreicht werden"
 }
