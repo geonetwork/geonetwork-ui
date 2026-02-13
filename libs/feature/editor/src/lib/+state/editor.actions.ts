@@ -4,7 +4,7 @@ import {
   LanguageCode,
 } from '@geonetwork-ui/common/domain/model/record'
 import { SaveRecordError } from './editor.models'
-import { EditorFieldIdentification } from '../models'
+import { EditorConfig, EditorFieldIdentification } from '../models'
 
 export const openRecord = createAction(
   '[Editor] Open record',
@@ -38,6 +38,11 @@ export const saveRecordFailure = createAction(
 export const draftSaveSuccess = createAction('[Editor] Draft save success')
 
 export const undoRecordDraft = createAction('[Editor] Undo record draft')
+
+export const setEditorConfiguration = createAction(
+  '[Editor] Set editor configuration',
+  props<{ configuration: EditorConfig }>()
+)
 
 export const setCurrentPage = createAction(
   '[Editor] Set current page',

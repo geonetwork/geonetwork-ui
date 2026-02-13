@@ -6,7 +6,10 @@ import {
   initialEditorState,
 } from './editor.reducer'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  CatalogRecordKeys,
+} from '@geonetwork-ui/common/domain/model/record'
 
 describe('Editor Reducer', () => {
   describe('valid Editor actions', () => {
@@ -107,19 +110,74 @@ describe('Editor Reducer', () => {
 
       expect(result.changedSinceSave).toBe(true)
     })
+    it('setEditorConfiguration action', () => {
+      const configuration = {
+        sections: [],
+        pages: [],
+      }
+      const action = EditorActions.setEditorConfiguration({ configuration })
+      const result: EditorState = editorReducer(
+        { ...initialEditorState, editorConfig: null },
+        action
+      )
+
+      expect(result.editorConfig).toEqual(configuration)
+    })
+    it('setCurrentPage action', () => {
+      const action = EditorActions.setCurrentPage({ page: 2 })
+      const result: EditorState = editorReducer(
+        { ...initialEditorState, currentPage: 0 },
+        action
+      )
+
+      expect(result.currentPage).toBe(2)
+    })
+    it('setFieldVisibility action', () => {
+      const field = { model: 'title' as CatalogRecordKeys }
+      const action = EditorActions.setFieldVisibility({
+        field,
+        visible: false,
+      })
+      const result: EditorState = editorReducer(
+        {
+          ...initialEditorState,
+          editorConfig: {
+            pages: [
+              {
+                sections: [
+                  {
+                    fields: [
+                      {
+                        model: 'title' as CatalogRecordKeys,
+                        formFieldConfig: {},
+                      },
+                    ],
+                    hidden: false,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        action
+      )
+
+      expect(result.editorConfig.pages[0].sections[0].fields[0].hidden).toEqual(
+        true
+      )
+    })
     it('hasRecordChangedSinceDraftSuccess action', () => {
-      const changes = ['change1', 'change2']
+      const changes = { user: 'barbie', date: new Date('2024-06-01T00:00:00Z') }
       const action = EditorActions.hasRecordChangedSinceDraftSuccess({
         changes,
       })
       const result: EditorState = editorReducer(
-        { ...initialEditorState, hasRecordChanged: [] },
+        { ...initialEditorState, hasRecordChanged: null },
         action
       )
 
       expect(result.hasRecordChanged).toEqual(changes)
     })
-
     it('isPublished action', () => {
       const action = EditorActions.isPublished({
         isPublished: true,
@@ -131,7 +189,6 @@ describe('Editor Reducer', () => {
 
       expect(result.isPublished).toBe(true)
     })
-
     it('canEditRecord action', () => {
       const action = EditorActions.canEditRecord({
         canEditRecord: true,
