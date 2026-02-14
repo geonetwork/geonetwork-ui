@@ -54,7 +54,7 @@
     "@nx/angular": "22.0.4",
     "@rgrove/parse-xml": "4.2.0",
     "alasql": "4.6.0",
-    "axios": "1.12.0",
+    "axios": "1.13.5",
     "basiclightbox": "^5.0.4",
     "chart.js": "4.4.7",
     "chroma-js": "3.1.2",
