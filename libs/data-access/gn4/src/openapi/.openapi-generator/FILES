@@ -1,6 +1,7 @@
 .gitignore
 .openapi-generator-ignore
 README.md
+api.base.service.ts
 api.module.ts
 api/api.ts
 api/atom.api.service.ts
@@ -72,9 +73,8 @@ model/hasfeaturecats.api.model.ts
 model/hassource.api.model.ts
 model/iProcessingReport.api.model.ts
 model/iSODate.api.model.ts
+model/index1403Response.api.model.ts
 model/infoReport.api.model.ts
-model/inlineObject1.api.model.ts
-model/inlineObject4.api.model.ts
 model/isoLanguage.api.model.ts
 model/jSONObject.api.model.ts
 model/jsonNode.api.model.ts
@@ -147,6 +147,7 @@ model/thumbnail.api.model.ts
 model/transferRequest.api.model.ts
 model/translations.api.model.ts
 model/uiSetting.api.model.ts
+model/uploadThesaurusRequest.api.model.ts
 model/user.api.model.ts
 model/userDto.api.model.ts
 model/userFeedbackDTO.api.model.ts
@@ -158,4 +159,6 @@ model/userSearchDto.api.model.ts
 model/userSecurity.api.model.ts
 model/values.api.model.ts
 model/xsltMetadataProcessingReport.api.model.ts
+param.ts
+provide-api.ts
 variables.ts

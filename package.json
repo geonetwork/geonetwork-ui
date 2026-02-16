@@ -146,7 +146,7 @@
     "@nx/storybook": "22.0.4",
     "@nx/webpack": "22.0.4",
     "@nx/workspace": "22.0.4",
-    "@openapitools/openapi-generator-cli": "^2.18.4",
+    "@openapitools/openapi-generator-cli": "2.25.2",
     "@schematics/angular": "20.3.12",
     "@storybook/angular": "9.1.9",
     "@stylistic/eslint-plugin-ts": "^2.12.1",
