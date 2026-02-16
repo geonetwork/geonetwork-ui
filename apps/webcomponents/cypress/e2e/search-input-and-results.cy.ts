@@ -19,8 +19,7 @@ describe('gn-search-input-and-results', () => {
       cy.get('gn-ui-fuzzy-search').type('velo')
       cy.get('mat-option').should('have.text', ' Accroches vélos MEL ')
     })
-    // FIXME
-    it.skip('should go to the dataset page when clicking on the autocomplete result', () => {
+    it('should go to the dataset page when clicking on the autocomplete result', () => {
       cy.get('gn-ui-fuzzy-search').type('velo')
       cy.get('mat-option').should('have.text', ' Accroches vélos MEL ').click()
       cy.url().should('include', '/dataset/')
