@@ -39,6 +39,8 @@ Look for 'GeoNetwork-UI pipeline' in `tools/pipelines/register-es-pipelines.js`
 | updateFrequency  | X       |         |       |
 | sources          |         |         | X     |
 
+For more details on the dataset/service/reuse classification, see the [classification system](./record-kind.md)
+
 ### sources
 
 The reuse must have at least one source dataset to be considered valid.

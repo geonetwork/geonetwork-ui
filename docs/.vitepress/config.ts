@@ -60,6 +60,7 @@ function sidebarGuides() {
         { text: 'Deploy', link: '/guide/deploy' },
         { text: 'Configure', link: '/guide/configure' },
         { text: 'Theming', link: '/guide/theming' },
+        { text: 'Classification system', link: '/guide/record-kind' },
         { text: 'Metadata quality', link: '/guide/metadata-quality' },
         {
           text: 'Source restriction',
