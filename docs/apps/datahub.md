@@ -73,6 +73,7 @@ Each type has its own 'page-type' with fixed sections (if the related data is av
   - Service : Capabilities
   - Reuse : Main link to reuse
 
+For more details on the dataset/service/reuse classification, see the [classification system](../guide/record-kind.md)
 For more details on sections and fields, see [Datahub - sections and fields](../apps/datahub-sections-fields.md)
 
 ### Organisations

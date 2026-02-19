@@ -81,6 +81,6 @@ The `ogc-client` library is used to parse the capabilities.
 
 In the **Datahub**, the concept of reuse covers applications and maps, both interactive and static.
 
-## Header link
+### Header link
 
 In the header of a reuse page, the first link of the record that is not an API or a download link is displayed as the main link.
