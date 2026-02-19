@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Web Component Demo</title>
+    <base href="./" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@200;300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: var(--font-family-main);
+      }
+      header {
+        height: 200px;
+        background-color: #5bd261;
+      }
+      .container {
+        max-width: 750px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <script src="gn-wc.js"></script>
+        <gn-search-input
+          api-url="https://www.geo2france.fr/geonetwork/srv/api"
+          open-on-search="https://www.geo2france.fr/datahub/home/search/?q=${search}"
+          open-on-select="https://www.geo2france.fr/datahub/dataset/${uuid}"
+          primary-color="#0f4395"
+          secondary-color="#8bc832"
+          main-color="#555"
+          background-color="#fdfbff"
+          main-font="'Inter', sans-serif"
+          title-font="'DM Serif Display', serif"
+        ></gn-search-input>
+      </div>
+    </header>
+    <main></main>
+  </body>
+</html>

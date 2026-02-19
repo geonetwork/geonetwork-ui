@@ -1,0 +1,1043 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Geonetwork EEA data catalogue</title>
+    <base href="./" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://forest.eea.europa.eu/favicon.ico"
+    />
+    <link rel="shortcut icon" href="https://forest.eea.europa.eu/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/facetview/vendor/jquery-ui-1.11.4.custom/jquery-ui.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/facetview/vendor/dist/themes/default/style.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/facetview/css/style.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/facetview/css/facetview.css"
+    />
+    <link rel="stylesheet" href="https://forest.eea.europa.eu/css/style.css" />
+    <link rel="stylesheet" href="https://forest.eea.europa.eu/css/tiles.css" />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/loading.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/no-more-tables.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/esbootstrap.facetview.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/no-more-tables.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/esbootstrap.facetview.css"
+    />
+    <link rel="stylesheet" href="https://forest.eea.europa.eu/custom.css" />
+    <script src="../webcomponents/gn-wc.js"></script>
+  </head>
+  <body>
+    <div id="main">
+      <div class="header-wrapper" role="banner">
+        <div class="sticky-outer-wrapper">
+          <div
+            class="sticky-inner-wrapper"
+            style="position: relative; top: 0px"
+          >
+            <div class="ui container">
+              <div class="header">
+                <div class="logo-nav-wrapper space-between">
+                  <div class="logo">
+                    <a title="Site" href="/"
+                      ><img
+                        class="logoImage"
+                        height="80"
+                        src="https://forest.eea.europa.eu/static/media/Logo.820d22dc.svg"
+                        alt="Plone Site"
+                        title="Plone Site" /><img
+                        class="logoImageSm"
+                        height="80"
+                        src="https://forest.eea.europa.eu/static/media/Logo.820d22dc.svg"
+                        alt="Plone Site"
+                        title="Plone Site"
+                    /></a>
+                  </div>
+                  <div class="nav-actions-mobile large screen hidden">
+                    <div class="search">
+                      <form action="/search" class="ui form">
+                        <div class="field searchbox">
+                          <div class="ui transparent input searchInput">
+                            <input
+                              type="text"
+                              aria-label="Search"
+                              name="SearchableText"
+                              value=""
+                              placeholder="Search website"
+                              title="Search"
+                            />
+                          </div>
+                          <button
+                            class="overSearchIcon ui small basic no-border icon button"
+                            aria-label="Search"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 36 36"
+                              style="
+                                height: 29px;
+                                width: auto;
+                                fill: currentColor;
+                              "
+                              class="icon"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M7,16 C7,11.038 11.037,7 16,7 C20.963,7 25,11.038 25,16 C25,20.962 20.963,25 16,25 C11.037,25 7,20.962 7,16 L7,16 Z M32.707,31.293 L24.448,23.034 C26.039,21.125 27,18.673 27,16 C27,9.935 22.065,5 16,5 C9.935,5 5,9.935 5,16 C5,22.065 9.935,27 16,27 C18.673,27 21.125,26.039 23.034,24.448 L31.293,32.707 L32.707,31.293 Z"
+                              ></path>
+                            </svg>
+                          </button>
+                          <button
+                            class="overSearchIcon ui small basic no-border icon button"
+                            aria-label="Search"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 36 36"
+                              style="height: 2; width: auto; fill: currentColor"
+                              class="icon"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M7,16 C7,11.038 11.037,7 16,7 C20.963,7 25,11.038 25,16 C25,20.962 20.963,25 16,25 C11.037,25 7,20.962 7,16 L7,16 Z M32.707,31.293 L24.448,23.034 C26.039,21.125 27,18.673 27,16 C27,9.935 22.065,5 16,5 C9.935,5 5,9.935 5,16 C5,22.065 9.935,27 16,27 C18.673,27 21.125,26.039 23.034,24.448 L31.293,32.707 L32.707,31.293 Z"
+                              ></path>
+                            </svg>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <nav class="navigation">
+                    <div class="mobile-nav-wrapper">
+                      <div
+                        class="hamburger-wrapper computer hidden large screen hidden widescreen hidden"
+                      >
+                        <button
+                          class="hamburger hamburger--collapse"
+                          type="button"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 36 36"
+                            style="
+                              height: 32px;
+                              width: auto;
+                              fill: currentColor;
+                            "
+                            class="icon searchIcon"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M7,16 C7,11.038 11.037,7 16,7 C20.963,7 25,11.038 25,16 C25,20.962 20.963,25 16,25 C11.037,25 7,20.962 7,16 L7,16 Z M32.707,31.293 L24.448,23.034 C26.039,21.125 27,18.673 27,16 C27,9.935 22.065,5 16,5 C9.935,5 5,9.935 5,16 C5,22.065 9.935,27 16,27 C18.673,27 21.125,26.039 23.034,24.448 L31.293,32.707 L32.707,31.293 Z"
+                            ></path>
+                          </svg>
+                        </button>
+                      </div>
+                      <div
+                        class="hamburger-wrapper computer hidden large screen hidden widescreen hidden"
+                      >
+                        <button
+                          class="hamburger hamburger--collapse"
+                          aria-label="Open menu"
+                          title="Open menu"
+                          type="button"
+                        >
+                          <span class="hamburger-box"
+                            ><span class="hamburger-inner"></span
+                          ></span>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="search computer large screen widescreen only">
+                      <div>
+                        <form
+                          autocomplete="off"
+                          action="/search"
+                          class="ui form searchform"
+                        >
+                          <div class="field searchbox">
+                            <div
+                              style="
+                                width: 100%;
+                                position: relative;
+                                margin-right: 0;
+                              "
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 36 36"
+                                style="
+                                  height: 26px;
+                                  width: auto;
+                                  fill: currentColor;
+                                "
+                                class="icon searchIcon"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M7,16 C7,11.038 11.037,7 16,7 C20.963,7 25,11.038 25,16 C25,20.962 20.963,25 16,25 C11.037,25 7,20.962 7,16 L7,16 Z M32.707,31.293 L24.448,23.034 C26.039,21.125 27,18.673 27,16 C27,9.935 22.065,5 16,5 C9.935,5 5,9.935 5,16 C5,22.065 9.935,27 16,27 C18.673,27 21.125,26.039 23.034,24.448 L31.293,32.707 L32.707,31.293 Z"
+                                ></path>
+                              </svg>
+                              <div class="ui transparent input">
+                                <input
+                                  type="text"
+                                  aria-label="Search"
+                                  placeholder="Search website"
+                                  title="Search"
+                                  value=""
+                                  name="SearchableText"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <div
+                      class="ui pointing secondary stackable computer large screen widescreen only menu"
+                    >
+                      <a class="item firstLevel" href="/">Home</a>
+                      <div class="ui item simple dropdown item firstLevel">
+                        <div class="firstLevel-title">Topics</div>
+                        <div class="menu transition Topics--section">
+                          <div
+                            id="Forest basic data"
+                            role="option"
+                            class="item Topics--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/topics/forest-basic-data"
+                              >Forest basic data</a
+                            >
+                          </div>
+                          <div
+                            id="Nature and biodiversity"
+                            role="option"
+                            class="item Topics--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/topics/forest-nature-and-biodiversity"
+                              >Nature and biodiversity</a
+                            >
+                          </div>
+                          <div
+                            id="Forest and climate change"
+                            role="option"
+                            class="item Topics--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/topics/forest-and-climate-change"
+                              >Forest and climate change</a
+                            >
+                          </div>
+                          <div
+                            id="Forest health and resilience"
+                            role="option"
+                            class="item Topics--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/topics/forest-health-and-resilience"
+                              >Forest health and resilience</a
+                            >
+                          </div>
+                          <div
+                            id="Bioeconomy"
+                            role="option"
+                            class="item Topics--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/topics/forest-bioeconomy"
+                              >Bioeconomy</a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <a class="item firstLevel" href="/policy">Policy</a>
+                      <div class="ui item simple dropdown item firstLevel">
+                        <div class="firstLevel-title">Countries</div>
+                        <div class="menu transition Countries--section">
+                          <div
+                            id="Austria"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/austria"
+                              >Austria</a
+                            >
+                          </div>
+                          <div
+                            id="Belgium"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/belgium"
+                              >Belgium</a
+                            >
+                          </div>
+                          <div
+                            id="Bulgaria"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/bulgaria"
+                              >Bulgaria</a
+                            >
+                          </div>
+                          <div
+                            id="Croatia"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/croatia"
+                              >Croatia</a
+                            >
+                          </div>
+                          <div
+                            id="Cyprus"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a class="item secondLevel" href="/countries/cyprus"
+                              >Cyprus</a
+                            >
+                          </div>
+                          <div
+                            id="Czechia"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/czechia"
+                              >Czechia</a
+                            >
+                          </div>
+                          <div
+                            id="Denmark"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/denmark"
+                              >Denmark</a
+                            >
+                          </div>
+                          <div
+                            id="Estonia"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/estonia"
+                              >Estonia</a
+                            >
+                          </div>
+                          <div
+                            id="Finland"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/finland"
+                              >Finland</a
+                            >
+                          </div>
+                          <div
+                            id="France"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a class="item secondLevel" href="/countries/france"
+                              >France</a
+                            >
+                          </div>
+                          <div
+                            id="Germany"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/germany"
+                              >Germany</a
+                            >
+                          </div>
+                          <div
+                            id="Greece"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a class="item secondLevel" href="/countries/greece"
+                              >Greece</a
+                            >
+                          </div>
+                          <div
+                            id="Hungary"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/hungary"
+                              >Hungary</a
+                            >
+                          </div>
+                          <div
+                            id="Ireland"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/ireland"
+                              >Ireland</a
+                            >
+                          </div>
+                          <div
+                            id="Italy"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a class="item secondLevel" href="/countries/italy"
+                              >Italy</a
+                            >
+                          </div>
+                          <div
+                            id="Latvia"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a class="item secondLevel" href="/countries/latvia"
+                              >Latvia</a
+                            >
+                          </div>
+                          <div
+                            id="Lithuania"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/lithuania"
+                              >Lithuania</a
+                            >
+                          </div>
+                          <div
+                            id="Luxembourg"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/luxembourg"
+                              >Luxembourg</a
+                            >
+                          </div>
+                          <div
+                            id="Malta"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a class="item secondLevel" href="/countries/malta"
+                              >Malta</a
+                            >
+                          </div>
+                          <div
+                            id="Netherlands"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/netherlands"
+                              >Netherlands</a
+                            >
+                          </div>
+                          <div
+                            id="Poland"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a class="item secondLevel" href="/countries/poland"
+                              >Poland</a
+                            >
+                          </div>
+                          <div
+                            id="Portugal"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/portugal"
+                              >Portugal</a
+                            >
+                          </div>
+                          <div
+                            id="Romania"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/romania"
+                              >Romania</a
+                            >
+                          </div>
+                          <div
+                            id="Slovakia"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/slovakia"
+                              >Slovakia</a
+                            >
+                          </div>
+                          <div
+                            id="Slovenia"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/slovenia"
+                              >Slovenia</a
+                            >
+                          </div>
+                          <div
+                            id="Spain"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a class="item secondLevel" href="/countries/spain"
+                              >Spain</a
+                            >
+                          </div>
+                          <div
+                            id="Sweden"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a class="item secondLevel" href="/countries/sweden"
+                              >Sweden</a
+                            >
+                          </div>
+                          <div
+                            id="Switzerland"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/countries/switzerland"
+                              >Switzerland</a
+                            >
+                          </div>
+                          <div
+                            id="Turkey"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a class="item secondLevel" href="/countries/turkey"
+                              >Turkey</a
+                            >
+                          </div>
+                          <div
+                            id="Norway"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <a class="item secondLevel" href="/countries/norway"
+                              >Norway</a
+                            >
+                          </div>
+                          <div
+                            id="Regions"
+                            role="option"
+                            class="item Countries--section-item"
+                          >
+                            <div class="item secondLevel">Regions</div>
+                            <div class="submenu-wrapper">
+                              <div class="submenu">
+                                <a
+                                  class="item thirdLevel"
+                                  href="/countries/regions/eu"
+                                  >European Union</a
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <a class="item firstLevel" href="/datacatalogue"
+                        >Data catalogue</a
+                      >
+                      <div class="ui item simple dropdown item firstLevel">
+                        <div class="firstLevel-title">Knowledge</div>
+                        <div class="menu transition Knowledge--section">
+                          <div
+                            id="Research projects"
+                            role="option"
+                            class="item Knowledge--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/knowledge/research-projects"
+                              >Research projects</a
+                            >
+                          </div>
+                          <div
+                            id="Tools"
+                            role="option"
+                            class="item Knowledge--section-item"
+                          >
+                            <a class="item secondLevel" href="/knowledge/tools"
+                              >Tools</a
+                            >
+                          </div>
+                          <div
+                            id="Geospatial Data Catalogue"
+                            role="option"
+                            class="item Knowledge--section-item"
+                          >
+                            <a
+                              class="item secondLevel"
+                              href="/knowledge/european-geospatial-metadata-catalogue"
+                              >Geospatial Data Catalogue</a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <a class="item menuActive firstLevel" href="/about"
+                        >About us</a
+                      >
+                    </div>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ui container">
+          <div class="header-bg contentpage">
+            <img
+              src="https://forest.eea.europa.eu/static/media/header-bg.b0e06ab2.png"
+              alt=""
+            />
+          </div>
+          <div style="position: relative">
+            <div
+              role="navigation"
+              aria-label="Breadcrumbs"
+              class="ui secondary vertical segment breadcrumbs"
+            >
+              <div class="ui container">
+                <div class="ui breadcrumb">
+                  <a class="section" title="Home" href="/">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 36 36"
+                      style="height: 18px; width: auto; fill: currentColor"
+                      class="icon"
+                    >
+                      <g fill-rule="evenodd">
+                        <path
+                          d="M18 4.826L4.476 13.148 5.524 14.851 18 7.174 30.476 14.851 31.524 13.148zM25 27L21 27 21 19 15 19 15 27 11 27 11 15 9 15 9 29 17 29 17 21 19 21 19 29 27 29 27 15 25 15z"
+                        ></path>
+                      </g>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="header-image-wrapper">
+              <img
+                class="header-image"
+                height="280"
+                style="
+                  background-image: url(https://forest.eea.europa.eu/topics/forest-and-nature/introduction/@@images/66d83483-03e7-4cd8-bb8a-449db7bbcb26.jpeg);
+                "
+                width="100%"
+              />
+              <div class="header-image-overlay"></div>
+              <div class="header-image-content">
+                <h1>Record List</h1>
+                <p>Forest and Nature</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui basic segment content-area">
+        <div class="ui container">
+          <main>
+            <div class="ui container messages"></div>
+            <div class="editor-toolbar-wrapper"></div>
+            <div id="view">
+              <div class="ui equal width grid zero-margin">
+                <div
+                  class="two wide computer three wide large screen twelve wide mobile twelve wide tablet three wide widescreen column"
+                >
+                  <div id="portlets-ploneleftcolumn"></div>
+                </div>
+                <div
+                  style="position: static"
+                  class="eight wide computer six wide large screen twelve wide tablet six wide widescreen column"
+                >
+                  <div id="page-document" class="ui container">
+                    <h2>Recent datasets</h2>
+                    <gn-results-list
+                      api-url="https://sdi.eea.europa.eu/catalogue/eea/api"
+                      catalog-url="https://sdi.eea.europa.eu/catalogue/eea/fre/catalog.search#/metadata/{uuid}"
+                      layout="TITLE"
+                      size="4"
+                      query="forest"
+                      primary-color="#251"
+                      secondary-color="#c2e9dc"
+                      main-color="#212029"
+                      background-color="#fdfbff"
+                    ></gn-results-list>
+                    <h2 id="4bcqq">Forest Information System for Europe</h2>
+                    <p>
+                      FISE is an entry point for sharing information with the
+                      forest community on Europe’s forest environment, its state
+                      and development. FISE brings together data, information
+                      and knowledge gathered or derived through key
+                      forest-related policy drivers.
+                    </p>
+                    <p>
+                      FISE joins the landscape of European Data Infrastructures
+                      and other global and European forest portals supporting
+                      forest-related policy reporting:
+                      <a
+                        href="http://www.fao.org/forest-resources-assessment/en"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >FAO-FRA</a
+                      >
+                      (Food and Agriculture Organisation of the United Nations-
+                      Global Forest Resources Assessments),
+                      <a
+                        href="http://www.unece.org/forests/welcome.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >UNECE</a
+                      >
+                      (United Nations Economic Commission for Europe),
+                      <a
+                        href="https://foresteurope.org/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Forest Europe</a
+                      >,
+                      <a
+                        href="http://www.euforgen.org/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >EUFORGEN</a
+                      >
+                      (European Forest Genetic Resources Programme),
+                      <a
+                        href="http://icp-forests.net/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >ICP-Forests</a
+                      >
+                      (International Co-operative Programme on Assessment and
+                      Monitoring of Air Pollution Effects on Forests),
+                      <a
+                        href="https://www.globalforestwatch.org"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Global Forest Watch</a
+                      >, and the
+                      <a
+                        href="https://www.efi.int/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >EFI</a
+                      >
+                      (European Forest Institute). FISE is heavily dependent on
+                      data and information coming from the EU and EEA member
+                      states.
+                    </p>
+                    <h3 id="fb7vl">Key partners</h3>
+                    <p>
+                      Developed in a partnership among the services of the
+                      European Commission and the
+                      <a
+                        href="https://www.eea.europa.eu"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >European Environment Agency</a
+                      >
+                      (EEA). This is mainly
+                      <a
+                        href="https://ec.europa.eu/info/departments/environment_en"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >DG-ENV</a
+                      >,
+                      <a
+                        href="https://ec.europa.eu/jrc/en"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >DG-JRC</a
+                      >,
+                      <a
+                        href="http://ec.europa.eu/eurostat"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Eurostat</a
+                      >, and other Directorates General of the European
+                      Commission.
+                    </p>
+                    <p>
+                      Main important European contributors are the Member States
+                      of the European Union: Austria, Belgium, Bulgaria,
+                      Croatia, Republic of Cyprus, Czech Republic, Denmark,
+                      Estonia, Finland, France, Germany, Greece, Hungary,
+                      Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta,
+                      Netherlands, Poland, Portugal, Romania, Slovakia,
+                      Slovenia, Spain, Sweden; as well as the other EEA Member
+                      countries (Iceland, Liechtenstein, Norway, Switzerland,
+                      Turkey) and cooperating countries of the EEA (Albania,
+                      Bosnia and Herzegovina, North Macedonia, Montenegro,
+                      Serbia and Kosovo*).
+                    </p>
+                    <p>
+                      *This designation is without prejudice to positions on
+                      status, and is in line with UNSCR 1244(1999) and the ICJ
+                      Opinion on the Kosovo Declaration of Independence
+                    </p>
+                    <h2 id="de61n">Contact us</h2>
+                    <p>European Environment Agency (EEA)</p>
+                    <br />
+                    <p>Phone number: (+45) 33 36 71 00</p>
+                    <p>
+                      Email:
+                      <a target="_blank" href="/mailto:info@eea.europa.eu"
+                        >info@eea.europa.eu</a
+                      >
+                    </p>
+                    <div id="forest-metadata-slot"></div>
+                  </div>
+                </div>
+                <div
+                  class="two wide computer three wide large screen twelve wide mobile twelve wide tablet three wide widescreen column"
+                >
+                  <div id="portlets-plonerightcolumn"></div>
+                </div>
+              </div>
+              <div class="print-button">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 36 36"
+                  style="height: 32px; width: auto; fill: currentColor"
+                  class="icon"
+                >
+                  <g fill-rule="evenodd">
+                    <path
+                      d="M8.9996,4.9999 L8.9996,14.9999 L4.9996,14.9999 L4.9996,27.0009 L8.9996,27.0009 L8.9996,30.9999 L26.9996,30.9999 L26.9996,27.0009 L31.0006,27.0009 L31.0006,14.9999 L26.9996,14.9999 L26.9996,11.5859 L20.4146,4.9999 L8.9996,4.9999 Z M11.0006,6.9999 L19.0006,6.9999 L19.0006,12.9999 L24.9996,12.9999 L24.9996,14.9999 L11.0006,14.9999 L11.0006,6.9999 Z M21.0006,8.4149 L23.5856,10.9999 L21.0006,10.9999 L21.0006,8.4149 Z M6.9996,16.9999 L8.9996,16.9999 L26.9996,16.9999 L29.0006,16.9999 L29.0006,24.9999 L26.9996,24.9999 L26.9996,22.9999 L8.9996,22.9999 L8.9996,24.9999 L6.9996,24.9999 L6.9996,16.9999 Z M11.0006,27.0009 L11.0006,24.9999 L24.9996,24.9999 L24.9996,27.0009 L24.9996,28.9999 L11.0006,28.9999 L11.0006,27.0009 Z"
+                    ></path>
+                    <path
+                      d="M21 21L23 21 23 19 21 19zM25 21L27 21 27 19 25 19z"
+                    ></path>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+      <div role="contentinfo" class="ui vertical padded segment footerWrapper">
+        <img
+          class="footerImage"
+          src="https://forest.eea.europa.eu/static/media/footer.58082013.png"
+          alt=""
+        />
+        <div class="ui container">
+          <div class="ui vertically divided grid">
+            <div class="footerLinkBar">
+              <ul class="unlist">
+                <li>
+                  <a class="item separated" href="/legal_notice"
+                    >Legal notice</a
+                  >
+                </li>
+                <li>
+                  <a class="item separated" href="/privacy_policy"
+                    >Privacy statement</a
+                  >
+                </li>
+                <li>
+                  <a class="item separated" href="mailto:info@eea.europa.eu"
+                    >Contact us</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="item separated"
+                    href="https://status.eea.europa.eu/"
+                    target="blank"
+                    >EEA Systems Status</a
+                  >
+                </li>
+                <li><a class="item" href="/login">Login</a></li>
+              </ul>
+              <p class="release-info">
+                Software version<!-- -->
+                <a
+                  href="https://github.com/eea/forests-frontend/releases/tag/2.0-beta.62"
+                  target="_blank"
+                  >eeacms/forests-frontend:2.0-beta.62</a
+                >, last updated
+                <!-- -->12/14/2020
+              </p>
+            </div>
+            <div class="three column row">
+              <div
+                class="three wide computer twelve wide mobile three wide tablet column"
+              >
+                <b>About</b>
+                <p>
+                  FISE - Forest Information System for Europe is a forest
+                  knowledge base in support of the EU Forest Strategy.<!-- -->
+                </p>
+              </div>
+              <div
+                class="three wide computer twelve wide mobile three wide tablet column"
+              >
+                <b>Partners</b>
+                <div class="footerLogoWrapper">
+                  <a
+                    target="_blank"
+                    href="https://ec.europa.eu/"
+                    title="European Commission"
+                    ><img
+                      class="footerLogo"
+                      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEoAAAAyCAYAAAD7oU3dAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAx1SURBVHgB7VpLUBzXFb3dzWACEp4kYuVUZryztDEpIe8iBjOoQjYCV5a2JVYup8oliDcuewGkIleySIAsJHsliJ1VJIM2woYhM8grWVJpSJWRK5VF49iLCNkeAYPQfLpzzuvXQyMJxIxGArt0q5r+ve5577xzz733NSJP7Ptn4+Pj4ampqWapwPjc5ORkVB6RmbKLrHHPnuNHjhxJSwVmGEb4qVDojDwi2zVAzUxNHTcLhQmp0AqFgu2KNM9MT/fKI7BdAVTik0+6XNfNrInnQlKB1dTURLFLgVr9yWQyLFW2HQdqeno6ZphmdHl1NVVrWbFKXY9AY0eQU06xWHUX3FGgkonECexi7R0dw4179w61HzkySkGXCiybzdqGCDc+35xIJLqkirYjQBGM5MzMUMF1jY6OjgHoyoCZzw+SXeG6uoqA2rNnTzMEPQ2disL90gBsqJouWCOP0QhQuLHxhOO6zVIsDq6ABTOJxDhA6stbVhiDk7bOTlsqMLoe3tuLbRCzfwyAnXccpx+3+qQK9sgZRXFmJPpnIpGEe50pOM5sezzeXUA457kPkmUYMbAr9TC5EMAZMQ3jBEHCwFoNTAhZKlWwihlFdtTBTRhtTIixOE5YTDOCqSUzVORyAQbOU9jmjOXl7he7uzPsOPRjFAywCRh06pjlOAZ1SrngysqwVGDMowiOIzKm9o4zhyDxtHbBNlhGHsKM+13krFqYZQLADuBHo5ipCG6Fcd6MQdL3w+idjVlj/mKD8gtobxeLxTS2TKd2IQJK/agxTQ6i2S0WF6xicTiztpZBgtmLa6mVlZU0j5FHjVbqetQjvDvpUqegfTAXfYvi/XM8bm9vfygXLAEF17iGgYfxI9H1u4ZN30ejtA8Ez/P5vArh94CJGdSMoqBG0fYWQPwObJtD1ydqAAin1dcpuh1zp9pQqJ9iTvAaGhqilaQIdHH2Ay48hN9K0e0IEtj1PPq2gGujdG2p0EpAJaamhvEyjiNDMCy6DW3dndTgeUmDmRG2d10OKuMDiU7ZzJLrMOg2uBoZxcFTgzCQo67XdoSdZqIJ92iG2w2QxcyjmCJIBUagLNNMglU9hmUNwQMm8DtdRccZBJuPsc2dfL6ns0LGloBC9HE33rnXrXw2kUl0r5I+wQLuKfdjFDqfNpeWJtq0TuG5Y3hmLABYlDolFZp28V4l5hosTOIYJocuP8c2ZFelYK0zKpEY1tktX5jBy8MlXfL0KFrSJs0mAnny7982f/m/fNVLhgeZK87gfy68MuCfa/CPYlIWWMZgcrvR/zNkFJh21GFAoZcg6ABEN5fLDZYDWCnqAYwTeFFJlwCWLZ6bzPls8jf+oAYv/O2SozJh2WEDu9OqdIGYY+vDJA6h7z0AawjgjJiWRa3KYA/CFcdCoVAzCvGYa5qKHPSUrYArAeXiZdQoABQhzZT7YMNsxFxPo8IayBKbGOJ/0mhGV24XpVz7WdOixFuuyrmLv5TlbIPsbciqfaW2trbGdKUNYA2hbydcMsmy+ouu24eJ7sf5eewjAOu8xYl1HCFIy8vLqW4tBzMzMzGHjNNkYTTmvQ1AgY5HxXM9G1sGPzDrM0kBGWCTSTcEaNSl23ccFci2M5jjnR/L0mq9TF85KPujX8rbxz5Qx431q/JS66fy2fxzcmn+gFRi1EsyKpfPt+H4OJgzhDH0IIgQrEG1B3hoGsO9p9dyuZG6bDbD1AUgiQGAdDCzAV6aA+I94YpEECgmhpsxSQFJNvnAgUkEEzN3S8qw56IL0gjmfDR7WC59vl+OvvWuAo5MeuHAvCxl6ysGikEBAx5DqnEN/RtEEOljsklGESRUBH0YQ5fJviOohPbujTksmwCOKn/AoiPxeDqp876ClKK7NxGB31IirZhEsXZdApNhuMeqGKdMtPsp4MgmMYxtDYIAfWFH5N2xV5Cte8GVAC3ZkVKb3/65D+54c0P7cozpAUFA0voLJxRKop8TyM26izU14xjwGN0Q9eV5s1hMFRAd6T1MTlfAHroXn6f7FZlLgl0hAIcyy74HKGbc3JseYJ4rASyTYIRCSpfuZpOm6pa2H4M+9eaQ/OFvL8vM5ZZN25FV17G98ZtzEj90VV7+/TtlaRbTFQuJK1jSioim3A/9TmJCuzGmXrjWLNs5tbX9AGt2KZud8N2LrqfZY+vXpds6OhS75G6g4L9jpbQALoak0YtuQNXPlZT7AW3Hi3iiMvEH2Nc3muSvZ1/a9qDpeksViDrEPFOHxYdiKNQL90uin4NgV5sLRmFSR9DnKLQpAkBH2L6xoaHL8caU0ZWF7Ys32cX1rIKnzykJAgXm9Ks9/4BJNZbFIy/75gu95NOLeI7jsYk5ywOMrjYOTdqufTa/X23lGpmBPvUjzPcAsOGiZQ0AtBM471bi7kW8MUY8jCNGTeL6FQFiyeRrEyJf1AVJFBaaILT19ABLFOIpv60bqb3SooCRRciiKfJk05ZC8gxSgHcY2eBy5YDV3XpROg5dkZPQtK8Xm7b1DPMoeMEs2QQQUvlcbqCOmopzkGAUvjmC610oUCPQIFX3ERyX4GAZyPHYw1rXRhvxASy93z9gwgkUSEWb5zrpzJi6/lPXwCSVtIksiE7UYLHNOs9B0o2WIdzl2DKi31d4drsg0ZhHYTeKpHGAX3R8wKhXrCExuUMm5SWXGwUQMejSACObqcdGhrFG9ZNO3/3i8fgEz0tAcWVQHbjrJZ+razff9PqOxySdOvzoKRMd3DzhfOv0a1KuJa60qK0cY/2JlOYaXGdU1ZDx+LOMYvzWRy+5k8v1MBtHTwc4yQAtjeN0u2YNi3LmYkw6dc4YlXVxD2gUilTDi2jieiiXIhqLYtWG19aZxABgf7NUGJItShhm4C8cuK5056ttMMRvz0S0nKindGZy8llEvRgA60eRf4aCfqdQoGZJCJrFdSkcppaWlye4okENAphdOogRA0+PveUm6ldprKWlYB8kdewVwlF/Q8LWyo3LJGh3zN+YyP20UX1P29TYsz++/r48F3mg7iujPr396gdSrtFVCFIOedKL8Xgbcqg2XiejmBJwPQqLdz10Ma4yMPkka3wthnHBMb2EZBTtRumGfs5IC4q5esBnD+1uBvlljH/Ol4FR4/KAorjtjWGVYLJUYRS8H1P8Wo9ZO7dy6z6dRx2thRZhEdKmPrGugwu2JbkODxCx5jYK+XC57AMGcSU0A1CU61HY82BZKfJxnMV1SQkmnDHurS2ybV0Ul86t2loBo8LZ2/lNnwkK8juvfqgA8XWLyeh1ZOCMjn8C66YvH5SxyU6pxLQId/NYLeJh8tDT4wCtX6mu657HfjTe3q6inQNA6Hoz+uMDhZ0j2+B+llUixYaE0z8OLqsEO8Nzzlzw2nYY5dv8ws9Lx9ShU2/+BaXL75R+MYVYKjM6Bo3CTSlgWcL8joxBAtnLBJLAFAkMP4xOTXUVdCQ3dJmmXsBSDYYoaTN59VcNfNt8hXNzYyZbesnJD78JV7JwRzZRtwhSOWmAb3cv3PHjAqRAgaEXHZ+n1mJQP8b+O70EPWd4Hx8ylI0gIARzTX9V4jnZxnabpgduUNQDRaFv/IHgeTmMChpd7nqZhe9Wpj9HpfR2jxGIXACI2traGDYyUQk6lmjE8pqyhLvHm+4pYR60IoBEbsP5M/tC8u//5mSnTS0FG0YycGkD80mApwI3fUKY3nifhvjfUhql0yKdIjzUt8ANhpcl3Z2xAXmMVrVP6jcXF9X2Q7Wq/ZPGubNnZf+BAxKJRqWpqUkWAVpDvRfF7IUFOYB78/PzEo1E1D22yWZXZfHm4oZr+5rKF/bHYVUDahWD5sA/vjAph1sPy8XZixLRAESiETn3j7NqfxaA3lz0VjJ/9etO+TQ1K1cb6qXl0CEF9muvvy670ar63yyrq1m1v3L5itoTmNXVVVmwF6QBYHgsawBz9pVA8pl1sKW8Ivh7Z9sV8yuXL7s3btxwq2gD8hitaowic7YSczKmKaA/92u7m4NB1TTq/VOn5eChFiXmdDEKNEXcF/amfU1yE8JdrwWe7kjXDJp/LQvQ/fYMEP4zO2lVY1Q9NOhwa6tchO4w2r13+j11nefXP5+XjyDUHPB1RD5qWBZ6RvEmiP6e13jvC7SfnLyg2sNlZTdYFcXcUAOmaDPicZCMegTQ3/bp8M9jWkvLIdXW39MYEAjYbk4VKjL3SWb+xIL20GL+ylsJ2e76TDXNNRx5nPbQQF361yIX3OVxG9aj5IntQvs/90ELWmOM1U4AAAAASUVORK5CYII="
+                      alt="European Commission"
+                      title="European Commission"
+                      width="100%" /></a
+                  ><a
+                    target="_blank"
+                    href="https://www.eea.europa.eu/"
+                    title="European Environment Agency"
+                    ><img
+                      class="footerLogo"
+                      src="data:image/png;base64,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"
+                      alt="European Environment Agency"
+                      title="European Environment Agency"
+                      width="100%"
+                  /></a>
+                </div>
+              </div>
+              <div
+                class="six wide computer twelve wide mobile six wide tablet column"
+              >
+                <b>Other European Information Systems</b>
+                <div class="footerLogoWrapper">
+                  <a
+                    target="_blank"
+                    href="https://climate-adapt.eea.europa.eu/"
+                    title="Climate Adapt"
+                    ><img
+                      class="footerLogo"
+                      src="https://forest.eea.europa.eu/static/media/climateadapt.5b5fd7c2.svg"
+                      alt="Climate Adapt"
+                      title="Climate Adapt"
+                      width="100%" /></a
+                  ><a
+                    target="_blank"
+                    href="https://biodiversity.europa.eu/"
+                    title="Biodiversity Information Sistems for Europe"
+                    ><img
+                      class="footerLogo"
+                      src="https://forest.eea.europa.eu/static/media/biselogo.3cdfd7ce.png"
+                      alt="Biodiversity Information Sistems for Europe"
+                      title="Biodiversity Information Sistems for Europe"
+                      width="100%" /></a
+                  ><a
+                    target="_blank"
+                    href="https://water.europa.eu/"
+                    title="Water Information System for Europe"
+                    ><img
+                      class="footerLogo"
+                      src="https://forest.eea.europa.eu/static/media/WISE.84320d99.png"
+                      alt="Water Information System for Europe"
+                      title="Water Information System for Europe"
+                      width="100%" /></a
+                  ><a
+                    target="_blank"
+                    href="https://land.copernicus.eu/"
+                    title="Land Monitoring Service"
+                    ><img
+                      class="footerLogo"
+                      src="https://forest.eea.europa.eu/static/media/landmonitoringservice.9ecb757a.png"
+                      alt="Land Monitoring Service"
+                      title="Land Monitoring Service"
+                      width="100%" /></a
+                  ><a
+                    target="_blank"
+                    href="https://climate.copernicus.eu/"
+                    title="Climate Change Service"
+                    ><img
+                      class="footerLogo"
+                      src="https://forest.eea.europa.eu/static/media/climateChange.190a61c3.svg"
+                      alt="Climate Change Service"
+                      title="Climate Change Service"
+                      width="100%"
+                  /></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="Toastify"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<main class="w-2/3 mx-auto my-12">
+  <gn-search-input
+    class="mt-28"
+    api-url="https://www.geo2france.fr/geonetwork/srv/api"
+    primary-color="#0f4395"
+    secondary-color="#8bc832"
+    main-color="#555"
+    background-color="#fdfbff"
+    main-font="'Inter', sans-serif"
+    title-font="'DM Serif Display', serif"
+  ></gn-search-input>
+
+  <gn-facets
+    api-url="https://www.geo2france.fr/geonetwork/srv/api"
+    facet-config='{"tag.default":{"terms":{"field":"tag.default","include":".*","size": 10}}}'
+  ></gn-facets>
+  <gn-results-list
+    api-url="https://www.geo2france.fr/geonetwork/srv/api"
+  ></gn-results-list>
+</main>
