@@ -1,6 +1,6 @@
 {
   "supportES6": true,
-  "ngVersion": "15.2.1",
+  "ngVersion": "20.0.0",
   "modelFileSuffix": ".api.model",
   "modelSuffix": "ApiModel",
   "serviceSuffix": "ApiService",
