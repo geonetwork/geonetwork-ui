@@ -52,9 +52,9 @@ export class MetadataContactComponent {
 
   get contacts() {
     return (
-      (this.metadata.kind === 'dataset'
-        ? this.metadata.contactsForResource
-        : this.metadata.contacts) || []
+      (this.metadata.kind === 'service'
+        ? this.metadata.contacts
+        : this.metadata.contactsForResource) || []
     )
   }
 
