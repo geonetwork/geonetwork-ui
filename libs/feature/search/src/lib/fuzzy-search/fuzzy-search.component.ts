@@ -17,6 +17,7 @@ import { map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { SortByEnum } from '@geonetwork-ui/common/domain/model/search'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 import { TranslatePipe } from '@ngx-translate/core'
@@ -79,6 +80,7 @@ export class FuzzySearchComponent implements OnInit {
     if (this.inputSubmitted.observers.length > 0) {
       this.inputSubmitted.emit(any)
     } else {
+      this.searchService.setSortBy(SortByEnum.RELEVANCY)
       this.searchService.updateFilters({ any })
     }
   }
