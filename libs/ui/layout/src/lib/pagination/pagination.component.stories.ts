@@ -1,19 +1,19 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+} from '@angular/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import {
   applicationConfig,
   componentWrapperDecorator,
   Meta,
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { PaginationComponent } from './pagination.component'
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-} from '@angular/core'
 import { Paginable } from '../paginable.interface'
-import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { PaginationComponent } from './pagination.component'
 
 @Component({
   selector: 'gn-ui-mock-list',
@@ -34,7 +34,6 @@ import { provideI18n } from '@geonetwork-ui/util/i18n'
     ><br />
     <div>pages count: {{ pagesCount }}</div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class MockListComponent implements Paginable {
   private changeDetector = inject(ChangeDetectorRef)
