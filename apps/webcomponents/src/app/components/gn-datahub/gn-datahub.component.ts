@@ -165,5 +165,6 @@ import { DatahubRouterService } from '../../../../../datahub/src/app/router/data
       useFactory: () => getGlobalConfig().REUSE_FORM_URL,
     },
   ],
+  standalone: false,
 })
 export class GnDatahubComponent {}
