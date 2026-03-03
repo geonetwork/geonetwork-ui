@@ -34,6 +34,22 @@ import { ExternalViewerButtonComponent } from '../external-viewer-button/externa
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 
+let mockWmsStyles = []
+jest.mock('@camptocamp/ogc-client', () => ({
+  WmsEndpoint: class {
+    private url: string
+    constructor(url: string) {
+      this.url = url
+    }
+    isReady() {
+      return Promise.resolve(this)
+    }
+    getLayerByName() {
+      return { styles: mockWmsStyles }
+    }
+  },
+}))
+
 jest.mock('@geonetwork-ui/ui/map', () => ({
   ...jest.requireActual('@geonetwork-ui/ui/map'),
   prioritizePageScroll: jest.fn(),
@@ -1300,7 +1316,34 @@ describe('MapViewComponent', () => {
       )
     }))
 
-    it('disables style dropdown when no TMS is present', fakeAsync(() => {
+    it('disables style dropdown when no TMS or WMS styles', fakeAsync(() => {
+      mockWmsStyles = []
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/wfs'),
+          name: 'featuretype',
+          type: 'service',
+          accessServiceProtocol: 'wfs',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+
+      tick(200)
+      fixture.detectChanges()
+
+      const dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      const styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+
+      expect(styleDropdown.disabled).toBeTruthy()
+      expect(styleDropdown.choices.length).toBe(1)
+    }))
+  })
+  describe('style selector with WMS', () => {
+    it('enables dropdown and shows default when WMS has no published styles', fakeAsync(() => {
+      mockWmsStyles = []
       mdViewFacade.mapApiLinks$.next([
         {
           url: new URL('http://abcd.com/wms'),
@@ -1320,8 +1363,80 @@ describe('MapViewComponent', () => {
       const styleDropdown = dropdowns[1]
         .componentInstance as DropdownSelectorComponent
 
-      expect(styleDropdown.disabled).toBeTruthy()
-      expect(styleDropdown.choices.length).toBe(1)
+      expect(styleDropdown.disabled).toBeFalsy()
+      expect(styleDropdown.choices).toEqual([
+        {
+          label: 'map.style.default',
+          value: 0,
+        },
+      ])
+    }))
+
+    it('enables and populates styles for WMS with published styles', fakeAsync(() => {
+      mockWmsStyles = [
+        { name: 'contour', title: 'Contour Lines' },
+        { name: 'heatmap', title: 'Heat Map' },
+      ]
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/wms'),
+          name: 'layer-wms',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+
+      tick(200)
+      fixture.detectChanges()
+
+      const dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      const styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+
+      expect(styleDropdown.disabled).toBeFalsy()
+      expect(styleDropdown.choices.map((c) => c.label)).toEqual([
+        'Contour Lines',
+        'Heat Map',
+      ])
+    }))
+
+    it('applies selected WMS style to the map context layer', fakeAsync(() => {
+      mockWmsStyles = [
+        { name: 'contour', title: 'Contour Lines' },
+        { name: 'heatmap', title: 'Heat Map' },
+      ]
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/wms'),
+          name: 'layer-wms',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+
+      tick(200)
+      fixture.detectChanges()
+
+      // Select the second style (heatmap)
+      component.selectStyleToDisplay(1)
+      tick(200)
+      fixture.detectChanges()
+
+      expect(mapComponent.context).toEqual({
+        layers: [
+          {
+            url: 'http://abcd.com/wms',
+            name: 'layer-wms',
+            type: 'wms',
+            style: 'heatmap',
+          },
+        ],
+        view: expect.any(Object),
+      })
     }))
   })
 })
