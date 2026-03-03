@@ -20,6 +20,12 @@ describe('GN UI version exports', () => {
       const module = await import('@geonetwork-ui/util/shared')
       expect(module.GEONETWORK_UI_VERSION).toBe('4.5.6-dev')
     })
+    it('returns the full version (dev npm version)', async () => {
+      currentVersion = '4.5.6-dev.c7f35f0e1'
+      // eslint-disable-next-line @nx/enforce-module-boundaries
+      const module = await import('@geonetwork-ui/util/shared')
+      expect(module.GEONETWORK_UI_VERSION).toBe('4.5.6-dev.c7f35f0e1')
+    })
     it('returns the full version (stable version)', async () => {
       currentVersion = '4.5.6'
       // eslint-disable-next-line @nx/enforce-module-boundaries
@@ -30,6 +36,12 @@ describe('GN UI version exports', () => {
   describe('GEONETWORK_UI_TAG_NAME', () => {
     it('returns the tag name (dev version)', async () => {
       currentVersion = '4.5.6-dev'
+      // eslint-disable-next-line @nx/enforce-module-boundaries
+      const module = await import('@geonetwork-ui/util/shared')
+      expect(module.GEONETWORK_UI_TAG_NAME).toBe('main')
+    })
+    it('returns the tag name (dev npm version)', async () => {
+      currentVersion = '4.5.6-dev.c7f35f0e1'
       // eslint-disable-next-line @nx/enforce-module-boundaries
       const module = await import('@geonetwork-ui/util/shared')
       expect(module.GEONETWORK_UI_TAG_NAME).toBe('main')
