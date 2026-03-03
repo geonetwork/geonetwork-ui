@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { action } from 'storybook/actions'
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular'
+import { Meta, StoryObj } from '@storybook/angular'
 import { EditableLabelDirective } from './editable-label.directive'
 
 @Component({
@@ -10,6 +10,7 @@ import { EditableLabelDirective } from './editable-label.directive'
     [gnUiEditableLabel]="label"
     (editableLabelChanged)="handleEditableLabelChanged($event)"
   ></h3>`,
+  imports: [EditableLabelDirective],
 })
 class EditableLabelStoryComponent {
   @Input() label: string
@@ -20,11 +21,6 @@ class EditableLabelStoryComponent {
 export default {
   title: 'Inputs/EditableLabel',
   component: EditableLabelStoryComponent,
-  decorators: [
-    moduleMetadata({
-      imports: [EditableLabelDirective],
-    }),
-  ],
 } as Meta<EditableLabelStoryComponent>
 
 export const Editable: StoryObj<EditableLabelStoryComponent> = {
