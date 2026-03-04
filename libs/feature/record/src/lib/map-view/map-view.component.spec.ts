@@ -42,6 +42,9 @@ jest.mock('@camptocamp/ogc-client', () => ({
       this.url = url
     }
     isReady() {
+      if (this.url.indexOf('error') > -1) {
+        return Promise.reject(new Error('WMS endpoint error'))
+      }
       return Promise.resolve(this)
     }
     getLayerByName() {
@@ -1342,7 +1345,7 @@ describe('MapViewComponent', () => {
     }))
   })
   describe('style selector with WMS', () => {
-    it('enables dropdown and shows default when WMS has no published styles', fakeAsync(() => {
+    it('shows disabled dropdown with default when WMS has no published styles', fakeAsync(() => {
       mockWmsStyles = []
       mdViewFacade.mapApiLinks$.next([
         {
@@ -1363,10 +1366,42 @@ describe('MapViewComponent', () => {
       const styleDropdown = dropdowns[1]
         .componentInstance as DropdownSelectorComponent
 
-      expect(styleDropdown.disabled).toBeFalsy()
+      expect(styleDropdown.disabled).toBeTruthy()
       expect(styleDropdown.choices).toEqual([
         {
           label: 'map.style.default',
+          value: 0,
+        },
+      ])
+    }))
+
+    it('shows disabled dropdown with style name when WMS has one published style', fakeAsync(() => {
+      mockWmsStyles = [
+        { name: 'contour', title: 'Contour Lines' },
+      ]
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/wms'),
+          name: 'layer-wms',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+
+      tick(200)
+      fixture.detectChanges()
+
+      const dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      const styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+
+      expect(styleDropdown.disabled).toBeTruthy()
+      expect(styleDropdown.choices).toEqual([
+        {
+          label: 'Contour Lines',
           value: 0,
         },
       ])
@@ -1437,6 +1472,23 @@ describe('MapViewComponent', () => {
         ],
         view: expect.any(Object),
       })
+    }))
+    it('handles WMS endpoint error gracefully', fakeAsync(() => {
+      mockWmsStyles = []
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/error'),
+          name: 'layer-wms',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+
+      tick(200)
+      fixture.detectChanges()
+
+      expect(component.error).toBeTruthy()
     }))
   })
 })

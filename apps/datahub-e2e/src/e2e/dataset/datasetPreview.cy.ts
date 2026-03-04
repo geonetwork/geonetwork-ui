@@ -169,7 +169,7 @@ describe('Preview section', () => {
       .should('have.length.gt', 1)
     cy.clickOnBody()
 
-    // it checks if style selector is disabled when no style is available
+    // it checks if style selector is disabled when only one style is available
     cy.get('@previewSection')
       .find('gn-ui-dropdown-selector')
       .eq(1)
