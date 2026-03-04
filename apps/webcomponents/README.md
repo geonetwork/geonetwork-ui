@@ -119,7 +119,6 @@ const CUSTOM_ELEMENTS: any[] = [
 }
 ```
 
-- Add stories for storybook to run it (angular and element stories)
 - Add a sample HTML file to show how to use it in a third party web page `${webcomponent_name}.sample.html` eg. gn-results-list.sample.html
 
 ## Update Web Component inputs

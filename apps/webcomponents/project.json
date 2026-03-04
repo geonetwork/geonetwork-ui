@@ -110,35 +110,6 @@
         "tsConfig": "apps/webcomponents/tsconfig.spec.json"
       }
     },
-    "storybook": {
-      "executor": "@storybook/angular:start-storybook",
-      "options": {
-        "port": 4400,
-        "configDir": "apps/webcomponents/.storybook",
-        "browserTarget": "webcomponents:build",
-        "compodoc": false
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
-    "build-storybook": {
-      "executor": "@storybook/angular:build-storybook",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputDir": "dist/storybook/webcomponents",
-        "configDir": "apps/webcomponents/.storybook",
-        "browserTarget": "webcomponents:build",
-        "compodoc": false
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
     "build-artefacts": {
       "executor": "nx:run-commands",
       "options": {

@@ -3,9 +3,9 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   DoBootstrap,
   importProvidersFrom,
+  inject,
   Injector,
   NgModule,
-  inject,
 } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -35,7 +35,6 @@ import { GEONETWORK_UI_VERSION, PROXY_PATH } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { AppComponent } from './app.component'
 import { BaseComponent } from './components/base.component'
 import { GnAggregatedRecordsComponent } from './components/gn-aggregated-records/gn-aggregated-records.component'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
@@ -64,7 +63,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
 
 @NgModule({
   declarations: [
-    AppComponent,
     BaseComponent,
     GnFacetsComponent,
     GnResultsListComponent,
@@ -112,7 +110,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  // bootstrap: [AppComponent],
 })
 export class WebcomponentsModule implements DoBootstrap {
   private injector = inject(Injector)
