@@ -29,6 +29,8 @@
     "storybook-wc": "nx run webcomponents:build --output-hashing=none && nx run webcomponents:storybook",
     "build:storybook-wc": "nx run webcomponents:build --output-hashing=none && nx run webcomponents:build-storybook",
     "build:demo": "tools/webcomponent/prepare-wc-pages.sh",
+    "build:webcomponents": "nx run webcomponents:build-artefacts",
+    "dev:webcomponents": "nx run webcomponents:build-artefacts-dev",
     "demo": "tools/webcomponent/prepare-wc-pages.sh --serve",
     "demo:local": "tools/webcomponent/prepare-wc-pages.sh --serve --local",
     "webcomponents:e2e": "npx cypress open --project apps/webcomponents --e2e --browser chrome",

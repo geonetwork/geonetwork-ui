@@ -16,18 +16,6 @@ Web Components are made to be easily included in any context, e.g.:
 <gn-results-list api-url="https://apps.titellus.net/geonetwork/srv/api" size="10" layout="TITLE" filters="soil"></gn-results-list>
 ```
 
-## Build
-
-All Angular custom elements are served by the same application `webcomponents`.
-
-Therefore, there is only one build and one javascript file for any web components called `gn-wc.js`.
-
-```
-npm run build:demo
-```
-
-You'll find the built files in `webcomponents/dist/demo/webcomponents` folder
-
 ## Setup
 
 Before running the web components, make sure to install the project dependencies from the root directory:
@@ -36,44 +24,39 @@ Before running the web components, make sure to install the project dependencies
 npm install
 ```
 
-## Run
+## Build
 
-### Storybook
+Two static JS files can be built from the `webcomponents` project:
 
-```shell script
-npm run storybook-wc
+- `gn-wc.js` contains all web components in GeoNetwork-UI
+- `gn-standalone-search.js` contains the Standalone Search only
+
+To build both artifacts in the `dist` folder:
+
+```
+npm run build:webcomponents
 ```
 
-This will build all components and start an instance of Storybook but with specific stories showcasing each individual Web Component.
+## Development
 
-Note that each WebComponent should appear in two stories: one where it is included as an Angular component, and another where it is included as a Web Component.
+Both bundles mentioned above can be built in dev mode, which means:
 
-### Web server
+- they will be rebuilt continuously when the source code changes
+- they will not be minified and thus easier to debug
 
-To test your Web Component in a real production context
+To start this dev mode:
 
-```shell script
-npm run demo
+```
+npm run dev:webcomponents
 ```
 
-To test your Web Component in a local context (needs the support services to run locally too)
+Then the Web Components can be tested on the docs like so:
 
-```shell script
-npm run demo:local
+```
+npm run docs:dev
 ```
 
-**Important:** The components are built in `production` mode.
-
-You can go on http://localhost:8001/ to visit GeoNetwork-UI Web Components demo pages.
-
-You'll be able to test your Web Components on `http://localhost:8001/webcomponents/{name_of_sample_file}`
-
-e.g: http://localhost:8001/webcomponents/gn-results-list.sample.html
-
-This script show you how to deploy your Web Component in a real world, it builds it, then to use your component in a real web page, you have to
-
-- import the script exported by Angular
-- include your Web Component in the HTML content.
+And then navigate to http://localhost:5173/webcomponents/
 
 ## E2E
 
