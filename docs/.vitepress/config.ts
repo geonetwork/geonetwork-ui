@@ -1,52 +1,67 @@
 import { defineConfig } from 'vitepress'
 import packageJson from '../../package.json'
+import {
+  getStandaloneSearchSamples,
+  getWebcomponentSamples,
+} from './load-webcomponent-samples'
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
-  title: 'GeoNetwork-UI',
-  description: 'Documentation of various aspects of the project',
-  themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: 'Guides', link: '/guide/introduction', activeMatch: '/guide/' },
-      {
-        text: 'For Developers',
-        link: '/developers/architecture-overview',
-        activeMatch: '/developers/',
+export default async () => {
+  return defineConfig({
+    vue: {
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith('gn-'),
+        },
       },
-      { text: 'Applications', link: '/apps/datahub', activeMatch: '/apps/' },
-      {
-        text: 'Web Components',
-        link: 'https://github.com/geonetwork/geonetwork-ui/tree/main/apps/webcomponents',
-      },
-      {
-        text: `Version ${packageJson.version}`,
-        link: 'https://github.com/geonetwork/geonetwork-ui/releases',
-      },
-    ],
+    },
+    title: 'GeoNetwork-UI',
+    description: 'Documentation of various aspects of the project',
+    themeConfig: {
+      // https://vitepress.dev/reference/default-theme-config
+      nav: [
+        { text: 'Guides', link: '/guide/introduction', activeMatch: '/guide/' },
+        {
+          text: 'For Developers',
+          link: '/developers/architecture-overview',
+          activeMatch: '/developers/',
+        },
+        { text: 'Applications', link: '/apps/datahub', activeMatch: '/apps/' },
+        {
+          text: 'Web Components',
+          link: '/webcomponents/',
+          activeMatch: '/webcomponents/',
+        },
+        {
+          text: `Version ${packageJson.version}`,
+          link: 'https://github.com/geonetwork/geonetwork-ui/releases',
+        },
+      ],
 
-    sidebar: {
-      '/guide/': sidebarGuides(),
-      '/developers/': sidebarForDevelopers(),
-      '/apps/': sidebarApps(),
+      sidebar: {
+        '/guide/': sidebarGuides(),
+        '/developers/': sidebarForDevelopers(),
+        '/apps/': sidebarApps(),
+        '/webcomponents/': await sidebarWebcomponents(),
+      },
+
+      socialLinks: [
+        { icon: 'github', link: 'https://github.com/geonetwork/geonetwork-ui' },
+      ],
+
+      footer: {
+        message: 'Released under the GPL-2.0 license.',
+        copyright: 'Copyright © 2020-present GeoNetwork',
+      },
+
+      search: {
+        provider: 'local',
+      },
     },
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/geonetwork/geonetwork-ui' },
-    ],
-
-    footer: {
-      message: 'Released under the GPL-2.0 license.',
-      copyright: 'Copyright © 2020-present GeoNetwork',
-    },
-
-    search: {
-      provider: 'local',
-    },
-  },
-
-  ignoreDeadLinks: 'localhostLinks',
-})
+    ignoreDeadLinks: 'localhostLinks',
+  })
+}
 
 function sidebarGuides() {
   return [
@@ -149,6 +164,29 @@ function sidebarApps() {
         },
         { text: 'Metadata Editor', link: '/apps/editor' },
       ],
+    },
+  ]
+}
+
+async function sidebarWebcomponents() {
+  const webcomponentsSamples = await getWebcomponentSamples()
+  const standaloneSearchSamples = await getStandaloneSearchSamples()
+  return [
+    {
+      text: 'Web Components examples',
+      link: '/webcomponents/',
+      items: webcomponentsSamples.map(({ slug, title }) => ({
+        text: title.replace('<', '&lt;').replace('>', '&gt;'),
+        link: `/webcomponents/${slug}`,
+      })),
+    },
+    {
+      text: 'Standalone Search examples',
+      link: '/webcomponents/standalone-search/',
+      items: standaloneSearchSamples.map(({ title, slug }) => ({
+        text: title.replace('<', '&lt;').replace('>', '&gt;'),
+        link: `/webcomponents/standalone-search/${slug}`,
+      })),
     },
   ]
 }

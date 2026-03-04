@@ -29,7 +29,7 @@ features:
   - icon: ⚙️
     title: Integrate
     details: Use Web Components to integrate GeoNetwork-UI features into your website
-    link: guide/webcomponents
+    link: webcomponents
   - icon: 🎨
     title: Personalize
     details: A powerful theming system to really make it your own!

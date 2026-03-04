@@ -12,6 +12,8 @@ are registered as Web Components in the application module.
 
 All Web Components are prefixed with `gn-`.
 
+[Take a look at the live showcase!](../webcomponents/)
+
 ## Use
 
 Web Components are made to be easily included in any context. To do so, you have to:
