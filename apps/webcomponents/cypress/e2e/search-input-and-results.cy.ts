@@ -31,6 +31,7 @@ describe('gn-search-input-and-results', () => {
         .eq(1)
         .should('have.attr', 'name', 'iconoirSearch')
         .trigger('click', { waitForAnimations: false })
+      cy.wait(500) // wait for the search results to be displayed
       cy.get('gn-ui-record-preview-row').should('have.length', 1)
       cy.get('mat-option').should('have.length', 0)
       cy.get('gn-ui-record-preview-row')
@@ -41,6 +42,7 @@ describe('gn-search-input-and-results', () => {
     })
     it('should display the search results on enter touch and close suggestions', () => {
       cy.get('gn-ui-fuzzy-search').type('velo{enter}')
+      cy.wait(500) // wait for the search results to be displayed
       cy.get('gn-ui-record-preview-row').should('have.length', 1)
       cy.get('mat-option').should('have.length', 0)
       cy.get('gn-ui-record-preview-row')
