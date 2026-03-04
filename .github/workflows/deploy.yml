@@ -75,19 +75,19 @@ jobs:
       - name: Build storybook
         run: npm run build:storybook
 
-      - name: Build demo & web components
-        run: npm run build:demo
-
       - name: Build metadata-converter app
         if: github.event_name != 'issue_comment' # This is not done on PR, only on main branch
         run: npx nx build metadata-converter --prod --base-href=./
 
+        # This will move the artifacts to dist/dist so that it works for the docs website!
+      - name: Build Web Components artifacts
+        run: npm run build:webcomponents && && mkdir -p dist/dist && mv dist/gn-*.js dist/dist && rm -rf dist/webcomponents
+
       - name: Build docs
         run: npm run docs:build -- --base=/geonetwork-ui/${{env.BRANCH_NAME}}/docs/ && mkdir -p dist/docs && mv docs/.vitepress/dist/* dist/docs
 
-      # FIXME: restore a system for testing web components but faster/lighter than storybook
-      #      - name: Build storybook for web components
-      #        run: npm run build:storybook-wc
+      - name: Add redirection page for old Web Components link
+        run: echo '<html><head><meta http-equiv="refresh" content="0; url=./docs/webcomponents/"></head></html>' > dist/demo/index.html
 
       - name: Deploy to directory ${{ env.BRANCH_NAME }}
         run: |
@@ -103,7 +103,7 @@ jobs:
 
             * (Documentation)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/docs/]
 
-            * (Web components demo)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/demo/webcomponents/]
+            * (Web components demo)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/docs/webcomponents/]
 
             * (UI components storybook)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/]'
           comment_tag: github-links
