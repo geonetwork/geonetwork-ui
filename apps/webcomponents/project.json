@@ -58,11 +58,17 @@
           "namedChunks": true
         },
         "webcomponents": {
-          "outputHashing": "none"
+          "outputHashing": "none",
+          "outputPath": "dist/webcomponents",
+          "deleteOutputPath": true,
+          "sourceMap": false
         },
         "standaloneSearch": {
           "outputHashing": "none",
-          "main": "apps/webcomponents/src/standalone-search.ts"
+          "main": "apps/webcomponents/src/standalone-search.ts",
+          "outputPath": "dist/standalone-search",
+          "deleteOutputPath": true,
+          "sourceMap": false
         }
       },
       "defaultConfiguration": "production"
@@ -131,6 +137,28 @@
         "ci": {
           "quiet": true
         }
+      }
+    },
+    "build-artefacts": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run webcomponents:build:webcomponents",
+          "nx run webcomponents:build:standaloneSearch",
+          "tools/webcomponent/bundle-artefacts.sh"
+        ],
+        "parallel": false
+      }
+    },
+    "build-artefacts-dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run webcomponents:build:webcomponents --optimization=false --watch",
+          "nx run webcomponents:build:standaloneSearch --optimization=false --watch",
+          "tools/webcomponent/bundle-artefacts.sh --watch"
+        ],
+        "parallel": true
       }
     }
   }
