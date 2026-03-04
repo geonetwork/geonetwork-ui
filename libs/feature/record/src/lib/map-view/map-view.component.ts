@@ -275,9 +275,7 @@ export class MapViewComponent implements AfterViewInit {
         src.accessServiceProtocol === 'wms'
       ) {
         this.isWmsStyleMode$.next(true)
-        return from(
-          new WmsEndpoint(src.url.toString()).isReady()
-        ).pipe(
+        return from(new WmsEndpoint(src.url.toString()).isReady()).pipe(
           map((endpoint) => {
             const layer = endpoint.getLayerByName(src.name)
             return layer?.styles || []
@@ -335,9 +333,7 @@ export class MapViewComponent implements AfterViewInit {
     this.selectedStyleId$.pipe(distinctUntilChanged()),
   ]).pipe(
     map(([src, styles, styleIdx]) =>
-      !this.isWmsStyleMode$.value && styles.length
-        ? styles[styleIdx]
-        : src
+      !this.isWmsStyleMode$.value && styles.length ? styles[styleIdx] : src
     ),
     shareReplay(1)
   )
