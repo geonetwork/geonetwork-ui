@@ -1,0 +1,53 @@
+<p>
+  You can use the GeoNetwork-UI search interface without Web Components using
+  the <code>Standalone Search</code> system.
+</p>
+
+<input type="text" id="search" placeholder="Search for record..." />
+<ul id="results"></ul>
+
+<script>
+  GNUI.init({
+    apiUrl: 'https://www.geocat.ch/geonetwork/srv/api',
+    metadataLanguage: 'ger',
+    textLanguage: 'de',
+  })
+
+  const searchInput = document.getElementById('search')
+  const resultsContainer = document.getElementById('results')
+
+  searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value
+
+    if (!searchTerm) {
+      resultsContainer.innerHTML = ''
+      return
+    }
+
+    GNUI.recordsRepository
+      .search({
+        filters: {
+          any: searchTerm,
+          linkProtocol: '/OGC:WMT?S.*/',
+        },
+        offset: 0,
+        limit: 10,
+        sort: ['desc', '_score'],
+        fields: ['resourceTitleObject', 'link', 'uuid'],
+      })
+      .subscribe({
+        next: (results) => {
+          displayResults(results.records)
+        },
+        error: (err) => {
+          console.error('Error fetching search results:', err)
+        },
+      })
+  })
+
+  function displayResults(items) {
+    resultsContainer.innerHTML = items
+      .map((item) => `<li>${item.title || 'No title available'}</li>`)
+      .join('\n')
+  }
+</script>

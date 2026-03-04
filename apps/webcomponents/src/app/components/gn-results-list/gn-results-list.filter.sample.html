@@ -1,0 +1,22 @@
+<p>
+  You can add filters for the search in your
+  <code>gn-results-list</code> web component
+</p>
+<p>eg. Filter on <i>dataset</i> records:</p>
+<ul>
+  <li>
+    <p>With GeoNetwork-UI syntax</p>
+    <code>{{ '{"cl_hierarchyLevel.key": { "service": true } }' }}</code>
+  </li>
+</ul>
+
+<h1>Filter on datasets</h1>
+<gn-results-list
+  api-url="https://apps.titellus.net/geonetwork/srv/api"
+  size="5"
+  layout="TITLE"
+  search-id="custom"
+  primary-color="#0f4395"
+  main-font="'Inter', sans-serif"
+  filter='{"cl_hierarchyLevel.key": { "dataset": true } }'
+></gn-results-list>
