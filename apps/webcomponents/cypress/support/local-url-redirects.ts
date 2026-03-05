@@ -27,12 +27,10 @@ export function defineLocalRedirections() {
   cy.intercept('https://www.geo2france.fr/**', (req) => {
     const bodyStr = JSON.stringify(req.body)
     req.body = JSON.parse(
-      bodyStr
-        .replace(
-          '9da51f58-15c6-4325-82b1-2cf6c8e75d0f',
-          '04bcec79-5b25-4b16-b635-73115f7456e4'
-        )
-        .replace('Géo2France', 'Métropole Européenne de Lille')
+      bodyStr.replace(
+        '9da51f58-15c6-4325-82b1-2cf6c8e75d0f',
+        '04bcec79-5b25-4b16-b635-73115f7456e4'
+      )
     )
   })
 }
