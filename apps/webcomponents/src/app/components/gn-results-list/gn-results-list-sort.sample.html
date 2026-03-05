@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Web Component Demo</title>
+    <base href="./" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@200;300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      html,
+      body {
+        font-family: var(--font-family-main);
+      }
+      .container {
+        max-width: 1024px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 3rem;
+      }
+      code {
+        background-color: #f6f6f6;
+        padding: 8px 14px;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="gn-wc.js"></script>
+    <main class="container">
+      <div style="margin: 60px 16px">
+        <p>
+          Use the <b><i>sort</i></b> attribute to control the sort order on a
+          <b><i>gn-results-list</i></b> web component.
+        </p>
+        <p>
+          Prefix the field name with <code>-</code> for descending order:
+          <code>sort="-revisionDateForResource"</code>
+        </p>
+      </div>
+
+      <h1>Sort by most recently updated (descending)</h1>
+      <gn-results-list
+        api-url="https://www.geocat.ch/geonetwork/srv/api"
+        size="5"
+        layout="TITLE"
+        primary-color="#0f4395"
+        main-font="'Inter', sans-serif"
+        sort="-revisionDateForResource"
+      ></gn-results-list>
+    </main>
+  </body>
+</html>

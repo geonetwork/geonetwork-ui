@@ -31,6 +31,7 @@ export class GnResultsListComponent extends BaseComponent {
   @Input() size = '10' // will be converted to number later
   @Input() query: string
   @Input() filter: string
+  @Input() sort: string
   @Input() catalogUrl: string
   @Input() showMore: ResultsListShowMoreStrategy = 'none'
 
@@ -56,6 +57,12 @@ export class GnResultsListComponent extends BaseComponent {
     if (filter) {
       const configFilters: FieldFilters = JSON.parse(filter)
       this.facade.setConfigFilters(configFilters)
+    }
+    if (this.sort) {
+      const desc = this.sort.startsWith('-')
+      const field = desc ? this.sort.slice(1).trim() : this.sort.trim()
+      const sortPayload: SearchStateParams['sort'] = [desc ? 'desc' : 'asc', field]
+      searchActionPayload.sort = sortPayload
     }
     this.facade.setSearch(searchActionPayload)
   }
