@@ -1,0 +1,35 @@
+<p>
+  You can sort the results of your <code>gn-results-list</code> web component
+</p>
+<p>eg. Sort by most recently updated records:</p>
+<ul>
+  <li>
+    <p>With object syntax</p>
+    <code>[["desc", "changeDate"]]</code>
+  </li>
+  <li>
+    <p>With string syntax (prefix with <code>-</code> for descending order)</p>
+    <code>-changeDate</code>
+  </li>
+</ul>
+
+<!-- #region source -->
+<gn-results-list
+  api-url="https://www.geo2france.fr/geonetwork/srv/api"
+  size="5"
+  layout="TITLE"
+  search-id="object"
+  primary-color="#0f4395"
+  main-font="'Inter', sans-serif"
+  sort='[["desc", "changeDate"]]'
+></gn-results-list>
+<gn-results-list
+  api-url="https://www.geo2france.fr/geonetwork/srv/api"
+  size="5"
+  layout="TITLE"
+  search-id="string"
+  primary-color="#0f4395"
+  main-font="'Inter', sans-serif"
+  sort="-changeDate"
+></gn-results-list>
+<!-- #endregion source -->

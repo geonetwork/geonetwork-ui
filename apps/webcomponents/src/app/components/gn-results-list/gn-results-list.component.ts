@@ -13,6 +13,7 @@ import {
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { BaseComponent, DefaultProviders } from '../base.component'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { sortByFromString } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'wc-gn-results-list-component',
@@ -30,10 +31,12 @@ export class GnResultsListComponent extends BaseComponent {
   @Input() size = '10' // will be converted to number later
   @Input() query: string
   @Input() filter: string
+  @Input() sort: string
   @Input() catalogUrl: string
   @Input() showMore: ResultsListShowMoreStrategy = 'none'
 
   private setSearch_() {
+    const sort = this.sort
     const filter = this.filter
     const query = this.query
     const searchActionPayload: SearchStateParams = {
@@ -55,6 +58,15 @@ export class GnResultsListComponent extends BaseComponent {
     if (filter) {
       const configFilters: FieldFilters = JSON.parse(filter)
       this.facade.setConfigFilters(configFilters)
+    }
+    if (sort) {
+      try {
+        // we assume it's an array
+        searchActionPayload.sort = JSON.parse(sort)
+      } catch (e) {
+        // we assume it's a string
+        searchActionPayload.sort = sortByFromString(sort)
+      }
     }
     this.facade.setSearch(searchActionPayload)
   }
