@@ -131,6 +131,20 @@
         ],
         "parallel": true
       }
+    },
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/webcomponents/cypress.config.ts",
+        "baseUrl": "http://localhost:5173/",
+        "testingType": "e2e",
+        "browser": "chrome"
+      },
+      "env": {
+        "browserPermissions": {
+          "write": "allow"
+        }
+      }
     }
   }
 }

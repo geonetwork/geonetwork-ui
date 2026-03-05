@@ -1,4 +1,8 @@
+import { defineLocalRedirections } from '../support/local-url-redirects'
+
 beforeEach(() => {
+  defineLocalRedirections()
+
   // GEOSERVER stubs
   cy.intercept(
     'GET',
@@ -30,29 +34,26 @@ beforeEach(() => {
   )
 })
 
-describe('gn-dataset-view-chart', () => {
-  beforeEach(() => {
-    cy.visit('/webcomponents/gn-dataset-view-chart.sample.html')
-  })
+it('gn-dataset-view-chart', () => {
+  cy.visit('/webcomponents/gn-dataset-view-chart.html')
 
-  it('should display the chart & dropdowns', () => {
-    cy.get('gn-ui-chart').should('not.match', ':empty')
-    cy.get('gn-ui-chart-view')
-      .find('gn-ui-dropdown-selector')
-      .filter(':visible')
-      .as('drop')
-    cy.get('@drop').should('have.length', 4)
-    cy.screenshot({ capture: 'fullPage' })
-  })
-  it('should change the chart on options change', () => {
-    cy.get('gn-ui-chart-view')
-      .find('gn-ui-dropdown-selector')
-      .filter(':visible')
-      .as('drop')
-    cy.get('@drop').eq(0).selectDropdownOption('pie')
-    cy.get('@drop').eq(2).selectDropdownOption('men')
-    cy.get('@drop').eq(3).selectDropdownOption('average')
-    cy.screenshot({ capture: 'fullPage' })
-    // No attributes to verify chart change in webcomponents
-  })
+  // should display the chart & dropdowns
+  cy.get('gn-ui-chart').should('not.match', ':empty')
+  cy.get('gn-ui-chart-view')
+    .find('gn-ui-dropdown-selector')
+    .filter(':visible')
+    .as('drop')
+  cy.get('@drop').should('have.length', 4)
+  cy.screenshot({ capture: 'fullPage' })
+
+  // should change the chart on options change
+  cy.get('gn-ui-chart-view')
+    .find('gn-ui-dropdown-selector')
+    .filter(':visible')
+    .as('drop')
+  cy.get('@drop').eq(0).selectDropdownOption('pie')
+  cy.get('@drop').eq(2).selectDropdownOption('men')
+  cy.get('@drop').eq(3).selectDropdownOption('average')
+  cy.screenshot({ capture: 'fullPage' })
+  // No attributes to verify chart change in webcomponents
 })

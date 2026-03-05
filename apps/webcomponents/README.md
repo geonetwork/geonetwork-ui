@@ -62,10 +62,10 @@ And then navigate to http://localhost:5173/webcomponents/
 
 It's possible de run the e2e tests locally in watch mode. For this, you first need to start the support services locally.
 
-Then, start the webcomponents demo page locally:
+Then, start the doc website in dev mode, which contains the Web Components demo pages:
 
 ```shell script
-npm run demo:local
+npm run docs:dev
 ```
 
 The `local` script will adapt the deployed demo pages to a local environment (api urls, ids of records, filters...).
@@ -73,7 +73,7 @@ The `local` script will adapt the deployed demo pages to a local environment (ap
 Then start Cypress in watch mode, pointing to the correct project:
 
 ```shell script
-npm run webcomponents:e2e
+nx e2e webcomponents --watch
 ```
 
 ## Create a new Web Component
@@ -93,7 +93,7 @@ To export content as a Web Component you have to:
 }
 ```
 
-- Provide the dependencies which are not inject in root by default (eg `SearchFacade`, `SearchService`, etc.)
+- Provide the dependencies which are not injected in root by default (eg `SearchFacade`, `SearchService`, etc.)
 
 ```typescript
 {
@@ -101,7 +101,7 @@ To export content as a Web Component you have to:
 }
 ```
 
-- import gnui styles from the component css file
+- import GeoNetwork-UI styles from the component CSS file
 
 ```css
 @import '../../../styles.css';
@@ -116,7 +116,6 @@ const CUSTOM_ELEMENTS: any[] = [
   [GnResultsListComponent, 'gn-results-list'],
   [GnAggregatedRecordsComponent, 'gn-aggregated-records'],
 ]
-}
 ```
 
 - Add a sample HTML file to show how to use it in a third party web page `${webcomponent_name}.sample.html` eg. gn-results-list.sample.html

@@ -6,7 +6,7 @@ volumes:
 
 services:
   database:
-    image: postgres:15
+    image: postgres:15.15
     environment:
       POSTGRES_USER: geonetwork
       POSTGRES_PASSWORD: geonetwork

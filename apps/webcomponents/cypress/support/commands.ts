@@ -23,7 +23,7 @@ Cypress.Commands.add(
   'openDropdown',
   { prevSubject: true },
   (dropdownElement) => {
-    cy.get('body').click('bottomLeft') // first click on the document to close other dropdowns
+    cy.get('body').click('bottomLeft', { force: true }) // first click on the document to close other dropdowns
     cy.wrap(dropdownElement).find('button').click()
     return cy.get('.gn-ui-overlay-container').find('[role=listbox]')
   }
