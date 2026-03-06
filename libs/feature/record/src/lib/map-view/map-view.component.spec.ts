@@ -1376,9 +1376,7 @@ describe('MapViewComponent', () => {
     }))
 
     it('shows disabled dropdown with style name when WMS has one published style', fakeAsync(() => {
-      mockWmsStyles = [
-        { name: 'contour', title: 'Contour Lines' },
-      ]
+      mockWmsStyles = [{ name: 'contour', title: 'Contour Lines' }]
       mdViewFacade.mapApiLinks$.next([
         {
           url: new URL('http://abcd.com/wms'),

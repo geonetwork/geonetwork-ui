@@ -382,7 +382,7 @@
   "map.ogc.urlInput.hint": "",
   "map.select.layer": "",
   "map.select.style": "",
-  "map.style.default": "",
+  "map.style.default": "Padrão",
   "map.wfs.urlInput.hint": "",
   "map.wms.urlInput.hint": "",
   "multiselect.filter.placeholder": "",
