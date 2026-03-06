@@ -18,67 +18,99 @@ describe('MetadataContactComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MetadataContactComponent)
     component = fixture.componentInstance
-    component.metadata = {
-      kind: 'dataset',
-      ownerOrganization: {
-        name: 'Worldcorp',
-        website: new URL('https://john.world.co'),
-      },
-      contactsForResource: [
-        {
-          name: 'john',
-          organization: 'Worldcorp',
-          email: 'john@world.co',
-          website: 'https://john.world.co',
-        },
-        {
-          name: 'billy',
-          organization: 'small corp',
-          email: 'billy@small.co',
-          website: 'https://billy.small.co',
-        },
-      ],
-    } as any
-    fixture.detectChanges()
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
   })
-  describe('on contact click', () => {
+  describe('kind dataset', () => {
     beforeEach(() => {
-      jest.resetAllMocks()
-      jest.spyOn(component.organizationClick, 'emit')
+      component.metadata = {
+        kind: 'dataset',
+        ownerOrganization: {
+          name: 'Worldcorp',
+          website: new URL('https://john.world.co'),
+        },
+        contactsForResource: [
+          {
+            firstName: 'john',
+            lastName: 'doe',
+            organization: 'Worldcorp',
+            email: 'john@world.co',
+            website: 'https://john.world.co',
+          },
+          {
+            firstName: 'billy',
+            lastName: 'smith',
+            organization: 'small corp',
+            email: 'billy@small.co',
+            website: 'https://billy.small.co',
+          },
+        ],
+      } as any
+      fixture.detectChanges()
     })
-    it('emit contact click with contact name', () => {
-      const el = fixture.debugElement.query(
-        By.css('[data-cy="organization-name-link"]')
-      ).nativeElement
-      el.click()
-      expect(component.organizationClick.emit).toHaveBeenCalledWith({
-        name: 'Worldcorp',
-        website: new URL('https://john.world.co'),
+    describe('on organization click', () => {
+      beforeEach(() => {
+        jest.resetAllMocks()
+        jest.spyOn(component.organizationClick, 'emit')
+      })
+      it('emit organization click with organization name', () => {
+        const el = fixture.debugElement.query(
+          By.css('[data-cy="organization-name-link"]')
+        ).nativeElement
+        el.click()
+        expect(component.organizationClick.emit).toHaveBeenCalledWith({
+          name: 'Worldcorp',
+          website: new URL('https://john.world.co'),
+        })
+      })
+    })
+    describe('content', () => {
+      let email
+      beforeEach(() => {
+        email = fixture.debugElement.queryAll(By.css('a'))[1]
+      })
+      it('displays the organization name', () => {
+        const el = fixture.debugElement.query(
+          By.css('[data-cy="organization-name-link"]')
+        ).nativeElement
+        expect(el.innerHTML).toBe(' Worldcorp ')
+      })
+      it('displays the contact email', () => {
+        expect(email.attributes.href).toBe('mailto:john@world.co')
+      })
+      it('displays a link to the contact website', () => {
+        const a = fixture.debugElement.query(By.css('.contact-website'))
+        expect(a.attributes.href).toBe('https://john.world.co/')
+        expect(a.attributes.target).toBe('_blank')
       })
     })
   })
-  describe('content', () => {
-    let email
+
+  describe('kind service', () => {
     beforeEach(() => {
-      email = fixture.debugElement.queryAll(By.css('a'))[1]
+      component.metadata = {
+        kind: 'service',
+        ownerOrganization: {
+          name: 'Service Corp',
+        },
+        contacts: [
+          {
+            firstName: 'samantha',
+            lastName: 'smith',
+          },
+        ],
+      } as any
+      fixture.detectChanges()
     })
-    it('displays the contact name', () => {
-      const el = fixture.debugElement.query(
-        By.css('[data-cy="organization-name-link"]')
-      ).nativeElement
-      expect(el.innerHTML).toBe(' Worldcorp ')
-    })
-    it('displays the contact email', () => {
-      expect(email.attributes.href).toBe('mailto:john@world.co')
-    })
-    it('displays a link to the contact website', () => {
-      const a = fixture.debugElement.query(By.css('.contact-website'))
-      expect(a.attributes.href).toBe('https://john.world.co/')
-      expect(a.attributes.target).toBe('_blank')
+    describe('content', () => {
+      it('displays the contact name', () => {
+        const el = fixture.debugElement.query(
+          By.css('[data-cy="contact-full-name"] > p')
+        ).nativeElement
+        expect(el.innerHTML).toBe(' samantha smith ')
+      })
     })
   })
 })
