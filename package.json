@@ -27,7 +27,7 @@
     "storybook": "nx run demo:storybook",
     "build:storybook": "nx run demo:build-storybook",
     "build:webcomponents": "nx run webcomponents:build-artefacts",
-    "dev:webcomponents": "nx run webcomponents:build-artefacts-watch",
+    "dev:webcomponents": "nx run webcomponents:build-artefacts-dev",
     "webcomponents:e2e": "nx e2e webcomponents --browser chrome",
     "webcomponents:e2e:ci": "npm run build:webcomponents && concurrently -k --success first \"npm run docs:dev\" \"nx e2e webcomponents\"",
     "generate-api": "tools/generate-api.sh",
