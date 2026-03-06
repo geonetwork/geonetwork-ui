@@ -3,9 +3,9 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   DoBootstrap,
   importProvidersFrom,
+  inject,
   Injector,
   NgModule,
-  inject,
 } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -35,9 +35,10 @@ import { GEONETWORK_UI_VERSION, PROXY_PATH } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { AppComponent } from './app.component'
 import { BaseComponent } from './components/base.component'
 import { GnAggregatedRecordsComponent } from './components/gn-aggregated-records/gn-aggregated-records.component'
+import { GnDatahubComponent } from './components/gn-datahub/gn-datahub.component'
+import { GnDatahubModule } from './gn-datahub.module'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
 import { GnDatasetViewMapComponent } from './components/gn-dataset-view-map/gn-dataset-view-map.component'
 import { GnDatasetViewTableComponent } from './components/gn-dataset-view-table/gn-dataset-view-table.component'
@@ -50,7 +51,10 @@ import { standaloneConfigurationObject } from './configuration'
 import { StandaloneSearchModule } from './standalone-search.module'
 import { WebcomponentOverlayContainer } from './webcomponent-overlay-container'
 
-const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
+const CUSTOM_ELEMENTS: [
+  new (...args) => BaseComponent | GnDatahubComponent,
+  string,
+][] = [
   [GnFacetsComponent, 'gn-facets'],
   [GnResultsListComponent, 'gn-results-list'],
   [GnAggregatedRecordsComponent, 'gn-aggregated-records'],
@@ -60,11 +64,11 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnMapViewerComponent, 'gn-map-viewer'],
   [GnFigureDatasetsComponent, 'gn-figure-datasets'],
   [GnDatasetViewMapComponent, 'gn-dataset-view-map'],
+  [GnDatahubComponent, 'gn-datahub'],
 ]
 
 @NgModule({
   declarations: [
-    AppComponent,
     BaseComponent,
     GnFacetsComponent,
     GnResultsListComponent,
@@ -75,9 +79,11 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     GnMapViewerComponent,
     GnFigureDatasetsComponent,
     GnDatasetViewMapComponent,
+    GnDatahubComponent,
   ],
   imports: [
     BrowserAnimationsModule,
+    GnDatahubModule,
     FeatureSearchModule,
     FeatureRecordModule,
     FeatureMapModule,
@@ -92,8 +98,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     RecordsMetricsComponent,
     ResultsListContainerComponent,
     FacetsContainerComponent,
-    LayersPanelComponent,
-    FigureComponent,
   ],
   providers: [
     importProvidersFrom(
@@ -112,7 +116,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  // bootstrap: [AppComponent],
 })
 export class WebcomponentsModule implements DoBootstrap {
   private injector = inject(Injector)
