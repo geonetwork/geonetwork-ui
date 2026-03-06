@@ -1,0 +1,22 @@
+<p>
+  Click on Load more button to increment the <code>size</code> input of the Web
+  Component
+</p>
+<div>
+  <button id="changeSizeBtn" onclick="moreRecords()">Load more ...</button>
+</div>
+<gn-results-list
+  api-url="https://apps.titellus.net/geonetwork/srv/api"
+  size="2"
+  primary-color="#ed119d"
+  main-color="#555"
+  main-font="'Inter', sans-serif"
+  title-font="'DM Serif Display', serif"
+  layout="TITLE"
+></gn-results-list>
+<script>
+  window.moreRecords = () => {
+    const wc = document.getElementsByTagName('gn-results-list')[0]
+    wc.size = parseInt(wc.size) + 2
+  }
+</script>

@@ -8,6 +8,8 @@ GeoNetwork-UI offers a mechanism similar to Web Components but which only allows
 
 The JS file to include is as a result much lighter, and this system is entirely appropriate if the search results coming from GeoNetwork should be used in a different UI framework.
 
+[Take a look at the live showcase!](../webcomponents/standalone-search/)
+
 ## Use
 
 To use the Standalone Search, you have to:

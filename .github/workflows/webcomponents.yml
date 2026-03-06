@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: 20.19.0
+  NODE_VERSION: 22
   PUBLISH_BRANCH: wc-dist
 
 jobs:
@@ -44,9 +44,9 @@ jobs:
       - name: Build webcomponents script
         run: |
           mkdir wc-dist
-          npm run build:demo
-          mv dist/demo/webcomponents/gn-wc.js wc-dist
-          mv dist/demo/webcomponents/gn-standalone-search.js wc-dist
+          npm run build:webcomponents
+          mv dist/gn-wc.js wc-dist
+          mv dist/gn-standalone-search.js wc-dist
 
       - name: Upload archives to release
         if: github.event_name == 'release'

@@ -1,4 +1,8 @@
+import { defineLocalRedirections } from '../support/local-url-redirects'
+
 beforeEach(() => {
+  defineLocalRedirections()
+
   // GEOSERVER stubs
   cy.intercept(
     'GET',
@@ -66,48 +70,43 @@ beforeEach(() => {
   )
 })
 
-describe('gn-dataset-view-table', () => {
-  beforeEach(() => {
-    cy.visit('/webcomponents/gn-dataset-view-table.sample.html')
-    cy.get('gn-ui-data-table').should('be.visible')
-    cy.get('gn-ui-data-table').find('table').as('table')
-  })
+it('gn-dataset-view-table', () => {
+  cy.visit('/webcomponents/gn-dataset-view-table.html')
+  cy.get('gn-ui-data-table').should('be.visible')
+  cy.get('gn-ui-data-table').find('table').as('table')
 
-  it('should display the table with 10 rows', () => {
-    cy.get('@table').find('tbody').children('tr').should('have.length', 10)
-    cy.screenshot({ capture: 'fullPage' })
-  })
+  // should display the table with 10 rows
+  cy.get('@table').find('tbody').children('tr').should('have.length', 10)
+  cy.screenshot({ capture: 'fullPage' })
 
-  it('should sort the table on column click', () => {
-    cy.get('@table').find('th').eq(1).click()
-    cy.get('@table')
-      .find('td')
-      .eq(1)
-      .invoke('text')
-      .then((firstValue) => {
-        cy.get('@table').find('th').eq(1).click()
-        cy.get('@table')
-          .find('td')
-          .eq(1)
-          .invoke('text')
-          .should('not.eq', firstValue)
-      })
-  })
+  // should sort the table on column click
+  cy.get('@table').find('th').eq(1).click()
+  cy.get('@table')
+    .find('td')
+    .eq(1)
+    .invoke('text')
+    .then((firstValue) => {
+      cy.get('@table').find('th').eq(1).click()
+      cy.get('@table')
+        .find('td')
+        .eq(1)
+        .invoke('text')
+        .should('not.eq', firstValue)
+    })
 
-  it('should display 10 rows with different data when clicking next page', () => {
-    cy.get('mat-paginator').as('pagination')
-    cy.get('@table')
-      .find('td')
-      .eq(1)
-      .invoke('text')
-      .then((firstValue) => {
-        cy.get('@pagination').find('button').eq(2).click()
-        cy.get('@table')
-          .find('td')
-          .eq(1)
-          .invoke('text')
-          .should('not.eq', firstValue)
-        cy.get('@table').find('tbody').children('tr').should('have.length', 10)
-      })
-  })
+  // should display 10 rows with different data when clicking next page
+  cy.get('mat-paginator').as('pagination')
+  cy.get('@table')
+    .find('td')
+    .eq(1)
+    .invoke('text')
+    .then((firstValue) => {
+      cy.get('@pagination').find('button').eq(2).click()
+      cy.get('@table')
+        .find('td')
+        .eq(1)
+        .invoke('text')
+        .should('not.eq', firstValue)
+      cy.get('@table').find('tbody').children('tr').should('have.length', 10)
+    })
 })
