@@ -50,7 +50,7 @@ export function dragPanCondition(
 
 export function mouseWheelZoomCondition(
   this: MouseWheelZoom,
-  event: MapBrowserEvent<UIEvent>
+  event: MapBrowserEvent<WheelEvent>
 ) {
   if (!platformModifierKeyOnly(event) && event.type === 'wheel') {
     this.getMap().dispatchEvent('mapmuted')

@@ -382,6 +382,7 @@
   "map.ogc.urlInput.hint": "Enter OGC API service URL",
   "map.select.layer": "Data source",
   "map.select.style": "Style",
+  "map.style.default": "Default",
   "map.wfs.urlInput.hint": "Enter WFS service URL",
   "map.wms.urlInput.hint": "Enter WMS service URL",
   "multiselect.filter.placeholder": "Search",
