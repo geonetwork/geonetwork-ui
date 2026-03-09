@@ -11,16 +11,22 @@ function removeHyphens(s: string) {
 
 async function processSampleToItem(samplePath: string) {
   const fullPath = join(baseDir, samplePath)
-  const sourceCode = await readFile(fullPath, 'utf-8')
+  const fullSource = await readFile(fullPath, 'utf-8')
   const fileName = basename(samplePath, '.sample.html')
   const [title, variant] = fileName.split('.')
 
+  // extract only the #region source content for display; fall back to full source
+  const regionMatch = fullSource.match(
+    /<!--\s*#region\s+source\s*-->\n?([\s\S]*?)\n?<!--\s*#endregion\s+source\s*-->/
+  )
+  const sourceCode = regionMatch ? regionMatch[1] : fullSource
+
   // script tags removed
-  const htmlCode = sourceCode.replace(/<script[^>]*>([\s\S]*?)<\/script>/gi, '')
+  const htmlCode = fullSource.replace(/<script[^>]*>([\s\S]*?)<\/script>/gi, '')
 
   // only content of first script tag kept
   const jsCode =
-    sourceCode.match(/<script[^>]*>([\s\S]*?)<\/script>/)?.[1] ?? ''
+    fullSource.match(/<script[^>]*>([\s\S]*?)<\/script>/)?.[1] ?? ''
 
   return {
     title,

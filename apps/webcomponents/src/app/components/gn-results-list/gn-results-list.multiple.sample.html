@@ -6,16 +6,17 @@
   To bind your component to a dedicated search state, provide the
   <code>search-id</code> input
 </p>
-<div class="first-list">
-  <h2>SCoT</h2>
-  <gn-results-list
-    api-url="https://www.geo2france.fr/geonetwork/srv/api"
-    catalog-url="https://www.geo2france.fr/datahub/dataset/{uuid}"
-    size="5"
-    layout="TITLE"
-    query="scot"
-  ></gn-results-list>
-</div>
+
+<!-- #region source -->
+<h2>SCoT</h2>
+<gn-results-list
+  api-url="https://www.geo2france.fr/geonetwork/srv/api"
+  catalog-url="https://www.geo2france.fr/datahub/dataset/{uuid}"
+  size="5"
+  layout="TITLE"
+  query="scot"
+></gn-results-list>
+
 <h2>Vélo</h2>
 <gn-results-list
   api-url="https://www.geo2france.fr/geonetwork/srv/api"
@@ -27,3 +28,4 @@
   query="velo"
   layout="TITLE"
 ></gn-results-list>
+<!-- #endregion source -->
