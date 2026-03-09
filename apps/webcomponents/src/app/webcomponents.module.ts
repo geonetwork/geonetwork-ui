@@ -1,4 +1,3 @@
-import { OverlayContainer } from '@angular/cdk/overlay'
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   DoBootstrap,
@@ -47,7 +46,6 @@ import { GnResultsListComponent } from './components/gn-results-list/gn-results-
 import { GnSearchInputComponent } from './components/gn-search-input/gn-search-input.component'
 import { standaloneConfigurationObject } from './configuration'
 import { StandaloneSearchModule } from './standalone-search.module'
-import { WebcomponentOverlayContainer } from './webcomponent-overlay-container'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
@@ -100,10 +98,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
       StoreDevtoolsModule.instrument({ connectInZone: true }),
       EffectsModule.forRoot()
     ),
-    {
-      provide: OverlayContainer,
-      useClass: WebcomponentOverlayContainer,
-    },
     {
       provide: PROXY_PATH,
       useFactory: standaloneConfigurationObject.proxyPathFactory,

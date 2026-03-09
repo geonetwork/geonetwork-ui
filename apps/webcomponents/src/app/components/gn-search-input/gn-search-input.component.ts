@@ -5,9 +5,11 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { BaseComponent } from '../base.component'
-import { FuzzySearchComponent } from '@geonetwork-ui/feature/search'
+import {
+  FuzzySearchComponent,
+  SearchService,
+} from '@geonetwork-ui/feature/search'
+import { BaseComponent, DefaultProviders } from '../base.component'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
@@ -16,7 +18,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
   styleUrls: ['./gn-search-input.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
-  providers: [SearchFacade, SearchService],
+  providers: [DefaultProviders, SearchService],
   standalone: false,
 })
 export class GnSearchInputComponent extends BaseComponent {

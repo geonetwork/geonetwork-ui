@@ -1,16 +1,14 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
+  inject,
   Injector,
   ViewEncapsulation,
-  inject,
 } from '@angular/core'
-import { BaseComponent } from '../base.component'
+import { BaseComponent, DefaultProviders } from '../base.component'
 import { RecordsService } from '@geonetwork-ui/feature/catalog'
 import { catchError, startWith } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'wc-gn-figure-datasets',
@@ -18,7 +16,7 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
   styleUrls: ['./gn-figure-datasets.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
-  providers: [SearchFacade],
+  providers: [DefaultProviders],
   standalone: false,
 })
 export class GnFigureDatasetsComponent extends BaseComponent {

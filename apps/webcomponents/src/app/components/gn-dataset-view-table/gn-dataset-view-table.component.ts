@@ -2,13 +2,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  inject,
   Input,
   OnInit,
   ViewEncapsulation,
-  inject,
 } from '@angular/core'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { BaseComponent } from '../base.component'
+import { SearchService } from '@geonetwork-ui/feature/search'
+import { BaseComponent, DefaultProviders } from '../base.component'
 import { LinkUsage } from '@geonetwork-ui/util/shared'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
@@ -18,7 +18,7 @@ import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record
   styleUrls: ['./gn-dataset-view-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
-  providers: [SearchFacade, SearchService],
+  providers: [DefaultProviders, SearchService],
   standalone: false,
 })
 export class GnDatasetViewTableComponent
