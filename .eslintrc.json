@@ -58,6 +58,17 @@
                 "sourceTag": "type:api",
                 "onlyDependOnLibsWithTags": ["type:api", "scope:shared"],
                 "bannedExternalImports": ["*app-config"]
+              },
+              {
+                "sourceTag": "scope:webcomponents",
+                "onlyDependOnLibsWithTags": [
+                  "type:app",
+                  "type:feature",
+                  "type:data-access",
+                  "type:ui",
+                  "type:util",
+                  "type:api"
+                ]
               }
             ]
           }

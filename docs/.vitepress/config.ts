@@ -60,6 +60,13 @@ export default async () => {
     },
 
     ignoreDeadLinks: 'localhostLinks',
+
+    transformPageData: (pageData, { siteConfig }) => {
+      // make gn-datahub web component full width
+      if (pageData.params?.title?.includes('gn-datahub')) {
+        pageData.frontmatter.aside = false
+      }
+    },
   })
 }
 

@@ -28,6 +28,12 @@
       "@geonetwork-ui/api/repository/gn4": [
         "libs/api/repository/src/lib/gn4/index.ts"
       ],
+      "@geonetwork-ui/apps/datahub/app.component.ts": [
+        "apps/datahub/src/app/app.component.ts"
+      ],
+      "@geonetwork-ui/apps/datahub/app.providers.ts": [
+        "apps/datahub/src/app/app.providers.ts"
+      ],
       "@geonetwork-ui/common/domain/*": ["libs/common/domain/src/lib/*"],
       "@geonetwork-ui/common/fixtures": ["libs/common/fixtures/src/index.ts"],
       "@geonetwork-ui/data-access/gn4": ["libs/data-access/gn4/src/index.ts"],

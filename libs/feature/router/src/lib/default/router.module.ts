@@ -1,6 +1,5 @@
-import { ModuleWithProviders, NgModule, inject } from '@angular/core'
+import { inject, ModuleWithProviders, NgModule } from '@angular/core'
 import { RouteReuseStrategy } from '@angular/router'
-import { EffectsModule } from '@ngrx/effects'
 import {
   FullRouterStateSerializer,
   routerReducer,
@@ -11,8 +10,9 @@ import { ROUTER_STATE_KEY } from './constants'
 import { RouterService } from './router.service'
 import { SearchRouteReuseStrategy } from './SearchRouteReuseStrategy'
 import { RouterFacade } from './state/router.facade'
-import { RouterEffects } from './state/router.effects'
 import { ROUTER_CONFIG, RouterConfigModel } from './router.config'
+import { RouterEffects } from './state/router.effects'
+import { EffectsModule } from '@ngrx/effects'
 
 @NgModule({
   imports: [

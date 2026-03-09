@@ -7,7 +7,6 @@ import {
   NgModule,
 } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {
   ChartViewComponent,
   TableViewComponent,
@@ -36,6 +35,7 @@ import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { BaseComponent } from './components/base.component'
 import { GnAggregatedRecordsComponent } from './components/gn-aggregated-records/gn-aggregated-records.component'
+import { GnDatahubComponent } from './components/gn-datahub/gn-datahub.component'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
 import { GnDatasetViewMapComponent } from './components/gn-dataset-view-map/gn-dataset-view-map.component'
 import { GnDatasetViewTableComponent } from './components/gn-dataset-view-table/gn-dataset-view-table.component'
@@ -46,8 +46,16 @@ import { GnResultsListComponent } from './components/gn-results-list/gn-results-
 import { GnSearchInputComponent } from './components/gn-search-input/gn-search-input.component'
 import { standaloneConfigurationObject } from './configuration'
 import { StandaloneSearchModule } from './standalone-search.module'
+import { BrowserModule } from '@angular/platform-browser'
+import { HashLocationStrategy, LocationStrategy } from '@angular/common'
+import { RouterModule } from '@angular/router'
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { DATAHUB_ROUTER_PROVIDERS } from '@geonetwork-ui/apps/datahub/app.providers.ts'
 
-const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
+const CUSTOM_ELEMENTS: [
+  new (...args) => BaseComponent | GnDatahubComponent,
+  string,
+][] = [
   [GnFacetsComponent, 'gn-facets'],
   [GnResultsListComponent, 'gn-results-list'],
   [GnAggregatedRecordsComponent, 'gn-aggregated-records'],
@@ -57,6 +65,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnMapViewerComponent, 'gn-map-viewer'],
   [GnFigureDatasetsComponent, 'gn-figure-datasets'],
   [GnDatasetViewMapComponent, 'gn-dataset-view-map'],
+  [GnDatahubComponent, 'gn-datahub'],
 ]
 
 @NgModule({
@@ -73,7 +82,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     GnDatasetViewMapComponent,
   ],
   imports: [
-    BrowserAnimationsModule,
+    BrowserModule,
     FeatureSearchModule,
     FeatureRecordModule,
     FeatureMapModule,
@@ -88,8 +97,19 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     RecordsMetricsComponent,
     ResultsListContainerComponent,
     FacetsContainerComponent,
-    LayersPanelComponent,
-    FigureComponent,
+    RouterModule.forRoot([], {
+      initialNavigation: 'disabled', // initial navigation is done after config is loaded
+      scrollPositionRestoration: 'disabled',
+    }),
+    StoreModule.forRoot(
+      {},
+      {
+        runtimeChecks: {
+          strictStateImmutability: false,
+          strictActionImmutability: false,
+        },
+      }
+    ),
   ],
   providers: [
     importProvidersFrom(
@@ -102,6 +122,9 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
       provide: PROXY_PATH,
       useFactory: standaloneConfigurationObject.proxyPathFactory,
     },
+    // { provide: LocationStrategy, useClass: CustomLocationStrategy }, // TODO: offer this if we don't want to see hashes in the url
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    DATAHUB_ROUTER_PROVIDERS,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

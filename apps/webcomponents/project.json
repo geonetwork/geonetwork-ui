@@ -4,7 +4,7 @@
   "projectType": "application",
   "sourceRoot": "apps/webcomponents/src",
   "prefix": "wc",
-  "tags": ["type:app"],
+  "tags": ["type:app", "scope:webcomponents"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
