@@ -59,7 +59,7 @@ Two static JS files can be built from the `webcomponents` project:
 
 To build both artifacts in the `dist` folder:
 
-```
+```bash
 npm run build:webcomponents
 ```
 
@@ -72,13 +72,22 @@ Both bundles mentioned above can be built in dev mode, which means:
 
 To start this dev mode:
 
-```
+```bash
 npm run dev:webcomponents
 ```
 
+::: info
+This command requires the `inotify` tool to be present on the system. If it's not the case, run the following command:
+
+```bash
+sudo apt-get install inotify-tools
+```
+
+:::
+
 Then the Web Components can be tested on the docs like so:
 
-```
+```bash
 npm run docs:dev
 ```
 
