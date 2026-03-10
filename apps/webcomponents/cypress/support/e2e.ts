@@ -15,3 +15,11 @@
 
 // Import commands.ts using ES2015 syntax:
 import './commands'
+
+beforeEach(() => {
+  // Vitepress might throw errors when click events are bounced back to the document by GeoNetwork-UI
+  Cypress.on(
+    'uncaught:exception',
+    (err) => !err.message.includes('el.matches is not a function')
+  )
+})

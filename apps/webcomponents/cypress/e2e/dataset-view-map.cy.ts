@@ -1,6 +1,9 @@
 import 'cypress-real-events'
+import { defineLocalRedirections } from '../support/local-url-redirects'
 
 beforeEach(() => {
+  defineLocalRedirections()
+
   // GEOSERVER stubs
   cy.intercept(
     'GET',
@@ -18,20 +21,16 @@ beforeEach(() => {
   )
 })
 
-describe('gn-dataset-view-map', () => {
-  beforeEach(() => {
-    cy.visit('/webcomponents/gn-dataset-view-map.sample.html')
-  })
+it('gn-dataset-view-map', () => {
+  cy.visit('/webcomponents/gn-dataset-view-map.html')
 
-  it('should display the map and the legend', () => {
-    cy.get('gn-ui-map-container').should('be.visible')
-    cy.get('gn-ui-map-legend').should('be.visible')
-    cy.screenshot({ capture: 'fullPage' })
-  })
+  // should display the map and the legend
+  cy.get('gn-ui-map-container').should('be.visible')
+  cy.get('gn-ui-map-legend').should('be.visible')
+  cy.screenshot({ capture: 'fullPage' })
 
-  it('should open a popup on layer click', () => {
-    cy.get('canvas').realClick()
-    cy.get('gn-ui-feature-detail')
-    cy.screenshot({ capture: 'fullPage' })
-  })
+  // should open a popup on layer click
+  cy.get('canvas').realClick()
+  cy.get('gn-ui-feature-detail')
+  cy.screenshot({ capture: 'fullPage' })
 })

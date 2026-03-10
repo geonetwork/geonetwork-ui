@@ -12,6 +12,8 @@ are registered as Web Components in the application module.
 
 All Web Components are prefixed with `gn-`.
 
+[Take a look at the live showcase!](../webcomponents/)
+
 ## Use
 
 Web Components are made to be easily included in any context. To do so, you have to:
@@ -50,31 +52,46 @@ You can choose the version of the Web Component script you wish to use by indica
 
 ## Build
 
-All Angular custom elements are served by the same application `webcomponents`.
+Two static JS files can be built from the `webcomponents` project:
 
-Therefore, there is only one build and one javascript file for all web components called `gn-wc.js`.
+- `gn-wc.js` contains all web components in GeoNetwork-UI
+- `gn-standalone-search.js` contains the Standalone Search only
 
-```
-npm run build:demo
-```
+To build both artifacts in the `dist` folder:
 
-You'll find the built files in `dist/demo/webcomponents` folder
-
-## Run
-
-To test your Web Component in a real production context
-
-```shell script
-npm run demo
+```bash
+npm run build:webcomponents
 ```
 
-**Important:** The components are built in `production` mode.
+## Development
 
-You can go to http://localhost:8001/ to visit GeoNetwork-UI Web Components demo pages.
+Both bundles mentioned above can be built in dev mode, which means:
 
-You'll be able to test your Web Components on `http://localhost:8001/webcomponents/{name_of_sample_file}`
+- they will be rebuilt continuously when the source code changes
+- they will not be minified and thus easier to debug
 
-e.g: http://localhost:8001/webcomponents/gn-results-list.sample.html
+To start this dev mode:
+
+```bash
+npm run dev:webcomponents
+```
+
+::: info
+This command requires the `inotify` tool to be present on the system. If it's not the case, run the following command:
+
+```bash
+sudo apt-get install inotify-tools
+```
+
+:::
+
+Then the Web Components can be tested on the docs like so:
+
+```bash
+npm run docs:dev
+```
+
+And then navigate to http://localhost:5173/webcomponents/
 
 ## Create a new Web Component
 

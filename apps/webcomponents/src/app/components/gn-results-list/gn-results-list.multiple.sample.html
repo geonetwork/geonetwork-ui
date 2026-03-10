@@ -1,0 +1,31 @@
+<p>
+  You can insert several <code>gn-results-list</code> web component in the same
+  page.
+</p>
+<p>
+  To bind your component to a dedicated search state, provide the
+  <code>search-id</code> input
+</p>
+
+<!-- #region source -->
+<h2>SCoT</h2>
+<gn-results-list
+  api-url="https://www.geo2france.fr/geonetwork/srv/api"
+  catalog-url="https://www.geo2france.fr/datahub/dataset/{uuid}"
+  size="5"
+  layout="TITLE"
+  query="scot"
+></gn-results-list>
+
+<h2>Vélo</h2>
+<gn-results-list
+  api-url="https://www.geo2france.fr/geonetwork/srv/api"
+  catalog-url="https://www.geo2france.fr/datahub/dataset/{uuid}"
+  size="5"
+  primary-color="#343e9c"
+  main-font="'Roboto', sans-serif"
+  search-id="velo"
+  query="velo"
+  layout="TITLE"
+></gn-results-list>
+<!-- #endregion source -->

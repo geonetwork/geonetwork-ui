@@ -1,13 +1,20 @@
 <!-- #region source -->
 <gn-search-input
   api-url="https://www.geo2france.fr/geonetwork/srv/api"
-  open-on-search="https://www.geo2france.fr/datahub/search/?q=${search}"
   open-on-select="https://www.geo2france.fr/datahub/dataset/${uuid}"
-  primary-color="#0f4395"
-  secondary-color="#8bc832"
+></gn-search-input>
+
+<gn-results-list
+  size="10"
+  api-url="https://www.geo2france.fr/geonetwork/srv/api"
+  catalog-url="https://www.geo2france.fr/datahub/dataset/{uuid}"
+  layout="ROW"
+  primary-color="#251"
+  secondary-color="#c40"
   main-color="#555"
   background-color="#fdfbff"
   main-font="'Inter', sans-serif"
   title-font="'DM Serif Display', serif"
-></gn-search-input>
+  show-more="auto"
+></gn-results-list>
 <!-- #endregion source -->

@@ -2,17 +2,16 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  inject,
   Input,
   ViewEncapsulation,
-  inject,
 } from '@angular/core'
 import {
   ResultsListShowMoreStrategy,
-  SearchFacade,
   SearchStateParams,
 } from '@geonetwork-ui/feature/search'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
-import { BaseComponent } from '../base.component'
+import { BaseComponent, DefaultProviders } from '../base.component'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
@@ -21,7 +20,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
   styleUrls: ['./gn-results-list.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
-  providers: [SearchFacade],
+  providers: [DefaultProviders],
   standalone: false,
 })
 export class GnResultsListComponent extends BaseComponent {

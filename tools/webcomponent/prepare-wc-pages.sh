@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+### THIS SCRIPT IS DEPRECATED
+### KEPT FOR REFERENCE because of the `--local` flag
+
 DIST_DEMO_PATH=dist/demo/
 DIST_WC_PATH=${DIST_DEMO_PATH}webcomponents/
 DIST_STANDALONE_PATH=${DIST_DEMO_PATH}standalone-search/

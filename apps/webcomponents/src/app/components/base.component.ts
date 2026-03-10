@@ -1,11 +1,11 @@
 import {
   Component,
   ElementRef,
+  inject,
   Injector,
   Input,
   OnChanges,
   OnInit,
-  inject,
 } from '@angular/core'
 import {
   LinkClassifierService,
@@ -25,6 +25,14 @@ import {
   standaloneConfigurationObject,
   TextLanguage,
 } from '../configuration'
+
+export const DefaultProviders = [
+  SearchFacade,
+  {
+    provide: OverlayContainer,
+    useClass: WebcomponentOverlayContainer,
+  },
+]
 
 @Component({
   selector: 'wc-base',
@@ -54,22 +62,20 @@ export class BaseComponent implements OnChanges, OnInit {
   linkClassifier: LinkClassifierService
 
   constructor() {
-    const injector = this.injector
-
-    this.facade = injector.get(SearchFacade)
-    this.translate = injector.get(TranslateService)
-    this.searchService = injector.get(SearchApiService)
-    this.recordsRepository = injector.get(RecordsRepositoryInterface)
-    this.linkClassifier = injector.get(LinkClassifierService)
-
-    const elementRef = injector.get(ElementRef)
-    const overlayContainer = injector.get(
-      OverlayContainer
-    ) as WebcomponentOverlayContainer
-    overlayContainer.setRoot(elementRef.nativeElement.shadowRoot)
+    this.facade = this.injector.get(SearchFacade)
+    this.translate = this.injector.get(TranslateService)
+    this.searchService = this.injector.get(SearchApiService)
+    this.recordsRepository = this.injector.get(RecordsRepositoryInterface)
+    this.linkClassifier = this.injector.get(LinkClassifierService)
   }
 
   ngOnInit() {
+    const elementRef = this.injector.get(ElementRef)
+    const overlayContainer = this.injector.get(
+      OverlayContainer
+    ) as WebcomponentOverlayContainer
+    overlayContainer.setRoot(elementRef.nativeElement.shadowRoot)
+
     if (!this.isInitialized && this.apiUrl) {
       this.init()
     }

@@ -5,8 +5,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { BaseComponent } from '../base.component'
+import { BaseComponent, DefaultProviders } from '../base.component'
 
 @Component({
   selector: 'wc-gn-facets-component',
@@ -14,7 +13,7 @@ import { BaseComponent } from '../base.component'
   styleUrls: ['./gn-facets.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
-  providers: [SearchFacade],
+  providers: [DefaultProviders],
   standalone: false,
 })
 export class GnFacetsComponent extends BaseComponent implements OnInit {

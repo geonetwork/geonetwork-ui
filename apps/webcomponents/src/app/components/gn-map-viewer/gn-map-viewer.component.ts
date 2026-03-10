@@ -3,8 +3,7 @@ import {
   Component,
   ViewEncapsulation,
 } from '@angular/core'
-import { BaseComponent } from '../base.component'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { BaseComponent, DefaultProviders } from '../base.component'
 
 @Component({
   selector: 'wc-gn-map-viewer',
@@ -12,7 +11,7 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
   styleUrls: ['./gn-map-viewer.component.css'],
   encapsulation: ViewEncapsulation.ShadowDom,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [SearchFacade],
+  providers: [DefaultProviders],
   standalone: false,
 })
 export class GnMapViewerComponent extends BaseComponent {}

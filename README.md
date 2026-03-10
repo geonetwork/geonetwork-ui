@@ -38,7 +38,7 @@ You can either try complete applications or showcases of components using the fo
 
 - [Storybook of UI components](https://geonetwork.github.io/geonetwork-ui/main/storybook/demo/)
 - [Metadata Converter app](https://geonetwork.github.io/geonetwork-ui/main/apps/metadata-converter/)
-- [Web Components demo](https://geonetwork.github.io/geonetwork-ui/main/demo/webcomponents/)
+- [Web Components demo](https://geonetwork.github.io/geonetwork-ui/main/docs/webcomponents/)
 
 ## More information
 

@@ -2,14 +2,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  inject,
   Input,
   OnInit,
   ViewEncapsulation,
-  inject,
 } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { BaseComponent } from '../base.component'
+import { BaseComponent, DefaultProviders } from '../base.component'
 import { LinkUsage } from '@geonetwork-ui/util/shared'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
@@ -19,7 +18,7 @@ import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record
   styleUrls: ['./gn-dataset-view-map.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
-  providers: [SearchFacade],
+  providers: [DefaultProviders],
   standalone: false,
 })
 export class GnDatasetViewMapComponent extends BaseComponent implements OnInit {

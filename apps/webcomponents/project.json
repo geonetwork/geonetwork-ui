@@ -58,11 +58,17 @@
           "namedChunks": true
         },
         "webcomponents": {
-          "outputHashing": "none"
+          "outputHashing": "none",
+          "outputPath": "dist/webcomponents",
+          "deleteOutputPath": true,
+          "sourceMap": false
         },
         "standaloneSearch": {
           "outputHashing": "none",
-          "main": "apps/webcomponents/src/standalone-search.ts"
+          "main": "apps/webcomponents/src/standalone-search.ts",
+          "outputPath": "dist/standalone-search",
+          "deleteOutputPath": true,
+          "sourceMap": false
         }
       },
       "defaultConfiguration": "production"
@@ -104,32 +110,39 @@
         "tsConfig": "apps/webcomponents/tsconfig.spec.json"
       }
     },
-    "storybook": {
-      "executor": "@storybook/angular:start-storybook",
+    "build-artefacts": {
+      "executor": "nx:run-commands",
       "options": {
-        "port": 4400,
-        "configDir": "apps/webcomponents/.storybook",
-        "browserTarget": "webcomponents:build",
-        "compodoc": false
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
+        "commands": [
+          "nx run webcomponents:build:webcomponents",
+          "nx run webcomponents:build:standaloneSearch",
+          "tools/webcomponent/bundle-artefacts.sh"
+        ],
+        "parallel": false
       }
     },
-    "build-storybook": {
-      "executor": "@storybook/angular:build-storybook",
-      "outputs": ["{options.outputPath}"],
+    "build-artefacts-dev": {
+      "executor": "nx:run-commands",
       "options": {
-        "outputDir": "dist/storybook/webcomponents",
-        "configDir": "apps/webcomponents/.storybook",
-        "browserTarget": "webcomponents:build",
-        "compodoc": false
+        "commands": [
+          "nx run webcomponents:build:webcomponents --optimization=false --watch",
+          "nx run webcomponents:build:standaloneSearch --optimization=false --watch",
+          "tools/webcomponent/bundle-artefacts.sh --watch"
+        ],
+        "parallel": true
+      }
+    },
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/webcomponents/cypress.config.ts",
+        "baseUrl": "http://localhost:5173/",
+        "testingType": "e2e",
+        "browser": "chrome"
       },
-      "configurations": {
-        "ci": {
-          "quiet": true
+      "env": {
+        "browserPermissions": {
+          "write": "allow"
         }
       }
     }
