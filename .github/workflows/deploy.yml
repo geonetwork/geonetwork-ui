@@ -81,10 +81,13 @@ jobs:
 
         # This will move the artifacts to dist/dist so that it works for the docs website!
       - name: Build Web Components artifacts
-        run: npm run build:webcomponents && mkdir -p dist/dist && mv dist/gn-*.js dist/dist && rm -rf dist/{webcomponents,standalone-search}
+        run: npm run build:webcomponents && rm -rf dist/{webcomponents,standalone-search}
 
-      - name: Build docs
-        run: npm run docs:build -- --base=/geonetwork-ui/${{env.BRANCH_NAME}}/docs/ && mkdir -p dist/docs && mv docs/.vitepress/dist/* dist/docs
+      - name: Build docs & move all artifacts to dist folder
+        run: |
+          npm run docs:build -- --base=/geonetwork-ui/${{env.BRANCH_NAME}}/docs/
+          mkdir -p dist/docs && mv docs/.vitepress/dist/* dist/docs
+          mkdir -p dist/dist && mv dist/gn-*.js dist/dist
 
       - name: Add redirection pages for old Web Components link
         run: |
