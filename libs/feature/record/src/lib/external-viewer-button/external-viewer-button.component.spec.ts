@@ -9,6 +9,24 @@ import { MockBuilder } from 'ng-mocks'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
+let mockDescribeLayerResult: Record<string, unknown> | null = null
+let mockDescribeLayerError = false
+
+jest.mock('@camptocamp/ogc-client', () => ({
+  WmsEndpoint: jest.fn().mockImplementation(() => ({
+    isReady: jest.fn().mockImplementation(() => {
+      if (mockDescribeLayerError) {
+        return Promise.reject(new Error('DescribeLayer failed'))
+      }
+      return Promise.resolve({
+        describeLayer: jest
+          .fn()
+          .mockImplementation(() => Promise.resolve(mockDescribeLayerResult)),
+      })
+    }),
+  })),
+}))
+
 window.open = jest.fn().mockImplementation(() => window)
 window.focus = jest.fn().mockImplementation(() => window)
 
@@ -18,6 +36,8 @@ describe('ExternalViewerButtonComponent', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
+    mockDescribeLayerResult = null
+    mockDescribeLayerError = false
   })
 
   beforeEach(() => MockBuilder(ExternalViewerButtonComponent))
@@ -76,12 +96,13 @@ describe('ExternalViewerButtonComponent', () => {
         expect(component.externalViewer).toEqual(true)
       })
       describe('click button', () => {
-        beforeEach(() => {
+        beforeEach(async () => {
           buttonComponent = fixture.debugElement.query(
             By.directive(ButtonComponent)
           ).componentInstance
           componentSpy = jest.spyOn(component, 'openInExternalViewer')
           buttonComponent.buttonClick.emit()
+          await component.openInExternalViewer()
         })
 
         afterEach(() => {
@@ -117,12 +138,13 @@ describe('ExternalViewerButtonComponent', () => {
         expect(component.externalViewer).toEqual(true)
       })
       describe('click button', () => {
-        beforeEach(() => {
+        beforeEach(async () => {
           buttonComponent = fixture.debugElement.query(
             By.directive(ButtonComponent)
           ).componentInstance
           componentSpy = jest.spyOn(component, 'openInExternalViewer')
           buttonComponent.buttonClick.emit()
+          await component.openInExternalViewer()
         })
 
         afterEach(() => {
@@ -155,12 +177,13 @@ describe('ExternalViewerButtonComponent', () => {
         expect(component.externalViewer).toEqual(true)
       })
       describe('click button', () => {
-        beforeEach(() => {
+        beforeEach(async () => {
           buttonComponent = fixture.debugElement.query(
             By.directive(ButtonComponent)
           ).componentInstance
           componentSpy = jest.spyOn(component, 'openInExternalViewer')
           buttonComponent.buttonClick.emit()
+          await component.openInExternalViewer()
         })
 
         afterEach(() => {
@@ -192,6 +215,39 @@ describe('ExternalViewerButtonComponent', () => {
     })
     it('sets externalViewer to display button to false', () => {
       expect(component.externalViewer).toEqual(false)
+    })
+  })
+  describe('mime_type resolution for WMS layers', () => {
+    beforeEach(() => {
+      ;(component as any).urlTemplate =
+        'https://example.com/myviewer/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["${layer_name}"],"sources":[{"url":"${service_url}","type":"${service_type}"}],"options":[{"format":"${mime_type}"}]}]'
+      component.link = {
+        url: new URL(
+          'http://example.com/ows?service=wms&request=getcapabilities'
+        ),
+        name: 'layername',
+        type: 'service',
+        accessServiceProtocol: 'wms',
+      }
+      fixture.detectChanges()
+    })
+    it('resolves to image/png when DescribeLayer returns owsType=wfs', async () => {
+      mockDescribeLayerResult = { owsType: 'wfs' }
+      await component.openInExternalViewer()
+      const url = (window.open as jest.Mock).mock.calls[0][0]
+      expect(url).toContain('image%2Fpng')
+    })
+    it('resolves to image/jpeg when DescribeLayer returns owsType=wcs', async () => {
+      mockDescribeLayerResult = { owsType: 'wcs' }
+      await component.openInExternalViewer()
+      const url = (window.open as jest.Mock).mock.calls[0][0]
+      expect(url).not.toContain('image%2Fpng')
+    })
+    it('falls back to image/jpeg when DescribeLayer fails', async () => {
+      mockDescribeLayerError = true
+      await component.openInExternalViewer()
+      const url = (window.open as jest.Mock).mock.calls[0][0]
+      expect(url).not.toContain('image%2Fpng')
     })
   })
 })

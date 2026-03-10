@@ -154,12 +154,13 @@ background_color = "#fdfbff"
 # ${service_url}: URL of the OWS or geojson file
 # ${service_type}: Type of the OWS or geojson file; currently supported WMS, WFS, GEOJSON
 # ${layer_name}: Name of the layer
+# ${mime_type}: Preferred image format for WMS layers; resolves to image/png for WMS layers backed by vector data (WFS), image/jpeg otherwise; empty for non-WMS layers
 # Be careful to use englobing single quotes, if your template syntax includes JSON (with double quotes)
 # Examples:
 # mapfishapp template:
 # external_viewer_url_template = 'https://dev.geo2france.fr/mapfishapp/?owsurl=${service_url}&layername=${layer_name}&owstype=${service_type}Layer'
 # mapstore template
-# external_viewer_url_template = 'https://dev.geo2france.fr/mapstore/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["${layer_name}"],"sources":[{"url":"${service_url}","type":"${service_type}"}]}]'
+# external_viewer_url_template = 'https://dev.geo2france.fr/mapstore/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["${layer_name}"],"sources":[{"url":"${service_url}","type":"${service_type}"}],"options":[{"format":"${mime_type}"}]}]'
 
 # Optional; if true, opens external viewer in new tab (default false)
 # external_viewer_open_new_tab = false
