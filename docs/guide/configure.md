@@ -330,11 +330,12 @@ The map section lets you customize how maps appear and behave across GeoNetwork-
   - `${service_url}`: URL of the data file or web service providing the layer
   - `${service_type}`: Type of layer; currently supported types are WMS, WFS, GEOJSON
   - `${layer_name}`: Name of the layer
+  - `${mime_type}`: Preferred image format for WMS layers; resolves to `image/png` for WMS layers backed by vector data (WFS), `image/jpeg` otherwise; empty for non-WMS layers
 
   Example for an integration with MapStore viewer:
 
   ```toml
-  external_viewer_url_template = 'https://my.sdi.org/mapstore/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["${layer_name}"],"sources":[{"url":"${service_url}","type":"${service_type}"}]}]'
+  external_viewer_url_template = 'https://my.sdi.org/mapstore/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["${layer_name}"],"sources":[{"url":"${service_url}","type":"${service_type}"}],"options":[{"format":"${mime_type}"}]}]'
   ```
 
 - `external_viewer_open_new_tab` (optional)
