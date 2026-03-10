@@ -231,7 +231,8 @@ export class MapViewComponent implements AfterViewInit {
           return compatibleLinks[0]
         }
       }
-    })
+    }),
+    shareReplay(1)
   )
 
   isWmsStyleMode$ = this.selectedSourceLink$.pipe(
@@ -343,6 +344,24 @@ export class MapViewComponent implements AfterViewInit {
     map(([src, styles, styleIdx, isWmsStyleMode]) =>
       !isWmsStyleMode && styles.length ? styles[styleIdx] : src
     ),
+    shareReplay(1)
+  )
+
+  wmsMimeType$ = this.selectedSourceLink$.pipe(
+    switchMap((link) => {
+      if (link?.type === 'service' && link?.accessServiceProtocol === 'wms') {
+        return from(
+          new WmsEndpoint(link.url.toString())
+            .isReady()
+            .then((endpoint) => endpoint.describeLayer(link.name))
+            .then((description) =>
+              description?.owsType === 'wfs' ? 'image/png' : 'image/jpeg'
+            )
+            .catch(() => 'image/jpeg')
+        )
+      }
+      return of('')
+    }),
     shareReplay(1)
   )
 

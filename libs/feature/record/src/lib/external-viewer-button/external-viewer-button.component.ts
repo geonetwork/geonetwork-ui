@@ -11,7 +11,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { getFileFormat } from '@geonetwork-ui/util/shared'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
-import { WmsEndpoint } from '@camptocamp/ogc-client'
 
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 
@@ -45,6 +44,7 @@ export class ExternalViewerButtonComponent {
   private openinNewTab = inject(EXTERNAL_VIEWER_OPEN_NEW_TAB)
 
   @Input() link: DatasetOnlineResource
+  @Input() mimeType = ''
   @Input() extraClass = ''
 
   get externalViewer() {
@@ -69,8 +69,7 @@ export class ExternalViewerButtonComponent {
     return null
   }
 
-  async openInExternalViewer() {
-    const mimeType = await this.resolveWmsMimeType()
+  openInExternalViewer() {
     const templateUrl = this.urlTemplate
     const layerName = this.link.name
       ? this.link.name
@@ -82,18 +81,7 @@ export class ExternalViewerButtonComponent {
         `${encodeURIComponent(this.link.url.toString())}`
       )
       .replace('${service_type}', `${this.supportedLinkLayerType}`)
-      .replace('${mime_type}', `${encodeURIComponent(mimeType)}`)
+      .replace('${mime_type}', `${encodeURIComponent(this.mimeType)}`)
     window.open(url, this.openinNewTab ? '_blank' : '_self').focus()
-  }
-
-  private async resolveWmsMimeType(): Promise<string> {
-    if (this.supportedLinkLayerType !== 'wms') return ''
-    try {
-      const endpoint = await new WmsEndpoint(this.link.url.toString()).isReady()
-      const description = await endpoint.describeLayer(this.link.name)
-      return description?.owsType === 'wfs' ? 'image/png' : 'image/jpeg'
-    } catch {
-      return 'image/jpeg'
-    }
   }
 }
