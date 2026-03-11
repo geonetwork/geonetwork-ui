@@ -13,24 +13,15 @@
       ></gn-ui-dropdown-selector>
     }
 
-    @if ((styleLinks$ | async)?.length > 1) {
-      <gn-ui-dropdown-selector
-        class="w-full md:flex-1 md:min-w-0"
-        extraBtnClass="font-sans font-bold"
-        [title]="'map.select.style' | translate"
-        [choices]="styleDropdownChoices$ | async"
-        [selected]="_styleFromConfig"
-        (selectValue)="selectStyleToDisplay($event)"
-      ></gn-ui-dropdown-selector>
-    } @else {
-      <gn-ui-dropdown-selector
-        class="w-full md:flex-1 md:min-w-0 text-gray-400"
-        extraBtnClass="font-sans font-bold text-gray-400"
-        [title]="'map.select.style' | translate"
-        [choices]="styleDropdownChoices$ | async"
-        [disabled]="true"
-      ></gn-ui-dropdown-selector>
-    }
+    <gn-ui-dropdown-selector
+      class="w-full md:flex-1 md:min-w-0"
+      extraBtnClass="font-sans font-bold"
+      [title]="'map.select.style' | translate"
+      [choices]="styleDropdownChoices$ | async"
+      [selected]="_styleFromConfig"
+      [disabled]="(styleDropdownChoices$ | async)?.length <= 1"
+      (selectValue)="selectStyleToDisplay($event)"
+    ></gn-ui-dropdown-selector>
 
     <div class="self-end md:ml-2">
       <gn-ui-external-viewer-button

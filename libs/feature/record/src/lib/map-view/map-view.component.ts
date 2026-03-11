@@ -154,7 +154,6 @@ export class MapViewComponent implements AfterViewInit {
   legendExists = false
   loading = false
   error = null
-  _wmsStyles: LayerStyle[] = []
 
   selectLinkToDisplay(id: string) {
     this.selectedLinkId$.next(id)
@@ -235,7 +234,13 @@ export class MapViewComponent implements AfterViewInit {
     })
   )
 
-  isWmsStyleMode$ = new BehaviorSubject(false)
+  isWmsStyleMode$ = this.selectedSourceLink$.pipe(
+    map(
+      (src) => src?.type === 'service' && src?.accessServiceProtocol === 'wms'
+    ),
+    distinctUntilChanged(),
+    shareReplay(1)
+  )
 
   styleLinks$ = this.selectedSourceLink$.pipe(
     switchMap((src) => {
@@ -244,7 +249,6 @@ export class MapViewComponent implements AfterViewInit {
         src.type === 'service' &&
         src.accessServiceProtocol === 'tms'
       ) {
-        this.isWmsStyleMode$.next(false)
         return from(
           // WARNING: when using "getGeodataLinksFromTms", make sure to add error handling to prevent the rest of the logic from failing
           // this may happen when TMS endpoint is in error
@@ -274,7 +278,6 @@ export class MapViewComponent implements AfterViewInit {
         src.type === 'service' &&
         src.accessServiceProtocol === 'wms'
       ) {
-        this.isWmsStyleMode$.next(true)
         return from(new WmsEndpoint(src.url.toString()).isReady()).pipe(
           map((endpoint) => {
             const layer = endpoint.getLayerByName(src.name)
@@ -286,7 +289,6 @@ export class MapViewComponent implements AfterViewInit {
           })
         )
       }
-      this.isWmsStyleMode$.next(false)
       return of([])
     }),
     tap((styles) => {
@@ -295,35 +297,40 @@ export class MapViewComponent implements AfterViewInit {
       } else {
         this.selectedStyleId$.next(0)
       }
-      this._wmsStyles = this.isWmsStyleMode$.value
-        ? (styles as LayerStyle[])
-        : []
     }),
     shareReplay(1)
   )
 
-  styleDropdownChoices$ = this.styleLinks$.pipe(
-    map((links) =>
+  styleDropdownChoices$ = combineLatest([
+    this.styleLinks$,
+    this.isWmsStyleMode$,
+  ]).pipe(
+    map(([links, isWmsStyleMode]) =>
       links.length
         ? links.map((link, index) => ({
-            label: this.isWmsStyleMode$.value
+            label: isWmsStyleMode
               ? (link as LayerStyle).title || (link as LayerStyle).name
               : getLinkLabel(link as DatasetOnlineResource),
             value: index,
           }))
-        : this.isWmsStyleMode$.value
-          ? [
-              {
-                label: this.translateService.instant('map.style.default'),
-                value: 0,
-              },
-            ]
-          : [
-              {
-                label: '\u00A0\u00A0\u00A0\u00A0',
-                value: 0,
-              },
-            ]
+        : [
+            {
+              label: this.translateService.instant('map.style.default'),
+              value: 0,
+            },
+          ]
+    )
+  )
+
+  selectedWmsStyleName$ = combineLatest([
+    this.styleLinks$,
+    this.isWmsStyleMode$,
+    this.selectedStyleId$.pipe(distinctUntilChanged()),
+  ]).pipe(
+    map(([styles, isWmsStyleMode, styleIdx]) =>
+      isWmsStyleMode && Array.isArray(styles)
+        ? (styles[styleIdx] as LayerStyle)?.name
+        : undefined
     )
   )
 
@@ -331,9 +338,10 @@ export class MapViewComponent implements AfterViewInit {
     this.selectedSourceLink$,
     this.styleLinks$,
     this.selectedStyleId$.pipe(distinctUntilChanged()),
+    this.isWmsStyleMode$,
   ]).pipe(
-    map(([src, styles, styleIdx]) =>
-      !this.isWmsStyleMode$.value && styles.length ? styles[styleIdx] : src
+    map(([src, styles, styleIdx, isWmsStyleMode]) =>
+      !isWmsStyleMode && styles.length ? styles[styleIdx] : src
     ),
     shareReplay(1)
   )
@@ -341,9 +349,9 @@ export class MapViewComponent implements AfterViewInit {
   currentLayers$ = combineLatest([
     this.selectedLink$,
     this.excludeWfs$,
-    this.selectedStyleId$.pipe(distinctUntilChanged()),
+    this.selectedWmsStyleName$,
   ]).pipe(
-    switchMap(([link, excludeWfs]) => {
+    switchMap(([link, excludeWfs, wmsStyleName]) => {
       if (!link) {
         return of([])
       }
@@ -357,10 +365,12 @@ export class MapViewComponent implements AfterViewInit {
         this.handleError('dataset.error.restrictedAccess')
         return of([])
       }
-      return this.getLayerFromLink(
-        link,
-        this._wmsStyles[this.selectedStyleId$.value]?.name
-      ).pipe(
+      return this.getLayerFromLink(link).pipe(
+        map((layer) =>
+          wmsStyleName && layer.type === 'wms'
+            ? { ...layer, style: wmsStyleName }
+            : layer
+        ),
         map((layer) => [layer]),
         catchError((e) => {
           this.handleError(e)
@@ -434,20 +444,13 @@ export class MapViewComponent implements AfterViewInit {
     this.selection = null
   }
 
-  getLayerFromLink(
-    link: DatasetOnlineResource,
-    wmsStyle?: string
-  ): Observable<MapContextLayer> {
+  getLayerFromLink(link: DatasetOnlineResource): Observable<MapContextLayer> {
     if (link.type === 'service' && link.accessServiceProtocol === 'wms') {
-      const layer: MapContextLayerWms = {
+      return of({
         url: link.url.toString(),
         type: 'wms',
         name: link.name,
-      }
-      if (wmsStyle) {
-        layer.style = wmsStyle
-      }
-      return of(layer)
+      } as MapContextLayerWms)
     } else if (
       link.type === 'service' &&
       link.accessServiceProtocol === 'tms'

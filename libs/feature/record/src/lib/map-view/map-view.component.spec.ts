@@ -1186,7 +1186,7 @@ describe('MapViewComponent', () => {
       expect(styleDropdown.disabled).toBeTruthy()
       expect(styleDropdown.choices).toEqual([
         {
-          label: '\u00A0\u00A0\u00A0\u00A0',
+          label: 'map.style.default',
           value: 0,
         },
       ])
@@ -1319,7 +1319,7 @@ describe('MapViewComponent', () => {
       )
     }))
 
-    it('disables style dropdown when no TMS or WMS styles', fakeAsync(() => {
+    it('disables style dropdown with default label when no TMS or WMS styles', fakeAsync(() => {
       mockWmsStyles = []
       mdViewFacade.mapApiLinks$.next([
         {
@@ -1341,7 +1341,12 @@ describe('MapViewComponent', () => {
         .componentInstance as DropdownSelectorComponent
 
       expect(styleDropdown.disabled).toBeTruthy()
-      expect(styleDropdown.choices.length).toBe(1)
+      expect(styleDropdown.choices).toEqual([
+        {
+          label: 'map.style.default',
+          value: 0,
+        },
+      ])
     }))
   })
   describe('style selector with WMS', () => {

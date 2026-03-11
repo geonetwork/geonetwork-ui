@@ -11,6 +11,11 @@ const npmDependenciesOnlyInEsm = [
   'fetch-blob',
   'formdata-polyfill',
   '.*.mjs',
+  'rbush',
+  'quickselect',
+  'quick-lru',
+  'geotiff',
+  'pbf',
 ]
 
 module.exports = {
