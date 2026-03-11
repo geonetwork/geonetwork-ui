@@ -353,11 +353,18 @@ export class MapViewComponent implements AfterViewInit {
         return from(
           new WmsEndpoint(link.url.toString())
             .isReady()
-            .then((endpoint) => endpoint.describeLayer(link.name))
-            .then((description) =>
-              description?.owsType === 'wfs' ? 'image/png' : 'image/jpeg'
-            )
-            .catch(() => 'image/jpeg')
+            .then((endpoint) => {
+              return endpoint.describeLayer(link.name).then((description) => {
+                if (description) {
+                  return description.owsType === 'wfs'
+                    ? 'image/png'
+                    : 'image/jpeg'
+                }
+                const layer = endpoint.getLayerByName(link.name)
+                return layer?.opaque ? 'image/jpeg' : 'image/png'
+              })
+            })
+            .catch(() => 'image/png')
         )
       }
       return of('')

@@ -60,6 +60,7 @@ jest.mock('@geonetwork-ui/ui/map', () => ({
 
 let mockDescribeLayerResult: Record<string, unknown> | null = null
 let mockDescribeLayerError = false
+let mockGetLayerByNameResult: Record<string, unknown> | null = null
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WmsEndpoint: jest.fn().mockImplementation(() => ({
@@ -71,6 +72,9 @@ jest.mock('@camptocamp/ogc-client', () => ({
         describeLayer: jest
           .fn()
           .mockImplementation(() => Promise.resolve(mockDescribeLayerResult)),
+        getLayerByName: jest
+          .fn()
+          .mockImplementation(() => mockGetLayerByNameResult),
       })
     }),
   })),
@@ -186,6 +190,7 @@ describe('MapViewComponent', () => {
     geoSdkCore.returnImmediately(true)
     mockDescribeLayerResult = null
     mockDescribeLayerError = false
+    mockGetLayerByNameResult = null
   })
 
   beforeEach(() =>
@@ -1556,7 +1561,7 @@ describe('MapViewComponent', () => {
       expect(externalViewerButtonComponent.mimeType).toEqual('image/jpeg')
     }))
 
-    it('falls back to image/jpeg when DescribeLayer fails', fakeAsync(() => {
+    it('falls back to image/png when DescribeLayer fails', fakeAsync(() => {
       mockDescribeLayerError = true
       mdViewFacade.mapApiLinks$.next([
         {
@@ -1569,7 +1574,58 @@ describe('MapViewComponent', () => {
       mdViewFacade.geoDataLinksWithGeometry$.next([])
       tick(200)
       fixture.detectChanges()
+      expect(externalViewerButtonComponent.mimeType).toEqual('image/png')
+    }))
+
+    it('falls back to image/jpeg when DescribeLayer returns null and layer is opaque', fakeAsync(() => {
+      mockDescribeLayerResult = null
+      mockGetLayerByNameResult = { opaque: true }
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/'),
+          name: 'layer1',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+      tick(200)
+      fixture.detectChanges()
       expect(externalViewerButtonComponent.mimeType).toEqual('image/jpeg')
+    }))
+
+    it('falls back to image/png when DescribeLayer returns null and layer is not opaque', fakeAsync(() => {
+      mockDescribeLayerResult = null
+      mockGetLayerByNameResult = { opaque: false }
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/'),
+          name: 'layer1',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+      tick(200)
+      fixture.detectChanges()
+      expect(externalViewerButtonComponent.mimeType).toEqual('image/png')
+    }))
+
+    it('falls back to image/png when DescribeLayer returns null and layer is not found', fakeAsync(() => {
+      mockDescribeLayerResult = null
+      mockGetLayerByNameResult = null
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/'),
+          name: 'layer1',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+      tick(200)
+      fixture.detectChanges()
+      expect(externalViewerButtonComponent.mimeType).toEqual('image/png')
     }))
 
     it('returns empty string for non-WMS links', fakeAsync(() => {
