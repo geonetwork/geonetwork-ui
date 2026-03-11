@@ -46,9 +46,12 @@ export class RouterSearchService implements SearchServiceI {
       this.searchFacade.searchFilters$
     )
     const updatedFilters = { ...currentFilters, ...newFilters }
-    const newParams = await firstValueFrom(
+    let newParams = await firstValueFrom(
       this.fieldsService.readFieldValuesFromFilters(updatedFilters)
     )
+    if (newFilters['any']) {
+      newParams = { ...newParams, [ROUTE_PARAMS.SORT]: '-_score' }
+    }
     this.facade.updateSearch(newParams as SearchRouteParams)
   }
 
