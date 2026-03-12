@@ -21,7 +21,6 @@
     "@nx/angular",
     "@rgrove/parse-xml",
     "alasql",
-    "axios",
     "basiclightbox",
     "chart.js",
     "chroma-js",
