@@ -235,12 +235,15 @@ export class DataService {
       })
   }
 
-  async getItemsFromOgcApi(url: string): Promise<OgcApiRecord[]> {
+  async getItemsFromOgcApi(
+    url: string,
+    limit?: number
+  ): Promise<OgcApiRecord[]> {
     const endpoint = new OgcApiEndpoint(url)
     return await endpoint.featureCollections
       .then((collections) => {
         return collections.length
-          ? endpoint.getCollectionItems(collections[0])
+          ? endpoint.getCollectionItems(collections[0], limit)
           : null
       })
       .catch(() => {
