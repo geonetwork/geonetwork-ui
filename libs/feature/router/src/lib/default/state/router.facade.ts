@@ -70,6 +70,7 @@ export class RouterFacade {
   }
 
   updateSearch(query?: SearchRouteParams) {
+    console.log('RouterFacade - updateSearch', query)
     this.go({
       path: this.routerService.getSearchRoute(),
       ...(query && { query: flattenQueryParams(query) }),
@@ -78,6 +79,7 @@ export class RouterFacade {
   }
 
   setSearch(query?: SearchRouteParams) {
+    console.log('RouterFacade - setSearch', query)
     this.go({
       path: this.routerService.getSearchRoute(),
       ...(query && { query: flattenQueryParams(query) }),

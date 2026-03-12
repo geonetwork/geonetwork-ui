@@ -58,6 +58,12 @@ export class RouterEffects {
       startWith([null, {}] as [Record<string, string>, FieldFilters]),
       pairwise(),
       map(([[oldParams, oldFilters], [newParams, newFilters]]) => {
+        console.log('RouterEffects - syncSearchState', {
+          oldParams,
+          newParams,
+          oldFilters,
+          newFilters,
+        })
         let sortBy =
           ROUTE_PARAMS.SORT in newParams
             ? sortByFromString(newParams[ROUTE_PARAMS.SORT])

@@ -21,6 +21,7 @@ export class RouterSearchService implements SearchServiceI {
   private fieldsService = inject(FieldsService)
 
   setSortAndFilters(filters: FieldFilters, sortBy: SortByField) {
+    console.log('RouterSearchService - setSortAndFilters', { filters, sortBy })
     this.fieldsService
       .readFieldValuesFromFilters(filters)
       .subscribe((values) => {
@@ -45,6 +46,7 @@ export class RouterSearchService implements SearchServiceI {
   }
 
   async updateFilters(newFilters: FieldFilters) {
+    console.log('RouterSearchService - updateFilters', newFilters)
     const currentFilters = await firstValueFrom(
       this.searchFacade.searchFilters$
     )
@@ -58,6 +60,7 @@ export class RouterSearchService implements SearchServiceI {
         [ROUTE_PARAMS.SORT]: sortByToString(SortByEnum.RELEVANCY),
       }
     }
+    console.log('RouterSearchService - updateFilters - newParams', newParams)
     this.facade.updateSearch(newParams as SearchRouteParams)
   }
 
