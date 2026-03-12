@@ -1,7 +1,8 @@
 import {
-  APP_INITIALIZER,
   EnvironmentProviders,
+  inject,
   makeEnvironmentProviders,
+  provideAppInitializer,
   Provider,
 } from '@angular/core'
 import {
@@ -22,17 +23,16 @@ import {
 } from '@angular/common/http'
 import { I18nInterceptor } from './i18n.interceptor'
 
-function i18nInitializerFromLocalStorageFactory(translate: TranslateService) {
-  return () => {
-    translate.setDefaultLang(DEFAULT_LANG)
-    let storageLang = null
-    try {
-      storageLang = localStorage.getItem(LANGUAGE_STORAGE_KEY)
-    } catch (error) {
-      console.warn(error)
-    }
-    translate.use(storageLang || translate.getBrowserLang() || DEFAULT_LANG)
+function i18nInitializerFromLocalStorageFactory() {
+  const translate = inject(TranslateService)
+  translate.setDefaultLang(DEFAULT_LANG)
+  let storageLang = null
+  try {
+    storageLang = localStorage.getItem(LANGUAGE_STORAGE_KEY)
+  } catch (error) {
+    console.warn(error)
   }
+  translate.use(storageLang || translate.getBrowserLang() || DEFAULT_LANG)
 }
 
 export function provideI18n(
@@ -56,12 +56,9 @@ export function provideI18n(
     provideTranslateService(usedConfig),
   ]
   if (useLocalStorage) {
-    providers.push({
-      provide: APP_INITIALIZER,
-      useFactory: i18nInitializerFromLocalStorageFactory,
-      deps: [TranslateService],
-      multi: true,
-    })
+    providers.push(
+      provideAppInitializer(i18nInitializerFromLocalStorageFactory)
+    )
   }
 
   return makeEnvironmentProviders(providers)

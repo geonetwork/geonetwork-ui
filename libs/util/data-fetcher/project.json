@@ -5,17 +5,6 @@
   "projectType": "library",
   "tags": ["type:util", "scope:shared"],
   "targets": {
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/util/data-fetcher",
-        "tsConfig": "libs/util/data-fetcher/tsconfig.lib.json",
-        "packageJson": "libs/util/data-fetcher/package.json",
-        "main": "libs/util/data-fetcher/src/index.ts",
-        "assets": ["libs/util/data-fetcher/*.md"]
-      }
-    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {

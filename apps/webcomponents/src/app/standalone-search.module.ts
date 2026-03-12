@@ -9,10 +9,10 @@ import {
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import {
   DEFAULT_LANG,
-  EmbeddedTranslateLoader,
   provideI18n,
   TRANSLATE_DEFAULT_CONFIG,
 } from '@geonetwork-ui/util/i18n'
+import { EmbeddedTranslateLoader } from '@geonetwork-ui/util/i18n/embedded-translate-loader'
 import { TranslateLoader, TranslateService } from '@ngx-translate/core'
 import { METADATA_LANGUAGE, provideGn4 } from '@geonetwork-ui/api/repository'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
