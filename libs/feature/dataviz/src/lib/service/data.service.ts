@@ -363,7 +363,14 @@ export class DataService {
           if (!geojsonUrl) {
             return throwError(() => 'ogc.geojson.notsupported')
           }
-          return openDataset(geojsonUrl, 'geojson', undefined, cacheActive)
+          const urlWithoutLimit = new URL(geojsonUrl)
+          urlWithoutLimit.searchParams.delete('limit')
+          return openDataset(
+            urlWithoutLimit.toString(),
+            'geojson',
+            undefined,
+            cacheActive
+          )
         })
       )
     }
