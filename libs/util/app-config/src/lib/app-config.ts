@@ -229,6 +229,7 @@ export function loadAppConfig() {
           'record_kind_quick_filter',
           'filter_geometry_data',
           'filter_geometry_url',
+          'do_not_use_default_search_preset',
           'search_preset',
           'advanced_filters',
           'limit',
@@ -252,6 +253,8 @@ export function loadAppConfig() {
                 parsedSearchSection.record_kind_quick_filter,
               FILTER_GEOMETRY_DATA: parsedSearchSection.filter_geometry_data,
               FILTER_GEOMETRY_URL: parsedSearchSection.filter_geometry_url,
+              DO_NOT_USE_DEFAULT_SEARCH_PRESET:
+                !!parsedSearchSection.do_not_use_default_search_preset,
               SEARCH_PRESET: parsedSearchParams.map((param) => ({
                 sort: param.sort,
                 name: param.name,

@@ -45,24 +45,26 @@
             (action)="listFavorites($event)"
           ></datahub-header-badge-button>
         }
-        <div>
-          <button
-            type="button"
-            class="badge-btn text-primary-white bg-primary-opacity-50 hover-bg-primary-opacity-100"
-            (click)="clearSearchAndSort(SORT_BY_PARAMS.RESOURCE_DATES)"
-          >
-            <span translate>datahub.header.lastRecords</span>
-          </button>
-        </div>
-        <div>
-          <button
-            type="button"
-            class="badge-btn text-primary-white bg-primary-opacity-50 hover-bg-primary-opacity-100"
-            (click)="clearSearchAndSort(SORT_BY_PARAMS.POPULARITY)"
-          >
-            <span translate>datahub.header.popularRecords</span>
-          </button>
-        </div>
+        @if (!searchConfig?.DO_NOT_USE_DEFAULT_SEARCH_PRESET) {
+          <div>
+            <button
+              type="button"
+              class="badge-btn text-primary-white bg-primary-opacity-50 hover-bg-primary-opacity-100"
+              (click)="clearSearchAndSort(SORT_BY_PARAMS.RESOURCE_DATES)"
+            >
+              <span translate>datahub.header.lastRecords</span>
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              class="badge-btn text-primary-white bg-primary-opacity-50 hover-bg-primary-opacity-100"
+              (click)="clearSearchAndSort(SORT_BY_PARAMS.POPULARITY)"
+            >
+              <span translate>datahub.header.popularRecords</span>
+            </button>
+          </div>
+        }
         @for (preset of searchConfig?.SEARCH_PRESET; track preset) {
           <div>
             <div>

@@ -26,6 +26,7 @@ jest.mock('@geonetwork-ui/util/app-config', () => {
       HEADER_BACKGROUND: 'red',
     }),
     getOptionalSearchConfig: () => ({
+      DO_NOT_USE_DEFAULT_SEARCH_PRESET: false,
       SEARCH_PRESET: [
         {
           sort: '-createDate',
@@ -260,6 +261,22 @@ describe('HomeHeaderComponent', () => {
               thisIs: 'a fake filter',
             })
           })
+        })
+      })
+
+      describe('given do_not_use_default_search_preset = true', () => {
+        beforeEach(() => {
+          const appConfig = jest.requireMock('@geonetwork-ui/util/app-config')
+          jest.spyOn(appConfig, 'getOptionalSearchConfig').mockReturnValue({
+            DO_NOT_USE_DEFAULT_SEARCH_PRESET: true,
+            SEARCH_PRESET: [],
+          })
+          fixture = TestBed.createComponent(HomeHeaderComponent)
+          fixture.detectChanges()
+        })
+        it('should not render default badges but only custom badges', () => {
+          const allBadges = fixture.debugElement.queryAll(By.css('.badge-btn'))
+          expect(allBadges.length).toBe(0)
         })
       })
 

@@ -58,6 +58,7 @@ export interface SearchConfig {
   RECORD_KIND_QUICK_FILTER?: boolean
   FILTER_GEOMETRY_URL?: string
   FILTER_GEOMETRY_DATA?: string
+  DO_NOT_USE_DEFAULT_SEARCH_PRESET?: boolean
   SEARCH_PRESET?: SearchPreset[]
   ADVANCED_FILTERS?: []
   LIMIT?: number

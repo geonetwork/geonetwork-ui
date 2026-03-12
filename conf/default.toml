@@ -97,6 +97,10 @@ background_color = "#fdfbff"
 # WARNING: 'resourceType' filter has been deprecated, please use 'recordKind' instead. Breaking change: 'resourceType' filter won't retrieve featureCatalog anymore.
 # advanced_filters = ['organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license']
 
+# Optional; if true, the default pre-configured searches ("The latest" and "The most popular")
+# will not be shown under the main search bar. Defaults to false.
+# do_not_use_default_search_preset = false
+
 # One or several search presets visible in form of badges can be defined here; every search preset is composed of:
 # - a name (which can be a translation key)
 # - a sort criteria (prepend the field name with - to do a descending sort):
