@@ -45,13 +45,12 @@ export class ApplicationBannerComponent {
         this.icon = 'matWarning'
         break
       case 'light':
-        this.msgClass =
-          'bg-primary-opacity-10 border-primary-lightest text-black'
+        this.msgClass = 'bg-primary/10 border-primary-lightest text-black'
         this.icon = 'matInfoOutline'
         break
       case 'secondary':
       default:
-        this.msgClass = 'bg-primary-opacity-50 border-primary-darker text-black'
+        this.msgClass = 'bg-primary/50 border-primary-darker text-black'
         this.icon = 'matWarningAmberOutline'
         break
     }

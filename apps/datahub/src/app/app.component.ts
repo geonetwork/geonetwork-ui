@@ -32,11 +32,6 @@ export class AppComponent implements OnInit {
       getThemeConfig().TITLE_FONT || "'Readex Pro', sans-serif",
       getThemeConfig().FONTS_STYLESHEET_URL || 'assets/css/default-fonts.css'
     )
-    ThemeService.generateBgOpacityClasses(
-      'primary',
-      getThemeConfig().PRIMARY_COLOR,
-      [10, 25, 50, 75, 100]
-    )
 
     const favicon = getThemeConfig().FAVICON
     if (favicon) ThemeService.setFavicon(favicon)

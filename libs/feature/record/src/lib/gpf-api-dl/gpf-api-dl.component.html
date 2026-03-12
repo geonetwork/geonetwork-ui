@@ -12,7 +12,7 @@
     </h2>
     <button
       (click)="resetUrl()"
-      class="bg-primary-opacity-50 inline-flex items-center justify-center px-4 py-2 text-white rounded hover:bg-primary transition"
+      class="bg-primary/50 inline-flex items-center justify-center px-4 py-2 text-white rounded hover:bg-primary transition"
       [attr.title]="'record.metadata.api.form.resetTooltip' | translate"
       [attr.aria-label]="'record.metadata.api.form.resetTooltip' | translate"
     >
@@ -97,7 +97,7 @@
         'px-4 py-2 text-white rounded transition ' +
         ((page$ | async) <= 1
           ? 'bg-gray-400 cursor-not-allowed  '
-          : 'bg-primary-opacity-50  hover:bg-primary')
+          : 'bg-primary/50  hover:bg-primary')
       "
       [attr.title]="'record.metadata.api.form.previousPageTooltip' | translate"
       [attr.aria-label]="
@@ -117,10 +117,10 @@
     <button
       (click)="moreResult()"
       [class]="
-        'bg-primary-opacity-50 px-4 py-2 text-white rounded transition ' +
+        'bg-primary/50 px-4 py-2 text-white rounded transition ' +
         ((page$ | async) >= (pageMax$ | async)
           ? 'bg-gray-400 cursor-not-allowed  '
-          : 'bg-primary-opacity-50  hover:bg-primary')
+          : 'bg-primary/50  hover:bg-primary')
       "
       [attr.title]="'record.metadata.api.form.nextPageTooltip' | translate"
       [attr.aria-label]="'record.metadata.api.form.nextPageTooltip' | translate"
