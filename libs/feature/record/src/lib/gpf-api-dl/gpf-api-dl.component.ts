@@ -1,15 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   Input,
   OnInit,
-  inject,
 } from '@angular/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { BehaviorSubject, combineLatest, map, mergeMap, Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { Choice, DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
-import axios from 'axios'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { GpfApiDlListItemComponent } from '../gpf-api-dl-list-item/gpf-api-dl-list-item.component'
@@ -209,9 +208,9 @@ export class GpfApiDlComponent implements OnInit {
     let pageCount = 1
 
     while (choicesTest === undefined && pageCount > page) {
-      const response = await axios.get(
+      const response = await fetch(
         this.url.concat(`&limit=200&page=${page}`)
-      )
+      ).then((resp) => resp.json())
 
       choicesTest = response.data.entry.filter(
         (element) => element['id'] == this.apiBaseUrl

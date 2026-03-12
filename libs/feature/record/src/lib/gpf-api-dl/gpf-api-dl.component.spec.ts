@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { firstValueFrom } from 'rxjs'
 import { Choice } from '@geonetwork-ui/ui/inputs'
