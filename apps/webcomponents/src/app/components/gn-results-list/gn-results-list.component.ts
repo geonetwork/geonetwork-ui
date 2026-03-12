@@ -14,6 +14,7 @@ import {
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { BaseComponent } from '../base.component'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { sortByFromString } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'wc-gn-results-list-component',
@@ -36,6 +37,7 @@ export class GnResultsListComponent extends BaseComponent {
   @Input() showMore: ResultsListShowMoreStrategy = 'none'
 
   private setSearch_() {
+    const sort = this.sort
     const filter = this.filter
     const query = this.query
     const searchActionPayload: SearchStateParams = {
@@ -58,11 +60,14 @@ export class GnResultsListComponent extends BaseComponent {
       const configFilters: FieldFilters = JSON.parse(filter)
       this.facade.setConfigFilters(configFilters)
     }
-    if (this.sort) {
-      const desc = this.sort.startsWith('-')
-      const field = desc ? this.sort.slice(1).trim() : this.sort.trim()
-      const sortPayload: SearchStateParams['sort'] = [desc ? 'desc' : 'asc', field]
-      searchActionPayload.sort = sortPayload
+    if (sort) {
+      try {
+        // we assume it's an array
+        searchActionPayload.sort = JSON.parse(sort)
+      } catch (e) {
+        // we assume it's a string
+        searchActionPayload.sort = sortByFromString(sort)
+      }
     }
     this.facade.setSearch(searchActionPayload)
   }

@@ -42,14 +42,26 @@
         </p>
       </div>
 
-      <h1>Sort by most recently updated (descending)</h1>
+      <h1>Sort by relevancy (object syntax)</h1>
       <gn-results-list
         api-url="https://www.geocat.ch/geonetwork/srv/api"
         size="5"
         layout="TITLE"
         primary-color="#0f4395"
         main-font="'Inter', sans-serif"
-        sort="-revisionDateForResource"
+        query="carte"
+        sort='[["desc", "_score"]]'
+      ></gn-results-list>
+      <h1>Sort by relevancy (string syntax)</h1>
+      <gn-results-list
+        api-url="https://www.geocat.ch/geonetwork/srv/api"
+        size="5"
+        layout="TITLE"
+        primary-color="#0f4395"
+        main-font="'Inter', sans-serif"
+        search-id="string"
+        query="carte"
+        sort="-_score"
       ></gn-results-list>
     </main>
   </body>
