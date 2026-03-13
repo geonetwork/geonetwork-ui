@@ -21,6 +21,7 @@ import {
   throwError,
   withLatestFrom,
 } from 'rxjs'
+import { WmsEndpoint } from '@camptocamp/ogc-client'
 import {
   catchError,
   distinctUntilChanged,
@@ -228,7 +229,8 @@ export class MapViewComponent implements AfterViewInit {
           return compatibleLinks[0]
         }
       }
-    })
+    }),
+    shareReplay(1)
   )
 
   styleLinks$ = this.selectedSourceLink$.pipe(
@@ -296,6 +298,31 @@ export class MapViewComponent implements AfterViewInit {
     this.selectedStyleId$.pipe(distinctUntilChanged()),
   ]).pipe(
     map(([src, styles, styleIdx]) => (styles.length ? styles[styleIdx] : src)),
+    shareReplay(1)
+  )
+
+  wmsMimeType$ = this.selectedSourceLink$.pipe(
+    switchMap((link) => {
+      if (link?.type === 'service' && link?.accessServiceProtocol === 'wms') {
+        return from(
+          new WmsEndpoint(link.url.toString())
+            .isReady()
+            .then((endpoint) => {
+              return endpoint.describeLayer(link.name).then((description) => {
+                if (description) {
+                  return description.owsType === 'wfs'
+                    ? 'image/png'
+                    : 'image/jpeg'
+                }
+                const layer = endpoint.getLayerByName(link.name)
+                return layer?.opaque ? 'image/jpeg' : 'image/png'
+              })
+            })
+            .catch(() => 'image/png')
+        )
+      }
+      return of('')
+    }),
     shareReplay(1)
   )
 

@@ -44,6 +44,7 @@ export class ExternalViewerButtonComponent {
   private openinNewTab = inject(EXTERNAL_VIEWER_OPEN_NEW_TAB)
 
   @Input() link: DatasetOnlineResource
+  @Input() mimeType = ''
   @Input() extraClass = ''
 
   get externalViewer() {
@@ -80,6 +81,7 @@ export class ExternalViewerButtonComponent {
         `${encodeURIComponent(this.link.url.toString())}`
       )
       .replace('${service_type}', `${this.supportedLinkLayerType}`)
+      .replace('${mime_type}', `${encodeURIComponent(this.mimeType)}`)
     window.open(url, this.openinNewTab ? '_blank' : '_self').focus()
   }
 }
