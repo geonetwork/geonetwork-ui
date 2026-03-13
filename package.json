@@ -155,6 +155,7 @@
     "@typescript-eslint/parser": "8.46.4",
     "@typescript-eslint/utils": "^7.16.0",
     "autoprefixer": "^10.4.22",
+    "baseline-browser-mapping": "^2.10.7",
     "concurrently": "^9.2.1",
     "cypress": "14.5.4",
     "cypress-browser-permissions": "^1.1.0",

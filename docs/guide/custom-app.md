@@ -174,7 +174,6 @@ Or if you don't want to rely on a remote font, you can provide it in the assets:
 ```html
 <head>
   <!-- ... -->
-  <link rel="stylesheet" href="assets/css/materials-symbols-outline.css" />
   <link rel="stylesheet" href="assets/css/default-fonts.css" />
 </head>
 ```
