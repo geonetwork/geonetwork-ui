@@ -18,7 +18,7 @@
       extraBtnClass="font-sans font-bold"
       [title]="'map.select.style' | translate"
       [choices]="styleDropdownChoices$ | async"
-      [selected]="_styleFromConfig"
+      [selected]="selectedStyleId$ | async"
       [disabled]="(styleDropdownChoices$ | async)?.length <= 1"
       (selectValue)="selectStyleToDisplay($event)"
     ></gn-ui-dropdown-selector>

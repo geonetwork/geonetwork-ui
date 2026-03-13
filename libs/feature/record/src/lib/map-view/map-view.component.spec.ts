@@ -1319,7 +1319,7 @@ describe('MapViewComponent', () => {
       )
     }))
 
-    it('disables style dropdown with default label when no TMS or WMS styles', fakeAsync(() => {
+    it('disables style dropdown with default label when not a TMS or WMS source', fakeAsync(() => {
       mockWmsStyles = []
       mdViewFacade.mapApiLinks$.next([
         {
