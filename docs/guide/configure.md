@@ -193,6 +193,10 @@ For a detailed explanation on the classification system, see [this documentation
 
 ⚠️ **Breaking change**: Record of type featureCatalog are not retrieved anymore.
 
+- `do_not_use_default_search_preset` (optional)
+
+  If set to `true`, the two default pre-configured search badges ("The latest" and "The most popular") will not be shown under the main search bar. Defaults to `false`. Note that the "My favorites" badge cannot be disabled by configuration.
+
 - `[[search_preset]]` (multiple, optional)
 
   Search presets are shown in a prominent way in badges to the user and can be used to showcase certain records in the catalog or offer shortcuts to frequent search criteria.

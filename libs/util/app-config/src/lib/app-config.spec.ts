@@ -161,6 +161,7 @@ describe('app config utils', () => {
         expect(getOptionalSearchConfig()).toEqual({
           RECORD_KIND_QUICK_FILTER: false,
           FILTER_GEOMETRY_URL: 'https://my.domain.org/geom.json',
+          DO_NOT_USE_DEFAULT_SEARCH_PRESET: false,
           SEARCH_PRESET: [
             {
               name: 'filterByOrgs',
