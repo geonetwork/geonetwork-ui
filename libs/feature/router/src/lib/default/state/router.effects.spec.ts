@@ -39,6 +39,7 @@ const routerConfigMock = {
 
 class RouterFacadeMock {
   searchParams$ = new Subject<Params>()
+  updateSearch = jest.fn()
 }
 
 const initialParams: Params = {
@@ -81,6 +82,8 @@ describe('RouterEffects', () => {
     back: jest.fn(),
     forward: jest.fn(),
   }
+
+  beforeEach(() => jest.resetAllMocks())
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -345,6 +348,58 @@ describe('RouterEffects', () => {
           c: new Paginate(2, 'main'),
         })
         expect(effects.syncSearchState$).toBeObservable(expected)
+      })
+    })
+  })
+
+  describe('applyInitialRelevancySort$', () => {
+    describe('when the initial params contain a full text criteria and no sort', () => {
+      beforeEach(() => {
+        routerFacade.searchParams$ = hot('a', {
+          a: {
+            q: 'hello world',
+          },
+        })
+        effects = TestBed.inject(fromEffects.RouterEffects)
+      })
+      it('adds a sort by relevancy in the params', () => {
+        effects.applyInitialRelevancySort$.subscribe(() => {
+          expect(routerFacade.updateSearch).toHaveBeenCalledWith({
+            q: 'hello world',
+            [ROUTE_PARAMS.SORT]: '-_score',
+          })
+        })
+      })
+    })
+    describe('when the initial params contain a full text criteria and a sort criteria', () => {
+      beforeEach(() => {
+        routerFacade.searchParams$ = hot('a', {
+          a: {
+            q: 'hello world',
+            _sort: 'changeDate',
+          },
+        })
+        effects = TestBed.inject(fromEffects.RouterEffects)
+      })
+      it('does not change the params', () => {
+        effects.applyInitialRelevancySort$.subscribe(() => {
+          expect(routerFacade.updateSearch).not.toHaveBeenCalled()
+        })
+      })
+    })
+    describe('when the initial params do not contain a full text criteria', () => {
+      beforeEach(() => {
+        routerFacade.searchParams$ = hot('a', {
+          a: {
+            tag: 'opendata',
+          },
+        })
+        effects = TestBed.inject(fromEffects.RouterEffects)
+      })
+      it('does not change the params', () => {
+        effects.applyInitialRelevancySort$.subscribe(() => {
+          expect(routerFacade.updateSearch).not.toHaveBeenCalled()
+        })
       })
     })
   })

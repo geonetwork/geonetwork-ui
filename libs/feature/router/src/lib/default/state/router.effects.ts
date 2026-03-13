@@ -1,5 +1,5 @@
 import { Location } from '@angular/common'
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
 import {
@@ -9,15 +9,18 @@ import {
   SetFilters,
   SetSortBy,
 } from '@geonetwork-ui/feature/search'
-import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
+import {
+  FieldFilters,
+  SortByEnum,
+} from '@geonetwork-ui/common/domain/model/search'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@ngrx/router-store/data-persistence'
 import { of, pairwise, startWith } from 'rxjs'
-import { map, mergeMap, tap } from 'rxjs/operators'
+import { map, mergeMap, take, tap } from 'rxjs/operators'
 import * as RouterActions from './router.actions'
 import { RouterFacade } from './router.facade'
 import { ROUTE_PARAMS } from '../constants'
-import { sortByFromString } from '@geonetwork-ui/util/shared'
+import { sortByFromString, sortByToString } from '@geonetwork-ui/util/shared'
 import { ROUTER_CONFIG, RouterConfigModel } from '../router.config'
 import { RouterService } from '../router.service'
 
@@ -101,6 +104,33 @@ export class RouterEffects {
         return of(...actions)
       })
     )
+  )
+
+  /**
+   * This effect is needed because on the page load, the search params from the URL are
+   * directly applied to the underlying search facade; this means that it doesn't go
+   * through the RouterSearchService which makes sure that a relevancy sort is applied
+   * whenever there's a full text search criteria set.
+   */
+  applyInitialRelevancySort$ = createEffect(
+    () =>
+      this.facade.searchParams$.pipe(
+        take(1),
+        tap((filters) => {
+          const relevancySort = sortByToString(SortByEnum.RELEVANCY)
+          if (
+            filters['q'] &&
+            (!Array.isArray(filters['q']) || filters['q'].length > 0) &&
+            !filters[ROUTE_PARAMS.SORT]
+          ) {
+            this.facade.updateSearch({
+              ...filters,
+              [ROUTE_PARAMS.SORT]: relevancySort,
+            })
+          }
+        })
+      ),
+    { dispatch: false }
   )
 
   /**
