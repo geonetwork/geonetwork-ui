@@ -156,29 +156,7 @@ Run:
 npm install --save geonetwork-ui
 ```
 
-### Step 7: Include the required fonts
-
-The root `index.html` file of your application should include the Material Symbols font for icons. Add these lines to itS `<head>` section:
-
-```html
-<head>
-  <!-- ... -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-</head>
-```
-
-Or if you don't want to rely on a remote font, you can provide it in the assets:
-
-```html
-<head>
-  <!-- ... -->
-  <link rel="stylesheet" href="assets/css/default-fonts.css" />
-</head>
-```
-
-### Step 8: Include the GeoNetwork-UI stylesheet
+### Step 7: Include the GeoNetwork-UI stylesheet
 
 GeoNetwork-UI comes with its own stylesheet, which you should include at the top of your application `style.css` file like so:
 
@@ -186,7 +164,7 @@ GeoNetwork-UI comes with its own stylesheet, which you should include at the top
 @import 'geonetwork-ui/style.css';
 ```
 
-### Step 9: Initialize the color theme
+### Step 8: Initialize the color theme
 
 GeoNetwork-UI lets users define their own theme based on primary and secondary colors for instance. By default, no theme is specified
 so UI components might not render properly. To define a theme, call the following function on the application module (or standalone component) constructor:
