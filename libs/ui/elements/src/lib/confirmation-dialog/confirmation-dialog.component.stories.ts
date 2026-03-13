@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import { Component, inject, Input } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
@@ -12,6 +13,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog.component'
     <span *ngIf="confirmed">Confirmed</span>
     <span *ngIf="confirmed === false">Canceled</span>
   `,
+  imports: [CommonModule, ButtonComponent],
 })
 class LaunchDialogComponent {
   private _dialog = inject(MatDialog)
@@ -44,7 +46,7 @@ export default {
   component: LaunchDialogComponent,
   decorators: [
     moduleMetadata({
-      imports: [ButtonComponent, ConfirmationDialogComponent],
+      imports: [ConfirmationDialogComponent],
     }),
   ],
 } as Meta
