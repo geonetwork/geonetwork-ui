@@ -1,7 +1,6 @@
 @import '../../../tailwind.base.css';
 @import 'node_modules/tippy.js/dist/tippy.css';
 @import 'node_modules/ol/ol.css';
-@import 'node_modules/basiclightbox/dist/basicLightbox.min.css';
 @import './material-styles.css';
 
 @tailwind base;

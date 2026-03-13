@@ -26,7 +26,6 @@
           }
         ],
         "styles": [
-          "node_modules/basiclightbox/dist/basicLightbox.min.css",
           "node_modules/tippy.js/dist/tippy.css",
           "node_modules/tippy.js/themes/light.css",
           "node_modules/tippy.js/themes/light-border.css",
