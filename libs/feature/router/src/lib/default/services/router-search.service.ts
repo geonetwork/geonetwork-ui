@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import {
   FieldsService,
   SearchFacade,
@@ -6,6 +6,7 @@ import {
 } from '@geonetwork-ui/feature/search'
 import {
   FieldFilters,
+  SortByEnum,
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
 import { ROUTE_PARAMS, SearchRouteParams } from '../constants'
@@ -31,10 +32,12 @@ export class RouterSearchService implements SearchServiceI {
   }
 
   async setFilters(newFilters: FieldFilters) {
-    const sortBy = await firstValueFrom(this.searchFacade.sortBy$)
+    let sortBy = await firstValueFrom(this.searchFacade.sortBy$)
     const fieldSearchParams = await firstValueFrom(
       this.fieldsService.readFieldValuesFromFilters(newFilters)
     )
+    // apply relevancy sort if a full text criteria is given
+    sortBy = newFilters['any'] ? SortByEnum.RELEVANCY : sortBy
     this.facade.setSearch({
       ...fieldSearchParams,
       [ROUTE_PARAMS.SORT]: sortBy ? sortByToString(sortBy) : undefined,
@@ -50,7 +53,10 @@ export class RouterSearchService implements SearchServiceI {
       this.fieldsService.readFieldValuesFromFilters(updatedFilters)
     )
     if (newFilters['any']) {
-      newParams = { ...newParams, [ROUTE_PARAMS.SORT]: '-_score' }
+      newParams = {
+        ...newParams,
+        [ROUTE_PARAMS.SORT]: sortByToString(SortByEnum.RELEVANCY),
+      }
     }
     this.facade.updateSearch(newParams as SearchRouteParams)
   }

@@ -1,5 +1,5 @@
 import { Location } from '@angular/common'
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
 import {
