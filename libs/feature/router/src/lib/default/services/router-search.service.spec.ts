@@ -11,7 +11,10 @@ import { TestBed } from '@angular/core/testing'
 let state = {}
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject(state)
-  sortBy$: BehaviorSubject<SortByField> = new BehaviorSubject(['asc', '_score'])
+  sortBy$: BehaviorSubject<SortByField> = new BehaviorSubject([
+    'asc',
+    'changeDate',
+  ])
 }
 
 class RouterFacadeMock {
@@ -22,6 +25,7 @@ class RouterFacadeMock {
 class FieldsServiceMock {
   mapping = {
     OrgForResource: 'publisher',
+    tag: 'keyword',
     any: 'q',
   }
   readFieldValuesFromFilters = jest.fn((filters) =>
@@ -50,6 +54,8 @@ describe('RouterSearchService', () => {
   let searchFacade: SearchFacade
   let fieldsService: FieldsService
 
+  beforeEach(() => jest.resetAllMocks())
+
   beforeEach(() => {
     state = { OrgForResource: { mel: true } }
     routerFacade = new RouterFacadeMock() as unknown as RouterFacade
@@ -73,16 +79,33 @@ describe('RouterSearchService', () => {
   describe('#setSearch', () => {
     it('dispatch setSearch with mapped params', async () => {
       const state = {
-        any: 'any',
         OrgForResource: {
           Org: true,
         },
       }
       await service.setFilters(state)
       expect(routerFacade.setSearch).toHaveBeenCalledWith({
-        q: ['any'],
         publisher: ['Org'],
-        _sort: '_score',
+        _sort: 'changeDate',
+      })
+    })
+
+    describe('when setting a full text criteria', () => {
+      beforeEach(() => {
+        const state = {
+          any: 'some text',
+          OrgForResource: {
+            Org: true,
+          },
+        }
+        service.updateFilters(state)
+      })
+      it('also applies a sort by relevancy', () => {
+        expect(routerFacade.updateSearch).toHaveBeenCalledWith({
+          q: ['some text'],
+          publisher: ['Org'],
+          _sort: '-_score',
+        })
       })
     })
   })
@@ -118,14 +141,29 @@ describe('RouterSearchService', () => {
   describe('#updateSearch', () => {
     beforeEach(() => {
       const state = {
-        any: 'any',
+        tag: 'opendata',
       }
       service.updateFilters(state)
     })
     it('dispatch updateSearch with merged mapped params', () => {
       expect(routerFacade.updateSearch).toHaveBeenCalledWith({
-        q: ['any'],
+        keyword: ['opendata'],
         publisher: ['mel'],
+      })
+    })
+    describe('when setting a full text criteria', () => {
+      beforeEach(() => {
+        const state = {
+          any: 'some text',
+        }
+        service.updateFilters(state)
+      })
+      it('also applies a sort by relevancy', () => {
+        expect(routerFacade.updateSearch).toHaveBeenCalledWith({
+          q: ['some text'],
+          publisher: ['mel'],
+          _sort: '-_score',
+        })
       })
     })
   })
