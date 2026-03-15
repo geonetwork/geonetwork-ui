@@ -48,9 +48,10 @@ import { standaloneConfigurationObject } from './configuration'
 import { StandaloneSearchModule } from './standalone-search.module'
 import { BrowserModule } from '@angular/platform-browser'
 import { HashLocationStrategy, LocationStrategy } from '@angular/common'
-import { RouterModule } from '@angular/router'
+import { RouterModule, TitleStrategy } from '@angular/router'
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { DATAHUB_ROUTER_PROVIDERS } from '@geonetwork-ui/apps/datahub/app.providers.ts'
+import { NoopTitleStrategy } from './noop-title-strategy.service'
 
 const CUSTOM_ELEMENTS: [
   new (...args) => BaseComponent | GnDatahubComponent,
@@ -125,6 +126,10 @@ const CUSTOM_ELEMENTS: [
     // { provide: LocationStrategy, useClass: CustomLocationStrategy }, // TODO: offer this if we don't want to see hashes in the url
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     DATAHUB_ROUTER_PROVIDERS,
+    {
+      provide: TitleStrategy,
+      useClass: NoopTitleStrategy,
+    },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

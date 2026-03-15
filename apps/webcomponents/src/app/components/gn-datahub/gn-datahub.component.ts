@@ -16,7 +16,7 @@ import { DATAHUB_CONFIG_PROVIDERS } from '@geonetwork-ui/apps/datahub/app.provid
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { AppComponent } from '@geonetwork-ui/apps/datahub/app.component.ts'
 import { AsyncPipe } from '@angular/common'
-import { Router, TitleStrategy } from '@angular/router'
+import { Router } from '@angular/router'
 import { OverlayContainer } from '@angular/cdk/overlay'
 import { WebcomponentOverlayContainer } from '../../webcomponent-overlay-container'
 import { provideGn4 } from '@geonetwork-ui/api/repository'
@@ -35,14 +35,6 @@ import { copyFontFacesToDocument } from '../base.component'
     },
     provideGn4({ disableAuth: true }),
     DATAHUB_CONFIG_PROVIDERS,
-    {
-      provide: TitleStrategy,
-      useClass: class extends TitleStrategy {
-        updateTitle() {
-          // do not update the page title
-        }
-      },
-    },
   ],
   standalone: true,
   imports: [AppComponent, AsyncPipe],
