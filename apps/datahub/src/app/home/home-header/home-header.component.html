@@ -49,7 +49,7 @@
           <div>
             <button
               type="button"
-              class="badge-btn text-primary-white bg-primary-opacity-50 hover-bg-primary-opacity-100"
+              class="badge-btn text-primary-white bg-primary/50 hover:bg-primary/100"
               (click)="clearSearchAndSort(SORT_BY_PARAMS.RESOURCE_DATES)"
             >
               <span translate>datahub.header.lastRecords</span>
@@ -58,7 +58,7 @@
           <div>
             <button
               type="button"
-              class="badge-btn text-primary-white bg-primary-opacity-50 hover-bg-primary-opacity-100"
+              class="badge-btn text-primary-white bg-primary/50 hover:bg-primary/100"
               (click)="clearSearchAndSort(SORT_BY_PARAMS.POPULARITY)"
             >
               <span translate>datahub.header.popularRecords</span>
@@ -70,7 +70,7 @@
             <div>
               <button
                 type="button"
-                class="badge-btn text-primary-white bg-primary-opacity-50 hover-bg-primary-opacity-100"
+                class="badge-btn text-primary-white bg-primary/50 hover:bg-primary/100"
                 (click)="clearSearchAndFilterAndSort(preset)"
               >
                 <span translate>{{ preset['name'] }}</span>

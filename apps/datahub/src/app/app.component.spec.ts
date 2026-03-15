@@ -1,12 +1,29 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { importProvidersFrom } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { AppComponent } from './app.component'
+import { StoreModule } from '@ngrx/store'
+import { provideGn4, provideRepositoryUrl } from '@geonetwork-ui/api/repository'
+import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
+import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
+import { EffectsModule } from '@ngrx/effects'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        importProvidersFrom([
+          StoreModule.forRoot({}),
+          FeatureSearchModule,
+          FeatureRecordModule,
+          FeatureEditorModule,
+          EffectsModule.forRoot(),
+        ]),
+        provideGn4(),
+        provideRepositoryUrl(() => 'https://local.dev/api/'),
+        provideI18n(),
+      ],
     }).compileComponents()
   })
 

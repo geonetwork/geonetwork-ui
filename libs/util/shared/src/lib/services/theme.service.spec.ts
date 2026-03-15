@@ -39,6 +39,8 @@ describe('ThemeService', () => {
           '--color-primary-lighter': 'rgb(255 115 82)',
           '--color-primary-lightest': 'rgb(255 178 153)',
           '--color-primary-white': 'rgb(255 226 216)',
+          '--color-raw-primary': '255 0 0',
+          '--color-raw-secondary': '0 128 0',
           '--color-secondary': 'rgb(0 128 0)',
           '--color-secondary-black': 'rgb(13 24 7)',
           '--color-secondary-darker': 'rgb(20 89 12)',
@@ -69,48 +71,6 @@ describe('ThemeService', () => {
           '--font-family-main': '"Font1", font2, sans-serif',
           '--font-family-title': '"Font3", font4, serif',
         })
-      })
-    })
-  })
-  describe('#generateBgOpacityClasses', () => {
-    let cssRules, firstRule
-    describe('default opacities', () => {
-      beforeEach(() => {
-        ThemeService.generateBgOpacityClasses('primary', 'red')
-        cssRules =
-          document.styleSheets[document.styleSheets.length - 1].cssRules
-        firstRule = cssRules[0]
-      })
-      it('generates 2 rules per opacity value', () => {
-        expect(cssRules.length).toEqual(10)
-      })
-      it('generates .bg-{name}-opacity-{value} class name', () => {
-        expect(firstRule.selectorText).toEqual('.bg-primary-opacity-0')
-      })
-      it('the rules has a background-color with opacity', () => {
-        expect(firstRule.style['background-color']).toEqual('rgb(255 0 0 / 0)')
-        expect(cssRules[4].style['background-color']).toEqual(
-          'rgb(255 0 0 / 0.25)'
-        )
-      })
-    })
-    describe('given opacities', () => {
-      beforeEach(() => {
-        ThemeService.generateBgOpacityClasses('primary', 'red', [75])
-        cssRules =
-          document.styleSheets[document.styleSheets.length - 1].cssRules
-        firstRule = cssRules[0]
-      })
-      it('generates 2 css rules', () => {
-        expect(cssRules.length).toEqual(2)
-      })
-      it('generates .bg-primary-opacity-75 class name', () => {
-        expect(firstRule.selectorText).toEqual('.bg-primary-opacity-75')
-      })
-      it('the rules has a background-color with opacity', () => {
-        expect(firstRule.style['background-color']).toEqual(
-          'rgb(255 0 0 / 0.75)'
-        )
       })
     })
   })

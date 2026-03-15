@@ -4,7 +4,7 @@
   "projectType": "application",
   "sourceRoot": "apps/webcomponents/src",
   "prefix": "wc",
-  "tags": ["type:app"],
+  "tags": ["type:app", "scope:webcomponents"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -16,12 +16,7 @@
         "polyfills": "apps/webcomponents/src/polyfills.ts",
         "tsConfig": "apps/webcomponents/tsconfig.app.json",
         "assets": [],
-        "styles": [
-          "tailwind.base.css",
-          "apps/webcomponents/src/styles.css",
-          "node_modules/tippy.js/dist/tippy.css",
-          "node_modules/ol/ol.css"
-        ],
+        "styles": [],
         "scripts": [],
         "allowedCommonJsDependencies": [
           "duration-relativetimeformat",

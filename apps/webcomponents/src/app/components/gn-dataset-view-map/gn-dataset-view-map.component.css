@@ -1,5 +1,4 @@
 @import '../../../styles.css';
-@import 'ol/ol.css';
 
 :host {
   display: block;
