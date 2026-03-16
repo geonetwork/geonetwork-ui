@@ -12,8 +12,13 @@
         }
         @if ((metadataViewFacade.isPresent$ | async) === true) {
           <div class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3">
-            <div class="sm:col-span-2"
-              [ngClass]="(hasThumbnail$ | async) ? 'pt-[max(0px,_calc(100vw_-_341px))] sm:pt-0' : ''"
+            <div
+              class="sm:col-span-2"
+              [ngClass]="
+                (hasThumbnail$ | async)
+                  ? 'pt-[max(0px,_calc(100vw_-_341px))] sm:pt-0'
+                  : ''
+              "
             >
               <gn-ui-metadata-info
                 class="sm:block"
@@ -23,7 +28,8 @@
               >
               </gn-ui-metadata-info>
             </div>
-            <div class="flex flex-col gap-5"
+            <div
+              class="flex flex-col gap-5"
               [ngClass]="(hasThumbnail$ | async) ? 'sm:pt-10' : ''"
             >
               @if (metadataViewFacade.resourceDoi$ | async; as resourceDoi) {
