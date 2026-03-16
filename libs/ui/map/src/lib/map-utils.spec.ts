@@ -32,6 +32,7 @@ describe('map utils', () => {
     it('returns true for a left click without modifier key', () => {
       const nativeEvent = {
         type: 'pointer',
+        pointerId: 1,
         pointerType: 'mouse',
         isPrimary: true,
         button: 0,
@@ -47,6 +48,7 @@ describe('map utils', () => {
     it('returns false for a left click with modifier key', () => {
       const nativeEvent = {
         type: 'pointer',
+        pointerId: 1,
         pointerType: 'mouse',
         isPrimary: true,
         button: 0,
