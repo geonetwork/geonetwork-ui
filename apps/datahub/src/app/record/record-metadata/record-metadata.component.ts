@@ -94,6 +94,10 @@ export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean
   @ViewChild('userFeedbacks') userFeedbacks: ElementRef<HTMLElement>
 
+  hasThumbnail$ = this.metadataViewFacade.metadata$.pipe(
+    map((metadata) => !!metadata?.overviews?.[0]?.url)
+  )
+
   private readonly displayConditions = {
     dataset: {
       download: (links) => links?.length > 0,
