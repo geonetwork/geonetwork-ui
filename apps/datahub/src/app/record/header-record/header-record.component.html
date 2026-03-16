@@ -124,12 +124,14 @@
               </div>
             </div>
             @if ((thumbnailUrl$ | async) && showOverlay) {
-              <gn-ui-image-overlay-preview
-                class="block h-[228px] w-full self-center"
-                [imageUrl]="thumbnailUrl$ | async"
-                (isPlaceholderShown)="showOverlay = !$event"
-              >
-              </gn-ui-image-overlay-preview>
+              <div class="h-[228px] overflow-visible">
+                <gn-ui-image-overlay-preview
+                  class="block h-auto aspect-square w-full"
+                  [imageUrl]="thumbnailUrl$ | async"
+                  (isPlaceholderShown)="showOverlay = !$event"
+                >
+                </gn-ui-image-overlay-preview>
+              </div>
             }
           </div>
         </div>
