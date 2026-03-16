@@ -235,12 +235,15 @@ export class DataService {
       })
   }
 
-  async getItemsFromOgcApi(url: string): Promise<OgcApiRecord[]> {
+  async getItemsFromOgcApi(
+    url: string,
+    limit?: number
+  ): Promise<OgcApiRecord[]> {
     const endpoint = new OgcApiEndpoint(url)
     return await endpoint.featureCollections
       .then((collections) => {
         return collections.length
-          ? endpoint.getCollectionItems(collections[0])
+          ? endpoint.getCollectionItems(collections[0], limit)
           : null
       })
       .catch(() => {
@@ -385,7 +388,14 @@ export class DataService {
           if (!geojsonUrl) {
             return throwError(() => 'ogc.geojson.notsupported')
           }
-          return openDataset(geojsonUrl, 'geojson', undefined, cacheActive)
+          const urlWithoutLimit = new URL(geojsonUrl)
+          urlWithoutLimit.searchParams.delete('limit')
+          return openDataset(
+            urlWithoutLimit.toString(),
+            'geojson',
+            undefined,
+            cacheActive
+          )
         })
       )
     }
