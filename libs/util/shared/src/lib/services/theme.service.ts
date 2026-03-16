@@ -10,26 +10,6 @@ export class ThemeService {
     return document.documentElement.style.getPropertyValue(`--color-${name}`)
   }
 
-  static generateBgOpacityClasses(
-    colorName,
-    colorValue,
-    opacities = [0, 10, 25, 50, 75]
-  ) {
-    const color = chroma(colorValue)
-    const styleElement = document.createElement('style')
-    styleElement.innerHTML = opacities.reduce((cssRules, opacity) => {
-      cssRules += `.bg-${colorName}-opacity-${opacity}{background-color:${color
-        .alpha(opacity / 100)
-        .css()};}`
-
-      cssRules += `.hover-bg-${colorName}-opacity-${opacity}:hover {background-color:${color
-        .alpha(opacity / 100)
-        .css()};}`
-      return cssRules
-    }, '')
-    document.getElementsByTagName('head')[0].appendChild(styleElement)
-  }
-
   static applyCssVariables(
     primaryColor: string,
     secondaryColor: string,
@@ -39,13 +19,19 @@ export class ThemeService {
     titleFont?: string,
     fontsStylesheetUrl?: string
   ) {
-    const applyColor = (name: string, color) => {
+    const applyColor = (name: string, color, includeRawValues?: boolean) => {
       document.documentElement.style.setProperty(`--color-${name}`, color.css())
+      if (includeRawValues) {
+        document.documentElement.style.setProperty(
+          `--color-raw-${name}`,
+          color.css().replace(/^rgba?\((.*)\)/, '$1')
+        )
+      }
     }
 
     const black = chroma('black')
     const white = chroma('white')
-    applyColor('primary', chroma(primaryColor))
+    applyColor('primary', chroma(primaryColor), true)
     applyColor(
       'primary-lighter',
       chroma.scale([primaryColor, white]).mode('lab')(0.3)
@@ -70,7 +56,7 @@ export class ThemeService {
       'primary-black',
       chroma.scale([primaryColor, black]).mode('lab')(0.85)
     )
-    applyColor('secondary', chroma(secondaryColor))
+    applyColor('secondary', chroma(secondaryColor), true)
     applyColor(
       'secondary-lighter',
       chroma.scale([secondaryColor, white]).mode('lab')(0.3)

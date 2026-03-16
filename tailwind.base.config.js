@@ -1,3 +1,4 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   theme: {
     extend: {
@@ -8,14 +9,14 @@ module.exports = {
         'primary-white': 'var(--color-primary-white)',
         'primary-lightest': 'var(--color-primary-lightest)',
         'primary-lighter': 'var(--color-primary-lighter)',
-        primary: 'var(--color-primary)',
+        primary: 'rgb(var(--color-raw-primary) / <alpha-value>)', // supports opacity
         'primary-darker': 'var(--color-primary-darker)',
         'primary-darkest': 'var(--color-primary-darkest)',
         'primary-black': 'var(--color-primary-black)',
         'secondary-white': 'var(--color-secondary-white)',
         'secondary-lightest': 'var(--color-secondary-lightest)',
         'secondary-lighter': 'var(--color-secondary-lighter)',
-        secondary: 'var(--color-secondary)',
+        secondary: 'rgb(var(--color-raw-secondary) / <alpha-value>)', // supports opacity
         'secondary-darker': 'var(--color-secondary-darker)',
         'secondary-darkest': 'var(--color-secondary-darkest)',
         'secondary-black': 'var(--color-secondary-black)',

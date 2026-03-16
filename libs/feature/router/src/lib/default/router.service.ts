@@ -1,10 +1,10 @@
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import {
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_ORGANIZATION,
+  ROUTER_ROUTE_REUSE,
   ROUTER_ROUTE_SEARCH,
   ROUTER_ROUTE_SERVICE,
-  ROUTER_ROUTE_REUSE,
 } from '.'
 import { Router, Routes } from '@angular/router'
 import { ROUTER_CONFIG, RouterConfigModel } from './router.config'

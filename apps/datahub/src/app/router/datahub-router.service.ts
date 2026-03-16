@@ -1,11 +1,11 @@
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { Router, Routes } from '@angular/router'
 import {
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_ORGANIZATION,
+  ROUTER_ROUTE_REUSE,
   ROUTER_ROUTE_SEARCH,
   ROUTER_ROUTE_SERVICE,
-  ROUTER_ROUTE_REUSE,
 } from '@geonetwork-ui/feature/router'
 import { HomePageComponent } from '../home/home-page/home-page.component'
 import { NewsPageComponent } from '../home/news-page/news-page.component'
