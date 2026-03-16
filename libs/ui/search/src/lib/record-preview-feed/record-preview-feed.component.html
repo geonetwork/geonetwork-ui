@@ -30,7 +30,7 @@
           ></gn-ui-thumbnail>
         }
       </div>
-      <div class="flex flex-col overflow-hidden items-start">
+      <div class="flex flex-col overflow-hidden items-start grow">
         @if (hasOrganization) {
           <span
             class="font-bold transition duration-200 text-primary truncate max-w-full"
@@ -51,32 +51,35 @@
           >
         </p>
       </div>
-    </div>
-    <div class="pt-5 pb-5 px-10 relative">
-      <div class="absolute top-[0.85em] right-[0.85em]">
+      <div class="ml-3 shrink-0">
         <ng-container
           [ngTemplateOutlet]="favoriteTemplate"
           [ngTemplateOutletContext]="{ $implicit: record }"
         ></ng-container>
       </div>
-      <h1
-        class="font-title text-black text-[21px] font-medium mb-3 pr-8"
-        data-cy="recordTitle"
-      >
-        {{ record.title }}
-      </h1>
+    </div>
+    <div class="pt-5 pb-5 px-10 relative">
+      <div class="flex flex-row gap-4 mb-3">
+        @if (record.overviews?.[0]) {
+          <gn-ui-thumbnail
+            class="block shrink-0 w-[120px] h-[120px] border border-gray-100 rounded-lg overflow-hidden"
+            [thumbnailUrl]="record.overviews?.[0]?.url.toString()"
+            [fit]="'cover'"
+          ></gn-ui-thumbnail>
+        }
+        <h1
+          class="font-title text-black text-[21px] font-medium"
+          data-cy="recordTitle"
+        >
+          {{ record.title }}
+        </h1>
+      </div>
       <p class="line-clamp-3">
         <gn-ui-markdown-parser
           [textContent]="abstract"
           [whitoutStyles]="true"
         />
       </p>
-      @if (record.overviews?.[0]) {
-        <gn-ui-thumbnail
-          class="block mt-3 w-full h-[136px] border border-gray-100 rounded-lg overflow-hidden"
-          [thumbnailUrl]="record.overviews?.[0]?.url.toString()"
-        ></gn-ui-thumbnail>
-      }
       @if (isDownloadable || isViewable) {
         <div class="flex flex-row mt-3">
           @if (isDownloadable) {
