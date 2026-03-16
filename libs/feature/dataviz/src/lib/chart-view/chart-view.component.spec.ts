@@ -329,9 +329,9 @@ describe('ChartViewComponent', () => {
       ])
       expect(DatasetReaderMock.instance.read).toHaveBeenCalledTimes(1)
     })
-    it('hides the Y property field', () => {
+    it('disables the Y property field', () => {
       const select = fixture.debugElement.query(By.css('.select-y-prop'))
-      expect(select).toBeFalsy()
+      expect(select.componentInstance.disabled).toBe(true)
     })
   })
 

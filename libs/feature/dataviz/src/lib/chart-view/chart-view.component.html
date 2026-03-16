@@ -19,16 +19,14 @@
       [title]="'chart.dropdown.xProperty' | translate"
     ></gn-ui-dropdown-selector>
     @if (yChoices$ | async; as yChoices) {
-      @if (!isCountAggregation) {
-        <gn-ui-dropdown-selector
-          class="basis-1/4"
-          [choices]="yChoices"
-          (selectValue)="yProperty$.next($event)"
-          [selected]="yProperty$.value"
-          [title]="'chart.dropdown.yProperty' | translate"
-          class="select-y-prop"
-        ></gn-ui-dropdown-selector>
-      }
+      <gn-ui-dropdown-selector
+        class="basis-1/4 select-y-prop"
+        [choices]="yChoices"
+        [disabled]="isCountAggregation"
+        (selectValue)="yProperty$.next($event)"
+        [selected]="yProperty$.value"
+        [title]="'chart.dropdown.yProperty' | translate"
+      ></gn-ui-dropdown-selector>
     }
     <gn-ui-dropdown-selector
       class="basis-1/4"
