@@ -264,7 +264,7 @@ Cypress.Commands.add('editor_createRecordCopy', (uuidToCopy, titleToCopy) => {
         return
       }
       // there is a copy: delete it
-      cy.get('[data-test="record-menu-button"]').eq(0).click()
+      cy.get('[data-test="record-menu-button"]').eq(1).click()
       cy.get('[data-test="record-menu-delete-button"]').click()
       cy.get('[data-cy="confirm-button"]').click()
       cy.log('An existing copy of the test record was found and deleted.')
