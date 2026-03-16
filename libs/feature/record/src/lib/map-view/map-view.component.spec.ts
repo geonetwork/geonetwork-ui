@@ -35,49 +35,32 @@ import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 
 let mockWmsStyles = []
-jest.mock('@camptocamp/ogc-client', () => ({
-  WmsEndpoint: class {
-    private url: string
-    constructor(url: string) {
-      this.url = url
-    }
-    isReady() {
-      if (this.url.indexOf('error') > -1) {
-        return Promise.reject(new Error('WMS endpoint error'))
-      }
-      return Promise.resolve(this)
-    }
-    getLayerByName() {
-      return { styles: mockWmsStyles }
-    }
-  },
-}))
-
-jest.mock('@geonetwork-ui/ui/map', () => ({
-  ...jest.requireActual('@geonetwork-ui/ui/map'),
-  prioritizePageScroll: jest.fn(),
-}))
-
 let mockDescribeLayerResult: Record<string, unknown> | null = null
 let mockDescribeLayerError = false
 let mockGetLayerByNameResult: Record<string, unknown> | null = null
 
 jest.mock('@camptocamp/ogc-client', () => ({
-  WmsEndpoint: jest.fn().mockImplementation(() => ({
+  WmsEndpoint: jest.fn().mockImplementation((url: string) => ({
     isReady: jest.fn().mockImplementation(() => {
-      if (mockDescribeLayerError) {
-        return Promise.reject(new Error('DescribeLayer failed'))
+      if (mockDescribeLayerError || url.indexOf('error') > -1) {
+        return Promise.reject(new Error('WMS endpoint error'))
       }
       return Promise.resolve({
         describeLayer: jest
           .fn()
           .mockImplementation(() => Promise.resolve(mockDescribeLayerResult)),
-        getLayerByName: jest
-          .fn()
-          .mockImplementation(() => mockGetLayerByNameResult),
+        getLayerByName: jest.fn().mockImplementation(() => ({
+          styles: mockWmsStyles,
+          ...(mockGetLayerByNameResult || {}),
+        })),
       })
     }),
   })),
+}))
+
+jest.mock('@geonetwork-ui/ui/map', () => ({
+  ...jest.requireActual('@geonetwork-ui/ui/map'),
+  prioritizePageScroll: jest.fn(),
 }))
 
 jest.mock('@geospatial-sdk/core', () => {
@@ -311,6 +294,7 @@ describe('MapViewComponent', () => {
                 url: 'http://abcd.com/',
                 name: 'layer1',
                 type: 'wms',
+                format: 'image/png',
               },
             ],
             view: expect.any(Object),
@@ -334,6 +318,7 @@ describe('MapViewComponent', () => {
                 url: 'http://abcd.com/',
                 name: 'layer2',
                 type: 'wms',
+                format: 'image/png',
               },
             ],
             view: expect.any(Object),
@@ -865,6 +850,7 @@ describe('MapViewComponent', () => {
               url: 'http://abcd.com/',
               name: 'layer',
               type: 'wms',
+              format: 'image/png',
             },
           ],
           view: expect.any(Object),
@@ -934,6 +920,7 @@ describe('MapViewComponent', () => {
                 url: 'http://abcd.com/',
                 name: 'layer2',
                 type: 'wms',
+                format: 'image/png',
               },
             ],
             view: {
@@ -963,6 +950,7 @@ describe('MapViewComponent', () => {
                 url: 'http://abcd.com/',
                 name: 'layer2',
                 type: 'wms',
+                format: 'image/png',
               },
             ],
             view: {
@@ -992,6 +980,7 @@ describe('MapViewComponent', () => {
                 url: 'http://abcd.com/',
                 name: 'layer2',
                 type: 'wms',
+                format: 'image/png',
               },
             ],
             view: { extent: recordMapExtent },
@@ -1020,6 +1009,7 @@ describe('MapViewComponent', () => {
               url: 'http://abcd.com/',
               name: 'layer2',
               type: 'wms',
+              format: 'image/png',
             },
           ])
         })
@@ -1496,6 +1486,7 @@ describe('MapViewComponent', () => {
             name: 'layer-wms',
             type: 'wms',
             style: 'heatmap',
+            format: 'image/png',
           },
         ],
         view: expect.any(Object),
@@ -1641,6 +1632,44 @@ describe('MapViewComponent', () => {
       tick(200)
       fixture.detectChanges()
       expect(externalViewerButtonComponent.mimeType).toEqual('')
+    }))
+
+    it('sets format=image/png on the WMS map context layer when DescribeLayer returns owsType=wfs', fakeAsync(() => {
+      mockDescribeLayerResult = { owsType: 'wfs' }
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/'),
+          name: 'layer1',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+      tick(200)
+      fixture.detectChanges()
+      expect(mapComponent.context.layers[0]).toMatchObject({
+        type: 'wms',
+        format: 'image/png',
+      })
+    }))
+
+    it('sets format=image/jpeg on the WMS map context layer when DescribeLayer returns owsType=wcs', fakeAsync(() => {
+      mockDescribeLayerResult = { owsType: 'wcs' }
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/'),
+          name: 'layer1',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+      tick(200)
+      fixture.detectChanges()
+      expect(mapComponent.context.layers[0]).toMatchObject({
+        type: 'wms',
+        format: 'image/jpeg',
+      })
     }))
   })
 })

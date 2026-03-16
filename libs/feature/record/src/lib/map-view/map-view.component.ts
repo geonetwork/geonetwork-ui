@@ -376,8 +376,9 @@ export class MapViewComponent implements AfterViewInit {
     this.selectedLink$,
     this.excludeWfs$,
     this.selectedWmsStyleName$,
+    this.wmsMimeType$,
   ]).pipe(
-    switchMap(([link, excludeWfs, wmsStyleName]) => {
+    switchMap(([link, excludeWfs, wmsStyleName, wmsMimeType]) => {
       if (!link) {
         return of([])
       }
@@ -393,8 +394,12 @@ export class MapViewComponent implements AfterViewInit {
       }
       return this.getLayerFromLink(link).pipe(
         map((layer) =>
-          wmsStyleName && layer.type === 'wms'
-            ? { ...layer, style: wmsStyleName }
+          layer.type === 'wms'
+            ? {
+                ...layer,
+                ...(wmsStyleName && { style: wmsStyleName }),
+                ...(wmsMimeType && { format: wmsMimeType }),
+              }
             : layer
         ),
         map((layer) => [layer]),
