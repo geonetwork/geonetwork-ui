@@ -6,7 +6,7 @@
   }
 
   &.size-M {
-    @apply max-w-[940px] md:h-[231px] gap-4;
+    @apply max-w-[940px] gap-4;
   }
 
   &.size-S {
@@ -28,11 +28,11 @@
   @apply border rounded-lg overflow-hidden shrink-0;
 
   .size-L & {
-    @apply w-full w-[190px] h-[184px];
+    @apply w-[190px] h-[190px];
   }
 
   .size-M & {
-    @apply w-full w-[138px] h-[207px];
+    @apply w-[138px] h-[138px];
   }
 }
 
@@ -78,6 +78,11 @@
 
 .record-card__footer {
   @apply flex sm:flex-row flex-col flex-nowrap gap-3 justify-end items-center w-full border-t pt-1 overflow-hidden;
+
+  .size-M & {
+    margin-left: calc(-138px - 1rem);
+    width: calc(100% + 138px + 1rem);
+  }
 
   .size-S & {
     @media (max-width: 450px) {
