@@ -1,6 +1,9 @@
 @if (previewUrl) {
-  <div class="w-80 h-full flex flex-col gap-2">
-    <gn-ui-image-overlay-preview class="h-48" [imageUrl]="previewUrl">
+  <div class="w-[314px] h-full flex flex-col gap-2">
+    <gn-ui-image-overlay-preview
+      class="w-[314px] h-[314px]"
+      [imageUrl]="previewUrl"
+    >
     </gn-ui-image-overlay-preview>
     @if (showAltTextInput) {
       <gn-ui-text-input

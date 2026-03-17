@@ -38,7 +38,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
 
 export const HEADER_HEIGHT_DEFAULT = 344
-export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 554
+export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 640
 
 marker('record.metadata.resourceUpdated')
 marker('record.metadata.resourcePublished')
