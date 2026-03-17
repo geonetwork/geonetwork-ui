@@ -231,7 +231,8 @@ export class MapViewComponent implements AfterViewInit {
           return compatibleLinks[0]
         }
       }
-    })
+    }),
+    shareReplay(1)
   )
 
   isWmsStyleMode$ = this.selectedSourceLink$.pipe(
@@ -346,12 +347,38 @@ export class MapViewComponent implements AfterViewInit {
     shareReplay(1)
   )
 
+  wmsMimeType$ = this.selectedSourceLink$.pipe(
+    switchMap((link) => {
+      if (link?.type === 'service' && link?.accessServiceProtocol === 'wms') {
+        return from(
+          new WmsEndpoint(link.url.toString())
+            .isReady()
+            .then((endpoint) => {
+              return endpoint.describeLayer(link.name).then((description) => {
+                if (description) {
+                  return description.owsType === 'wfs'
+                    ? 'image/png'
+                    : 'image/jpeg'
+                }
+                const layer = endpoint.getLayerByName(link.name)
+                return layer?.opaque ? 'image/jpeg' : 'image/png'
+              })
+            })
+            .catch(() => 'image/png')
+        )
+      }
+      return of('')
+    }),
+    shareReplay(1)
+  )
+
   currentLayers$ = combineLatest([
     this.selectedLink$,
     this.excludeWfs$,
     this.selectedWmsStyleName$,
+    this.wmsMimeType$,
   ]).pipe(
-    switchMap(([link, excludeWfs, wmsStyleName]) => {
+    switchMap(([link, excludeWfs, wmsStyleName, wmsMimeType]) => {
       if (!link) {
         return of([])
       }
@@ -367,8 +394,12 @@ export class MapViewComponent implements AfterViewInit {
       }
       return this.getLayerFromLink(link).pipe(
         map((layer) =>
-          wmsStyleName && layer.type === 'wms'
-            ? { ...layer, style: wmsStyleName }
+          layer.type === 'wms'
+            ? {
+                ...layer,
+                ...(wmsStyleName && { style: wmsStyleName }),
+                ...(wmsMimeType && { format: wmsMimeType }),
+              }
             : layer
         ),
         map((layer) => [layer]),
