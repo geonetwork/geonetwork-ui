@@ -12,14 +12,7 @@
         }
         @if ((metadataViewFacade.isPresent$ | async) === true) {
           <div class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3">
-            <div
-              class="sm:col-span-2"
-              [ngClass]="
-                (hasThumbnail$ | async)
-                  ? 'pt-[max(0px,_calc(100vw_-_341px))] sm:pt-0'
-                  : ''
-              "
-            >
+            <div class="sm:col-span-2">
               <gn-ui-metadata-info
                 class="sm:block"
                 [metadata]="metadataViewFacade.metadata$ | async"
