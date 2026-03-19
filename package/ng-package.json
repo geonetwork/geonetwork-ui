@@ -35,7 +35,6 @@
     "ngx-translate-messageformat-compiler",
     "ol",
     "papaparse",
-    "pg",
     "proj4",
     "rdflib",
     "reflect-metadata",
