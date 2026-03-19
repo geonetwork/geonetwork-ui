@@ -31,7 +31,6 @@
     "express",
     "geojson-validation",
     "marked",
-    "moment",
     "ng-table-virtual-scroll",
     "ngx-chips",
     "ngx-dropzone",
