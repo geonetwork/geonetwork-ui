@@ -88,7 +88,6 @@
     "ngx-translate-messageformat-compiler": "~7.2.0",
     "ol": "~10.8.0",
     "papaparse": "~5.5.3",
-    "pg": "~8.20.0",
     "proj4": "~2.20.4",
     "rdflib": "~2.3.5",
     "rxjs": "~7.8.2",
