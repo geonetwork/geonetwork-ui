@@ -16,6 +16,7 @@ const npmDependenciesOnlyInEsm = [
   'quick-lru',
   'geotiff',
   'pbf',
+  'marked',
 ]
 
 module.exports = {
