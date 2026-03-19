@@ -19,13 +19,24 @@
         "styles": [],
         "scripts": [],
         "allowedCommonJsDependencies": [
+          "rdf-canonize",
+          "lru-cache",
+          "canonicalize",
+          "geojson-validation",
+          "@messageformat/core",
+          "semver",
           "duration-relativetimeformat",
-          "papaparse",
-          "xlsx",
-          "chroma-js",
           "@rgrove/parse-xml",
-          "messageformat",
-          "rbush"
+          "alasql",
+          "papaparse",
+          "lodash.throttle",
+          "cross-fetch",
+          "@frogcat/ttl2jsonld",
+          "solid-namespace",
+          "@xmldom/xmldom",
+          "jsonld",
+          "buffer",
+          "readable-stream"
         ]
       },
       "configurations": {
