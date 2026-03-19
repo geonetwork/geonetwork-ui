@@ -32,7 +32,6 @@
     "geojson-validation",
     "marked",
     "ng-table-virtual-scroll",
-    "ngx-chips",
     "ngx-dropzone",
     "ngx-translate-messageformat-compiler",
     "ol",
