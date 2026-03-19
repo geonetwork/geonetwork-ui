@@ -31,7 +31,6 @@
     "express",
     "geojson-validation",
     "marked",
-    "ng-table-virtual-scroll",
     "ngx-dropzone",
     "ngx-translate-messageformat-compiler",
     "ol",
