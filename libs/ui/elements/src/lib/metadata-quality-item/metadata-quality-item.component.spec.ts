@@ -12,7 +12,7 @@ describe('MetadataQualityInfoComponent', () => {
     await TestBed.configureTestingModule({
       providers: [
         provideI18n({
-          useDefaultLang: false, // this leaves the keys untouched
+          fallbackLang: null,
         }),
       ],
     })

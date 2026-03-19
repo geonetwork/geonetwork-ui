@@ -70,6 +70,9 @@
       "@geonetwork-ui/util/i18n/embedded-translate-loader": [
         "libs/util/i18n/src/lib/embedded.translate.loader.ts"
       ],
+      "@geonetwork-ui/util/i18n/test-translate-loader": [
+        "libs/util/i18n/src/lib/test.translate.loader.ts"
+      ],
       "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"]
     },
     "allowJs": true,

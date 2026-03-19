@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http'
 import { DEFAULT_LANG } from './i18n.constants'
 import { Observable } from 'rxjs'
-import { Injectable, Injector, inject } from '@angular/core'
+import { inject, Injectable, Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 
 @Injectable()
@@ -21,7 +21,7 @@ export class I18nInterceptor implements HttpInterceptor {
     const translate = this.injector.get(TranslateService)
     request = request.clone({
       setHeaders: {
-        'Accept-Language': translate.currentLang || DEFAULT_LANG,
+        'Accept-Language': translate.getCurrentLang() || DEFAULT_LANG,
       },
     })
     return next.handle(request)

@@ -15,10 +15,15 @@ import {
   SearchConfig,
   ThemeConfig,
 } from './model'
-import { TranslateCompiler, TranslateLoader } from '@ngx-translate/core'
+import {
+  TranslateCompiler,
+  TranslateLoader,
+  TranslateModuleConfig,
+} from '@ngx-translate/core'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
-import { HttpClient } from '@angular/common/http'
 import { FileWithOverridesTranslateLoader } from './i18n/file-with-overrides.translate.loader'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
+import { HttpClient } from '@angular/common/http'
 
 const MISSING_CONFIG_ERROR = `Application configuration was not initialized correctly.
 This error might show up in case of an invalid/malformed configuration file.
@@ -310,16 +315,23 @@ export function _reset() {
   customTranslations = null
 }
 
-export const TRANSLATE_WITH_OVERRIDES_CONFIG = {
+export const TRANSLATE_WITH_OVERRIDES_CONFIG: TranslateModuleConfig = {
   compiler: {
     provide: TranslateCompiler,
     useClass: TranslateMessageFormatCompiler,
   },
-  loader: {
-    provide: TranslateLoader,
-    useFactory: function HttpLoaderFactory(http: HttpClient) {
-      return new FileWithOverridesTranslateLoader(http, './assets/i18n/')
+  loader: [
+    {
+      provide: TRANSLATE_HTTP_LOADER_CONFIG,
+      useValue: {
+        prefix: './assets/i18n/',
+        suffix: '.json',
+      },
     },
-    deps: [HttpClient],
-  },
+    {
+      provide: TranslateLoader,
+      useClass: FileWithOverridesTranslateLoader,
+      deps: [HttpClient, TRANSLATE_HTTP_LOADER_CONFIG],
+    },
+  ],
 }

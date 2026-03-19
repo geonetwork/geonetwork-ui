@@ -79,7 +79,7 @@ class GoupsApiServiceMock {
 }
 
 class TranslateServiceMock {
-  currentLang = 'fr'
+  getCurrentLang = () => 'fr'
   get = jest.fn((key) => of(key))
 }
 

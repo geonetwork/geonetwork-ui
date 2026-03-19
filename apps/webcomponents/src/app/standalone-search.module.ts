@@ -44,7 +44,7 @@ import {
           provide: TranslateLoader,
           useClass: EmbeddedTranslateLoader,
         },
-        defaultLanguage: DEFAULT_LANG,
+        fallbackLang: DEFAULT_LANG,
       },
       false // do not load language from localStorage
     ),

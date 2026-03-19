@@ -49,7 +49,9 @@ describe('FavoriteStarComponent', () => {
           useClass: FavoritesServiceMock,
         },
         MockProvider(TranslateService, {
-          currentLang: 'fr',
+          getCurrentLang() {
+            return 'fr'
+          },
           get: jest.fn(() => of('You can log in here')),
           onLangChange: new EventEmitter<{
             lang: string

@@ -102,7 +102,7 @@ export class BaseComponent implements OnChanges, OnInit {
       this.translate.use(this.textLanguage)
     }
 
-    this.translate.reloadLang(this.translate.currentLang)
+    this.translate.reloadLang(this.translate.getCurrentLang())
     ThemeService.applyCssVariables(
       this.primaryColor,
       this.secondaryColor,

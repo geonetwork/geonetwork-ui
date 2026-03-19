@@ -25,7 +25,7 @@ import { I18nInterceptor } from './i18n.interceptor'
 
 function i18nInitializerFromLocalStorageFactory() {
   const translate = inject(TranslateService)
-  translate.setDefaultLang(DEFAULT_LANG)
+  translate.setFallbackLang(DEFAULT_LANG)
   let storageLang = null
   try {
     storageLang = localStorage.getItem(LANGUAGE_STORAGE_KEY)

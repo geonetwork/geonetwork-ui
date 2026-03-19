@@ -1,4 +1,4 @@
-import { Component, InjectionToken, inject } from '@angular/core'
+import { Component, inject, InjectionToken } from '@angular/core'
 import { LANGUAGE_STORAGE_KEY } from '@geonetwork-ui/util/i18n'
 import { TranslateService } from '@ngx-translate/core'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
@@ -26,7 +26,7 @@ export class LanguageSwitcherComponent {
   )
 
   get currentLang() {
-    return this.translate.currentLang
+    return this.translate.getCurrentLang()
   }
 
   changeLanguage(value: unknown) {

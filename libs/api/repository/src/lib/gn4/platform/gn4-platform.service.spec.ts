@@ -8,7 +8,7 @@ import {
   UsersApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { TestBed } from '@angular/core/testing'
-import { Gn4PlatformService, DISABLE_AUTH } from './gn4-platform.service'
+import { DISABLE_AUTH, Gn4PlatformService } from './gn4-platform.service'
 import { firstValueFrom, lastValueFrom, of, Subject, throwError } from 'rxjs'
 import { AvatarServiceInterface } from '../auth/avatar.service.interface'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
@@ -168,7 +168,7 @@ class RegistriesApiServiceMock {
 }
 
 class TranslateServiceMock {
-  currentLang = 'fr'
+  getCurrentLang = () => 'fr'
 }
 
 const associatedResources = {
@@ -476,7 +476,7 @@ describe('Gn4PlatformService', () => {
       })
       describe('if translations are unavailable', () => {
         it('uses default values', async () => {
-          service['translateService']['currentLang'] = 'de'
+          service['translateService']['getCurrentLang'] = () => 'de'
           const keywords = await lastValueFrom(
             service.searchKeywords('road', ['theme'])
           )
@@ -618,7 +618,7 @@ describe('Gn4PlatformService', () => {
       })
       describe('if translations are unavailable', () => {
         it('uses default values', async () => {
-          service['translateService']['currentLang'] = 'de'
+          service['translateService']['getCurrentLang'] = () => 'de'
           const thesaurusDomain = await lastValueFrom(
             service.getKeywordsByUri('http://inspire.ec.europa.eu/theme/')
           )

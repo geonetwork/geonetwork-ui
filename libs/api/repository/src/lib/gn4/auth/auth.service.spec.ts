@@ -7,7 +7,9 @@ import { Location } from '@angular/common'
 
 let loginUrlTokenMock
 const translateServiceMock = {
-  currentLang: 'fr',
+  getCurrentLang() {
+    return 'fr'
+  },
 }
 
 let mockAppBaseHref
