@@ -1,10 +1,13 @@
 import { EndpointError, WfsEndpoint, WfsVersion } from '@camptocamp/ogc-client'
 import { DataItem, DatasetInfo, FetchError, PropertyInfo } from '../model'
-import { fetchDataAsText } from '../utils'
+import {
+  fetchDataAsText,
+  getJsonDataItemsProxy,
+  jsonToGeojsonFeature,
+} from '../utils'
 import { GmlReader, parseGml } from './gml'
 import { GeojsonReader, parseGeojson } from './geojson'
 import { BaseCacheReader } from './base-cache'
-import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils'
 import { generateSqlQuery } from '../sql-utils'
 
 export async function getWfsEndpoint(wfsUrl: string): Promise<WfsEndpoint> {
@@ -167,7 +170,7 @@ export class WfsReader extends BaseCacheReader {
       this.groupedBy,
       this.aggregations
     )
-    const result = await import('alasql').then((module) =>
+    const result: any[] = await import('alasql').then((module) =>
       module.default(query, [jsonItems])
     )
     return result.map(jsonToGeojsonFeature)
