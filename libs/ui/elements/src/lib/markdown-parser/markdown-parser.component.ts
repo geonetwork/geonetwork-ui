@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { marked } from 'marked'
+import { parse } from 'marked'
 
 @Component({
   selector: 'gn-ui-markdown-parser',
@@ -14,6 +14,6 @@ export class MarkdownParserComponent {
   @Input() whitoutStyles?: boolean
 
   get parsedMarkdown() {
-    return marked.parse(this.textContent ?? '')
+    return parse(this.textContent ?? '')
   }
 }
