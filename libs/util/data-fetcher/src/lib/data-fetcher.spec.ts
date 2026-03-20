@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @jest-environment jest-fixed-jsdom
  */
 import fetchMock from '@fetch-mock/jest'
 import fs from 'fs'
@@ -59,9 +59,9 @@ describe('data-fetcher', () => {
   beforeEach(() => {
     // this is used to make the HTTP requests pointing at http://localfile
     // to read the fixture files by name and set the correct content type
-    fetchMock.get(
-      (url) => new URL(url).hostname === 'localfile',
-      async (url) => {
+    fetchMock.route(
+      ({ url }) => new URL(url).hostname === 'localfile',
+      async ({ url }) => {
         const filePath = path.join(__dirname, '..', new URL(url).pathname)
         let body
         const fileExt = path.extname(filePath)

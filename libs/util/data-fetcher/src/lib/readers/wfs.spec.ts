@@ -1,7 +1,7 @@
 /**
- * @jest-environment jsdom
+ * @jest-environment jest-fixed-jsdom
  */
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
 import path from 'path'
 import fs from 'fs/promises'
 import { getWfsEndpoint, WfsReader } from './wfs'
@@ -175,9 +175,9 @@ describe('WfsReader', () => {
     const wfsEndpoint = new WfsEndpoint(urlGeojson)
 
     beforeEach(() => {
-      fetchMock.get(
-        (url) => new URL(url).hostname === 'localfile',
-        async (url) => {
+      fetchMock.route(
+        ({ url }) => new URL(url).hostname === 'localfile',
+        async ({ url }) => {
           const filePath = path.join(__dirname, '../..', new URL(url).pathname)
           return {
             body: await fs.readFile(filePath, 'utf8'),
@@ -310,9 +310,9 @@ describe('WfsReader', () => {
   describe('WfsReader - Wfs is version 2.0.0 gml', () => {
     let reader: WfsReader
     beforeEach(() => {
-      fetchMock.get(
-        (url) => new URL(url).hostname === 'localfile',
-        async (url) => {
+      fetchMock.route(
+        ({ url }) => new URL(url).hostname === 'localfile',
+        async ({ url }) => {
           const filePath = path.join(__dirname, '../..', new URL(url).pathname)
           return {
             body: await fs.readFile(filePath, 'utf8'),
@@ -398,9 +398,9 @@ describe('WfsReader', () => {
     let GmlReaderSpy: jest.SpyInstance
     beforeEach(() => {
       GmlReaderSpy = jest.spyOn({ GmlReader }, 'GmlReader')
-      fetchMock.get(
-        (url) => new URL(url).hostname === 'localfile',
-        async (url) => {
+      fetchMock.route(
+        ({ url }) => new URL(url).hostname === 'localfile',
+        async ({ url }) => {
           const filePath = path.join(__dirname, '../..', new URL(url).pathname)
           return {
             body: await fs.readFile(filePath, 'utf8'),

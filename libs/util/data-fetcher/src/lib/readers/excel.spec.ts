@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { ExcelReader, parseExcel } from './excel'
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
 import { useCache } from '@camptocamp/ogc-client'
 
 const sampleXlsx = fs.readFileSync(
@@ -4118,9 +4118,9 @@ describe('Excel parsing', () => {
     let cacheActive = true
     beforeEach(() => {
       jest.clearAllMocks()
-      fetchMock.get(
-        (url) => new URL(url).hostname === 'localfile',
-        async (url) => {
+      fetchMock.route(
+        ({ url }) => new URL(url).hostname === 'localfile',
+        async ({ url }) => {
           const filePath = path.join(__dirname, '../..', new URL(url).pathname)
           return {
             body: fs.readFileSync(filePath, null),

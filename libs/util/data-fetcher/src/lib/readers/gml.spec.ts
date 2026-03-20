@@ -1,8 +1,8 @@
 /**
- * @jest-environment jsdom
+ * @jest-environment jest-fixed-jsdom
  */
 import { GmlReader, parseGml } from './gml'
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
 import path from 'path'
 import fs from 'fs/promises'
 import { useCache } from '@camptocamp/ogc-client'
@@ -274,9 +274,9 @@ describe('Gml parsing', () => {
     let cacheActive = true
     beforeEach(() => {
       jest.clearAllMocks()
-      fetchMock.get(
-        (url) => new URL(url).hostname === 'localfile',
-        async (url) => {
+      fetchMock.route(
+        ({ url }) => new URL(url).hostname === 'localfile',
+        async ({ url }) => {
           const filePath = path.join(__dirname, '../..', new URL(url).pathname)
           return {
             body: await fs.readFile(filePath, 'utf8'),
