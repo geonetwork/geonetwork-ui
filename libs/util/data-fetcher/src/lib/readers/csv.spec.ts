@@ -1,5 +1,5 @@
 import { CsvReader, parseCsv } from './csv'
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
 import path from 'path'
 import fs from 'fs/promises'
 import { useCache } from '@camptocamp/ogc-client'
@@ -389,7 +389,7 @@ describe('CSV parsing', () => {
       reader.load()
     })
     afterEach(() => {
-      fetchMock.reset()
+      fetchMock.mockReset()
       cacheActive = true
     })
     describe('#info', () => {

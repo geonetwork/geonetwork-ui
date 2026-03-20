@@ -3,7 +3,7 @@ import {
   HttpTestingController,
   provideHttpClientTesting,
 } from '@angular/common/http/testing'
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
 import { provideI18n } from './i18n.providers'
 import { TRANSLATE_DEFAULT_CONFIG } from './i18n.constants'
 import { TranslateLoader } from '@ngx-translate/core'
@@ -13,7 +13,7 @@ describe('FileTranslateLoader', () => {
   let httpController: HttpTestingController
 
   beforeEach(() => {
-    fetchMock.reset()
+    fetchMock.mockReset()
     TestBed.configureTestingModule({
       providers: [
         provideI18n(TRANSLATE_DEFAULT_CONFIG, false), // do not use local storage to avoid additional requests

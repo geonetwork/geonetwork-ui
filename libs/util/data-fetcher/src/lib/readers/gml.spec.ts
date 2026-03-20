@@ -299,7 +299,7 @@ describe('Gml parsing', () => {
       reader.load()
     })
     afterEach(() => {
-      fetchMock.reset()
+      fetchMock.mockReset()
     })
     describe('#info', () => {
       it('returns dataset info', async () => {

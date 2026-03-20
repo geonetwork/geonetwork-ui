@@ -1,4 +1,4 @@
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
 import {
   _reset,
   getCustomTranslations,
@@ -21,7 +21,7 @@ import {
 describe('app config utils', () => {
   beforeEach(() => {
     jest.spyOn(global.console, 'warn')
-    fetchMock.reset()
+    fetchMock.mockReset()
     _reset()
   })
   describe('when the configuration file is missing', () => {

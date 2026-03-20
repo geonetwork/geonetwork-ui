@@ -4,8 +4,8 @@
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'
-import { WfsReader, getWfsEndpoint } from './wfs'
-import { WfsEndpoint, useCache } from '@camptocamp/ogc-client'
+import { getWfsEndpoint, WfsReader } from './wfs'
+import { useCache, WfsEndpoint } from '@camptocamp/ogc-client'
 import { GeojsonReader } from './geojson'
 import { GmlReader } from './gml'
 import { FetchError } from '../model'
@@ -195,7 +195,7 @@ describe('WfsReader', () => {
       reader.load()
     })
     afterEach(() => {
-      fetchMock.reset()
+      fetchMock.mockReset()
       jest.clearAllMocks()
     })
     describe('#info', () => {
@@ -331,7 +331,7 @@ describe('WfsReader', () => {
       reader.load()
     })
     afterEach(() => {
-      fetchMock.reset()
+      fetchMock.mockReset()
     })
     describe('#info', () => {
       it('returns dataset info', async () => {
@@ -424,7 +424,7 @@ describe('WfsReader', () => {
       reader.load()
     })
     afterEach(() => {
-      fetchMock.reset()
+      fetchMock.mockReset()
       GmlReaderSpy.mockRestore()
     })
     it('returns an instance of WfsReader', async () => {
