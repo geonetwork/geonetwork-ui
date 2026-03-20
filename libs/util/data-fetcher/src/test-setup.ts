@@ -1,5 +1,5 @@
 /* eslint-disable */
-import fetch from 'fetch-mock-jest'
+import fetch from '@fetch-mock/jest'
 import { TextDecoder, TextEncoder } from 'util'
 
 global.fetch = fetch as never

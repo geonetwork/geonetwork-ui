@@ -1,13 +1,13 @@
 /**
  * @jest-environment jsdom
  */
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
 import fs from 'fs'
 import path from 'path'
 import { readDataset } from './data-fetcher'
 import { CsvReader } from './readers/csv'
 import { GeojsonReader } from './readers/geojson'
-import { sharedFetch, useCache, WfsEndpoint } from '@camptocamp/ogc-client'
+import { sharedFetch, useCache } from '@camptocamp/ogc-client'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   useCache: jest.fn(async (factory) =>
@@ -112,7 +112,7 @@ describe('data-fetcher', () => {
     jest.spyOn(GeojsonReader.prototype, 'read')
   })
   afterEach(() => {
-    fetchMock.reset()
+    fetchMock.mockReset()
     jest.clearAllMocks()
   })
   describe('readDataset', () => {

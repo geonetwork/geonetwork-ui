@@ -6,7 +6,7 @@ import {
 import * as AppConfig from '../app-config'
 import { loadAppConfig, TRANSLATE_WITH_OVERRIDES_CONFIG } from '../app-config'
 import { appConfigWithTranslationFixture } from '../fixtures'
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { TranslateLoader } from '@ngx-translate/core'
 
@@ -15,7 +15,7 @@ describe('FileTranslateLoader', () => {
   let httpController: HttpTestingController
 
   beforeEach(() => {
-    fetchMock.reset()
+    fetchMock.mockReset()
     jest.spyOn(AppConfig, 'getCustomTranslations')
     TestBed.configureTestingModule({
       providers: [
