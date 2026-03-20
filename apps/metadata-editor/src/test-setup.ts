@@ -1,4 +1,5 @@
 import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone'
+import fetchMock from '@fetch-mock/jest'
 import '../../../jest.setup'
 
 import { CommonModule } from '@angular/common'
@@ -11,6 +12,8 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { ngMocks } from 'ng-mocks'
 import { BehaviorSubject, EMPTY } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
+
+fetchMock.mockGlobal()
 
 setupZoneTestEnv()
 

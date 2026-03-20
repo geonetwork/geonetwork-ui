@@ -366,9 +366,9 @@ describe('CSV parsing', () => {
     let reader: CsvReader
     let cacheActive = true
     beforeEach(() => {
-      fetchMock.get(
-        (url) => new URL(url).hostname === 'localfile',
-        async (url) => {
+      fetchMock.route(
+        ({ url }) => new URL(url).hostname === 'localfile',
+        async ({ url }) => {
           const filePath = path.join(__dirname, '../..', new URL(url).pathname)
           return {
             body: await fs.readFile(filePath, 'utf8'),

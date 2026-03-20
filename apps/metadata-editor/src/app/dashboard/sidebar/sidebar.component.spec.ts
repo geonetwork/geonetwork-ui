@@ -62,7 +62,7 @@ describe('SidebarComponent', () => {
 
       await component.logOut()
 
-      expect(fetchMock.called('http://logout.com/bla?')).toBe(true)
+      expect(fetchMock).toHaveFetched('http://logout.com/bla?')
       expect(window.location.href.slice(0, -1)).toBe(originalUrl)
     })
   })
