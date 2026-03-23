@@ -12,7 +12,7 @@ These fields are used in the following context:
 
 - when building a URL or permalink from several search criteria; these fields will appear as query parameters in the URL, for instance:  
   `/search?organization=MyOrg&format=csv&format=excel`
-- when specifying advanced filters [in a configuration file](../guide/configure.md#search)
+- when specifying advanced filters or search presets [in a configuration file](../guide/configure.md#search)
 
 ## Fields
 
@@ -63,7 +63,9 @@ This field targets the keywords present in a record. These are treated as simple
 ::: info Note for multilingual catalogs
 GeoNetwork 4 supports multilingual keywords.
 
-The keywords will show up in the correct language when viewing a record in applications such as the Datahub, but for the search fields **only the "default" labels are used** (i.e. the labels in the main language of the record).
+The keywords will show up in the correct language when viewing a record in applications such as the Datahub.
+When searching for a keyword, if the `metadata_language` is set to a specific language, this language will be used for the search.
+Otherwise (not set or set to "current") **only the "default" labels are used** (i.e. the labels in the main language of the record).
 
 This means that a "keyword" search filter will show values in potentially many different languages.
 :::
@@ -94,11 +96,17 @@ This field targets the license(s) that are mentioned in a record. Note that this
 
 Other kind of licenses will appear under the label "Unknown or absent".
 
-### Resource type
+### Resource type (deprecated, use `recordKind` instead)
 
 > Field id: `resourceType`
 
-Type of record, such as "dataset" or "service".
+Type of resource, such as "dataset" or "mapDigital".
+
+### Record kind
+
+> Field id: `recordKind`
+
+Kind of record: "dataset" or "service" or "reuse".
 
 ### Representation type
 
@@ -108,6 +116,6 @@ Representation type of a record, such as "vector" or "raster".
 
 ### Metadata standard
 
-> Field id: `standard`
+> Field id: `documentStandard`
 
 This field targets the name of the metadata standard used to describe a record. This can for instance be "ISO 19115-3" or "ISO 19139".
