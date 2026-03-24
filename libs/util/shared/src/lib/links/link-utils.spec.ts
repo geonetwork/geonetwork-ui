@@ -46,6 +46,10 @@ const mockWfsFeatureType = [
     name: 'ft3',
     title: 'Feature Type 3',
   },
+  {
+    name: 'fte',
+    title: 'Feature Type Error',
+  },
 ]
 
 jest.mock('@camptocamp/ogc-client', () => ({
@@ -58,12 +62,16 @@ jest.mock('@camptocamp/ogc-client', () => ({
       return mockWfsFeatureType
     }
     getFeatureTypeFull(name: string) {
-      return Promise.resolve({
-        name,
-        title: mockWfsFeatureType.find((layer) => layer.name === name)?.title,
-        abstract: mockWfsFeatureType.find((layer) => layer.name === name)
-          ?.title,
-      })
+      if (name === 'fte') {
+        return Promise.reject('Something went wrong')
+      } else {
+        return Promise.resolve({
+          name,
+          title: mockWfsFeatureType.find((layer) => layer.name === name)?.title,
+          abstract: mockWfsFeatureType.find((layer) => layer.name === name)
+            ?.title,
+        })
+      }
     }
   },
   OgcApiEndpoint: class {
@@ -533,7 +541,7 @@ describe('link utils', () => {
       ])
     })
 
-    it('should return WFS feature types', async () => {
+    it('should return fulfilled WFS feature types', async () => {
       const layers = await getLayers('https://example.com', 'wfs')
       expect(layers).toEqual([
         {
