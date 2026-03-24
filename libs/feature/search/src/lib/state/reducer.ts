@@ -114,7 +114,6 @@ export function reducerSearch(
     // From router.effects
     // From home - fuzzy-search - search.service
     case fromActions.SET_FILTERS: {
-      console.log('reducerSearch - SET_FILTERS', action.payload)
       return {
         ...state,
         params: {

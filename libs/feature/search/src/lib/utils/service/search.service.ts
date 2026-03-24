@@ -19,13 +19,11 @@ export class SearchService implements SearchServiceI {
   private facade = inject(SearchFacade)
 
   setSortAndFilters(filters: FieldFilters, sort: SortByField) {
-    console.log('SearchService - setSortAndFilters', { filters, sort })
     this.setFilters(filters)
     this.setSortBy(sort)
   }
 
   updateFilters(params: FieldFilters) {
-    console.log('SearchService - updateFilters', params)
     this.facade.searchFilters$
       .pipe(
         first(),
