@@ -225,7 +225,8 @@ For a detailed explanation on the classification system, see [this documentation
   filters.organization = ['Org 1', 'Org 2']
   filters.format = ['format 1', 'format 2']
   filters.documentStandard = ['iso19115-3.2018']
-  filters.inspireKeyword = ['keyword 1', 'keyword 2']
+  filters.keyword = ['keyword 1', 'keyword 2']
+  filters.inspireKeyword = ['http://inspire.ec.europa.eu/theme/er']
   filters.topic = ['boundaries']
   filters.publicationYear = ['2023', '2022']
   filters.isSpatial = ['yes']
@@ -236,6 +237,8 @@ For a detailed explanation on the classification system, see [this documentation
   name = 'otherFilter'
   filters.q = 'full text search'
   ```
+
+      Note: Values for the same filter are treated with an OR logic, value for different filters are treated with an AND logic
 
 #### `[metadata-quality]`
 
