@@ -6,17 +6,27 @@
 [global]
 # This URL (relative or absolute) must point to the API endpoint of a GeoNetwork4 instance
 geonetwork4_api_url = "/geonetwork/srv/api"
-# deprecated - not used anymore
+
+# deprecated - not used currently
 datahub_url = "/datahub"
+
+# Optional; URL template allowing opening datasets in an editor; if set, applications such as the Datahub will offer a button in the header to open the currently-viewed dataset in an editor.
+# The template must include the following placeholders, which allow applications to inject the correct values when generating the final URL:
+# ${record_id}: identifier of the record
+# Example for an integration with the Metadata-Editor:
+# edit_url_template = "/metadata-editor/edit/${record_id}"
+
 # This should point to a proxy to avoid CORS errors on some requests (data preview, OGC capabilities etc.)
 # The actual URL will be appended after this path, e.g. : https://my.proxy/?url=http%3A%2F%2Fencoded.url%2Fows`
 # This is an optional parameter: leave empty to disable proxy usage
 proxy_path = ""
+
 # This optional parameter defines, in which language metadata should be queried in elasticsearch.
 # Use ISO 639-1 (https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format in 2 characters to indicate the language of the metadata.
 # Setting to "current" will use the current language of the User Interface.
 # If not indicated, a wildcard is used and no language preference is applied for the search.
 # metadata_language = "current"
+
 # This optional URL should point to the login page that allows authentication to the datahub.
 # If not indicated, the default geonetwork login page is used.
 # The following three placeholders can be part of this URL:
@@ -26,6 +36,7 @@ proxy_path = ""
 # login_url = "/cas/login?service=${current_url}"
 # logout_url = "/geonetwork/signout"
 # settings_url = "/geonetwork/srv/\${lang3}/admin.console#/organization/users?userOrGroup="
+
 # This optional URL should point to the static html page wc-embedder.html which allows to display a web component (like chart and table) via a permalink.
 # URLs can be indicated from the root of the same server starting with a "/" or as an external URL. Be conscious of potential CORS issues when using an external URL.
 # The default location in the dockerized datahub app for example is "/datahub/wc-embedder.html".

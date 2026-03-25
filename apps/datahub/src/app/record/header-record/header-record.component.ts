@@ -3,6 +3,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
+  OnChanges,
+  SimpleChanges,
   inject,
 } from '@angular/core'
 import { Router } from '@angular/router'
@@ -29,13 +31,18 @@ import {
   iconoirCode,
   iconoirOpenNewWindow,
 } from '@ng-icons/iconoir'
-import { matArrowBack, matCreditCard } from '@ng-icons/material-icons/baseline'
+import {
+  matArrowBack,
+  matCreditCard,
+  matEdit,
+} from '@ng-icons/material-icons/baseline'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { combineLatest, map } from 'rxjs'
+import { combineLatest, map, Observable, of } from 'rxjs'
 import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 export const HEADER_HEIGHT_DEFAULT = 344
 export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 640
@@ -72,24 +79,48 @@ marker('record.metadata.resourceCreated')
       matCreditCard,
       iconoirAppleShortcuts,
       iconoirOpenNewWindow,
+      matEdit,
     }),
     provideNgIconsConfig({
       size: '1.5em',
     }),
   ],
 })
-export class HeaderRecordComponent {
+export class HeaderRecordComponent implements OnChanges {
   facade = inject(MdViewFacade)
   private router = inject(Router)
   private location = inject(Location)
   private platformServiceInterface = inject(PlatformServiceInterface)
+  private recordsRepositoryInterface = inject(RecordsRepositoryInterface)
 
   @Input() metadata: DatasetRecord | ServiceRecord | ReuseRecord
+
+  canEdit$: Observable<boolean> = of(false)
+  editUrl: string
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['metadata'] && this.metadata) {
+      console.log(this.metadata)
+      this.canEdit$ = this.recordsRepositoryInterface.canEditIndexedRecord(
+        this.metadata
+      )
+      this.editUrl = this.editUrlTemplate.replace(
+        '${record_id}',
+        this.metadata.uniqueIdentifier
+      )
+    }
+  }
+
   backgroundCss =
     getThemeConfig().HEADER_BACKGROUND ||
     `center /cover url('assets/img/header_bg.webp')`
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
+  editUrlTemplate = getGlobalConfig().EDIT_URL_TEMPLATE
+
+  openEditUrl() {
+    window.open(this.editUrl, '_blank')
+  }
 
   showOverlay = true
 

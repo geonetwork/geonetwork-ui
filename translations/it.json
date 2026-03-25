@@ -38,6 +38,7 @@
   "dashboard.records.username": "Nome utente",
   "dashboard.records.users": "utenti",
   "datahub.header.datasets": "Catalogo",
+  "datahub.header.edit.url.open": "",
   "datahub.header.lastRecords": "Ultimi",
   "datahub.header.myfavorites": "Miei preferiti",
   "datahub.header.news": "Home",

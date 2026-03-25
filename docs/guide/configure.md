@@ -91,7 +91,21 @@ Some additional notes:
 
 - `datahub_url` (optional)
 
-  deprecated - not used anymore
+  deprecated - not used currently
+
+- `edit_url_template` (optional)
+
+  URL template allowing opening datasets in an editor; if set, applications such as the Datahub will offer a button in the header to open the currently-viewed dataset in an editor.
+
+  The template must include the following placeholders, which allow applications to inject the correct values when generating the final URL:
+
+  - `${record_id}`: identifier of the record
+
+  Example for an integration with the Metadata-Editor:
+
+  ```toml
+  edit_url_template = '/metadata-editor/edit/${record_id}'
+  ```
 
 #### `[theme]`
 
@@ -326,7 +340,7 @@ The map section lets you customize how maps appear and behave across GeoNetwork-
 
 - `external_viewer_url_template` (optional)
 
-  URL template allowing opening map layers in an external viewer; if set, applications such as the Datahub will offer a button next to the map viewer tp open the currently-viewed layers in an external viewer.
+  URL template allowing opening map layers in an external viewer; if set, applications such as the Datahub will offer a button next to the map viewer to open the currently-viewed layers in an external viewer.
 
   The template must include the following placeholders, which allow applications to inject the correct values when generating the final URL:
 

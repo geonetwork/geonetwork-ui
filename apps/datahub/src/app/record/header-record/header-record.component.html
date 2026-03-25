@@ -34,6 +34,25 @@
               >
             </gn-ui-button>
             <div class="flex flex-row content-center gap-3">
+              @if (
+                editUrlTemplate &&
+                !isAuthDisabled &&
+                (canEdit$ | async) &&
+                (isMobile$ | async) === false
+              ) {
+                <gn-ui-button
+                  [type]="'outline'"
+                  (buttonClick)="openEditUrl()"
+                  [style.--gn-ui-button-color]="foregroundColor"
+                  [style.--gn-ui-button-background]="'none'"
+                  [style.--color-gray-300]="foregroundColor"
+                >
+                  <ng-icon name="matEdit"></ng-icon>
+                  <span class="mx-2">{{
+                    'datahub.header.edit.url.open' | translate
+                  }}</span>
+                </gn-ui-button>
+              }
               @if (metadata?.uniqueIdentifier && !isAuthDisabled) {
                 <gn-ui-favorite-star
                   [record]="metadata"

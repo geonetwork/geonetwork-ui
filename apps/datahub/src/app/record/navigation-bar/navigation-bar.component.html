@@ -109,6 +109,22 @@
       class="h-[60px] z-50 flex flex-row gap-3 justify-center items-center px-4 lg:pl-4 lg:justify-end text-sm"
       [class]="displayMobileMenu ? 'border-l-2 border-slate-200' : ''"
     >
+      @if (
+        editUrlTemplate &&
+        !isAuthDisabled &&
+        (canEdit$ | async) &&
+        (isMobile$ | async) === false
+      ) {
+        <gn-ui-button
+          [type]="'outline'"
+          (buttonClick)="openEditUrl()"
+          [style.--gn-ui-button-color]="foregroundColor"
+          [style.--gn-ui-button-background]="'none'"
+          [style.--color-gray-300]="foregroundColor"
+        >
+          <ng-icon name="matEdit"></ng-icon>
+        </gn-ui-button>
+      }
       @if (metadata?.uniqueIdentifier && !isAuthDisabled) {
         <gn-ui-favorite-star
           [record]="metadata"

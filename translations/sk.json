@@ -38,6 +38,7 @@
   "dashboard.records.username": "Užívateľské meno",
   "dashboard.records.users": "{count, plural, =1{užívateľ} other{užívatelia}}",
   "datahub.header.datasets": "Katalóg",
+  "datahub.header.edit.url.open": "",
   "datahub.header.lastRecords": "Najnovšie",
   "datahub.header.myfavorites": "Moje obľúbené",
   "datahub.header.news": "Domov",

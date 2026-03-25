@@ -5,6 +5,8 @@ import {
   ElementRef,
   HostListener,
   Input,
+  OnChanges,
+  SimpleChanges,
   ViewChild,
   inject,
 } from '@angular/core'
@@ -20,8 +22,10 @@ import { getIsMobile } from '@geonetwork-ui/util/shared'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { iconoirMenu } from '@ng-icons/iconoir'
-import { matArrowBack } from '@ng-icons/material-icons/baseline'
+import { matArrowBack, matEdit } from '@ng-icons/material-icons/baseline'
 import { TranslateDirective } from '@ngx-translate/core'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { Observable, of } from 'rxjs'
 
 marker('record.metadata.about')
 marker('record.metadata.capabilities')
@@ -46,19 +50,36 @@ marker('record.metadata.userFeedbacks')
     AnchorLinkDirective,
   ],
   viewProviders: [
-    provideIcons({ iconoirMenu, matArrowBack }),
+    provideIcons({ iconoirMenu, matArrowBack, matEdit }),
     provideNgIconsConfig({
       size: '1.5em',
     }),
   ],
 })
-export class NavigationBarComponent {
+export class NavigationBarComponent implements OnChanges {
   private router = inject(Router)
   private location = inject(Location)
   private platformServiceInterface = inject(PlatformServiceInterface)
+  private recordsRepositoryInterface = inject(RecordsRepositoryInterface)
 
   @Input() metadata: DatasetRecord
   @ViewChild('navBar', { static: false }) mobileMenuRef: ElementRef
+
+  canEdit$: Observable<boolean> = of(false)
+  editUrl: string
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['metadata'] && this.metadata) {
+      this.canEdit$ = this.recordsRepositoryInterface.canEditIndexedRecord(
+        this.metadata
+      )
+      this.editUrl = this.editUrlTemplate.replace(
+        '${record_id}',
+        this.metadata.uniqueIdentifier
+      )
+    }
+  }
+
   displayMobileMenu = false
   anchorLinks = [
     {
@@ -91,6 +112,12 @@ export class NavigationBarComponent {
     },
   ]
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
+  editUrlTemplate = getGlobalConfig().EDIT_URL_TEMPLATE
+
+  openEditUrl() {
+    window.open(this.editUrl, '_blank')
+  }
+
   isMobile$ = getIsMobile()
 
   get isAuthDisabled(): boolean {
