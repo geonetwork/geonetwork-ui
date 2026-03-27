@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   OnDestroy,
   OnInit,
-  inject,
 } from '@angular/core'
 import {
   MdViewFacade,
@@ -13,11 +14,10 @@ import {
   getMetadataQualityConfig,
   MetadataQualityConfig,
 } from '@geonetwork-ui/util/app-config'
-import { RecordMetadataComponent } from '../record-metadata/record-metadata.component'
-import { HeaderRecordComponent } from '../header-record/header-record.component'
-import { CommonModule } from '@angular/common'
-import { TitleService } from '../../router/datahub-title.service'
 import { Subscription, tap } from 'rxjs'
+import { TitleService } from '../../router/datahub-title.service'
+import { RecordHeaderComponent } from '../record-header/record-header.component'
+import { RecordMetadataComponent } from '../record-metadata/record-metadata.component'
 
 @Component({
   selector: 'datahub-record-page',
@@ -28,7 +28,7 @@ import { Subscription, tap } from 'rxjs'
   imports: [
     CommonModule,
     RecordMetadataComponent,
-    HeaderRecordComponent,
+    RecordHeaderComponent,
     RecordMetaComponent,
   ],
 })

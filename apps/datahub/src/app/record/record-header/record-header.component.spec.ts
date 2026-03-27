@@ -2,21 +2,21 @@ import { Location } from '@angular/common'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   datasetRecordsFixture,
   SAMPLE_RECORD,
 } from '@geonetwork-ui/common/fixtures'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { DateService } from '@geonetwork-ui/util/shared'
+import { MockBuilder, MockProvider } from 'ng-mocks'
+import { BehaviorSubject } from 'rxjs'
 import {
   HEADER_HEIGHT_DEFAULT,
   HEADER_HEIGHT_MOBILE_THUMBNAIL,
-  HeaderRecordComponent,
-} from './header-record.component'
-import { MockBuilder, MockProvider } from 'ng-mocks'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { BehaviorSubject } from 'rxjs'
-import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { DateService } from '@geonetwork-ui/util/shared'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+  RecordHeaderComponent,
+} from './record-header.component'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -45,13 +45,13 @@ const locationMock: Partial<Location> = {
   back: jest.fn(),
 }
 
-describe('HeaderRecordComponent', () => {
-  let component: HeaderRecordComponent
-  let fixture: ComponentFixture<HeaderRecordComponent>
+describe('RecordHeaderComponent', () => {
+  let component: RecordHeaderComponent
+  let fixture: ComponentFixture<RecordHeaderComponent>
   let facade
   let router: Router
 
-  beforeEach(() => MockBuilder(HeaderRecordComponent))
+  beforeEach(() => MockBuilder(RecordHeaderComponent))
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -89,7 +89,7 @@ describe('HeaderRecordComponent', () => {
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderRecordComponent)
+    fixture = TestBed.createComponent(RecordHeaderComponent)
     component = fixture.componentInstance
     component.metadata = {
       ...datasetRecordsFixture()[0],

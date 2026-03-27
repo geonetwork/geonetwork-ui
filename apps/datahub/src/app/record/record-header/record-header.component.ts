@@ -2,17 +2,20 @@ import { CommonModule, Location } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   Input,
   OnChanges,
   SimpleChanges,
-  inject,
 } from '@angular/core'
 import { Router } from '@angular/router'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   DatasetRecord,
   ReuseRecord,
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
@@ -24,7 +27,10 @@ import {
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
-import { getIsMobile } from '@geonetwork-ui/util/shared'
+import {
+  getIsMobile,
+  GnUiHumanizeDateDirective,
+} from '@geonetwork-ui/util/shared'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import {
   iconoirAppleShortcuts,
@@ -38,11 +44,7 @@ import {
 } from '@ng-icons/material-icons/baseline'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { combineLatest, map, Observable, of } from 'rxjs'
-import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component'
 
 export const HEADER_HEIGHT_DEFAULT = 344
 export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 640
@@ -52,9 +54,9 @@ marker('record.metadata.resourcePublished')
 marker('record.metadata.resourceCreated')
 
 @Component({
-  selector: 'datahub-header-record',
-  templateUrl: './header-record.component.html',
-  styleUrls: ['./header-record.component.css'],
+  selector: 'datahub-record-header',
+  templateUrl: './record-header.component.html',
+  styleUrls: ['./record-header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -86,7 +88,7 @@ marker('record.metadata.resourceCreated')
     }),
   ],
 })
-export class HeaderRecordComponent implements OnChanges {
+export class RecordHeaderComponent implements OnChanges {
   facade = inject(MdViewFacade)
   private router = inject(Router)
   private location = inject(Location)
