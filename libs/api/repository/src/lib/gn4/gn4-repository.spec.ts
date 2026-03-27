@@ -178,6 +178,7 @@ describe('Gn4Repository', () => {
   })
 
   afterEach(() => {
+    _supportsAuthentication = true
     // Verify that no other requests are outstanding
     httpTestingController.verify()
   })

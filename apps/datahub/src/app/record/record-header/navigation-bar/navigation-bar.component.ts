@@ -1,31 +1,24 @@
-import { CommonModule, Location } from '@angular/common'
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   HostListener,
   Input,
-  OnChanges,
-  SimpleChanges,
   ViewChild,
   inject,
 } from '@angular/core'
-import { Router } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
-import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { AnchorLinkDirective } from '@geonetwork-ui/ui/layout'
-import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import { getIsMobile } from '@geonetwork-ui/util/shared'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { iconoirMenu } from '@ng-icons/iconoir'
-import { matArrowBack, matEdit } from '@ng-icons/material-icons/baseline'
+import { matArrowBack } from '@ng-icons/material-icons/baseline'
 import { TranslateDirective } from '@ngx-translate/core'
-import { Observable, of } from 'rxjs'
+import { RecordActionsComponent } from '../record-actions/record-actions.component'
+import { RecordHeaderService } from '../record-header.service'
 
 marker('record.metadata.about')
 marker('record.metadata.capabilities')
@@ -45,41 +38,21 @@ marker('record.metadata.userFeedbacks')
     CommonModule,
     TranslateDirective,
     ButtonComponent,
-    LanguageSwitcherComponent,
-    FavoriteStarComponent,
     AnchorLinkDirective,
+    RecordActionsComponent,
   ],
   viewProviders: [
-    provideIcons({ iconoirMenu, matArrowBack, matEdit }),
+    provideIcons({ iconoirMenu, matArrowBack }),
     provideNgIconsConfig({
       size: '1.5em',
     }),
   ],
 })
-export class NavigationBarComponent implements OnChanges {
-  private router = inject(Router)
-  private location = inject(Location)
-  private platformServiceInterface = inject(PlatformServiceInterface)
-  private recordsRepositoryInterface = inject(RecordsRepositoryInterface)
+export class NavigationBarComponent {
+  private headerService = inject(RecordHeaderService)
 
   @Input() metadata: DatasetRecord
   @ViewChild('navBar', { static: false }) mobileMenuRef: ElementRef
-
-  canEdit$: Observable<boolean> = of(false)
-  editUrl: string
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['metadata'] && this.metadata) {
-      this.canEdit$ = this.recordsRepositoryInterface.canEditIndexedRecord(
-        this.metadata
-      )
-      this.editUrl = this.editUrlTemplate.replace(
-        '${record_id}',
-        this.metadata.uniqueIdentifier
-      )
-    }
-  }
-
   displayMobileMenu = false
   anchorLinks = [
     {
@@ -111,18 +84,7 @@ export class NavigationBarComponent implements OnChanges {
       label: 'record.metadata.userFeedbacks',
     },
   ]
-  showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
-  editUrlTemplate = getGlobalConfig().EDIT_URL_TEMPLATE
-
-  openEditUrl() {
-    window.open(this.editUrl, '_blank')
-  }
-
   isMobile$ = getIsMobile()
-
-  get isAuthDisabled(): boolean {
-    return !this.platformServiceInterface.supportsAuthentication()
-  }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -142,9 +104,8 @@ export class NavigationBarComponent implements OnChanges {
   toggleMobileMenu() {
     this.displayMobileMenu = !this.displayMobileMenu
   }
+
   back() {
-    this.router.lastSuccessfulNavigation.previousNavigation
-      ? this.location.back()
-      : this.router.navigateByUrl('/search')
+    this.headerService.back()
   }
 }

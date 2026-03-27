@@ -1,18 +1,11 @@
-import { Location } from '@angular/common'
 import { ElementRef } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { Router } from '@angular/router'
-import { SearchService } from '@geonetwork-ui/feature/search'
 import { MockBuilder, MockProvider } from 'ng-mocks'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { BehaviorSubject } from 'rxjs'
+import { RecordHeaderService } from '../record-header.service'
 import { NavigationBarComponent } from './navigation-bar.component'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getGlobalConfig() {
-    return {
-      LANGUAGES: ['en', 'es'],
-    }
-  },
   getOptionalSearchConfig() {
     return {
       LIMIT: 10,
@@ -20,43 +13,22 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
   },
 }))
 
-const routerMock: Partial<Router> = {
-  lastSuccessfulNavigation: {
-    previousNavigation: null,
-  } as any,
-  navigateByUrl: jest.fn(),
-}
-const locationMock: Partial<Location> = {
-  back: jest.fn(),
-}
-
 describe('NavigationBarComponent', () => {
   let component: NavigationBarComponent
   let fixture: ComponentFixture<NavigationBarComponent>
-  let router: Router
 
   beforeEach(() => MockBuilder(NavigationBarComponent))
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        MockProvider(SearchService, {
-          updateFilters: jest.fn(),
-        }),
-        {
-          provide: Router,
-          useValue: routerMock,
-        },
-        {
-          provide: Location,
-          useValue: locationMock,
-        },
-        MockProvider(PlatformServiceInterface, {
-          supportsAuthentication: jest.fn(() => true),
+        MockProvider(RecordHeaderService, {
+          back: jest.fn(),
+          canEditFromUrl$: new BehaviorSubject(true),
+          openEditUrl: jest.fn(),
         }),
       ],
     }).compileComponents()
-    router = TestBed.inject(Router)
   })
 
   beforeEach(() => {
@@ -119,20 +91,6 @@ describe('NavigationBarComponent', () => {
       component.displayMobileMenu = true
       component.toggleMobileMenu()
       expect(component.displayMobileMenu).toBe(false)
-    })
-  })
-
-  describe('#back', () => {
-    it('should call the back function of Location if previous navigation', () => {
-      router.lastSuccessfulNavigation.previousNavigation = {} as any
-      component.back()
-      expect(locationMock.back).toHaveBeenCalled()
-    })
-
-    it('should call the navigateByUrl function of Router to /search if no previous navigation', () => {
-      router.lastSuccessfulNavigation.previousNavigation = null
-      component.back()
-      expect(router.navigateByUrl).toHaveBeenCalledWith('/search')
     })
   })
 })

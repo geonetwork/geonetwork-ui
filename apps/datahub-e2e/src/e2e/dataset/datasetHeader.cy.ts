@@ -31,7 +31,7 @@ describe('dataset: header', () => {
       .should('be.visible')
 
     // it should display the title
-    cy.get('datahub-header-record')
+    cy.get('datahub-record-header')
       .find('header')
       .find('.font-title')
       .invoke('text')
