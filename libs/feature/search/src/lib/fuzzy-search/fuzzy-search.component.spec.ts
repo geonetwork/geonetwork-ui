@@ -36,7 +36,7 @@ describe('FuzzySearchComponent', () => {
     await TestBed.configureTestingModule({
       providers: [
         provideI18n({
-          useDefaultLang: false,
+          fallbackLang: null,
         }),
         {
           provide: SearchFacade,

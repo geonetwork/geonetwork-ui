@@ -84,8 +84,7 @@ jobs:
 
       - name: Build docker images for affected apps
         if: github.event_name != 'release'
-        # FIXME: excluding data-platform until it has a remote registry to be pushed
-        run: npx nx affected --target=docker-build --exclude=data-platform
+        run: npx nx affected --target=docker-build
 
       - name: Build docker images for tools
         working-directory: tools

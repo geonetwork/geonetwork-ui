@@ -1,6 +1,4 @@
-import { HttpClient } from '@angular/common/http'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
-import { FileTranslateLoader } from './file.translate.loader'
 import {
   TranslateCompiler,
   TranslateDefaultParser,
@@ -9,26 +7,34 @@ import {
   TranslateParser,
 } from '@ngx-translate/core'
 import { Injectable } from '@angular/core'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
+import { HttpClient } from '@angular/common/http'
+import { FileTranslateLoader } from './file.translate.loader'
 
 export const DEFAULT_LANG = 'en'
 
 // Caution: changing this can break language selection from third parties!
 export const LANGUAGE_STORAGE_KEY = 'geonetwork-ui-language'
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new FileTranslateLoader(http, './assets/i18n/')
-}
-
 export const TRANSLATE_DEFAULT_CONFIG: TranslateModuleConfig = {
   compiler: {
     provide: TranslateCompiler,
     useClass: TranslateMessageFormatCompiler,
   },
-  loader: {
-    provide: TranslateLoader,
-    useFactory: HttpLoaderFactory,
-    deps: [HttpClient],
-  },
+  loader: [
+    {
+      provide: TRANSLATE_HTTP_LOADER_CONFIG,
+      useValue: {
+        prefix: './assets/i18n/',
+        suffix: '.json',
+      },
+    },
+    {
+      provide: TranslateLoader,
+      useClass: FileTranslateLoader,
+      deps: [HttpClient, TRANSLATE_HTTP_LOADER_CONFIG],
+    },
+  ],
 }
 
 @Injectable()

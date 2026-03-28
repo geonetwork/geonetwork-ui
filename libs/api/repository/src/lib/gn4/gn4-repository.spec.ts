@@ -16,10 +16,10 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import {
   datasetRecordsFixture,
+  duplicateDatasetRecordAsXmlFixture,
   simpleDatasetRecordAsXmlFixture,
   simpleDatasetRecordFixture,
   simpleDatasetRecordWithFcatsFixture,
-  duplicateDatasetRecordAsXmlFixture,
   simpleServiceRecordFixture,
 } from '@geonetwork-ui/common/fixtures'
 import {
@@ -119,7 +119,9 @@ const SAMPLE_RECORD = {
 }
 
 const translateServiceMock = {
-  currentLang: 'fr',
+  getCurrentLang() {
+    return 'fr'
+  },
 }
 
 describe('Gn4Repository', () => {

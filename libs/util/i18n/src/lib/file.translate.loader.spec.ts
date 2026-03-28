@@ -1,25 +1,26 @@
 import { TestBed } from '@angular/core/testing'
-import { FileTranslateLoader } from './file.translate.loader'
 import {
-  HttpClientTestingModule,
   HttpTestingController,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing'
-import { HttpClient } from '@angular/common/http'
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
+import { provideI18n } from './i18n.providers'
+import { TRANSLATE_DEFAULT_CONFIG } from './i18n.constants'
+import { TranslateLoader } from '@ngx-translate/core'
 
 describe('FileTranslateLoader', () => {
-  let loader: FileTranslateLoader
+  let loader: TranslateLoader
   let httpController: HttpTestingController
 
   beforeEach(() => {
-    fetchMock.reset()
+    fetchMock.mockReset()
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      providers: [
+        provideI18n(TRANSLATE_DEFAULT_CONFIG, false), // do not use local storage to avoid additional requests
+        provideHttpClientTesting(),
+      ],
     })
-    loader = new FileTranslateLoader(
-      TestBed.inject(HttpClient),
-      './assets/i18n/'
-    )
+    loader = TestBed.inject(TranslateLoader)
     httpController = TestBed.inject(HttpTestingController)
   })
 

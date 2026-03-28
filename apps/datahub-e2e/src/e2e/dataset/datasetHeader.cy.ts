@@ -50,10 +50,8 @@ describe('dataset: header', () => {
       .as('overlay')
       .should('have.length', 1)
     cy.get('@overlay').find('gn-ui-button').click()
-    cy.get('[class="basicLightbox__placeholder"]')
-      .as('lightbox')
-      .find('img')
-      .should('have.length', 1)
+    cy.get('[data-test=lightbox-image]').as('lightbox')
+    cy.get('@lightbox').should('have.length', 1)
     cy.get('body').click()
     cy.get('@lightbox').should('have.length', 0)
 

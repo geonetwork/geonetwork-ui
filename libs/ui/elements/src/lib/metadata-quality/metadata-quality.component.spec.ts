@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MetadataQualityComponent } from './metadata-quality.component'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import {
   CatalogRecord,
   ReuseRecord,
@@ -15,7 +14,6 @@ describe('MetadataQualityComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [provideI18n()],
     }).compileComponents()
   })

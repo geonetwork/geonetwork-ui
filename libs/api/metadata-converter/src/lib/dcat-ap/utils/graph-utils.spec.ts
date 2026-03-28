@@ -241,9 +241,9 @@ describe('graph utils', () => {
  xmlns:dcterms="http://purl.org/dc/terms/"
  xmlns:dcat="http://www.w3.org/ns/dcat#">
     <dcat:Dataset>
-        <dcterms:title rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" xml:lang="en">new title in english</dcterms:title>
-        <dcterms:title rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" xml:lang="de">neues Titel</dcterms:title>
-        <dcterms:title rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" xml:lang="nl">nieuwe titel</dcterms:title>
+        <dcterms:title xml:lang="en">new title in english</dcterms:title>
+        <dcterms:title xml:lang="de">neues Titel</dcterms:title>
+        <dcterms:title xml:lang="nl">nieuwe titel</dcterms:title>
     </dcat:Dataset>
 </rdf:RDF>
 `)

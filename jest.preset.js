@@ -16,6 +16,7 @@ const npmDependenciesOnlyInEsm = [
   'quick-lru',
   'geotiff',
   'pbf',
+  'marked',
 ]
 
 module.exports = {
@@ -31,7 +32,6 @@ module.exports = {
       {
         tsconfig: '<rootDir>/tsconfig.spec.json',
         stringifyContentPathRegex: '\\.(html|svg)$',
-        isolatedModules: true,
       },
     ],
   },

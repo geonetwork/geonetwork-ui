@@ -1,29 +1,29 @@
 import { TestBed } from '@angular/core/testing'
-import { FileWithOverridesTranslateLoader } from './file-with-overrides.translate.loader'
 import {
-  HttpClientTestingModule,
   HttpTestingController,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing'
-import { HttpClient } from '@angular/common/http'
 import * as AppConfig from '../app-config'
-import { loadAppConfig } from '../app-config'
+import { loadAppConfig, TRANSLATE_WITH_OVERRIDES_CONFIG } from '../app-config'
 import { appConfigWithTranslationFixture } from '../fixtures'
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { TranslateLoader } from '@ngx-translate/core'
 
 describe('FileTranslateLoader', () => {
-  let loader: FileWithOverridesTranslateLoader
+  let loader: TranslateLoader
   let httpController: HttpTestingController
 
   beforeEach(() => {
-    fetchMock.reset()
+    fetchMock.mockReset()
     jest.spyOn(AppConfig, 'getCustomTranslations')
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      providers: [
+        provideI18n(TRANSLATE_WITH_OVERRIDES_CONFIG, false), // do not use local storage to avoid additional requests
+        provideHttpClientTesting(),
+      ],
     })
-    loader = new FileWithOverridesTranslateLoader(
-      TestBed.inject(HttpClient),
-      './assets/i18n/'
-    )
+    loader = TestBed.inject(TranslateLoader)
     httpController = TestBed.inject(HttpTestingController)
   })
 

@@ -17,7 +17,7 @@ import { DATAHUB_CONFIG_PROVIDERS } from '@geonetwork-ui/apps/datahub/app.provid
 import { AppComponent } from '@geonetwork-ui/apps/datahub/app.component.ts'
 import { AsyncPipe } from '@angular/common'
 import { Router } from '@angular/router'
-import { OverlayContainer } from '@angular/cdk/overlay'
+import { Overlay, OverlayContainer } from '@angular/cdk/overlay'
 import { WebcomponentOverlayContainer } from '../../webcomponent-overlay-container'
 import { provideGn4 } from '@geonetwork-ui/api/repository'
 import { copyFontFacesToDocument } from '../base.component'
@@ -29,6 +29,7 @@ import { copyFontFacesToDocument } from '../base.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [
+    Overlay,
     {
       provide: OverlayContainer,
       useClass: WebcomponentOverlayContainer,

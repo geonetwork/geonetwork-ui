@@ -52,7 +52,7 @@ export class RecordPreviewFeedComponent extends RecordPreviewComponent {
   protected elementRef: ElementRef
   private translate = inject(TranslateService)
 
-  timeFormat = new Duration(this.translate.currentLang, {})
+  timeFormat = new Duration(this.translate.getCurrentLang(), {})
 
   constructor() {
     const elementRef = inject(ElementRef)

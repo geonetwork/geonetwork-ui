@@ -18,7 +18,7 @@
           class="absolute bottom-0 right-0 z-10 mr-2 mb-2"
           [type]="'outline'"
           [extraClass]="'!py-2 !px-0'"
-          (buttonClick)="openLightbox(imageUrl)"
+          (buttonClick)="openLightbox()"
         >
           <ng-icon name="matZoomOutMap"></ng-icon>
         </gn-ui-button>
@@ -26,3 +26,13 @@
     </div>
   }
 </gn-ui-content-ghost>
+
+<ng-template #imageTemplate>
+  <img
+    data-test="lightbox-image"
+    class="bg-white max-h-[90vh] max-w-[90vw]"
+    [src]="imageUrl"
+    alt="Preview image"
+    (click)="closeLightbox()"
+  />
+</ng-template>

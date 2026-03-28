@@ -1,9 +1,9 @@
 import {
   parseConfigSection,
-  parseTranslationsConfigSection,
   parseMultiConfigSection,
+  parseTranslationsConfigSection,
 } from './parse-utils'
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
 
 describe('parse utils', () => {
   let result
@@ -12,7 +12,7 @@ describe('parse utils', () => {
 
   beforeEach(() => {
     jest.spyOn(global.console, 'warn')
-    fetchMock.reset()
+    fetchMock.mockReset()
     warnings = []
     errors = []
   })

@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { TranslateService } from '@ngx-translate/core'
 import { toLang3 } from '@geonetwork-ui/util/i18n'
@@ -13,7 +13,7 @@ export class MetadataUrlService {
   getUrl(uuid: string, apiPath: string = this.apiConfiguration.basePath) {
     const prefix = `${apiPath}/../`
     return `${prefix}${toLang3(
-      this.translate.currentLang
+      this.translate.getCurrentLang()
     )}/catalog.search#/metadata/${uuid}`
   }
 }

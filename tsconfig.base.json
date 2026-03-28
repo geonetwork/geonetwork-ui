@@ -5,7 +5,6 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2021",
@@ -66,6 +65,12 @@
       ],
       "@geonetwork-ui/util/i18n/language-codes": [
         "libs/util/i18n/src/lib/language-codes.ts"
+      ],
+      "@geonetwork-ui/util/i18n/embedded-translate-loader": [
+        "libs/util/i18n/src/lib/embedded.translate.loader.ts"
+      ],
+      "@geonetwork-ui/util/i18n/test-translate-loader": [
+        "libs/util/i18n/src/lib/test.translate.loader.ts"
       ],
       "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"]
     },

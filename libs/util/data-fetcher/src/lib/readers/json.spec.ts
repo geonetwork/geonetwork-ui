@@ -1,5 +1,5 @@
 import { JsonReader, parseJson } from './json'
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
 import path from 'path'
 import fs from 'fs/promises'
 import { useCache } from '@camptocamp/ogc-client'
@@ -229,9 +229,9 @@ describe('json parsing', () => {
     let cacheActive = true
     beforeEach(() => {
       jest.clearAllMocks()
-      fetchMock.get(
-        (url) => new URL(url).hostname === 'localfile',
-        async (url) => {
+      fetchMock.route(
+        ({ url }) => new URL(url).hostname === 'localfile',
+        async ({ url }) => {
           const filePath = path.join(__dirname, '../..', new URL(url).pathname)
           return {
             body: await fs.readFile(filePath, 'utf8'),
@@ -252,7 +252,7 @@ describe('json parsing', () => {
       reader.load()
     })
     afterEach(() => {
-      fetchMock.reset()
+      fetchMock.mockReset()
     })
     describe('#info', () => {
       it('returns dataset info', async () => {

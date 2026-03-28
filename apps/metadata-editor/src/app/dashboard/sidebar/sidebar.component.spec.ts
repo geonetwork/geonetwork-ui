@@ -8,7 +8,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { MockBuilder, MockProvider, MockProviders } from 'ng-mocks'
 import { SidebarComponent } from './sidebar.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import fetchMock from 'fetch-mock-jest'
+import fetchMock from '@fetch-mock/jest'
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent
@@ -16,7 +16,7 @@ describe('SidebarComponent', () => {
   let service: AuthService
 
   beforeEach(() => {
-    fetchMock.reset()
+    fetchMock.mockReset()
   })
 
   beforeEach(() => {
@@ -62,7 +62,7 @@ describe('SidebarComponent', () => {
 
       await component.logOut()
 
-      expect(fetchMock.called('http://logout.com/bla?')).toBe(true)
+      expect(fetchMock).toHaveFetched('http://logout.com/bla?')
       expect(window.location.href.slice(0, -1)).toBe(originalUrl)
     })
   })

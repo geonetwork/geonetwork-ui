@@ -1,4 +1,3 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordPreviewRowComponent } from './record-preview-row.component'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -6,12 +5,6 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 describe('RecordPreviewDatahubComponent', () => {
   let component: RecordPreviewRowComponent
   let fixture: ComponentFixture<RecordPreviewRowComponent>
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents()
-  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RecordPreviewRowComponent)

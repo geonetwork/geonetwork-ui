@@ -10,7 +10,9 @@ import { TranslateService } from '@ngx-translate/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const translateServiceMock = {
-  currentLang: 'fr',
+  getCurrentLang() {
+    return 'fr'
+  },
 }
 
 class AvatarServiceInterfaceMock {

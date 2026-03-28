@@ -1,5 +1,5 @@
 import { HttpClient, HttpEventType } from '@angular/common/http'
-import { Injectable, InjectionToken, inject } from '@angular/core'
+import { inject, Injectable, InjectionToken } from '@angular/core'
 import {
   KeywordApiResponse,
   ThesaurusApiResponse,
@@ -97,7 +97,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
   private keywordsByThesauri: Record<string, Observable<Keyword[]>> = {}
 
   private get lang3() {
-    return toLang3(this.translateService.currentLang)
+    return toLang3(this.translateService.getCurrentLang())
   }
 
   constructor() {
