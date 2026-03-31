@@ -20,7 +20,7 @@
     ></gn-ui-dropdown-selector>
     @if (yChoices$ | async; as yChoices) {
       <gn-ui-dropdown-selector
-        class="basis-1/4 select-y-prop"
+        class="basis-1/4 flex items-center select-y-prop"
         [choices]="yChoices"
         [disabled]="isCountAggregation"
         (selectValue)="yProperty$.next($event)"
@@ -29,9 +29,9 @@
       ></gn-ui-dropdown-selector>
     }
     <gn-ui-dropdown-selector
-      class="basis-1/4"
+      class="basis-1/4 aggregation-choices"
       [choices]="aggregationChoices"
-      class="aggregation-choices"
+      [disabled]="!yProperty$.value"
       (selectValue)="aggregation$.next($event)"
       [selected]="aggregation$.value"
       [title]="'chart.dropdown.aggregation' | translate"

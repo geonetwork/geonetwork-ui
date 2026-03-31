@@ -102,7 +102,7 @@ export class DropdownSelectorComponent implements OnInit {
   }
 
   getChoiceLabel(): string {
-    return this.selectedChoice?.label
+    return this.selectedChoice?.label ?? '\u00A0'
   }
 
   ngOnInit(): void {
