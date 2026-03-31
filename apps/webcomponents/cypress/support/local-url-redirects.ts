@@ -5,26 +5,14 @@
  */
 
 export function defineLocalRedirections() {
-  cy.intercept('https://www.geo2france.fr/geonetwork/**', (req) => {
+  // general redirection to the local geonetwork from the docker-composition
+  cy.intercept('https://*/geonetwork/**', (req) => {
     req.url = req.url.replace(
-      'https://www.geo2france.fr/geonetwork',
+      /^https:\/\/.+\/geonetwork/,
       'http://localhost:8080/geonetwork'
     )
-  })
-  cy.intercept('https://www.geo2france.fr/datahub/**', (req) => {
-    req.url = req.url.replace('https://www.geo2france.fr/datahub', '/datahub')
-  })
 
-  cy.intercept('https://www.geo2france.fr/mapstore/proxy/?url=**', (req) => {
-    const proxiedUrl = req.url.replace(
-      'https://www.geo2france.fr/mapstore/proxy/?url=',
-      ''
-    )
-    req.url = decodeURIComponent(proxiedUrl)
-  })
-
-  // this will only change some values inside the bodies
-  cy.intercept('https://www.geo2france.fr/**', (req) => {
+    // this will only change some values inside the bodies
     const bodyStr = JSON.stringify(req.body)
     req.body = JSON.parse(
       bodyStr.replace(
@@ -32,5 +20,19 @@ export function defineLocalRedirections() {
         '04bcec79-5b25-4b16-b635-73115f7456e4'
       )
     )
-  })
+  }).as('toGeoNetworkApi')
+
+  // makes the redirection to a datahub instance work
+  cy.intercept('https://www.geo2france.fr/datahub/**', (req) => {
+    req.url = req.url.replace('https://www.geo2france.fr/datahub', '/datahub')
+  }).as('toDatahubApp')
+
+  // works around the OWS proxy present for some datasets
+  cy.intercept('https://www.geo2france.fr/mapstore/proxy/?url=**', (req) => {
+    const proxiedUrl = req.url.replace(
+      'https://www.geo2france.fr/mapstore/proxy/?url=',
+      ''
+    )
+    req.url = decodeURIComponent(proxiedUrl)
+  }).as('workdAroundOxsProxy')
 }
