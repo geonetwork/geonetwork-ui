@@ -73,7 +73,9 @@ export class DownloadsListComponent {
         /^.*?:/,
         ''
       )
-      const uniqueKey = `${format}-${withoutNameSpace}`
+      const uniqueKey = link.accessServiceProtocol
+        ? `${format}-${withoutNameSpace}`
+        : `${format}-${withoutNameSpace}-${link.url}`
       if (!preferredLinks.has(uniqueKey)) {
         preferredLinks.set(uniqueKey, link)
       } else {

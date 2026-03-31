@@ -289,7 +289,7 @@ describe('DownloadsListComponent', () => {
     })
   })
   describe('filtering by protocol', () => {
-    it('removes duplicate formats if the lqyernqme is the same', () => {
+    it('removes duplicate formats, but keeps non-service links with same name and different URLs', () => {
       const links = [
         aSetOfLinksFixture().dataCsv(),
         { ...aSetOfLinksFixture().dataCsv(), name: 'hello world' },
@@ -310,6 +310,10 @@ describe('DownloadsListComponent', () => {
         JSON.stringify([
           aSetOfLinksFixture().dataCsv(),
           { ...aSetOfLinksFixture().dataCsv(), name: 'hello world' },
+          {
+            ...aSetOfLinksFixture().dataCsv(),
+            url: new URL('http://my.server/files/different.csv'),
+          },
           aSetOfLinksFixture().dataJson(),
         ])
       )
