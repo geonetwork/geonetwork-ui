@@ -11,7 +11,11 @@ import {
   getOptionalSearchConfig,
   getThemeConfig,
 } from '@geonetwork-ui/util/app-config'
-import { LOGIN_URL, METADATA_LANGUAGE } from '@geonetwork-ui/api/repository'
+import {
+  LOGIN_URL,
+  METADATA_LANGUAGE,
+  provideRepositoryUrl,
+} from '@geonetwork-ui/api/repository'
 import {
   EXTERNAL_VIEWER_OPEN_NEW_TAB,
   EXTERNAL_VIEWER_URL_TEMPLATE,
@@ -53,6 +57,9 @@ import { SearchPageComponent } from './home/search/search-page/search-page.compo
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
 
+/**
+ * These providers are separate because they are environment providers (not useable at Component-level)
+ */
 export const DATAHUB_ROUTER_PROVIDERS = makeEnvironmentProviders([
   importProvidersFrom(
     DefaultRouterModule.forRoot({
@@ -72,6 +79,7 @@ export const DATAHUB_ROUTER_PROVIDERS = makeEnvironmentProviders([
  * into DI token values used throughout the Datahub app
  */
 export const DATAHUB_CONFIG_PROVIDERS: Array<Provider> = [
+  provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
   {
     provide: PROXY_PATH,
     useFactory: () => getGlobalConfig().PROXY_PATH,

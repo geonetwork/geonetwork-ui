@@ -27,10 +27,10 @@ import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
 import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { provideGn4, provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { StoreModule } from '@ngrx/store'
+import { provideGn4 } from '@geonetwork-ui/api/repository'
 
 if (environment.production) {
   enableProdMode()
@@ -76,7 +76,6 @@ loadAppConfig().then(() => {
       DATAHUB_CONFIG_PROVIDERS,
       provideI18n(TRANSLATE_WITH_OVERRIDES_CONFIG),
       provideGn4(),
-      provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
     ],
   }).catch((err) => console.error(err))
 })
