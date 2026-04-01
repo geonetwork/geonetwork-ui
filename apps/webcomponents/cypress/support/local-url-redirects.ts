@@ -34,5 +34,5 @@ export function defineLocalRedirections() {
       ''
     )
     req.url = decodeURIComponent(proxiedUrl)
-  }).as('workdAroundOxsProxy')
+  }).as('workdAroundOwsProxy')
 }
