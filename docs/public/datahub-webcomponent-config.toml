@@ -1,5 +1,5 @@
 [global]
-geonetwork4_api_url = "/geonetwork/srv/api"
+geonetwork4_api_url = "https://geonetwork-ui.labs.camptocamp.com/geonetwork/srv/api"
 
 [theme]
 primary_color = "#c82850"
