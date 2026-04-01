@@ -67,29 +67,32 @@ export class DownloadsListComponent {
   ): DatasetDownloadDistribution[] {
     const preferredLinks = new Map<string, DatasetDownloadDistribution>()
 
-    links.forEach((link) => {
-      const format = getFileFormat(link)
-      const withoutNameSpace = (link.name || link.description || '').replace(
-        /^.*?:/,
-        ''
-      )
-      const uniqueKey = link.accessServiceProtocol
-        ? `${format}-${withoutNameSpace}`
-        : `${format}-${withoutNameSpace}-${link.url}`
-      if (!preferredLinks.has(uniqueKey)) {
-        preferredLinks.set(uniqueKey, link)
-      } else {
-        const existingLink = preferredLinks.get(uniqueKey)
-        if (
-          link.accessServiceProtocol === 'ogcFeatures' &&
-          existingLink?.accessServiceProtocol !== 'ogcFeatures'
-        ) {
+    links
+      .filter((link) => link.accessServiceProtocol)
+      .forEach((link) => {
+        const format = getFileFormat(link)
+        const withoutNameSpace = (link.name || link.description || '').replace(
+          /^.*?:/,
+          ''
+        )
+        const uniqueKey = `${format}-${withoutNameSpace}`
+        if (!preferredLinks.has(uniqueKey)) {
           preferredLinks.set(uniqueKey, link)
+        } else {
+          const existingLink = preferredLinks.get(uniqueKey)
+          if (
+            link.accessServiceProtocol === 'ogcFeatures' &&
+            existingLink?.accessServiceProtocol !== 'ogcFeatures'
+          ) {
+            preferredLinks.set(uniqueKey, link)
+          }
         }
-      }
-    })
+      })
 
-    return Array.from(preferredLinks.values())
+    const preferredSet = new Set(preferredLinks.values())
+    return links.filter(
+      (link) => !link.accessServiceProtocol || preferredSet.has(link)
+    )
   }
 
   get filteredLinks(): DatasetDownloadDistribution[] {

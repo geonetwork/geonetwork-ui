@@ -289,7 +289,33 @@ describe('DownloadsListComponent', () => {
     })
   })
   describe('filtering by protocol', () => {
-    it('removes duplicate formats, but keeps non-service links with same name and different URLs', () => {
+    it('removes duplicate formats if the layer name is the same for service links', () => {
+      const links: DatasetDownloadDistribution[] = [
+        {
+          ...aSetOfLinksFixture().dataCsv(),
+          accessServiceProtocol: 'wfs' as ServiceProtocol,
+        },
+        {
+          ...aSetOfLinksFixture().dataCsv(),
+          url: new URL('http://other.server/data.csv'),
+          accessServiceProtocol: 'wfs' as ServiceProtocol,
+        },
+        aSetOfLinksFixture().dataJson(),
+      ]
+
+      const result = component['removeDuplicateFormats'](links)
+
+      expect(JSON.stringify(result)).toEqual(
+        JSON.stringify([
+          {
+            ...aSetOfLinksFixture().dataCsv(),
+            accessServiceProtocol: 'wfs' as ServiceProtocol,
+          },
+          aSetOfLinksFixture().dataJson(),
+        ])
+      )
+    })
+    it('does not deduplicate non-service links', () => {
       const links = [
         aSetOfLinksFixture().dataCsv(),
         { ...aSetOfLinksFixture().dataCsv(), name: 'hello world' },
@@ -306,17 +332,7 @@ describe('DownloadsListComponent', () => {
 
       const result = component['removeDuplicateFormats'](links)
 
-      expect(JSON.stringify(result)).toEqual(
-        JSON.stringify([
-          aSetOfLinksFixture().dataCsv(),
-          { ...aSetOfLinksFixture().dataCsv(), name: 'hello world' },
-          {
-            ...aSetOfLinksFixture().dataCsv(),
-            url: new URL('http://my.server/files/different.csv'),
-          },
-          aSetOfLinksFixture().dataJson(),
-        ])
-      )
+      expect(result).toEqual(links)
     })
     it('prioritizes ogcFeatures protocol', () => {
       const links: DatasetDownloadDistribution[] = [
