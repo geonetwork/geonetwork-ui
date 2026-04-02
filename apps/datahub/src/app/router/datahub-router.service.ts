@@ -113,7 +113,7 @@ export class DatahubRouterService {
   }
 
   getSearchRoute(): string {
-    return `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}`
+    return ROUTER_ROUTE_SEARCH
   }
 
   getOrganizationPageRoute(): string {
