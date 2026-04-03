@@ -2,8 +2,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input,
   inject,
+  Input,
 } from '@angular/core'
 import { TranslateDirective, TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -67,32 +67,29 @@ export class DownloadsListComponent {
   ): DatasetDownloadDistribution[] {
     const preferredLinks = new Map<string, DatasetDownloadDistribution>()
 
-    links
-      .filter((link) => link.accessServiceProtocol)
-      .forEach((link) => {
-        const format = getFileFormat(link)
-        const withoutNameSpace = (link.name || link.description || '').replace(
-          /^.*?:/,
-          ''
-        )
-        const uniqueKey = `${format}-${withoutNameSpace}`
-        if (!preferredLinks.has(uniqueKey)) {
+    links.forEach((link, index) => {
+      const format = getFileFormat(link)
+      const withoutNameSpace = (link.name || link.description || '').replace(
+        /^.*?:/,
+        ''
+      )
+      const uniqueKey = link.accessServiceProtocol
+        ? `${format}-${withoutNameSpace}`
+        : index.toString() // direct download links should not be deduplicated
+      if (!preferredLinks.has(uniqueKey)) {
+        preferredLinks.set(uniqueKey, link)
+      } else {
+        const existingLink = preferredLinks.get(uniqueKey)
+        if (
+          link.accessServiceProtocol === 'ogcFeatures' &&
+          existingLink?.accessServiceProtocol !== 'ogcFeatures'
+        ) {
           preferredLinks.set(uniqueKey, link)
-        } else {
-          const existingLink = preferredLinks.get(uniqueKey)
-          if (
-            link.accessServiceProtocol === 'ogcFeatures' &&
-            existingLink?.accessServiceProtocol !== 'ogcFeatures'
-          ) {
-            preferredLinks.set(uniqueKey, link)
-          }
         }
-      })
+      }
+    })
 
-    const preferredSet = new Set(preferredLinks.values())
-    return links.filter(
-      (link) => !link.accessServiceProtocol || preferredSet.has(link)
-    )
+    return Array.from(preferredLinks.values())
   }
 
   get filteredLinks(): DatasetDownloadDistribution[] {
