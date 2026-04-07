@@ -16,6 +16,7 @@ import { WebcomponentOverlayContainer } from '../../webcomponent-overlay-contain
 import { provideGn4 } from '@geonetwork-ui/api/repository'
 import { copyFontFacesToDocument } from '../base.component'
 import { standaloneConfigurationObject } from '../../configuration'
+import { TranslateService } from '@ngx-translate/core'
 
 // We need only the providers and app component from the Datahub so we work around this linting rule
 // eslint-disable-next-line @nx/enforce-module-boundaries
@@ -45,6 +46,7 @@ export class GnDatahubComponent implements OnInit {
   configReady$: Promise<boolean>
   router = inject(Router)
   injector = inject(Injector)
+  translate = inject(TranslateService)
 
   ngOnInit() {
     const elementRef = this.injector.get(ElementRef)
@@ -54,6 +56,8 @@ export class GnDatahubComponent implements OnInit {
     overlayContainer.setRoot(elementRef.nativeElement.shadowRoot)
 
     copyFontFacesToDocument(this.injector.get(ElementRef).nativeElement)
+
+    this.translate.use(this.translate.getBrowserLang())
 
     // once the config is loaded, do initial navigation
     this.configReady$ = loadAppConfig(this.configUrl).then(() => {
