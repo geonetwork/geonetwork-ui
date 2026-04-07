@@ -2,8 +2,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input,
   inject,
+  Input,
 } from '@angular/core'
 import { TranslateDirective, TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -67,13 +67,15 @@ export class DownloadsListComponent {
   ): DatasetDownloadDistribution[] {
     const preferredLinks = new Map<string, DatasetDownloadDistribution>()
 
-    links.forEach((link) => {
+    links.forEach((link, index) => {
       const format = getFileFormat(link)
       const withoutNameSpace = (link.name || link.description || '').replace(
         /^.*?:/,
         ''
       )
-      const uniqueKey = `${format}-${withoutNameSpace}`
+      const uniqueKey = link.accessServiceProtocol
+        ? `${format}-${withoutNameSpace}`
+        : index.toString() // direct download links should not be deduplicated
       if (!preferredLinks.has(uniqueKey)) {
         preferredLinks.set(uniqueKey, link)
       } else {
