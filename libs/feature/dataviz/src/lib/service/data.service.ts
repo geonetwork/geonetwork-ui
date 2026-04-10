@@ -197,14 +197,19 @@ export class DataService {
     const collectionInfo = await this.getDownloadUrlsFromOgcApi(
       ogcApiLink.url.href
     )
-    return Object.keys(collectionInfo.bulkDownloadLinks).map((downloadLink) => {
+
+    return Object.keys(collectionInfo.bulkDownloadLinks).map((mimeType) => {
+      const urlWithoutLimit = new URL(
+        collectionInfo.bulkDownloadLinks[mimeType]
+      )
+      urlWithoutLimit.searchParams.delete('limit')
       return {
         ...ogcApiLink,
         name: collectionInfo.id,
         type: 'download',
-        url: new URL(collectionInfo.bulkDownloadLinks[downloadLink]),
+        url: urlWithoutLimit,
         mimeType: getMimeTypeForFormat(
-          getFileFormatFromServiceOutput(downloadLink)
+          getFileFormatFromServiceOutput(mimeType)
         ),
       }
     })

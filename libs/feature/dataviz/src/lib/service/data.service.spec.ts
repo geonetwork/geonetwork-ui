@@ -125,16 +125,22 @@ jest.mock('@camptocamp/ogc-client', () => ({
         return Promise.resolve({
           name: collectionName,
           id: collectionName === 'collection1' ? 'collection1' : 'collection2',
-          bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
+          bulkDownloadLinks: {
+            json: 'http://json?limit=10000',
+            csv: 'http://csv?limit=10000',
+          },
         })
       }
       if (this.url.indexOf('nojson') > -1) {
         return Promise.resolve({
-          bulkDownloadLinks: { csv: 'http://csv' },
+          bulkDownloadLinks: { csv: 'http://csv?limit=10000' },
         })
       }
       return Promise.resolve({
-        bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
+        bulkDownloadLinks: {
+          json: 'http://json?limit=10000',
+          csv: 'http://csv?limit=10000',
+        },
       })
     }
     featureCollections =
@@ -622,22 +628,26 @@ describe('DataService', () => {
             type: 'service',
             accessServiceProtocol: 'ogcFeatures',
           })
-          expect(links).toEqual([
-            {
-              name: 'collection1',
-              mimeType: 'application/json',
-              url: new URL('http://json'),
-              type: 'download',
-              accessServiceProtocol: 'ogcFeatures',
-            },
-            {
-              name: 'collection1',
-              mimeType: 'text/csv',
-              url: new URL('http://csv'),
-              type: 'download',
-              accessServiceProtocol: 'ogcFeatures',
-            },
-          ])
+          expect(JSON.parse(JSON.stringify(links))).toEqual(
+            JSON.parse(
+              JSON.stringify([
+                {
+                  name: 'collection1',
+                  mimeType: 'application/json',
+                  url: new URL('http://json'),
+                  type: 'download',
+                  accessServiceProtocol: 'ogcFeatures',
+                },
+                {
+                  name: 'collection1',
+                  mimeType: 'text/csv',
+                  url: new URL('http://csv'),
+                  type: 'download',
+                  accessServiceProtocol: 'ogcFeatures',
+                },
+              ])
+            )
+          )
         })
 
         it('should OGC override the collection title when it is wrong', async () => {
