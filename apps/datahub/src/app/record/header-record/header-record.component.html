@@ -5,7 +5,7 @@
   <ng-template let-expandRatio>
     <header
       class="w-full sm:h-[344px] grid"
-      [ngClass]="(thumbnailUrl$ | async) ? 'h-[554px]' : 'h-[344px]'"
+      [ngClass]="(thumbnailUrl$ | async) ? 'h-[640px]' : 'h-[344px]'"
     >
       <div
         [style.background]="backgroundCss"
@@ -125,12 +125,16 @@
               </div>
             </div>
             @if ((thumbnailUrl$ | async) && showOverlay) {
-              <gn-ui-image-overlay-preview
-                class="block h-[228px] w-full self-center"
-                [imageUrl]="thumbnailUrl$ | async"
-                (isPlaceholderShown)="showOverlay = !$event"
+              <div
+                class="h-[228px] overflow-visible flex justify-center sm:justify-end"
               >
-              </gn-ui-image-overlay-preview>
+                <gn-ui-image-overlay-preview
+                  class="block w-[314px] h-[314px]"
+                  [imageUrl]="thumbnailUrl$ | async"
+                  (isPlaceholderShown)="showOverlay = !$event"
+                >
+                </gn-ui-image-overlay-preview>
+              </div>
             }
           </div>
         </div>
