@@ -156,4 +156,24 @@ describe('dataset: header', () => {
       .find('[data-cy="resources-mobile-menu"]')
       .should('not.exist')
   })
+  // EDIT LINK
+  it('should display the edit link when configured and the user can edit', () => {
+    cy.intercept('GET', '/assets/configuration/default.toml', {
+      fixture: 'config-with-edit-url-template.toml',
+    })
+    cy.login()
+    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+
+    //it should display the edit link on editable dataset
+    cy.get('datahub-record-page')
+      .find('[data-cy=editButton]')
+      .should('be.visible')
+
+    cy.visit('/dataset/01491630-78ce-49f3-b479-4b30dabc4c69')
+
+    //it should not display the edit link on non editable dataset (harvested)
+    cy.get('datahub-record-page')
+      .find('[data-cy=editButton]')
+      .should('not.exist')
+  })
 })
