@@ -18,4 +18,20 @@ describe('OnlineServiceResourceInputComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
+  describe('filteredProtocolOptions', () => {
+    it('returns all protocol options by default', () => {
+      expect(component.filteredProtocolOptions).toEqual(
+        component.protocolOptions
+      )
+    })
+
+    it('returns only ogcFeatures and wfs when featuresOnly is true', () => {
+      component.featuresOnly = true
+      expect(component.filteredProtocolOptions.map((o) => o.value)).toEqual([
+        'ogcFeatures',
+        'wfs',
+      ])
+    })
+  })
 })

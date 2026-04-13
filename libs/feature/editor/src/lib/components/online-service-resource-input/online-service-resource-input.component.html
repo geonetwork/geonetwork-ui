@@ -20,7 +20,7 @@
     [disabled]="disabled"
     (change)="resetAllFormFields()"
   >
-    @for (protocolOption of protocolOptions; track protocolOption) {
+    @for (protocolOption of filteredProtocolOptions; track protocolOption) {
       <mat-radio-button [value]="protocolOption.value">
         {{ protocolOption.label | translate }}
       </mat-radio-button>

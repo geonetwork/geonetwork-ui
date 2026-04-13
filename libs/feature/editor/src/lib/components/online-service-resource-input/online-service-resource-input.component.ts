@@ -79,6 +79,7 @@ export class OnlineServiceResourceInputComponent {
   @Input() protocolHint?: string
   @Input() disabled? = false
   @Input() modifyMode? = false
+  @Input() featuresOnly = false
   @Output() serviceChange: EventEmitter<DatasetServiceDistribution> =
     new EventEmitter()
 
@@ -122,6 +123,15 @@ export class OnlineServiceResourceInputComponent {
       value: 'other',
     },
   ]
+
+  get filteredProtocolOptions() {
+    if (this.featuresOnly) {
+      return this.protocolOptions.filter(
+        (o) => o.value === 'ogcFeatures' || o.value === 'wfs'
+      )
+    }
+    return this.protocolOptions
+  }
 
   get activeLayerSuggestion() {
     return !['wps', 'GPFDL', 'esriRest', 'other'].includes(
