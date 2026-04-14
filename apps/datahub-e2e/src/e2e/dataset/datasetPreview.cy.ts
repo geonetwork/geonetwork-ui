@@ -103,7 +103,7 @@ beforeEach(() => {
   )
   cy.intercept(
     'GET',
-    'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10%3A54%3A42.030Z%2F2019-12-31T23%3A00%3A00.000Z',
+    'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10%3A54%3A42.030Z%2F2020-01-01T00%3A00%3A00.000Z',
     {
       fixture: 'stac-items-date-modified.json',
     }
