@@ -20,8 +20,8 @@ export interface Label {
 export interface FormatProduit {
   title: string
   update: string
-  format: Array<TermBucket>
-  zone: Array<TermBucket>
+  format: Array<GpfApiDlTermBucket>
+  zone: Array<GpfApiDlTermBucket>
 }
 
 export interface FormatSortieProduit {
@@ -39,7 +39,7 @@ export interface ListChoice {
   crs: Choice[]
 }
 
-export interface TermBucket {
+export interface GpfApiDlTermBucket {
   term: string
   label: string | number
 }
@@ -77,7 +77,11 @@ export class GpfApiDlComponent implements OnInit {
   page$ = new BehaviorSubject(1)
   url =
     'https://data.geopf.fr/telechargement/capabilities?outputFormat=application/json'
-  choices: { zone: TermBucket[]; format: TermBucket[]; category: TermBucket[] }
+  choices: {
+    zone: GpfApiDlTermBucket[]
+    format: GpfApiDlTermBucket[]
+    category: GpfApiDlTermBucket[]
+  }
   bucketPromisesZone: Choice[]
   bucketPromisesFormat: Choice[]
   bucketPromisesCrs: Choice[]
