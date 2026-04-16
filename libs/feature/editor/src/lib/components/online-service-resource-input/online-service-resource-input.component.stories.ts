@@ -41,7 +41,7 @@ export const Default: StoryObj<OnlineServiceResourceInputComponent> = {
 export const FeaturesOnly: StoryObj<OnlineServiceResourceInputComponent> = {
   args: {
     service: { ...emptyService },
-    featuresOnly: true,
+    protocolOptions: ['ogcFeatures', 'wfs'],
   },
 }
 
@@ -110,6 +110,6 @@ export const FeaturesOnlyWithPrefilledWfs: StoryObj<OnlineServiceResourceInputCo
         accessServiceProtocol: 'wfs',
         identifierInService: 'mylayer',
       },
-      featuresOnly: true,
+      protocolOptions: ['ogcFeatures', 'wfs'],
     },
   }

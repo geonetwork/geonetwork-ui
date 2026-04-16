@@ -19,18 +19,27 @@ describe('OnlineServiceResourceInputComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('filteredProtocolOptions', () => {
-    it('returns all protocol options by default', () => {
-      expect(component.filteredProtocolOptions).toEqual(
-        component.protocolOptions
+  describe('availableProtocolOptions', () => {
+    it('returns all protocol options when no protocolOptions input is provided', () => {
+      expect(component.availableProtocolOptions).toEqual(
+        component.allProtocolOptions
       )
     })
 
-    it('returns only ogcFeatures and wfs when featuresOnly is true', () => {
-      component.featuresOnly = true
-      expect(component.filteredProtocolOptions.map((o) => o.value)).toEqual([
+    it('returns only the specified protocols when protocolOptions input is provided', () => {
+      component.protocolOptions = ['ogcFeatures', 'wfs']
+      expect(component.availableProtocolOptions.map((o) => o.value)).toEqual([
         'ogcFeatures',
         'wfs',
+      ])
+    })
+
+    it('filters allProtocolOptions preserving their original order', () => {
+      component.protocolOptions = ['wms', 'wmts', 'esriRest']
+      expect(component.availableProtocolOptions.map((o) => o.value)).toEqual([
+        'wms',
+        'wmts',
+        'esriRest',
       ])
     })
   })

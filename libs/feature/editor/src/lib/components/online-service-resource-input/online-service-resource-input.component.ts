@@ -79,7 +79,7 @@ export class OnlineServiceResourceInputComponent {
   @Input() protocolHint?: string
   @Input() disabled? = false
   @Input() modifyMode? = false
-  @Input() featuresOnly = false
+  @Input() protocolOptions?: ServiceProtocol[]
   @Output() serviceChange: EventEmitter<DatasetServiceDistribution> =
     new EventEmitter()
 
@@ -90,7 +90,7 @@ export class OnlineServiceResourceInputComponent {
   layers$: Observable<{ name?: string; title?: string }[]> =
     this.layersSubject.asObservable()
 
-  protocolOptions: {
+  allProtocolOptions: {
     label: string
     value: ServiceProtocol
   }[] = [
@@ -124,13 +124,13 @@ export class OnlineServiceResourceInputComponent {
     },
   ]
 
-  get filteredProtocolOptions() {
-    if (this.featuresOnly) {
-      return this.protocolOptions.filter(
-        (o) => o.value === 'ogcFeatures' || o.value === 'wfs'
+  get availableProtocolOptions() {
+    if (this.protocolOptions) {
+      return this.allProtocolOptions.filter((o) =>
+        this.protocolOptions.includes(o.value)
       )
     }
-    return this.protocolOptions
+    return this.allProtocolOptions
   }
 
   get activeLayerSuggestion() {
