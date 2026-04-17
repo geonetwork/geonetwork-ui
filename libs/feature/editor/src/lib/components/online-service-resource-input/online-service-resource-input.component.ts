@@ -22,6 +22,7 @@ import {
   TextInputComponent,
   UrlInputComponent,
 } from '@geonetwork-ui/ui/inputs'
+import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { createFuzzyFilter, getLayers } from '@geonetwork-ui/util/shared'
 import {
   NgIconComponent,
@@ -57,6 +58,7 @@ marker(
     MatTooltipModule,
     MatRadioModule,
     NgIconComponent,
+    SpinningLoaderComponent,
     TextInputComponent,
     TranslateDirective,
     TranslatePipe,
@@ -84,6 +86,7 @@ export class OnlineServiceResourceInputComponent {
     new EventEmitter()
 
   errorMessage = false
+  loading = false
   resetUrlOnChange = Math.random()
 
   layersSubject = new BehaviorSubject<{ name?: string; title?: string }[]>([])
@@ -145,6 +148,8 @@ export class OnlineServiceResourceInputComponent {
   }
 
   async handleUploadClick(url: string) {
+    this.loading = true
+    this.cdr.detectChanges()
     try {
       const layers = await getLayers(url, this._service.accessServiceProtocol)
 
@@ -158,6 +163,7 @@ export class OnlineServiceResourceInputComponent {
       this.layersSubject.next([])
     }
 
+    this.loading = false
     this.cdr.detectChanges()
   }
 
@@ -169,6 +175,7 @@ export class OnlineServiceResourceInputComponent {
 
   resetLayersSuggestion() {
     this.errorMessage = false
+    this.loading = false
     this.layersSubject.next([])
     this._service.identifierInService = null
   }
