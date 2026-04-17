@@ -50,17 +50,17 @@ it('gn-datahub', () => {
   // navigate to a record
   cy.get('gn-ui-results-list gn-ui-results-list-item').eq(0).click()
   cy.get('datahub-record-page').should('be.visible')
-  cy.get('datahub-header-record').should('be.visible')
-  cy.get('datahub-header-record header .font-title')
+  cy.get('datahub-record-header').should('be.visible')
+  cy.get('datahub-record-header header .font-title')
     .invoke('text')
     .invoke('trim')
     .should('not.be.empty')
-  cy.get('datahub-header-record header .font-title')
+  cy.get('datahub-record-header header .font-title')
     .invoke('text')
     .invoke('trim')
     .as('recordTitle')
   cy.get('@recordTitle').should('not.be.empty')
-  cy.get('datahub-header-record')
+  cy.get('datahub-record-header')
     .find('gn-ui-favorite-star')
     .should('have.length', 0) // auth related functions are disabled
   cy.title().then(function (pageTitle) {
@@ -71,11 +71,11 @@ it('gn-datahub', () => {
   // reload & stay on same page
   // cy.reload()
   cy.get('datahub-record-page').should('be.visible')
-  cy.get('datahub-header-record header .font-title')
+  cy.get('datahub-record-header header .font-title')
     .invoke('text')
     .invoke('trim')
     .should('not.be.empty')
-  cy.get('datahub-header-record header .font-title')
+  cy.get('datahub-record-header header .font-title')
     .invoke('text')
     .invoke('trim')
     .then(function (currentTitle) {

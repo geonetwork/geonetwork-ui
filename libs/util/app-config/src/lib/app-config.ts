@@ -97,6 +97,7 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
         ['geonetwork4_api_url'],
         [
           'datahub_url',
+          'edit_url_template',
           'proxy_path',
           'metadata_language',
           'login_url',
@@ -122,6 +123,7 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
           : ({
               GN4_API_URL: parsedGlobalSection.geonetwork4_api_url,
               DATAHUB_URL: parsedGlobalSection.datahub_url,
+              EDIT_URL_TEMPLATE: parsedGlobalSection.edit_url_template,
               PROXY_PATH: parsedGlobalSection.proxy_path,
               METADATA_LANGUAGE: parsedGlobalSection.metadata_language
                 ? (

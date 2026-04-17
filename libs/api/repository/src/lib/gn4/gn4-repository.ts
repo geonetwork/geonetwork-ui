@@ -323,6 +323,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
 
   private canEdit(record: CatalogRecord, allowEditHarvested: boolean): boolean {
     return (
+      this.platformService.supportsAuthentication() &&
       record.kind === 'dataset' &&
       record.extras['edit'] &&
       (!record.extras['isHarvested'] || allowEditHarvested)

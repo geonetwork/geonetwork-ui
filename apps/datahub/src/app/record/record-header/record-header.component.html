@@ -33,27 +33,13 @@
                 >datahub.search.back</span
               >
             </gn-ui-button>
-            <div class="flex flex-row content-center gap-3">
-              @if (metadata?.uniqueIdentifier && !isAuthDisabled) {
-                <gn-ui-favorite-star
-                  [record]="metadata"
-                  [displayLabel]="(isMobile$ | async) ? false : true"
-                  [displayCount]="false"
-                  class="flex text-background content-center"
-                  [buttonType]="'outline'"
-                  [style.--gn-ui-button-color]="foregroundColor"
-                  [style.--gn-ui-button-background]="'none'"
-                  [style.--color-gray-300]="foregroundColor"
-                ></gn-ui-favorite-star>
-              }
-              @if (showLanguageSwitcher) {
-                <gn-ui-language-switcher
-                  [style.--color-main]="foregroundColor"
-                  [style.--color-gray-300]="foregroundColor"
-                ></gn-ui-language-switcher>
-              }
-            </div>
+
+            <datahub-record-actions
+              [metadata]="metadata"
+              [color]="foregroundColor"
+            ></datahub-record-actions>
           </div>
+
           <div
             class="py-7 grid gap-3 grid-cols-1 sm:gap-6 sm:grid-cols-3 items-center content-center min-h-[228px]"
           >
@@ -80,8 +66,8 @@
                     <ng-icon
                       class="ml-2 text-[0.9em]"
                       name="iconoirOpenNewWindow"
-                    ></ng-icon
-                  ></a>
+                    ></ng-icon>
+                  </a>
                 }
                 <div
                   class="flex flex-row flex-wrap items-center gap-4"
@@ -89,11 +75,11 @@
                   data-test="metadataBadges"
                 >
                   <gn-ui-kind-badge
-                    [styling]="'outline'"
+                    styling="outline"
                     [kind]="metadata.kind"
                   ></gn-ui-kind-badge>
                   <gn-ui-geo-data-badge
-                    [styling]="'default'"
+                    styling="default"
                     [record]="metadata"
                   ></gn-ui-geo-data-badge>
                   @if (
@@ -131,13 +117,13 @@
                   class="block w-[314px] h-[314px]"
                   [imageUrl]="thumbnailUrl$ | async"
                   (isPlaceholderShown)="showOverlay = !$event"
-                >
-                </gn-ui-image-overlay-preview>
+                ></gn-ui-image-overlay-preview>
               </div>
             }
           </div>
         </div>
       </div>
+
       @if ((facade.isMetadataLoading$ | async) === false) {
         <datahub-navigation-bar
           [metadata]="metadata"

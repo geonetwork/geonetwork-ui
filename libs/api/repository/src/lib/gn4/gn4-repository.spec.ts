@@ -100,8 +100,10 @@ class RecordsApiServiceMock {
   create = jest.fn(() => of('1234-5678'))
 }
 
+let _supportsAuthentication = true
 class PlatformServiceInterfaceMock {
   getApiVersion = jest.fn(() => of('4.2.5'))
+  supportsAuthentication = jest.fn(() => _supportsAuthentication)
 }
 
 let allowEditHarvested = false
@@ -176,6 +178,7 @@ describe('Gn4Repository', () => {
   })
 
   afterEach(() => {
+    _supportsAuthentication = true
     // Verify that no other requests are outstanding
     httpTestingController.verify()
   })
@@ -1238,6 +1241,12 @@ describe('Gn4Repository', () => {
     it('should return true when the record can be edited', () => {
       repository.canEditIndexedRecord(SAMPLE_RECORD).subscribe((canEdit) => {
         expect(canEdit).toEqual(true)
+      })
+    })
+    it('should return false when the authentication features are disabled', () => {
+      _supportsAuthentication = false
+      repository.canEditIndexedRecord(SAMPLE_RECORD).subscribe((canEdit) => {
+        expect(canEdit).toEqual(false)
       })
     })
     it('should return false when the record is of the wrong type', () => {

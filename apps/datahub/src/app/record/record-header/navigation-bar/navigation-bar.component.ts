@@ -1,4 +1,4 @@
-import { CommonModule, Location } from '@angular/common'
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,20 +8,17 @@ import {
   ViewChild,
   inject,
 } from '@angular/core'
-import { Router } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
-import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
-import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { AnchorLinkDirective } from '@geonetwork-ui/ui/layout'
-import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import { getIsMobile } from '@geonetwork-ui/util/shared'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { iconoirMenu } from '@ng-icons/iconoir'
 import { matArrowBack } from '@ng-icons/material-icons/baseline'
 import { TranslateDirective } from '@ngx-translate/core'
+import { RecordActionsComponent } from '../record-actions/record-actions.component'
+import { RecordHeaderService } from '../record-header.service'
 
 marker('record.metadata.about')
 marker('record.metadata.capabilities')
@@ -41,9 +38,8 @@ marker('record.metadata.userFeedbacks')
     CommonModule,
     TranslateDirective,
     ButtonComponent,
-    LanguageSwitcherComponent,
-    FavoriteStarComponent,
     AnchorLinkDirective,
+    RecordActionsComponent,
   ],
   viewProviders: [
     provideIcons({ iconoirMenu, matArrowBack }),
@@ -53,9 +49,7 @@ marker('record.metadata.userFeedbacks')
   ],
 })
 export class NavigationBarComponent {
-  private router = inject(Router)
-  private location = inject(Location)
-  private platformServiceInterface = inject(PlatformServiceInterface)
+  private headerService = inject(RecordHeaderService)
 
   @Input() metadata: DatasetRecord
   @ViewChild('navBar', { static: false }) mobileMenuRef: ElementRef
@@ -90,12 +84,7 @@ export class NavigationBarComponent {
       label: 'record.metadata.userFeedbacks',
     },
   ]
-  showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
   isMobile$ = getIsMobile()
-
-  get isAuthDisabled(): boolean {
-    return !this.platformServiceInterface.supportsAuthentication()
-  }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -115,9 +104,8 @@ export class NavigationBarComponent {
   toggleMobileMenu() {
     this.displayMobileMenu = !this.displayMobileMenu
   }
+
   back() {
-    this.router.lastSuccessfulNavigation.previousNavigation
-      ? this.location.back()
-      : this.router.navigateByUrl('/search')
+    this.headerService.back()
   }
 }

@@ -23,12 +23,13 @@
         <ng-icon name="matArrowBack"></ng-icon>
       </gn-ui-button>
     </div>
+
     @if ((isMobile$ | async) === false) {
       @for (l of anchorLinks; track l) {
         <button
           type="button"
           [attr.data-cy]="l.anchor"
-          gnUiAnchorLink="{{ l.anchor }}"
+          [gnUiAnchorLink]="l.anchor"
           gnUiAnchorLinkDisabledClass="sm:hidden"
           gnUiAnchorLinkInViewClass="!border-b-primary border-b-[3px] pb-0"
           gnUiAnchorLinkOutOfViewClass="pb-1"
@@ -38,20 +39,17 @@
           {{ l.label }}
         </button>
       }
-    }
-    @if ((isMobile$ | async) === true) {
+    } @else {
       <div
         (click)="toggleMobileMenu()"
         class="w-full flex justify-start items-start cursor-pointer"
       >
-        @if ((isMobile$ | async) === true) {
-          <button
-            type="button"
-            class="h-[60px] z-50 inline-flex items-center justify-center p-2 rounded-md shrink-0"
-          >
-            <ng-icon name="iconoirMenu" size="24px"></ng-icon>
-          </button>
-        }
+        <button
+          type="button"
+          class="h-[60px] z-50 inline-flex items-center justify-center p-2 rounded-md shrink-0"
+        >
+          <ng-icon name="iconoirMenu" size="24px"></ng-icon>
+        </button>
         @if (displayMobileMenu) {
           <div
             class="bg-nav-bar-color -ml-[60px] absolute shrink truncate w-screen border-b-2 border-b-slate-200"
@@ -61,7 +59,7 @@
                 <div class="pl-[100px]">
                   <button
                     attr.data-cy="{{ l.anchor }}-mobile-menu"
-                    gnUiAnchorLink="{{ l.anchor }}"
+                    [gnUiAnchorLink]="l.anchor"
                     gnUiAnchorLinkDisabledClass="hidden"
                     class="h-[60px] block px-3 py-3 hover:bg-slate-50 font-medium text-left text-wrap uppercase"
                     translate
@@ -73,14 +71,13 @@
               </div>
             }
           </div>
-        }
-        @if (!displayMobileMenu) {
+        } @else {
           <div class="h-[60px]">
             @for (l of anchorLinks; track l) {
               <div>
                 <button
                   attr.data-cy="{{ l.anchor }}-mobile-title"
-                  gnUiAnchorLink="{{ l.anchor }}"
+                  [gnUiAnchorLink]="l.anchor"
                   gnUiAnchorLinkDisabledClass="hidden"
                   gnUiAnchorLinkInViewClass="block"
                   gnUiAnchorLinkOutOfViewClass="hidden"
@@ -93,33 +90,26 @@
                 </button>
               </div>
             }
-            @if ((isMobile$ | async) === true && !displayMobileMenu) {
-              <button
-                class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap text-left uppercase"
-                translate
-              >
-                navbar.mobile.menuTitle
-              </button>
-            }
+
+            <button
+              class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap text-left uppercase"
+              translate
+            >
+              navbar.mobile.menuTitle
+            </button>
           </div>
         }
       </div>
     }
+
     <div
       class="h-[60px] z-50 flex flex-row gap-3 justify-center items-center px-4 lg:pl-4 lg:justify-end text-sm"
       [class]="displayMobileMenu ? 'border-l-2 border-slate-200' : ''"
     >
-      @if (metadata?.uniqueIdentifier && !isAuthDisabled) {
-        <gn-ui-favorite-star
-          [record]="metadata"
-          [buttonType]="'outline'"
-          [displayCount]="false"
-          class="flex text-background content-center"
-        ></gn-ui-favorite-star>
-      }
-      @if (showLanguageSwitcher) {
-        <gn-ui-language-switcher></gn-ui-language-switcher>
-      }
+      <datahub-record-actions
+        [metadata]="metadata"
+        [showLabel]="false"
+      ></datahub-record-actions>
     </div>
   </div>
 </nav>

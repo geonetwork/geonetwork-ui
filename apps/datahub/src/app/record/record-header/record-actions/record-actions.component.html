@@ -1,0 +1,35 @@
+<div class="flex flex-row content-center gap-3">
+  @if ((canEdit$ | async) && (isMobile$ | async) === false) {
+    <gn-ui-button
+      type="outline"
+      (buttonClick)="openEdit()"
+      [style.--gn-ui-button-color]="color"
+      [style.--gn-ui-button-background]="'none'"
+      data-cy="editButton"
+    >
+      <ng-icon name="matEditNote"></ng-icon>
+      @if (showLabel) {
+        <span class="mx-2">{{
+          'datahub.header.edit.url.open' | translate
+        }}</span>
+      }
+    </gn-ui-button>
+  }
+  @if (metadata?.uniqueIdentifier && !isAuthDisabled) {
+    <gn-ui-favorite-star
+      [record]="metadata"
+      [displayLabel]="showLabel && (isMobile$ | async) === false"
+      [displayCount]="false"
+      class="flex content-center"
+      [buttonType]="'outline'"
+      [style.--gn-ui-button-color]="color"
+      [style.--gn-ui-button-background]="'none'"
+    ></gn-ui-favorite-star>
+  }
+  @if (showLanguageSwitcher) {
+    <gn-ui-language-switcher
+      [style.--color-main]="color"
+      [style.--gn-ui-button-background]="'none'"
+    ></gn-ui-language-switcher>
+  }
+</div>

@@ -1,33 +1,25 @@
-import { Location } from '@angular/common'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { Router } from '@angular/router'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   datasetRecordsFixture,
   SAMPLE_RECORD,
 } from '@geonetwork-ui/common/fixtures'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { MockBuilder, MockProvider } from 'ng-mocks'
+import { BehaviorSubject } from 'rxjs'
 import {
   HEADER_HEIGHT_DEFAULT,
   HEADER_HEIGHT_MOBILE_THUMBNAIL,
-  HeaderRecordComponent,
-} from './header-record.component'
-import { MockBuilder, MockProvider } from 'ng-mocks'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { BehaviorSubject } from 'rxjs'
-import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { DateService } from '@geonetwork-ui/util/shared'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+  RecordHeaderComponent,
+} from './record-header.component'
+import { RecordHeaderService } from './record-header.service'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
     HEADER_BACKGROUND: 'red',
     HEADER_FOREGROUND_COLOR: 'white',
   }),
-  getGlobalConfig() {
-    return {
-      LANGUAGES: ['en', 'es'],
-    }
-  },
   getOptionalSearchConfig() {
     return {
       LIMIT: 10,
@@ -35,23 +27,12 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
   },
 }))
 
-const routerMock: Partial<Router> = {
-  lastSuccessfulNavigation: {
-    previousNavigation: null,
-  } as any,
-  navigateByUrl: jest.fn(),
-}
-const locationMock: Partial<Location> = {
-  back: jest.fn(),
-}
-
-describe('HeaderRecordComponent', () => {
-  let component: HeaderRecordComponent
-  let fixture: ComponentFixture<HeaderRecordComponent>
+describe('RecordHeaderComponent', () => {
+  let component: RecordHeaderComponent
+  let fixture: ComponentFixture<RecordHeaderComponent>
   let facade
-  let router: Router
 
-  beforeEach(() => MockBuilder(HeaderRecordComponent))
+  beforeEach(() => MockBuilder(RecordHeaderComponent))
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -68,28 +49,17 @@ describe('HeaderRecordComponent', () => {
           error$: new BehaviorSubject(null),
           isMetadataLoading$: new BehaviorSubject(false),
         }),
-        MockProvider(DateService, {
-          formatDate: jest.fn(),
+        MockProvider(RecordHeaderService, {
+          metadata$: new BehaviorSubject(null),
+          back: jest.fn(),
         }),
-        MockProvider(PlatformServiceInterface, {
-          supportsAuthentication: jest.fn().mockReturnValue(false),
-        }),
-        {
-          provide: Router,
-          useValue: routerMock,
-        },
-        {
-          provide: Location,
-          useValue: locationMock,
-        },
       ],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
-    router = TestBed.inject(Router)
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderRecordComponent)
+    fixture = TestBed.createComponent(RecordHeaderComponent)
     component = fixture.componentInstance
     component.metadata = {
       ...datasetRecordsFixture()[0],
@@ -232,20 +202,6 @@ describe('HeaderRecordComponent', () => {
         expect(url).toBeNull()
         done()
       })
-    })
-  })
-
-  describe('back()', () => {
-    it('should call the back function of Location if previous navigation', () => {
-      router.lastSuccessfulNavigation.previousNavigation = {} as any
-      component.back()
-      expect(locationMock.back).toHaveBeenCalled()
-    })
-
-    it('should call the navigateByUrl function of Router to /search if no previous navigation', () => {
-      router.lastSuccessfulNavigation.previousNavigation = null
-      component.back()
-      expect(router.navigateByUrl).toHaveBeenCalledWith('/search')
     })
   })
 })
