@@ -20,7 +20,7 @@
     [disabled]="disabled"
     (change)="resetAllFormFields()"
   >
-    @for (protocolOption of protocolOptions; track protocolOption) {
+    @for (protocolOption of availableProtocolOptions; track protocolOption) {
       <mat-radio-button [value]="protocolOption.value">
         {{ protocolOption.label | translate }}
       </mat-radio-button>
@@ -45,6 +45,11 @@
     }
   </gn-ui-url-input>
 
+  @if (loading) {
+    <div class="flex justify-center w-full py-4">
+      <gn-ui-spinning-loader></gn-ui-spinning-loader>
+    </div>
+  }
   @if (errorMessage) {
     <p class="text-sm text-red-500 pl-4" translate>
       editor.record.form.field.onlineResource.edit.identifier.error

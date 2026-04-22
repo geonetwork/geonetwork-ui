@@ -8,6 +8,8 @@ export * from './lib/components/metadata-quality-panel/metadata-quality-panel.co
 export * from './lib/components/multilingual-panel/multilingual-panel.component'
 export * from './lib/components/record-form/form-field'
 export * from './lib/components/record-form/record-form.component'
+export * from './lib/components/online-service-resource-input/online-service-resource-input.component'
+export * from './lib/components/online-resource-card/online-resource-card.component'
 export * from './lib/feature-editor.module'
 export * from './lib/fields.config'
 export * from './lib/services/editor.service'
