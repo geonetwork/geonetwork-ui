@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { UrlInputComponent } from './url-input.component'
 import { By } from '@angular/platform-browser'
 import { ButtonComponent } from '../button/button.component'
+import { SimpleChange } from '@angular/core'
 
 describe('UrlInputComponent', () => {
   let component: UrlInputComponent
@@ -141,6 +142,25 @@ describe('UrlInputComponent', () => {
         inputEl.dispatchEvent(new Event('input'))
         fixture.detectChanges()
         expect(button.componentInstance.disabled).toBeFalsy()
+      })
+    })
+
+    describe('resetUrlOnChange', () => {
+      it('does not clear the value on the initial binding', () => {
+        component.value = 'https://example.com/wms'
+        component.ngOnChanges({
+          resetUrlOnChange: new SimpleChange(undefined, Math.random(), true),
+        })
+        fixture.detectChanges()
+        expect(inputEl.value).toEqual('https://example.com/wms')
+      })
+      it('clears the value on subsequent changes', () => {
+        component.value = 'https://example.com/wms'
+        component.ngOnChanges({
+          resetUrlOnChange: new SimpleChange(1, 2, false),
+        })
+        fixture.detectChanges()
+        expect(inputEl.value).toEqual('')
       })
     })
 

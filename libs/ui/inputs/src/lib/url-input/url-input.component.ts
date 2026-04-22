@@ -62,7 +62,10 @@ export class UrlInputComponent implements OnChanges {
   inputValue = ''
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['resetUrlOnChange']) {
+    if (
+      changes['resetUrlOnChange'] &&
+      !changes['resetUrlOnChange'].firstChange
+    ) {
       this.inputValue = ''
     }
   }

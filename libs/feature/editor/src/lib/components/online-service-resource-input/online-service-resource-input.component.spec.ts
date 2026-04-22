@@ -51,6 +51,19 @@ describe('OnlineServiceResourceInputComponent', () => {
     })
   })
 
+  describe('url display', () => {
+    it('displays the URL from the service input on initial render', () => {
+      component.service = {
+        type: 'service',
+        url: new URL('https://example.com/wms'),
+        accessServiceProtocol: 'wms',
+      }
+      fixture.detectChanges()
+      const input = fixture.nativeElement.querySelector('input[type="url"]')
+      expect(input.value).toEqual('https://example.com/wms')
+    })
+  })
+
   describe('handleUploadClick', () => {
     beforeEach(() => {
       component.service = {
