@@ -41,12 +41,12 @@ describe('OnlineServiceResourceInputComponent', () => {
       ])
     })
 
-    it('filters allProtocolOptions preserving their original order', () => {
-      component.protocolOptions = ['wms', 'wmts', 'esriRest']
+    it('returns protocol options in the order defined by the protocolOptions input', () => {
+      component.protocolOptions = ['esriRest', 'wms', 'wmts']
       expect(component.availableProtocolOptions.map((o) => o.value)).toEqual([
+        'esriRest',
         'wms',
         'wmts',
-        'esriRest',
       ])
     })
   })

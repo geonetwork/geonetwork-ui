@@ -128,12 +128,10 @@ export class OnlineServiceResourceInputComponent {
   ]
 
   get availableProtocolOptions() {
-    if (this.protocolOptions) {
-      return this.allProtocolOptions.filter((o) =>
-        this.protocolOptions.includes(o.value)
-      )
-    }
-    return this.allProtocolOptions
+    if (!this.protocolOptions) return this.allProtocolOptions
+    return this.protocolOptions.flatMap(
+      (v) => this.allProtocolOptions.find((o) => o.value === v) ?? []
+    )
   }
 
   get activeLayerSuggestion() {
