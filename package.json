@@ -179,7 +179,7 @@
     "ngrx-store-freeze": "^0.2.4",
     "ngx-translate-testing": "^6.1.0",
     "nx": "22.0.4",
-    "postcss": "^8.4.31",
+    "postcss": "^8.5.10",
     "prettier": "3.4.2",
     "tailwindcss": "^3.3.3",
     "ts-jest": "29.4.5",
