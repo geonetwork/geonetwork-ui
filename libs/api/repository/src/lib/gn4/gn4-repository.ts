@@ -425,7 +425,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
           publishToAll,
           undefined,
           'OVERWRITE',
-          undefined,
+          '2',
           undefined,
           undefined,
           '_none_',
