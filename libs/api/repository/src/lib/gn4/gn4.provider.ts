@@ -6,7 +6,7 @@ import {
 } from './platform/gn4-platform.service'
 import { Gn4PlatformMapper } from './platform/gn4-platform.mapper'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { Gn4Repository } from './gn4-repository'
+import { Gn4Repository, DISABLE_DRAFT } from './gn4-repository'
 import { AvatarServiceInterface, GravatarService } from './auth'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core'
 
 interface Gn4ProvideOptions {
   disableAuth?: boolean
+  disableDraft?: boolean
 }
 
 export function provideGn4(provideOptions?: Gn4ProvideOptions): Provider[] {
@@ -29,6 +30,10 @@ export function provideGn4(provideOptions?: Gn4ProvideOptions): Provider[] {
     {
       provide: DISABLE_AUTH,
       useValue: provideOptions?.disableAuth,
+    },
+    {
+      provide: DISABLE_DRAFT,
+      useValue: provideOptions?.disableDraft,
     },
     {
       provide: PlatformServiceInterface,
