@@ -12,7 +12,6 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 import { EditorPartialState } from './editor.reducer'
 import { MockProvider } from 'ng-mocks'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { EDITOR_SETTINGS } from '../editor-settings'
 
 class EditorServiceMock {
   saveRecord = jest.fn((record) =>
@@ -276,88 +275,6 @@ describe('EditorEffects', () => {
       const expected = hot('-#', undefined, new Error('oopsie'))
 
       expect(effects.checkCanEditRecord$).toBeObservable(expected)
-    })
-  })
-})
-
-describe('EditorEffects with disableDraft: true', () => {
-  let actions: Observable<Action>
-  let effects: EditorEffects
-  let service: EditorService
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        EditorEffects,
-        provideMockActions(() => actions),
-        provideMockStore<EditorPartialState>({
-          initialState: { editor: initialEditorState },
-        }),
-        { provide: EditorService, useClass: EditorServiceMock },
-        {
-          provide: RecordsRepositoryInterface,
-          useClass: RecordsRepositoryMock,
-        },
-        MockProvider(PlatformServiceInterface, {
-          cleanRecordAttachments: jest.fn(() => of(undefined)),
-        }),
-        { provide: EDITOR_SETTINGS, useValue: { disableDraft: true } },
-      ],
-    })
-    service = TestBed.inject(EditorService)
-    effects = TestBed.inject(EditorEffects)
-  })
-
-  describe('saveRecordDraft$', () => {
-    it('does not save draft even after debounce time', () => {
-      getTestScheduler().run(() => {
-        actions = hot('a 1050ms -', {
-          a: EditorActions.updateRecordField({
-            field: 'title',
-            value: 'Hello world',
-          }),
-        })
-        expect(effects.saveRecordDraft$).toBeObservable(hot('- 1050ms -'))
-        expect(service.saveRecordAsDraft).not.toHaveBeenCalled()
-      })
-    })
-  })
-
-  describe('checkHasChangesOnOpen$', () => {
-    it('dispatches undoRecordDraft to clear the stale draft', () => {
-      actions = hot('-a-|', {
-        a: EditorActions.openRecord({ record: datasetRecordsFixture()[0] }),
-      })
-      const expected = hot('-a-|', {
-        a: EditorActions.undoRecordDraft(),
-      })
-      expect(effects.checkHasChangesOnOpen$).toBeObservable(expected)
-    })
-
-    it('dispatches nothing when record has no draft', () => {
-      ;(
-        TestBed.inject(RecordsRepositoryInterface).recordHasDraft as jest.Mock
-      ).mockImplementationOnce(() => false)
-      actions = hot('-a-|', {
-        a: EditorActions.openRecord({ record: datasetRecordsFixture()[0] }),
-      })
-      expect(effects.checkHasChangesOnOpen$).toBeObservable(hot('---|'))
-    })
-  })
-
-  describe('hasRecordChangedSinceDraft$', () => {
-    it('dispatches success with empty changes without calling service', () => {
-      const record = datasetRecordsFixture()[0]
-      actions = hot('-a-|', {
-        a: EditorActions.hasRecordChangedSinceDraft({ record }),
-      })
-      const expected = hot('-a-|', {
-        a: EditorActions.hasRecordChangedSinceDraftSuccess({
-          changes: { user: undefined, date: undefined },
-        }),
-      })
-      expect(effects.hasRecordChangedSinceDraft$).toBeObservable(expected)
-      expect(service.hasRecordChangedSinceDraft).not.toHaveBeenCalled()
     })
   })
 })
