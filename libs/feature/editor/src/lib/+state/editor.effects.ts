@@ -12,6 +12,7 @@ import {
 } from './editor.selectors'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { EDITOR_SETTINGS, EditorSettings } from '../editor-settings'
 
 @Injectable()
 export class EditorEffects {
@@ -20,6 +21,7 @@ export class EditorEffects {
   private recordsRepository = inject(RecordsRepositoryInterface)
   private plateformService = inject(PlatformServiceInterface)
   private store = inject(Store)
+  private settings: EditorSettings = inject(EDITOR_SETTINGS)
 
   saveRecord$ = createEffect(() =>
     this.actions$.pipe(
@@ -103,7 +105,9 @@ export class EditorEffects {
         this.store.select(selectRecordSource)
       ),
       switchMap(([, record, recordSource]) =>
-        this.editorService.saveRecordAsDraft(record, recordSource)
+        this.settings.disableDraft
+          ? EMPTY
+          : this.editorService.saveRecordAsDraft(record, recordSource)
       ),
       map(() => EditorActions.draftSaveSuccess())
     )
@@ -130,7 +134,11 @@ export class EditorEffects {
         this.recordsRepository.recordHasDraft(record.uniqueIdentifier)
       ),
       filter((hasDraft) => hasDraft),
-      map(() => EditorActions.markRecordAsChanged())
+      map(() =>
+        this.settings.disableDraft
+          ? EditorActions.undoRecordDraft()
+          : EditorActions.markRecordAsChanged()
+      )
     )
   )
 
@@ -138,13 +146,14 @@ export class EditorEffects {
     this.actions$.pipe(
       ofType(EditorActions.hasRecordChangedSinceDraft),
       switchMap(({ record }) =>
-        this.editorService
-          .hasRecordChangedSinceDraft(record)
-          .pipe(
-            map((changes) =>
-              EditorActions.hasRecordChangedSinceDraftSuccess({ changes })
-            )
+        (this.settings.disableDraft
+          ? of({ user: undefined, date: undefined })
+          : this.editorService.hasRecordChangedSinceDraft(record)
+        ).pipe(
+          map((changes) =>
+            EditorActions.hasRecordChangedSinceDraftSuccess({ changes })
           )
+        )
       )
     )
   )
