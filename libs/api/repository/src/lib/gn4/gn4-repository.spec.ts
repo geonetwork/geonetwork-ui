@@ -1350,10 +1350,12 @@ describe('Gn4Repository with DISABLE_DRAFT', () => {
       )
     })
     it('loads from the server, ignoring any draft in localStorage', async () => {
-      const [, , savedOnce] = await lastValueFrom(
+      const [, xml, savedOnce] = await lastValueFrom(
         repository.openRecordForEdition('1234-5678')
       )
       expect(gn4RecordsApi.getRecordAs).toHaveBeenCalled()
+      expect(xml).toContain('1234-5678')
+      expect(xml).not.toContain('my-dataset-001')
       expect(savedOnce).toBe(true)
     })
   })

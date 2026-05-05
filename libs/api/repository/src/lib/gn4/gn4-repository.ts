@@ -355,28 +355,11 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   openRecordForEdition(
     uniqueIdentifier: string
   ): Observable<[CatalogRecord, string, boolean] | null> {
+    const draft$ = this.disableDraft
+      ? of(null)
+      : of(this.getRecordFromLocalStorage(uniqueIdentifier))
     const recordAsXml$ = this.getRecordAsXml(uniqueIdentifier)
 
-    if (this.disableDraft) {
-      return recordAsXml$.pipe(
-        switchMap((recordAsXml) =>
-          from(
-            findConverterForDocument(recordAsXml)
-              .readRecord(recordAsXml)
-              .then(
-                (record) =>
-                  [record, recordAsXml, true] as [
-                    CatalogRecord,
-                    string,
-                    boolean,
-                  ]
-              )
-          )
-        )
-      )
-    }
-
-    const draft$ = of(this.getRecordFromLocalStorage(uniqueIdentifier))
     return combineLatest([draft$, recordAsXml$]).pipe(
       switchMap(([draft, recordAsXml]) => {
         const xml = draft ?? recordAsXml
