@@ -1,4 +1,4 @@
-import { Gn4Repository } from './gn4-repository'
+import { Gn4Repository, DISABLE_DRAFT } from './gn4-repository'
 import {
   RecordsApiService,
   SearchApiService,
@@ -1287,6 +1287,116 @@ describe('Gn4Repository', () => {
         .subscribe((canEdit) => {
           expect(canEdit).toEqual(false)
         })
+    })
+  })
+})
+
+describe('Gn4Repository with DISABLE_DRAFT', () => {
+  let repository: Gn4Repository
+  let gn4RecordsApi: RecordsApiService
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        Gn4Repository,
+        { provide: DISABLE_DRAFT, useValue: true },
+        { provide: ElasticsearchService, useClass: ElasticsearchServiceMock },
+        { provide: SearchApiService, useClass: SearchApiServiceMock },
+        { provide: RecordsApiService, useClass: RecordsApiServiceMock },
+        { provide: Gn4Converter, useClass: Gn4MetadataMapperMock },
+        {
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceInterfaceMock,
+        },
+        { provide: Gn4SettingsService, useClass: Gn4SettingsServiceMock },
+        { provide: TranslateService, useValue: translateServiceMock },
+      ],
+    })
+    repository = TestBed.inject(Gn4Repository)
+    gn4RecordsApi = TestBed.inject(RecordsApiService)
+    window.localStorage.clear()
+  })
+
+  describe('saveRecordAsDraft', () => {
+    it('does not write to localStorage', async () => {
+      await lastValueFrom(
+        repository.saveRecordAsDraft({
+          ...simpleDatasetRecordFixture(),
+          uniqueIdentifier: 'DRAFT-123',
+        })
+      )
+      expect(
+        window.localStorage.getItem('geonetwork-ui-draft-DRAFT-123')
+      ).toBeNull()
+    })
+    it('does not emit draftsChanged', async () => {
+      const spy = jest.spyOn(repository._draftsChanged, 'next')
+      await lastValueFrom(
+        repository.saveRecordAsDraft({
+          ...simpleDatasetRecordFixture(),
+          uniqueIdentifier: 'DRAFT-123',
+        })
+      )
+      expect(spy).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('openRecordForEdition', () => {
+    beforeEach(() => {
+      window.localStorage.setItem(
+        'geonetwork-ui-draft-1234-5678',
+        simpleDatasetRecordAsXmlFixture()
+      )
+    })
+    it('loads from the server, ignoring any draft in localStorage', async () => {
+      const [, xml, savedOnce] = await lastValueFrom(
+        repository.openRecordForEdition('1234-5678')
+      )
+      expect(gn4RecordsApi.getRecordAs).toHaveBeenCalled()
+      expect(xml).toContain('1234-5678')
+      expect(xml).not.toContain('my-dataset-001')
+      expect(savedOnce).toBe(true)
+    })
+  })
+
+  describe('recordHasDraft', () => {
+    it('returns false even when a draft exists in localStorage', () => {
+      window.localStorage.setItem('geonetwork-ui-draft-DRAFT-123', 'content')
+      expect(repository.recordHasDraft('DRAFT-123')).toBe(false)
+    })
+  })
+
+  describe('clearRecordDraft', () => {
+    it('is a no-op (does not remove the draft from localStorage)', () => {
+      window.localStorage.setItem('geonetwork-ui-draft-DRAFT-123', 'content')
+      repository.clearRecordDraft('DRAFT-123')
+      expect(
+        window.localStorage.getItem('geonetwork-ui-draft-DRAFT-123')
+      ).not.toBeNull()
+    })
+    it('does not emit draftsChanged', () => {
+      const spy = jest.spyOn(repository._draftsChanged, 'next')
+      repository.clearRecordDraft('DRAFT-123')
+      expect(spy).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('getAllDrafts', () => {
+    it('returns an empty array even when drafts exist in localStorage', async () => {
+      window.localStorage.setItem('geonetwork-ui-draft-1', 'content')
+      window.localStorage.setItem('geonetwork-ui-draft-2', 'content')
+      const drafts = await lastValueFrom(repository.getAllDrafts())
+      expect(drafts).toEqual([])
+    })
+  })
+
+  describe('getDraftsCount', () => {
+    it('returns 0 even when drafts exist in localStorage', async () => {
+      window.localStorage.setItem('geonetwork-ui-draft-1', 'content')
+      window.localStorage.setItem('geonetwork-ui-draft-2', 'content')
+      const count = await lastValueFrom(repository.getDraftsCount())
+      expect(count).toBe(0)
     })
   })
 })
