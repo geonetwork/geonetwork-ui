@@ -584,11 +584,8 @@ describe('Sections', () => {
     cy.get('@proviLink')
       .invoke('attr', 'href')
       .then((link) => {
-        const targetLink = link
-        cy.get('@proviLink')
-          .invoke('removeAttr', 'target') // this prevents having a target="_blank" attribute
-          .click()
-        cy.url().should('include', targetLink)
+        cy.get('@proviLink').click()
+        cy.url().should('include', link)
       })
 
     // When there is no link
