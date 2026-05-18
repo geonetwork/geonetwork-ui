@@ -56,9 +56,6 @@ export class MetadataQualityPanelComponent implements OnChanges {
   @Input() editorConfig: EditorConfig
   @Input() record: CatalogRecord
 
-  // Fields with no corresponding form field in the editor yet
-  private readonly FUTURE_FIELDS: ValidatorMapperKeys[] = ['organisation']
-
   ngOnChanges() {
     if (this.editorConfig && this.record) {
       const fieldsByPage = this.editorConfig.pages.map((page, pageIndex) => ({
@@ -69,11 +66,9 @@ export class MetadataQualityPanelComponent implements OnChanges {
             .map((field) => field.model as ValidatorMapperKeys)
         ),
       }))
-      // FIXME: temporarily add organisation to the third page
-      // as long as it is not handled by the editor
-      if (fieldsByPage.length > 0) {
-        fieldsByPage[2].models.includes('organisation') ||
-          fieldsByPage[2].models.push('organisation')
+      // FIXME: organisation is not yet a form field in the editor; show it on page 2 as non-navigable
+      if (fieldsByPage[2] && !fieldsByPage[2].models.includes('organisation')) {
+        fieldsByPage[2].models.push('organisation')
       }
       this.propertiesByPage = fieldsByPage
         .map(({ pageIndex, models }) =>
@@ -82,11 +77,8 @@ export class MetadataQualityPanelComponent implements OnChanges {
               label: `editor.record.form.field.${name}`, // use same translations as in fields.config.ts
               value: validator(),
               model: name as ValidatorMapperKeys,
-              pageIndex: this.FUTURE_FIELDS.includes(
-                name as ValidatorMapperKeys
-              )
-                ? -1
-                : pageIndex,
+              // FIXME: see above
+              pageIndex: name === 'organisation' ? -1 : pageIndex,
             })
           )
         )
