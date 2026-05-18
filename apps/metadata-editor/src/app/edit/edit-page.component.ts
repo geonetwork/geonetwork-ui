@@ -179,10 +179,9 @@ export class EditPageComponent implements OnInit, OnDestroy {
       this.facade.pendingScrollToField$
         .pipe(filter((field) => !!field))
         .subscribe((field) => {
-          afterNextRender(
-            () => this.scrollToQualityField(field),
-            { injector: this.injector }
-          )
+          afterNextRender(() => this.scrollToQualityField(field), {
+            injector: this.injector,
+          })
         })
     )
 
@@ -238,7 +237,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
     this.scrollContainer?.nativeElement.scroll({ top: 0, behavior: 'instant' })
     document
       .getElementById(field)
-      ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      ?.scrollIntoView({ behavior: 'instant', block: 'start' })
     this.facade.clearPendingScrollField()
   }
 

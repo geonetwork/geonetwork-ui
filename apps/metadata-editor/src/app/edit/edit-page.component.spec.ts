@@ -233,7 +233,7 @@ describe('EditPageComponent', () => {
 
       expect(document.getElementById).toHaveBeenCalledWith('abstract')
       expect(mockScrollIntoView).toHaveBeenCalledWith({
-        behavior: 'smooth',
+        behavior: 'instant',
         block: 'start',
       })
       jest.restoreAllMocks()
