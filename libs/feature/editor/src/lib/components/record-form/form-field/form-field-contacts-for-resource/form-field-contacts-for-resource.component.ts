@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -67,6 +68,7 @@ export class FormFieldContactsForResourceComponent
 {
   private platformServiceInterface = inject(PlatformServiceInterface)
   private organizationsServiceInterface = inject(OrganizationsServiceInterface)
+  private changeDetectorRef = inject(ChangeDetectorRef)
 
   @Input() value: Individual[]
   @Output() valueChange: EventEmitter<Individual[]> = new EventEmitter()
@@ -74,18 +76,21 @@ export class FormFieldContactsForResourceComponent
   contactsForRessourceByRole: Map<Role, Individual[]> = new Map()
   roleValues = RoleValues
 
-  rolesToPick: Role[] = this.roleValues.filter(
-    (role) => role !== 'other' && role !== 'unspecified'
-  )
+  rolesToPick: Role[] = this.getPickableRoles()
 
   roleSectionsToDisplay: Role[] = []
 
   allOrganizations: Map<string, Organization> = new Map()
 
   ngOnChanges() {
+    if (this.value.length === 0) {
+      this.roleSectionsToDisplay = []
+      this.rolesToPick = this.getPickableRoles()
+    }
     this.updateContactsForRessource()
     this.manageRoleSectionsToDisplay(this.value)
     this.filterRolesToPick()
+    this.changeDetectorRef.markForCheck()
   }
 
   async ngOnInit(): Promise<void> {
@@ -102,6 +107,12 @@ export class FormFieldContactsForResourceComponent
   addRoleToDisplay(roleToAdd: string) {
     this.roleSectionsToDisplay.push(roleToAdd)
     this.filterRolesToPick()
+  }
+
+  private getPickableRoles(): Role[] {
+    return this.roleValues.filter(
+      (role) => role !== 'other' && role !== 'unspecified'
+    )
   }
 
   filterRolesToPick() {

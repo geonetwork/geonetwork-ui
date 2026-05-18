@@ -10,12 +10,6 @@
   </gn-ui-autocomplete>
 
   @if (contacts.length > 0) {
-    @if (contacts.length === 1) {
-      @for (contact of contacts; track contact; let index = $index) {
-        <gn-ui-contact-card [contact]="contact"></gn-ui-contact-card>
-      }
-    }
-    @if (contacts.length > 1) {
       <gn-ui-sortable-list
         [items]="contacts"
         (itemsOrderChange)="handleContactsChanged($event)"
@@ -24,7 +18,6 @@
       <ng-template #contactTemplate let-contact>
         <gn-ui-contact-card [contact]="contact"></gn-ui-contact-card>
       </ng-template>
-    }
   } @else {
     <div
       class="p-4 text-sm border border-primary bg-primary-lightest rounded-lg"
