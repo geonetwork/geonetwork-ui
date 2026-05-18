@@ -117,9 +117,11 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
    * gn-ui-autocomplete
    */
   displayWithFn: (user: UserModel) => string = (user) =>
-    `${user.name} ${user.surname} ${
-      user.organisation ? `(${user.organisation})` : ''
-    }`
+    user.name
+      ? `${user.name} ${user.surname} ${
+          user.organisation ? `(${user.organisation})` : ''
+        }`
+      : ``
 
   /**
    * gn-ui-autocomplete
