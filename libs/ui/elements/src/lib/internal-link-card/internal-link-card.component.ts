@@ -58,7 +58,6 @@ export class InternalLinkCardComponent implements OnInit {
   protected elementRef = inject(ElementRef)
 
   @Input() record: CatalogRecord
-  @Input() linkTarget = '_blank'
   @Input() linkHref: string = null
   @Input() metadataQualityDisplay: boolean
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
