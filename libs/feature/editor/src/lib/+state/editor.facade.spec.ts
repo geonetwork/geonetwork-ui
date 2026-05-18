@@ -151,5 +151,28 @@ describe('EditorFacade', () => {
       })
       expect(spy).toHaveBeenCalledWith(action)
     })
+
+    it('navigateToQualityField() should dispatch setCurrentPage and emit on pendingScrollToField$', () => {
+      const spy = jest.spyOn(store, 'dispatch')
+      const emissions: (string | null)[] = []
+      facade.pendingScrollToField$.subscribe((v) => emissions.push(v))
+
+      facade.navigateToQualityField(2, 'abstract')
+
+      expect(spy).toHaveBeenCalledWith(
+        EditorActions.setCurrentPage({ page: 2 })
+      )
+      expect(emissions).toContain('abstract')
+    })
+
+    it('clearPendingScrollField() should emit null on pendingScrollToField$', () => {
+      facade.navigateToQualityField(0, 'title')
+      const emissions: (string | null)[] = []
+      facade.pendingScrollToField$.subscribe((v) => emissions.push(v))
+
+      facade.clearPendingScrollField()
+
+      expect(emissions[emissions.length - 1]).toBeNull()
+    })
   })
 })

@@ -6,7 +6,7 @@ import {
   CatalogRecord,
   LanguageCode,
 } from '@geonetwork-ui/common/domain/model/record'
-import { filter } from 'rxjs'
+import { BehaviorSubject, filter } from 'rxjs'
 import { Actions, ofType } from '@ngrx/effects'
 import { EditorConfig, EditorFieldIdentification } from '../models'
 
@@ -37,6 +37,11 @@ export class EditorFacade {
   )
   isPublished$ = this.store.pipe(select(EditorSelectors.selectIsPublished))
   canEditRecord$ = this.store.pipe(select(EditorSelectors.selectCanEditRecord))
+
+  private readonly _pendingScrollToField$ = new BehaviorSubject<string | null>(
+    null
+  )
+  pendingScrollToField$ = this._pendingScrollToField$.asObservable()
 
   openRecord(record: CatalogRecord, recordSource: string) {
     this.store.dispatch(
@@ -75,6 +80,15 @@ export class EditorFacade {
 
   setCurrentPage(page: number) {
     this.store.dispatch(EditorActions.setCurrentPage({ page }))
+  }
+
+  navigateToQualityField(page: number, model: string) {
+    this.setCurrentPage(page)
+    this._pendingScrollToField$.next(model)
+  }
+
+  clearPendingScrollField() {
+    this._pendingScrollToField$.next(null)
   }
 
   setFieldVisibility(field: EditorFieldIdentification, visible: boolean) {
