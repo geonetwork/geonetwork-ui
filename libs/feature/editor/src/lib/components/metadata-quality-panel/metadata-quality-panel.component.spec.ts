@@ -116,7 +116,7 @@ describe('MetadataQualityPanelComponent', () => {
             label: 'editor.record.form.field.topics',
             value: true,
             model: 'topics',
-            pageIndex: -1,
+            pageIndex: 0,
           },
         ],
         [
@@ -142,9 +142,8 @@ describe('MetadataQualityPanelComponent', () => {
       ])
     })
 
-    it('should assign pageIndex -1 to FUTURE fields (topics, organisation)', () => {
+    it('should assign pageIndex -1 to FUTURE fields (organisation)', () => {
       const allItems = component.propertiesByPage.flat()
-      expect(allItems.find((p) => p.model === 'topics')?.pageIndex).toBe(-1)
       expect(allItems.find((p) => p.model === 'organisation')?.pageIndex).toBe(
         -1
       )
@@ -179,7 +178,7 @@ describe('MetadataQualityPanelComponent', () => {
     it('should not call facade.navigateToQualityField for FUTURE fields (pageIndex -1)', () => {
       component.onCriterionClick({
         value: false,
-        model: 'topics',
+        model: 'organisation',
         pageIndex: -1,
       })
       expect(mockFacade.navigateToQualityField).not.toHaveBeenCalled()
