@@ -38,7 +38,9 @@ class EditorFacadeMock {
   currentPage$ = new BehaviorSubject(0)
   pagesCount$ = new BehaviorSubject(2)
   hasRecordChanged$ = new BehaviorSubject(false)
+  pendingScrollToField$ = new BehaviorSubject<string | null>(null)
   saveRecord = jest.fn()
+  clearPendingScrollField = jest.fn()
 }
 class NotificationsServiceMock {
   showNotification = jest.fn()
@@ -182,18 +184,18 @@ describe('EditPageComponent', () => {
     })
 
     describe('subscriptions', () => {
-      it('should add 5 subscriptions to component.subscription', () => {
+      it('should add 6 subscriptions to component.subscription', () => {
         const addSpy = jest.spyOn(component.subscription, 'add')
         component.ngOnInit()
-        expect(addSpy).toHaveBeenCalledTimes(5)
+        expect(addSpy).toHaveBeenCalledTimes(6)
       })
-      it('should add 5 subscriptions to component.subscription when on /create route', () => {
+      it('should add 6 subscriptions to component.subscription when on /create route', () => {
         const activatedRoute = TestBed.inject(ActivatedRoute)
         activatedRoute.snapshot.routeConfig.path = '/create'
         fixture.detectChanges()
         const addSpy = jest.spyOn(component.subscription, 'add')
         component.ngOnInit()
-        expect(addSpy).toHaveBeenCalledTimes(5)
+        expect(addSpy).toHaveBeenCalledTimes(6)
       })
       it('unsubscribes', () => {
         const unsubscribeSpy = jest.spyOn(component.subscription, 'unsubscribe')
@@ -202,6 +204,48 @@ describe('EditPageComponent', () => {
       })
     })
   })
+  describe('scrollToQualityField', () => {
+    let facadeMock: EditorFacadeMock
+    let mockScroll: jest.Mock
+
+    beforeEach(() => {
+      facadeMock = TestBed.inject(EditorFacade) as unknown as EditorFacadeMock
+      mockScroll = jest.fn()
+      fixture.detectChanges()
+      // Set after detectChanges so the @ViewChild query doesn't overwrite it
+      component.scrollContainer = {
+        nativeElement: { scroll: mockScroll },
+      } as any
+    })
+
+    it('should reset scroll container to top', () => {
+      component.scrollToQualityField('abstract')
+      expect(mockScroll).toHaveBeenCalledWith({ top: 0, behavior: 'instant' })
+    })
+
+    it('should call scrollIntoView on the field element', () => {
+      const mockScrollIntoView = jest.fn()
+      jest.spyOn(document, 'getElementById').mockReturnValue({
+        scrollIntoView: mockScrollIntoView,
+      } as any)
+
+      component.scrollToQualityField('abstract')
+
+      expect(document.getElementById).toHaveBeenCalledWith('abstract')
+      expect(mockScrollIntoView).toHaveBeenCalledWith({
+        behavior: 'smooth',
+        block: 'start',
+      })
+      jest.restoreAllMocks()
+    })
+
+    it('should call clearPendingScrollField', () => {
+      component.scrollToQualityField('abstract')
+      expect(facadeMock.clearPendingScrollField).toHaveBeenCalled()
+    })
+  })
+
+
   describe('New record', () => {
     beforeEach(() => {
       const modifiedRecord = {

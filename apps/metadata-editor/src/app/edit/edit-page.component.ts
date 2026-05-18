@@ -2,9 +2,11 @@ import { CommonModule } from '@angular/common'
 import {
   Component,
   ElementRef,
+  Injector,
   OnDestroy,
   OnInit,
   ViewChild,
+  afterNextRender,
   inject,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
@@ -71,6 +73,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService)
   private router = inject(Router)
   private dateService = inject(DateService)
+  private injector = inject(Injector)
 
   subscription = new Subscription()
 
@@ -172,6 +175,17 @@ export class EditPageComponent implements OnInit, OnDestroy {
       })
     )
 
+    this.subscription.add(
+      this.facade.pendingScrollToField$
+        .pipe(filter((field) => !!field))
+        .subscribe((field) => {
+          afterNextRender(
+            () => this.scrollToQualityField(field),
+            { injector: this.injector }
+          )
+        })
+    )
+
     // if we're on the /duplicate route, go to /edit/{uuid} to update the uuid
     if (this.route.snapshot.routeConfig?.path.includes('duplicate')) {
       this.router.navigate(['edit', currentRecord.uniqueIdentifier], {
@@ -218,6 +232,14 @@ export class EditPageComponent implements OnInit, OnDestroy {
       this.facade.setCurrentPage(currentPage + 1)
       this.scrollToTop()
     }
+  }
+
+  scrollToQualityField(field: string) {
+    this.scrollContainer?.nativeElement.scroll({ top: 0, behavior: 'instant' })
+    document
+      .getElementById(field)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    this.facade.clearPendingScrollField()
   }
 
   private scrollToTop() {
