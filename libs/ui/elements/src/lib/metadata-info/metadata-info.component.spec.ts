@@ -244,7 +244,7 @@ describe('MetadataInfoComponent', () => {
         expect(displayedElement).toBeTruthy()
       })
     })
-    describe('only resourceContact', () => {
+    describe('only contactsForResource', () => {
       beforeEach(() => {
         fixture = TestBed.createComponent(MetadataInfoComponent)
         component = fixture.componentInstance
@@ -260,12 +260,18 @@ describe('MetadataInfoComponent', () => {
         } as DatasetRecord
         fixture.detectChanges()
       })
-      it('should display the resourceContact section', () => {
-        expandPanel(fixture, 'details-panel')
-        const displayedElement = fixture.debugElement.query(
-          By.css('[data-test="details-panel-resource-contact"]')
+      it('should display the contacts panel', () => {
+        const contactsPanel = fixture.debugElement.query(
+          By.css('[data-test="contacts-panel"]')
         )
-        expect(displayedElement).toBeTruthy()
+        expect(contactsPanel).toBeTruthy()
+      })
+      it('should render one contact pill per contact in contactsForResource', () => {
+        expandPanel(fixture, 'contacts-panel')
+        const pills = fixture.debugElement.queryAll(
+          By.css('[data-test="contact-pill"]')
+        )
+        expect(pills.length).toBe(component.metadata.contactsForResource.length)
       })
     })
     describe('only resourceCreated', () => {

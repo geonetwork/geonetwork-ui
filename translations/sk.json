@@ -520,6 +520,7 @@
   "record.metadata.quality.updateFrequency.failed": "Frekvencia aktualizácie nie je určená",
   "record.metadata.quality.updateFrequency.success": "Frekvencia aktualizácie je určená",
   "record.metadata.related": "Súvisiace záznamy",
+  "record.metadata.resource.contacts": "Kontakty k zdroju",
   "record.metadata.resourceCreated": "",
   "record.metadata.resourcePublished": "",
   "record.metadata.resourceUpdated": "",

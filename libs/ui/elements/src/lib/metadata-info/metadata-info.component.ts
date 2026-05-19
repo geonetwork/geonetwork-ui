@@ -8,9 +8,16 @@ import {
 } from '@angular/core'
 import {
   CatalogRecord,
+  Individual,
   Keyword,
+  RoleLabels,
 } from '@geonetwork-ui/common/domain/model/record'
-import { DateService, getTemporalRangeUnion } from '@geonetwork-ui/util/shared'
+import {
+  ContactGroup,
+  DateService,
+  getTemporalRangeUnion,
+  groupContactsByRole,
+} from '@geonetwork-ui/util/shared'
 import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
 import {
   ExpandablePanelComponent,
@@ -24,8 +31,10 @@ import {
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
-import { matMailOutline } from '@ng-icons/material-icons/outline'
-import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
+import {
+  matMailOutline,
+  matInfoOutline,
+} from '@ng-icons/material-icons/outline'
 import { GnUiLinkifyDirective } from './linkify.directive'
 import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
 
@@ -44,7 +53,6 @@ import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
     ExpandablePanelComponent,
     BadgeComponent,
     ContentGhostComponent,
-    ThumbnailComponent,
     MaxLinesComponent,
     CopyTextButtonComponent,
     NgIcon,
@@ -56,6 +64,7 @@ import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
     provideIcons({
       matOpenInNew,
       matMailOutline,
+      matInfoOutline,
     }),
   ],
 })
@@ -132,12 +141,21 @@ export class MetadataInfoComponent {
     return getTemporalRangeUnion(temporalExtents, this.dateService)
   }
 
-  get shownOrganization() {
-    return this.metadata.ownerOrganization
+  get contactGroups(): ContactGroup[] {
+    return groupContactsByRole(this.metadata?.contactsForResource ?? [])
   }
 
-  get resourceContact() {
-    return this.metadata.contactsForResource?.[0]
+  getRoleTranslationKey(role: string): string {
+    return RoleLabels.get(role) ?? 'domain.contact.role.other'
+  }
+
+  getContactDisplayName(contact: Individual): string {
+    if (contact.organization?.name) return contact.organization.name
+    const first = contact.firstName?.trim()
+    const last = contact.lastName?.trim()
+    if (first && last) return `${first} ${last}`
+    if (first || last) return first || last
+    return contact.email || ''
   }
 
   fieldReady(propName: string) {
