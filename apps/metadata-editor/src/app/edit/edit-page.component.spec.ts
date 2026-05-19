@@ -245,7 +245,6 @@ describe('EditPageComponent', () => {
     })
   })
 
-
   describe('New record', () => {
     beforeEach(() => {
       const modifiedRecord = {
