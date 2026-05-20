@@ -7,7 +7,7 @@ import {
 } from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject, firstValueFrom, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { ANCHOR_ID_PREFIX, EditorFacade } from '@geonetwork-ui/feature/editor'
+import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MockBuilder } from 'ng-mocks'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
@@ -38,10 +38,8 @@ class EditorFacadeMock {
   currentPage$ = new BehaviorSubject(0)
   pagesCount$ = new BehaviorSubject(2)
   hasRecordChanged$ = new BehaviorSubject(false)
-  focusedField$ = new BehaviorSubject<string | null>(null)
   saveRecord = jest.fn()
   setCurrentPage = jest.fn()
-  setFocusedField = jest.fn()
   checkHasRecordChanged = jest.fn()
 }
 class NotificationsServiceMock {
@@ -186,18 +184,18 @@ describe('EditPageComponent', () => {
     })
 
     describe('subscriptions', () => {
-      it('should add 6 subscriptions to component.subscription', () => {
+      it('should add 5 subscriptions to component.subscription', () => {
         const addSpy = jest.spyOn(component.subscription, 'add')
         component.ngOnInit()
-        expect(addSpy).toHaveBeenCalledTimes(6)
+        expect(addSpy).toHaveBeenCalledTimes(5)
       })
-      it('should add 6 subscriptions to component.subscription when on /create route', () => {
+      it('should add 5 subscriptions to component.subscription when on /create route', () => {
         const activatedRoute = TestBed.inject(ActivatedRoute)
         activatedRoute.snapshot.routeConfig.path = '/create'
         fixture.detectChanges()
         const addSpy = jest.spyOn(component.subscription, 'add')
         component.ngOnInit()
-        expect(addSpy).toHaveBeenCalledTimes(6)
+        expect(addSpy).toHaveBeenCalledTimes(5)
       })
       it('unsubscribes', () => {
         const unsubscribeSpy = jest.spyOn(component.subscription, 'unsubscribe')
@@ -206,57 +204,6 @@ describe('EditPageComponent', () => {
       })
     })
   })
-  describe('scrollToQualityField', () => {
-    beforeEach(() => {
-      fixture.detectChanges()
-    })
-
-    it('should call scrollIntoView on the field element using ANCHOR_ID_PREFIX', () => {
-      const mockScrollIntoView = jest.fn()
-      jest.spyOn(document, 'getElementById').mockReturnValue({
-        scrollIntoView: mockScrollIntoView,
-      } as any)
-
-      component.scrollToQualityField('abstract')
-
-      expect(document.getElementById).toHaveBeenCalledWith(
-        ANCHOR_ID_PREFIX + 'abstract'
-      )
-      expect(mockScrollIntoView).toHaveBeenCalledWith({
-        behavior: 'instant',
-        block: 'start',
-      })
-      jest.restoreAllMocks()
-    })
-  })
-
-  describe('onCriterionClicked', () => {
-    beforeEach(() => {
-      fixture.detectChanges()
-    })
-
-    it('should call facade.setFocusedField with the model', () => {
-      component.onCriterionClicked('abstract')
-      expect(facade.setFocusedField).toHaveBeenCalledWith('abstract')
-    })
-  })
-
-  describe('getPageIndexForField', () => {
-    beforeEach(() => {
-      fixture.detectChanges()
-    })
-
-    it('should return the page index for a field present in the config', async () => {
-      const pageIndex = await component.getPageIndexForField('title')
-      expect(pageIndex).toBe(0)
-    })
-
-    it('should return null for a field not present in the config', async () => {
-      const pageIndex = await component.getPageIndexForField('organisation')
-      expect(pageIndex).toBeNull()
-    })
-  })
-
   describe('New record', () => {
     beforeEach(() => {
       const modifiedRecord = {

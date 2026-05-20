@@ -159,13 +159,5 @@ describe('EditorFacade', () => {
         EditorActions.setFocusedField({ model: 'abstract' })
       )
     })
-
-    it('setFocusedField(null) should dispatch setFocusedField action with null', () => {
-      const spy = jest.spyOn(store, 'dispatch')
-      facade.setFocusedField(null)
-      expect(spy).toHaveBeenCalledWith(
-        EditorActions.setFocusedField({ model: null })
-      )
-    })
   })
 })

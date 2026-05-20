@@ -3,6 +3,7 @@ import { MetadataQualityPanelComponent } from './metadata-quality-panel.componen
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { EditorConfig } from '../../models'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { EditorFacade } from '../../+state/editor.facade'
 
 const EDITOR_CONFIG_MOCK: EditorConfig = {
   pages: [
@@ -56,11 +57,17 @@ const RECORD_MOCK: CatalogRecord = {
 describe('MetadataQualityPanelComponent', () => {
   let component: MetadataQualityPanelComponent
   let fixture: ComponentFixture<MetadataQualityPanelComponent>
+  let mockFacade: { setFocusedField: jest.Mock }
 
   beforeEach(async () => {
+    mockFacade = { setFocusedField: jest.fn() }
+
     await TestBed.configureTestingModule({
       imports: [MetadataQualityPanelComponent],
-      providers: [provideI18n()],
+      providers: [
+        provideI18n(),
+        { provide: EditorFacade, useValue: mockFacade },
+      ],
     }).compileComponents()
 
     fixture = TestBed.createComponent(MetadataQualityPanelComponent)
@@ -141,16 +148,14 @@ describe('MetadataQualityPanelComponent', () => {
   })
 
   describe('onCriterionClick', () => {
-    it('should emit criterionClicked when criterion is invalid', () => {
-      const spy = jest.spyOn(component.criterionClicked, 'emit')
+    it('should call facade.setFocusedField when criterion is invalid', () => {
       component.onCriterionClick({ value: false, model: 'abstract' })
-      expect(spy).toHaveBeenCalledWith('abstract')
+      expect(mockFacade.setFocusedField).toHaveBeenCalledWith('abstract')
     })
 
-    it('should not emit criterionClicked when criterion is valid', () => {
-      const spy = jest.spyOn(component.criterionClicked, 'emit')
+    it('should not call facade.setFocusedField when criterion is valid', () => {
       component.onCriterionClick({ value: true, model: 'title' })
-      expect(spy).not.toHaveBeenCalled()
+      expect(mockFacade.setFocusedField).not.toHaveBeenCalled()
     })
   })
 
