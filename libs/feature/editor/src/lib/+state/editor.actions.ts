@@ -5,6 +5,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { SaveRecordError } from './editor.models'
 import { EditorConfig, EditorFieldIdentification } from '../models'
+import { ValidatorMapperKeys } from '@geonetwork-ui/util/shared'
 
 export const openRecord = createAction(
   '[Editor] Open record',
@@ -72,4 +73,9 @@ export const isPublished = createAction(
 export const canEditRecord = createAction(
   '[Editor] User can edit record',
   props<{ canEditRecord: boolean }>()
+)
+
+export const setFocusedField = createAction(
+  '[Editor] Set focused field',
+  props<{ model: ValidatorMapperKeys | null }>()
 )

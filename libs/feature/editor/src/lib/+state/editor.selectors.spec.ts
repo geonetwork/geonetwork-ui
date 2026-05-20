@@ -24,6 +24,7 @@ describe('Editor Selectors', () => {
         hasRecordChanged: ['date', 'user'],
         isPublished: true,
         canEditRecord: true,
+        focusedField: 'abstract',
       },
     }
   })
@@ -71,6 +72,11 @@ describe('Editor Selectors', () => {
     it('selectCanEditRecord() should return the current "canEditRecord" state', () => {
       const result = EditorSelectors.selectCanEditRecord(state)
       expect(result).toEqual(true)
+    })
+
+    it('selectFocusedField() should return the current "focusedField" state', () => {
+      const result = EditorSelectors.selectFocusedField(state)
+      expect(result).toBe('abstract')
     })
 
     describe('selectRecordFields', () => {

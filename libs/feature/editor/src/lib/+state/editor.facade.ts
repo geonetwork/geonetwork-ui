@@ -6,7 +6,7 @@ import {
   CatalogRecord,
   LanguageCode,
 } from '@geonetwork-ui/common/domain/model/record'
-import { BehaviorSubject, filter } from 'rxjs'
+import { filter } from 'rxjs'
 import { Actions, ofType } from '@ngrx/effects'
 import { EditorConfig, EditorFieldIdentification } from '../models'
 import { ValidatorMapperKeys } from '@geonetwork-ui/util/shared'
@@ -38,10 +38,7 @@ export class EditorFacade {
   )
   isPublished$ = this.store.pipe(select(EditorSelectors.selectIsPublished))
   canEditRecord$ = this.store.pipe(select(EditorSelectors.selectCanEditRecord))
-
-  private readonly _focusedField$ =
-    new BehaviorSubject<ValidatorMapperKeys | null>(null)
-  focusedField$ = this._focusedField$.asObservable()
+  focusedField$ = this.store.pipe(select(EditorSelectors.selectFocusedField))
 
   openRecord(record: CatalogRecord, recordSource: string) {
     this.store.dispatch(
@@ -83,7 +80,7 @@ export class EditorFacade {
   }
 
   setFocusedField(model: ValidatorMapperKeys | null) {
-    this._focusedField$.next(model)
+    this.store.dispatch(EditorActions.setFocusedField({ model }))
   }
 
   setFieldVisibility(field: EditorFieldIdentification, visible: boolean) {

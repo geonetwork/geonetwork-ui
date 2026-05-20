@@ -152,23 +152,20 @@ describe('EditorFacade', () => {
       expect(spy).toHaveBeenCalledWith(action)
     })
 
-    it('setFocusedField() should emit the field on focusedField$', () => {
-      const emissions: (string | null)[] = []
-      facade.focusedField$.subscribe((v) => emissions.push(v))
-
+    it('setFocusedField() should dispatch setFocusedField action', () => {
+      const spy = jest.spyOn(store, 'dispatch')
       facade.setFocusedField('abstract')
-
-      expect(emissions).toContain('abstract')
+      expect(spy).toHaveBeenCalledWith(
+        EditorActions.setFocusedField({ model: 'abstract' })
+      )
     })
 
-    it('setFocusedField(null) should emit null on focusedField$', () => {
-      facade.setFocusedField('title')
-      const emissions: (string | null)[] = []
-      facade.focusedField$.subscribe((v) => emissions.push(v))
-
+    it('setFocusedField(null) should dispatch setFocusedField action with null', () => {
+      const spy = jest.spyOn(store, 'dispatch')
       facade.setFocusedField(null)
-
-      expect(emissions[emissions.length - 1]).toBeNull()
+      expect(spy).toHaveBeenCalledWith(
+        EditorActions.setFocusedField({ model: null })
+      )
     })
   })
 })
