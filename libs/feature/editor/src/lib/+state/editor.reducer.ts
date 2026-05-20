@@ -4,7 +4,10 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SaveRecordError } from './editor.models'
 import { EditorConfig } from '../models'
 import { DEFAULT_CONFIGURATION } from '../fields.config'
-import { updateLanguages, ValidatorMapperKeys } from '@geonetwork-ui/util/shared'
+import {
+  updateLanguages,
+  ValidatorMapperKeys,
+} from '@geonetwork-ui/util/shared'
 
 export const EDITOR_FEATURE_KEY = 'editor'
 

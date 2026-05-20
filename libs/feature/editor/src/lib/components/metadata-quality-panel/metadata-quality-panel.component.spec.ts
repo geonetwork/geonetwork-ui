@@ -81,16 +81,48 @@ describe('MetadataQualityPanelComponent', () => {
     it('should initialize propertiesByPage corresponding to editorConfig and propsToValidate', () => {
       expect(component.propertiesByPage).toEqual([
         [
-          { label: 'editor.record.form.field.title', value: true, model: 'title' },
-          { label: 'editor.record.form.field.abstract', value: true, model: 'abstract' },
-          { label: 'editor.record.form.field.keywords', value: true, model: 'keywords' },
-          { label: 'editor.record.form.field.updateFrequency', value: true, model: 'updateFrequency' },
-          { label: 'editor.record.form.field.topics', value: true, model: 'topics' },
+          {
+            label: 'editor.record.form.field.title',
+            value: true,
+            model: 'title',
+          },
+          {
+            label: 'editor.record.form.field.abstract',
+            value: true,
+            model: 'abstract',
+          },
+          {
+            label: 'editor.record.form.field.keywords',
+            value: true,
+            model: 'keywords',
+          },
+          {
+            label: 'editor.record.form.field.updateFrequency',
+            value: true,
+            model: 'updateFrequency',
+          },
+          {
+            label: 'editor.record.form.field.topics',
+            value: true,
+            model: 'topics',
+          },
         ],
         [
-          { label: 'editor.record.form.field.legalConstraints', value: false, model: 'legalConstraints' },
-          { label: 'editor.record.form.field.contacts', value: false, model: 'contacts' },
-          { label: 'editor.record.form.field.organisation', value: false, model: 'organisation' },
+          {
+            label: 'editor.record.form.field.legalConstraints',
+            value: false,
+            model: 'legalConstraints',
+          },
+          {
+            label: 'editor.record.form.field.contacts',
+            value: false,
+            model: 'contacts',
+          },
+          {
+            label: 'editor.record.form.field.organisation',
+            value: false,
+            model: 'organisation',
+          },
         ],
       ])
     })
