@@ -74,6 +74,7 @@
           <gn-ui-metadata-quality-panel
             [record]="facade.record$ | async"
             [editorConfig]="facade.editorConfig$ | async"
+            (criterionClicked)="onCriterionClicked($event)"
           >
           </gn-ui-metadata-quality-panel>
         }

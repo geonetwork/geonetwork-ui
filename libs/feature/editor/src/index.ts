@@ -13,3 +13,4 @@ export * from './lib/components/online-resource-card/online-resource-card.compon
 export * from './lib/feature-editor.module'
 export * from './lib/fields.config'
 export * from './lib/services/editor.service'
+export * from './lib/models/editor-config.model'

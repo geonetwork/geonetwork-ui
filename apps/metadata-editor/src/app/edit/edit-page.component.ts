@@ -18,6 +18,7 @@ import {
   MetadataQualityPanelComponent,
   MultilingualPanelComponent,
   RecordFormComponent,
+  ANCHOR_ID_PREFIX,
 } from '@geonetwork-ui/feature/editor'
 import {
   NotificationsContainerComponent,
@@ -30,14 +31,14 @@ import {
   TranslateService,
 } from '@ngx-translate/core'
 import { combineLatest, filter, firstValueFrom, Subscription, take } from 'rxjs'
-import { map, skip } from 'rxjs/operators'
+import { map, skip, switchMap } from 'rxjs/operators'
 import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
 import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { SearchHeaderComponent } from '../dashboard/search-header/search-header.component'
 import { PageErrorComponent } from './components/page-error/page-error.component'
-import { DateService } from '@geonetwork-ui/util/shared'
+import { DateService, ValidatorMapperKeys } from '@geonetwork-ui/util/shared'
 
 marker('editor.record.form.bottomButtons.comeBackLater')
 marker('editor.record.form.bottomButtons.previous')
@@ -176,9 +177,20 @@ export class EditPageComponent implements OnInit, OnDestroy {
     )
 
     this.subscription.add(
-      this.facade.pendingScrollToField$
-        .pipe(filter((field) => !!field))
-        .subscribe((field) => {
+      this.facade.focusedField$
+        .pipe(
+          filter((field) => !!field),
+          switchMap(async (field) => ({
+            field: field as ValidatorMapperKeys,
+            pageIndex: await this.getPageIndexForField(
+              field as ValidatorMapperKeys
+            ),
+          }))
+        )
+        .subscribe(({ field, pageIndex }) => {
+          if (pageIndex !== null) {
+            this.facade.setCurrentPage(pageIndex)
+          }
           afterNextRender(() => this.scrollToQualityField(field), {
             injector: this.injector,
           })
@@ -233,12 +245,26 @@ export class EditPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  onCriterionClicked(model: ValidatorMapperKeys) {
+    this.facade.setFocusedField(model)
+  }
+
+  async getPageIndexForField(
+    model: ValidatorMapperKeys
+  ): Promise<number | null> {
+    const config = await firstValueFrom(this.facade.editorConfig$)
+    const pageIndex = config.pages.findIndex((page) =>
+      page.sections.some((section) =>
+        section.fields.some((field) => field.model === model)
+      )
+    )
+    return pageIndex >= 0 ? pageIndex : null
+  }
+
   scrollToQualityField(field: string) {
-    this.scrollContainer?.nativeElement.scroll({ top: 0, behavior: 'instant' })
     document
-      .getElementById(field)
+      .getElementById(ANCHOR_ID_PREFIX + field)
       ?.scrollIntoView({ behavior: 'instant', block: 'start' })
-    this.facade.clearPendingScrollField()
   }
 
   private scrollToTop() {

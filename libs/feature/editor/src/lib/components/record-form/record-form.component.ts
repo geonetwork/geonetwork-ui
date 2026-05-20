@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
-import { EditorFieldValue } from '../../models'
+import { ANCHOR_ID_PREFIX, EditorFieldValue } from '../../models'
 import { FormFieldComponent } from './form-field'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
@@ -20,6 +20,7 @@ import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
   imports: [CommonModule, FormFieldComponent, TranslateDirective],
 })
 export class RecordFormComponent {
+  anchorIdPrefix = ANCHOR_ID_PREFIX
   facade = inject(EditorFacade)
 
   recordUniqueIdentifier$ = this.facade.record$.pipe(

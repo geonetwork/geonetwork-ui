@@ -170,17 +170,6 @@ describe('editor form', () => {
       // Should still be on page 3 — abstract (page 1) should not be visible
       cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('not.exist')
     })
-
-    it('should not navigate when clicking a FIXME criterion (topics or organisation)', () => {
-      cy.get('@accessContactPageBtn').click()
-
-      cy.get('gn-ui-metadata-quality-panel')
-        .find('[data-cy="md-quality-btn-editor.record.form.field.topics"]')
-        .click()
-
-      // Should still be on page 3 — abstract (page 1) should not be visible
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('not.exist')
-    })
   })
 
   describe('form fields', () => {

@@ -9,6 +9,7 @@ import {
 import { BehaviorSubject, filter } from 'rxjs'
 import { Actions, ofType } from '@ngrx/effects'
 import { EditorConfig, EditorFieldIdentification } from '../models'
+import { ValidatorMapperKeys } from '@geonetwork-ui/util/shared'
 
 @Injectable()
 export class EditorFacade {
@@ -38,10 +39,9 @@ export class EditorFacade {
   isPublished$ = this.store.pipe(select(EditorSelectors.selectIsPublished))
   canEditRecord$ = this.store.pipe(select(EditorSelectors.selectCanEditRecord))
 
-  private readonly _pendingScrollToField$ = new BehaviorSubject<string | null>(
-    null
-  )
-  pendingScrollToField$ = this._pendingScrollToField$.asObservable()
+  private readonly _focusedField$ =
+    new BehaviorSubject<ValidatorMapperKeys | null>(null)
+  focusedField$ = this._focusedField$.asObservable()
 
   openRecord(record: CatalogRecord, recordSource: string) {
     this.store.dispatch(
@@ -82,13 +82,8 @@ export class EditorFacade {
     this.store.dispatch(EditorActions.setCurrentPage({ page }))
   }
 
-  navigateToQualityField(page: number, model: string) {
-    this.setCurrentPage(page)
-    this._pendingScrollToField$.next(model)
-  }
-
-  clearPendingScrollField() {
-    this._pendingScrollToField$.next(null)
+  setFocusedField(model: ValidatorMapperKeys | null) {
+    this._focusedField$.next(model)
   }
 
   setFieldVisibility(field: EditorFieldIdentification, visible: boolean) {

@@ -1,5 +1,6 @@
 import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 
+export const ANCHOR_ID_PREFIX = 'gn-ui--field-'
 // Expressions should be enclosed in `${}` to be recognized as such
 // eg. ${dateNow()}
 export type EditorFieldExpression = `$\{${string}}`
