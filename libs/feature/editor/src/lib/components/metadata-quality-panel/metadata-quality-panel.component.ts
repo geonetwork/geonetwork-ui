@@ -90,16 +90,11 @@ export class MetadataQualityPanelComponent implements OnChanges {
     }
   }
 
-  getExtraClass(checked: boolean, pageIndex: number): string {
-    const isClickable = !checked && pageIndex >= 0
+  getExtraClass(checked: boolean): string {
     const baseClasses = `flex flex-row justify-between rounded mb-1 h-[34px] w-full focus:ring-0 hover:border-none border-none hover:text-black text-black`
     if (checked) {
       return `${baseClasses} bg-neutral-100 hover:bg-neutral-100 cursor-default`
     }
-    // FIXME: for fields that are not yet handled by the editor (pageIndex -1)
-    if (isClickable) {
-      return `${baseClasses} bg-transparent hover:bg-gray-100`
-    }
-    return `${baseClasses} bg-transparent hover:bg-transparent cursor-default`
+    return `${baseClasses} bg-transparent hover:bg-gray-100`
   }
 }

@@ -11,7 +11,7 @@
     <div class="flex flex-col gap-2">
       @for (property of properties; track property) {
         <gn-ui-button
-          [extraClass]="getExtraClass(property.value, property.pageIndex)"
+          [extraClass]="getExtraClass(property.value)"
           (buttonClick)="onCriterionClick(property)"
           type="outline"
           attr.data-cy="md-quality-btn-{{ property.label }}"
