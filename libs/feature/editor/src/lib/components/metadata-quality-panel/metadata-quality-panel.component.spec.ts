@@ -34,7 +34,6 @@ const EDITOR_CONFIG_MOCK: EditorConfig = {
           fields: [
             { model: 'legalConstraints', hidden: true },
             { model: 'contacts', hidden: false },
-            { model: 'organisation', hidden: false },
           ],
         },
       ],
@@ -128,7 +127,7 @@ describe('MetadataQualityPanelComponent', () => {
           {
             label: 'editor.record.form.field.organisation',
             value: false,
-            model: 'organisation',
+            model: 'organisation' as any,
           },
         ],
       ])
@@ -136,7 +135,7 @@ describe('MetadataQualityPanelComponent', () => {
 
     it('should append organisation to page 2 as FIXME field', () => {
       const page2 = component.propertiesByPage[1]
-      expect(page2.find((p) => p.model === 'organisation')).toBeDefined()
+      expect(page2.find((p) => p.label.includes('organisation'))).toBeDefined()
     })
   })
 
@@ -160,24 +159,16 @@ describe('MetadataQualityPanelComponent', () => {
   })
 
   describe('getExtraClass', () => {
-    it('should include hover background for invalid navigable items', () => {
-      expect(component.getExtraClass(false, 0)).toContain('hover:bg-gray-100')
+    it('should include hover background for invalid items', () => {
+      expect(component.getExtraClass(false)).toContain('hover:bg-gray-100')
     })
 
     it('should include cursor-default for valid items', () => {
-      expect(component.getExtraClass(true, 0)).toContain('cursor-default')
-    })
-
-    it('should include cursor-default for FUTURE fields (pageIndex -1)', () => {
-      expect(component.getExtraClass(false, -1)).toContain('cursor-default')
+      expect(component.getExtraClass(true)).toContain('cursor-default')
     })
 
     it('should include bg-neutral-100 for checked items', () => {
-      expect(component.getExtraClass(true, 0)).toContain('bg-neutral-100')
-    })
-
-    it('should include bg-transparent for unchecked non-clickable items', () => {
-      expect(component.getExtraClass(false, -1)).toContain('bg-transparent')
+      expect(component.getExtraClass(true)).toContain('bg-neutral-100')
     })
   })
 })
