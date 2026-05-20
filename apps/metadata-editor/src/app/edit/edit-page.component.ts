@@ -2,11 +2,9 @@ import { CommonModule } from '@angular/common'
 import {
   Component,
   ElementRef,
-  Injector,
   OnDestroy,
   OnInit,
   ViewChild,
-  afterNextRender,
   inject,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
@@ -18,7 +16,6 @@ import {
   MetadataQualityPanelComponent,
   MultilingualPanelComponent,
   RecordFormComponent,
-  ANCHOR_ID_PREFIX,
 } from '@geonetwork-ui/feature/editor'
 import {
   NotificationsContainerComponent,
@@ -31,7 +28,7 @@ import {
   TranslateService,
 } from '@ngx-translate/core'
 import { combineLatest, filter, firstValueFrom, Subscription, take } from 'rxjs'
-import { map, skip, switchMap } from 'rxjs/operators'
+import { map, skip } from 'rxjs/operators'
 import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
 import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component'
@@ -39,7 +36,6 @@ import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { SearchHeaderComponent } from '../dashboard/search-header/search-header.component'
 import { PageErrorComponent } from './components/page-error/page-error.component'
 import { DateService } from '@geonetwork-ui/util/shared'
-import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 
 marker('editor.record.form.bottomButtons.comeBackLater')
 marker('editor.record.form.bottomButtons.previous')
@@ -75,7 +71,6 @@ export class EditPageComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService)
   private router = inject(Router)
   private dateService = inject(DateService)
-  private injector = inject(Injector)
 
   subscription = new Subscription()
 
@@ -177,27 +172,6 @@ export class EditPageComponent implements OnInit, OnDestroy {
       })
     )
 
-    this.subscription.add(
-      this.facade.focusedField$
-        .pipe(
-          filter((field) => !!field),
-          switchMap(async (field) => ({
-            field: field as CatalogRecordKeys,
-            pageIndex: await this.getPageIndexForField(
-              field as CatalogRecordKeys
-            ),
-          }))
-        )
-        .subscribe(({ field, pageIndex }) => {
-          if (pageIndex !== null) {
-            this.facade.setCurrentPage(pageIndex)
-          }
-          afterNextRender(() => this.scrollToQualityField(field), {
-            injector: this.injector,
-          })
-        })
-    )
-
     // if we're on the /duplicate route, go to /edit/{uuid} to update the uuid
     if (this.route.snapshot.routeConfig?.path.includes('duplicate')) {
       this.router.navigate(['edit', currentRecord.uniqueIdentifier], {
@@ -244,26 +218,6 @@ export class EditPageComponent implements OnInit, OnDestroy {
       this.facade.setCurrentPage(currentPage + 1)
       this.scrollToTop()
     }
-  }
-
-  onCriterionClicked(model: CatalogRecordKeys) {
-    this.facade.setFocusedField(model)
-  }
-
-  async getPageIndexForField(model: CatalogRecordKeys): Promise<number | null> {
-    const config = await firstValueFrom(this.facade.editorConfig$)
-    const pageIndex = config.pages.findIndex((page) =>
-      page.sections.some((section) =>
-        section.fields.some((field) => field.model === model)
-      )
-    )
-    return pageIndex >= 0 ? pageIndex : null
-  }
-
-  scrollToQualityField(field: string) {
-    document
-      .getElementById(ANCHOR_ID_PREFIX + field)
-      ?.scrollIntoView({ behavior: 'instant', block: 'start' })
   }
 
   private scrollToTop() {

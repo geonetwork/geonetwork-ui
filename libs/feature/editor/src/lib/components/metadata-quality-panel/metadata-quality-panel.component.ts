@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-} from '@angular/core'
+import { Component, inject, Input, OnChanges } from '@angular/core'
 import {
   CatalogRecord,
   CatalogRecordKeys,
@@ -24,6 +18,7 @@ import { iconoirBadgeCheck, iconoirSystemShut } from '@ng-icons/iconoir'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { EditorConfig } from '../../models'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { EditorFacade } from '../../+state/editor.facade'
 
 //forced translations that are not available in fields.config.ts
 marker('editor.record.form.field.keywords')
@@ -52,6 +47,7 @@ marker('editor.record.form.field.organisation')
   styleUrl: './metadata-quality-panel.component.css',
 })
 export class MetadataQualityPanelComponent implements OnChanges {
+  facade = inject(EditorFacade)
   propsToValidate: ValidatorMapperKeys[] = getAllKeysValidator()
   propertiesByPage: {
     label: string
@@ -60,7 +56,6 @@ export class MetadataQualityPanelComponent implements OnChanges {
   }[][] = []
   @Input() editorConfig: EditorConfig
   @Input() record: CatalogRecord
-  @Output() criterionClicked = new EventEmitter<CatalogRecordKeys>()
 
   ngOnChanges() {
     if (this.editorConfig && this.record) {
@@ -91,7 +86,7 @@ export class MetadataQualityPanelComponent implements OnChanges {
 
   onCriterionClick(property: { value: boolean; model: CatalogRecordKeys }) {
     if (!property.value) {
-      this.criterionClicked.emit(property.model)
+      this.facade.setFocusedField(property.model)
     }
   }
 
