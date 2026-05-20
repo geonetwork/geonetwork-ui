@@ -7,7 +7,7 @@ import {
 } from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject, firstValueFrom, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { EditorFacade } from '@geonetwork-ui/feature/editor'
+import { ANCHOR_ID_PREFIX, EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MockBuilder } from 'ng-mocks'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
@@ -38,9 +38,11 @@ class EditorFacadeMock {
   currentPage$ = new BehaviorSubject(0)
   pagesCount$ = new BehaviorSubject(2)
   hasRecordChanged$ = new BehaviorSubject(false)
-  pendingScrollToField$ = new BehaviorSubject<string | null>(null)
+  focusedField$ = new BehaviorSubject<string | null>(null)
   saveRecord = jest.fn()
-  clearPendingScrollField = jest.fn()
+  setCurrentPage = jest.fn()
+  setFocusedField = jest.fn()
+  checkHasRecordChanged = jest.fn()
 }
 class NotificationsServiceMock {
   showNotification = jest.fn()
@@ -205,25 +207,11 @@ describe('EditPageComponent', () => {
     })
   })
   describe('scrollToQualityField', () => {
-    let facadeMock: EditorFacadeMock
-    let mockScroll: jest.Mock
-
     beforeEach(() => {
-      facadeMock = TestBed.inject(EditorFacade) as unknown as EditorFacadeMock
-      mockScroll = jest.fn()
       fixture.detectChanges()
-      // Set after detectChanges so the @ViewChild query doesn't overwrite it
-      component.scrollContainer = {
-        nativeElement: { scroll: mockScroll },
-      } as any
     })
 
-    it('should reset scroll container to top', () => {
-      component.scrollToQualityField('abstract')
-      expect(mockScroll).toHaveBeenCalledWith({ top: 0, behavior: 'instant' })
-    })
-
-    it('should call scrollIntoView on the field element', () => {
+    it('should call scrollIntoView on the field element using ANCHOR_ID_PREFIX', () => {
       const mockScrollIntoView = jest.fn()
       jest.spyOn(document, 'getElementById').mockReturnValue({
         scrollIntoView: mockScrollIntoView,
@@ -231,17 +219,41 @@ describe('EditPageComponent', () => {
 
       component.scrollToQualityField('abstract')
 
-      expect(document.getElementById).toHaveBeenCalledWith('abstract')
+      expect(document.getElementById).toHaveBeenCalledWith(
+        ANCHOR_ID_PREFIX + 'abstract'
+      )
       expect(mockScrollIntoView).toHaveBeenCalledWith({
         behavior: 'instant',
         block: 'start',
       })
       jest.restoreAllMocks()
     })
+  })
 
-    it('should call clearPendingScrollField', () => {
-      component.scrollToQualityField('abstract')
-      expect(facadeMock.clearPendingScrollField).toHaveBeenCalled()
+  describe('onCriterionClicked', () => {
+    beforeEach(() => {
+      fixture.detectChanges()
+    })
+
+    it('should call facade.setFocusedField with the model', () => {
+      component.onCriterionClicked('abstract')
+      expect(facade.setFocusedField).toHaveBeenCalledWith('abstract')
+    })
+  })
+
+  describe('getPageIndexForField', () => {
+    beforeEach(() => {
+      fixture.detectChanges()
+    })
+
+    it('should return the page index for a field present in the config', async () => {
+      const pageIndex = await component.getPageIndexForField('title')
+      expect(pageIndex).toBe(0)
+    })
+
+    it('should return null for a field not present in the config', async () => {
+      const pageIndex = await component.getPageIndexForField('organisation')
+      expect(pageIndex).toBeNull()
     })
   })
 

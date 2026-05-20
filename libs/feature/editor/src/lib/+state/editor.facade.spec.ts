@@ -152,25 +152,21 @@ describe('EditorFacade', () => {
       expect(spy).toHaveBeenCalledWith(action)
     })
 
-    it('navigateToQualityField() should dispatch setCurrentPage and emit on pendingScrollToField$', () => {
-      const spy = jest.spyOn(store, 'dispatch')
+    it('setFocusedField() should emit the field on focusedField$', () => {
       const emissions: (string | null)[] = []
-      facade.pendingScrollToField$.subscribe((v) => emissions.push(v))
+      facade.focusedField$.subscribe((v) => emissions.push(v))
 
-      facade.navigateToQualityField(2, 'abstract')
+      facade.setFocusedField('abstract')
 
-      expect(spy).toHaveBeenCalledWith(
-        EditorActions.setCurrentPage({ page: 2 })
-      )
       expect(emissions).toContain('abstract')
     })
 
-    it('clearPendingScrollField() should emit null on pendingScrollToField$', () => {
-      facade.navigateToQualityField(0, 'title')
+    it('setFocusedField(null) should emit null on focusedField$', () => {
+      facade.setFocusedField('title')
       const emissions: (string | null)[] = []
-      facade.pendingScrollToField$.subscribe((v) => emissions.push(v))
+      facade.focusedField$.subscribe((v) => emissions.push(v))
 
-      facade.clearPendingScrollField()
+      facade.setFocusedField(null)
 
       expect(emissions[emissions.length - 1]).toBeNull()
     })
