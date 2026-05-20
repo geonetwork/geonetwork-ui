@@ -38,7 +38,8 @@ import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.compon
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { SearchHeaderComponent } from '../dashboard/search-header/search-header.component'
 import { PageErrorComponent } from './components/page-error/page-error.component'
-import { DateService, ValidatorMapperKeys } from '@geonetwork-ui/util/shared'
+import { DateService } from '@geonetwork-ui/util/shared'
+import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 
 marker('editor.record.form.bottomButtons.comeBackLater')
 marker('editor.record.form.bottomButtons.previous')
@@ -181,9 +182,9 @@ export class EditPageComponent implements OnInit, OnDestroy {
         .pipe(
           filter((field) => !!field),
           switchMap(async (field) => ({
-            field: field as ValidatorMapperKeys,
+            field: field as CatalogRecordKeys,
             pageIndex: await this.getPageIndexForField(
-              field as ValidatorMapperKeys
+              field as CatalogRecordKeys
             ),
           }))
         )
@@ -245,13 +246,11 @@ export class EditPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  onCriterionClicked(model: ValidatorMapperKeys) {
+  onCriterionClicked(model: CatalogRecordKeys) {
     this.facade.setFocusedField(model)
   }
 
-  async getPageIndexForField(
-    model: ValidatorMapperKeys
-  ): Promise<number | null> {
+  async getPageIndexForField(model: CatalogRecordKeys): Promise<number | null> {
     const config = await firstValueFrom(this.facade.editorConfig$)
     const pageIndex = config.pages.findIndex((page) =>
       page.sections.some((section) =>

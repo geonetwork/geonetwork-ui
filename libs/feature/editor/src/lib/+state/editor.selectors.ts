@@ -71,8 +71,3 @@ export const selectCanEditRecord = createSelector(
   selectEditorState,
   (state: EditorState) => state.canEditRecord
 )
-
-export const selectFocusedField = createSelector(
-  selectEditorState,
-  (state: EditorState) => state.focusedField
-)

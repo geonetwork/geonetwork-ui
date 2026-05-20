@@ -5,7 +5,10 @@ import {
   OnChanges,
   Output,
 } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  CatalogRecordKeys,
+} from '@geonetwork-ui/common/domain/model/record'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import {
   getAllKeysValidator,
@@ -53,11 +56,11 @@ export class MetadataQualityPanelComponent implements OnChanges {
   propertiesByPage: {
     label: string
     value: boolean
-    model: ValidatorMapperKeys
+    model: CatalogRecordKeys
   }[][] = []
   @Input() editorConfig: EditorConfig
   @Input() record: CatalogRecord
-  @Output() criterionClicked = new EventEmitter<ValidatorMapperKeys>()
+  @Output() criterionClicked = new EventEmitter<CatalogRecordKeys>()
 
   ngOnChanges() {
     if (this.editorConfig && this.record) {
@@ -74,20 +77,19 @@ export class MetadataQualityPanelComponent implements OnChanges {
       }
       this.propertiesByPage = fieldsByPage
         .map((fields) =>
-          getQualityValidators(
-            this.record,
-            fields as ValidatorMapperKeys[]
-          ).map(({ name, validator }) => ({
-            label: `editor.record.form.field.${name}`, // use same translations as in fields.config.ts
-            value: validator(),
-            model: name as ValidatorMapperKeys,
-          }))
+          getQualityValidators(this.record, fields as CatalogRecordKeys[]).map(
+            ({ name, validator }) => ({
+              label: `editor.record.form.field.${name}`, // use same translations as in fields.config.ts
+              value: validator(),
+              model: name as CatalogRecordKeys,
+            })
+          )
         )
         .filter((arr) => arr.length > 0)
     }
   }
 
-  onCriterionClick(property: { value: boolean; model: ValidatorMapperKeys }) {
+  onCriterionClick(property: { value: boolean; model: CatalogRecordKeys }) {
     if (!property.value) {
       this.criterionClicked.emit(property.model)
     }

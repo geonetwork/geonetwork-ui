@@ -200,24 +200,6 @@ describe('Editor Reducer', () => {
 
       expect(result.canEditRecord).toBe(true)
     })
-    it('setFocusedField action', () => {
-      const action = EditorActions.setFocusedField({ model: 'abstract' })
-      const result: EditorState = editorReducer(
-        { ...initialEditorState, focusedField: null },
-        action
-      )
-
-      expect(result.focusedField).toBe('abstract')
-    })
-    it('setFocusedField action with null', () => {
-      const action = EditorActions.setFocusedField({ model: null })
-      const result: EditorState = editorReducer(
-        { ...initialEditorState, focusedField: 'abstract' },
-        action
-      )
-
-      expect(result.focusedField).toBeNull()
-    })
   })
 
   describe('unknown action', () => {

@@ -1,11 +1,11 @@
 import { createAction, props } from '@ngrx/store'
 import {
   CatalogRecord,
+  CatalogRecordKeys,
   LanguageCode,
 } from '@geonetwork-ui/common/domain/model/record'
 import { SaveRecordError } from './editor.models'
 import { EditorConfig, EditorFieldIdentification } from '../models'
-import { ValidatorMapperKeys } from '@geonetwork-ui/util/shared'
 
 export const openRecord = createAction(
   '[Editor] Open record',
@@ -77,5 +77,5 @@ export const canEditRecord = createAction(
 
 export const setFocusedField = createAction(
   '[Editor] Set focused field',
-  props<{ model: ValidatorMapperKeys | null }>()
+  props<{ model: CatalogRecordKeys }>()
 )

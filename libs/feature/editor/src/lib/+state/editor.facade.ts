@@ -4,12 +4,12 @@ import * as EditorActions from './editor.actions'
 import * as EditorSelectors from './editor.selectors'
 import {
   CatalogRecord,
+  CatalogRecordKeys,
   LanguageCode,
 } from '@geonetwork-ui/common/domain/model/record'
-import { filter } from 'rxjs'
+import { filter, map } from 'rxjs'
 import { Actions, ofType } from '@ngrx/effects'
 import { EditorConfig, EditorFieldIdentification } from '../models'
-import { ValidatorMapperKeys } from '@geonetwork-ui/util/shared'
 
 @Injectable()
 export class EditorFacade {
@@ -38,7 +38,10 @@ export class EditorFacade {
   )
   isPublished$ = this.store.pipe(select(EditorSelectors.selectIsPublished))
   canEditRecord$ = this.store.pipe(select(EditorSelectors.selectCanEditRecord))
-  focusedField$ = this.store.pipe(select(EditorSelectors.selectFocusedField))
+  focusedField$ = this.actions$.pipe(
+    ofType(EditorActions.setFocusedField),
+    map(({ model }) => model)
+  )
 
   openRecord(record: CatalogRecord, recordSource: string) {
     this.store.dispatch(
@@ -79,7 +82,7 @@ export class EditorFacade {
     this.store.dispatch(EditorActions.setCurrentPage({ page }))
   }
 
-  setFocusedField(model: ValidatorMapperKeys | null) {
+  setFocusedField(model: CatalogRecordKeys) {
     this.store.dispatch(EditorActions.setFocusedField({ model }))
   }
 

@@ -4,10 +4,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SaveRecordError } from './editor.models'
 import { EditorConfig } from '../models'
 import { DEFAULT_CONFIGURATION } from '../fields.config'
-import {
-  updateLanguages,
-  ValidatorMapperKeys,
-} from '@geonetwork-ui/util/shared'
+import { updateLanguages } from '@geonetwork-ui/util/shared'
 
 export const EDITOR_FEATURE_KEY = 'editor'
 
@@ -27,7 +24,6 @@ export interface EditorState {
   changedSinceSave: boolean
   editorConfig: EditorConfig
   currentPage: number
-  focusedField: ValidatorMapperKeys | null
   hasRecordChanged: { user: string; date: Date }
   isPublished: boolean
   canEditRecord: boolean
@@ -45,7 +41,6 @@ export const initialEditorState: EditorState = {
   changedSinceSave: false,
   editorConfig: DEFAULT_CONFIGURATION,
   currentPage: 0,
-  focusedField: null,
   hasRecordChanged: null,
   isPublished: true,
   canEditRecord: true,
@@ -93,10 +88,6 @@ const reducer = createReducer(
   on(EditorActions.setCurrentPage, (state, { page }) => ({
     ...state,
     currentPage: page,
-  })),
-  on(EditorActions.setFocusedField, (state, { model }) => ({
-    ...state,
-    focusedField: model,
   })),
   on(EditorActions.setFieldVisibility, (state, { field, visible }) => ({
     ...state,
