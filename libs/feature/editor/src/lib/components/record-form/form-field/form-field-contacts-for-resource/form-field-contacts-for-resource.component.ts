@@ -1,6 +1,5 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -24,7 +23,10 @@ import {
   AutocompleteComponent,
   ButtonComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
+import {
+  createFuzzyFilter,
+  getUserDisplayName,
+} from '@geonetwork-ui/util/shared'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import {
   debounceTime,
@@ -68,7 +70,6 @@ export class FormFieldContactsForResourceComponent
 {
   private platformServiceInterface = inject(PlatformServiceInterface)
   private organizationsServiceInterface = inject(OrganizationsServiceInterface)
-  private changeDetectorRef = inject(ChangeDetectorRef)
 
   @Input() value: Individual[]
   @Output() valueChange: EventEmitter<Individual[]> = new EventEmitter()
@@ -76,21 +77,18 @@ export class FormFieldContactsForResourceComponent
   contactsForRessourceByRole: Map<Role, Individual[]> = new Map()
   roleValues = RoleValues
 
-  rolesToPick: Role[] = this.getPickableRoles()
+  rolesToPick: Role[] = this.roleValues.filter(
+    (role) => role !== 'other' && role !== 'unspecified'
+  )
 
   roleSectionsToDisplay: Role[] = []
 
   allOrganizations: Map<string, Organization> = new Map()
 
   ngOnChanges() {
-    if (this.value.length === 0) {
-      this.roleSectionsToDisplay = []
-      this.rolesToPick = this.getPickableRoles()
-    }
     this.updateContactsForRessource()
     this.manageRoleSectionsToDisplay(this.value)
     this.filterRolesToPick()
-    this.changeDetectorRef.markForCheck()
   }
 
   async ngOnInit(): Promise<void> {
@@ -107,12 +105,6 @@ export class FormFieldContactsForResourceComponent
   addRoleToDisplay(roleToAdd: string) {
     this.roleSectionsToDisplay.push(roleToAdd)
     this.filterRolesToPick()
-  }
-
-  private getPickableRoles(): Role[] {
-    return this.roleValues.filter(
-      (role) => role !== 'other' && role !== 'unspecified'
-    )
   }
 
   filterRolesToPick() {
@@ -179,12 +171,7 @@ export class FormFieldContactsForResourceComponent
   /**
    * gn-ui-autocomplete
    */
-  displayWithFn: (user: UserModel) => string = (user) =>
-    user.name
-      ? `${user.name} ${user.surname} ${
-          user.organisation ? `(${user.organisation})` : ''
-        }`
-      : ``
+  displayWithFn: (user: UserModel) => string = getUserDisplayName
 
   /**
    * gn-ui-autocomplete
