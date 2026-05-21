@@ -1,7 +1,8 @@
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 
 export function getUserDisplayName(user: UserModel): string {
-  if (!user.name) return ''
+  const nameParts = [user.name, user.surname].filter(Boolean).join(' ')
   const orgPart = user.organisation ? ` (${user.organisation})` : ''
-  return `${user.name} ${user.surname}${orgPart}`
+  if (nameParts) return `${nameParts}${orgPart}`
+  return user.organisation ?? user.username ?? user.email ?? ''
 }
