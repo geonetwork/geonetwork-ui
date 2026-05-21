@@ -110,9 +110,20 @@
     [title]="'record.metadata.resource.contacts' | translate"
     data-test="contacts-panel"
   >
-    <gn-ui-metadata-resource-contacts
-      [contacts]="metadata.contactsForResource"
-    ></gn-ui-metadata-resource-contacts>
+    <div class="flex flex-col gap-1 pt-3 pb-4">
+      @for (group of contactGroups; track group.role) {
+        <div class="flex flex-col gap-1 rounded bg-gray-50 py-4 px-2">
+          <p class="text-xs font-normal text-black">
+            {{ group.roleLabel | translate }}
+          </p>
+          <div class="grid gap-0.5 grid-cols-1 md:grid-cols-2">
+            @for (contact of group.contacts; track contact.email) {
+              <gn-ui-contact-pill [contact]="contact"></gn-ui-contact-pill>
+            }
+          </div>
+        </div>
+      }
+    </div>
   </gn-ui-expandable-panel>
 }
 @if (

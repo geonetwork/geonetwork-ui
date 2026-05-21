@@ -244,29 +244,6 @@ describe('MetadataInfoComponent', () => {
         expect(displayedElement).toBeTruthy()
       })
     })
-    describe('only contactsForResource', () => {
-      beforeEach(() => {
-        fixture = TestBed.createComponent(MetadataInfoComponent)
-        component = fixture.componentInstance
-        component.metadata = {
-          ...datasetRecordsFixture()[0],
-          lineage: null,
-          resourceCreated: null,
-          resourcePublished: null,
-          resourceUpdated: null,
-          updateFrequency: null,
-          otherLanguages: [],
-          temporalExtents: [],
-        } as DatasetRecord
-        fixture.detectChanges()
-      })
-      it('should render the contacts panel', () => {
-        const contactsPanel = fixture.debugElement.query(
-          By.css('[data-test="contacts-panel"]')
-        )
-        expect(contactsPanel).toBeTruthy()
-      })
-    })
     describe('only resourceCreated', () => {
       beforeEach(() => {
         fixture = TestBed.createComponent(MetadataInfoComponent)
@@ -443,6 +420,22 @@ describe('MetadataInfoComponent', () => {
         )
         expect(displayedElement).toBeTruthy()
       })
+    })
+  })
+  describe('contacts panel', () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(MetadataInfoComponent)
+      component = fixture.componentInstance
+      component.metadata = {
+        ...datasetRecordsFixture()[0],
+      } as DatasetRecord
+      fixture.detectChanges()
+    })
+    it('should render the contacts panel', () => {
+      const contactsPanel = fixture.debugElement.query(
+        By.css('[data-test="contacts-panel"]')
+      )
+      expect(contactsPanel).toBeTruthy()
     })
   })
   describe('spatial extent panel', () => {

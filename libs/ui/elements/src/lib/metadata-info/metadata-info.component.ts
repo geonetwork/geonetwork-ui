@@ -8,7 +8,10 @@ import {
 } from '@angular/core'
 import {
   CatalogRecord,
+  Individual,
   Keyword,
+  Role,
+  RoleLabels,
 } from '@geonetwork-ui/common/domain/model/record'
 import { DateService, getTemporalRangeUnion } from '@geonetwork-ui/util/shared'
 import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
@@ -29,7 +32,7 @@ import { GnUiLinkifyDirective } from './linkify.directive'
 import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
 
 import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
-import { MetadataResourceContactsComponent } from '../metadata-resource-contacts/metadata-resource-contacts.component'
+import { ContactPillComponent } from '../contact-pill/contact-pill.component'
 
 @Component({
   selector: 'gn-ui-metadata-info',
@@ -50,7 +53,7 @@ import { MetadataResourceContactsComponent } from '../metadata-resource-contacts
     GnUiLinkifyDirective,
     GnUiHumanizeDateDirective,
     SpatialExtentComponent,
-    MetadataResourceContactsComponent,
+    ContactPillComponent,
   ],
   viewProviders: [
     provideIcons({
@@ -134,6 +137,29 @@ export class MetadataInfoComponent {
 
   fieldReady(propName: string) {
     return !this.incomplete || propName in this.metadata
+  }
+
+  get contactGroups(): {
+    role: Role
+    roleLabel: string
+    contacts: Individual[]
+  }[] {
+    const groups: { role: Role; roleLabel: string; contacts: Individual[] }[] =
+      []
+    const indexByRole = new Map<Role, number>()
+    for (const contact of this.metadata.contactsForResource ?? []) {
+      if (indexByRole.has(contact.role)) {
+        groups[indexByRole.get(contact.role)].contacts.push(contact)
+      } else {
+        indexByRole.set(contact.role, groups.length)
+        groups.push({
+          role: contact.role,
+          roleLabel: RoleLabels.get(contact.role),
+          contacts: [contact],
+        })
+      }
+    }
+    return groups
   }
 
   onKeywordClick(keyword: Keyword) {
