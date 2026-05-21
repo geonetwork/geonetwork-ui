@@ -260,18 +260,11 @@ describe('MetadataInfoComponent', () => {
         } as DatasetRecord
         fixture.detectChanges()
       })
-      it('should display the contacts panel', () => {
+      it('should render the contacts panel', () => {
         const contactsPanel = fixture.debugElement.query(
           By.css('[data-test="contacts-panel"]')
         )
         expect(contactsPanel).toBeTruthy()
-      })
-      it('should render one contact pill per contact in contactsForResource', () => {
-        expandPanel(fixture, 'contacts-panel')
-        const pills = fixture.debugElement.queryAll(
-          By.css('[data-test="contact-pill"]')
-        )
-        expect(pills.length).toBe(component.metadata.contactsForResource.length)
       })
     })
     describe('only resourceCreated', () => {

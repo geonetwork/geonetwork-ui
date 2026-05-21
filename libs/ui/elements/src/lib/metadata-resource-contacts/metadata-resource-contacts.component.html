@@ -1,0 +1,34 @@
+@if (contactGroups.length) {
+  <div class="flex flex-col gap-1 pt-3 pb-4">
+    @for (group of contactGroups; track group.role) {
+      <div class="flex flex-col gap-1 rounded bg-gray-50 py-4 px-2">
+        <p class="text-xs font-normal text-black">
+          {{ getRoleTranslationKey(group.role) | translate }}
+        </p>
+        <div class="grid gap-0.5 grid-cols-1 md:grid-cols-2">
+          @for (contact of group.contacts; track contact.email) {
+            <div
+              class="group flex items-center justify-between min-h-12 w-full rounded bg-primary-white py-2 pr-4 pl-5 gap-3 hover:bg-primary transition-colors duration-100"
+              data-test="contact-pill"
+            >
+              <span
+                class="font-title font-medium text-base leading-tight truncate group-hover:text-white"
+                [title]="getContactDisplayName(contact)"
+                >{{ getContactDisplayName(contact) }}</span
+              >
+              <gn-ui-button
+                type="outline"
+                extraClass="w-10 h-8 rounded-lg shrink-0 !bg-primary-white hover:!bg-primary-white group-hover:!bg-primary group-hover:!border-white group-hover:!text-white"
+              >
+                <ng-icon
+                  class="!w-6 !h-6 !text-[24px]"
+                  name="matInfoOutline"
+                ></ng-icon>
+              </gn-ui-button>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}
