@@ -25,7 +25,6 @@ import {
 } from './app/app.providers'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
-import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -59,7 +58,6 @@ loadAppConfig().then(() => {
           : [],
         FeatureSearchModule,
         FeatureRecordModule,
-        FeatureEditorModule,
         EffectsModule.forRoot(),
       ]),
       provideRouter(

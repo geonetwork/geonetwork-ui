@@ -5,7 +5,6 @@ import { StoreModule } from '@ngrx/store'
 import { provideGn4, provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
-import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 import { EffectsModule } from '@ngrx/effects'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
@@ -17,7 +16,6 @@ describe('AppComponent', () => {
           StoreModule.forRoot({}),
           FeatureSearchModule,
           FeatureRecordModule,
-          FeatureEditorModule,
           EffectsModule.forRoot(),
         ]),
         provideGn4(),
