@@ -8,6 +8,14 @@
       </gn-ui-button>
     }
   </div>
+  @if (value.length === 0) {
+    <div
+      class="p-4 border border-primary bg-primary-lightest rounded-lg"
+      translate
+    >
+      editor.record.form.field.contactsForResource.noContact
+    </div>
+  }
   @if (roleSectionsToDisplay && roleSectionsToDisplay.length > 0) {
     <div class="mt-8" data-test="displayedRoles">
       @for (
@@ -52,13 +60,6 @@
           }
         </div>
       }
-    </div>
-  } @else {
-    <div
-      class="p-4 border border-primary bg-primary-lightest rounded-lg"
-      translate
-    >
-      editor.record.form.field.contactsForResource.noContact
     </div>
   }
 </div>
