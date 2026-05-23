@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/">
+  <skos:ConceptScheme rdf:about="http://publications.europa.eu/resource/authority/access-right">
+    <owl:versionInfo>20160920-0</owl:versionInfo>
+    <dc:title>Access rights - Service</dc:title>
+    <rdfs:label xml:lang="en">Access right Named Authority List</rdfs:label>
+  </skos:ConceptScheme>
+  <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC">
+    <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right"/>
+    <dc:identifier>PUBLIC</dc:identifier>
+    <skos:prefLabel xml:lang="bg">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="cs">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="da">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="el">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="et">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="fi">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="ga">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="hr">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="hu">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="it">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="lv">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="lt">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="mt">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Toegang zonder voorwaarden</skos:prefLabel>
+    <skos:prefLabel xml:lang="no">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="pl">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="pt">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="ro">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="sk">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="sl">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="es">without conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="sv">without conditions</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC">
+    <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right"/>
+    <dc:identifier>NON_PUBLIC</dc:identifier>
+    <skos:prefLabel xml:lang="bg">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="cs">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="da">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="el">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="et">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="fi">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="ga">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="hr">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="hu">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="it">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="lv">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="lt">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="mt">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Toegang met voorwaarden</skos:prefLabel>
+    <skos:prefLabel xml:lang="no">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="pl">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="pt">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="ro">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="sk">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="sl">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="es">with conditions</skos:prefLabel>
+    <skos:prefLabel xml:lang="sv">with conditions</skos:prefLabel>
+  </skos:Concept>
+  </rdf:RDF>
