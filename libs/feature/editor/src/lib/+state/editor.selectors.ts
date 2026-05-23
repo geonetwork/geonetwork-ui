@@ -71,3 +71,8 @@ export const selectCanEditRecord = createSelector(
   selectEditorState,
   (state: EditorState) => state.canEditRecord
 )
+
+export const selectCurrentLanguage = createSelector(
+  selectEditorState,
+  (state: EditorState) => state.currentLanguage
+)
