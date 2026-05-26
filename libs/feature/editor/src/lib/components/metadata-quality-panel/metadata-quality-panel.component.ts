@@ -85,12 +85,4 @@ export class MetadataQualityPanelComponent {
       this.facade.setFocusedField(property.model)
     }
   }
-
-  getExtraClass(checked: boolean): string {
-    const baseClasses = `flex flex-row justify-between rounded mb-1 h-[34px] w-full focus:ring-0 hover:border-none border-none hover:text-black text-black`
-    if (checked) {
-      return `${baseClasses} bg-neutral-100 hover:bg-neutral-100 cursor-default`
-    }
-    return `${baseClasses} bg-transparent hover:bg-gray-100`
-  }
 }

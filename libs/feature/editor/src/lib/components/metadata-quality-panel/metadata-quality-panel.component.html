@@ -12,7 +12,10 @@
     <div class="flex flex-col gap-2">
       @for (property of properties; track property) {
         <gn-ui-button
-          [extraClass]="getExtraClass(property.value)"
+          [extraClass]="
+            'justify-between rounded mb-1 h-[34px] w-full focus:ring-0 hover:border-none border-none hover:text-black text-black bg-transparent hover:bg-gray-100 disabled:opacity-100'
+          "
+          [disabled]="property.value"
           (buttonClick)="onCriterionClick(property)"
           type="outline"
           attr.data-cy="md-quality-btn-{{ property.label }}"

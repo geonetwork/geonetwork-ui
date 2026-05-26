@@ -169,18 +169,4 @@ describe('MetadataQualityPanelComponent', () => {
       expect(mockFacade.setFocusedField).not.toHaveBeenCalled()
     })
   })
-
-  describe('getExtraClass', () => {
-    it('should include hover background for invalid items', () => {
-      expect(component.getExtraClass(false)).toContain('hover:bg-gray-100')
-    })
-
-    it('should include cursor-default for valid items', () => {
-      expect(component.getExtraClass(true)).toContain('cursor-default')
-    })
-
-    it('should include bg-neutral-100 for checked items', () => {
-      expect(component.getExtraClass(true)).toContain('bg-neutral-100')
-    })
-  })
 })
