@@ -63,7 +63,7 @@ describe('RecordFormComponent', () => {
     })
   })
 
-  describe('scrollToQualityField', () => {
+  describe('focusedField$ subscription', () => {
     let mockHostScrollIntoView: jest.Mock
 
     beforeEach(() => {
@@ -71,30 +71,38 @@ describe('RecordFormComponent', () => {
       component['el'].nativeElement.scrollIntoView = mockHostScrollIntoView
     })
 
-    it('should scroll the host element into view', () => {
-      component.scrollToQualityField('abstract')
-      expect(mockHostScrollIntoView).toHaveBeenCalledWith({
-        behavior: 'instant',
-        block: 'start',
+    describe('when the focused field is on a different page', () => {
+      beforeEach(async () => {
+        // 'licenses' is on page 2 in editorConfigFixture
+        facade.focusedField$.next('licenses')
+        await fixture.whenStable()
+      })
+
+      it('should navigate to the correct page', () => {
+        expect(facade.setCurrentPage).toHaveBeenCalledWith(2)
+      })
+
+      it('should scroll the host element to the top of the form', () => {
+        expect(mockHostScrollIntoView).toHaveBeenCalledWith({
+          behavior: 'instant',
+          block: 'start',
+        })
       })
     })
 
-    it('should scroll the field element into view using anchorIdPrefix', () => {
-      const mockFieldScrollIntoView = jest.fn()
-      jest
-        .spyOn(document, 'getElementById')
-        .mockReturnValue({ scrollIntoView: mockFieldScrollIntoView } as any)
-
-      component.scrollToQualityField('abstract')
-
-      expect(document.getElementById).toHaveBeenCalledWith(
-        component.anchorIdPrefix + 'abstract'
-      )
-      expect(mockFieldScrollIntoView).toHaveBeenCalledWith({
-        behavior: 'instant',
-        block: 'start',
+    describe('when the focused field is not found in the config', () => {
+      beforeEach(async () => {
+        facade.focusedField$.next('organisation' as any)
+        await fixture.whenStable()
       })
-      jest.restoreAllMocks()
+
+      it('should not navigate to a page', () => {
+        expect(facade.setCurrentPage).not.toHaveBeenCalled()
+      })
+
+      it('should not scroll the host element', () => {
+        expect(mockHostScrollIntoView).not.toHaveBeenCalled()
+      })
     })
   })
 

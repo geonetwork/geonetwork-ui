@@ -54,10 +54,20 @@ export class RecordFormComponent implements OnInit, OnDestroy {
         .subscribe(({ field, pageIndex }) => {
           if (pageIndex !== null) {
             this.facade.setCurrentPage(pageIndex)
+            this.el.nativeElement.scrollIntoView({
+              behavior: 'instant',
+              block: 'start',
+            })
           }
-          afterNextRender(() => this.scrollToQualityField(field), {
-            injector: this.injector,
-          })
+          afterNextRender(
+            () =>
+              requestAnimationFrame(() =>
+                document
+                  .getElementById(this.anchorIdPrefix + field)
+                  ?.scrollIntoView({ behavior: 'instant', block: 'start' })
+              ),
+            { injector: this.injector }
+          )
         })
     )
   }
@@ -89,15 +99,5 @@ export class RecordFormComponent implements OnInit, OnDestroy {
       )
     )
     return pageIndex >= 0 ? pageIndex : null
-  }
-
-  scrollToQualityField(field: string) {
-    this.el.nativeElement.scrollIntoView({
-      behavior: 'instant',
-      block: 'start',
-    })
-    document
-      .getElementById(this.anchorIdPrefix + field)
-      ?.scrollIntoView({ behavior: 'instant', block: 'start' })
   }
 }
