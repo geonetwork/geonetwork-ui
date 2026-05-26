@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common'
 import {
-  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   inject,
-  Injector,
   OnDestroy,
   OnInit,
 } from '@angular/core'
@@ -31,7 +29,6 @@ import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 export class RecordFormComponent implements OnInit, OnDestroy {
   anchorIdPrefix = 'gn-ui--field-'
   facade = inject(EditorFacade)
-  private injector = inject(Injector)
   private el = inject(ElementRef)
   subscription = new Subscription()
 
@@ -59,14 +56,10 @@ export class RecordFormComponent implements OnInit, OnDestroy {
               block: 'start',
             })
           }
-          afterNextRender(
-            () =>
-              requestAnimationFrame(() =>
-                document
-                  .getElementById(this.anchorIdPrefix + field)
-                  ?.scrollIntoView({ behavior: 'instant', block: 'start' })
-              ),
-            { injector: this.injector }
+          setTimeout(() =>
+            document
+              .getElementById(this.anchorIdPrefix + field)
+              ?.scrollIntoView({ behavior: 'instant', block: 'start' })
           )
         })
     )
