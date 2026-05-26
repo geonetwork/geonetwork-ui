@@ -55,30 +55,19 @@ export class MetadataQualityPanelComponent {
   ]).pipe(
     map(([editorConfig, record]) => {
       if (!editorConfig || !record) return []
-      const fieldsByPage = editorConfig.pages.map((page) =>
-        page.sections.flatMap((section) =>
-          section.fields
-            .filter((field) => this.propsToValidate.includes(field.model))
-            .map((field) => field.model as ValidatorMapperKeys)
-        )
-      )
-      // FIXME: organisation is not yet a form field in the editor; show it on page 2
-      if (fieldsByPage[2] && !fieldsByPage[2].includes('organisation')) {
-        fieldsByPage[2].push('organisation')
-      }
-      return fieldsByPage
-        .map((fields) =>
-          getQualityValidators(record, fields as CatalogRecordKeys[]).map(
-            ({ name, validator }) => ({
-              label: `editor.record.form.field.${name}`, // use same translations as in fields.config.ts
+      const validators = getQualityValidators(record, this.propsToValidate)
+      return editorConfig.pages
+        .map((page) =>
+          page.sections
+            .flatMap((section) => section.fields)
+            .flatMap(({ model }) =>
+              validators.filter((v) => (v.alias ?? v.name) === model)
+            )
+            .map(({ name, validator, alias }) => ({
+              label: `editor.record.form.field.${name}`,
               value: validator(),
-              // FIXME: navigate to contacts when clicking on organisation
-              model:
-                name === 'organisation'
-                  ? 'contacts'
-                  : (name as CatalogRecordKeys),
-            })
-          )
+              model: (alias ?? name) as CatalogRecordKeys,
+            }))
         )
         .filter((arr) => arr.length > 0)
     })

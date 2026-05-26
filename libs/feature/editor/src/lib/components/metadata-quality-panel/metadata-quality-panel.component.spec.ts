@@ -145,7 +145,7 @@ describe('MetadataQualityPanelComponent', () => {
       ])
     })
 
-    it('should append organisation to page 2 as FIXME field', () => {
+    it('should include organisation in the same page as contacts via its alias', () => {
       expect(
         propertiesByPage[1].find((p) => p.label.includes('organisation'))
       ).toBeDefined()
