@@ -62,7 +62,7 @@ export class MetadataQualityPanelComponent {
             .map((field) => field.model as ValidatorMapperKeys)
         )
       )
-      // FIXME: organisation is not yet a form field in the editor; show it on page 2 as non-navigable
+      // FIXME: organisation is not yet a form field in the editor; show it on page 2
       if (fieldsByPage[2] && !fieldsByPage[2].includes('organisation')) {
         fieldsByPage[2].push('organisation')
       }
@@ -72,7 +72,11 @@ export class MetadataQualityPanelComponent {
             ({ name, validator }) => ({
               label: `editor.record.form.field.${name}`, // use same translations as in fields.config.ts
               value: validator(),
-              model: name as CatalogRecordKeys,
+              // FIXME: navigate to contacts when clicking on organisation
+              model:
+                name === 'organisation'
+                  ? 'contacts'
+                  : (name as CatalogRecordKeys),
             })
           )
         )

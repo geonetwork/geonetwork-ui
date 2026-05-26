@@ -139,7 +139,7 @@ describe('MetadataQualityPanelComponent', () => {
           {
             label: 'editor.record.form.field.organisation',
             value: false,
-            model: 'organisation' as any,
+            model: 'contacts' as any,
           },
         ],
       ])
