@@ -71,10 +71,7 @@
           </gn-ui-multilingual-panel>
         }
         @if (sidePanelOpen === 'metadataQuality') {
-          <gn-ui-metadata-quality-panel
-            [record]="facade.record$ | async"
-            [editorConfig]="facade.editorConfig$ | async"
-          >
+          <gn-ui-metadata-quality-panel>
           </gn-ui-metadata-quality-panel>
         }
       </div>

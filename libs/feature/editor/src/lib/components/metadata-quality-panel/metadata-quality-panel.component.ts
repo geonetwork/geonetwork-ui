@@ -1,8 +1,5 @@
-import { Component, inject, Input, OnChanges } from '@angular/core'
-import {
-  CatalogRecord,
-  CatalogRecordKeys,
-} from '@geonetwork-ui/common/domain/model/record'
+import { Component, inject } from '@angular/core'
+import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import {
   getAllKeysValidator,
@@ -16,9 +13,10 @@ import {
 } from '@ng-icons/core'
 import { iconoirBadgeCheck, iconoirSystemShut } from '@ng-icons/iconoir'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { EditorConfig } from '../../models'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { EditorFacade } from '../../+state/editor.facade'
+import { combineLatest, map } from 'rxjs'
+import { AsyncPipe } from '@angular/common'
 
 //forced translations that are not available in fields.config.ts
 marker('editor.record.form.field.keywords')
@@ -33,6 +31,7 @@ marker('editor.record.form.field.organisation')
     TranslatePipe,
     ButtonComponent,
     NgIconComponent,
+    AsyncPipe,
   ],
   providers: [
     provideIcons({
@@ -46,20 +45,17 @@ marker('editor.record.form.field.organisation')
   templateUrl: './metadata-quality-panel.component.html',
   styleUrl: './metadata-quality-panel.component.css',
 })
-export class MetadataQualityPanelComponent implements OnChanges {
+export class MetadataQualityPanelComponent {
   facade = inject(EditorFacade)
   propsToValidate: ValidatorMapperKeys[] = getAllKeysValidator()
-  propertiesByPage: {
-    label: string
-    value: boolean
-    model: CatalogRecordKeys
-  }[][] = []
-  @Input() editorConfig: EditorConfig
-  @Input() record: CatalogRecord
 
-  ngOnChanges() {
-    if (this.editorConfig && this.record) {
-      const fieldsByPage = this.editorConfig.pages.map((page) =>
+  propertiesByPage$ = combineLatest([
+    this.facade.editorConfig$,
+    this.facade.record$,
+  ]).pipe(
+    map(([editorConfig, record]) => {
+      if (!editorConfig || !record) return []
+      const fieldsByPage = editorConfig.pages.map((page) =>
         page.sections.flatMap((section) =>
           section.fields
             .filter((field) => this.propsToValidate.includes(field.model))
@@ -70,9 +66,9 @@ export class MetadataQualityPanelComponent implements OnChanges {
       if (fieldsByPage[2] && !fieldsByPage[2].includes('organisation')) {
         fieldsByPage[2].push('organisation')
       }
-      this.propertiesByPage = fieldsByPage
+      return fieldsByPage
         .map((fields) =>
-          getQualityValidators(this.record, fields as CatalogRecordKeys[]).map(
+          getQualityValidators(record, fields as CatalogRecordKeys[]).map(
             ({ name, validator }) => ({
               label: `editor.record.form.field.${name}`, // use same translations as in fields.config.ts
               value: validator(),
@@ -81,8 +77,8 @@ export class MetadataQualityPanelComponent implements OnChanges {
           )
         )
         .filter((arr) => arr.length > 0)
-    }
-  }
+    })
+  )
 
   onCriterionClick(property: { value: boolean; model: CatalogRecordKeys }) {
     if (!property.value) {
