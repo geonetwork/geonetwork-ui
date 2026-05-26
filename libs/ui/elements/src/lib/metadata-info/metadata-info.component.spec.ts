@@ -437,6 +437,33 @@ describe('MetadataInfoComponent', () => {
       )
       expect(contactsPanel).toBeTruthy()
     })
+    it('should group contacts by role', () => {
+      component.metadata = {
+        ...datasetRecordsFixture()[0],
+        contactsForResource: [
+          {
+            email: 'a@org.com',
+            role: 'author',
+            organization: { name: 'Org A' },
+          },
+          {
+            email: 'b@org.com',
+            role: 'author',
+            organization: { name: 'Org B' },
+          },
+          {
+            email: 'c@org.com',
+            role: 'custodian',
+            organization: { name: 'Org C' },
+          },
+        ],
+      } as DatasetRecord
+      expect(component.contactGroups.length).toBe(2)
+      expect(component.contactGroups[0].role).toBe('author')
+      expect(component.contactGroups[0].contacts.length).toBe(2)
+      expect(component.contactGroups[1].role).toBe('custodian')
+      expect(component.contactGroups[1].contacts.length).toBe(1)
+    })
   })
   describe('spatial extent panel', () => {
     describe('spatialExtent is defined on a service', () => {
