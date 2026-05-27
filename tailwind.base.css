@@ -74,7 +74,10 @@
     --bg-hover: var(--gn-ui-button-bg-hover, var(--color-background));
     --font-size: var(--gn-ui-button-font-size, 1em);
     --color: var(--gn-ui-button-color, var(--color-main));
-    @apply flex flex-row items-center justify-center
+    --disabled-opacity: var(--gn-ui-button-disabled-opacity, 0.5);
+    --justify: var(--gn-ui-button-justify, center);
+    justify-content: var(--justify);
+    @apply flex flex-row items-center
       text-[length:--font-size] leading-none
       text-[color:--color]
       p-[--padding] rounded-[--rounded] w-[--width] h-[--height] overflow-hidden
@@ -82,7 +85,7 @@
       hover:bg-[--bg-hover] focus:bg-[--bg-hover] active:bg-[--background]
       outline-none
       relative
-      disabled:opacity-50 disabled:pointer-events-none
+      disabled:opacity-[--disabled-opacity] disabled:pointer-events-none
       focus:z-10 active:z-10 hover:z-10;
   }
   /* makes sure icons will not make the buttons grow vertically */

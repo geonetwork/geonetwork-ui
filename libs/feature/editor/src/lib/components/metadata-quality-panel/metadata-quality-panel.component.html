@@ -12,8 +12,15 @@
     <div class="flex flex-col gap-2">
       @for (property of properties; track property) {
         <gn-ui-button
-          [extraClass]="
-            'justify-between rounded mb-1 h-[34px] w-full focus:ring-0 hover:border-none border-none hover:text-black text-black bg-transparent hover:bg-gray-100 disabled:opacity-100'
+          style="
+            --gn-ui-button-justify: space-between;
+            --gn-ui-button-height: 34px;
+            --gn-ui-button-width: 100%;
+            --gn-ui-button-border-width: 0;
+            --gn-ui-button-color: black;
+            --gn-ui-button-background: transparent;
+            --gn-ui-button-bg-hover: #f3f4f6;
+            --gn-ui-button-disabled-opacity: 1;
           "
           [disabled]="property.value"
           (buttonClick)="onCriterionClick(property)"
