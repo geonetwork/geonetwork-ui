@@ -23,7 +23,7 @@ describe('ContactPillComponent', () => {
   })
 
   describe('displayName', () => {
-    it('should return organization name when available', () => {
+    it('should return organization and full name when available', () => {
       component.contact = {
         email: 'a@b.com',
         role: 'author',
@@ -31,7 +31,7 @@ describe('ContactPillComponent', () => {
         firstName: 'John',
         lastName: 'Doe',
       }
-      expect(component.displayName).toBe('My Org')
+      expect(component.displayName).toBe('John Doe (My Org)')
     })
 
     it('should return full name when no organization', () => {
@@ -44,12 +44,12 @@ describe('ContactPillComponent', () => {
       expect(component.displayName).toBe('John Doe')
     })
 
-    it('should return empty string when no org or name', () => {
+    it('should return email when no org or name', () => {
       component.contact = {
         email: 'a@b.com',
         role: 'author',
       }
-      expect(component.displayName).toBe('')
+      expect(component.displayName).toBe('a@b.com')
     })
   })
 })

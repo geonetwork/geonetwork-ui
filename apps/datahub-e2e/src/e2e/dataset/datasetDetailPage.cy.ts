@@ -156,7 +156,9 @@ describe('Sections', () => {
       .should('not.eql', '')
 
     // it should display the keywords
-    cy.get('gn-ui-badge').should('have.length.gt', 0)
+    cy.get('.metadata-info-keywords')
+      .find('gn-ui-button')
+      .should('have.length.gt', 0)
 
     // it should display four expandable panels
     cy.get('datahub-record-metadata')
@@ -256,7 +258,11 @@ describe('Sections', () => {
       .should('eq', 'https://www.geo2france.fr/')
 
     // it should go to dataset search page when clicking on keyword and filter by keyword
-    cy.get('gn-ui-badge').should('have.length.gt', 0).eq(2).as('keyword')
+    cy.get('.metadata-info-keywords')
+      .find('gn-ui-button')
+      .should('have.length.gt', 0)
+      .eq(2)
+      .as('keyword')
 
     cy.get('@keyword').invoke('text').invoke('toUpperCase').as('keywordText')
     cy.get('@keyword').first().click()
