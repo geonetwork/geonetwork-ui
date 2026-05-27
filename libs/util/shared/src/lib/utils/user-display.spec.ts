@@ -1,8 +1,8 @@
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { Individual } from '@geonetwork-ui/common/domain/model/record'
-import { getUserDisplayName, toIndividual } from './user-display'
+import { getIndividualDisplayName, toIndividual } from './user-display'
 
-describe('getUserDisplayName', () => {
+describe('getIndividualDisplayName', () => {
   it('should return first and last name with org', () => {
     const individual: Individual = {
       firstName: 'Jane',
@@ -11,7 +11,7 @@ describe('getUserDisplayName', () => {
       role: 'author',
       organization: { name: 'ACME' },
     }
-    expect(getUserDisplayName(individual)).toBe('Jane Doe (ACME)')
+    expect(getIndividualDisplayName(individual)).toBe('Jane Doe (ACME)')
   })
 
   it('should fall back to org name when no personal name', () => {
@@ -20,7 +20,7 @@ describe('getUserDisplayName', () => {
       role: 'author',
       organization: { name: 'ACME' },
     }
-    expect(getUserDisplayName(individual)).toBe('ACME')
+    expect(getIndividualDisplayName(individual)).toBe('ACME')
   })
 })
 

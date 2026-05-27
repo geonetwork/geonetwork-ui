@@ -1,7 +1,7 @@
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { Individual } from '@geonetwork-ui/common/domain/model/record'
 
-export function getUserDisplayName(individual: Individual): string {
+export function getIndividualDisplayName(individual: Individual): string {
   const nameParts = [individual.firstName, individual.lastName]
     .filter(Boolean)
     .join(' ')

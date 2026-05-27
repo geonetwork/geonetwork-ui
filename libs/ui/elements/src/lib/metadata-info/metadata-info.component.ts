@@ -21,6 +21,7 @@ import {
 } from '@geonetwork-ui/ui/layout'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import {
+  BadgeComponent,
   ButtonComponent,
   CopyTextButtonComponent,
 } from '@geonetwork-ui/ui/inputs'
@@ -46,6 +47,7 @@ import { ContactPillComponent } from '../contact-pill/contact-pill.component'
     MarkdownParserComponent,
     ExpandablePanelComponent,
     ButtonComponent,
+    BadgeComponent,
     ContentGhostComponent,
     MaxLinesComponent,
     CopyTextButtonComponent,
