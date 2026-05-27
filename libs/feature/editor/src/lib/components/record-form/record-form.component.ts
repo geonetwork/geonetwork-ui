@@ -48,8 +48,9 @@ export class RecordFormComponent implements OnInit, OnDestroy {
             ),
           }))
         )
-        .subscribe(({ field, pageIndex }) => {
-          if (pageIndex !== null) {
+        .subscribe(async ({ field, pageIndex }) => {
+          const currentPage = await firstValueFrom(this.facade.currentPage$)
+          if (pageIndex !== null && pageIndex !== currentPage) {
             this.facade.setCurrentPage(pageIndex)
             this.el.nativeElement.scrollIntoView({
               behavior: 'instant',

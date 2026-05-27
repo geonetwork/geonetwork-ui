@@ -12,6 +12,7 @@ class EditorFacadeMock {
   record$ = new BehaviorSubject(datasetRecordsFixture()[0])
   focusedField$ = new Subject<string | null>()
   editorConfig$ = new BehaviorSubject(editorConfigFixture())
+  currentPage$ = new BehaviorSubject(0)
   setCurrentPage = jest.fn()
   updateRecordField = jest.fn()
 }
@@ -87,6 +88,22 @@ describe('RecordFormComponent', () => {
           behavior: 'instant',
           block: 'start',
         })
+      })
+    })
+
+    describe('when the focused field is on the same page as the current page', () => {
+      beforeEach(async () => {
+        // 'title' is on page 0 in editorConfigFixture, and currentPage$ defaults to 0
+        facade.focusedField$.next('title')
+        await fixture.whenStable()
+      })
+
+      it('should not navigate to a page', () => {
+        expect(facade.setCurrentPage).not.toHaveBeenCalled()
+      })
+
+      it('should not scroll the host element', () => {
+        expect(mockHostScrollIntoView).not.toHaveBeenCalled()
       })
     })
 
