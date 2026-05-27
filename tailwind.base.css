@@ -136,7 +136,7 @@
 
   .gn-ui-btn-primary-light {
     @apply gn-ui-btn text-primary-darkest
-      bg-primary-white hover:bg-primary focus:bg-primary hover:text-white focus:text-white
+      bg-primary-white hover:bg-primary focus:bg-primary hover:text-white focus:text-white active:bg-primary-darker
       border-transparent;
   }
 
