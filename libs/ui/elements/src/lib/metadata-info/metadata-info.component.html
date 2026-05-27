@@ -28,11 +28,12 @@
       <gn-ui-max-lines [maxLines]="7">
         <div class="metadata-info-keywords sm:pb-4 flex flex-wrap gap-2">
           @for (keyword of metadata.keywords; track keyword) {
-            <gn-ui-badge
-              class="inline-block lowercase"
-              (click)="onKeywordClick(keyword)"
-              [clickable]="true"
-              >{{ keyword.label }}</gn-ui-badge
+            <gn-ui-button
+              type="primary-light"
+              class="inline-block opacity-70"
+              extraClass="lowercase text-sm py-1 px-2"
+              (buttonClick)="onKeywordClick(keyword)"
+              >{{ keyword.label }}</gn-ui-button
             >
           }
         </div>
@@ -306,10 +307,11 @@
           <p class="text-sm mb-1" translate>record.metadata.topics</p>
           <div class="sm:pb-4 sm:pr-16">
             @for (topic of metadata.topics; track topic) {
-              <gn-ui-badge
-                [clickable]="false"
-                class="inline-block mr-2 mb-2 lowercase"
-                >{{ topic }}</gn-ui-badge
+              <gn-ui-button
+                type="primary-light"
+                class="inline-block opacity-70 pointer-events-none mr-2 mb-2"
+                extraClass="lowercase text-sm py-1 px-2"
+                >{{ topic }}</gn-ui-button
               >
             }
           </div>
