@@ -26,6 +26,7 @@ export class ButtonComponent {
       | 'light'
       | 'gray'
       | 'black'
+      | 'primary-light'
   ) {
     // btn-classes are written in full to be picked up by tailwind
     switch (value) {
@@ -46,6 +47,9 @@ export class ButtonComponent {
         break
       case 'black':
         this.btnClass = 'gn-ui-btn-black'
+        break
+      case 'primary-light':
+        this.btnClass = 'gn-ui-btn-primary-light'
         break
       case 'default':
       default:
