@@ -7,8 +7,11 @@
       >editor.record.form.metadataQuality.title</span
     >
   </div>
-  @let propertiesByPage = (propertiesByPage$ | async) ?? [];
-  @for (properties of propertiesByPage; track properties; let i = $index) {
+  @for (
+    properties of (propertiesByPage$ | async) ?? [];
+    track properties;
+    let isLast = $last
+  ) {
     <div class="flex flex-col gap-2">
       @for (property of properties; track property) {
         <gn-ui-button
@@ -40,7 +43,7 @@
           </div>
         </gn-ui-button>
       }
-      @if (i !== propertiesByPage.length - 1) {
+      @if (!isLast) {
         <hr class="border-gray-300 w-11/12 mx-auto" />
       }
     </div>
