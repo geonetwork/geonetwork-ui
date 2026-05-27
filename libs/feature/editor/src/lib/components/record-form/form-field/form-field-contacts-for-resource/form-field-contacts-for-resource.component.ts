@@ -26,6 +26,7 @@ import {
 import {
   createFuzzyFilter,
   getUserDisplayName,
+  toIndividual,
 } from '@geonetwork-ui/util/shared'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import {
@@ -171,7 +172,8 @@ export class FormFieldContactsForResourceComponent
   /**
    * gn-ui-autocomplete
    */
-  displayWithFn: (user: UserModel) => string = getUserDisplayName
+  displayWithFn: (user: UserModel) => string = (user) =>
+    getUserDisplayName(toIndividual(user))
 
   /**
    * gn-ui-autocomplete

@@ -1,8 +1,7 @@
 <gn-ui-button
-  type="outline"
-  extraClass="group w-full min-h-12 gap-3 justify-between bg-primary-white hover:bg-primary hover:border-primary hover:text-white py-2 pl-5 pr-4 rounded"
+  type="primary-light"
+  extraClass="group w-full min-h-12 gap-3 justify-between py-2 pl-5 pr-4 rounded"
   data-test="contact-pill"
-  (buttonClick)="contactClick.emit(contact)"
 >
   <span
     class="font-title font-medium text-base leading-tight truncate group-hover:text-white"
@@ -10,7 +9,7 @@
     >{{ displayName }}</span
   >
   <div
-    class="flex items-center justify-center w-10 h-8 rounded-lg border border-gray-300 shrink-0 group-hover:border-white group-hover:text-white"
+    class="gn-ui-card-icon items-center justify-center w-10 h-8 group-hover:border-white group-hover:text-white"
   >
     <ng-icon class="!w-6 !h-6 !text-[24px]" name="matInfoOutline"></ng-icon>
   </div>
