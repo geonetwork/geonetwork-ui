@@ -3,6 +3,8 @@ import { MetadataQualityPanelComponent } from './metadata-quality-panel.componen
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { EditorConfig } from '../../models'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { EditorFacade } from '../../+state/editor.facade'
+import { BehaviorSubject } from 'rxjs'
 
 const EDITOR_CONFIG_MOCK: EditorConfig = {
   pages: [
@@ -32,7 +34,6 @@ const EDITOR_CONFIG_MOCK: EditorConfig = {
         {
           fields: [
             { model: 'legalConstraints', hidden: true },
-            { model: 'organisation', hidden: false },
             { model: 'contacts', hidden: false },
           ],
         },
@@ -56,15 +57,30 @@ const RECORD_MOCK: CatalogRecord = {
 describe('MetadataQualityPanelComponent', () => {
   let component: MetadataQualityPanelComponent
   let fixture: ComponentFixture<MetadataQualityPanelComponent>
+  let mockFacade: {
+    setFocusedField: jest.Mock
+    editorConfig$: BehaviorSubject<EditorConfig | null>
+    record$: BehaviorSubject<CatalogRecord | null>
+  }
 
   beforeEach(async () => {
+    mockFacade = {
+      setFocusedField: jest.fn(),
+      editorConfig$: new BehaviorSubject<EditorConfig | null>(null),
+      record$: new BehaviorSubject<CatalogRecord | null>(null),
+    }
+
     await TestBed.configureTestingModule({
       imports: [MetadataQualityPanelComponent],
-      providers: [provideI18n()],
+      providers: [
+        provideI18n(),
+        { provide: EditorFacade, useValue: mockFacade },
+      ],
     }).compileComponents()
 
     fixture = TestBed.createComponent(MetadataQualityPanelComponent)
     component = fixture.componentInstance
+    fixture.detectChanges()
   })
 
   it('should create', () => {
@@ -72,42 +88,85 @@ describe('MetadataQualityPanelComponent', () => {
   })
 
   describe('when editorConfig and record are set', () => {
+    let propertiesByPage: { label: string; value: boolean; model: any }[][]
+
     beforeEach(() => {
-      component.editorConfig = EDITOR_CONFIG_MOCK
-      component.record = RECORD_MOCK
-      component.ngOnChanges()
+      mockFacade.editorConfig$.next(EDITOR_CONFIG_MOCK)
+      mockFacade.record$.next(RECORD_MOCK)
+      component.propertiesByPage$.subscribe((v) => (propertiesByPage = v))
     })
+
     it('should initialize propertiesByPage corresponding to editorConfig and propsToValidate', () => {
-      expect(component.propertiesByPage).toEqual([
+      expect(propertiesByPage).toEqual([
         [
-          { label: 'editor.record.form.field.title', value: true },
-          { label: 'editor.record.form.field.abstract', value: true },
-          { label: 'editor.record.form.field.keywords', value: true },
-          { label: 'editor.record.form.field.updateFrequency', value: true },
-          { label: 'editor.record.form.field.topics', value: true },
+          {
+            label: 'editor.record.form.field.title',
+            value: true,
+            model: 'title',
+          },
+          {
+            label: 'editor.record.form.field.abstract',
+            value: true,
+            model: 'abstract',
+          },
+          {
+            label: 'editor.record.form.field.keywords',
+            value: true,
+            model: 'keywords',
+          },
+          {
+            label: 'editor.record.form.field.updateFrequency',
+            value: true,
+            model: 'updateFrequency',
+          },
+          {
+            label: 'editor.record.form.field.topics',
+            value: true,
+            model: 'topics',
+          },
         ],
         [
           {
             label: 'editor.record.form.field.legalConstraints',
             value: false,
+            model: 'legalConstraints',
           },
-          { label: 'editor.record.form.field.organisation', value: false },
-          { label: 'editor.record.form.field.contacts', value: false },
+          {
+            label: 'editor.record.form.field.contacts',
+            value: false,
+            model: 'contacts',
+          },
+          {
+            label: 'editor.record.form.field.organisation',
+            value: false,
+            model: 'contacts' as any,
+          },
         ],
       ])
     })
-  })
-  it('should handle empty editorConfig and record', () => {
-    component.editorConfig = undefined
-    component.record = undefined
-    component.ngOnChanges()
-    expect(component.propertiesByPage.length).toBe(0)
+
+    it('should include organisation in the same page as contacts via its alias', () => {
+      expect(
+        propertiesByPage[1].find((p) => p.label.includes('organisation'))
+      ).toBeDefined()
+    })
   })
 
-  it('getExtraClass should return correct classes', () => {
-    const checkedClass = component.getExtraClass(true)
-    const uncheckedClass = component.getExtraClass(false)
-    expect(checkedClass).toContain('bg-neutral-100')
-    expect(uncheckedClass).toContain('bg-transparent')
+  it('should have empty propertiesByPage when editorConfig and record are not set', () => {
+    let result: any[]
+    component.propertiesByPage$.subscribe((v) => (result = v))
+    expect(result.length).toBe(0)
+  })
+
+  describe('onCriterionClick', () => {
+    it('should call facade.setFocusedField when criterion is invalid', () => {
+      component.onCriterionClick({ value: false, model: 'abstract' })
+      expect(mockFacade.setFocusedField).toHaveBeenCalledWith('abstract')
+    })
+
+    it('should not call facade.setFocusedField when criterion is valid', () => {
+      component.onCriterionClick({ value: true, model: 'title' })
+      expect(mockFacade.setFocusedField).not.toHaveBeenCalled()
+    })
   })
 })

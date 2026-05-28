@@ -3,27 +3,41 @@ import {
   RecordKind,
 } from '@geonetwork-ui/common/domain/model/record'
 
+type TValidatorEntry = {
+  validator: (metadata: Partial<CatalogRecord>) => boolean
+  alias?: string
+}
+
 type TValidatorMapper = {
-  [key: string]: (metadata: Partial<CatalogRecord>) => boolean
+  [key: string]: TValidatorEntry
 }
 
 const ValidatorMapper: TValidatorMapper = {
-  title: (record) => !!record?.title,
-  abstract: (record) => !!record?.abstract,
-  keywords: (record) => (record?.keywords?.length ?? 0) > 0,
-  legalConstraints: (record) =>
-    !!(
-      record?.legalConstraints?.length &&
-      record.legalConstraints.some((c) => c?.text?.trim().length > 0)
-    ),
-  contacts: (record) =>
-    !!record?.contacts?.[0]?.email &&
-    record.contacts[0].email !== 'missing@missing.com',
-  updateFrequency: (record) =>
-    !!record?.updateFrequency && record.updateFrequency !== 'unknown',
-  topics: (record) => (record?.topics?.length ?? 0) > 0,
-  organisation: (record) => !!record?.contacts?.[0]?.organization?.name,
-  source: (record) => !!record?.extras?.sourcesIdentifiers,
+  title: { validator: (record) => !!record?.title },
+  abstract: { validator: (record) => !!record?.abstract },
+  keywords: { validator: (record) => (record?.keywords?.length ?? 0) > 0 },
+  legalConstraints: {
+    validator: (record) =>
+      !!(
+        record?.legalConstraints?.length &&
+        record.legalConstraints.some((c) => c?.text?.trim().length > 0)
+      ),
+  },
+  contacts: {
+    validator: (record) =>
+      !!record?.contacts?.[0]?.email &&
+      record.contacts[0].email !== 'missing@missing.com',
+  },
+  updateFrequency: {
+    validator: (record) =>
+      !!record?.updateFrequency && record.updateFrequency !== 'unknown',
+  },
+  topics: { validator: (record) => (record?.topics?.length ?? 0) > 0 },
+  organisation: {
+    validator: (record) => !!record?.contacts?.[0]?.organization?.name,
+    alias: 'contacts',
+  },
+  source: { validator: (record) => !!record?.extras?.sourcesIdentifiers },
 } as const
 
 export type ValidatorMapperKeys = keyof typeof ValidatorMapper & string
@@ -67,6 +81,7 @@ export function getQualityValidators(
 
   return filteredProps.map((name) => ({
     name,
-    validator: () => ValidatorMapper[name](record),
+    validator: () => ValidatorMapper[name].validator(record),
+    alias: ValidatorMapper[name].alias,
   }))
 }

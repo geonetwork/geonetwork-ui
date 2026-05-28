@@ -139,6 +139,39 @@ describe('editor form', () => {
       .should('eql', '100%')
   })
 
+  describe('metadata quality panel navigation', () => {
+    beforeEach(() => {
+      cy.get('md-editor-top-toolbar').find('gn-ui-button').eq(2).click()
+      cy.get('gn-ui-metadata-quality-panel').should('be.visible')
+    })
+
+    it('should navigate to the correct page when clicking an invalid criterion', () => {
+      // Make abstract invalid, then navigate to another page
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').clear()
+      cy.get('@accessContactPageBtn').click()
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('not.exist')
+
+      // Click the abstract criterion in the quality panel
+      cy.get('gn-ui-metadata-quality-panel')
+        .find('[data-cy="md-quality-btn-editor.record.form.field.abstract"]')
+        .click()
+
+      // Should navigate back to page 1 where abstract is
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('be.visible')
+    })
+
+    it('should not navigate when clicking a valid criterion', () => {
+      cy.get('@accessContactPageBtn').click()
+
+      cy.get('gn-ui-metadata-quality-panel')
+        .find('[data-cy="md-quality-btn-editor.record.form.field.title"]')
+        .click()
+
+      // Should still be on page 3 — abstract (page 1) should not be visible
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('not.exist')
+    })
+  })
+
   describe('form fields', () => {
     it('about section', () => {
       // TITLE

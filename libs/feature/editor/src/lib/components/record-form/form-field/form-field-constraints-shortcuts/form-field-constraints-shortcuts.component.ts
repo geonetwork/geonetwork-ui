@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
-  OnInit,
+  afterNextRender,
   inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
@@ -67,9 +67,7 @@ export type ConstraintChoice =
   styleUrls: ['./form-field-constraints-shortcuts.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormFieldConstraintsShortcutsComponent
-  implements OnInit, OnDestroy
-{
+export class FormFieldConstraintsShortcutsComponent implements OnDestroy {
   private editorFacade = inject(EditorFacade)
 
   legalConstraints$ = this.editorFacade.record$.pipe(
@@ -112,37 +110,39 @@ export class FormFieldConstraintsShortcutsComponent
 
   onDestroy$ = new Subject<void>()
 
-  ngOnInit(): void {
-    // hide all constraints if any toggle is activated
-    this.anyToggleActivated$
-      .pipe(takeUntil(this.onDestroy$), distinctUntilChanged())
-      .subscribe((anyToggleActivated) => {
-        if (anyToggleActivated) {
-          this.hideAllConstraintSections()
-        }
-      })
+  constructor() {
+    // Deferred to afterNextRender to avoid dispatching store actions
+    // synchronously during Angular's change detection cycle (NG0100)
+    afterNextRender(() => {
+      this.anyToggleActivated$
+        .pipe(takeUntil(this.onDestroy$), distinctUntilChanged())
+        .subscribe((anyToggleActivated) => {
+          if (anyToggleActivated) {
+            this.hideAllConstraintSections()
+          }
+        })
 
-    // also hide constraints which are empty arrays
-    const hideEmptyConstraints = (
-      constraints$: Observable<Constraint[]>,
-      model: ConstraintChoice
-    ) => {
-      const isConstraintNotEmpty$ = constraints$.pipe(
-        takeUntil(this.onDestroy$),
-        map((c) => c.length > 0),
-        distinctUntilChanged()
-      )
-      combineLatest([
-        isConstraintNotEmpty$,
-        this.anyToggleActivated$,
-      ]).subscribe(([isNotEmpty, anyToggleActivated]) => {
-        const visible = isNotEmpty && !anyToggleActivated
-        this.editorFacade.setFieldVisibility({ model }, visible)
-      })
-    }
-    hideEmptyConstraints(this.legalConstraints$, 'legalConstraints')
-    hideEmptyConstraints(this.securityConstraints$, 'securityConstraints')
-    hideEmptyConstraints(this.otherConstraints$, 'otherConstraints')
+      const hideEmptyConstraints = (
+        constraints$: Observable<Constraint[]>,
+        model: ConstraintChoice
+      ) => {
+        const isConstraintNotEmpty$ = constraints$.pipe(
+          takeUntil(this.onDestroy$),
+          map((c) => c.length > 0),
+          distinctUntilChanged()
+        )
+        combineLatest([
+          isConstraintNotEmpty$,
+          this.anyToggleActivated$,
+        ]).subscribe(([isNotEmpty, anyToggleActivated]) => {
+          const visible = isNotEmpty && !anyToggleActivated
+          this.editorFacade.setFieldVisibility({ model }, visible)
+        })
+      }
+      hideEmptyConstraints(this.legalConstraints$, 'legalConstraints')
+      hideEmptyConstraints(this.securityConstraints$, 'securityConstraints')
+      hideEmptyConstraints(this.otherConstraints$, 'otherConstraints')
+    })
   }
 
   ngOnDestroy() {

@@ -7,11 +7,26 @@
       >editor.record.form.metadataQuality.title</span
     >
   </div>
-  @for (properties of propertiesByPage; track properties; let i = $index) {
+  @for (
+    properties of (propertiesByPage$ | async) ?? [];
+    track properties;
+    let isLast = $last
+  ) {
     <div class="flex flex-col gap-2">
       @for (property of properties; track property) {
         <gn-ui-button
-          [extraClass]="getExtraClass(property.value)"
+          style="
+            --gn-ui-button-justify: space-between;
+            --gn-ui-button-height: 34px;
+            --gn-ui-button-width: 100%;
+            --gn-ui-button-border-width: 0;
+            --gn-ui-button-color: black;
+            --gn-ui-button-background: transparent;
+            --gn-ui-button-bg-hover: #f3f4f6;
+            --gn-ui-button-disabled-opacity: 1;
+          "
+          [disabled]="property.value"
+          (buttonClick)="onCriterionClick(property)"
           type="outline"
           attr.data-cy="md-quality-btn-{{ property.label }}"
         >
@@ -28,7 +43,7 @@
           </div>
         </gn-ui-button>
       }
-      @if (i !== propertiesByPage.length - 1) {
+      @if (!isLast) {
         <hr class="border-gray-300 w-11/12 mx-auto" />
       }
     </div>
