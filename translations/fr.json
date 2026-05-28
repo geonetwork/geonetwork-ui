@@ -520,6 +520,7 @@
   "record.metadata.quality.updateFrequency.failed": "La fréquence de mise à jour n'est pas renseignée",
   "record.metadata.quality.updateFrequency.success": "La fréquence de mise à jour est renseignée",
   "record.metadata.related": "Explorez le catalogue",
+  "record.metadata.resource.contacts": "Contacts liés à la donnée",
   "record.metadata.resourceCreated": "Créé",
   "record.metadata.resourcePublished": "Publié",
   "record.metadata.resourceUpdated": "Mis à jour",

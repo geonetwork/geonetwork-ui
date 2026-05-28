@@ -244,30 +244,6 @@ describe('MetadataInfoComponent', () => {
         expect(displayedElement).toBeTruthy()
       })
     })
-    describe('only resourceContact', () => {
-      beforeEach(() => {
-        fixture = TestBed.createComponent(MetadataInfoComponent)
-        component = fixture.componentInstance
-        component.metadata = {
-          ...datasetRecordsFixture()[0],
-          lineage: null,
-          resourceCreated: null,
-          resourcePublished: null,
-          resourceUpdated: null,
-          updateFrequency: null,
-          otherLanguages: [],
-          temporalExtents: [],
-        } as DatasetRecord
-        fixture.detectChanges()
-      })
-      it('should display the resourceContact section', () => {
-        expandPanel(fixture, 'details-panel')
-        const displayedElement = fixture.debugElement.query(
-          By.css('[data-test="details-panel-resource-contact"]')
-        )
-        expect(displayedElement).toBeTruthy()
-      })
-    })
     describe('only resourceCreated', () => {
       beforeEach(() => {
         fixture = TestBed.createComponent(MetadataInfoComponent)
@@ -444,6 +420,49 @@ describe('MetadataInfoComponent', () => {
         )
         expect(displayedElement).toBeTruthy()
       })
+    })
+  })
+  describe('contacts panel', () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(MetadataInfoComponent)
+      component = fixture.componentInstance
+      component.metadata = {
+        ...datasetRecordsFixture()[0],
+      } as DatasetRecord
+      fixture.detectChanges()
+    })
+    it('should render the contacts panel', () => {
+      const contactsPanel = fixture.debugElement.query(
+        By.css('[data-test="contacts-panel"]')
+      )
+      expect(contactsPanel).toBeTruthy()
+    })
+    it('should group contacts by role', () => {
+      component.metadata = {
+        ...datasetRecordsFixture()[0],
+        contactsForResource: [
+          {
+            email: 'a@org.com',
+            role: 'author',
+            organization: { name: 'Org A' },
+          },
+          {
+            email: 'b@org.com',
+            role: 'author',
+            organization: { name: 'Org B' },
+          },
+          {
+            email: 'c@org.com',
+            role: 'custodian',
+            organization: { name: 'Org C' },
+          },
+        ],
+      } as DatasetRecord
+      expect(component.contactGroups.length).toBe(2)
+      expect(component.contactGroups[0].role).toBe('author')
+      expect(component.contactGroups[0].contacts.length).toBe(2)
+      expect(component.contactGroups[1].role).toBe('custodian')
+      expect(component.contactGroups[1].contacts.length).toBe(1)
     })
   })
   describe('spatial extent panel', () => {

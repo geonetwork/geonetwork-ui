@@ -28,11 +28,12 @@
       <gn-ui-max-lines [maxLines]="7">
         <div class="metadata-info-keywords sm:pb-4 flex flex-wrap gap-2">
           @for (keyword of metadata.keywords; track keyword) {
-            <gn-ui-badge
-              class="inline-block lowercase"
-              (click)="onKeywordClick(keyword)"
-              [clickable]="true"
-              >{{ keyword.label }}</gn-ui-badge
+            <gn-ui-button
+              type="primary-light"
+              class="inline-block opacity-70"
+              extraClass="lowercase text-sm py-1 px-2"
+              (buttonClick)="onKeywordClick(keyword)"
+              >{{ keyword.label }}</gn-ui-button
             >
           }
         </div>
@@ -105,9 +106,29 @@
     </div>
   </gn-ui-expandable-panel>
 }
+@if (metadata.contactsForResource?.length) {
+  <gn-ui-expandable-panel
+    [title]="'record.metadata.resource.contacts' | translate"
+    data-test="contacts-panel"
+  >
+    <div class="flex flex-col gap-1 pt-3 pb-4">
+      @for (group of contactGroups; track group.role) {
+        <div class="flex flex-col gap-1 rounded bg-gray-50 py-4 px-2">
+          <p class="text-xs font-normal text-black">
+            {{ group.roleLabel | translate }}
+          </p>
+          <div class="grid gap-0.5 grid-cols-1 md:grid-cols-2">
+            @for (contact of group.contacts; track contact.email) {
+              <gn-ui-contact-pill [contact]="contact"></gn-ui-contact-pill>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </gn-ui-expandable-panel>
+}
 @if (
   (metadata.kind === 'dataset' && metadata.lineage) ||
-  resourceContact ||
   metadata.resourceCreated ||
   metadata.resourcePublished ||
   metadata.resourceUpdated ||
@@ -127,66 +148,6 @@
         <p class="whitespace-pre-line break-words text-gray-900" gnUiLinkify>
           {{ metadata.lineage }}
         </p>
-      </div>
-    }
-    @if (resourceContact) {
-      <div
-        class="flex flex-row gap-6 mt-5 mb-8 resource-contact"
-        data-test="details-panel-resource-contact"
-      >
-        @if (resourceContact.organization?.logoUrl?.href) {
-          <div
-            class="flex items-center justify-center border-solid border border-gray-300 rounded-md bg-white h-32 overflow-hidden"
-          >
-            <gn-ui-thumbnail
-              class="relative h-full w-full"
-              [thumbnailUrl]="resourceContact.organization.logoUrl.href"
-              fit="contain"
-            ></gn-ui-thumbnail>
-          </div>
-        }
-        <div class="flex flex-col gap-1">
-          <p class="text-sm font-medium" translate>record.metadata.producer</p>
-          <div
-            class="text-primary font-title text-21 mr-2 cursor-pointer hover:underline"
-            data-cy="organization-name"
-          >
-            {{ resourceContact.organization?.name }}
-          </div>
-          @if (resourceContact.organization?.website) {
-            <div>
-              <a
-                [href]="resourceContact.organization.website"
-                target="_blank"
-                class="contact-website text-primary text-sm cursor-pointer hover:underline transition-all"
-                >{{ resourceContact.organization.website }}
-                <ng-icon
-                  class="!w-[12px] !h-[12px] !text-[12px] opacity-75 shrink-0"
-                  name="matOpenInNew"
-                ></ng-icon>
-              </a>
-            </div>
-          }
-          @if (resourceContact.email) {
-            <div class="mt-4">
-              <div class="flex">
-                <ng-icon
-                  class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
-                  name="matMailOutline"
-                ></ng-icon>
-                @if (resourceContact.email) {
-                  <a
-                    [href]="'mailto:' + resourceContact.email"
-                    class="text-sm hover:underline ml-2"
-                    target="_blank"
-                    data-cy="contact-email"
-                    >{{ resourceContact?.email }}</a
-                  >
-                }
-              </div>
-            </div>
-          }
-        </div>
       </div>
     }
     <div

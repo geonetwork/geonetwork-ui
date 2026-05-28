@@ -520,6 +520,7 @@
   "record.metadata.quality.updateFrequency.failed": "Aktualisierungsfrequenz nicht angegeben",
   "record.metadata.quality.updateFrequency.success": "Aktualisierungsfrequenz angegeben",
   "record.metadata.related": "Entdecken Sie den Katalog",
+  "record.metadata.resource.contacts": "Kontakte zur Ressource",
   "record.metadata.resourceCreated": "Erstellt",
   "record.metadata.resourcePublished": "Veröffentlicht",
   "record.metadata.resourceUpdated": "Zuletzt aktualisiert",

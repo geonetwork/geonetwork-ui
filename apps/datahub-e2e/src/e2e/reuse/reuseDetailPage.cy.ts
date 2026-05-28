@@ -34,7 +34,7 @@ describe('reuse pages', () => {
 
     // About
     // should display the spatial extent
-    cy.get('gn-ui-expandable-panel').eq(2).click()
+    cy.get('gn-ui-expandable-panel').eq(3).click()
     cy.get('gn-ui-map-container').should('be.visible')
 
     // Links

@@ -520,6 +520,7 @@
   "record.metadata.quality.updateFrequency.failed": "La frequenza di aggiornamento non è specificata",
   "record.metadata.quality.updateFrequency.success": "La frequenza di aggiornamento è specificata",
   "record.metadata.related": "Vedi anche",
+  "record.metadata.resource.contacts": "Contatti per la risorsa",
   "record.metadata.resourceCreated": "Creato",
   "record.metadata.resourcePublished": "Pubblicato",
   "record.metadata.resourceUpdated": "Ultimo aggiornamento",

@@ -156,12 +156,14 @@ describe('Sections', () => {
       .should('not.eql', '')
 
     // it should display the keywords
-    cy.get('gn-ui-badge').should('have.length.gt', 0)
+    cy.get('.metadata-info-keywords')
+      .find('gn-ui-button')
+      .should('have.length.gt', 0)
 
-    // it should display three expandable panels
+    // it should display four expandable panels
     cy.get('datahub-record-metadata')
       .find('gn-ui-expandable-panel')
-      .should('have.length', 3)
+      .should('have.length', 4)
 
     // it should display the lineage
     cy.get('datahub-record-metadata')
@@ -170,6 +172,19 @@ describe('Sections', () => {
       .invoke('text')
       .invoke('trim')
       .should('not.eq', '')
+
+    // it should display one contact pill in the contacts panel
+    cy.get('datahub-record-metadata')
+      .find('[id="about"]')
+      .find('gn-ui-expandable-panel')
+      .eq(1)
+      .click()
+    cy.get('gn-ui-expandable-panel')
+      .eq(1)
+      .children('div')
+      .eq(1)
+      .find('[data-test="contact-pill"]')
+      .should('have.length', 1)
 
     // it should display the data producer elements
     cy.get('datahub-record-metadata')
@@ -186,14 +201,14 @@ describe('Sections', () => {
     cy.get('datahub-record-metadata')
       .find('[id="about"]')
       .find('gn-ui-expandable-panel')
-      .eq(1)
+      .eq(2)
       .click()
     cy.get('gn-ui-expandable-panel')
-      .eq(1)
-      .children('div')
-      .eq(1)
-      .children('div')
       .eq(2)
+      .children('div')
+      .eq(1)
+      .children('div')
+      .eq(1)
       .children('div')
       .as('aboutContent')
     cy.get('@aboutContent').should('have.length', 4)
@@ -243,7 +258,11 @@ describe('Sections', () => {
       .should('eq', 'https://www.geo2france.fr/')
 
     // it should go to dataset search page when clicking on keyword and filter by keyword
-    cy.get('gn-ui-badge').should('have.length.gt', 0).eq(2).as('keyword')
+    cy.get('.metadata-info-keywords')
+      .find('gn-ui-button')
+      .should('have.length.gt', 0)
+      .eq(2)
+      .as('keyword')
 
     cy.get('@keyword').invoke('text').invoke('toUpperCase').as('keywordText')
     cy.get('@keyword').first().click()

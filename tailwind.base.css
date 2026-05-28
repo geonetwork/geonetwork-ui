@@ -134,6 +134,12 @@
       bg-white border-white focus:ring-4 focus:ring-gray-300;
   }
 
+  .gn-ui-btn-primary-light {
+    @apply gn-ui-btn text-primary-darkest
+      bg-primary-white hover:bg-primary focus:bg-primary hover:text-white focus:text-white active:bg-primary-darker
+      border-transparent;
+  }
+
   .gn-ui-card-s {
     @apply min-h-[64px] w-full xs:min-w-[260px] xs:max-w-[280px] sm:min-w-[300px] sm:max-w-[500px] md:min-w-[230px];
   }

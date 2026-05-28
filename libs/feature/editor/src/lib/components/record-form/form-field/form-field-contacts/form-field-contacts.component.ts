@@ -30,7 +30,8 @@ import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/orga
 import { ContactCardComponent } from '../../../contact-card/contact-card.component'
 import {
   createFuzzyFilter,
-  getUserDisplayName,
+  getIndividualDisplayName,
+  toIndividual,
 } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'
@@ -119,7 +120,8 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
   /**
    * gn-ui-autocomplete
    */
-  displayWithFn: (user: UserModel) => string = getUserDisplayName
+  displayWithFn: (user: UserModel) => string = (user) =>
+    getIndividualDisplayName(toIndividual(user))
 
   /**
    * gn-ui-autocomplete
