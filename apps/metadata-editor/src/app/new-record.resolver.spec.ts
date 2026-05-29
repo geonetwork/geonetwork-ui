@@ -17,6 +17,14 @@ import {
 } from '@geonetwork-ui/common/fixtures'
 import { TranslateService } from '@ngx-translate/core'
 import { NOT_KNOWN_CONSTRAINT } from '@geonetwork-ui/feature/editor'
+import {
+  EditorConfig,
+  getOptionalEditorConfig,
+} from '@geonetwork-ui/util/app-config'
+
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getOptionalEditorConfig: jest.fn(),
+}))
 
 class TranslateServiceMock {
   instant = jest.fn((key: string) => key)
@@ -37,6 +45,7 @@ describe('NewRecordResolver', () => {
   let resolvedData: [CatalogRecord, string, boolean]
 
   beforeEach(() => {
+    ;(getOptionalEditorConfig as jest.Mock).mockReturnValue(null)
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
@@ -99,6 +108,23 @@ describe('NewRecordResolver', () => {
         null,
         false,
       ])
+    })
+
+    it('defaults to English when no language is configured', () => {
+      expect(resolvedData[0].defaultLanguage).toBe('en')
+    })
+  })
+
+  describe('defaultLanguage from config', () => {
+    beforeEach(() => {
+      ;(getOptionalEditorConfig as jest.Mock).mockReturnValue({
+        NEW_RECORD_DEFAULT_LANGUAGE: 'fr',
+      } as EditorConfig)
+      resolver.resolve().subscribe((r) => (resolvedData = r))
+    })
+
+    it('uses the configured language', () => {
+      expect(resolvedData[0].defaultLanguage).toBe('fr')
     })
   })
 })

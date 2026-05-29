@@ -69,6 +69,10 @@ export interface MetadataQualityConfig {
   ENABLED: boolean
 }
 
+export interface EditorConfig {
+  NEW_RECORD_DEFAULT_LANGUAGE?: string
+}
+
 export type CustomTranslations = { [translationKey: string]: string }
 export type CustomTranslationsAllLanguages = {
   [lang: string]: CustomTranslations

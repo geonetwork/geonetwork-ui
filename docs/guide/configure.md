@@ -266,6 +266,21 @@ To show Metadata Quality scores on records and allow sorting, enabling the setti
 
   By default, the widget is not activated; to enable it, just set this parameter to "true".
 
+#### `[editor]`
+
+This section contains settings specific to the Metadata Editor application.
+
+- `new_record_default_language` (optional)
+
+  Defines the default language assigned to newly created metadata records (e.g. `en`, `fr`, `de`).
+
+  If not set, defaults to `en`.
+
+  ```toml
+  [editor]
+  new_record_default_language = "fr"
+  ```
+
 #### `[map]`
 
 The map section lets you customize how maps appear and behave across GeoNetwork-UI applications.
