@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { ChangeDetectorRef, Component, inject, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Geometry } from 'geojson'
 import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON.js'
@@ -10,8 +10,8 @@ import {
   MapContextLayer,
 } from '@geospatial-sdk/core'
 import { MapContainerComponent } from '../map-container/map-container.component'
-import { BehaviorSubject, Observable } from 'rxjs'
-import { switchMap } from 'rxjs/operators'
+import { BehaviorSubject, from, Observable, of } from 'rxjs'
+import { map, switchMap, tap } from 'rxjs/operators'
 import { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
@@ -22,14 +22,16 @@ import { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
   styleUrl: './spatial-extent.component.css',
 })
 export class SpatialExtentComponent {
+  private _cdr = inject(ChangeDetectorRef)
+
   @Input() set spatialExtents(value: DatasetSpatialExtent[]) {
     this.spatialExtents$.next(value)
   }
   spatialExtents$ = new BehaviorSubject<DatasetSpatialExtent[]>([])
   mapContext$: Observable<MapContext> = this.spatialExtents$.pipe(
-    switchMap(async (extents) => {
+    switchMap((extents) => {
       if (extents.length === 0) {
-        return null // null extent means default view
+        return of(null)
       }
       const featureCollection: GeoJSONFeatureCollection = {
         type: 'FeatureCollection',
@@ -61,11 +63,10 @@ export class SpatialExtentComponent {
           'fill-color': 'rgba(153, 153, 153, 0.3)',
         },
       }
-      const view = await createViewFromLayer(layer)
-      return {
-        view,
-        layers: [layer],
-      }
+      return from(createViewFromLayer(layer)).pipe(
+        map((view) => ({ view, layers: [layer] }) as MapContext),
+        tap(() => this._cdr.markForCheck())
+      )
     })
   )
 
