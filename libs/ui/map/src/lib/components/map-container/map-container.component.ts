@@ -204,11 +204,12 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
 
   async ngOnChanges(changes: SimpleChanges) {
     if ('context' in changes && !changes['context'].isFirstChange()) {
+      const olMap = await this.openlayersMap
       const diff = computeMapContextDiff(
         this.processContext(changes['context'].currentValue),
         this.processContext(changes['context'].previousValue)
       )
-      await applyContextDiffToMap(this.olMap, diff)
+      await applyContextDiffToMap(olMap, diff)
 
       if (this._resolvedExtentChange && diff.viewChanges) {
         this._resolvedExtentChange.emit(this.calculateCurrentMapExtent())
