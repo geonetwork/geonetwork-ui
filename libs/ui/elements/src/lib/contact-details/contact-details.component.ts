@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { Individual } from '@geonetwork-ui/common/domain/model/record'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import {
-  matMailOutline,
-  matOpenInNew,
-} from '@ng-icons/material-icons/baseline'
+import { matMailOutline, matOpenInNew } from '@ng-icons/material-icons/baseline'
 import {
   matCallOutline,
   matLocationOnOutline,

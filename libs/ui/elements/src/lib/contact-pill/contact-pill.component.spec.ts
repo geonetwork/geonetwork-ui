@@ -89,7 +89,9 @@ describe('ContactPillComponent', () => {
       flush()
       fixture.detectChanges()
       expect(component.overlayOpen).toBe(false)
-      expect(overlayContainer.querySelector('gn-ui-contact-details')).toBeFalsy()
+      expect(
+        overlayContainer.querySelector('gn-ui-contact-details')
+      ).toBeFalsy()
     }))
 
     it('closes on outside click', fakeAsync(() => {

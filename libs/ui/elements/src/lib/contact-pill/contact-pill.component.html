@@ -27,9 +27,11 @@
   [cdkConnectedOverlayOrigin]="overlayOrigin"
   [cdkConnectedOverlayOpen]="overlayOpen"
   [cdkConnectedOverlayPositions]="overlayPositions"
-  [cdkConnectedOverlayFlexibleDimensions]="true"
+  [cdkConnectedOverlayOffsetX]="overlayOffsetX"
   (overlayOutsideClick)="closeOverlay()"
   (detach)="closeOverlay()"
 >
-  <gn-ui-contact-details [contact]="contact"></gn-ui-contact-details>
+  <div [style.width.px]="overlayWidth">
+    <gn-ui-contact-details [contact]="contact"></gn-ui-contact-details>
+  </div>
 </ng-template>
