@@ -142,6 +142,9 @@ export function checkNewRecordDefaultLanguage(
   parsedConfigSection: any,
   outWarnings: string[]
 ) {
+  if (parsedConfigSection.new_record_default_language === 'current') {
+    return parsedConfigSection
+  }
   const lang2 = toLang2(
     parsedConfigSection.new_record_default_language.toLowerCase()
   )

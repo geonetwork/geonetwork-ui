@@ -273,8 +273,9 @@ This section contains settings specific to the Metadata Editor application.
 - `new_record_default_language` (optional)
 
   Defines the default language assigned to newly created metadata records (e.g. `en`, `fr`, `de`).
+  Use `"current"` to assign the current UI language at the time of record creation.
 
-  If not set, defaults to `en`.
+  If not set, defaults to the current UI language.
 
   ```toml
   [editor]

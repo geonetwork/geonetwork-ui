@@ -156,7 +156,8 @@ background_color = "#fdfbff"
 # This section contains settings specific to the Metadata Editor application.
 [editor]
 # Optional; defines the default language assigned to newly created records (e.g. 'en', 'fr', 'de').
-# If not set, defaults to 'en'.
+# Use "current" to assign the current UI language at the time of record creation.
+# If not set, defaults to the current UI language.
 # new_record_default_language = "fr"
 
 ### MAP SETTINGS

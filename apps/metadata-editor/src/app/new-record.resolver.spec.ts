@@ -27,6 +27,7 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
 }))
 
 class TranslateServiceMock {
+  currentLang = 'de'
   instant = jest.fn((key: string) => key)
 }
 
@@ -110,8 +111,8 @@ describe('NewRecordResolver', () => {
       ])
     })
 
-    it('defaults to English when no language is configured', () => {
-      expect(resolvedData[0].defaultLanguage).toBe('en')
+    it('defaults to the current UI language when no language is configured', () => {
+      expect(resolvedData[0].defaultLanguage).toBe('de')
     })
   })
 
