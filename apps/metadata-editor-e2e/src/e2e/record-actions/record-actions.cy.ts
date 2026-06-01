@@ -383,4 +383,34 @@ describe('record-actions', () => {
     cy.get('md-editor-publish-button').click()
     cy.get('[data-test="publish-warning"]').should('not.exist')
   })
+
+  it('new record default language should follow configuration', () => {
+    // with no editor config (default to English)
+    cy.get('[data-cy="create-record"]').click()
+    cy.editor_readFormUniqueIdentifier().as('defaultLangRecordUuid')
+    cy.intercept({ method: 'PUT', pathname: '**/records' }).as('publishDefault')
+    cy.get('md-editor-publish-button').click()
+    cy.wait('@publishDefault')
+      .its('request.body')
+      .should('include', 'codeListValue="eng"')
+    cy.get<string>('@defaultLangRecordUuid').then((uuid) =>
+      cy.deleteRecord(uuid)
+    )
+
+    // with new_record_default_language = "fr"
+    cy.intercept('GET', '/assets/configuration/default.toml', {
+      fixture: 'config-with-french-default-language.toml',
+    })
+    cy.visit('/catalog/search')
+    cy.get('[data-cy="create-record"]').click()
+    cy.editor_readFormUniqueIdentifier().as('frenchLangRecordUuid')
+    cy.intercept({ method: 'PUT', pathname: '**/records' }).as('publishFrench')
+    cy.get('md-editor-publish-button').click()
+    cy.wait('@publishFrench')
+      .its('request.body')
+      .should('include', 'codeListValue="fre"')
+    cy.get<string>('@frenchLangRecordUuid').then((uuid) =>
+      cy.deleteRecord(uuid)
+    )
+  })
 })
