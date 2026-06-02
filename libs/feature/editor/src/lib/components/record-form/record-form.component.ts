@@ -77,12 +77,12 @@ export class RecordFormComponent implements OnInit, OnDestroy {
               behavior: 'instant',
               block: 'start',
             })
+            setTimeout(() => {
+              this.scrollToField(field)
+            })
+          } else {
+            this.scrollToField(field)
           }
-          setTimeout(() =>
-            document
-              .getElementById(this.anchorIdPrefix + field)
-              ?.scrollIntoView({ behavior: 'instant', block: 'start' })
-          )
           // Clear the trigger on the next macrotask, once change detection has
           // delivered the focused field to the matching form field (even on a
           // freshly switched page) and it has highlighted itself. The defer is
@@ -112,6 +112,12 @@ export class RecordFormComponent implements OnInit, OnDestroy {
 
   sectionTracker(index: number, section: EditorSectionWithValues) {
     return section.labelKey
+  }
+
+  scrollToField(model: CatalogRecordKeys) {
+    document
+      .getElementById(this.anchorIdPrefix + model)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   async getPageIndexForField(model: CatalogRecordKeys): Promise<number | null> {
