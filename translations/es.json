@@ -159,6 +159,7 @@
   "editor.record.form.field.legalConstraints": "",
   "editor.record.form.field.license": "",
   "editor.record.form.field.onlineLinkResources": "",
+  "editor.record.form.field.onlineLinkageResource.defaultName": "",
   "editor.record.form.field.onlineResource.cancel": "",
   "editor.record.form.field.onlineResource.confirm": "",
   "editor.record.form.field.onlineResource.dialogTitle": "",
