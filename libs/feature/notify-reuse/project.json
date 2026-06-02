@@ -1,5 +1,5 @@
 {
-  "name": "notify-reuse",
+  "name": "feature-notify-reuse",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/feature/notify-reuse/src",
   "prefix": "gn-ui",
