@@ -9,9 +9,19 @@ gn-ui-form-field.gn-ui-field-focus-glow {
 gn-ui-form-field.gn-ui-field-focus-glow::after {
   content: '';
   position: absolute;
-  inset: -4px;
-  border: 2px dashed var(--color-primary);
+  inset: -8px;
   border-radius: 8px;
+  background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  pointer-events: none;
+  animation: gn-ui-field-focus-glow 3s ease-out forwards;
+}
+
+gn-ui-form-field.gn-ui-field-focus-glow::before {
+  content: '';
+  position: absolute;
+  inset: -16px;
+  border: 2px dashed var(--color-primary);
+  border-radius: 10px;
   pointer-events: none;
   animation: gn-ui-field-focus-glow 3s ease-out forwards;
 }
@@ -19,11 +29,9 @@ gn-ui-form-field.gn-ui-field-focus-glow::after {
 @keyframes gn-ui-field-focus-glow {
   0%,
   55% {
-    border-color: var(--color-primary);
-    background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
+    opacity: 1;
   }
   100% {
-    border-color: transparent;
-    background-color: transparent;
+    opacity: 0;
   }
 }
