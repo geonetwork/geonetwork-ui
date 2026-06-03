@@ -8,5 +8,5 @@ secondary_color = "#001638"
 main_color = "#212029"
 background_color = "#fdfbff"
 
-[editor]
+[editing]
 new_record_default_language = "fr"

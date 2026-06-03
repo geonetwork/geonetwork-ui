@@ -266,19 +266,18 @@ To show Metadata Quality scores on records and allow sorting, enabling the setti
 
   By default, the widget is not activated; to enable it, just set this parameter to "true".
 
-#### `[editor]`
+#### `[editing]`
 
-This section contains settings specific to the Metadata Editor application.
+This section contains settings for metadata editing behavior in the Metadata Editor application.
 
 - `new_record_default_language` (optional)
 
   Defines the default language assigned to newly created metadata records (e.g. `en`, `fr`, `de`).
-  Use `"current"` to assign the current UI language at the time of record creation.
 
   If not set, defaults to the current UI language.
 
   ```toml
-  [editor]
+  [editing]
   new_record_default_language = "fr"
   ```
 

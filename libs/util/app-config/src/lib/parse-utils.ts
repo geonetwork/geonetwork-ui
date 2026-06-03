@@ -142,19 +142,20 @@ export function checkNewRecordDefaultLanguage(
   parsedConfigSection: any,
   outWarnings: string[]
 ) {
-  if (parsedConfigSection.new_record_default_language === 'current') {
-    return parsedConfigSection
-  }
   const lang2 = toLang2(
     parsedConfigSection.new_record_default_language.toLowerCase()
   )
   if (!(lang2 in LANG_2_TO_3_MAPPER)) {
     outWarnings.push(
-      `In the [editor] section: new_record_default_language = "${parsedConfigSection.new_record_default_language}" is not a recognized ISO 639 language code`
+      `In the [editing] section: new_record_default_language = "${parsedConfigSection.new_record_default_language}" is not a recognized ISO 639 language code`
     )
-    parsedConfigSection.new_record_default_language = undefined
-  } else {
-    parsedConfigSection.new_record_default_language = lang2
+    return {
+      ...parsedConfigSection,
+      new_record_default_language: undefined,
+    }
   }
-  return parsedConfigSection
+  return {
+    ...parsedConfigSection,
+    new_record_default_language: lang2,
+  }
 }

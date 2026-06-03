@@ -21,12 +21,9 @@ export class NewRecordResolver {
   private translateService = inject(TranslateService)
 
   resolve(): Observable<[CatalogRecord, string, boolean]> {
-    const configuredLang =
-      getOptionalEditorConfig()?.NEW_RECORD_DEFAULT_LANGUAGE
     const defaultLang =
-      !configuredLang || configuredLang === 'current'
-        ? this.translateService.currentLang
-        : configuredLang
+      getOptionalEditorConfig()?.NEW_RECORD_DEFAULT_LANGUAGE ??
+      this.translateService.currentLang
     return this.getCurrentUserAsPointOfContact().pipe(
       map((userContact) => {
         const catalogRecord: CatalogRecord = {

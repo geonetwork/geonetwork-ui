@@ -293,29 +293,29 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
               SORTABLE: parsedMetadataQualitySection.sortable,
             } as MetadataQualityConfig)
 
-      let parsedEditorSection = parseConfigSection(
+      let parsedEditingSection = parseConfigSection(
         parsed,
-        'editor',
+        'editing',
         [],
         ['new_record_default_language'],
         warnings,
         errors
       )
       if (
-        parsedEditorSection !== null &&
-        parsedEditorSection.new_record_default_language !== undefined
+        parsedEditingSection !== null &&
+        parsedEditingSection.new_record_default_language !== undefined
       ) {
-        parsedEditorSection = checkNewRecordDefaultLanguage(
-          parsedEditorSection,
+        parsedEditingSection = checkNewRecordDefaultLanguage(
+          parsedEditingSection,
           warnings
         )
       }
       editorConfig =
-        parsedEditorSection === null
+        parsedEditingSection === null
           ? null
           : ({
               NEW_RECORD_DEFAULT_LANGUAGE:
-                parsedEditorSection.new_record_default_language as
+                parsedEditingSection.new_record_default_language as
                   | string
                   | undefined,
             } as EditorConfig)

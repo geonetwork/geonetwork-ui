@@ -257,7 +257,7 @@ describe('app config utils', () => {
           () =>
             minimalAppConfigFixture() +
             `
-[editor]
+[editing]
 new_record_default_language = "fr"
 `
         )
@@ -276,7 +276,7 @@ new_record_default_language = "fr"
           () =>
             minimalAppConfigFixture() +
             `
-[editor]
+[editing]
 new_record_default_language = "fre"
 `
         )
@@ -295,7 +295,7 @@ new_record_default_language = "fre"
           () =>
             minimalAppConfigFixture() +
             `
-[editor]
+[editing]
 new_record_default_language = "xyz"
 `
         )
