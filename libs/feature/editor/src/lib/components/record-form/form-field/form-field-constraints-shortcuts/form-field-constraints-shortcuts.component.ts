@@ -139,7 +139,6 @@ export class FormFieldConstraintsShortcutsComponent implements OnDestroy {
           this.editorFacade.setFieldVisibility({ model }, visible)
         })
       }
-      hideEmptyConstraints(this.legalConstraints$, 'legalConstraints')
       hideEmptyConstraints(this.securityConstraints$, 'securityConstraints')
       hideEmptyConstraints(this.otherConstraints$, 'otherConstraints')
     })

@@ -180,45 +180,44 @@ describe('FormFieldConstraintsShortcutsComponent', () => {
       return calls[calls.length - 1]
     }
 
-    describe.each([
-      'legalConstraints',
-      'securityConstraints',
-      'otherConstraints',
-    ])('for field %s', (fieldName) => {
-      it('is visible if not empty at first and no toggles activated', () => {
-        sampleRecord$.next({
-          ...sampleRecord,
-          [fieldName]: [{ text: 'some constraint' }],
+    describe.each(['securityConstraints', 'otherConstraints'])(
+      'for field %s',
+      (fieldName) => {
+        it('is visible if not empty at first and no toggles activated', () => {
+          sampleRecord$.next({
+            ...sampleRecord,
+            [fieldName]: [{ text: 'some constraint' }],
+          })
+          fixture.detectChanges()
+          expect(getLastCallForField(fieldName)).toEqual([
+            { model: fieldName },
+            true,
+          ])
         })
-        fixture.detectChanges()
-        expect(getLastCallForField(fieldName)).toEqual([
-          { model: fieldName },
-          true,
-        ])
-      })
-      it('is hidden if not empty at first and NOT_APPLICABLE_CONSTRAINT present', () => {
-        sampleRecord$.next({
-          ...sampleRecord,
-          [fieldName]: [{ text: 'some constraint' }],
-          legalConstraints: [NOT_APPLICABLE_CONSTRAINT],
+        it('is hidden if not empty at first and NOT_APPLICABLE_CONSTRAINT present', () => {
+          sampleRecord$.next({
+            ...sampleRecord,
+            [fieldName]: [{ text: 'some constraint' }],
+            legalConstraints: [NOT_APPLICABLE_CONSTRAINT],
+          })
+          fixture.detectChanges()
+          expect(getLastCallForField(fieldName)).toEqual([
+            { model: fieldName },
+            false,
+          ])
         })
-        fixture.detectChanges()
-        expect(getLastCallForField(fieldName)).toEqual([
-          { model: fieldName },
-          false,
-        ])
-      })
-      it('is hidden if field is empty', () => {
-        sampleRecord$.next({
-          ...sampleRecord,
-          [fieldName]: [],
+        it('is hidden if field is empty', () => {
+          sampleRecord$.next({
+            ...sampleRecord,
+            [fieldName]: [],
+          })
+          fixture.detectChanges()
+          expect(getLastCallForField(fieldName)).toEqual([
+            { model: fieldName },
+            false,
+          ])
         })
-        fixture.detectChanges()
-        expect(getLastCallForField(fieldName)).toEqual([
-          { model: fieldName },
-          false,
-        ])
-      })
-    })
+      }
+    )
   })
 })
