@@ -49,7 +49,7 @@ describe('FieldFocusDirective', () => {
     fixture = TestBed.createComponent(HostComponent)
     host = fixture.componentInstance
     el = fixture.nativeElement.querySelector('div')
-    el.scrollIntoView = jest.fn() // jsdom has no layout
+    el.scrollIntoView = jest.fn()
     fixture.detectChanges()
   })
 

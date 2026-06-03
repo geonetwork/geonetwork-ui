@@ -2,12 +2,6 @@ gn-ui-form-field {
   scroll-margin-top: 90px;
 }
 
-/*
- * Highlight applied (via the gnUiFieldFocus directive) to the field targeted
- * from the quality panel: a dashed blue ring + blue background that holds
- * briefly then fades out. An outline (not a border) keeps the ring outside the
- * field with breathing room and never shifts the layout.
- */
 gn-ui-form-field.gn-ui-field-focus-glow {
   border-radius: 8px;
   animation: gn-ui-field-focus-glow 3s ease-out forwards;

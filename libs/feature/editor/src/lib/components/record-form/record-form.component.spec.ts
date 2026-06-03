@@ -65,8 +65,6 @@ describe('RecordFormComponent', () => {
   })
 
   describe('focusedField$ subscription', () => {
-    // Scrolling + highlighting now live in FieldFocusDirective; the component is
-    // only responsible for switching to the page that holds the focused field.
     describe('when the focused field is on a different page', () => {
       beforeEach(async () => {
         // 'licenses' is on page 2 in editorConfigFixture
@@ -128,7 +126,6 @@ describe('RecordFormComponent', () => {
 
     it('is reset to null on the next macrotask so a re-click can re-fire', async () => {
       facade.focusedField$.next('title')
-      // let the async pipeline run, then the deferred reset macrotask
       await new Promise((resolve) => setTimeout(resolve))
       await new Promise((resolve) => setTimeout(resolve))
       expect(component.focusedFieldModel$.value).toBeNull()

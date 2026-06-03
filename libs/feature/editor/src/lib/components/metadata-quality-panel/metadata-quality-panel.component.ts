@@ -51,9 +51,6 @@ export class MetadataQualityPanelComponent {
   facade = inject(EditorFacade)
   propsToValidate: ValidatorMapperKeys[] = getAllKeysValidator()
 
-  /** Label of the criterion row currently flashing; reset on the next
-   * macrotask so a re-click re-fires. Keyed on the (unique) label, not the
-   * model, because contacts and organisation share `model: 'contacts'`. */
   activeRowLabel$ = new BehaviorSubject<string | null>(null)
 
   propertiesByPage$ = combineLatest([
@@ -87,7 +84,6 @@ export class MetadataQualityPanelComponent {
   }) {
     if (!property.value) {
       this.facade.setFocusedField(property.model)
-      // Flash the clicked row; deferred reset so re-clicking it re-fires.
       this.activeRowLabel$.next(property.label)
       setTimeout(() => this.activeRowLabel$.next(null))
     }
