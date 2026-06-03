@@ -9,13 +9,20 @@ import {
 } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
 import { EditorFieldValue } from '../../models'
-import { FormFieldComponent } from './form-field'
+import { FieldFocusDirective, FormFieldComponent } from './form-field'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
   EditorFieldWithValue,
   EditorSectionWithValues,
 } from '../../+state/editor.models'
-import { filter, firstValueFrom, map, Subscription, switchMap } from 'rxjs'
+import {
+  BehaviorSubject,
+  filter,
+  firstValueFrom,
+  map,
+  Subscription,
+  switchMap,
+} from 'rxjs'
 import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
@@ -24,13 +31,23 @@ import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FormFieldComponent, TranslateDirective],
+  imports: [
+    CommonModule,
+    FormFieldComponent,
+    FieldFocusDirective,
+    TranslateDirective,
+  ],
 })
 export class RecordFormComponent implements OnInit, OnDestroy {
   anchorIdPrefix = 'gn-ui--field-'
   facade = inject(EditorFacade)
   private el = inject(ElementRef)
   subscription = new Subscription()
+
+  /** Model of the field currently requested to be focused, pushed down to the
+   * matching `<gn-ui-form-field>` so it highlights and focuses itself. Reset to
+   * null on the next macrotask once change detection has delivered it. */
+  focusedFieldModel$ = new BehaviorSubject<CatalogRecordKeys | null>(null)
 
   recordUniqueIdentifier$ = this.facade.record$.pipe(
     map((record) => record.uniqueIdentifier)
@@ -49,6 +66,10 @@ export class RecordFormComponent implements OnInit, OnDestroy {
           }))
         )
         .subscribe(async ({ field, pageIndex }) => {
+          // Push the focused field down so the matching form field highlights
+          // and focuses itself (works cross-page too: the field created after
+          // the page switch reads this value via its binding during CD).
+          this.focusedFieldModel$.next(field)
           const currentPage = await firstValueFrom(this.facade.currentPage$)
           if (pageIndex !== null && pageIndex !== currentPage) {
             this.facade.setCurrentPage(pageIndex)
@@ -62,6 +83,14 @@ export class RecordFormComponent implements OnInit, OnDestroy {
               .getElementById(this.anchorIdPrefix + field)
               ?.scrollIntoView({ behavior: 'instant', block: 'start' })
           )
+          // Clear the trigger on the next macrotask, once change detection has
+          // delivered the focused field to the matching form field (even on a
+          // freshly switched page) and it has highlighted itself. The defer is
+          // required: a synchronous or microtask reset would revert the value
+          // before that change detection runs and the field would never glow.
+          // Clearing it lets a re-click re-fire and avoids a spurious re-glow
+          // when navigating back to the page.
+          setTimeout(() => this.focusedFieldModel$.next(null))
         })
     )
   }

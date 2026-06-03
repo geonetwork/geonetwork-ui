@@ -145,7 +145,7 @@ describe('editor form', () => {
       cy.get('gn-ui-metadata-quality-panel').should('be.visible')
     })
 
-    it('should navigate to the correct page when clicking an invalid criterion', () => {
+    it('should switch page, scroll to and highlight/focus the field when clicking an invalid criterion', () => {
       // Make abstract invalid, then navigate to another page
       cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').clear()
       cy.get('@accessContactPageBtn').click()
@@ -156,11 +156,66 @@ describe('editor form', () => {
         .find('[data-cy="md-quality-btn-editor.record.form.field.abstract"]')
         .click()
 
-      // Should navigate back to page 1 where abstract is
+      // page switched back to where abstract is
       cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('be.visible')
+
+      // the field is scrolled into the viewport (be.visible alone does not
+      // guarantee this, so check the bounding rect)
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').then(($el) => {
+        const { top, bottom } = $el[0].getBoundingClientRect()
+        expect(top).to.be.within(0, Cypress.config('viewportHeight'))
+        expect(bottom).to.be.greaterThan(0)
+      })
+
+      // the field is highlighted (class stays for the whole animation, so it is
+      // reliably caught)
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should(
+        'have.class',
+        'gn-ui-field-focus-glow'
+      )
+
+      // the cursor is placed inside the field (best-effort focus)
+      cy.focused()
+        .closest('gn-ui-form-field[ng-reflect-model=abstract]')
+        .should('exist')
     })
 
-    it('should not navigate when clicking a valid criterion', () => {
+    it('should highlight and focus the field when clicking an invalid criterion on the current page', () => {
+      // abstract lives on the default (description) page → make it invalid
+      cy.get('@abstractField').clear()
+
+      cy.get('gn-ui-metadata-quality-panel')
+        .find('[data-cy="md-quality-btn-editor.record.form.field.abstract"]')
+        .click()
+
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should(
+        'have.class',
+        'gn-ui-field-focus-glow'
+      )
+      cy.focused()
+        .closest('gn-ui-form-field[ng-reflect-model=abstract]')
+        .should('exist')
+    })
+
+    it('should scroll the field back into view when it is off-screen on the current page', () => {
+      cy.get('@abstractField').clear()
+
+      // scroll the form container so abstract is pushed out of the viewport
+      cy.get('gn-ui-record-form').closest('.overflow-auto').scrollTo('bottom')
+
+      cy.get('gn-ui-metadata-quality-panel')
+        .find('[data-cy="md-quality-btn-editor.record.form.field.abstract"]')
+        .click()
+
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').then(($el) => {
+        expect($el[0].getBoundingClientRect().top).to.be.within(
+          0,
+          Cypress.config('viewportHeight')
+        )
+      })
+    })
+
+    it('should not navigate nor highlight when clicking a valid criterion', () => {
       cy.get('@accessContactPageBtn').click()
 
       cy.get('gn-ui-metadata-quality-panel')
@@ -169,6 +224,10 @@ describe('editor form', () => {
 
       // Should still be on page 3 — abstract (page 1) should not be visible
       cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('not.exist')
+      // and no field is highlighted
+      cy.get('gn-ui-record-form')
+        .find('gn-ui-form-field.gn-ui-field-focus-glow')
+        .should('not.exist')
     })
   })
 

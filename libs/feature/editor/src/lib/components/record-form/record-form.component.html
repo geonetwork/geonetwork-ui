@@ -1,3 +1,4 @@
+@let focused = focusedFieldModel$ | async;
 <div class="flex flex-col gap-6">
   @for (
     section of facade.currentSections$ | async;
@@ -24,6 +25,10 @@
           ) {
             @if (!field.config.hidden) {
               <gn-ui-form-field
+                gnUiFieldFocus
+                [fieldFocusActive]="
+                  !!field.config.model && focused === field.config.model
+                "
                 [id]="anchorIdPrefix + field.config.model"
                 [ngClass]="
                   field.config.gridColumnSpan === 1
