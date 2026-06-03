@@ -159,6 +159,7 @@
   "editor.record.form.field.legalConstraints": "Legal constraint",
   "editor.record.form.field.license": "License",
   "editor.record.form.field.onlineLinkResources": "Attached resources",
+  "editor.record.form.field.onlineLinkageResource.defaultName": "Link",
   "editor.record.form.field.onlineResource.cancel": "Cancel",
   "editor.record.form.field.onlineResource.confirm": "Confirm",
   "editor.record.form.field.onlineResource.dialogTitle": "Modify the dataset preview",

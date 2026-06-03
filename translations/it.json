@@ -159,6 +159,7 @@
   "editor.record.form.field.legalConstraints": "Vincolo legale",
   "editor.record.form.field.license": "Licenza",
   "editor.record.form.field.onlineLinkResources": "Risorse allegate",
+  "editor.record.form.field.onlineLinkageResource.defaultName": "Link",
   "editor.record.form.field.onlineResource.cancel": "Annulla",
   "editor.record.form.field.onlineResource.confirm": "Convalida",
   "editor.record.form.field.onlineResource.dialogTitle": "Modifica anteprima dataset",

@@ -159,6 +159,7 @@
   "editor.record.form.field.legalConstraints": "Contrainte légale",
   "editor.record.form.field.license": "Licence",
   "editor.record.form.field.onlineLinkResources": "Ressources attachées",
+  "editor.record.form.field.onlineLinkageResource.defaultName": "Lien",
   "editor.record.form.field.onlineResource.cancel": "Annuler",
   "editor.record.form.field.onlineResource.confirm": "Valider",
   "editor.record.form.field.onlineResource.dialogTitle": "Modifier l'aperçu du jeu de données",

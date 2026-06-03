@@ -159,6 +159,7 @@
   "editor.record.form.field.legalConstraints": "Rechtliche Einschränkung",
   "editor.record.form.field.license": "Lizenz",
   "editor.record.form.field.onlineLinkResources": "Beigefügte Ressourcen",
+  "editor.record.form.field.onlineLinkageResource.defaultName": "Link",
   "editor.record.form.field.onlineResource.cancel": "Abbrechen",
   "editor.record.form.field.onlineResource.confirm": "Bestätigen",
   "editor.record.form.field.onlineResource.dialogTitle": "Vorschau des Datensatzes bearbeiten",
