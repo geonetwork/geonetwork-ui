@@ -1,0 +1,24 @@
+/*
+ * Background-only flash applied (via the gnUiFieldFocus directive) to the
+ * clicked criterion row, mirroring the field highlight. The row's inner button
+ * is transparent (--gn-ui-button-background: transparent), so animating the
+ * host's background shows through.
+ */
+gn-ui-button.gn-ui-row-focus-glow {
+  border-radius: 4px;
+  animation: gn-ui-row-focus-glow 3s ease-out forwards;
+  /* keep the inner button transparent while flashing so the host's animated
+   * background shows even when the cursor stays on the row (the row sets an
+   * inline --gn-ui-button-bg-hover, hence !important) */
+  --gn-ui-button-bg-hover: transparent !important;
+}
+
+@keyframes gn-ui-row-focus-glow {
+  0%,
+  55% {
+    background-color: var(--color-primary-lightest);
+  }
+  100% {
+    background-color: transparent;
+  }
+}

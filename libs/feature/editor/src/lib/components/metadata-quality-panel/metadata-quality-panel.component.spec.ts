@@ -159,14 +159,43 @@ describe('MetadataQualityPanelComponent', () => {
   })
 
   describe('onCriterionClick', () => {
+    const abstract = {
+      label: 'editor.record.form.field.abstract',
+      value: false,
+      model: 'abstract' as any,
+    }
+    const title = {
+      label: 'editor.record.form.field.title',
+      value: true,
+      model: 'title' as any,
+    }
+
     it('should call facade.setFocusedField when criterion is invalid', () => {
-      component.onCriterionClick({ value: false, model: 'abstract' })
+      component.onCriterionClick(abstract)
       expect(mockFacade.setFocusedField).toHaveBeenCalledWith('abstract')
     })
 
     it('should not call facade.setFocusedField when criterion is valid', () => {
-      component.onCriterionClick({ value: true, model: 'title' })
+      component.onCriterionClick(title)
       expect(mockFacade.setFocusedField).not.toHaveBeenCalled()
+    })
+
+    it('should flash the clicked row (keyed on its label) when invalid', () => {
+      component.onCriterionClick(abstract)
+      expect(component.activeRowLabel$.value).toBe(
+        'editor.record.form.field.abstract'
+      )
+    })
+
+    it('should not flash the row when criterion is valid', () => {
+      component.onCriterionClick(title)
+      expect(component.activeRowLabel$.value).toBeNull()
+    })
+
+    it('should reset the active row on the next macrotask', async () => {
+      component.onCriterionClick(abstract)
+      await new Promise((resolve) => setTimeout(resolve))
+      expect(component.activeRowLabel$.value).toBeNull()
     })
   })
 })

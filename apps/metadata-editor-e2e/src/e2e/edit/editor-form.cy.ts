@@ -195,6 +195,11 @@ describe('editor form', () => {
       cy.focused()
         .closest('gn-ui-form-field[ng-reflect-model=abstract]')
         .should('exist')
+
+      // the clicked criterion row also flashes
+      cy.get('gn-ui-metadata-quality-panel')
+        .find('gn-ui-button.gn-ui-row-focus-glow')
+        .should('exist')
     })
 
     it('should scroll the field back into view when it is off-screen on the current page', () => {

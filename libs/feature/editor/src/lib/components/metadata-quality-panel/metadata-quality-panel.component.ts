@@ -15,8 +15,9 @@ import { iconoirBadgeCheck, iconoirSystemShut } from '@ng-icons/iconoir'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { EditorFacade } from '../../+state/editor.facade'
-import { combineLatest, map } from 'rxjs'
+import { BehaviorSubject, combineLatest, map } from 'rxjs'
 import { AsyncPipe } from '@angular/common'
+import { FieldFocusDirective } from '../record-form/form-field'
 
 //forced translations that are not available in fields.config.ts
 marker('editor.record.form.field.keywords')
@@ -32,6 +33,7 @@ marker('editor.record.form.field.organisation')
     ButtonComponent,
     NgIconComponent,
     AsyncPipe,
+    FieldFocusDirective,
   ],
   providers: [
     provideIcons({
@@ -48,6 +50,11 @@ marker('editor.record.form.field.organisation')
 export class MetadataQualityPanelComponent {
   facade = inject(EditorFacade)
   propsToValidate: ValidatorMapperKeys[] = getAllKeysValidator()
+
+  /** Label of the criterion row currently flashing; reset on the next
+   * macrotask so a re-click re-fires. Keyed on the (unique) label, not the
+   * model, because contacts and organisation share `model: 'contacts'`. */
+  activeRowLabel$ = new BehaviorSubject<string | null>(null)
 
   propertiesByPage$ = combineLatest([
     this.facade.editorConfig$,
@@ -73,9 +80,16 @@ export class MetadataQualityPanelComponent {
     })
   )
 
-  onCriterionClick(property: { value: boolean; model: CatalogRecordKeys }) {
+  onCriterionClick(property: {
+    label: string
+    value: boolean
+    model: CatalogRecordKeys
+  }) {
     if (!property.value) {
       this.facade.setFocusedField(property.model)
+      // Flash the clicked row; deferred reset so re-clicking it re-fires.
+      this.activeRowLabel$.next(property.label)
+      setTimeout(() => this.activeRowLabel$.next(null))
     }
   }
 }

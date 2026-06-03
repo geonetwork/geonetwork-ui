@@ -6,7 +6,13 @@ import { FieldFocusDirective } from './field-focus.directive'
   standalone: true,
   imports: [FieldFocusDirective],
   template: `
-    <div gnUiFieldFocus [fieldFocusActive]="active">
+    <div
+      gnUiFieldFocus
+      [fieldFocusActive]="active"
+      [fieldFocusScroll]="scroll"
+      [fieldFocusCursor]="cursor"
+      [fieldFocusGlowClass]="glowClass"
+    >
       <button type="button">a button</button>
       <input type="text" />
     </div>
@@ -14,6 +20,9 @@ import { FieldFocusDirective } from './field-focus.directive'
 })
 class HostComponent {
   active = false
+  scroll = true
+  cursor = true
+  glowClass = 'gn-ui-field-focus-glow'
 }
 
 @Component({
@@ -95,6 +104,28 @@ describe('FieldFocusDirective', () => {
   it('does nothing when toggled inactive', () => {
     host.active = false
     fixture.detectChanges()
+    expect(el.classList.contains('gn-ui-field-focus-glow')).toBe(false)
+  })
+
+  it('does not scroll when fieldFocusScroll is false', () => {
+    host.scroll = false
+    activate()
+    jest.runOnlyPendingTimers()
+    expect(el.scrollIntoView).not.toHaveBeenCalled()
+  })
+
+  it('does not move focus when fieldFocusCursor is false', () => {
+    host.cursor = false
+    const before = document.activeElement
+    activate()
+    jest.runOnlyPendingTimers()
+    expect(document.activeElement).toBe(before)
+  })
+
+  it('uses a custom glow class when provided', () => {
+    host.glowClass = 'gn-ui-row-focus-glow'
+    activate()
+    expect(el.classList.contains('gn-ui-row-focus-glow')).toBe(true)
     expect(el.classList.contains('gn-ui-field-focus-glow')).toBe(false)
   })
 
