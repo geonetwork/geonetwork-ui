@@ -9,12 +9,12 @@ import {
 
 /**
  * Dumb, presentational directive applied on a host element. When
- * `fieldFocusActive` becomes true it
- *   1. glows the host by toggling a CSS class (`fieldFocusGlowClass`, animation
+ * `gnUiFieldFocusActive` becomes true it
+ *   1. glows the host by toggling a CSS class (`gnUiFieldFocusGlowClass`, animation
  *      defined in the consuming component's stylesheet),
- *   2. scrolls the host into view (`fieldFocusScroll`), and
- *   3. places the text cursor in the host's main input (`fieldFocusCursor`).
- * It is fire-and-forget: the owner of `fieldFocusActive` resets that trigger
+ *   2. scrolls the host into view (`gnUiFieldFocusScroll`), and
+ *   3. places the text cursor in the host's main input (`gnUiFieldFocusCursor`).
+ * It is fire-and-forget: the owner of `gnUiFieldFocusActive` resets that trigger
  * (see RecordFormComponent). Page-switching stays in the owner — a per-page
  * directive cannot bring its own off-page field on screen — but once the field
  * is on the current page (created right after the switch), the directive owns
@@ -28,17 +28,17 @@ import {
   standalone: true,
 })
 export class FieldFocusDirective implements OnChanges {
-  @Input() fieldFocusActive = false
-  @Input() fieldFocusScroll = true
-  @Input() fieldFocusCursor = true
-  @Input() fieldFocusGlowClass = 'gn-ui-field-focus-glow'
+  @Input() gnUiFieldFocusActive = false
+  @Input() gnUiFieldFocusScroll = true
+  @Input() gnUiFieldFocusCursor = true
+  @Input() gnUiFieldFocusGlowClass = 'gn-ui-field-focus-glow'
 
   private el = inject(ElementRef)
 
   // Trigger from ngOnChanges (not an input setter): Angular writes all inputs
   // for the change-detection pass before calling ngOnChanges.
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['fieldFocusActive']?.currentValue) {
+    if (changes['gnUiFieldFocusActive']?.currentValue) {
       this.focusField()
     }
   }
@@ -52,7 +52,7 @@ export class FieldFocusDirective implements OnChanges {
     // be laid out before we scroll to / focus it.
     setTimeout(() => {
       const host = this.el.nativeElement as HTMLElement
-      const glowClass = this.fieldFocusGlowClass
+      const glowClass = this.gnUiFieldFocusGlowClass
 
       // Remove + reflow + re-add so the animation restarts even if it is still
       // running from a previous focus (re-clicking the same criterion).
@@ -65,10 +65,10 @@ export class FieldFocusDirective implements OnChanges {
         { once: true }
       )
 
-      if (this.fieldFocusScroll) {
+      if (this.gnUiFieldFocusScroll) {
         host.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
-      if (this.fieldFocusCursor) {
+      if (this.gnUiFieldFocusCursor) {
         // Prefer a real text input (skipping buttons, so e.g. the rich-text
         // editor wins over its preview toggle), then fall back to any focusable
         // control such as the trigger button of a dropdown (topics/themes).

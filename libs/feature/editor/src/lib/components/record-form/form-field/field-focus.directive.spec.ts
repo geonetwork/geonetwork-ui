@@ -8,10 +8,10 @@ import { FieldFocusDirective } from './field-focus.directive'
   template: `
     <div
       gnUiFieldFocus
-      [fieldFocusActive]="active"
-      [fieldFocusScroll]="scroll"
-      [fieldFocusCursor]="cursor"
-      [fieldFocusGlowClass]="glowClass"
+      [gnUiFieldFocusActive]="active"
+      [gnUiFieldFocusScroll]="scroll"
+      [gnUiFieldFocusCursor]="cursor"
+      [gnUiFieldFocusGlowClass]="glowClass"
     >
       <button type="button">a button</button>
       <input type="text" />
@@ -29,7 +29,7 @@ class HostComponent {
   standalone: true,
   imports: [FieldFocusDirective],
   template: `
-    <div gnUiFieldFocus [fieldFocusActive]="active">
+    <div gnUiFieldFocus [gnUiFieldFocusActive]="active">
       <button type="button">trigger</button>
     </div>
   `,
