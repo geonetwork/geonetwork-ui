@@ -73,6 +73,7 @@ describe('FieldFocusDirective', () => {
 
   it('adds the highlight class when activated', () => {
     activate()
+    jest.runOnlyPendingTimers()
     expect(el.classList.contains('gn-ui-field-focus-glow')).toBe(true)
   })
 
@@ -93,11 +94,13 @@ describe('FieldFocusDirective', () => {
 
   it('re-applies the highlight when re-activated', () => {
     activate()
+    jest.runOnlyPendingTimers()
     el.classList.remove('gn-ui-field-focus-glow')
     host.active = false
     fixture.detectChanges()
     host.active = true
     fixture.detectChanges()
+    jest.runOnlyPendingTimers()
     expect(el.classList.contains('gn-ui-field-focus-glow')).toBe(true)
   })
 
@@ -125,6 +128,7 @@ describe('FieldFocusDirective', () => {
   it('uses a custom glow class when provided', () => {
     host.glowClass = 'gn-ui-row-focus-glow'
     activate()
+    jest.runOnlyPendingTimers()
     expect(el.classList.contains('gn-ui-row-focus-glow')).toBe(true)
     expect(el.classList.contains('gn-ui-field-focus-glow')).toBe(false)
   })

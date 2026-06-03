@@ -44,27 +44,27 @@ export class FieldFocusDirective implements OnChanges {
   }
 
   private focusField() {
-    const host = this.el.nativeElement as HTMLElement
-    const glowClass = this.fieldFocusGlowClass
-
-    // Remove + reflow + re-add so the animation restarts even if it is still
-    // running from a previous focus (re-clicking the same criterion).
-    host.classList.remove(glowClass)
-    void host.offsetWidth
-    host.classList.add(glowClass)
-    host.addEventListener(
-      'animationend',
-      () => host.classList.remove(glowClass),
-      { once: true }
-    )
-
-    if (!this.fieldFocusScroll && !this.fieldFocusCursor) {
-      return
-    }
-
-    // Defer so the field is laid out (incl. after a page switch) before
-    // revealing it; scroll first, then place the cursor without re-scrolling.
+    // Defer the whole effect to a macrotask. Doing it during the
+    // change-detection pass that mounts a freshly switched-to page would force
+    // a synchronous reflow (`offsetWidth`, to restart the animation) mid-mount,
+    // which makes the sibling fields play their entry transition and flash.
+    // Running after the page has rendered avoids that, and also lets the field
+    // be laid out before we scroll to / focus it.
     setTimeout(() => {
+      const host = this.el.nativeElement as HTMLElement
+      const glowClass = this.fieldFocusGlowClass
+
+      // Remove + reflow + re-add so the animation restarts even if it is still
+      // running from a previous focus (re-clicking the same criterion).
+      host.classList.remove(glowClass)
+      void host.offsetWidth
+      host.classList.add(glowClass)
+      host.addEventListener(
+        'animationend',
+        () => host.classList.remove(glowClass),
+        { once: true }
+      )
+
       if (this.fieldFocusScroll) {
         host.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
