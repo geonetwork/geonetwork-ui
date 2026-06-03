@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   inject,
   OnDestroy,
   OnInit,
@@ -39,9 +38,7 @@ import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
   ],
 })
 export class RecordFormComponent implements OnInit, OnDestroy {
-  anchorIdPrefix = 'gn-ui--field-'
   facade = inject(EditorFacade)
-  private el = inject(ElementRef)
   subscription = new Subscription()
 
   /** Model of the field currently requested to be focused, pushed down to the
@@ -66,26 +63,20 @@ export class RecordFormComponent implements OnInit, OnDestroy {
           }))
         )
         .subscribe(async ({ field, pageIndex }) => {
-          // Push the focused field down so the matching form field highlights
-          // and focuses itself (works cross-page too: the field created after
-          // the page switch reads this value via its binding during CD).
+          // Push the focused field down so the matching form field reveals
+          // (scrolls), highlights and focuses itself — the directive owns that
+          // (works cross-page too: the field created after the page switch
+          // reads this value via its binding during CD).
           this.focusedFieldModel$.next(field)
+          // Only the page switch must stay here: a per-page directive cannot
+          // bring its own off-page field on screen.
           const currentPage = await firstValueFrom(this.facade.currentPage$)
           if (pageIndex !== null && pageIndex !== currentPage) {
             this.facade.setCurrentPage(pageIndex)
-            this.el.nativeElement.scrollIntoView({
-              behavior: 'instant',
-              block: 'start',
-            })
-            setTimeout(() => {
-              this.scrollToField(field)
-            })
-          } else {
-            this.scrollToField(field)
           }
           // Clear the trigger on the next macrotask, once change detection has
           // delivered the focused field to the matching form field (even on a
-          // freshly switched page) and it has highlighted itself. The defer is
+          // freshly switched page) and it has revealed itself. The defer is
           // required: a synchronous or microtask reset would revert the value
           // before that change detection runs and the field would never glow.
           // Clearing it lets a re-click re-fire and avoids a spurious re-glow
@@ -112,12 +103,6 @@ export class RecordFormComponent implements OnInit, OnDestroy {
 
   sectionTracker(index: number, section: EditorSectionWithValues) {
     return section.labelKey
-  }
-
-  scrollToField(model: CatalogRecordKeys) {
-    document
-      .getElementById(this.anchorIdPrefix + model)
-      ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   async getPageIndexForField(model: CatalogRecordKeys): Promise<number | null> {

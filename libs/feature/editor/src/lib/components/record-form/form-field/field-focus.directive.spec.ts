@@ -40,6 +40,7 @@ describe('FieldFocusDirective', () => {
     fixture = TestBed.createComponent(HostComponent)
     host = fixture.componentInstance
     el = fixture.nativeElement.querySelector('div')
+    el.scrollIntoView = jest.fn() // jsdom has no layout
     fixture.detectChanges()
   })
 
@@ -66,6 +67,15 @@ describe('FieldFocusDirective', () => {
     expect(el.classList.contains('gn-ui-field-focus-glow')).toBe(true)
   })
 
+  it('scrolls the host into view when activated', () => {
+    activate()
+    jest.runOnlyPendingTimers()
+    expect(el.scrollIntoView).toHaveBeenCalledWith({
+      behavior: 'smooth',
+      block: 'start',
+    })
+  })
+
   it('focuses the first focusable text descendant (not a button)', () => {
     activate()
     jest.runOnlyPendingTimers()
@@ -90,6 +100,7 @@ describe('FieldFocusDirective', () => {
 
   it('falls back to focusing a button when there is no text input', () => {
     const buttonFixture = TestBed.createComponent(ButtonOnlyHostComponent)
+    buttonFixture.nativeElement.querySelector('div').scrollIntoView = jest.fn()
     buttonFixture.componentInstance.active = true
     buttonFixture.detectChanges()
     jest.runOnlyPendingTimers()

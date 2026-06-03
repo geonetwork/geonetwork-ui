@@ -11,10 +11,14 @@ import {
  * Dumb, presentational directive applied on a `<gn-ui-form-field>` cell. When
  * `fieldFocusActive` becomes true it
  *   1. glows the host by toggling the `gn-ui-field-focus-glow` class (the
- *      animation itself lives in record-form.component.css), and
- *   2. places the text cursor in the field's main input (best effort).
+ *      animation itself lives in record-form.component.css),
+ *   2. scrolls the host into view, and
+ *   3. places the text cursor in the field's main input (best effort).
  * It is fire-and-forget: the owner of `fieldFocusActive` resets that trigger
- * (see RecordFormComponent).
+ * (see RecordFormComponent). Page-switching stays in the owner — a per-page
+ * directive cannot bring its own off-page field on screen — but once the field
+ * is on the current page (created right after the switch), the directive owns
+ * revealing it.
  */
 @Directive({
   selector: '[gnUiFieldFocus]',
@@ -57,7 +61,12 @@ export class FieldFocusDirective implements OnChanges {
       host.querySelector<HTMLElement>(
         'button:not([disabled]), [tabindex]:not([tabindex="-1"])'
       )
-    // Defer so the scroll has settled before moving the cursor.
-    setTimeout(() => target?.focus({ preventScroll: true }))
+
+    // Defer so the field is laid out (incl. after a page switch) before
+    // revealing it; scroll first, then place the cursor without re-scrolling.
+    setTimeout(() => {
+      host.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      target?.focus({ preventScroll: true })
+    })
   }
 }

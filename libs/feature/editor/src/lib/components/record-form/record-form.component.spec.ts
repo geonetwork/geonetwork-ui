@@ -65,13 +65,8 @@ describe('RecordFormComponent', () => {
   })
 
   describe('focusedField$ subscription', () => {
-    let mockHostScrollIntoView: jest.Mock
-
-    beforeEach(() => {
-      mockHostScrollIntoView = jest.fn()
-      component['el'].nativeElement.scrollIntoView = mockHostScrollIntoView
-    })
-
+    // Scrolling + highlighting now live in FieldFocusDirective; the component is
+    // only responsible for switching to the page that holds the focused field.
     describe('when the focused field is on a different page', () => {
       beforeEach(async () => {
         // 'licenses' is on page 2 in editorConfigFixture
@@ -81,13 +76,6 @@ describe('RecordFormComponent', () => {
 
       it('should navigate to the correct page', () => {
         expect(facade.setCurrentPage).toHaveBeenCalledWith(2)
-      })
-
-      it('should scroll the host element to the top of the form', () => {
-        expect(mockHostScrollIntoView).toHaveBeenCalledWith({
-          behavior: 'instant',
-          block: 'start',
-        })
       })
     })
 
@@ -101,10 +89,6 @@ describe('RecordFormComponent', () => {
       it('should not navigate to a page', () => {
         expect(facade.setCurrentPage).not.toHaveBeenCalled()
       })
-
-      it('should not scroll the host element', () => {
-        expect(mockHostScrollIntoView).not.toHaveBeenCalled()
-      })
     })
 
     describe('when the focused field is not found in the config', () => {
@@ -115,10 +99,6 @@ describe('RecordFormComponent', () => {
 
       it('should not navigate to a page', () => {
         expect(facade.setCurrentPage).not.toHaveBeenCalled()
-      })
-
-      it('should not scroll the host element', () => {
-        expect(mockHostScrollIntoView).not.toHaveBeenCalled()
       })
     })
   })
