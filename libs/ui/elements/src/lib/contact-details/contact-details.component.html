@@ -1,12 +1,12 @@
 <div
-  class="bg-white rounded border border-gray-200 shadow-md p-4 flex flex-col gap-3 w-full"
+  class="bg-gray-50 rounded border border-gray-200 shadow-md p-4 flex flex-col gap-3 w-full"
   data-test="contact-details"
 >
   @if (displayName) {
     <div class="flex items-center gap-3">
       @if (organization?.logoUrl?.href) {
         <div
-          class="flex items-center justify-center border border-gray-200 rounded-md bg-white w-14 h-14 shrink-0 overflow-hidden"
+          class="flex items-center justify-center rounded-md bg-white w-14 h-14 shrink-0 overflow-hidden"
         >
           <gn-ui-thumbnail
             class="relative h-full w-full"
@@ -24,10 +24,8 @@
   }
 
   <!-- Email + phone: always shown; icon dimmed when field is absent -->
-  <div
-    class="grid grid-cols-2 divide-x divide-gray-200 bg-gray-50 rounded-md overflow-hidden"
-  >
-    <div class="flex items-center gap-2 px-3 py-2">
+  <div class="grid grid-cols-2 gap-1 rounded-md overflow-hidden">
+    <div class="bg-gray-100 flex items-center gap-2 px-3 py-2">
       <ng-icon
         class="!w-5 !h-5 !text-[20px] shrink-0"
         [class.opacity-30]="!contact.email"
@@ -43,7 +41,7 @@
         >
       }
     </div>
-    <div class="flex items-center gap-2 px-3 py-2">
+    <div class="bg-gray-100 flex items-center gap-2 px-3 py-2">
       <ng-icon
         class="!w-5 !h-5 !text-[20px] shrink-0"
         [class.opacity-30]="!contact.phone"
@@ -59,9 +57,7 @@
   </div>
 
   <!-- Address: always shown; icon dimmed when absent -->
-  <div
-    class="border border-gray-200 rounded-md flex items-start gap-2 px-3 py-2"
-  >
+  <div class="bg-gray-100 rounded-md flex items-start gap-2 px-3 py-2">
     <ng-icon
       class="!w-5 !h-5 !text-[20px] shrink-0 mt-0.5"
       [class.opacity-30]="!addressLines.length"
@@ -79,9 +75,7 @@
 
   <!-- Website: only shown when org exists; icon dimmed when absent -->
   @if (organization) {
-    <div
-      class="border border-gray-200 rounded-md flex items-center gap-2 px-3 py-2"
-    >
+    <div class="bg-gray-100 rounded-md flex items-center gap-2 px-3 py-2">
       <ng-icon
         class="!w-5 !h-5 !text-[20px] shrink-0"
         [class.opacity-30]="!organization.website"
