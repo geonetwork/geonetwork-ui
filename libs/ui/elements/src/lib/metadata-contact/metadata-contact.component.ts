@@ -21,7 +21,7 @@ import {
   matCallOutline,
   matLocationOnOutline,
 } from '@ng-icons/material-icons/outline'
-
+import { getAddressLines } from '@geonetwork-ui/util/shared'
 import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({
@@ -59,10 +59,7 @@ export class MetadataContactComponent {
   }
 
   get address() {
-    const addressParts = this.contacts[0].address
-      .split(',')
-      .map((part) => part.trim())
-    return addressParts
+    return getAddressLines(this.contacts[0]?.address)
   }
 
   onOrganizationClick() {

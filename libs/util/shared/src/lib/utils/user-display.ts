@@ -12,6 +12,15 @@ export function getIndividualDisplayName(individual: Individual): string {
   return individual.organization?.name ?? individual.email ?? ''
 }
 
+export function getAddressLines(address: string | undefined): string[] {
+  return address
+    ? address
+        .split(',')
+        .map((part) => part.trim())
+        .filter(Boolean)
+    : []
+}
+
 export function toIndividual(user: UserModel): Individual {
   return {
     firstName: user.name,
