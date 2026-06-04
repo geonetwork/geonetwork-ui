@@ -12,7 +12,8 @@ it('gn-datahub', () => {
   cy.title().as('initialPageTitle')
 
   // should display the search bar and header buttons
-  cy.get('gn-ui-fuzzy-search', { timeout: 10000 }).should('be.visible')
+  cy.get('gn-ui-fuzzy-search', { timeout: 6000 }) // we use a higher timeout because the web component takes a while to boot in dev mode
+    .should('be.visible')
   cy.get('datahub-navigation-menu').find('button').should('have.length', 3)
 
   // should display news page
