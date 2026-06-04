@@ -1231,6 +1231,45 @@ export function writeLineage(record: DatasetRecord, rootEl: XmlElement) {
   )(rootEl)
 }
 
+export function writeLineageSources(
+  record: DatasetRecord,
+  rootEl: XmlElement
+) {
+  const sources = record.lineageSources
+  if (sources === undefined) return
+
+  if (sources.length === 0) {
+    const lineageEl = findNestedElement(
+      'gmd:dataQualityInfo',
+      'gmd:DQ_DataQuality',
+      'gmd:lineage',
+      'gmd:LI_Lineage'
+    )(rootEl)
+    if (lineageEl) removeChildrenByName('gmd:source')(lineageEl)
+    return
+  }
+
+  pipe(
+    findNestedChildOrCreate(
+      'gmd:dataQualityInfo',
+      'gmd:DQ_DataQuality',
+      'gmd:lineage',
+      'gmd:LI_Lineage'
+    ),
+    removeChildrenByName('gmd:source'),
+    appendChildren(
+      ...sources.map((source) =>
+        pipe(
+          createElement('gmd:source'),
+          writeAttribute('uuidref', source.uuid),
+          source.title ? writeAttribute('xlink:title', source.title) : noop,
+          source.href ? writeAttribute('xlink:href', source.href) : noop
+        )
+      )
+    )
+  )(rootEl)
+}
+
 export function getServiceEndpointProtocol(endpoint: ServiceEndpoint): string {
   switch (endpoint.accessServiceProtocol.toLowerCase()) {
     case 'wfs':

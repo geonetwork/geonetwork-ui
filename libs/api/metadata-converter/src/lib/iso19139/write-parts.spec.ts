@@ -15,6 +15,7 @@ import {
   writeKeywords,
   writeLanguages,
   writeLegalConstraints,
+  writeLineageSources,
   writeOnlineResources,
   writeOtherConstraints,
   writeResourceCreated,
@@ -1094,6 +1095,115 @@ describe('write parts', () => {
         </gmd:PT_Locale>
     </gmd:locale>
 </root>`)
+    })
+  })
+
+  describe('writeLineageSources', () => {
+    describe('sources is undefined', () => {
+      it('does nothing', () => {
+        writeLineageSources(
+          { ...datasetRecord, lineageSources: undefined },
+          rootEl
+        )
+        expect(rootAsString()).toEqual('<root/>')
+      })
+    })
+
+    describe('sources is empty array', () => {
+      it('removes existing source elements when LI_Lineage exists', () => {
+        const sample = parseXmlString(`
+<root>
+    <gmd:dataQualityInfo>
+        <gmd:DQ_DataQuality>
+            <gmd:lineage>
+                <gmd:LI_Lineage>
+                    <gmd:source uuidref="old-uuid"/>
+                </gmd:LI_Lineage>
+            </gmd:lineage>
+        </gmd:DQ_DataQuality>
+    </gmd:dataQualityInfo>
+</root>`)
+        rootEl = getRootElement(sample)
+        writeLineageSources({ ...datasetRecord, lineageSources: [] }, rootEl)
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:dataQualityInfo>
+        <gmd:DQ_DataQuality>
+            <gmd:lineage>
+                <gmd:LI_Lineage/>
+            </gmd:lineage>
+        </gmd:DQ_DataQuality>
+    </gmd:dataQualityInfo>
+</root>`)
+      })
+    })
+
+    describe('sources with uuidref only', () => {
+      it('writes source elements with only uuidref', () => {
+        writeLineageSources(
+          {
+            ...datasetRecord,
+            lineageSources: [{ uuid: 'abc-123' }, { uuid: 'def-456' }],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:dataQualityInfo>
+        <gmd:DQ_DataQuality>
+            <gmd:lineage>
+                <gmd:LI_Lineage>
+                    <gmd:source uuidref="abc-123"/>
+                    <gmd:source uuidref="def-456"/>
+                </gmd:LI_Lineage>
+            </gmd:lineage>
+        </gmd:DQ_DataQuality>
+    </gmd:dataQualityInfo>
+</root>`)
+      })
+    })
+
+    describe('replaces existing sources', () => {
+      it('wipes old source elements and writes only new ones', () => {
+        const sample = parseXmlString(`
+<root>
+    <gmd:dataQualityInfo>
+        <gmd:DQ_DataQuality>
+            <gmd:lineage>
+                <gmd:LI_Lineage>
+                    <gmd:source uuidref="old-uuid-1" xlink:title="Old Title 1" xlink:href="https://example.com/old-source-1"/>
+                    <gmd:source uuidref="old-uuid-2" xlink:title="Old Title 2" xlink:href="https://example.com/old-source-2"/>
+                </gmd:LI_Lineage>
+            </gmd:lineage>
+        </gmd:DQ_DataQuality>
+    </gmd:dataQualityInfo>
+</root>`)
+        rootEl = getRootElement(sample)
+        writeLineageSources(
+          {
+            ...datasetRecord,
+            lineageSources: [
+              { uuid: 'new-uuid' },
+              {
+                uuid: 'new-uuid-2',
+                title: 'New Title 2',
+                href: 'https://example.com/new-source-2',
+              },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:dataQualityInfo>
+        <gmd:DQ_DataQuality>
+            <gmd:lineage>
+                <gmd:LI_Lineage>
+                    <gmd:source uuidref="new-uuid"/>
+                    <gmd:source uuidref="new-uuid-2" xlink:title="New Title 2" xlink:href="https://example.com/new-source-2"/>
+                </gmd:LI_Lineage>
+            </gmd:lineage>
+        </gmd:DQ_DataQuality>
+    </gmd:dataQualityInfo>
+</root>`)
+      })
     })
   })
 })
