@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { Individual } from '@geonetwork-ui/common/domain/model/record'
+import {
+  getAddressLines,
+  getIndividualDisplayName,
+} from '@geonetwork-ui/util/shared'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matMailOutline, matOpenInNew } from '@ng-icons/material-icons/baseline'
 import {
@@ -31,18 +35,11 @@ export class ContactDetailsComponent {
     return this.contact?.organization
   }
 
-  get fullName(): string {
-    return [this.contact?.firstName, this.contact?.lastName]
-      .filter(Boolean)
-      .join(' ')
+  get displayName(): string {
+    return getIndividualDisplayName(this.contact)
   }
 
   get addressLines(): string[] {
-    return this.contact?.address
-      ? this.contact.address
-          .split(',')
-          .map((part) => part.trim())
-          .filter(Boolean)
-      : []
+    return getAddressLines(this.contact?.address)
   }
 }

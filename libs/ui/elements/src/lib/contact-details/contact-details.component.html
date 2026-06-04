@@ -2,9 +2,9 @@
   class="bg-white rounded border border-gray-200 shadow-md p-4 flex flex-col gap-3 w-full"
   data-test="contact-details"
 >
-  @if (organization) {
+  @if (displayName) {
     <div class="flex items-center gap-3">
-      @if (organization.logoUrl?.href) {
+      @if (organization?.logoUrl?.href) {
         <div
           class="flex items-center justify-center border border-gray-200 rounded-md bg-white w-14 h-14 shrink-0 overflow-hidden"
         >
@@ -17,16 +17,10 @@
       }
       <span
         class="font-title text-xl leading-tight"
-        data-test="contact-details-org-name"
-        >{{ organization.name }}</span
+        data-test="contact-details-name"
+        >{{ displayName }}</span
       >
     </div>
-  } @else if (fullName) {
-    <span
-      class="font-title text-xl leading-tight"
-      data-test="contact-details-full-name-header"
-      >{{ fullName }}</span
-    >
   }
 
   @if (contact.position) {
