@@ -5,24 +5,19 @@ import {
   inject,
   OnDestroy,
   OnInit,
+  viewChildren,
 } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
 import { EditorFieldValue } from '../../models'
-import { FieldFocusDirective, FormFieldComponent } from './form-field'
+import { FormFieldComponent } from './form-field'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
   EditorFieldWithValue,
   EditorSectionWithValues,
 } from '../../+state/editor.models'
-import {
-  BehaviorSubject,
-  filter,
-  firstValueFrom,
-  map,
-  Subscription,
-  switchMap,
-} from 'rxjs'
+import { firstValueFrom, map, Subscription, withLatestFrom } from 'rxjs'
 import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
+import { switchMap } from 'rxjs/operators'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -30,42 +25,45 @@ import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    FormFieldComponent,
-    FieldFocusDirective,
-    TranslateDirective,
-  ],
+  imports: [CommonModule, FormFieldComponent, TranslateDirective],
 })
 export class RecordFormComponent implements OnInit, OnDestroy {
   facade = inject(EditorFacade)
   subscription = new Subscription()
 
-  focusedFieldModel$ = new BehaviorSubject<CatalogRecordKeys | null>(null)
-
   recordUniqueIdentifier$ = this.facade.record$.pipe(
     map((record) => record.uniqueIdentifier)
   )
 
+  focusFieldWithPagePage$ = this.facade.focusedField$.pipe(
+    switchMap(
+      async (field) => [field, await this.getPageIndexForField(field)] as const
+    )
+  )
+
+  formFields = viewChildren(FormFieldComponent)
+
+  focusField(model: CatalogRecordKeys) {
+    const fields = this.formFields()
+    const field = fields.find((f) => f.model === model)
+    field?.fieldFocus.focusField()
+  }
+
   ngOnInit() {
     this.subscription.add(
-      this.facade.focusedField$
+      this.focusFieldWithPagePage$
         .pipe(
-          filter((field) => !!field),
-          switchMap(async (field) => ({
-            field: field as CatalogRecordKeys,
-            pageIndex: await this.getPageIndexForField(
-              field as CatalogRecordKeys
-            ),
-          }))
+          withLatestFrom(
+            this.facade.currentPage$,
+            ([field, fieldPage], currentPage) =>
+              [field, fieldPage, currentPage] as const
+          )
         )
-        .subscribe(async ({ field, pageIndex }) => {
-          this.focusedFieldModel$.next(field)
-          const currentPage = await firstValueFrom(this.facade.currentPage$)
-          if (pageIndex !== null && pageIndex !== currentPage) {
-            this.facade.setCurrentPage(pageIndex)
+        .subscribe(([field, fieldPage, currentPage]) => {
+          if (fieldPage !== null && fieldPage !== currentPage) {
+            this.facade.setCurrentPage(fieldPage)
           }
-          setTimeout(() => this.focusedFieldModel$.next(null))
+          setTimeout(() => this.focusField(field))
         })
     )
   }
