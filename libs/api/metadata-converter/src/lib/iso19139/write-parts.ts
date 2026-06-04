@@ -1231,10 +1231,7 @@ export function writeLineage(record: DatasetRecord, rootEl: XmlElement) {
   )(rootEl)
 }
 
-export function writeLineageSources(
-  record: DatasetRecord,
-  rootEl: XmlElement
-) {
+export function writeLineageSources(record: DatasetRecord, rootEl: XmlElement) {
   const sources = record.lineageSources
   if (sources === undefined) return
 

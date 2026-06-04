@@ -564,3 +564,32 @@ export function writeOtherLanguages(record: DatasetRecord, rootEl: XmlElement) {
     )
   )(rootEl)
 }
+
+export function writeLineageSources(record: DatasetRecord, rootEl: XmlElement) {
+  const sources = record.lineageSources
+  if (sources === undefined) return
+
+  if (sources.length === 0) {
+    const lineageEl = findNestedElement(
+      'mdb:resourceLineage',
+      'mrl:LI_Lineage'
+    )(rootEl)
+    if (lineageEl) removeChildrenByName('mrl:source')(lineageEl)
+    return
+  }
+
+  pipe(
+    findNestedChildOrCreate('mdb:resourceLineage', 'mrl:LI_Lineage'),
+    removeChildrenByName('mrl:source'),
+    appendChildren(
+      ...sources.map((source) =>
+        pipe(
+          createElement('mrl:source'),
+          writeAttribute('uuidref', source.uuid),
+          source.title ? writeAttribute('xlink:title', source.title) : noop,
+          source.href ? writeAttribute('xlink:href', source.href) : noop
+        )
+      )
+    )
+  )(rootEl)
+}

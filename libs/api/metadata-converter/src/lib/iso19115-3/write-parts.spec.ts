@@ -3,6 +3,7 @@ import {
   writeContacts,
   writeContactsForResource,
   writeDefaultLanguage,
+  writeLineageSources,
   writeOnlineResources,
   writeOtherLanguages,
   writeRecordCreated,
@@ -702,6 +703,95 @@ describe('write parts', () => {
         </lan:PT_Locale>
     </mdb:otherLocale>
 </root>`)
+    })
+  })
+
+  describe('writeLineageSources', () => {
+    describe('sources is undefined', () => {
+      it('does nothing', () => {
+        writeLineageSources(
+          { ...datasetRecord, lineageSources: undefined },
+          rootEl
+        )
+        expect(rootAsString()).toEqual('<root/>')
+      })
+    })
+
+    describe('sources is empty array', () => {
+      it('removes existing source elements when LI_Lineage exists', () => {
+        const sample = parseXmlString(`
+<root>
+    <mdb:resourceLineage>
+        <mrl:LI_Lineage>
+            <mrl:source uuidref="old-uuid"/>
+        </mrl:LI_Lineage>
+    </mdb:resourceLineage>
+</root>`)
+        rootEl = getRootElement(sample)
+        writeLineageSources({ ...datasetRecord, lineageSources: [] }, rootEl)
+        expect(rootAsString()).toEqual(`<root>
+    <mdb:resourceLineage>
+        <mrl:LI_Lineage/>
+    </mdb:resourceLineage>
+</root>`)
+      })
+    })
+
+    describe('sources with uuidref only', () => {
+      it('writes source elements with only uuidref', () => {
+        writeLineageSources(
+          {
+            ...datasetRecord,
+            lineageSources: [{ uuid: 'abc-123' }, { uuid: 'def-456' }],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <mdb:resourceLineage>
+        <mrl:LI_Lineage>
+            <mrl:source uuidref="abc-123"/>
+            <mrl:source uuidref="def-456"/>
+        </mrl:LI_Lineage>
+    </mdb:resourceLineage>
+</root>`)
+      })
+    })
+
+    describe('replaces existing sources', () => {
+      it('wipes old source elements and writes only new ones', () => {
+        const sample = parseXmlString(`
+<root>
+    <mdb:resourceLineage>
+        <mrl:LI_Lineage>
+            <mrl:source uuidref="old-uuid-1" xlink:title="Old Title 1" xlink:href="https://example.com/old-source-1"/>
+            <mrl:source uuidref="old-uuid-2" xlink:title="Old Title 2" xlink:href="https://example.com/old-source-2"/>
+        </mrl:LI_Lineage>
+    </mdb:resourceLineage>
+</root>`)
+        rootEl = getRootElement(sample)
+        writeLineageSources(
+          {
+            ...datasetRecord,
+            lineageSources: [
+              { uuid: 'new-uuid' },
+              {
+                uuid: 'old-uuid-2',
+                title: 'Old Title 2',
+                href: 'https://example.com/old-source-2',
+              },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <mdb:resourceLineage>
+        <mrl:LI_Lineage>
+            <mrl:source uuidref="new-uuid"/>
+            <mrl:source uuidref="old-uuid-2" xlink:title="Old Title 2" xlink:href="https://example.com/old-source-2"/>
+        </mrl:LI_Lineage>
+    </mdb:resourceLineage>
+</root>`)
+      })
     })
   })
 })

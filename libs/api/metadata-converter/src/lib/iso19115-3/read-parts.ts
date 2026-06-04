@@ -31,6 +31,7 @@ import {
 import {
   Individual,
   LanguageCode,
+  LineageSource,
   OnlineResource,
   Organization,
   OrganizationTranslations,
@@ -289,6 +290,27 @@ export function readLineage(
     extractLocalizedCharacterString('lineage', translations),
     map(([lineage]) => lineage)
   )(rootEl)
+}
+
+export function readLineageSources(
+  rootEl: XmlElement
+): LineageSource[] | undefined {
+  const sources = pipe(
+    findNestedElements('mdb:resourceLineage', 'mrl:LI_Lineage', 'mrl:source'),
+    mapArray((el) => {
+      const uuid = readAttribute('uuidref')(el)
+      if (!uuid) return null
+      const title = readAttribute('xlink:title')(el)
+      const href = readAttribute('xlink:href')(el)
+      return {
+        uuid,
+        ...(title ? { title } : {}),
+        ...(href ? { href } : {}),
+      } as LineageSource
+    }),
+    filterArray((s): s is LineageSource => s !== null)
+  )(rootEl)
+  return sources.length > 0 ? sources : undefined
 }
 
 function extractDateInfo(
