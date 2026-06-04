@@ -151,6 +151,14 @@ background_color = "#fdfbff"
 # enabled = true
 # If u want to use metadata quality widget this configuration is required
 
+### EDITING SETTINGS
+
+# This section contains settings for metadata editing behavior in the Metadata Editor application.
+[editing]
+# Optional; defines the default language assigned to newly created records (e.g. 'en', 'fr', 'de').
+# If not set, defaults to the current UI language.
+# new_record_default_language = "fr"
+
 ### MAP SETTINGS
 
 # The map section allows to customize how maps are configured.

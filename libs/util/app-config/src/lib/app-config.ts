@@ -1,6 +1,7 @@
 import * as TOML from '@ltd/j-toml'
 import {
   checkMetadataLanguage,
+  checkNewRecordDefaultLanguage,
   parseConfigSection,
   parseMultiConfigSection,
   parseTranslationsConfigSection,
@@ -8,6 +9,7 @@ import {
 import {
   CustomTranslations,
   CustomTranslationsAllLanguages,
+  EditorConfig,
   GlobalConfig,
   LayerConfig,
   MapConfig,
@@ -49,6 +51,12 @@ let searchConfig: SearchConfig = null
 
 export function getOptionalSearchConfig(): SearchConfig | null {
   return searchConfig
+}
+
+let editorConfig: EditorConfig = null
+
+export function getOptionalEditorConfig(): EditorConfig | null {
+  return editorConfig
 }
 
 let metadataQualityConfig: MetadataQualityConfig = null
@@ -285,6 +293,33 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
               SORTABLE: parsedMetadataQualitySection.sortable,
             } as MetadataQualityConfig)
 
+      let parsedEditingSection = parseConfigSection(
+        parsed,
+        'editing',
+        [],
+        ['new_record_default_language'],
+        warnings,
+        errors
+      )
+      if (
+        parsedEditingSection !== null &&
+        parsedEditingSection.new_record_default_language !== undefined
+      ) {
+        parsedEditingSection = checkNewRecordDefaultLanguage(
+          parsedEditingSection,
+          warnings
+        )
+      }
+      editorConfig =
+        parsedEditingSection === null
+          ? null
+          : ({
+              NEW_RECORD_DEFAULT_LANGUAGE:
+                parsedEditingSection.new_record_default_language as
+                  | string
+                  | undefined,
+            } as EditorConfig)
+
       customTranslations = parseTranslationsConfigSection(
         parsed,
         'translations'
@@ -309,6 +344,7 @@ export function isConfigLoaded() {
 export function _reset() {
   globalConfig = null
   themeConfig = null
+  editorConfig = null
   customTranslations = null
 }
 

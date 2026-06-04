@@ -3,6 +3,7 @@ import {
   _reset,
   getCustomTranslations,
   getGlobalConfig,
+  getOptionalEditorConfig,
   getOptionalMapConfig,
   getOptionalSearchConfig,
   getThemeConfig,
@@ -244,6 +245,73 @@ describe('app config utils', () => {
     describe('getOptionalSearchConfig', () => {
       it('returns null', () => {
         expect(getOptionalSearchConfig()).toEqual(null)
+      })
+    })
+  })
+
+  describe('when the configuration file contains new_record_default_language', () => {
+    describe('when set to a valid 2-letter code', () => {
+      beforeEach(async () => {
+        fetchMock.get(
+          'end:default.toml',
+          () =>
+            minimalAppConfigFixture() +
+            `
+[editing]
+new_record_default_language = "fr"
+`
+        )
+        await loadAppConfig()
+      })
+
+      it('stores the language code in editorConfig', () => {
+        expect(getOptionalEditorConfig().NEW_RECORD_DEFAULT_LANGUAGE).toBe('fr')
+      })
+    })
+
+    describe('when set to a 3-letter code', () => {
+      beforeEach(async () => {
+        fetchMock.get(
+          'end:default.toml',
+          () =>
+            minimalAppConfigFixture() +
+            `
+[editing]
+new_record_default_language = "fre"
+`
+        )
+        await loadAppConfig()
+      })
+
+      it('normalizes to the 2-letter equivalent', () => {
+        expect(getOptionalEditorConfig().NEW_RECORD_DEFAULT_LANGUAGE).toBe('fr')
+      })
+    })
+
+    describe('when set to an unrecognized code', () => {
+      beforeEach(async () => {
+        fetchMock.get(
+          'end:default.toml',
+          () =>
+            minimalAppConfigFixture() +
+            `
+[editing]
+new_record_default_language = "xyz"
+`
+        )
+        await loadAppConfig()
+      })
+
+      it('logs a warning', () => {
+        expect(console.warn).toHaveBeenCalledWith(
+          expect.stringMatching(/new_record_default_language.*xyz/)
+        )
+      })
+
+      it('stores undefined in editorConfig', () => {
+        expect(
+          getOptionalEditorConfig().NEW_RECORD_DEFAULT_LANGUAGE
+        ).toBeUndefined()
       })
     })
   })
