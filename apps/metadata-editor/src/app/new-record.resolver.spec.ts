@@ -9,7 +9,7 @@ import { NewRecordResolver } from './new-record.resolver'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
 import {
   barbieIncOrganizationFixture,
   barbieUserFixture,
@@ -43,7 +43,7 @@ class OrganizationsServiceInterfaceMock {
 
 describe('NewRecordResolver', () => {
   let resolver: NewRecordResolver
-  let resolvedData: [CatalogRecord, string, boolean]
+  let resolvedData: [CatalogRecord, string | null, boolean]
 
   beforeEach(() => {
     ;(getOptionalEditorConfig as jest.Mock).mockReturnValue(null)
@@ -126,6 +126,18 @@ describe('NewRecordResolver', () => {
 
     it('uses the configured language', () => {
       expect(resolvedData[0].defaultLanguage).toBe('fr')
+    })
+  })
+
+  describe('new record standard from config', () => {
+    it('creates an ISO19115-3 record source when configured', async () => {
+      ;(getOptionalEditorConfig as jest.Mock).mockReturnValue({
+        NEW_RECORD_STANDARD: 'iso19115-3',
+      } as EditorConfig)
+
+      resolvedData = await firstValueFrom(resolver.resolve())
+
+      expect(resolvedData[1]).toContain('<mdb:MD_Metadata')
     })
   })
 })

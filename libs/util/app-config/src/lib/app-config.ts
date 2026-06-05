@@ -2,6 +2,7 @@ import * as TOML from '@ltd/j-toml'
 import {
   checkMetadataLanguage,
   checkNewRecordDefaultLanguage,
+  checkNewRecordStandard,
   parseConfigSection,
   parseMultiConfigSection,
   parseTranslationsConfigSection,
@@ -297,7 +298,7 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
         parsed,
         'editing',
         [],
-        ['new_record_default_language'],
+        ['new_record_default_language', 'new_record_standard'],
         warnings,
         errors
       )
@@ -310,6 +311,15 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
           warnings
         )
       }
+      if (
+        parsedEditingSection !== null &&
+        parsedEditingSection.new_record_standard !== undefined
+      ) {
+        parsedEditingSection = checkNewRecordStandard(
+          parsedEditingSection,
+          warnings
+        )
+      }
       editorConfig =
         parsedEditingSection === null
           ? null
@@ -318,6 +328,9 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
                 parsedEditingSection.new_record_default_language as
                   | string
                   | undefined,
+              NEW_RECORD_STANDARD: parsedEditingSection.new_record_standard as
+                | EditorConfig['NEW_RECORD_STANDARD']
+                | undefined,
             } as EditorConfig)
 
       customTranslations = parseTranslationsConfigSection(

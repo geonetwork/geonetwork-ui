@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core'
-import { forkJoin, Observable, of, switchMap } from 'rxjs'
+import { Observable, switchMap } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { EditorConfig } from '../models/'
@@ -15,7 +15,7 @@ export class EditorService {
   // returns the record as it was when saved, alongside its source
   saveRecord(
     record: CatalogRecord,
-    recordSource: string,
+    recordSource: string | null,
     fieldsConfig: EditorConfig
   ): Observable<[CatalogRecord, string]> {
     const savedRecord = { ...record }
@@ -42,7 +42,7 @@ export class EditorService {
     }
 
     return this.recordsRepository
-      .saveRecord(savedRecord, recordSource, publishToAll)
+      .saveRecord(savedRecord, recordSource ?? undefined, publishToAll)
       .pipe(
         switchMap((uniqueIdentifier) =>
           this.recordsRepository.openRecordForEdition(uniqueIdentifier)
@@ -59,11 +59,11 @@ export class EditorService {
   // note: onSave processes are not run for drafts
   saveRecordAsDraft(
     record: CatalogRecord,
-    recordSource: string
+    recordSource: string | null
   ): Observable<void> {
     record.recordUpdated = new Date()
     return this.recordsRepository
-      .saveRecordAsDraft(record, recordSource)
+      .saveRecordAsDraft(record, recordSource ?? undefined)
       .pipe(map(() => undefined))
   }
 

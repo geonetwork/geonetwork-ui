@@ -159,6 +159,10 @@ background_color = "#fdfbff"
 # If not set, defaults to the current UI language.
 # new_record_default_language = "fr"
 
+# Optional; defines the metadata standard used when creating new records.
+# Accepted values: "iso19139" (default) or "iso19115-3".
+# new_record_standard = "iso19115-3"
+
 ### MAP SETTINGS
 
 # The map section allows to customize how maps are configured.

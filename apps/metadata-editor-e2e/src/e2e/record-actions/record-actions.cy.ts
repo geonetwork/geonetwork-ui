@@ -413,4 +413,32 @@ describe('record-actions', () => {
       cy.deleteRecord(uuid)
     )
   })
+
+  it('new record metadata standard should follow configuration', () => {
+    // with no editor config (defaults to iso19139; body contains gmd root element)
+    cy.get('[data-cy="create-record"]').click()
+    cy.editor_readFormUniqueIdentifier().as('defaultStandardRecordUuid')
+    cy.intercept({ method: 'PUT', pathname: '**/records' }).as('publishDefault')
+    cy.get('md-editor-publish-button').click()
+    cy.wait('@publishDefault')
+      .its('request.body')
+      .should('include', '<gmd:MD_Metadata')
+    cy.get<string>('@defaultStandardRecordUuid').then((uuid) =>
+      cy.deleteRecord(uuid)
+    )
+
+    // with new_record_standard = "iso19115-3"
+    cy.intercept('GET', '/assets/configuration/default.toml', {
+      fixture: 'config-with-iso19115-3-standard.toml',
+    })
+    cy.visit('/catalog/search')
+    cy.get('[data-cy="create-record"]').click()
+    cy.editor_readFormUniqueIdentifier().as('iso191153RecordUuid')
+    cy.intercept({ method: 'PUT', pathname: '**/records' }).as('publishIso3')
+    cy.get('md-editor-publish-button').click()
+    cy.wait('@publishIso3')
+      .its('request.body')
+      .should('include', '<mdb:MD_Metadata')
+    cy.get<string>('@iso191153RecordUuid').then((uuid) => cy.deleteRecord(uuid))
+  })
 })

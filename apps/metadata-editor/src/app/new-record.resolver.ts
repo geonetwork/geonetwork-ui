@@ -4,13 +4,14 @@ import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { Observable, of } from 'rxjs'
+import { from, Observable, of } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { TranslateService } from '@ngx-translate/core'
 import { NOT_KNOWN_CONSTRAINT } from '@geonetwork-ui/feature/editor'
 import { getOptionalEditorConfig } from '@geonetwork-ui/util/app-config'
+import { Iso191153Converter } from '@geonetwork-ui/api/metadata-converter'
 
 @Injectable({
   providedIn: 'root',
@@ -19,10 +20,12 @@ export class NewRecordResolver {
   private platformService = inject(PlatformServiceInterface)
   private organizationsServiceInterface = inject(OrganizationsServiceInterface)
   private translateService = inject(TranslateService)
+  private readonly iso191153Converter = new Iso191153Converter()
 
-  resolve(): Observable<[CatalogRecord, string, boolean]> {
+  resolve(): Observable<[CatalogRecord, string | null, boolean]> {
+    const editorConfig = getOptionalEditorConfig()
     const defaultLang =
-      getOptionalEditorConfig()?.NEW_RECORD_DEFAULT_LANGUAGE ??
+      editorConfig?.NEW_RECORD_DEFAULT_LANGUAGE ??
       this.translateService.currentLang
     return this.getCurrentUserAsPointOfContact().pipe(
       map((userContact) => {
@@ -53,7 +56,22 @@ export class NewRecordResolver {
           spatialExtents: [],
           temporalExtents: [],
         }
-        return [catalogRecord, null, false]
+        return catalogRecord
+      }),
+      switchMap((catalogRecord) => {
+        if (editorConfig?.NEW_RECORD_STANDARD === 'iso19115-3') {
+          return from(this.iso191153Converter.writeRecord(catalogRecord)).pipe(
+            map(
+              (recordSource) =>
+                [catalogRecord, recordSource, false] as [
+                  CatalogRecord,
+                  string,
+                  false,
+                ]
+            )
+          )
+        }
+        return of([catalogRecord, null, false] as [CatalogRecord, null, false])
       })
     )
   }
