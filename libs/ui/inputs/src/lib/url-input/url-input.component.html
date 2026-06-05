@@ -6,7 +6,7 @@
     type="url"
     [value]="inputValue"
     (input)="handleInput($event)"
-    (keydown.enter)="handleUpload(input)"
+    (keydown.enter)="handleUpload(input, $event)"
     [placeholder]="placeholder"
     [attr.aria-label]="placeholder"
     [disabled]="disabled"
@@ -25,7 +25,7 @@
       extraClass="absolute inset-y-[var(--side-padding)] right-[var(--side-padding)]"
       type="primary"
       [disabled]="disabled || input.value === '' || !isValidUrl(input.value)"
-      (buttonClick)="handleUpload(input)"
+      (buttonClick)="handleUpload(input, $event)"
     >
       <ng-content>
         <ng-icon name="iconoirArrowUp"></ng-icon>
