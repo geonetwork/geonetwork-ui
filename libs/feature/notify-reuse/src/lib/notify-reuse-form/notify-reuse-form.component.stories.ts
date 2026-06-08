@@ -10,6 +10,7 @@ const RECORD: ReuseRecord = {
     'Orthophotoplan 2021 sur le territoire de la commune de Saint-Etienne-Roilaye.',
   reuseType: 'map',
   lineage: '',
+  sourceRecords: [],
   onlineResources: [
     {
       type: 'link',

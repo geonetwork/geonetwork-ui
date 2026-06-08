@@ -96,6 +96,7 @@ export const GEO2FRANCE_REUSE_ROILAYE_RECORD: ReuseRecord = {
   ],
   translations: {},
   lineage: null,
+  sourceRecords: [],
   temporalExtents: [{ start: null, end: null }],
   reuseType: 'map',
 }

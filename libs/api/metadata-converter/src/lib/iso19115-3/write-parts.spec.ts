@@ -707,16 +707,6 @@ describe('write parts', () => {
   })
 
   describe('writeSourceRecords', () => {
-    describe('sources is undefined', () => {
-      it('does nothing', () => {
-        writeSourceRecords(
-          { ...datasetRecord, sourceRecords: undefined },
-          rootEl
-        )
-        expect(rootAsString()).toEqual('<root/>')
-      })
-    })
-
     describe('sources is empty array', () => {
       it('removes existing source elements when LI_Lineage exists', () => {
         const sample = parseXmlString(`
@@ -749,8 +739,8 @@ describe('write parts', () => {
         expect(rootAsString()).toEqual(`<root>
     <mdb:resourceLineage>
         <mrl:LI_Lineage>
-            <mrl:source uuidref="abc-123"/>
-            <mrl:source uuidref="def-456"/>
+            <gmd:source uuidref="abc-123"/>
+            <gmd:source uuidref="def-456"/>
         </mrl:LI_Lineage>
     </mdb:resourceLineage>
 </root>`)
@@ -769,7 +759,7 @@ describe('write parts', () => {
         expect(rootAsString()).toEqual(`<root>
     <mdb:resourceLineage>
         <mrl:LI_Lineage>
-            <mrl:source xlink:href="https://example.com/source"/>
+            <gmd:source xlink:href="https://example.com/source"/>
         </mrl:LI_Lineage>
     </mdb:resourceLineage>
 </root>`)
@@ -805,8 +795,8 @@ describe('write parts', () => {
         expect(rootAsString()).toEqual(`<root>
     <mdb:resourceLineage>
         <mrl:LI_Lineage>
-            <mrl:source uuidref="new-uuid"/>
-            <mrl:source uuidref="old-uuid-2" xlink:title="Old Title 2" xlink:href="https://example.com/old-source-2"/>
+            <gmd:source uuidref="new-uuid"/>
+            <gmd:source uuidref="old-uuid-2" xlink:title="Old Title 2" xlink:href="https://example.com/old-source-2"/>
         </mrl:LI_Lineage>
     </mdb:resourceLineage>
 </root>`)

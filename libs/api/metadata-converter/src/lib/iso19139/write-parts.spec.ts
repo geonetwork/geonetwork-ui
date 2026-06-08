@@ -1099,16 +1099,6 @@ describe('write parts', () => {
   })
 
   describe('writeSourceRecords', () => {
-    describe('sources is undefined', () => {
-      it('does nothing', () => {
-        writeSourceRecords(
-          { ...datasetRecord, sourceRecords: undefined },
-          rootEl
-        )
-        expect(rootAsString()).toEqual('<root/>')
-      })
-    })
-
     describe('sources is empty array', () => {
       it('removes existing source elements when LI_Lineage exists', () => {
         const sample = parseXmlString(`

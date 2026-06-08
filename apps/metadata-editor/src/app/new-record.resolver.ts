@@ -49,6 +49,7 @@ export class NewRecordResolver {
           kind: 'dataset',
           status: 'ongoing',
           lineage: '',
+          sourceRecords: [],
           onlineResources: [],
           spatialExtents: [],
           temporalExtents: [],

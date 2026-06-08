@@ -546,6 +546,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   ],
   lineage:
     'Digitalisiert nach den administrativen Einheiten der Schweiz, die im Anhang des Übereinkommens erscheinen.',
+  sourceRecords: [],
   licenses: [
     {
       text: "Licence passée entre l'Office fédéral de l'environnement (OFEV), et le canton de Fribourg, représenté par la Coordination SIT (SITel)",
