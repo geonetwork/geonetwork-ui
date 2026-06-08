@@ -34,7 +34,7 @@ import {
 } from '../function-utils'
 import {
   appendKeywords,
-  appendLineageSources,
+  appendSourceRecords,
   appendOnlineResource,
   appendServiceOnlineResources,
   createDistributionInfo,
@@ -566,8 +566,8 @@ export function writeOtherLanguages(record: DatasetRecord, rootEl: XmlElement) {
   )(rootEl)
 }
 
-export function writeLineageSources(record: DatasetRecord, rootEl: XmlElement) {
-  const sources = record.lineageSources
+export function writeSourceRecords(record: DatasetRecord, rootEl: XmlElement) {
+  const sources = record.sourceRecords
   if (sources === undefined) return
 
   if (sources.length === 0) {
@@ -581,6 +581,6 @@ export function writeLineageSources(record: DatasetRecord, rootEl: XmlElement) {
 
   pipe(
     findNestedChildOrCreate('mdb:resourceLineage', 'mrl:LI_Lineage'),
-    appendLineageSources('mrl:source', sources)
+    appendSourceRecords('mrl:source', sources)
   )(rootEl)
 }

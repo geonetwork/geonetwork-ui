@@ -8,7 +8,7 @@ import {
   Keyword,
   KeywordTranslations,
   LanguageCode,
-  LineageSource,
+  SourceRecord,
   ModelTranslations,
   OnlineLinkResource,
   OnlineResource,
@@ -895,32 +895,32 @@ export function readLineage(
   )(rootEl)
 }
 
-export function extractLineageSources(
+export function extractSourceRecords(
   liLineageEl: XmlElement
-): LineageSource[] | undefined {
+): SourceRecord[] | undefined {
   if (!liLineageEl) return undefined
   const sources = pipe(
     findChildrenElement('gmd:source', false),
     mapArray((el) => {
       const uuid = readAttribute('uuidref')(el)
-      if (!uuid) return null
       const title = readAttribute('xlink:title')(el)
       const href = readAttribute('xlink:href')(el)
+      if (!uuid && !title && !href) return null
       return {
-        uuid,
+        ...(uuid ? { uuid } : {}),
         ...(title ? { title } : {}),
         ...(href ? { href } : {}),
-      } as LineageSource
+      } as SourceRecord
     }),
-    filterArray((s): s is LineageSource => s !== null)
+    filterArray((s): s is SourceRecord => s !== null)
   )(liLineageEl)
   return sources.length > 0 ? sources : undefined
 }
 
-export function readLineageSources(
+export function readSourceRecords(
   rootEl: XmlElement
-): LineageSource[] | undefined {
-  return extractLineageSources(
+): SourceRecord[] | undefined {
+  return extractSourceRecords(
     pipe(
       findNestedElement(
         'gmd:dataQualityInfo',

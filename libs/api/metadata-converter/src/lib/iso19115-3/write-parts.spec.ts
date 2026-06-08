@@ -3,7 +3,7 @@ import {
   writeContacts,
   writeContactsForResource,
   writeDefaultLanguage,
-  writeLineageSources,
+  writeSourceRecords,
   writeOnlineResources,
   writeOtherLanguages,
   writeRecordCreated,
@@ -706,11 +706,11 @@ describe('write parts', () => {
     })
   })
 
-  describe('writeLineageSources', () => {
+  describe('writeSourceRecords', () => {
     describe('sources is undefined', () => {
       it('does nothing', () => {
-        writeLineageSources(
-          { ...datasetRecord, lineageSources: undefined },
+        writeSourceRecords(
+          { ...datasetRecord, sourceRecords: undefined },
           rootEl
         )
         expect(rootAsString()).toEqual('<root/>')
@@ -728,7 +728,7 @@ describe('write parts', () => {
     </mdb:resourceLineage>
 </root>`)
         rootEl = getRootElement(sample)
-        writeLineageSources({ ...datasetRecord, lineageSources: [] }, rootEl)
+        writeSourceRecords({ ...datasetRecord, sourceRecords: [] }, rootEl)
         expect(rootAsString()).toEqual(`<root>
     <mdb:resourceLineage>
         <mrl:LI_Lineage/>
@@ -739,10 +739,10 @@ describe('write parts', () => {
 
     describe('sources with uuidref only', () => {
       it('writes source elements with only uuidref', () => {
-        writeLineageSources(
+        writeSourceRecords(
           {
             ...datasetRecord,
-            lineageSources: [{ uuid: 'abc-123' }, { uuid: 'def-456' }],
+            sourceRecords: [{ uuid: 'abc-123' }, { uuid: 'def-456' }],
           },
           rootEl
         )
@@ -751,6 +751,25 @@ describe('write parts', () => {
         <mrl:LI_Lineage>
             <mrl:source uuidref="abc-123"/>
             <mrl:source uuidref="def-456"/>
+        </mrl:LI_Lineage>
+    </mdb:resourceLineage>
+</root>`)
+      })
+    })
+
+    describe('sources with xlink:href only', () => {
+      it('writes source elements with only href', () => {
+        writeSourceRecords(
+          {
+            ...datasetRecord,
+            sourceRecords: [{ href: 'https://example.com/source' }],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <mdb:resourceLineage>
+        <mrl:LI_Lineage>
+            <mrl:source xlink:href="https://example.com/source"/>
         </mrl:LI_Lineage>
     </mdb:resourceLineage>
 </root>`)
@@ -769,10 +788,10 @@ describe('write parts', () => {
     </mdb:resourceLineage>
 </root>`)
         rootEl = getRootElement(sample)
-        writeLineageSources(
+        writeSourceRecords(
           {
             ...datasetRecord,
-            lineageSources: [
+            sourceRecords: [
               { uuid: 'new-uuid' },
               {
                 uuid: 'old-uuid-2',

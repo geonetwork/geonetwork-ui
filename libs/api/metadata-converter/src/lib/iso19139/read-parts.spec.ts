@@ -18,7 +18,7 @@ import {
   getUpdateFrequencyFromCustomPeriod,
   readContacts,
   readDefaultLanguage,
-  readLineageSources,
+  readSourceRecords,
   readOnlineResources,
   readOtherLanguages,
   readOwnerOrganization,
@@ -721,10 +721,10 @@ describe('read parts', () => {
       })
     })
 
-    describe('readLineageSources', () => {
+    describe('readSourceRecords', () => {
       describe('no source elements present', () => {
         it('returns undefined', () => {
-          expect(readLineageSources(recordRootEl)).toBeUndefined()
+          expect(readSourceRecords(recordRootEl)).toBeUndefined()
         })
       })
       describe('source with uuidref only', () => {
@@ -743,8 +743,29 @@ describe('read parts', () => {
           )(recordRootEl)
         })
         it('returns a source with only uuid', () => {
-          expect(readLineageSources(recordRootEl)).toEqual([
-            { uuid: 'abc-123' },
+          expect(readSourceRecords(recordRootEl)).toEqual([{ uuid: 'abc-123' }])
+        })
+      })
+      describe('source with xlink:href only', () => {
+        beforeEach(() => {
+          const sourceEl = getRootElement(
+            parseXmlString(
+              `<gmd:source xlink:href="https://example.com/source"/>`
+            )
+          )
+          pipe(
+            findNestedElement(
+              'gmd:dataQualityInfo',
+              'gmd:DQ_DataQuality',
+              'gmd:lineage',
+              'gmd:LI_Lineage'
+            ),
+            appendChildren(() => sourceEl)
+          )(recordRootEl)
+        })
+        it('returns a source with only href', () => {
+          expect(readSourceRecords(recordRootEl)).toEqual([
+            { href: 'https://example.com/source' },
           ])
         })
       })
@@ -766,7 +787,7 @@ describe('read parts', () => {
           )(recordRootEl)
         })
         it('returns a source with uuid, title and href', () => {
-          expect(readLineageSources(recordRootEl)).toEqual([
+          expect(readSourceRecords(recordRootEl)).toEqual([
             {
               uuid: 'abc-123',
               title: 'My Source',
@@ -797,7 +818,7 @@ describe('read parts', () => {
           )(recordRootEl)
         })
         it('returns all sources', () => {
-          expect(readLineageSources(recordRootEl)).toEqual([
+          expect(readSourceRecords(recordRootEl)).toEqual([
             { uuid: 'uuid-1', title: 'Source One' },
             { uuid: 'uuid-2' },
           ])

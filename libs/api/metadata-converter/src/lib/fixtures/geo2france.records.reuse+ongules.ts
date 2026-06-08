@@ -237,7 +237,7 @@ export const GEO2FRANCE_REUSE_ONGULES_RECORD: ReuseRecord = {
   ],
   translations: {},
   lineage: null,
-  lineageSources: [
+  sourceRecords: [
     {
       uuid: '67c60362-0461-4574-8975-f4e7cfa64d20',
       title: 'Répartition des ongulés sauvages en France (données depuis 1980)',

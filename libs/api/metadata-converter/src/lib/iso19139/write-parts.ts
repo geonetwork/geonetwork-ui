@@ -8,7 +8,7 @@ import {
   Individual,
   Keyword,
   LanguageCode,
-  LineageSource,
+  SourceRecord,
   RecordStatus,
   RecordTranslations,
   ReuseRecord,
@@ -1232,27 +1232,29 @@ export function writeLineage(record: DatasetRecord, rootEl: XmlElement) {
   )(rootEl)
 }
 
-export function appendLineageSources(
+export function appendSourceRecords(
   sourceElementName: string,
-  sources: LineageSource[]
+  sources: SourceRecord[]
 ): ChainableFunction<XmlElement, XmlElement> {
   return pipe(
     removeChildrenByName(sourceElementName),
     appendChildren(
-      ...sources.map((source) =>
-        pipe(
-          createElement(sourceElementName),
-          writeAttribute('uuidref', source.uuid),
-          source.title ? writeAttribute('xlink:title', source.title) : noop,
-          source.href ? writeAttribute('xlink:href', source.href) : noop
+      ...sources
+        .filter((source) => source.uuid || source.title || source.href)
+        .map((source) =>
+          pipe(
+            createElement(sourceElementName),
+            source.uuid ? writeAttribute('uuidref', source.uuid) : noop,
+            source.title ? writeAttribute('xlink:title', source.title) : noop,
+            source.href ? writeAttribute('xlink:href', source.href) : noop
+          )
         )
-      )
     )
   )
 }
 
-export function writeLineageSources(record: DatasetRecord, rootEl: XmlElement) {
-  const sources = record.lineageSources
+export function writeSourceRecords(record: DatasetRecord, rootEl: XmlElement) {
+  const sources = record.sourceRecords
   if (sources === undefined) return
 
   if (sources.length === 0) {
@@ -1273,7 +1275,7 @@ export function writeLineageSources(record: DatasetRecord, rootEl: XmlElement) {
       'gmd:lineage',
       'gmd:LI_Lineage'
     ),
-    appendLineageSources('gmd:source', sources)
+    appendSourceRecords('gmd:source', sources)
   )(rootEl)
 }
 

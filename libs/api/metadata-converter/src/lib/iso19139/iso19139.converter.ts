@@ -30,7 +30,7 @@ import {
   readLegalConstraints,
   readLicenses,
   readLineage,
-  readLineageSources,
+  readSourceRecords,
   readOnlineResources,
   readOtherConstraints,
   readOtherLanguages,
@@ -63,7 +63,7 @@ import {
   writeLegalConstraints,
   writeLicenses,
   writeLineage,
-  writeLineageSources,
+  writeSourceRecords,
   writeOnlineResources,
   writeOtherConstraints,
   writeRecordUpdated,
@@ -114,7 +114,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     spatialRepresentation: readSpatialRepresentation,
     overviews: readOverviews,
     lineage: readLineage,
-    lineageSources: readLineageSources,
+    sourceRecords: readSourceRecords,
     onlineResources: readOnlineResources,
     temporalExtents: readTemporalExtents,
     spatialExtents: readSpatialExtents,
@@ -156,7 +156,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     spatialRepresentation: writeSpatialRepresentation,
     overviews: writeGraphicOverviews,
     lineage: writeLineage,
-    lineageSources: writeLineageSources,
+    sourceRecords: writeSourceRecords,
     onlineResources: writeOnlineResources,
     temporalExtents: writeTemporalExtents,
     spatialExtents: writeSpatialExtents,
@@ -299,7 +299,7 @@ export class Iso19139Converter extends BaseConverter<string> {
       )
       const temporalExtents = this.readers['temporalExtents'](rootEl, tr)
       const lineage = this.readers['lineage'](rootEl, tr)
-      const lineageSources = this.readers['lineageSources'](rootEl, tr)
+      const sourceRecords = this.readers['sourceRecords'](rootEl, tr)
       const updateFrequency = this.readers['updateFrequency'](rootEl, tr)
 
       return this.afterRecordRead({
@@ -307,7 +307,7 @@ export class Iso19139Converter extends BaseConverter<string> {
         kind,
         status,
         lineage,
-        ...(lineageSources && { lineageSources }),
+        ...(sourceRecords && { sourceRecords }),
         ...(spatialRepresentation && { spatialRepresentation }),
         temporalExtents,
         updateFrequency,
@@ -315,7 +315,7 @@ export class Iso19139Converter extends BaseConverter<string> {
       } as DatasetRecord)
     } else if (kind === 'reuse') {
       const lineage = this.readers['lineage'](rootEl, tr)
-      const lineageSources = this.readers['lineageSources'](rootEl, tr)
+      const sourceRecords = this.readers['sourceRecords'](rootEl, tr)
       const temporalExtents = this.readers['temporalExtents'](rootEl, tr)
       const reuseType = this.readers['reuseType'](rootEl, tr)
 
@@ -323,7 +323,7 @@ export class Iso19139Converter extends BaseConverter<string> {
         ...this.readBaseRecord(rootEl, tr),
         kind,
         lineage,
-        ...(lineageSources && { lineageSources }),
+        ...(sourceRecords && { sourceRecords }),
         temporalExtents,
         reuseType,
       } as ReuseRecord)
@@ -419,8 +419,8 @@ export class Iso19139Converter extends BaseConverter<string> {
         this.writers['spatialExtents'](record, rootEl)
       ;(fieldChanged('lineage') || fieldChanged('translations')) &&
         this.writers['lineage'](record, rootEl)
-      fieldChanged('lineageSources') &&
-        this.writers['lineageSources'](record, rootEl)
+      fieldChanged('sourceRecords') &&
+        this.writers['sourceRecords'](record, rootEl)
     }
 
     fieldChanged('otherLanguages') &&

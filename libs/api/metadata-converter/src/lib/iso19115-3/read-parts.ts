@@ -21,7 +21,7 @@ import {
   extractCharacterString,
   extractDatasetOnlineResources,
   extractDateTime,
-  extractLineageSources,
+  extractSourceRecords,
   extractLocalizedCharacterString,
   extractReuseOnlineResources,
   extractRole,
@@ -32,7 +32,7 @@ import {
 import {
   Individual,
   LanguageCode,
-  LineageSource,
+  SourceRecord,
   OnlineResource,
   Organization,
   OrganizationTranslations,
@@ -293,10 +293,10 @@ export function readLineage(
   )(rootEl)
 }
 
-export function readLineageSources(
+export function readSourceRecords(
   rootEl: XmlElement
-): LineageSource[] | undefined {
-  return extractLineageSources(
+): SourceRecord[] | undefined {
+  return extractSourceRecords(
     pipe(findNestedElement('mdb:resourceLineage', 'mrl:LI_Lineage'))(rootEl)
   )
 }

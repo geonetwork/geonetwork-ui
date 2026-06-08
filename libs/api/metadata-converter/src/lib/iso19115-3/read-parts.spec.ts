@@ -11,7 +11,7 @@ import {
 import { readKeywords } from '../iso19139/read-parts'
 import {
   readDefaultLanguage,
-  readLineageSources,
+  readSourceRecords,
   readOtherLanguages,
 } from './read-parts'
 
@@ -493,11 +493,11 @@ describe('read parts', () => {
       expect(readOtherLanguages(root)).toEqual(['en', 'es', 'aar'])
     })
   })
-  describe('readLineageSources', () => {
+  describe('readSourceRecords', () => {
     describe('no source elements present', () => {
       it('returns undefined', () => {
         const root = getRootElement(parseXmlString(`<mdb:MD_Metadata/>`))
-        expect(readLineageSources(root)).toBeUndefined()
+        expect(readSourceRecords(root)).toBeUndefined()
       })
     })
     describe('source with uuidref only', () => {
@@ -512,7 +512,24 @@ describe('read parts', () => {
   </mdb:resourceLineage>
 </mdb:MD_Metadata>`)
         )
-        expect(readLineageSources(root)).toEqual([{ uuid: 'abc-123' }])
+        expect(readSourceRecords(root)).toEqual([{ uuid: 'abc-123' }])
+      })
+    })
+    describe('source with xlink:href only', () => {
+      it('returns a source with only href', () => {
+        const root = getRootElement(
+          parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:resourceLineage>
+    <mrl:LI_Lineage>
+      <mrl:source xlink:href="https://example.com/source"/>
+    </mrl:LI_Lineage>
+  </mdb:resourceLineage>
+</mdb:MD_Metadata>`)
+        )
+        expect(readSourceRecords(root)).toEqual([
+          { href: 'https://example.com/source' },
+        ])
       })
     })
     describe('source with uuidref, xlink:title and xlink:href', () => {
@@ -527,7 +544,7 @@ describe('read parts', () => {
   </mdb:resourceLineage>
 </mdb:MD_Metadata>`)
         )
-        expect(readLineageSources(root)).toEqual([
+        expect(readSourceRecords(root)).toEqual([
           {
             uuid: 'abc-123',
             title: 'My Source',
@@ -549,7 +566,7 @@ describe('read parts', () => {
   </mdb:resourceLineage>
 </mdb:MD_Metadata>`)
         )
-        expect(readLineageSources(root)).toEqual([
+        expect(readSourceRecords(root)).toEqual([
           { uuid: 'uuid-1', title: 'Source One' },
           { uuid: 'uuid-2' },
         ])
