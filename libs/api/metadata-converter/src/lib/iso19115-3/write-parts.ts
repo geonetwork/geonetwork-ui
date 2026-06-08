@@ -567,20 +567,8 @@ export function writeOtherLanguages(record: DatasetRecord, rootEl: XmlElement) {
 }
 
 export function writeSourceRecords(record: DatasetRecord, rootEl: XmlElement) {
-  const sources = record.sourceRecords
-  if (sources === undefined) return
-
-  if (sources.length === 0) {
-    const lineageEl = findNestedElement(
-      'mdb:resourceLineage',
-      'mrl:LI_Lineage'
-    )(rootEl)
-    if (lineageEl) removeChildrenByName('mrl:source')(lineageEl)
-    return
-  }
-
   pipe(
     findNestedChildOrCreate('mdb:resourceLineage', 'mrl:LI_Lineage'),
-    appendSourceRecords('mrl:source', sources)
+    appendSourceRecords(record.sourceRecords)
   )(rootEl)
 }

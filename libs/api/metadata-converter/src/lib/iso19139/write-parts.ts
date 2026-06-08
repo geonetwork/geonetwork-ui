@@ -1233,17 +1233,16 @@ export function writeLineage(record: DatasetRecord, rootEl: XmlElement) {
 }
 
 export function appendSourceRecords(
-  sourceElementName: string,
   sources: SourceRecord[]
 ): ChainableFunction<XmlElement, XmlElement> {
   return pipe(
-    removeChildrenByName(sourceElementName),
+    removeChildrenByName('gmd:source'),
     appendChildren(
       ...sources
         .filter((source) => source.uuid || source.title || source.href)
         .map((source) =>
           pipe(
-            createElement(sourceElementName),
+            createElement('gmd:source'),
             source.uuid ? writeAttribute('uuidref', source.uuid) : noop,
             source.title ? writeAttribute('xlink:title', source.title) : noop,
             source.href ? writeAttribute('xlink:href', source.href) : noop
@@ -1254,20 +1253,6 @@ export function appendSourceRecords(
 }
 
 export function writeSourceRecords(record: DatasetRecord, rootEl: XmlElement) {
-  const sources = record.sourceRecords
-  if (sources === undefined) return
-
-  if (sources.length === 0) {
-    const lineageEl = findNestedElement(
-      'gmd:dataQualityInfo',
-      'gmd:DQ_DataQuality',
-      'gmd:lineage',
-      'gmd:LI_Lineage'
-    )(rootEl)
-    if (lineageEl) removeChildrenByName('gmd:source')(lineageEl)
-    return
-  }
-
   pipe(
     findNestedChildOrCreate(
       'gmd:dataQualityInfo',
@@ -1275,7 +1260,7 @@ export function writeSourceRecords(record: DatasetRecord, rootEl: XmlElement) {
       'gmd:lineage',
       'gmd:LI_Lineage'
     ),
-    appendSourceRecords('gmd:source', sources)
+    appendSourceRecords(record.sourceRecords)
   )(rootEl)
 }
 

@@ -171,6 +171,9 @@ export class Iso191153Converter extends Iso19139Converter {
       'gmd:fileName': 'mcc:fileName',
       'gmd:fileDescription': 'mcc:fileDescription',
 
+      // lineage sources
+      'gmd:source': 'mrl:source',
+
       // no more URL elements
       'gmd:URL': 'gco:CharacterString',
     })

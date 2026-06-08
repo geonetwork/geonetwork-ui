@@ -293,9 +293,7 @@ export function readLineage(
   )(rootEl)
 }
 
-export function readSourceRecords(
-  rootEl: XmlElement
-): SourceRecord[] | undefined {
+export function readSourceRecords(rootEl: XmlElement): SourceRecord[] {
   return extractSourceRecords(
     pipe(findNestedElement('mdb:resourceLineage', 'mrl:LI_Lineage'))(rootEl)
   )

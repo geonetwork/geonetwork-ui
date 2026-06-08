@@ -495,9 +495,9 @@ describe('read parts', () => {
   })
   describe('readSourceRecords', () => {
     describe('no source elements present', () => {
-      it('returns undefined', () => {
+      it('returns an empty array', () => {
         const root = getRootElement(parseXmlString(`<mdb:MD_Metadata/>`))
-        expect(readSourceRecords(root)).toBeUndefined()
+        expect(readSourceRecords(root)).toEqual([])
       })
     })
     describe('source with uuidref only', () => {

@@ -723,8 +723,8 @@ describe('read parts', () => {
 
     describe('readSourceRecords', () => {
       describe('no source elements present', () => {
-        it('returns undefined', () => {
-          expect(readSourceRecords(recordRootEl)).toBeUndefined()
+        it('returns an empty array', () => {
+          expect(readSourceRecords(recordRootEl)).toEqual([])
         })
       })
       describe('source with uuidref only', () => {

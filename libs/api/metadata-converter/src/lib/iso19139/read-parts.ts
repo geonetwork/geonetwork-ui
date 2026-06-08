@@ -895,11 +895,9 @@ export function readLineage(
   )(rootEl)
 }
 
-export function extractSourceRecords(
-  liLineageEl: XmlElement
-): SourceRecord[] | undefined {
-  if (!liLineageEl) return undefined
-  const sources = pipe(
+export function extractSourceRecords(liLineageEl: XmlElement): SourceRecord[] {
+  if (!liLineageEl) return []
+  return pipe(
     findChildrenElement('gmd:source', false),
     mapArray((el) => {
       const uuid = readAttribute('uuidref')(el)
@@ -914,12 +912,9 @@ export function extractSourceRecords(
     }),
     filterArray((s): s is SourceRecord => s !== null)
   )(liLineageEl)
-  return sources.length > 0 ? sources : undefined
 }
 
-export function readSourceRecords(
-  rootEl: XmlElement
-): SourceRecord[] | undefined {
+export function readSourceRecords(rootEl: XmlElement): SourceRecord[] {
   return extractSourceRecords(
     pipe(
       findNestedElement(

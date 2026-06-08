@@ -267,7 +267,7 @@ export interface DatasetRecord extends BaseRecord {
   kind: 'dataset'
   status: RecordStatus
   lineage: string // Explanation of the origin of this record (e.g: how, why)"
-  sourceRecords?: Array<SourceRecord>
+  sourceRecords: Array<SourceRecord>
   onlineResources: Array<DatasetOnlineResource>
   spatialExtents: Array<DatasetSpatialExtent>
   temporalExtents: Array<DatasetTemporalExtent>
@@ -295,7 +295,7 @@ export interface ServiceRecord extends BaseRecord {
 export interface ReuseRecord extends BaseRecord {
   kind: 'reuse'
   lineage: string // Explanation of the origin of this record (e.g: how, why)"
-  sourceRecords?: Array<SourceRecord>
+  sourceRecords: Array<SourceRecord>
   onlineResources: Array<DatasetOnlineResource>
   reuseType: ReuseType
   spatialExtents: Array<DatasetSpatialExtent>
