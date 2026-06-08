@@ -53,7 +53,7 @@
     data-test="usage-panel"
   >
     <div class="flex flex-col gap-[10px] mr-4 py-[12px] rounded text-gray-900">
-      @for (license of licenses; track license) {
+      @for (license of licenses; track $index) {
         @if (license.url) {
           <div class="text-primary">
             <a
@@ -117,7 +117,7 @@
           <p class="text-xs font-normal text-black">
             {{ group.roleLabel | translate }}
           </p>
-          <div class="grid gap-0.5 grid-cols-1 md:grid-cols-2">
+          <div class="grid gap-1 grid-cols-1 md:grid-cols-2">
             @for (contact of group.contacts; track contact.email) {
               <gn-ui-contact-pill [contact]="contact"></gn-ui-contact-pill>
             }
