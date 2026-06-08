@@ -37,7 +37,6 @@ describe('ContactDetailsComponent', () => {
         lastName: 'Smith',
         email: 'alice@example.com',
         role: 'point_of_contact',
-        position: 'Director',
         phone: '+33 1 23 45 67 89',
         address: '10 rue Example, 75001 Paris, France',
         organization: {
@@ -48,18 +47,11 @@ describe('ContactDetailsComponent', () => {
       })
     })
 
-    it('renders the org name', () => {
+    it('renders the display name with org', () => {
       const el = fixture.nativeElement.querySelector(
-        '[data-test="contact-details-org-name"]'
+        '[data-test="contact-details-name"]'
       )
-      expect(el?.textContent.trim()).toBe('ACME Corp')
-    })
-
-    it('renders position', () => {
-      const el = fixture.nativeElement.querySelector(
-        '[data-test="contact-details-position"]'
-      )
-      expect(el?.textContent.trim()).toBe('Director')
+      expect(el?.textContent.trim()).toBe('Alice Smith (ACME Corp)')
     })
 
     it('renders email as mailto link', () => {
@@ -93,6 +85,12 @@ describe('ContactDetailsComponent', () => {
       )
       expect(el).toBeTruthy()
     })
+
+    it('renders the org logo thumbnail', () => {
+      expect(
+        fixture.nativeElement.querySelector('gn-ui-thumbnail')
+      ).toBeTruthy()
+    })
   })
 
   describe('with no org (name only)', () => {
@@ -105,19 +103,36 @@ describe('ContactDetailsComponent', () => {
       })
     })
 
-    it('shows full name as header instead of org', () => {
+    it('shows full name as the display name', () => {
       const el = fixture.nativeElement.querySelector(
-        '[data-test="contact-details-full-name-header"]'
+        '[data-test="contact-details-name"]'
       )
       expect(el?.textContent.trim()).toBe('Bob Doe')
     })
 
-    it('does not show org name', () => {
+    it('does not render an org logo thumbnail', () => {
+      expect(fixture.nativeElement.querySelector('gn-ui-thumbnail')).toBeNull()
+    })
+  })
+
+  describe('with org but no website', () => {
+    beforeEach(() => {
+      render({
+        email: 'contact@acme.com',
+        role: 'point_of_contact',
+        organization: { name: 'ACME Corp' },
+      })
+    })
+
+    it('shows the website row but no link', () => {
       expect(
         fixture.nativeElement.querySelector(
-          '[data-test="contact-details-org-name"]'
+          '[data-test="contact-details-website"]'
         )
       ).toBeNull()
+      expect(
+        fixture.nativeElement.querySelector('ng-icon[name="matOpenInNew"]')
+      ).toBeTruthy()
     })
   })
 
@@ -148,6 +163,13 @@ describe('ContactDetailsComponent', () => {
           '[data-test="contact-details-website"]'
         )
       ).toBeNull()
+    })
+
+    it('falls back to the email as display name', () => {
+      const el = fixture.nativeElement.querySelector(
+        '[data-test="contact-details-name"]'
+      )
+      expect(el?.textContent.trim()).toBe('a@b.com')
     })
   })
 })
