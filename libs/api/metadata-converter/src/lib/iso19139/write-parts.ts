@@ -8,6 +8,7 @@ import {
   Individual,
   Keyword,
   LanguageCode,
+  LineageSource,
   RecordStatus,
   RecordTranslations,
   ReuseRecord,
@@ -1231,6 +1232,25 @@ export function writeLineage(record: DatasetRecord, rootEl: XmlElement) {
   )(rootEl)
 }
 
+export function appendLineageSources(
+  sourceElementName: string,
+  sources: LineageSource[]
+): ChainableFunction<XmlElement, XmlElement> {
+  return pipe(
+    removeChildrenByName(sourceElementName),
+    appendChildren(
+      ...sources.map((source) =>
+        pipe(
+          createElement(sourceElementName),
+          writeAttribute('uuidref', source.uuid),
+          source.title ? writeAttribute('xlink:title', source.title) : noop,
+          source.href ? writeAttribute('xlink:href', source.href) : noop
+        )
+      )
+    )
+  )
+}
+
 export function writeLineageSources(record: DatasetRecord, rootEl: XmlElement) {
   const sources = record.lineageSources
   if (sources === undefined) return
@@ -1253,17 +1273,7 @@ export function writeLineageSources(record: DatasetRecord, rootEl: XmlElement) {
       'gmd:lineage',
       'gmd:LI_Lineage'
     ),
-    removeChildrenByName('gmd:source'),
-    appendChildren(
-      ...sources.map((source) =>
-        pipe(
-          createElement('gmd:source'),
-          writeAttribute('uuidref', source.uuid),
-          source.title ? writeAttribute('xlink:title', source.title) : noop,
-          source.href ? writeAttribute('xlink:href', source.href) : noop
-        )
-      )
-    )
+    appendLineageSources('gmd:source', sources)
   )(rootEl)
 }
 

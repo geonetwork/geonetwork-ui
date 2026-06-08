@@ -895,17 +895,12 @@ export function readLineage(
   )(rootEl)
 }
 
-export function readLineageSources(
-  rootEl: XmlElement
+export function extractLineageSources(
+  liLineageEl: XmlElement
 ): LineageSource[] | undefined {
+  if (!liLineageEl) return undefined
   const sources = pipe(
-    findNestedElements(
-      'gmd:dataQualityInfo',
-      'gmd:DQ_DataQuality',
-      'gmd:lineage',
-      'gmd:LI_Lineage',
-      'gmd:source'
-    ),
+    findChildrenElement('gmd:source', false),
     mapArray((el) => {
       const uuid = readAttribute('uuidref')(el)
       if (!uuid) return null
@@ -918,8 +913,23 @@ export function readLineageSources(
       } as LineageSource
     }),
     filterArray((s): s is LineageSource => s !== null)
-  )(rootEl)
+  )(liLineageEl)
   return sources.length > 0 ? sources : undefined
+}
+
+export function readLineageSources(
+  rootEl: XmlElement
+): LineageSource[] | undefined {
+  return extractLineageSources(
+    pipe(
+      findNestedElement(
+        'gmd:dataQualityInfo',
+        'gmd:DQ_DataQuality',
+        'gmd:lineage',
+        'gmd:LI_Lineage'
+      )
+    )(rootEl)
+  )
 }
 
 export function readUpdateFrequency(rootEl: XmlElement): UpdateFrequency {
