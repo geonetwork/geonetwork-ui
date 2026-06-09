@@ -80,7 +80,7 @@ describe('AuthService', () => {
     })
     it('should construct a login URL based on the injected value', () => {
       expect(service.loginUrl).toEqual(
-        '/geonetwork/srv/fre/catalog.signin?redirect=/localhost'
+        '/geonetwork/srv/fre/catalog.signin?redirect=/'
       )
     })
   })
