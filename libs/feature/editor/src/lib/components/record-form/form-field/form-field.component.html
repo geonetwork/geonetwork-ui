@@ -150,6 +150,7 @@
     <ng-container *ngSwitchCase="'contacts'">
       <gn-ui-form-field-contacts
         [value]="valueAsIndividuals"
+        [modelSpecifier]="modelSpecifier"
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-contacts>
     </ng-container>

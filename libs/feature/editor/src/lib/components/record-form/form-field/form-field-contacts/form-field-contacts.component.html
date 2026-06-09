@@ -15,8 +15,15 @@
       (itemsOrderChange)="handleContactsChanged($event)"
       [elementTemplate]="contactTemplate"
     ></gn-ui-sortable-list>
-    <ng-template #contactTemplate let-contact>
-      <gn-ui-contact-card [contact]="contact"></gn-ui-contact-card>
+    <ng-template #contactTemplate let-contact let-index="index">
+      @if (modelSpecifier === 'contact:editableDetails') {
+        <gn-ui-contact-details-form
+          [contact]="contact"
+          (contactChange)="handleContactChanged($event, index)"
+        ></gn-ui-contact-details-form>
+      } @else {
+        <gn-ui-contact-card [contact]="contact"></gn-ui-contact-card>
+      }
     </ng-template>
   } @else {
     <div

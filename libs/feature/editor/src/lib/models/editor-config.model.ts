@@ -19,9 +19,13 @@ export interface FormFieldConfig {
 // This is used for instance to target only certain online resources in a field
 type OnlineLinkResourceSpecifier = `onlineResourceType:link`
 type DatasetDistributionsSpecifier = `onlineResourceType:!link`
+// When set on the `contacts` field, contacts are rendered as editable detail
+// fields (ContactDetailsFormComponent) instead of cards (ContactCardComponent)
+type EditableContactDetailsSpecifier = `contact:editableDetails`
 export type FieldModelSpecifier =
   | OnlineLinkResourceSpecifier
   | DatasetDistributionsSpecifier
+  | EditableContactDetailsSpecifier
 
 export type FormFieldComponentName =
   | 'form-field-constraints-shortcuts'
