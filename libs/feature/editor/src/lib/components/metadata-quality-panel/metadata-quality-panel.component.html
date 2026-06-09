@@ -7,7 +7,6 @@
       >editor.record.form.metadataQuality.title</span
     >
   </div>
-  @let activeRow = activeRowLabel$ | async;
   @for (
     properties of (propertiesByPage$ | async) ?? [];
     track properties;
@@ -16,11 +15,6 @@
     <div class="flex flex-col gap-2">
       @for (property of properties; track property) {
         <gn-ui-button
-          gnUiFieldFocus
-          [gnUiFieldFocusActive]="activeRow === property.label"
-          [gnUiFieldFocusScroll]="false"
-          [gnUiFieldFocusCursor]="false"
-          gnUiFieldFocusGlowClass="gn-ui-row-focus-glow"
           style="
             --gn-ui-button-justify: space-between;
             --gn-ui-button-height: 34px;

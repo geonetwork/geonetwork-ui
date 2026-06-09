@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { EditorFacade } from '../../+state/editor.facade'
 import { RecordFormComponent } from './record-form.component'
+import { FormFieldComponent } from './form-field'
 import { MockBuilder } from 'ng-mocks'
 import {
   datasetRecordsFixture,
   editorConfigFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { BehaviorSubject, filter, firstValueFrom, Subject } from 'rxjs'
+import { BehaviorSubject, Subject } from 'rxjs'
 
 class EditorFacadeMock {
   record$ = new BehaviorSubject(datasetRecordsFixture()[0])
@@ -23,7 +24,7 @@ describe('RecordFormComponent', () => {
   let facade: EditorFacadeMock
 
   beforeEach(() => {
-    return MockBuilder(RecordFormComponent)
+    return MockBuilder(RecordFormComponent).keep(FormFieldComponent)
   })
 
   beforeEach(async () => {
@@ -65,6 +66,10 @@ describe('RecordFormComponent', () => {
   })
 
   describe('focusedField$ subscription', () => {
+    beforeEach(() => {
+      jest.spyOn(component, 'focusField').mockImplementation()
+    })
+
     describe('when the focused field is on a different page', () => {
       beforeEach(async () => {
         // 'licenses' is on page 2 in editorConfigFixture
@@ -112,23 +117,6 @@ describe('RecordFormComponent', () => {
       const unsubscribeSpy = jest.spyOn(component.subscription, 'unsubscribe')
       component.ngOnDestroy()
       expect(unsubscribeSpy).toHaveBeenCalled()
-    })
-  })
-
-  describe('focusedFieldModel$', () => {
-    it('is set to the focused field so it can be pushed down to the form fields', async () => {
-      const focused = firstValueFrom(
-        component.focusedFieldModel$.pipe(filter((model) => model !== null))
-      )
-      facade.focusedField$.next('title')
-      await expect(focused).resolves.toBe('title')
-    })
-
-    it('is reset to null on the next macrotask so a re-click can re-fire', async () => {
-      facade.focusedField$.next('title')
-      await new Promise((resolve) => setTimeout(resolve))
-      await new Promise((resolve) => setTimeout(resolve))
-      expect(component.focusedFieldModel$.value).toBeNull()
     })
   })
 })

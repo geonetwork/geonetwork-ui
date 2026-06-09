@@ -159,17 +159,12 @@ describe('editor form', () => {
         .closest('gn-ui-form-field[ng-reflect-model=abstract]')
         .should('exist')
 
-      // it should also flash the clicked criterion row
-      cy.get('gn-ui-metadata-quality-panel')
-        .find('gn-ui-button.gn-ui-row-focus-glow')
-        .should('exist')
-
       // it should scroll the field back into view when it is off-screen on the current page
       cy.get('gn-ui-record-form').closest('.overflow-auto').scrollTo('bottom')
       cy.get('gn-ui-metadata-quality-panel')
         .find('[data-cy="md-quality-btn-editor.record.form.field.abstract"]')
         .click()
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').then(($el) => {
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should(($el) => {
         expect($el[0].getBoundingClientRect().top).to.be.within(
           0,
           Cypress.config('viewportHeight')
@@ -183,7 +178,7 @@ describe('editor form', () => {
         .find('[data-cy="md-quality-btn-editor.record.form.field.abstract"]')
         .click()
       cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('be.visible')
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').then(($el) => {
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should(($el) => {
         const { top, bottom } = $el[0].getBoundingClientRect()
         expect(top).to.be.within(0, Cypress.config('viewportHeight'))
         expect(bottom).to.be.greaterThan(0)

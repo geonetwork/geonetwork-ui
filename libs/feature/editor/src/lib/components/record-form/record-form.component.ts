@@ -35,7 +35,7 @@ export class RecordFormComponent implements OnInit, OnDestroy {
     map((record) => record.uniqueIdentifier)
   )
 
-  focusFieldWithPagePage$ = this.facade.focusedField$.pipe(
+  focusFieldWithPage$ = this.facade.focusedField$.pipe(
     switchMap(
       async (field) => [field, await this.getPageIndexForField(field)] as const
     )
@@ -51,7 +51,7 @@ export class RecordFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription.add(
-      this.focusFieldWithPagePage$
+      this.focusFieldWithPage$
         .pipe(
           withLatestFrom(
             this.facade.currentPage$,

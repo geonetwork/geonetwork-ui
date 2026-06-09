@@ -179,23 +179,5 @@ describe('MetadataQualityPanelComponent', () => {
       component.onCriterionClick(title)
       expect(mockFacade.setFocusedField).not.toHaveBeenCalled()
     })
-
-    it('should flash the clicked row (keyed on its label) when invalid', () => {
-      component.onCriterionClick(abstract)
-      expect(component.activeRowLabel$.value).toBe(
-        'editor.record.form.field.abstract'
-      )
-    })
-
-    it('should not flash the row when criterion is valid', () => {
-      component.onCriterionClick(title)
-      expect(component.activeRowLabel$.value).toBeNull()
-    })
-
-    it('should reset the active row on the next macrotask', async () => {
-      component.onCriterionClick(abstract)
-      await new Promise((resolve) => setTimeout(resolve))
-      expect(component.activeRowLabel$.value).toBeNull()
-    })
   })
 })
