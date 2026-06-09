@@ -8,16 +8,6 @@ import {
 import { Individual } from '@geonetwork-ui/common/domain/model/record'
 import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-
-marker('editor.record.form.field.contactDetails.lastName')
-marker('editor.record.form.field.contactDetails.firstName')
-marker('editor.record.form.field.contactDetails.email')
-marker('editor.record.form.field.contactDetails.organization')
-marker('editor.record.form.field.contactDetails.lastName.placeholder')
-marker('editor.record.form.field.contactDetails.firstName.placeholder')
-marker('editor.record.form.field.contactDetails.email.placeholder')
-marker('editor.record.form.field.contactDetails.organization.placeholder')
 
 @Component({
   selector: 'gn-ui-contact-details-form',
@@ -31,41 +21,25 @@ export class ContactDetailsFormComponent {
   @Input() contact: Individual
   @Output() contactChange = new EventEmitter<Individual>()
 
-  private get currentContact(): Individual {
-    return (
-      this.contact ?? {
-        email: '',
-        role: 'unspecified',
-        organization: { name: '' },
-      }
-    )
-  }
-
   handleFirstNameChange(firstName: string) {
-    this.contactChange.emit({
-      ...this.currentContact,
-      firstName,
-    })
+    this.contactChange.emit({ ...this.contact, firstName })
   }
 
   handleLastNameChange(lastName: string) {
-    this.contactChange.emit({
-      ...this.currentContact,
-      lastName,
-    })
+    this.contactChange.emit({ ...this.contact, lastName })
   }
 
   handleEmailChange(email: string) {
     this.contactChange.emit({
-      ...this.currentContact,
-      organization: { ...this.currentContact.organization, email },
+      ...this.contact,
+      organization: { ...this.contact.organization, email },
     })
   }
 
   handleOrganizationChange(name: string) {
     this.contactChange.emit({
-      ...this.currentContact,
-      organization: { ...this.currentContact.organization, name },
+      ...this.contact,
+      organization: { ...this.contact.organization, name },
     })
   }
 }

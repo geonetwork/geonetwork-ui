@@ -7,7 +7,7 @@
       <gn-ui-text-input
         class="block w-full"
         extraClass="w-full"
-        [value]="contact?.lastName ?? ''"
+        [value]="contact.lastName ?? ''"
         (valueChange)="handleLastNameChange($event)"
         [placeholder]="
           'editor.record.form.field.contactDetails.lastName.placeholder'
@@ -23,7 +23,7 @@
       <gn-ui-text-input
         class="block w-full"
         extraClass="w-full"
-        [value]="contact?.firstName ?? ''"
+        [value]="contact.firstName ?? ''"
         (valueChange)="handleFirstNameChange($event)"
         [placeholder]="
           'editor.record.form.field.contactDetails.firstName.placeholder'
@@ -40,7 +40,7 @@
     <gn-ui-text-input
       class="block w-full"
       extraClass="w-full"
-      [value]="contact?.organization?.email ?? ''"
+      [value]="contact.organization?.email ?? ''"
       (valueChange)="handleEmailChange($event)"
       [placeholder]="
         'editor.record.form.field.contactDetails.email.placeholder' | translate
@@ -55,7 +55,7 @@
     <gn-ui-text-input
       class="block w-full"
       extraClass="w-full"
-      [value]="contact?.organization?.name ?? ''"
+      [value]="contact.organization?.name ?? ''"
       (valueChange)="handleOrganizationChange($event)"
       [placeholder]="
         'editor.record.form.field.contactDetails.organization.placeholder'

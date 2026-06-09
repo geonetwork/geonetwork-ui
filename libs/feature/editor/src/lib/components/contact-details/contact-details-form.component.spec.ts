@@ -78,21 +78,24 @@ describe('ContactDetailsFormComponent', () => {
     })
   })
 
-  describe('without an initial contact', () => {
+  describe('with an empty contact', () => {
+    const emptyContact: Individual = {
+      firstName: '',
+      lastName: '',
+      organization: { name: '', email: '' } as Organization,
+      email: '',
+      role: 'unspecified',
+    }
+
     beforeEach(() => {
-      component.contact = undefined
+      component.contact = emptyContact
     })
 
-    it('emits a contact with default values', () => {
+    it('emits the typed first name preserving other empty fields', () => {
       let emitted: Individual
       component.contactChange.subscribe((c) => (emitted = c))
       component.handleFirstNameChange('Jane')
-      expect(emitted).toEqual({
-        email: '',
-        role: 'unspecified',
-        organization: { name: '' },
-        firstName: 'Jane',
-      })
+      expect(emitted).toEqual({ ...emptyContact, firstName: 'Jane' })
     })
   })
 })
