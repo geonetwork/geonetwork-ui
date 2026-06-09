@@ -5,7 +5,10 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { Individual } from '@geonetwork-ui/common/domain/model/record'
+import {
+  Individual,
+  Organization,
+} from '@geonetwork-ui/common/domain/model/record'
 import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 
@@ -21,25 +24,16 @@ export class ContactDetailsFormComponent {
   @Input() contact: Individual
   @Output() contactChange = new EventEmitter<Individual>()
 
-  handleFirstNameChange(firstName: string) {
-    this.contactChange.emit({ ...this.contact, firstName })
+  emitContactChange() {
+    this.contactChange.emit(this.contact)
   }
 
-  handleLastNameChange(lastName: string) {
-    this.contactChange.emit({ ...this.contact, lastName })
-  }
+  handleOrganizationChange(change: Partial<Organization>) {
+    this.contact.organization = {
+      ...(this.contact.organization ?? ({} as Organization)),
+      ...change,
+    } as Organization
 
-  handleEmailChange(email: string) {
-    this.contactChange.emit({
-      ...this.contact,
-      organization: { ...this.contact.organization, email },
-    })
-  }
-
-  handleOrganizationChange(name: string) {
-    this.contactChange.emit({
-      ...this.contact,
-      organization: { ...this.contact.organization, name },
-    })
+    this.emitContactChange()
   }
 }

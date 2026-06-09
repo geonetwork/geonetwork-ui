@@ -49,17 +49,19 @@ describe('ContactDetailsFormComponent', () => {
     })
 
     it('emits the updated first name', () => {
-      component.handleFirstNameChange('Jane')
-      expect(emitted).toEqual({ ...mockContact, firstName: 'Jane' })
+      component.contact.firstName = 'Jane'
+      component.emitContactChange()
+      expect(emitted.firstName).toEqual('Jane')
     })
 
     it('emits the updated last name', () => {
-      component.handleLastNameChange('Smith')
-      expect(emitted).toEqual({ ...mockContact, lastName: 'Smith' })
+      component.contact.lastName = 'Smith'
+      component.emitContactChange()
+      expect(emitted.lastName).toEqual('Smith')
     })
 
     it('emits the updated email', () => {
-      component.handleEmailChange('jane@example.com')
+      component.handleOrganizationChange({ email: 'jane@example.com' })
       expect(emitted).toEqual({
         ...mockContact,
         organization: {
@@ -70,7 +72,7 @@ describe('ContactDetailsFormComponent', () => {
     })
 
     it('emits the updated organization name', () => {
-      component.handleOrganizationChange('New Org')
+      component.handleOrganizationChange({ name: 'New Org' })
       expect(emitted).toEqual({
         ...mockContact,
         organization: { ...mockContact.organization, name: 'New Org' },
@@ -94,8 +96,35 @@ describe('ContactDetailsFormComponent', () => {
     it('emits the typed first name preserving other empty fields', () => {
       let emitted: Individual
       component.contactChange.subscribe((c) => (emitted = c))
-      component.handleFirstNameChange('Jane')
-      expect(emitted).toEqual({ ...emptyContact, firstName: 'Jane' })
+      component.contact.firstName = 'Jane'
+      component.emitContactChange()
+      expect(emitted.firstName).toEqual('Jane')
+    })
+  })
+
+  describe('when organization is undefined', () => {
+    beforeEach(() => {
+      component.contact = {
+        firstName: 'John',
+        lastName: 'Doe',
+        email: '',
+        role: 'unspecified',
+        organization: undefined,
+      }
+    })
+
+    it('creates the organization when setting the email', () => {
+      let emitted: Individual
+      component.contactChange.subscribe((c) => (emitted = c))
+      component.handleOrganizationChange({ email: 'john@example.com' })
+      expect(emitted.organization).toEqual({ email: 'john@example.com' })
+    })
+
+    it('creates the organization when setting the name', () => {
+      let emitted: Individual
+      component.contactChange.subscribe((c) => (emitted = c))
+      component.handleOrganizationChange({ name: 'New Org' })
+      expect(emitted.organization).toEqual({ name: 'New Org' })
     })
   })
 })
