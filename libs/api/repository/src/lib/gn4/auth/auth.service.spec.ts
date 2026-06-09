@@ -72,6 +72,18 @@ describe('AuthService', () => {
       expect(service.loginUrl).toEqual('http://localhost/?login')
     })
   })
+  describe('login URL from config (with current_path)', () => {
+    beforeEach(() => {
+      loginUrlTokenMock =
+        '/geonetwork/srv/fre/catalog.signin?redirect=${current_path}'
+      service = TestBed.inject(AuthService)
+    })
+    it('should construct a login URL based on the injected value', () => {
+      expect(service.loginUrl).toEqual(
+        '/geonetwork/srv/fre/catalog.signin?redirect=/localhost'
+      )
+    })
+  })
   describe('login URL from config (special georchestra case, appending a query param with existing query params)', () => {
     beforeEach(() => {
       mockAppBaseHref = '/datahub'
