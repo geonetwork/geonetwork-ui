@@ -1,0 +1,67 @@
+<div class="flex flex-col gap-7">
+  <div class="grid grid-cols-2 gap-4">
+    <div class="min-w-0">
+      <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+        editor.record.form.field.contactDetails.lastName
+      </h3>
+      <gn-ui-text-input
+        class="block w-full"
+        extraClass="w-full"
+        [(value)]="contact.lastName"
+        (valueChange)="emitContactChange()"
+        [placeholder]="
+          'editor.record.form.field.contactDetails.lastName.placeholder'
+            | translate
+        "
+        data-test="contactDetailsLastName"
+      ></gn-ui-text-input>
+    </div>
+    <div class="min-w-0">
+      <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+        editor.record.form.field.contactDetails.firstName
+      </h3>
+      <gn-ui-text-input
+        class="block w-full"
+        extraClass="w-full"
+        [(value)]="contact.firstName"
+        (valueChange)="emitContactChange()"
+        [placeholder]="
+          'editor.record.form.field.contactDetails.firstName.placeholder'
+            | translate
+        "
+        data-test="contactDetailsFirstName"
+      ></gn-ui-text-input>
+    </div>
+  </div>
+  <div>
+    <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+      editor.record.form.field.contactDetails.email
+    </h3>
+    <gn-ui-text-input
+      class="block w-full"
+      extraClass="w-full"
+      [value]="contact.organization?.email ?? ''"
+      (valueChange)="handleOrganizationChange({ email: $event })"
+      [placeholder]="
+        'editor.record.form.field.contactDetails.email.placeholder' | translate
+      "
+      data-test="contactDetailsEmail"
+    ></gn-ui-text-input>
+  </div>
+  <div>
+    <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+      editor.record.form.field.contactDetails.organization
+    </h3>
+    <gn-ui-text-input
+      class="block w-full"
+      extraClass="w-full"
+      [value]="contact.organization?.name ?? ''"
+      (valueChange)="handleOrganizationChange({ name: $event })"
+      [placeholder]="
+        'editor.record.form.field.contactDetails.organization.placeholder'
+          | translate
+      "
+      data-test="contactDetailsOrganization"
+    ></gn-ui-text-input>
+  </div>
+</div>
