@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { EditorFacade } from '../../+state/editor.facade'
 import { RecordFormComponent } from './record-form.component'
+import { FormFieldComponent } from './form-field'
 import { MockBuilder } from 'ng-mocks'
 import {
   datasetRecordsFixture,
@@ -23,7 +24,7 @@ describe('RecordFormComponent', () => {
   let facade: EditorFacadeMock
 
   beforeEach(() => {
-    return MockBuilder(RecordFormComponent)
+    return MockBuilder(RecordFormComponent).keep(FormFieldComponent)
   })
 
   beforeEach(async () => {
@@ -65,11 +66,8 @@ describe('RecordFormComponent', () => {
   })
 
   describe('focusedField$ subscription', () => {
-    let mockHostScrollIntoView: jest.Mock
-
     beforeEach(() => {
-      mockHostScrollIntoView = jest.fn()
-      component['el'].nativeElement.scrollIntoView = mockHostScrollIntoView
+      jest.spyOn(component, 'focusField').mockImplementation()
     })
 
     describe('when the focused field is on a different page', () => {
@@ -81,13 +79,6 @@ describe('RecordFormComponent', () => {
 
       it('should navigate to the correct page', () => {
         expect(facade.setCurrentPage).toHaveBeenCalledWith(2)
-      })
-
-      it('should scroll the host element to the top of the form', () => {
-        expect(mockHostScrollIntoView).toHaveBeenCalledWith({
-          behavior: 'instant',
-          block: 'start',
-        })
       })
     })
 
@@ -101,10 +92,6 @@ describe('RecordFormComponent', () => {
       it('should not navigate to a page', () => {
         expect(facade.setCurrentPage).not.toHaveBeenCalled()
       })
-
-      it('should not scroll the host element', () => {
-        expect(mockHostScrollIntoView).not.toHaveBeenCalled()
-      })
     })
 
     describe('when the focused field is not found in the config', () => {
@@ -115,10 +102,6 @@ describe('RecordFormComponent', () => {
 
       it('should not navigate to a page', () => {
         expect(facade.setCurrentPage).not.toHaveBeenCalled()
-      })
-
-      it('should not scroll the host element', () => {
-        expect(mockHostScrollIntoView).not.toHaveBeenCalled()
       })
     })
   })

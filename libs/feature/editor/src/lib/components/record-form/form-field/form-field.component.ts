@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  inject,
   Input,
   Output,
   ViewChild,
@@ -22,6 +23,7 @@ import {
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 import { TranslatePipe } from '@ngx-translate/core'
 import {
+  FieldFocusDirective,
   FormFieldDateComponent,
   FormFieldLicenseComponent,
   FormFieldTemporalExtentsComponent,
@@ -77,6 +79,7 @@ import { FormFieldTopicsComponent } from './form-field-topics/form-field-topics.
     FormFieldTopicsComponent,
     TextFieldModule,
   ],
+  hostDirectives: [FieldFocusDirective],
 })
 export class FormFieldComponent {
   @Input() uniqueIdentifier: string
@@ -91,6 +94,8 @@ export class FormFieldComponent {
 
   @ViewChild('titleInput') titleInput: ElementRef
   isOpenData = false
+
+  fieldFocus = inject(FieldFocusDirective)
 
   toggleIsOpenData(event: boolean) {
     this.isOpenData = event

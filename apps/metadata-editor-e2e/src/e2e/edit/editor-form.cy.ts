@@ -145,30 +145,61 @@ describe('editor form', () => {
       cy.get('gn-ui-metadata-quality-panel').should('be.visible')
     })
 
-    it('should navigate to the correct page when clicking an invalid criterion', () => {
-      // Make abstract invalid, then navigate to another page
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').clear()
-      cy.get('@accessContactPageBtn').click()
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('not.exist')
-
-      // Click the abstract criterion in the quality panel
+    it('quality panel navigation', () => {
+      // it should highlight and focus the field when clicking an invalid criterion on the current page
+      cy.get('@abstractField').clear()
       cy.get('gn-ui-metadata-quality-panel')
         .find('[data-cy="md-quality-btn-editor.record.form.field.abstract"]')
         .click()
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should(
+        'have.class',
+        'gn-ui-field-focus-glow'
+      )
+      cy.focused()
+        .closest('gn-ui-form-field[ng-reflect-model=abstract]')
+        .should('exist')
 
-      // Should navigate back to page 1 where abstract is
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('be.visible')
-    })
+      // it should scroll the field back into view when it is off-screen on the current page
+      cy.get('gn-ui-record-form').closest('.overflow-auto').scrollTo('bottom')
+      cy.get('gn-ui-metadata-quality-panel')
+        .find('[data-cy="md-quality-btn-editor.record.form.field.abstract"]')
+        .click()
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should(($el) => {
+        expect($el[0].getBoundingClientRect().top).to.be.within(
+          0,
+          Cypress.config('viewportHeight')
+        )
+      })
 
-    it('should not navigate when clicking a valid criterion', () => {
+      // it should switch page, scroll to and highlight/focus the field when clicking an invalid criterion
       cy.get('@accessContactPageBtn').click()
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('not.exist')
+      cy.get('gn-ui-metadata-quality-panel')
+        .find('[data-cy="md-quality-btn-editor.record.form.field.abstract"]')
+        .click()
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('be.visible')
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should(($el) => {
+        const { top, bottom } = $el[0].getBoundingClientRect()
+        expect(top).to.be.within(0, Cypress.config('viewportHeight'))
+        expect(bottom).to.be.greaterThan(0)
+      })
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should(
+        'have.class',
+        'gn-ui-field-focus-glow'
+      )
+      cy.focused()
+        .closest('gn-ui-form-field[ng-reflect-model=abstract]')
+        .should('exist')
 
+      // it should not navigate nor highlight when clicking a valid criterion
+      cy.get('@accessContactPageBtn').click()
       cy.get('gn-ui-metadata-quality-panel')
         .find('[data-cy="md-quality-btn-editor.record.form.field.title"]')
         .click()
-
-      // Should still be on page 3 — abstract (page 1) should not be visible
       cy.get('gn-ui-form-field[ng-reflect-model=abstract]').should('not.exist')
+      cy.get('gn-ui-record-form')
+        .find('gn-ui-form-field.gn-ui-field-focus-glow')
+        .should('not.exist')
     })
   })
 

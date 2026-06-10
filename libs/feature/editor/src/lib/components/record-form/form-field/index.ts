@@ -1,3 +1,4 @@
+export * from './field-focus.directive'
 export * from './form-field-keywords/form-field-keywords.component'
 export * from './form-field-license/form-field-license.component'
 export * from './form-field-date/form-field-date.component'

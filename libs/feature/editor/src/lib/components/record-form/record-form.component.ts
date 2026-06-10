@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   inject,
   OnDestroy,
   OnInit,
+  viewChildren,
 } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
 import { EditorFieldValue } from '../../models'
@@ -15,8 +15,9 @@ import {
   EditorFieldWithValue,
   EditorSectionWithValues,
 } from '../../+state/editor.models'
-import { filter, firstValueFrom, map, Subscription, switchMap } from 'rxjs'
+import { firstValueFrom, map, Subscription, withLatestFrom } from 'rxjs'
 import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
+import { switchMap } from 'rxjs/operators'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -27,41 +28,42 @@ import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
   imports: [CommonModule, FormFieldComponent, TranslateDirective],
 })
 export class RecordFormComponent implements OnInit, OnDestroy {
-  anchorIdPrefix = 'gn-ui--field-'
   facade = inject(EditorFacade)
-  private el = inject(ElementRef)
   subscription = new Subscription()
 
   recordUniqueIdentifier$ = this.facade.record$.pipe(
     map((record) => record.uniqueIdentifier)
   )
 
+  focusFieldWithPage$ = this.facade.focusedField$.pipe(
+    switchMap(
+      async (field) => [field, await this.getPageIndexForField(field)] as const
+    )
+  )
+
+  formFields = viewChildren(FormFieldComponent)
+
+  focusField(model: CatalogRecordKeys) {
+    const fields = this.formFields()
+    const field = fields.find((f) => f.model === model)
+    field?.fieldFocus.focusField()
+  }
+
   ngOnInit() {
     this.subscription.add(
-      this.facade.focusedField$
+      this.focusFieldWithPage$
         .pipe(
-          filter((field) => !!field),
-          switchMap(async (field) => ({
-            field: field as CatalogRecordKeys,
-            pageIndex: await this.getPageIndexForField(
-              field as CatalogRecordKeys
-            ),
-          }))
-        )
-        .subscribe(async ({ field, pageIndex }) => {
-          const currentPage = await firstValueFrom(this.facade.currentPage$)
-          if (pageIndex !== null && pageIndex !== currentPage) {
-            this.facade.setCurrentPage(pageIndex)
-            this.el.nativeElement.scrollIntoView({
-              behavior: 'instant',
-              block: 'start',
-            })
-          }
-          setTimeout(() =>
-            document
-              .getElementById(this.anchorIdPrefix + field)
-              ?.scrollIntoView({ behavior: 'instant', block: 'start' })
+          withLatestFrom(
+            this.facade.currentPage$,
+            ([field, fieldPage], currentPage) =>
+              [field, fieldPage, currentPage] as const
           )
+        )
+        .subscribe(([field, fieldPage, currentPage]) => {
+          if (fieldPage !== null && fieldPage !== currentPage) {
+            this.facade.setCurrentPage(fieldPage)
+          }
+          setTimeout(() => this.focusField(field))
         })
     )
   }
