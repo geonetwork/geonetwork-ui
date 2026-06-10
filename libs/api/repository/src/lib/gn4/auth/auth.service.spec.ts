@@ -74,13 +74,15 @@ describe('AuthService', () => {
   })
   describe('login URL from config (with current_path)', () => {
     beforeEach(() => {
+      mockAppBaseHref = '/datahub'
+      mockLocationPath = '/?org=Abcd&keywords=bla;bla&location'
       loginUrlTokenMock =
         '/geonetwork/srv/fre/catalog.signin?redirect=${current_path}'
       service = TestBed.inject(AuthService)
     })
     it('should construct a login URL based on the injected value', () => {
       expect(service.loginUrl).toEqual(
-        '/geonetwork/srv/fre/catalog.signin?redirect=/'
+        '/geonetwork/srv/fre/catalog.signin?redirect=/datahub/?org=Abcd&keywords=bla;bla&location'
       )
     })
   })
