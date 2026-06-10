@@ -67,6 +67,8 @@ Some additional notes:
 
   - `${current_url}`: replaced by the current browser URL
 
+  - `${current_path}`: replaced by the _path component_ of the current browser URL; in a URL like https://my.host.org/hello/world?param=value, the _path component_ is `/hello/world?param=value` (it includes anything after the first `/`, including query params and hash fragments)
+
   - `${lang2}`, `${lang3}`: replaced by the ISO-639 code of the current language, respectively in 2- or 3-characters format
 
   Example for a platform relying on CAS:

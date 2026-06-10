@@ -31,6 +31,7 @@ proxy_path = ""
 # If not indicated, the default geonetwork login page is used.
 # The following three placeholders can be part of this URL:
 #  - ${current_url}: indicates where the current location should be injected in the constructed login URL (eg. start, end)
+#  - ${current_path}: indicates where the path component of the current URL (i.e. the part after the host name, starting with "/") should be injected in the constructed login URL
 #  - ${lang2}, ${lang3}: indicates if and where the current language should be part of the login URL in language 2 or 3 letter code
 # Example to use the georchestra login page:
 # login_url = "/cas/login?service=${current_url}"
