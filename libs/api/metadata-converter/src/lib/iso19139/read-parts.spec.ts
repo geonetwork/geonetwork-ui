@@ -18,6 +18,7 @@ import {
   getUpdateFrequencyFromCustomPeriod,
   readContacts,
   readDefaultLanguage,
+  readSourceRecords,
   readOnlineResources,
   readOtherLanguages,
   readOwnerOrganization,
@@ -716,6 +717,111 @@ describe('read parts', () => {
         })
         it('returns an empty array', () => {
           expect(readSpatialExtents(recordRootEl)).toEqual([])
+        })
+      })
+    })
+
+    describe('readSourceRecords', () => {
+      describe('no source elements present', () => {
+        it('returns an empty array', () => {
+          expect(readSourceRecords(recordRootEl)).toEqual([])
+        })
+      })
+      describe('source with uuidref only', () => {
+        beforeEach(() => {
+          const sourceEl = getRootElement(
+            parseXmlString(`<gmd:source uuidref="abc-123"/>`)
+          )
+          pipe(
+            findNestedElement(
+              'gmd:dataQualityInfo',
+              'gmd:DQ_DataQuality',
+              'gmd:lineage',
+              'gmd:LI_Lineage'
+            ),
+            appendChildren(() => sourceEl)
+          )(recordRootEl)
+        })
+        it('returns a source with only uuid', () => {
+          expect(readSourceRecords(recordRootEl)).toEqual([{ uuid: 'abc-123' }])
+        })
+      })
+      describe('source with xlink:href only', () => {
+        beforeEach(() => {
+          const sourceEl = getRootElement(
+            parseXmlString(
+              `<gmd:source xlink:href="https://example.com/source"/>`
+            )
+          )
+          pipe(
+            findNestedElement(
+              'gmd:dataQualityInfo',
+              'gmd:DQ_DataQuality',
+              'gmd:lineage',
+              'gmd:LI_Lineage'
+            ),
+            appendChildren(() => sourceEl)
+          )(recordRootEl)
+        })
+        it('returns a source with only href', () => {
+          expect(readSourceRecords(recordRootEl)).toEqual([
+            { href: 'https://example.com/source' },
+          ])
+        })
+      })
+      describe('source with uuidref, xlink:title and xlink:href', () => {
+        beforeEach(() => {
+          const sourceEl = getRootElement(
+            parseXmlString(
+              `<gmd:source uuidref="abc-123" xlink:title="My Source" xlink:href="https://example.com/source"/>`
+            )
+          )
+          pipe(
+            findNestedElement(
+              'gmd:dataQualityInfo',
+              'gmd:DQ_DataQuality',
+              'gmd:lineage',
+              'gmd:LI_Lineage'
+            ),
+            appendChildren(() => sourceEl)
+          )(recordRootEl)
+        })
+        it('returns a source with uuid, title and href', () => {
+          expect(readSourceRecords(recordRootEl)).toEqual([
+            {
+              uuid: 'abc-123',
+              title: 'My Source',
+              href: 'https://example.com/source',
+            },
+          ])
+        })
+      })
+      describe('multiple sources', () => {
+        beforeEach(() => {
+          const source1 = getRootElement(
+            parseXmlString(
+              `<gmd:source uuidref="uuid-1" xlink:title="Source One"/>`
+            )
+          )
+          const source2 = getRootElement(
+            parseXmlString(`<gmd:source uuidref="uuid-2"/>`)
+          )
+          pipe(
+            findNestedElement(
+              'gmd:dataQualityInfo',
+              'gmd:DQ_DataQuality',
+              'gmd:lineage',
+              'gmd:LI_Lineage'
+            ),
+            appendChildren(() => source1),
+            appendChildren(() => source2)
+          )(recordRootEl)
+        })
+        it('returns all sources', () => {
+          expect(readSourceRecords(recordRootEl)).toEqual([
+            { uuid: 'uuid-1', title: 'Source One' },
+            { uuid: 'uuid-2' },
+          ])
         })
       })
     })

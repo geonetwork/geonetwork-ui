@@ -68,6 +68,7 @@ export const VLAANDEREN_DATASET_RECORD: DatasetRecord = {
   temporalExtents: [],
   topics: ['biodiversity'],
   lineage: '',
+  sourceRecords: [],
   recordUpdated: new Date('2024-09-19T01:15:09.732Z'),
   resourceUpdated: new Date('2021-04-14T11:15+02:00'),
   status: 'completed',

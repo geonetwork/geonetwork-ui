@@ -9,6 +9,7 @@ import {
   readKind,
   readLandingPage,
   readLineage,
+  readSourceRecords,
   readOnlineResources,
   readOtherLanguages,
   readOwnerOrganization,
@@ -25,6 +26,7 @@ import {
   writeKind,
   writeLandingPage,
   writeLineage,
+  writeSourceRecords,
   writeOnlineResources,
   writeOtherLanguages,
   writeRecordCreated,
@@ -53,6 +55,7 @@ export class Iso191153Converter extends Iso19139Converter {
     this.readers['ownerOrganization'] = readOwnerOrganization
     this.readers['landingPage'] = readLandingPage
     this.readers['lineage'] = readLineage
+    this.readers['sourceRecords'] = readSourceRecords
     this.readers['onlineResources'] = readOnlineResources
     this.readers['defaultLanguage'] = readDefaultLanguage
     this.readers['otherLanguages'] = readOtherLanguages
@@ -72,6 +75,7 @@ export class Iso191153Converter extends Iso19139Converter {
     this.writers['ownerOrganization'] = () => undefined // fixme: find a way to store this value properly
     this.writers['landingPage'] = writeLandingPage
     this.writers['lineage'] = writeLineage
+    this.writers['sourceRecords'] = writeSourceRecords
     this.writers['onlineResources'] = writeOnlineResources
     this.writers['status'] = writeStatus
     this.writers['spatialRepresentation'] = writeSpatialRepresentation
@@ -166,6 +170,9 @@ export class Iso191153Converter extends Iso19139Converter {
       'gmd:MD_BrowseGraphic': 'mcc:MD_BrowseGraphic',
       'gmd:fileName': 'mcc:fileName',
       'gmd:fileDescription': 'mcc:fileDescription',
+
+      // lineage sources
+      'gmd:source': 'mrl:source',
 
       // no more URL elements
       'gmd:URL': 'gco:CharacterString',

@@ -9,6 +9,7 @@ const REUSE_RECORD: ReuseRecord = {
   abstract: 'A test reuse record',
   reuseType: 'application',
   lineage: '',
+  sourceRecords: [],
   onlineResources: [],
   spatialExtents: [],
   temporalExtents: [],

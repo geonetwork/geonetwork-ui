@@ -82,6 +82,7 @@ export const SEXTANT_BATHYMETRY_DATASET_RECORD: DatasetRecord = {
                 Le pas de la grille est de 25m.
                 Produit interne Ifremer.`,
   lineage: '',
+  sourceRecords: [],
   ownerOrganization: null,
   recordUpdated: new Date('2020-06-03T22:34:05.000Z'),
   resourceUpdated: new Date('2020-06-03T22:34:05.000Z'),
@@ -322,6 +323,7 @@ export const SEXTANT_CURRENTS_DATASET_RECORD: CatalogRecord = {
   ],
   lineage:
     'Sallée, J.B.; Speer, K and Morrow, R. Southern Ocean fronts and their variability to climate modes, Journ. of Climate, 2008, Vol. 21(12), pp. 3020-3039',
+  sourceRecords: [],
   onlineResources: [
     {
       name: 'Digital Object Identifier (DOI)',

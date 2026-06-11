@@ -77,6 +77,7 @@ export class DcatApConverter extends BaseConverter<string> {
     updateFrequency: () => 'unknown',
     overviews: () => [],
     lineage: () => '',
+    sourceRecords: () => [],
     temporalExtents: () => [],
     spatialRepresentation: () => undefined,
     extras: () => undefined,
@@ -114,6 +115,7 @@ export class DcatApConverter extends BaseConverter<string> {
     spatialRepresentation: () => undefined,
     overviews: () => undefined,
     lineage: () => undefined,
+    sourceRecords: () => [],
     onlineResources: () => undefined,
     temporalExtents: () => undefined,
     spatialExtents: () => undefined,
@@ -314,6 +316,12 @@ export class DcatApConverter extends BaseConverter<string> {
         tr,
         defaultLanguage
       )
+      const sourceRecords = this.readers['sourceRecords'](
+        dataStore,
+        catalogRecord,
+        tr,
+        defaultLanguage
+      )
       const onlineResources = this.readers['onlineResources'](
         dataStore,
         catalogRecord,
@@ -351,6 +359,7 @@ export class DcatApConverter extends BaseConverter<string> {
         securityConstraints,
         otherConstraints,
         lineage,
+        sourceRecords,
         ...(spatialRepresentation && { spatialRepresentation }),
         overviews,
         spatialExtents,

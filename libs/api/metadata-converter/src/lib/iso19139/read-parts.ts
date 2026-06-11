@@ -8,6 +8,7 @@ import {
   Keyword,
   KeywordTranslations,
   LanguageCode,
+  SourceRecord,
   ModelTranslations,
   OnlineLinkResource,
   OnlineResource,
@@ -892,6 +893,38 @@ export function readLineage(
     extractLocalizedCharacterString('lineage', translations),
     map(([lineage]) => lineage)
   )(rootEl)
+}
+
+export function extractSourceRecords(liLineageEl: XmlElement): SourceRecord[] {
+  if (!liLineageEl) return []
+  return pipe(
+    findChildrenElement('gmd:source', false),
+    mapArray((el) => {
+      const uuid = readAttribute('uuidref')(el)
+      const title = readAttribute('xlink:title')(el)
+      const href = readAttribute('xlink:href')(el)
+      if (!uuid && !title && !href) return null
+      return {
+        ...(uuid ? { uuid } : {}),
+        ...(title ? { title } : {}),
+        ...(href ? { href } : {}),
+      } as SourceRecord
+    }),
+    filterArray((s): s is SourceRecord => s !== null)
+  )(liLineageEl)
+}
+
+export function readSourceRecords(rootEl: XmlElement): SourceRecord[] {
+  return extractSourceRecords(
+    pipe(
+      findNestedElement(
+        'gmd:dataQualityInfo',
+        'gmd:DQ_DataQuality',
+        'gmd:lineage',
+        'gmd:LI_Lineage'
+      )
+    )(rootEl)
+  )
 }
 
 export function readUpdateFrequency(rootEl: XmlElement): UpdateFrequency {

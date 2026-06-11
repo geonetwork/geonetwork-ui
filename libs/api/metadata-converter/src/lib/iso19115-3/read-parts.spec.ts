@@ -9,7 +9,11 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { readKeywords } from '../iso19139/read-parts'
-import { readDefaultLanguage, readOtherLanguages } from './read-parts'
+import {
+  readDefaultLanguage,
+  readSourceRecords,
+  readOtherLanguages,
+} from './read-parts'
 
 describe('read parts', () => {
   describe('readContacts, readContactsForResource, readOwnerOrganization', () => {
@@ -487,6 +491,86 @@ describe('read parts', () => {
       const root = getRootElement(xml)
 
       expect(readOtherLanguages(root)).toEqual(['en', 'es', 'aar'])
+    })
+  })
+  describe('readSourceRecords', () => {
+    describe('no source elements present', () => {
+      it('returns an empty array', () => {
+        const root = getRootElement(parseXmlString(`<mdb:MD_Metadata/>`))
+        expect(readSourceRecords(root)).toEqual([])
+      })
+    })
+    describe('source with uuidref only', () => {
+      it('returns a source with only uuid', () => {
+        const root = getRootElement(
+          parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:resourceLineage>
+    <mrl:LI_Lineage>
+      <mrl:source uuidref="abc-123"/>
+    </mrl:LI_Lineage>
+  </mdb:resourceLineage>
+</mdb:MD_Metadata>`)
+        )
+        expect(readSourceRecords(root)).toEqual([{ uuid: 'abc-123' }])
+      })
+    })
+    describe('source with xlink:href only', () => {
+      it('returns a source with only href', () => {
+        const root = getRootElement(
+          parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:resourceLineage>
+    <mrl:LI_Lineage>
+      <mrl:source xlink:href="https://example.com/source"/>
+    </mrl:LI_Lineage>
+  </mdb:resourceLineage>
+</mdb:MD_Metadata>`)
+        )
+        expect(readSourceRecords(root)).toEqual([
+          { href: 'https://example.com/source' },
+        ])
+      })
+    })
+    describe('source with uuidref, xlink:title and xlink:href', () => {
+      it('returns a source with uuid, title and href', () => {
+        const root = getRootElement(
+          parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:resourceLineage>
+    <mrl:LI_Lineage>
+      <mrl:source uuidref="abc-123" xlink:title="My Source" xlink:href="https://example.com/source"/>
+    </mrl:LI_Lineage>
+  </mdb:resourceLineage>
+</mdb:MD_Metadata>`)
+        )
+        expect(readSourceRecords(root)).toEqual([
+          {
+            uuid: 'abc-123',
+            title: 'My Source',
+            href: 'https://example.com/source',
+          },
+        ])
+      })
+    })
+    describe('multiple sources', () => {
+      it('returns all sources', () => {
+        const root = getRootElement(
+          parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:resourceLineage>
+    <mrl:LI_Lineage>
+      <mrl:source uuidref="uuid-1" xlink:title="Source One"/>
+      <mrl:source uuidref="uuid-2"/>
+    </mrl:LI_Lineage>
+  </mdb:resourceLineage>
+</mdb:MD_Metadata>`)
+        )
+        expect(readSourceRecords(root)).toEqual([
+          { uuid: 'uuid-1', title: 'Source One' },
+          { uuid: 'uuid-2' },
+        ])
+      })
     })
   })
 })

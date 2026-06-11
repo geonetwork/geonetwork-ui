@@ -34,6 +34,7 @@ import {
 } from '../function-utils'
 import {
   appendKeywords,
+  appendSourceRecords,
   appendOnlineResource,
   appendServiceOnlineResources,
   createDistributionInfo,
@@ -562,5 +563,12 @@ export function writeOtherLanguages(record: DatasetRecord, rootEl: XmlElement) {
     ...record.otherLanguages.map((lang: LanguageCode) =>
       pipe(createElement('mdb:otherLocale'), writeLocaleElement(lang))
     )
+  )(rootEl)
+}
+
+export function writeSourceRecords(record: DatasetRecord, rootEl: XmlElement) {
+  pipe(
+    findNestedChildOrCreate('mdb:resourceLineage', 'mrl:LI_Lineage'),
+    appendSourceRecords(record.sourceRecords)
   )(rootEl)
 }

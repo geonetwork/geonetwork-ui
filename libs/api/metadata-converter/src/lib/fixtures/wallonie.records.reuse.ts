@@ -447,5 +447,13 @@ export const WALLONIE_REUSE_SPW_RECORD: ReuseRecord = {
     'https://metawal.wallonie.be/geonetwork/srv/api/records/83809bcd-1763-4d28-b820-2b9828083ba5'
   ),
   lineage: "L'application a été développée sur base de l'API GeoViewer",
+  sourceRecords: [
+    {
+      uuid: 'ee965118-2416-4d48-b07e-bbc696f002c2',
+      title:
+        'SCoT (Schéma de cohérence territoriale) en région Hauts-de-France',
+      href: 'https://metawal.wallonie.be/geonetwork/srv/api/records/ee965118-2416-4d48-b07e-bbc696f002c2',
+    },
+  ],
   temporalExtents: [],
 }

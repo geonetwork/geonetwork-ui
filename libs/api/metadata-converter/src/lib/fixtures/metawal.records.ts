@@ -419,6 +419,7 @@ Cette donnée a été intégrée dans la base de données routière (BDR). Les D
 
 Ces données, intégrées dans la Banque de Données routières (BDR), ont fait l’objet d’une mise à jour massive en 2014-2015.
 Depuis, ce sont les Districts routiers qui assurent la tenue à jour de ces informations directement dans la base de données.`,
+  sourceRecords: [],
   otherConstraints: [],
   overviews: [
     {
