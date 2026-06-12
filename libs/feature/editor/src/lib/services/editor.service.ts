@@ -15,7 +15,7 @@ export class EditorService {
   // returns the record as it was when saved, alongside its source
   saveRecord(
     record: CatalogRecord,
-    recordSource: string | null,
+    recordSource: string,
     fieldsConfig: EditorConfig
   ): Observable<[CatalogRecord, string]> {
     const savedRecord = { ...record }
@@ -42,7 +42,7 @@ export class EditorService {
     }
 
     return this.recordsRepository
-      .saveRecord(savedRecord, recordSource ?? undefined, publishToAll)
+      .saveRecord(savedRecord, recordSource, publishToAll)
       .pipe(
         switchMap((uniqueIdentifier) =>
           this.recordsRepository.openRecordForEdition(uniqueIdentifier)
@@ -59,11 +59,11 @@ export class EditorService {
   // note: onSave processes are not run for drafts
   saveRecordAsDraft(
     record: CatalogRecord,
-    recordSource: string | null
+    recordSource: string
   ): Observable<void> {
     record.recordUpdated = new Date()
     return this.recordsRepository
-      .saveRecordAsDraft(record, recordSource ?? undefined)
+      .saveRecordAsDraft(record, recordSource)
       .pipe(map(() => undefined))
   }
 

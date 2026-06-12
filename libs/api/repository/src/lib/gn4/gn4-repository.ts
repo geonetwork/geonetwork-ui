@@ -6,6 +6,7 @@ import {
 import { Injectable, InjectionToken, inject } from '@angular/core'
 import {
   assertValidXml,
+  BaseConverter,
   findConverterForDocument,
   Gn4Converter,
   Gn4SearchResults,
@@ -61,6 +62,12 @@ export const DISABLE_DRAFT = new InjectionToken<boolean>('gnDisableDraft', {
   factory: () => false,
 })
 
+export const DEFAULT_RECORD_CONVERTER = new InjectionToken<
+  BaseConverter<string>
+>('defaultRecordConverter', {
+  factory: () => new Iso19139Converter(),
+})
+
 @Injectable()
 export class Gn4Repository implements RecordsRepositoryInterface {
   private httpClient = inject(HttpClient)
@@ -72,6 +79,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   private gn4LanguagesApi = inject(LanguagesApiService)
   private settingsService = inject(Gn4SettingsService)
   private disableDraft = inject(DISABLE_DRAFT, { optional: true }) ?? false
+  private defaultConverter = inject(DEFAULT_RECORD_CONVERTER)
 
   _draftsChanged = new Subject<void>()
   draftsChanged$ = this._draftsChanged.asObservable()
@@ -605,10 +613,10 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     record: CatalogRecord,
     referenceRecordSource?: string
   ): Observable<string> {
-    // if there's a reference record, use that standard; otherwise, use iso19139
+    // if there's a reference record, use that standard; otherwise, use standard based on configuration or default
     const converter = referenceRecordSource
       ? findConverterForDocument(referenceRecordSource)
-      : new Iso19139Converter()
+      : this.defaultConverter
     return from(converter.writeRecord(record, referenceRecordSource))
   }
 

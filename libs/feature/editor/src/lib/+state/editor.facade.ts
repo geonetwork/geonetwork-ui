@@ -43,7 +43,7 @@ export class EditorFacade {
     map(({ model }) => model)
   )
 
-  openRecord(record: CatalogRecord, recordSource: string | null) {
+  openRecord(record: CatalogRecord, recordSource: string) {
     this.store.dispatch(
       EditorActions.openRecord({
         record,
