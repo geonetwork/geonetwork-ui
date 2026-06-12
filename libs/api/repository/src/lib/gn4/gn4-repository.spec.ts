@@ -1,4 +1,8 @@
-import { Gn4Repository, DISABLE_DRAFT } from './gn4-repository'
+import {
+  DEFAULT_RECORD_CONVERTER,
+  Gn4Repository,
+  DISABLE_DRAFT,
+} from './gn4-repository'
 import {
   RecordsApiService,
   SearchApiService,
@@ -9,6 +13,7 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing'
 import {
   EsSearchResponse,
   Gn4Converter,
+  Iso191153Converter,
 } from '@geonetwork-ui/api/metadata-converter'
 import {
   Aggregations,
@@ -123,6 +128,17 @@ const SAMPLE_RECORD = {
 const translateServiceMock = {
   currentLang: 'fr',
 }
+
+const baseProviders = [
+  Gn4Repository,
+  { provide: ElasticsearchService, useClass: ElasticsearchServiceMock },
+  { provide: SearchApiService, useClass: SearchApiServiceMock },
+  { provide: RecordsApiService, useClass: RecordsApiServiceMock },
+  { provide: Gn4Converter, useClass: Gn4MetadataMapperMock },
+  { provide: PlatformServiceInterface, useClass: PlatformServiceInterfaceMock },
+  { provide: Gn4SettingsService, useClass: Gn4SettingsServiceMock },
+  { provide: TranslateService, useValue: translateServiceMock },
+]
 
 describe('Gn4Repository', () => {
   let repository: Gn4Repository
@@ -1298,20 +1314,7 @@ describe('Gn4Repository with DISABLE_DRAFT', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [
-        Gn4Repository,
-        { provide: DISABLE_DRAFT, useValue: true },
-        { provide: ElasticsearchService, useClass: ElasticsearchServiceMock },
-        { provide: SearchApiService, useClass: SearchApiServiceMock },
-        { provide: RecordsApiService, useClass: RecordsApiServiceMock },
-        { provide: Gn4Converter, useClass: Gn4MetadataMapperMock },
-        {
-          provide: PlatformServiceInterface,
-          useClass: PlatformServiceInterfaceMock,
-        },
-        { provide: Gn4SettingsService, useClass: Gn4SettingsServiceMock },
-        { provide: TranslateService, useValue: translateServiceMock },
-      ],
+      providers: [{ provide: DISABLE_DRAFT, useValue: true }, ...baseProviders],
     })
     repository = TestBed.inject(Gn4Repository)
     gn4RecordsApi = TestBed.inject(RecordsApiService)
@@ -1397,6 +1400,37 @@ describe('Gn4Repository with DISABLE_DRAFT', () => {
       window.localStorage.setItem('geonetwork-ui-draft-2', 'content')
       const count = await lastValueFrom(repository.getDraftsCount())
       expect(count).toBe(0)
+    })
+  })
+})
+
+describe('Gn4Repository with DEFAULT_RECORD_CONVERTER', () => {
+  let repository: Gn4Repository
+  let gn4RecordsApi: RecordsApiService
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        {
+          provide: DEFAULT_RECORD_CONVERTER,
+          useValue: new Iso191153Converter(),
+        },
+        ...baseProviders,
+      ],
+    })
+    repository = TestBed.inject(Gn4Repository)
+    gn4RecordsApi = TestBed.inject(RecordsApiService)
+  })
+
+  describe('saveRecord', () => {
+    it('uses the configured converter when no reference source is provided', async () => {
+      ;(gn4RecordsApi.insert as jest.Mock).mockReturnValueOnce(
+        of({ metadataInfos: { 1234: [{ uuid: '1234-5678-9012' }] } })
+      )
+      await lastValueFrom(repository.saveRecord(datasetRecordsFixture()[0]))
+      const recordXml = (gn4RecordsApi.insert as jest.Mock).mock.calls[0][14]
+      expect(recordXml).toMatch('<mdb:MD_Metadata')
     })
   })
 })

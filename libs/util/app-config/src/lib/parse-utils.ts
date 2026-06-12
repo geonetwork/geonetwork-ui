@@ -159,3 +159,30 @@ export function checkNewRecordDefaultLanguage(
     new_record_default_language: lang2,
   }
 }
+
+export function checkNewRecordStandard(
+  parsedConfigSection: any,
+  outWarnings: string[]
+) {
+  const standard = parsedConfigSection.new_record_standard
+  const normalizedStandard =
+    typeof standard === 'string' ? standard.trim().toLowerCase() : null
+
+  if (
+    normalizedStandard === 'iso19139' ||
+    normalizedStandard === 'iso19115-3'
+  ) {
+    return {
+      ...parsedConfigSection,
+      new_record_standard: normalizedStandard,
+    }
+  }
+
+  outWarnings.push(
+    `In the [editing] section: new_record_standard = "${standard}" is not a supported metadata standard`
+  )
+  return {
+    ...parsedConfigSection,
+    new_record_standard: undefined,
+  }
+}

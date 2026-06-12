@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core'
-import { forkJoin, Observable, of, switchMap } from 'rxjs'
+import { Observable, switchMap } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { EditorConfig } from '../models/'

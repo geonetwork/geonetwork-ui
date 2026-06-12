@@ -69,8 +69,11 @@ export interface MetadataQualityConfig {
   ENABLED: boolean
 }
 
+export type NewRecordStandard = 'iso19139' | 'iso19115-3'
+
 export interface EditorConfig {
   NEW_RECORD_DEFAULT_LANGUAGE?: string
+  NEW_RECORD_STANDARD?: NewRecordStandard
 }
 
 export type CustomTranslations = { [translationKey: string]: string }

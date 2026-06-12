@@ -283,6 +283,17 @@ This section contains settings for metadata editing behavior in the Metadata Edi
   new_record_default_language = "fr"
   ```
 
+- `new_record_standard` (optional)
+
+  Defines the metadata standard used when creating new records. Accepted values are `iso19139` and `iso19115-3`.
+
+  If not set, defaults to `iso19139`.
+
+  ```toml
+  [editing]
+  new_record_standard = "iso19115-3"
+  ```
+
 #### `[map]`
 
 The map section lets you customize how maps appear and behave across GeoNetwork-UI applications.
