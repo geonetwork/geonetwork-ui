@@ -24,7 +24,11 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import {
   iconoirAppWindow,
@@ -65,6 +69,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
   private scrollStrategies = inject(ScrollStrategyOptions)
   private overlayRef: OverlayRef | null = null
   private recordsRepository = inject(RecordsRepositoryInterface)
+  private readonly translate = inject(TranslateService)
 
   @ViewChild('notifyReuseForm') templateRef: TemplateRef<unknown>
 
@@ -131,6 +136,10 @@ export class NotifyReuseFormComponent implements OnDestroy {
     const onlineResource: OnlineLinkResource = {
       type: 'link',
       url: new URL(this.url),
+      name: this.translate.instant('record.notify.reuse.resource.name'),
+      description: this.translate.instant(
+        'record.notify.reuse.resource.description'
+      ),
     }
     const contact: Individual = {
       email: this.email,
