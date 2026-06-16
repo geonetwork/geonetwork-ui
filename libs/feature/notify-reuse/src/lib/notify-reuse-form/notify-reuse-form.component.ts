@@ -31,6 +31,7 @@ import {
   iconoirPlusCircle,
   iconoirXmark,
 } from '@ng-icons/iconoir'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 @Component({
   selector: 'gn-ui-notify-reuse-form',
@@ -63,6 +64,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
   private viewContainerRef = inject(ViewContainerRef)
   private scrollStrategies = inject(ScrollStrategyOptions)
   private overlayRef: OverlayRef | null = null
+  private recordsRepository = inject(RecordsRepositoryInterface)
 
   @ViewChild('notifyReuseForm') templateRef: TemplateRef<unknown>
 
@@ -132,12 +134,49 @@ export class NotifyReuseFormComponent implements OnDestroy {
     }
     const contact: Individual = {
       email: this.email,
-      role: 'pointOfContact',
+      role: 'point_of_contact',
     }
-    const _reuseRecord: Partial<ReuseRecord> = {
+    const reuseRecord: ReuseRecord = {
+      uniqueIdentifier: '',
+      kind: 'reuse',
       title: this.title,
-      onlineResources: [onlineResource],
+      abstract: '',
+      ownerOrganization: { name: '' },
       contacts: [contact],
+      contactsForResource: [],
+      recordUpdated: new Date(),
+      topics: [],
+      keywords: [],
+      licenses: [],
+      legalConstraints: [],
+      securityConstraints: [],
+      otherConstraints: [],
+      overviews: [],
+      defaultLanguage: 'en',
+      otherLanguages: [],
+      lineage: '',
+      reuseType: 'application',
+      sourceRecords: [
+        {
+          uuid: this._record?.uniqueIdentifier ?? '',
+          title: this._record?.title ?? '',
+        },
+      ],
+      onlineResources: [onlineResource],
+      spatialExtents: [],
+      temporalExtents: [],
     }
+    this.recordsRepository.saveRecord(reuseRecord).subscribe({
+      next: (uniqueIdentifier) => {
+        console.log(
+          'Reuse record saved with unique identifier:',
+          uniqueIdentifier
+        )
+        this.closeOverlay()
+      },
+      error: (err) => {
+        console.error('Error saving reuse record:', err)
+      },
+    })
   }
 }
