@@ -1,4 +1,5 @@
 import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
+import { GEO2FRANCE_REUSE_ROILAYE_RECORD } from '../fixtures/geo2france.records.reuse+roilaye'
 import {
   writeContacts,
   writeContactsForResource,
@@ -19,11 +20,15 @@ import {
   xmlToString,
 } from '../xml-utils'
 import { XmlElement } from '@rgrove/parse-xml'
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetRecord,
+  ReuseRecord,
+} from '@geonetwork-ui/common/domain/model/record'
 
 describe('write parts', () => {
   let rootEl: XmlElement
   let datasetRecord: DatasetRecord
+  let reuseRecord: ReuseRecord
 
   function rootAsString() {
     return xmlToString(rootEl).trim()
@@ -32,6 +37,7 @@ describe('write parts', () => {
   beforeEach(() => {
     rootEl = createElement('root')()
     datasetRecord = { ...GENERIC_DATASET_RECORD }
+    reuseRecord = { ...GEO2FRANCE_REUSE_ROILAYE_RECORD }
   })
 
   describe('write dates', () => {
@@ -797,6 +803,25 @@ describe('write parts', () => {
         <mrl:LI_Lineage>
             <gmd:source uuidref="new-uuid"/>
             <gmd:source uuidref="old-uuid-2" xlink:title="Old Title 2" xlink:href="https://example.com/old-source-2"/>
+        </mrl:LI_Lineage>
+    </mdb:resourceLineage>
+</root>`)
+      })
+    })
+
+    describe('with a reuse record', () => {
+      it('writes source records for a reuse record', () => {
+        writeSourceRecords(
+          {
+            ...reuseRecord,
+            sourceRecords: [{ uuid: 'dataset-uuid', title: 'Source Dataset' }],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <mdb:resourceLineage>
+        <mrl:LI_Lineage>
+            <gmd:source uuidref="dataset-uuid" xlink:title="Source Dataset"/>
         </mrl:LI_Lineage>
     </mdb:resourceLineage>
 </root>`)

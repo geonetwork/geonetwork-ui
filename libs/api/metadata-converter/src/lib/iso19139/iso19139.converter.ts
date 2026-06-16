@@ -417,6 +417,9 @@ export class Iso19139Converter extends BaseConverter<string> {
         this.writers['temporalExtents'](record, rootEl)
       fieldChanged('spatialExtents') &&
         this.writers['spatialExtents'](record, rootEl)
+    }
+
+    if (record.kind === 'dataset' || record.kind === 'reuse') {
       ;(fieldChanged('lineage') || fieldChanged('translations')) &&
         this.writers['lineage'](record, rootEl)
       fieldChanged('sourceRecords') &&
