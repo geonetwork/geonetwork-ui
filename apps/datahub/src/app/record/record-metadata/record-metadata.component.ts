@@ -32,10 +32,7 @@ import { RecordDownloadsComponent } from '../record-downloads/record-downloads.c
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
-import {
-  RecordDataPreviewComponent,
-  REUSE_FORM_URL,
-} from '../record-data-preview/record-data-preview.component'
+import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matChatOutline } from '@ng-icons/material-icons/outline'
@@ -44,8 +41,13 @@ import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
+import {
+  NotifyReuseFormComponent,
+  REUSE_FORM_URL,
+} from '@geonetwork-ui/feature/notify-reuse'
+
+const WRITE_PROFILES = ['Editor', 'Reviewer', 'UserAdmin', 'Administrator']
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -75,6 +77,7 @@ import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
     TranslateDirective,
     TranslatePipe,
     MetadataDoiComponent,
+    NotifyReuseFormComponent,
   ],
   viewProviders: [
     provideIcons({ matChatOutline, iconoirAppWindow }),
@@ -115,7 +118,14 @@ export class RecordMetadataComponent {
       api: (links) => links?.length > 0,
     },
   }
-  activeUser$: Observable<UserModel>
+  activeUserCanWrite$ = this.platformServiceInterface
+    .getMe()
+    .pipe(
+      map(
+        (activeUser) =>
+          !!activeUser?.id && WRITE_PROFILES.includes(activeUser.profile)
+      )
+    )
 
   private getDisplayCondition(
     kind: 'dataset' | 'service' | 'reuse',
@@ -243,10 +253,6 @@ export class RecordMetadataComponent {
 
   errorTypes = ErrorType
 
-  constructor() {
-    this.activeUser$ = this.platformServiceInterface.getMe()
-  }
-
   get isAuthDisabled(): boolean {
     return !this.platformServiceInterface.supportsAuthentication()
   }
@@ -271,21 +277,14 @@ export class RecordMetadataComponent {
 
   showReuseButton(): Observable<boolean> {
     return combineLatest([
-      this.activeUser$.pipe(startWith(null)),
+      this.activeUserCanWrite$.pipe(startWith(false)),
       this.kind$.pipe(startWith(null)),
     ]).pipe(
-      map(([activeUser, kind]) => {
-        return activeUser?.id && this.reuseFormUrl && kind === 'dataset'
-      }),
+      map(
+        ([canWrite, kind]) =>
+          canWrite && !!this.reuseFormUrl && kind === 'dataset'
+      ),
       startWith(false)
     )
-  }
-
-  navigateToReuseForm() {
-    this.metadataUuid$.subscribe((uuid) => {
-      if (uuid && this.reuseFormUrl) {
-        window.open(`${this.reuseFormUrl}/${uuid}`, '_blank')
-      }
-    })
   }
 }

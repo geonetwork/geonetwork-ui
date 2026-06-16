@@ -21,7 +21,7 @@ import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlink
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { REUSE_FORM_URL } from '../record-data-preview/record-data-preview.component'
+import { REUSE_FORM_URL } from '@geonetwork-ui/feature/notify-reuse'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const SAMPLE_RECORD = {
@@ -471,46 +471,72 @@ describe('RecordMetadataComponent', () => {
   })
   describe('Reuse Button', () => {
     describe('display rules for reuse button', () => {
+      let visible: boolean
+
+      const subscribeVisible = () => {
+        component.showReuseButton().subscribe((v) => (visible = v))
+      }
+
       beforeEach(() => {
+        visible = undefined
         component.reuseFormUrl = 'https://example.com/reuse'
-        ;(platformService.getMe as jest.Mock).mockReturnValue(of(null))
+        component.activeUserCanWrite$ = of(true)
         facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'dataset' } })
         fixture.detectChanges()
       })
 
-      it('do not display reuse button when user is not logged in', () => {
-        component.showReuseButton().subscribe((visible) => {
-          expect(visible).toBe(false)
-        })
+      it('does not display reuse button when user has no write access', () => {
+        component.activeUserCanWrite$ = of(false)
+        subscribeVisible()
+        expect(visible).toBe(false)
       })
 
-      it('do not display reuse button  when kind is not dataset', () => {
-        ;(platformService.getMe as jest.Mock).mockReturnValue(
-          of({ id: 'user1' })
-        )
+      it('does not display reuse button when kind is not dataset', () => {
         facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'service' } })
-
-        component.showReuseButton().subscribe((visible) => {
-          expect(visible).toBe(false)
-        })
+        subscribeVisible()
+        expect(visible).toBe(false)
       })
 
-      it('do not display reuse button  when reuseFormUrl is not defined', () => {
+      it('does not display reuse button when reuseFormUrl is not defined', () => {
         component.reuseFormUrl = null
-        ;(platformService.getMe as jest.Mock).mockReturnValue(
-          of({ id: 'user1' })
-        )
-        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'dataset' } })
-
-        component.showReuseButton().subscribe((visible) => {
-          expect(visible).toBe(false)
-        })
+        subscribeVisible()
+        expect(visible).toBe(false)
       })
 
-      it('display reuse button when all conditions are met', () => {
-        component.showReuseButton().subscribe((visible) => {
-          expect(visible).toBe(true)
-        })
+      it('displays reuse button when all conditions are met', () => {
+        subscribeVisible()
+        expect(visible).toBe(true)
+      })
+    })
+
+    describe('activeUserCanWrite$', () => {
+      let canWrite: boolean
+
+      const createWith = (user) => {
+        ;(platformService.getMe as jest.Mock).mockReturnValue(of(user))
+        fixture = TestBed.createComponent(RecordMetadataComponent)
+        component = fixture.componentInstance
+        component.activeUserCanWrite$.subscribe((v) => (canWrite = v))
+      }
+
+      it('is false when no user is logged in', () => {
+        createWith(null)
+        expect(canWrite).toBe(false)
+      })
+
+      it('is false when the user profile has no write access', () => {
+        createWith({ id: 'user1', profile: 'RegisteredUser' })
+        expect(canWrite).toBe(false)
+      })
+
+      it('is true for an Editor', () => {
+        createWith({ id: 'user1', profile: 'Editor' })
+        expect(canWrite).toBe(true)
+      })
+
+      it('is true for an Administrator', () => {
+        createWith({ id: 'user1', profile: 'Administrator' })
+        expect(canWrite).toBe(true)
       })
     })
   })
