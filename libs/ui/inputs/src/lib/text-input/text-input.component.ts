@@ -26,6 +26,8 @@ export class TextInputComponent implements AfterViewInit {
   @Output() valueChange = this.rawChange.pipe(distinctUntilChanged())
   @ViewChild('input') input
 
+  private dirty = false
+
   ngAfterViewInit() {
     this.checkRequired(this.input.nativeElement.value)
   }
@@ -33,11 +35,12 @@ export class TextInputComponent implements AfterViewInit {
   checkRequired(value) {
     this.input.nativeElement.classList.toggle(
       'invalid',
-      this.required && value === ''
+      this.required && this.dirty && value === ''
     )
   }
 
   handleChange($event) {
+    this.dirty = true
     const value = $event.target.value
     this.checkRequired(value)
     this.rawChange.next(value)
