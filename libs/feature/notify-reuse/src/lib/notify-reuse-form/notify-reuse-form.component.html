@@ -1,76 +1,99 @@
-<div
-  class="flex flex-col gap-3 bg-gray-50 rounded-l overflow-clip px-4 py-5 shadow-[0px_9px_12px_0px_rgba(9,30,66,0.15),0px_0px_1px_0px_rgba(9,30,66,0.31)]"
+<gn-ui-button
+  type="outline"
+  extraClass="w-full flex flex-row justify-between bg-white"
+  [style.--gn-ui-button-rounded]="'10px'"
+  (buttonClick)="toggleOverlay()"
+  cdkOverlayOrigin
+  #overlayOrigin="cdkOverlayOrigin"
 >
-  <div class="flex flex-col gap-3 pb-3">
-    <div class="flex items-start justify-between pb-3">
-      <p class="text-xl font-medium text-black" translate>
-        record.notify.reuse.form.title
+  <span translate>service.metadata.reuse</span>
+  <ng-icon class="mr-[5px] text-[1em]" name="iconoirAppWindow"></ng-icon>
+</gn-ui-button>
+<ng-template
+  #notifyReuseForm
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="overlayOrigin"
+  [cdkConnectedOverlayOpen]="overlayOpen"
+  [cdkConnectedOverlayPositions]="overlayPositions"
+  [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+  (overlayOutsideClick)="closeOverlay()"
+  (detach)="closeOverlay()"
+>
+  <div
+    class="w-[400px] max-w-[90vw] flex flex-col gap-3 bg-gray-50 rounded-l overflow-clip px-4 py-5 shadow-[0px_9px_12px_0px_rgba(9,30,66,0.15),0px_0px_1px_0px_rgba(9,30,66,0.31)]"
+  >
+    <div class="flex flex-col gap-3 pb-3">
+      <div class="flex items-start justify-between pb-3">
+        <p class="text-xl font-medium text-black" translate>
+          record.notify.reuse.form.title
+        </p>
+        <button
+          type="button"
+          class="flex items-center justify-center size-6 text-black"
+          [attr.aria-label]="'record.notify.reuse.form.close' | translate"
+          (click)="closeOverlay()"
+        >
+          <ng-icon name="iconoirXmark" size="1.5em"></ng-icon>
+        </button>
+      </div>
+
+      <div class="flex flex-col gap-[10px]">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center">
+            <label class="font-bold text-base text-main leading-6">
+              <span translate>record.notify.reuse.form.field.title</span>
+              <span class="text-red-500">*</span>
+            </label>
+          </div>
+          <gn-ui-text-input
+            [placeholder]="
+              'record.notify.reuse.form.field.title.placeholder' | translate
+            "
+            [required]="true"
+          ></gn-ui-text-input>
+        </div>
+
+        <div class="flex flex-col gap-2 pt-3">
+          <div class="flex items-center">
+            <label class="font-bold text-base text-main leading-6">
+              <span translate>record.notify.reuse.form.field.url</span>
+              <span class="text-red-500">*</span>
+            </label>
+          </div>
+          <gn-ui-text-input
+            [placeholder]="
+              'record.notify.reuse.form.field.url.placeholder' | translate
+            "
+            [required]="true"
+          ></gn-ui-text-input>
+        </div>
+
+        <div class="flex flex-col gap-2 pt-3">
+          <div class="flex items-center">
+            <label class="font-bold text-base text-main leading-6">
+              <span translate>record.notify.reuse.form.field.email</span>
+              <span class="text-red-500">*</span>
+            </label>
+          </div>
+          <gn-ui-text-input
+            [placeholder]="
+              'record.notify.reuse.form.field.email.placeholder' | translate
+            "
+            [required]="true"
+          ></gn-ui-text-input>
+        </div>
+      </div>
+
+      <p class="font-medium text-sm text-gray-700 leading-5" translate>
+        record.notify.reuse.form.required.hint
       </p>
-      <button
-        type="button"
-        class="flex items-center justify-center size-6 text-black"
-        [attr.aria-label]="'record.notify.reuse.form.close' | translate"
-      >
-        <ng-icon name="iconoirXmark" size="1.5em"></ng-icon>
-      </button>
     </div>
 
-    <div class="flex flex-col gap-[10px]">
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center">
-          <label class="font-bold text-base text-main leading-6">
-            <span translate>record.notify.reuse.form.field.title</span>
-            <span class="text-red-500">*</span>
-          </label>
-        </div>
-        <gn-ui-text-input
-          [placeholder]="
-            'record.notify.reuse.form.field.title.placeholder' | translate
-          "
-          [required]="true"
-        ></gn-ui-text-input>
-      </div>
-
-      <div class="flex flex-col gap-2 pt-3">
-        <div class="flex items-center">
-          <label class="font-bold text-base text-main leading-6">
-            <span translate>record.notify.reuse.form.field.url</span>
-            <span class="text-red-500">*</span>
-          </label>
-        </div>
-        <gn-ui-text-input
-          [placeholder]="
-            'record.notify.reuse.form.field.url.placeholder' | translate
-          "
-          [required]="true"
-        ></gn-ui-text-input>
-      </div>
-
-      <div class="flex flex-col gap-2 pt-3">
-        <div class="flex items-center">
-          <label class="font-bold text-base text-main leading-6">
-            <span translate>record.notify.reuse.form.field.email</span>
-            <span class="text-red-500">*</span>
-          </label>
-        </div>
-        <gn-ui-text-input
-          [placeholder]="
-            'record.notify.reuse.form.field.email.placeholder' | translate
-          "
-          [required]="true"
-        ></gn-ui-text-input>
-      </div>
+    <div class="flex flex-col">
+      <gn-ui-button type="primary" extraClass="w-full h-8 justify-center gap-2">
+        <span translate>record.notify.reuse.form.submit</span>
+        <ng-icon name="iconoirPlusCircle" size="1.5em"></ng-icon>
+      </gn-ui-button>
     </div>
-
-    <p class="font-medium text-sm text-gray-700 leading-5" translate>
-      record.notify.reuse.form.required.hint
-    </p>
   </div>
-
-  <div class="flex flex-col">
-    <gn-ui-button type="primary" extraClass="w-full h-8 justify-center gap-2">
-      <span translate>record.notify.reuse.form.submit</span>
-      <ng-icon name="iconoirPlusCircle" size="1.5em"></ng-icon>
-    </gn-ui-button>
-  </div>
-</div>
+</ng-template>

@@ -46,6 +46,7 @@ import { RecordLinkedRecordsComponent } from '../record-linked-records/record-li
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
+import { NotifyReuseFormComponent } from '@geonetwork-ui/feature/notify-reuse'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -75,6 +76,7 @@ import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
     TranslateDirective,
     TranslatePipe,
     MetadataDoiComponent,
+    NotifyReuseFormComponent,
   ],
   viewProviders: [
     provideIcons({ matChatOutline, iconoirAppWindow }),
