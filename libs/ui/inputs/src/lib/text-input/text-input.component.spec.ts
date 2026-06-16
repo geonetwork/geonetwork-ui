@@ -56,4 +56,37 @@ describe('TextInputComponent', () => {
       expect(emittedCount).toBe(2)
     })
   })
+
+  describe('required validation', () => {
+    let inputEl
+    beforeEach(() => {
+      component.required = true
+      fixture.detectChanges()
+      inputEl = fixture.nativeElement.querySelector('input')
+    })
+
+    it('does not mark an empty input invalid before it is touched', () => {
+      component.ngAfterViewInit()
+      expect(inputEl.classList).not.toContain('invalid')
+    })
+
+    it('marks the input invalid once it is touched and left empty', () => {
+      inputEl.value = ''
+      inputEl.dispatchEvent(new Event('input'))
+      expect(inputEl.classList).toContain('invalid')
+    })
+
+    it('does not mark the input invalid when a value is entered', () => {
+      inputEl.value = 'some value'
+      inputEl.dispatchEvent(new Event('input'))
+      expect(inputEl.classList).not.toContain('invalid')
+    })
+
+    it('does not mark the input invalid when not required', () => {
+      component.required = false
+      inputEl.value = ''
+      inputEl.dispatchEvent(new Event('input'))
+      expect(inputEl.classList).not.toContain('invalid')
+    })
+  })
 })
