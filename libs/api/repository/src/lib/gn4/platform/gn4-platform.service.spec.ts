@@ -1,4 +1,5 @@
 import {
+  GroupsApiService,
   MeApiService,
   RecordsApiService,
   RegistriesApiService,
@@ -203,6 +204,17 @@ class UserfeedbackApiServiceMock {
   newUserFeedback = jest.fn(() => of(undefined))
 }
 
+class GroupsApiServiceMock {
+  // intentionally different order than me response arrays to validate ordering logic
+  getGroups = jest.fn(() =>
+    of([
+      { id: 22, name: 'Autre groupe' },
+      { id: 103, name: 'Groupe Editors' },
+      { id: 105, name: 'Groupe Reviewers' },
+    ])
+  )
+}
+
 describe('Gn4PlatformService', () => {
   let service: Gn4PlatformService
   let meApiService: MeApiService
@@ -256,6 +268,10 @@ describe('Gn4PlatformService', () => {
         {
           provide: RecordsApiService,
           useClass: RecordsApiServiceMock,
+        },
+        {
+          provide: GroupsApiService,
+          useClass: GroupsApiServiceMock,
         },
       ],
       imports: [HttpClientTestingModule],
@@ -374,6 +390,96 @@ describe('Gn4PlatformService', () => {
           const isAnonymous = await firstValueFrom(service.isAnonymous())
           expect(isAnonymous).toBe(true)
         })
+      })
+    })
+    describe('getUserPermissionsByGroup', () => {
+      it('maps canApprove from groupsWithReviewer and canEdit from groupsWithEditor for non-admin user', async () => {
+        const permissionsPromise = firstValueFrom(
+          service.getUserPermissionsByGroup()
+        )
+        ;(meApiService as any)._me$.next({
+          admin: false,
+          groupsWithRegisteredUser: [],
+          groupsWithEditor: [103],
+          groupsWithReviewer: [105],
+          groupsWithUserAdmin: [],
+        })
+        const permissions = await permissionsPromise
+        expect(permissions).toEqual([
+          {
+            groupId: 105,
+            groupName: 'Groupe Reviewers',
+            isMember: false,
+            canEdit: false,
+            canApprove: true,
+            canAdministrate: false,
+          },
+          {
+            groupId: 103,
+            groupName: 'Groupe Editors',
+            isMember: false,
+            canEdit: true,
+            canApprove: false,
+            canAdministrate: false,
+          },
+          {
+            groupId: 22,
+            groupName: 'Autre groupe',
+            isMember: false,
+            canEdit: false,
+            canApprove: false,
+            canAdministrate: false,
+          },
+        ])
+      })
+
+      it('returns all groups with all flags set to true for admin user', async () => {
+        const permissionsPromise = firstValueFrom(
+          service.getUserPermissionsByGroup()
+        )
+        ;(meApiService as any)._me$.next({
+          admin: true,
+          groupsWithRegisteredUser: [],
+          groupsWithEditor: [],
+          groupsWithReviewer: [],
+          groupsWithUserAdmin: [],
+        })
+        const permissions = await permissionsPromise
+        expect(permissions).toEqual([
+          {
+            groupId: 22,
+            groupName: 'Autre groupe',
+            isMember: true,
+            canEdit: true,
+            canApprove: true,
+            canAdministrate: true,
+          },
+          {
+            groupId: 103,
+            groupName: 'Groupe Editors',
+            isMember: true,
+            canEdit: true,
+            canApprove: true,
+            canAdministrate: true,
+          },
+          {
+            groupId: 105,
+            groupName: 'Groupe Reviewers',
+            isMember: true,
+            canEdit: true,
+            canApprove: true,
+            canAdministrate: true,
+          },
+        ])
+      })
+
+      it('returns empty array when user is anonymous', async () => {
+        const permissionsPromise = firstValueFrom(
+          service.getUserPermissionsByGroup()
+        )
+        ;(meApiService as any)._me$.next(null)
+        const permissions = await permissionsPromise
+        expect(permissions).toEqual([])
       })
     })
     describe('#translateKey', () => {

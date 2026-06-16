@@ -109,6 +109,26 @@ let _supportsAuthentication = true
 class PlatformServiceInterfaceMock {
   getApiVersion = jest.fn(() => of('4.2.5'))
   supportsAuthentication = jest.fn(() => _supportsAuthentication)
+  getUserPermissionsByGroup = jest.fn(() =>
+    of([
+      {
+        groupId: 105,
+        groupName: 'Groupe Reviewers',
+        isMember: true,
+        canEdit: true,
+        canApprove: true,
+        canAdministrate: false,
+      },
+      {
+        groupId: 103,
+        groupName: 'Groupe Editors',
+        isMember: true,
+        canEdit: true,
+        canApprove: false,
+        canAdministrate: false,
+      },
+    ])
+  )
 }
 
 let allowEditHarvested = false
@@ -743,6 +763,53 @@ describe('Gn4Repository', () => {
     })
     it('returns the record as serialized', () => {
       expect(recordSource).toMatch(/<mdb:MD_Metadata/)
+    })
+    it('uses the first reviewer group id when calling create', () => {
+      expect(gn4RecordsApi.create).toHaveBeenCalledWith(
+        '1234-5678',
+        '105',
+        expect.anything(),
+        expect.anything(),
+        expect.anything(),
+        undefined,
+        expect.anything(),
+        expect.anything(),
+        undefined,
+        expect.anything(),
+        expect.anything(),
+        expect.anything()
+      )
+    })
+    describe('when getUserPermissionsByGroup returns empty (anonymous or no groups)', () => {
+      beforeEach(async () => {
+        ;(
+          platformService.getUserPermissionsByGroup as jest.Mock
+        ).mockReturnValueOnce(of([]))
+        ;(gn4RecordsApi.getRecordAs as jest.Mock).mockReturnValueOnce(
+          of(duplicateDatasetRecordAsXmlFixture()).pipe(
+            map((xml) => ({ body: xml }))
+          )
+        )
+        ;[record, recordSource, savedOnce] = await lastValueFrom(
+          repository.openRecordForDuplication('1234-5678')
+        )
+      })
+      it('falls back to group 2', () => {
+        expect(gn4RecordsApi.create).toHaveBeenLastCalledWith(
+          '1234-5678',
+          '2',
+          expect.anything(),
+          expect.anything(),
+          expect.anything(),
+          undefined,
+          expect.anything(),
+          expect.anything(),
+          undefined,
+          expect.anything(),
+          expect.anything(),
+          expect.anything()
+        )
+      })
     })
   })
   // note: we're using a simple record here otherwise there might be loss of information when converting

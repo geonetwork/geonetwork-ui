@@ -385,38 +385,48 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   openRecordForDuplication(
     uniqueIdentifier: string
   ): Observable<[CatalogRecord, string, true] | null> {
-    return this.gn4RecordsApi
-      .create(
-        uniqueIdentifier,
-        '2',
-        'METADATA',
-        '',
-        false,
-        undefined,
-        true,
-        false,
-        undefined,
-        'body',
-        false,
-        {
-          httpHeaderAccept: 'application/json',
-          httpContentTypeSelected: 'application/json;charset=UTF-8',
-        }
-      )
-      .pipe(
-        switchMap((uniqueIdentifier) => {
-          return this.getRecordAsXml(uniqueIdentifier)
-        }),
-        switchMap((xml) => {
-          return from(
-            findConverterForDocument(xml)
-              .readRecord(xml)
-              .then((record) => {
-                return [record, xml, true] as [CatalogRecord, string, true]
-              })
+    return this.platformService.getUserPermissionsByGroup().pipe(
+      map(
+        (permissions) =>
+          permissions.find((p) => p.canApprove)?.groupId?.toString() ??
+          permissions.find((p) => p.canEdit)?.groupId?.toString() ??
+          '2'
+      ),
+      switchMap((groupId) =>
+        this.gn4RecordsApi
+          .create(
+            uniqueIdentifier,
+            groupId,
+            'METADATA',
+            '',
+            false,
+            undefined,
+            true,
+            false,
+            undefined,
+            'body',
+            false,
+            {
+              httpHeaderAccept: 'application/json',
+              httpContentTypeSelected: 'application/json;charset=UTF-8',
+            }
           )
-        })
+          .pipe(
+            switchMap((uniqueIdentifier) => {
+              return this.getRecordAsXml(uniqueIdentifier)
+            }),
+            switchMap((xml) => {
+              return from(
+                findConverterForDocument(xml)
+                  .readRecord(xml)
+                  .then((record) => {
+                    return [record, xml, true] as [CatalogRecord, string, true]
+                  })
+              )
+            })
+          )
       )
+    )
   }
 
   saveRecord(
