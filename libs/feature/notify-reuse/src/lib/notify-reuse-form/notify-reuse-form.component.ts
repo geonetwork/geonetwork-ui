@@ -1,9 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
-  Output,
   inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
@@ -57,15 +55,25 @@ import {
 export class NotifyReuseFormComponent {
   private scrollStrategies = inject(ScrollStrategyOptions)
 
-  @Input() record: CatalogRecord | null = null
-  @Output() recordChange = new EventEmitter<ReuseRecord>()
+  @Input() set record(value: Partial<CatalogRecord> | null) {
+    this._record = value
+    this.email = value?.ownerOrganization?.email ?? ''
+  }
+  get record() {
+    return this._record
+  }
+  private _record: Partial<CatalogRecord> | null = null
 
   title = ''
   url = ''
   email = ''
 
   get isFormValid() {
-    return this.title.trim() !== '' && this.url.trim() !== '' && this.email.trim() !== ''
+    return (
+      this.title.trim() !== '' &&
+      this.url.trim() !== '' &&
+      this.email.trim() !== ''
+    )
   }
 
   overlayOpen = false
