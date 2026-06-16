@@ -1,6 +1,7 @@
-import { Meta, StoryObj, componentWrapperDecorator } from '@storybook/angular'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { NotifyReuseFormComponent } from './notify-reuse-form.component'
 import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const RECORD: ReuseRecord = {
   uniqueIdentifier: 'story-reuse-001',
@@ -38,11 +39,13 @@ const RECORD: ReuseRecord = {
 export default {
   title: 'Smart/NotifyReuse/NotifyReuseForm',
   component: NotifyReuseFormComponent,
-  decorators: [
-    componentWrapperDecorator(
-      (story) => `<div class="max-w-3xl p-6">${story}</div>`
-    ),
-  ],
+  decorators: [applicationConfig({ providers: [provideI18n()] })],
+  render: (args) => ({
+    props: args,
+    template: `<div class="max-w-[400px] p-6">
+      <gn-ui-notify-reuse-form [record]="record"></gn-ui-notify-reuse-form>
+    </div>`,
+  }),
 } as Meta<NotifyReuseFormComponent>
 
 export const Primary: StoryObj<NotifyReuseFormComponent> = {

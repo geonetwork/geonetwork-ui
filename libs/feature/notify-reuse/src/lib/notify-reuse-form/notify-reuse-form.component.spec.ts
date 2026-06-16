@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NotifyReuseFormComponent } from './notify-reuse-form.component'
 import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const REUSE_RECORD: ReuseRecord = {
   uniqueIdentifier: 'test-reuse-001',
@@ -34,6 +35,7 @@ describe('NotifyReuseFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [provideI18n()],
       imports: [NotifyReuseFormComponent],
     }).compileComponents()
 
