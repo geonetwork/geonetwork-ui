@@ -2,14 +2,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
   inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
-  ConnectedPosition,
+  Overlay,
   OverlayModule,
+  OverlayRef,
   ScrollStrategyOptions,
 } from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
 import {
   CatalogRecord,
   Individual,
@@ -52,8 +58,13 @@ import {
     }),
   ],
 })
-export class NotifyReuseFormComponent {
+export class NotifyReuseFormComponent implements OnDestroy {
+  private overlay = inject(Overlay)
+  private viewContainerRef = inject(ViewContainerRef)
   private scrollStrategies = inject(ScrollStrategyOptions)
+  private overlayRef: OverlayRef | null = null
+
+  @ViewChild('notifyReuseForm') templateRef: TemplateRef<unknown>
 
   @Input() set record(value: Partial<CatalogRecord> | null) {
     this._record = value
@@ -76,31 +87,41 @@ export class NotifyReuseFormComponent {
     )
   }
 
-  overlayOpen = false
-  scrollStrategy = this.scrollStrategies.reposition()
-  overlayPositions: ConnectedPosition[] = [
-    {
-      originX: 'start',
-      originY: 'bottom',
-      overlayX: 'start',
-      overlayY: 'top',
-      offsetY: 8,
-    },
-    {
-      originX: 'start',
-      originY: 'top',
-      overlayX: 'start',
-      overlayY: 'bottom',
-      offsetY: -8,
-    },
-  ]
-
   toggleOverlay() {
-    this.overlayOpen = !this.overlayOpen
+    if (this.overlayRef) {
+      this.closeOverlay()
+    } else {
+      this.openOverlay()
+    }
+  }
+
+  openOverlay() {
+    const positionStrategy = this.overlay
+      .position()
+      .global()
+      .centerVertically()
+      .right('16px')
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      hasBackdrop: true,
+      backdropClass: 'cdk-overlay-transparent-backdrop',
+      scrollStrategy: this.scrollStrategies.noop(),
+    })
+
+    this.overlayRef.attach(
+      new TemplatePortal(this.templateRef, this.viewContainerRef)
+    )
+    this.overlayRef.backdropClick().subscribe(() => this.closeOverlay())
   }
 
   closeOverlay() {
-    this.overlayOpen = false
+    this.overlayRef?.dispose()
+    this.overlayRef = null
+  }
+
+  ngOnDestroy() {
+    this.closeOverlay()
   }
 
   submit() {

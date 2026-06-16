@@ -3,22 +3,11 @@
   extraClass="w-full flex flex-row justify-between bg-white"
   [style.--gn-ui-button-rounded]="'10px'"
   (buttonClick)="toggleOverlay()"
-  cdkOverlayOrigin
-  #overlayOrigin="cdkOverlayOrigin"
 >
   <span translate>service.metadata.reuse</span>
   <ng-icon class="mr-[5px] text-[1em]" name="iconoirAppWindow"></ng-icon>
 </gn-ui-button>
-<ng-template
-  #notifyReuseForm
-  cdkConnectedOverlay
-  [cdkConnectedOverlayOrigin]="overlayOrigin"
-  [cdkConnectedOverlayOpen]="overlayOpen"
-  [cdkConnectedOverlayPositions]="overlayPositions"
-  [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
-  (overlayOutsideClick)="closeOverlay()"
-  (detach)="closeOverlay()"
->
+<ng-template #notifyReuseForm>
   <div
     class="w-[400px] max-w-[90vw] flex flex-col gap-3 bg-gray-50 rounded-l overflow-clip px-4 py-5 shadow-[0px_9px_12px_0px_rgba(9,30,66,0.15),0px_0px_1px_0px_rgba(9,30,66,0.31)]"
   >
