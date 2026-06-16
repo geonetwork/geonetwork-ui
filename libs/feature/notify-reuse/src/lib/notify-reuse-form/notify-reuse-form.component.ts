@@ -91,11 +91,18 @@ export class NotifyReuseFormComponent implements OnDestroy {
   loading = signal(false)
 
   get isFormValid() {
+    // TODO: validate URL format and email format and display message to user
     return (
       this.title.trim() !== '' &&
       this.url.trim() !== '' &&
       this.email.trim() !== ''
     )
+  }
+
+  clearInputs() {
+    this.title = ''
+    this.url = ''
+    this.email = this.record?.ownerOrganization?.email ?? ''
   }
 
   toggleOverlay() {
@@ -171,8 +178,8 @@ export class NotifyReuseFormComponent implements OnDestroy {
       reuseType: 'application',
       sourceRecords: [
         {
-          uuid: this._record?.uniqueIdentifier ?? '',
-          title: this._record?.title ?? '',
+          uuid: this.record?.uniqueIdentifier ?? '',
+          title: this.record?.title ?? '',
         },
       ],
       onlineResources: [onlineResource],
@@ -187,11 +194,16 @@ export class NotifyReuseFormComponent implements OnDestroy {
           uniqueIdentifier
         )
         this.loading.set(false)
+        this.clearInputs()
         this.closeOverlay()
+        // TODO: send to editor
       },
       error: (err) => {
         console.error('Error saving reuse record:', err)
         this.loading.set(false)
+        this.clearInputs()
+        this.closeOverlay()
+        // TODO: display error message to user
       },
     })
   }
