@@ -11,11 +11,7 @@ import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
-import {
-  iconoirHelpCircle,
-  iconoirPlusCircle,
-  iconoirXmark,
-} from '@ng-icons/iconoir'
+import { iconoirPlusCircle, iconoirXmark } from '@ng-icons/iconoir'
 
 @Component({
   selector: 'gn-ui-notify-reuse-form',
@@ -33,7 +29,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [
     provideIcons({
-      iconoirHelpCircle,
       iconoirPlusCircle,
       iconoirXmark,
     }),
