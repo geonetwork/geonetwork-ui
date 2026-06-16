@@ -7,6 +7,7 @@ import {
   ViewChild,
   ViewContainerRef,
   inject,
+  signal,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
@@ -36,6 +37,7 @@ import {
   iconoirXmark,
 } from '@ng-icons/iconoir'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'gn-ui-notify-reuse-form',
@@ -45,6 +47,7 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
     OverlayModule,
     TextInputComponent,
     ButtonComponent,
+    SpinningLoaderComponent,
     TranslatePipe,
     TranslateDirective,
     NgIcon,
@@ -85,6 +88,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
   title = ''
   url = ''
   email = ''
+  loading = signal(false)
 
   get isFormValid() {
     return (
@@ -175,16 +179,19 @@ export class NotifyReuseFormComponent implements OnDestroy {
       spatialExtents: [],
       temporalExtents: [],
     }
+    this.loading.set(true)
     this.recordsRepository.saveRecord(reuseRecord).subscribe({
       next: (uniqueIdentifier) => {
         console.log(
           'Reuse record saved with unique identifier:',
           uniqueIdentifier
         )
+        this.loading.set(false)
         this.closeOverlay()
       },
       error: (err) => {
         console.error('Error saving reuse record:', err)
+        this.loading.set(false)
       },
     })
   }
