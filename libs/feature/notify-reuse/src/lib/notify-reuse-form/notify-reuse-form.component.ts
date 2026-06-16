@@ -12,7 +12,12 @@ import {
   OverlayModule,
   ScrollStrategyOptions,
 } from '@angular/cdk/overlay'
-import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  Individual,
+  OnlineLinkResource,
+  ReuseRecord,
+} from '@geonetwork-ui/common/domain/model/record'
 import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
@@ -52,8 +57,16 @@ import {
 export class NotifyReuseFormComponent {
   private scrollStrategies = inject(ScrollStrategyOptions)
 
-  @Input() record: ReuseRecord | null = null
+  @Input() record: CatalogRecord | null = null
   @Output() recordChange = new EventEmitter<ReuseRecord>()
+
+  title = ''
+  url = ''
+  email = ''
+
+  get isFormValid() {
+    return this.title.trim() !== '' && this.url.trim() !== '' && this.email.trim() !== ''
+  }
 
   overlayOpen = false
   scrollStrategy = this.scrollStrategies.reposition()
@@ -80,5 +93,22 @@ export class NotifyReuseFormComponent {
 
   closeOverlay() {
     this.overlayOpen = false
+  }
+
+  submit() {
+    if (!this.isFormValid) return
+    const onlineResource: OnlineLinkResource = {
+      type: 'link',
+      url: new URL(this.url),
+    }
+    const contact: Individual = {
+      email: this.email,
+      role: 'pointOfContact',
+    }
+    const _reuseRecord: Partial<ReuseRecord> = {
+      title: this.title,
+      onlineResources: [onlineResource],
+      contacts: [contact],
+    }
   }
 }

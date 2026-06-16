@@ -46,6 +46,7 @@
             </label>
           </div>
           <gn-ui-text-input
+            [(value)]="title"
             [placeholder]="
               'record.notify.reuse.form.field.title.placeholder' | translate
             "
@@ -61,6 +62,7 @@
             </label>
           </div>
           <gn-ui-text-input
+            [(value)]="url"
             [placeholder]="
               'record.notify.reuse.form.field.url.placeholder' | translate
             "
@@ -76,6 +78,7 @@
             </label>
           </div>
           <gn-ui-text-input
+            [(value)]="email"
             [placeholder]="
               'record.notify.reuse.form.field.email.placeholder' | translate
             "
@@ -90,7 +93,12 @@
     </div>
 
     <div class="flex flex-col">
-      <gn-ui-button type="primary" extraClass="w-full h-8 justify-center gap-2">
+      <gn-ui-button
+        type="primary"
+        extraClass="w-full h-8 justify-center gap-2"
+        [disabled]="!isFormValid"
+        (buttonClick)="submit()"
+      >
         <span translate>record.notify.reuse.form.submit</span>
         <ng-icon name="iconoirPlusCircle" size="1.5em"></ng-icon>
       </gn-ui-button>
