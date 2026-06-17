@@ -250,6 +250,18 @@ describe('NotifyReuseFormComponent', () => {
       ])
     })
 
+    it('opens the saved reuse record in the metadata editor', () => {
+      component.reuseFormUrl = 'http://my-metadata-editor/'
+      const openSpy = jest.spyOn(window, 'open').mockImplementation(() => null)
+
+      component.submit()
+
+      expect(openSpy).toHaveBeenCalledWith(
+        'http://my-metadata-editor/edit/new-reuse-uuid',
+        '_blank'
+      )
+    })
+
     it('clears the loading state and inputs after a successful save', () => {
       component.openOverlay()
       component.submit()

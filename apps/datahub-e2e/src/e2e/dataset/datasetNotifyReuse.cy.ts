@@ -1,6 +1,12 @@
 import 'cypress-real-events'
 
 describe('Declare a reuse', () => {
+  beforeEach(() => {
+    cy.intercept('GET', '/assets/configuration/default.toml', {
+      fixture: 'config-with-reuse-form.toml',
+    })
+  })
+
   describe('when not logged in', () => {
     it('does not display the reuse button', () => {
       cy.visit('/dataset/accroche_velos')
@@ -21,11 +27,13 @@ describe('Declare a reuse', () => {
       cy.get('@reuseForm')
         .find('gn-ui-button')
         .first()
-        .should('contain.text', 'Reuse')
+        .should('contain.text', 'Declare a reuse')
     })
 
     describe('reuse form overlay', () => {
       beforeEach(() => {
+        // stub window.open so the success path doesn't spawn a real tab
+        cy.window().then((win) => cy.stub(win, 'open').as('windowOpen'))
         cy.get('@reuseForm').find('gn-ui-button').first().click()
         cy.get('.cdk-overlay-container').as('overlay')
       })
@@ -66,15 +74,18 @@ describe('Declare a reuse', () => {
           .should('not.be.disabled')
       })
 
-      it('submits the reuse and closes the overlay', () => {
-        cy.intercept('PUT', '/geonetwork/srv/api/records', {
+      it('submits the reuse, closes the overlay and opens the editor', () => {
+        cy.intercept(
+          { method: 'PUT', pathname: '**/records' },
+          {
           statusCode: 201,
           body: {
             metadataInfos: {
               '12345': [{ uuid: 'new-reuse-uuid' }],
             },
           },
-        }).as('saveRecord')
+          }
+        ).as('saveRecord')
 
         cy.get('@overlay')
           .find('gn-ui-text-input input')
@@ -96,6 +107,44 @@ describe('Declare a reuse', () => {
           'not.contain.text',
           'Declare a reuse'
         )
+
+        // navigates to the new reuse record in the metadata editor (new tab)
+        cy.get('@windowOpen').should(
+          'have.been.calledWith',
+          'http://my-metadata-editor/edit/new-reuse-uuid',
+          '_blank'
+        )
+      })
+
+      it('shows an error toast and keeps the editor closed when saving fails', () => {
+        cy.intercept(
+          { method: 'PUT', pathname: '**/records' },
+          {
+          statusCode: 500,
+          body: {},
+          }
+        ).as('saveRecord')
+
+        cy.get('@overlay')
+          .find('gn-ui-text-input input')
+          .eq(0)
+          .type('My great reuse')
+        cy.get('@overlay')
+          .find('gn-ui-text-input input')
+          .eq(1)
+          .type('https://example.com/my-reuse')
+
+        cy.get('@overlay').find('gn-ui-button').last().find('button').click()
+
+        cy.wait('@saveRecord')
+
+        // the error is surfaced as a notification toast
+        cy.get('gn-ui-notification').should(
+          'contain.text',
+          'Error saving the reuse'
+        )
+        // and the editor is not opened
+        cy.get('@windowOpen').should('not.have.been.called')
       })
 
       it('closes the overlay with the close button', () => {
