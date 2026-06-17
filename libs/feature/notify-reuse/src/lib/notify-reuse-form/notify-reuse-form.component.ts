@@ -39,6 +39,11 @@ import {
 } from '@ng-icons/iconoir'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('record.notify.reuse.form.error.title')
+marker('record.notify.reuse.form.error.body')
 
 export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
 @Component({
@@ -75,6 +80,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
   private overlayRef: OverlayRef | null = null
   private recordsRepository = inject(RecordsRepositoryInterface)
   private readonly translate = inject(TranslateService)
+  private readonly notificationsService = inject(NotificationsService)
   reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
 
   @ViewChild('notifyReuseForm') templateRef: TemplateRef<unknown>
@@ -203,11 +209,20 @@ export class NotifyReuseFormComponent implements OnDestroy {
         window.open(`${baseUrl}/edit/${uniqueIdentifier}`, '_blank')
       },
       error: (err) => {
-        console.error('Error saving reuse record:', err)
         this.loading.set(false)
         this.clearInputs()
         this.closeOverlay()
-        // TODO: display error message to user
+        this.notificationsService.showNotification(
+          {
+            type: 'error',
+            title: this.translate.instant(
+              'record.notify.reuse.form.error.title'
+            ),
+            text: this.translate.instant('record.notify.reuse.form.error.body'),
+          },
+          7000,
+          err
+        )
       },
     })
   }

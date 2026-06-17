@@ -7,6 +7,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
 import { of, throwError } from 'rxjs'
 
@@ -262,11 +263,16 @@ describe('NotifyReuseFormComponent', () => {
       )
     })
 
-    it('clears the loading state and closes the overlay on error', () => {
+    it('clears the loading state, closes the overlay and notifies on error', () => {
       recordsRepository.saveRecord.mockReturnValueOnce(
         throwError(() => new Error('save failed'))
       )
       jest.spyOn(console, 'error').mockImplementation(() => undefined)
+      const notificationsService = TestBed.inject(NotificationsService)
+      const showNotification = jest.spyOn(
+        notificationsService,
+        'showNotification'
+      )
       component.openOverlay()
 
       component.submit()
@@ -274,6 +280,15 @@ describe('NotifyReuseFormComponent', () => {
       expect(component.loading()).toBe(false)
       expect(overlayContainerElement.textContent).not.toContain(
         'record.notify.reuse.form.title'
+      )
+      expect(showNotification).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'error',
+          title: 'record.notify.reuse.form.error.title',
+          text: 'record.notify.reuse.form.error.body',
+        }),
+        7000,
+        expect.any(Error)
       )
     })
   })

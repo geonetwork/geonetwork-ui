@@ -18,6 +18,7 @@ import { Subscription, tap } from 'rxjs'
 import { TitleService } from '../../router/datahub-title.service'
 import { RecordHeaderComponent } from '../record-header/record-header.component'
 import { RecordMetadataComponent } from '../record-metadata/record-metadata.component'
+import { NotificationsContainerComponent } from '@geonetwork-ui/feature/notifications'
 
 @Component({
   selector: 'datahub-record-page',
@@ -30,6 +31,7 @@ import { RecordMetadataComponent } from '../record-metadata/record-metadata.comp
     RecordMetadataComponent,
     RecordHeaderComponent,
     RecordMetaComponent,
+    NotificationsContainerComponent,
   ],
 })
 export class RecordPageComponent implements OnInit, OnDestroy {

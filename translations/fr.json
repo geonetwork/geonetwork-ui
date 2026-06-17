@@ -559,6 +559,8 @@
   "record.metadata.userFeedbacks.sortSelector.label": "Trier par ...",
   "record.more.details": "Détails",
   "record.notify.reuse.form.close": "Fermer",
+  "record.notify.reuse.form.error.body": "La réutilisation n'a pas pu être enregistrée. Veuillez réessayer.",
+  "record.notify.reuse.form.error.title": "Erreur lors de l'enregistrement de la réutilisation",
   "record.notify.reuse.form.field.email": "Email",
   "record.notify.reuse.form.field.email.placeholder": "adresse mail du contact",
   "record.notify.reuse.form.field.title": "Titre",

@@ -559,6 +559,8 @@
   "record.metadata.userFeedbacks.sortSelector.label": "",
   "record.more.details": "",
   "record.notify.reuse.form.close": "Sluiten",
+  "record.notify.reuse.form.error.body": "",
+  "record.notify.reuse.form.error.title": "",
   "record.notify.reuse.form.field.email": "E-mail",
   "record.notify.reuse.form.field.email.placeholder": "e-mailadres van het contact",
   "record.notify.reuse.form.field.title": "Titel",

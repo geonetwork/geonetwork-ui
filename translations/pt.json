@@ -559,6 +559,8 @@
   "record.metadata.userFeedbacks.sortSelector.label": "",
   "record.more.details": "",
   "record.notify.reuse.form.close": "Fechar",
+  "record.notify.reuse.form.error.body": "",
+  "record.notify.reuse.form.error.title": "",
   "record.notify.reuse.form.field.email": "E-mail",
   "record.notify.reuse.form.field.email.placeholder": "endereço de e-mail do contacto",
   "record.notify.reuse.form.field.title": "Título",
