@@ -7,3 +7,7 @@
   --2x-side-padding: calc(var(--side-padding) * 2);
   --text-padding: calc(var(--side-padding) + 40px);
 }
+
+.invalid {
+  border-color: var(--color-invalid, theme('colors.red.500'));
+}

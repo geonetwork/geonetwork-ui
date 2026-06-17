@@ -124,6 +124,49 @@ describe('UrlInputComponent', () => {
       })
     })
 
+    describe('invalid state', () => {
+      it('is not marked invalid before any interaction', () => {
+        component.required = true
+        fixture.detectChanges()
+        expect(inputEl.classList.contains('invalid')).toBe(false)
+      })
+      it('is marked invalid when required and emptied', () => {
+        component.required = true
+        inputEl.value = ''
+        inputEl.dispatchEvent(new Event('input'))
+        expect(inputEl.classList.contains('invalid')).toBe(true)
+      })
+      it('is marked invalid when required and not a valid URL', () => {
+        component.required = true
+        inputEl.value = 'not-a-url'
+        inputEl.dispatchEvent(new Event('input'))
+        expect(inputEl.classList.contains('invalid')).toBe(true)
+      })
+      it('is not marked invalid when required and a valid URL is entered', () => {
+        component.required = true
+        inputEl.value = 'http://hello.org'
+        inputEl.dispatchEvent(new Event('input'))
+        expect(inputEl.classList.contains('invalid')).toBe(false)
+      })
+      it('is never marked invalid when not required', () => {
+        inputEl.value = 'not-a-url'
+        inputEl.dispatchEvent(new Event('input'))
+        expect(inputEl.classList.contains('invalid')).toBe(false)
+      })
+      it('clears the invalid state when reset via resetUrlOnChange', () => {
+        component.required = true
+        inputEl.value = 'not-a-url'
+        inputEl.dispatchEvent(new Event('input'))
+        expect(inputEl.classList.contains('invalid')).toBe(true)
+
+        component.ngOnChanges({
+          resetUrlOnChange: new SimpleChange(1, 2, false),
+        })
+        fixture.detectChanges()
+        expect(inputEl.classList.contains('invalid')).toBe(false)
+      })
+    })
+
     describe('button', () => {
       it('is disabled if parent set it as disabled', () => {
         component.disabled = true

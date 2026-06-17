@@ -1,12 +1,15 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   Output,
   SimpleChanges,
+  ViewChild,
   inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
@@ -32,7 +35,7 @@ import { iconoirArrowUp, iconoirLink } from '@ng-icons/iconoir'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UrlInputComponent implements OnChanges {
+export class UrlInputComponent implements OnChanges, AfterViewInit {
   private cd = inject(ChangeDetectorRef)
 
   @Input() set value(v: string) {
@@ -52,6 +55,10 @@ export class UrlInputComponent implements OnChanges {
   @Input() disabled: boolean
   @Input() showValidateButton = true
   @Input() resetUrlOnChange: number
+  @Input() required = false
+
+  @ViewChild('input') input: ElementRef<HTMLInputElement>
+  private dirty = false
 
   /**
    * This will emit null if the field is emptied
@@ -67,18 +74,33 @@ export class UrlInputComponent implements OnChanges {
       !changes['resetUrlOnChange'].firstChange
     ) {
       this.inputValue = ''
+      this.dirty = false
+      this.checkValidity(this.inputValue)
     }
+  }
+
+  ngAfterViewInit() {
+    this.checkValidity(this.inputValue)
   }
 
   handleInput(event: Event) {
     const value = (event.target as HTMLInputElement).value
     this.inputValue = value
+    this.dirty = true
+    this.checkValidity(value)
     if (!value || !this.isValidUrl(value)) {
       this.valueChange.next(null)
       return
     }
     this.cd.markForCheck()
     this.valueChange.next(value)
+  }
+
+  checkValidity(value: string) {
+    this.input?.nativeElement.classList.toggle(
+      'invalid',
+      this.required && this.dirty && !this.isValidUrl(value)
+    )
   }
 
   handleUpload(element: HTMLInputElement, event: Event) {
