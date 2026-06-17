@@ -1,6 +1,23 @@
 import 'cypress-real-events'
+import { lt } from 'semver'
 
 describe('Declare a reuse', () => {
+  before(function () {
+    // declaring a reuse persists a record through saveRecord(), which requires
+    // the GeoNetwork publication API v4.2.5+; skip the suite on older backends.
+    cy.request({
+      url: '/geonetwork/srv/api/site/settings?key=system/platform/version',
+      headers: { accept: 'application/json' },
+    })
+      .its('body')
+      .then((body) => {
+        const version = body['system/platform/version']
+        if (lt(version, '4.2.5')) {
+          this.skip()
+        }
+      })
+  })
+
   beforeEach(() => {
     // reuse_form_url is optional and disabled in the default config, so the
     // reuse feature is opt-in: serve a config that enables it for these tests
