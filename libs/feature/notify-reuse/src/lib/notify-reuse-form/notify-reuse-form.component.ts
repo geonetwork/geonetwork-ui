@@ -24,8 +24,11 @@ import {
   OnlineLinkResource,
   ReuseRecord,
 } from '@geonetwork-ui/common/domain/model/record'
-import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  ButtonComponent,
+  TextInputComponent,
+  UrlInputComponent,
+} from '@geonetwork-ui/ui/inputs'
 import {
   TranslateDirective,
   TranslatePipe,
@@ -53,6 +56,7 @@ export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
     CommonModule,
     OverlayModule,
     TextInputComponent,
+    UrlInputComponent,
     ButtonComponent,
     SpinningLoaderComponent,
     TranslatePipe,
@@ -100,12 +104,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
   loading = signal(false)
 
   get isFormValid() {
-    // TODO: validate URL format and email format and display message to user
-    return (
-      this.title.trim() !== '' &&
-      this.url.trim() !== '' &&
-      this.email.trim() !== ''
-    )
+    return this.title.trim() !== '' && !!this.url && this.email.trim() !== ''
   }
 
   clearInputs() {
