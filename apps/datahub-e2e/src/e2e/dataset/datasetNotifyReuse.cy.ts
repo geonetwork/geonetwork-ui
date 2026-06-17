@@ -78,12 +78,12 @@ describe('Declare a reuse', () => {
         cy.intercept(
           { method: 'PUT', pathname: '**/records' },
           {
-          statusCode: 201,
-          body: {
-            metadataInfos: {
-              '12345': [{ uuid: 'new-reuse-uuid' }],
+            statusCode: 201,
+            body: {
+              metadataInfos: {
+                '12345': [{ uuid: 'new-reuse-uuid' }],
+              },
             },
-          },
           }
         ).as('saveRecord')
 
@@ -112,7 +112,7 @@ describe('Declare a reuse', () => {
         cy.get('@windowOpen').should(
           'have.been.calledWith',
           'http://my-metadata-editor/edit/new-reuse-uuid',
-          '_blank'
+          '_self'
         )
       })
 
@@ -120,8 +120,8 @@ describe('Declare a reuse', () => {
         cy.intercept(
           { method: 'PUT', pathname: '**/records' },
           {
-          statusCode: 500,
-          body: {},
+            statusCode: 500,
+            body: {},
           }
         ).as('saveRecord')
 

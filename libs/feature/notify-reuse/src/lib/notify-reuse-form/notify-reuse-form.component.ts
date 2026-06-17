@@ -206,7 +206,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
         this.clearInputs()
         this.closeOverlay()
         const baseUrl = `${this.reuseFormUrl ?? ''}`.replace(/\/+$/, '')
-        window.open(`${baseUrl}/edit/${uniqueIdentifier}`, '_blank')
+        window.open(`${baseUrl}/edit/${uniqueIdentifier}`, '_self')
       },
       error: (err) => {
         this.loading.set(false)

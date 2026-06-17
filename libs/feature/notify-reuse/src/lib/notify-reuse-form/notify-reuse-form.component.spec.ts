@@ -258,7 +258,7 @@ describe('NotifyReuseFormComponent', () => {
 
       expect(openSpy).toHaveBeenCalledWith(
         'http://my-metadata-editor/edit/new-reuse-uuid',
-        '_blank'
+        '_self'
       )
     })
 
