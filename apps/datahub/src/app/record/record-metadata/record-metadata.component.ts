@@ -32,10 +32,7 @@ import { RecordDownloadsComponent } from '../record-downloads/record-downloads.c
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
-import {
-  RecordDataPreviewComponent,
-  REUSE_FORM_URL,
-} from '../record-data-preview/record-data-preview.component'
+import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matChatOutline } from '@ng-icons/material-icons/outline'
@@ -46,7 +43,10 @@ import { RecordLinkedRecordsComponent } from '../record-linked-records/record-li
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
-import { NotifyReuseFormComponent } from '@geonetwork-ui/feature/notify-reuse'
+import {
+  NotifyReuseFormComponent,
+  REUSE_FORM_URL,
+} from '@geonetwork-ui/feature/notify-reuse'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -281,13 +281,5 @@ export class RecordMetadataComponent {
       }),
       startWith(false)
     )
-  }
-
-  navigateToReuseForm() {
-    this.metadataUuid$.subscribe((uuid) => {
-      if (uuid && this.reuseFormUrl) {
-        window.open(`${this.reuseFormUrl}/${uuid}`, '_blank')
-      }
-    })
   }
 }

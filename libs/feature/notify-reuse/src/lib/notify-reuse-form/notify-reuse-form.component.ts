@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  InjectionToken,
   Input,
   OnDestroy,
   TemplateRef,
@@ -39,6 +40,7 @@ import {
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 
+export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
 @Component({
   selector: 'gn-ui-notify-reuse-form',
   standalone: true,
@@ -73,6 +75,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
   private overlayRef: OverlayRef | null = null
   private recordsRepository = inject(RecordsRepositoryInterface)
   private readonly translate = inject(TranslateService)
+  reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
 
   @ViewChild('notifyReuseForm') templateRef: TemplateRef<unknown>
 
@@ -196,7 +199,8 @@ export class NotifyReuseFormComponent implements OnDestroy {
         this.loading.set(false)
         this.clearInputs()
         this.closeOverlay()
-        // TODO: send to editor
+        const baseUrl = `${this.reuseFormUrl ?? ''}`.replace(/\/+$/, '')
+        window.open(`${baseUrl}/edit/${uniqueIdentifier}`, '_blank')
       },
       error: (err) => {
         console.error('Error saving reuse record:', err)

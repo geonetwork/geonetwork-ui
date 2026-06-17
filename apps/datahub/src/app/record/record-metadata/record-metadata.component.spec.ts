@@ -21,7 +21,7 @@ import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlink
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { REUSE_FORM_URL } from '../record-data-preview/record-data-preview.component'
+import { REUSE_FORM_URL } from '@geonetwork-ui/feature/notify-reuse'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const SAMPLE_RECORD = {
