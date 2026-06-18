@@ -781,33 +781,16 @@ describe('Gn4Repository', () => {
       )
     })
     describe('when getUserPermissionsByGroup returns empty (anonymous or no groups)', () => {
-      beforeEach(async () => {
+      it('throws an error', async () => {
         ;(
           platformService.getUserPermissionsByGroup as jest.Mock
         ).mockReturnValueOnce(of([]))
-        ;(gn4RecordsApi.getRecordAs as jest.Mock).mockReturnValueOnce(
-          of(duplicateDatasetRecordAsXmlFixture()).pipe(
-            map((xml) => ({ body: xml }))
-          )
-        )
-        ;[record, recordSource, savedOnce] = await lastValueFrom(
+        let error: Error
+        await lastValueFrom(
           repository.openRecordForDuplication('1234-5678')
-        )
-      })
-      it('falls back to group 2', () => {
-        expect(gn4RecordsApi.create).toHaveBeenLastCalledWith(
-          '1234-5678',
-          '2',
-          expect.anything(),
-          expect.anything(),
-          expect.anything(),
-          undefined,
-          expect.anything(),
-          expect.anything(),
-          undefined,
-          expect.anything(),
-          expect.anything(),
-          expect.anything()
+        ).catch((e) => (error = e))
+        expect(error).toEqual(
+          new Error('Current user has no writable group to duplicate into')
         )
       })
     })

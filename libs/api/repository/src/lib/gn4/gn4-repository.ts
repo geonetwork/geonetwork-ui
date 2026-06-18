@@ -386,12 +386,16 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     uniqueIdentifier: string
   ): Observable<[CatalogRecord, string, true] | null> {
     return this.platformService.getUserPermissionsByGroup().pipe(
-      map(
-        (permissions) =>
+      map((permissions) => {
+        const groupId =
           permissions.find((p) => p.canApprove)?.groupId?.toString() ??
-          permissions.find((p) => p.canEdit)?.groupId?.toString() ??
-          '2'
-      ),
+          permissions.find((p) => p.canEdit)?.groupId?.toString()
+        if (!groupId)
+          throw new Error(
+            'Current user has no writable group to duplicate into'
+          )
+        return groupId
+      }),
       switchMap((groupId) =>
         this.gn4RecordsApi
           .create(
