@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core'
+import { Component, Input, Output, ViewChild } from '@angular/core'
 import { distinctUntilChanged } from 'rxjs/operators'
 import { Subject } from 'rxjs'
 import { CommonModule } from '@angular/common'
@@ -16,7 +10,7 @@ import { CommonModule } from '@angular/common'
   standalone: true,
   imports: [CommonModule],
 })
-export class TextInputComponent implements AfterViewInit {
+export class TextInputComponent {
   @Input() value = ''
   @Input() extraClass = ''
   @Input() placeholder: string
@@ -27,23 +21,8 @@ export class TextInputComponent implements AfterViewInit {
   @Output() valueChange = this.rawChange.pipe(distinctUntilChanged())
   @ViewChild('input') input
 
-  private dirty = false
-
-  ngAfterViewInit() {
-    this.checkRequired(this.input.nativeElement.value)
-  }
-
-  checkRequired(value) {
-    this.input.nativeElement.classList.toggle(
-      'invalid',
-      this.required && this.dirty && value === ''
-    )
-  }
-
   handleChange($event) {
-    this.dirty = true
     const value = $event.target.value
-    this.checkRequired(value)
     this.rawChange.next(value)
   }
 }

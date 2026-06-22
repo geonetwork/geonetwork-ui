@@ -118,28 +118,30 @@ describe('TextInputComponent', () => {
       inputEl = fixture.nativeElement.querySelector('input')
     })
 
-    it('does not mark an empty input invalid before it is touched', () => {
-      component.ngAfterViewInit()
-      expect(inputEl.classList).not.toContain('invalid')
+    it('sets the required attribute on the element', () => {
+      expect(inputEl.required).toBe(true)
     })
 
-    it('marks the input invalid once it is touched and left empty', () => {
+    it('reports an empty required input as invalid', () => {
       inputEl.value = ''
       inputEl.dispatchEvent(new Event('input'))
-      expect(inputEl.classList).toContain('invalid')
+      expect(inputEl.validity.valueMissing).toBe(true)
+      expect(inputEl.checkValidity()).toBe(false)
     })
 
-    it('does not mark the input invalid when a value is entered', () => {
+    it('reports the input as valid when a value is entered', () => {
       inputEl.value = 'some value'
       inputEl.dispatchEvent(new Event('input'))
-      expect(inputEl.classList).not.toContain('invalid')
+      expect(inputEl.validity.valid).toBe(true)
     })
 
-    it('does not mark the input invalid when not required', () => {
+    it('does not set the required attribute when not required', () => {
       component.required = false
+      fixture.detectChanges()
       inputEl.value = ''
       inputEl.dispatchEvent(new Event('input'))
-      expect(inputEl.classList).not.toContain('invalid')
+      expect(inputEl.required).toBe(false)
+      expect(inputEl.validity.valid).toBe(true)
     })
   })
 })
