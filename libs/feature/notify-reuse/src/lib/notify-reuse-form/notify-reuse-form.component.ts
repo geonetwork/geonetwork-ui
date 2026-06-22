@@ -99,7 +99,19 @@ export class NotifyReuseFormComponent implements OnDestroy {
   loading = signal(false)
 
   get isFormValid() {
-    return this.title.trim() !== '' && !!this.url && this.email.trim() !== ''
+    return (
+      this.title.trim() !== '' &&
+      this.isInputValid('url', this.url) &&
+      this.isInputValid('email', this.email)
+    )
+  }
+
+  private isInputValid(type: string, value: string): boolean {
+    const input = document.createElement('input')
+    input.type = type
+    input.required = true
+    input.value = value
+    return input.checkValidity()
   }
 
   clearInputs() {

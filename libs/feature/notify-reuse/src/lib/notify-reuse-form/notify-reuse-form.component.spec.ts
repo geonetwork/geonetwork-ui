@@ -9,7 +9,7 @@ import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
-import { of, throwError } from 'rxjs'
+import { Observable, of, throwError } from 'rxjs'
 
 const REUSE_RECORD: ReuseRecord = {
   uniqueIdentifier: 'test-reuse-001',
@@ -48,7 +48,9 @@ const DATASET_RECORD: Partial<DatasetRecord> = {
 }
 
 class RecordsRepositoryMock {
-  saveRecord = jest.fn(() => of('new-reuse-uuid'))
+  saveRecord = jest.fn<Observable<string>, [ReuseRecord]>(() =>
+    of('new-reuse-uuid')
+  )
 }
 
 describe('NotifyReuseFormComponent', () => {
@@ -137,6 +139,20 @@ describe('NotifyReuseFormComponent', () => {
       component.title = 'My reuse'
       component.url = 'https://example.com'
       component.email = ''
+      expect(component.isFormValid).toBe(false)
+    })
+
+    it('is invalid when the url is not a valid absolute url', () => {
+      component.title = 'My reuse'
+      component.url = 'not a url'
+      component.email = 'me@example.com'
+      expect(component.isFormValid).toBe(false)
+    })
+
+    it('is invalid when the email is not a valid email', () => {
+      component.title = 'My reuse'
+      component.url = 'https://example.com'
+      component.email = 'not-an-email'
       expect(component.isFormValid).toBe(false)
     })
 
