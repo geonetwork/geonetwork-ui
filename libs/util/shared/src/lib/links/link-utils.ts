@@ -266,7 +266,7 @@ export function checkFileFormat(
       new RegExp(`[./]${format}`, 'i').test(link.name.toLowerCase())) ||
     ('url' in link &&
       new RegExp(`[./]${format}`, 'i').test(link.url.toString())) ||
-    ('name' in link && new RegExp(`\\b${format}`, 'i').test(link.name))
+    ('name' in link && new RegExp(`\\b${format}\\b`, 'i').test(link.name))
   )
 }
 
