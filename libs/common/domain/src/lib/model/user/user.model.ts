@@ -1,6 +1,13 @@
 export interface UserModel {
   id: string
-  profile: string
+  profile:
+    | 'Administrator'
+    | 'UserAdmin'
+    | 'Reviewer'
+    | 'Editor'
+    | 'RegisteredUser'
+    | 'Guest'
+    | 'Monitor'
   username: string
   name: string
   surname: string
