@@ -50,14 +50,14 @@
               <span class="text-red-500">*</span>
             </label>
           </div>
-          <gn-ui-url-input
+          <gn-ui-text-input
             [(value)]="url"
+            [type]="'url'"
             [placeholder]="
               'record.notify.reuse.form.field.url.placeholder' | translate
             "
             [required]="true"
-            [showValidateButton]="false"
-          ></gn-ui-url-input>
+          ></gn-ui-text-input>
         </div>
 
         <div class="flex flex-col gap-2 pt-3">

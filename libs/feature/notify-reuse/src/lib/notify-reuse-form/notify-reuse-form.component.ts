@@ -24,11 +24,7 @@ import {
   OnlineLinkResource,
   ReuseRecord,
 } from '@geonetwork-ui/common/domain/model/record'
-import {
-  ButtonComponent,
-  TextInputComponent,
-  UrlInputComponent,
-} from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent, TextInputComponent } from '@geonetwork-ui/ui/inputs'
 import {
   TranslateDirective,
   TranslatePipe,
@@ -56,7 +52,6 @@ export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
     CommonModule,
     OverlayModule,
     TextInputComponent,
-    UrlInputComponent,
     ButtonComponent,
     SpinningLoaderComponent,
     TranslatePipe,
