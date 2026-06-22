@@ -218,6 +218,30 @@ describe('link utils', () => {
         expect(getFileFormat(aSetOfLinksFixture().dataZip())).toEqual('zip')
       })
     })
+    describe('for format names in link labels', () => {
+      const namesToTest = [
+        ['Digital Object Identifier (DOI)', null],
+        ['Certificat de conformité', null],
+        ['Tiffany Lane dataset', null],
+        ['Télécharger au format GeoTIFF', 'tiff'],
+        ['ESRI Shapefile (SHP)', 'shp'],
+      ]
+
+      describe.each(namesToTest)(
+        'link name=%s, recognized file format=%s',
+        (name, fileFormat) => {
+          it('returns the correct file format', () => {
+            expect(
+              getFileFormat({
+                name,
+                url: new URL('https://example.com/download'),
+                type: 'download',
+              })
+            ).toEqual(fileFormat)
+          })
+        }
+      )
+    })
 
     // format name, file extension, mime type
     const toTest = [
