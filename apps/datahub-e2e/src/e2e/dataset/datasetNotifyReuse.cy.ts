@@ -55,13 +55,12 @@ describe('Declare a reuse', () => {
       cy.get('@reuseForm').find('gn-ui-button').first().click()
       cy.get('.cdk-overlay-container').as('overlay')
       cy.get('@overlay').should('contain.text', 'Declare a reuse')
-      cy.get('@overlay').find('gn-ui-text-input').should('have.length', 2)
-      cy.get('@overlay').find('gn-ui-url-input').should('have.length', 1)
+      cy.get('@overlay').find('gn-ui-text-input').should('have.length', 3)
 
       // it should pre-fill the email with the organization email
       cy.get('@overlay')
         .find('gn-ui-text-input input')
-        .eq(1)
+        .eq(2)
         .invoke('val')
         .should('not.be.empty')
 
@@ -75,8 +74,19 @@ describe('Declare a reuse', () => {
         .find('gn-ui-text-input input')
         .eq(0)
         .type('My great reuse')
+
+      // an invalid url keeps submit disabled (the url format is validated)
+      cy.get('@overlay').find('gn-ui-text-input input').eq(1).type('not-a-url')
       cy.get('@overlay')
-        .find('gn-ui-url-input input')
+        .find('gn-ui-button')
+        .last()
+        .find('button')
+        .should('be.disabled')
+
+      cy.get('@overlay').find('gn-ui-text-input input').eq(1).clear()
+      cy.get('@overlay')
+        .find('gn-ui-text-input input')
+        .eq(1)
         .type('https://example.com/my-reuse')
       cy.get('@overlay')
         .find('gn-ui-button')
@@ -123,7 +133,8 @@ describe('Declare a reuse', () => {
         .eq(0)
         .type('My great reuse')
       cy.get('@overlay')
-        .find('gn-ui-url-input input')
+        .find('gn-ui-text-input input')
+        .eq(1)
         .type('https://example.com/my-reuse')
       cy.get('@overlay').find('gn-ui-button').last().find('button').click()
       // the serialized record carries the entered title (linking the reuse
