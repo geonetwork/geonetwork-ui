@@ -98,20 +98,12 @@ export class NotifyReuseFormComponent implements OnDestroy {
   email = ''
   loading = signal(false)
 
-  get isFormValid() {
+  get isFormModelFilled() {
     return (
       this.title.trim() !== '' &&
-      this.isInputValid('url', this.url) &&
-      this.isInputValid('email', this.email)
+      this.url.trim() !== '' &&
+      this.email.trim() !== ''
     )
-  }
-
-  private isInputValid(type: string, value: string): boolean {
-    const input = document.createElement('input')
-    input.type = type
-    input.required = true
-    input.value = value
-    return input.checkValidity()
   }
 
   clearInputs() {
@@ -158,7 +150,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
   }
 
   submit() {
-    if (!this.isFormValid) return
+    if (!this.isFormModelFilled) return
     const onlineResource: OnlineLinkResource = {
       type: 'link',
       url: new URL(this.url),

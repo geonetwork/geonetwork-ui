@@ -87,7 +87,7 @@
       <gn-ui-button
         type="primary"
         extraClass="w-full h-8 justify-center gap-2"
-        [disabled]="!isFormValid"
+        [disabled]="!isFormModelFilled"
         (buttonClick)="submit()"
       >
         @if (loading()) {

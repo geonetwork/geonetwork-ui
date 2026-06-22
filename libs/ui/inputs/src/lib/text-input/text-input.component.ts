@@ -22,7 +22,8 @@ export class TextInputComponent {
   @ViewChild('input') input
 
   handleChange($event) {
-    const value = $event.target.value
-    this.rawChange.next(value)
+    const input = $event.target as HTMLInputElement
+    if (!input.checkValidity()) return
+    this.rawChange.next(input.value)
   }
 }

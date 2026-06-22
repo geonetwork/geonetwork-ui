@@ -116,51 +116,37 @@ describe('NotifyReuseFormComponent', () => {
     })
   })
 
-  describe('isFormValid', () => {
+  describe('isFormModelFilled', () => {
     beforeEach(() => {
       component.record = null
     })
 
-    it('is invalid when fields are empty', () => {
+    it('is not filled when fields are empty', () => {
       component.title = ''
       component.url = ''
       component.email = ''
-      expect(component.isFormValid).toBe(false)
+      expect(component.isFormModelFilled).toBe(false)
     })
 
-    it('is invalid when only whitespace is provided', () => {
+    it('is not filled when only whitespace is provided', () => {
       component.title = '   '
       component.url = '   '
       component.email = '   '
-      expect(component.isFormValid).toBe(false)
+      expect(component.isFormModelFilled).toBe(false)
     })
 
-    it('is invalid when one field is missing', () => {
+    it('is not filled when one field is missing', () => {
       component.title = 'My reuse'
       component.url = 'https://example.com'
       component.email = ''
-      expect(component.isFormValid).toBe(false)
+      expect(component.isFormModelFilled).toBe(false)
     })
 
-    it('is invalid when the url is not a valid absolute url', () => {
-      component.title = 'My reuse'
-      component.url = 'not a url'
-      component.email = 'me@example.com'
-      expect(component.isFormValid).toBe(false)
-    })
-
-    it('is invalid when the email is not a valid email', () => {
-      component.title = 'My reuse'
-      component.url = 'https://example.com'
-      component.email = 'not-an-email'
-      expect(component.isFormValid).toBe(false)
-    })
-
-    it('is valid when all fields are filled', () => {
+    it('is filled when all fields are filled', () => {
       component.title = 'My reuse'
       component.url = 'https://example.com'
       component.email = 'me@example.com'
-      expect(component.isFormValid).toBe(true)
+      expect(component.isFormModelFilled).toBe(true)
     })
   })
 

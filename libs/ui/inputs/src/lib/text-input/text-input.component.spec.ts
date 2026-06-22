@@ -110,6 +110,48 @@ describe('TextInputComponent', () => {
     })
   })
 
+  describe('value emission with validation', () => {
+    let inputEl
+    let emitted
+    let emittedCount
+
+    beforeEach(() => {
+      emitted = undefined
+      emittedCount = 0
+      component.type = 'email'
+      fixture.detectChanges()
+      inputEl = fixture.nativeElement.querySelector('input')
+      component.valueChange.subscribe((v) => {
+        emitted = v
+        emittedCount++
+      })
+    })
+
+    it('does not emit a value that fails type validation', () => {
+      inputEl.value = 'not-an-email'
+      inputEl.dispatchEvent(new Event('input'))
+      expect(emittedCount).toBe(0)
+      expect(emitted).toBeUndefined()
+    })
+
+    it('does not emit an empty required value', () => {
+      component.required = true
+      fixture.detectChanges()
+      inputEl.value = ''
+      inputEl.dispatchEvent(new Event('input'))
+      expect(emittedCount).toBe(0)
+    })
+
+    it('emits once the value becomes valid', () => {
+      inputEl.value = 'not-an-email'
+      inputEl.dispatchEvent(new Event('input'))
+      inputEl.value = 'foo@bar.com'
+      inputEl.dispatchEvent(new Event('input'))
+      expect(emitted).toBe('foo@bar.com')
+      expect(emittedCount).toBe(1)
+    })
+  })
+
   describe('required validation', () => {
     let inputEl
     beforeEach(() => {
