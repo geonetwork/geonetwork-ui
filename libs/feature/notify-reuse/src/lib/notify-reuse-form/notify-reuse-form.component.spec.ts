@@ -8,6 +8,7 @@ import {
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { TranslateService } from '@ngx-translate/core'
 import { Observable, of, throwError } from 'rxjs'
 
@@ -53,6 +54,19 @@ class RecordsRepositoryMock {
   )
 }
 
+class PlatformServiceMock {
+  getMe = jest.fn(() =>
+    of({
+      id: '1',
+      profile: 'Editor' as const,
+      username: 'jdoe',
+      name: 'John',
+      surname: 'Doe',
+      email: 'logged-user@example.com',
+    })
+  )
+}
+
 describe('NotifyReuseFormComponent', () => {
   let component: NotifyReuseFormComponent
   let fixture: ComponentFixture<NotifyReuseFormComponent>
@@ -66,6 +80,10 @@ describe('NotifyReuseFormComponent', () => {
         {
           provide: RecordsRepositoryInterface,
           useClass: RecordsRepositoryMock,
+        },
+        {
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceMock,
         },
       ],
       imports: [NotifyReuseFormComponent],
@@ -100,19 +118,21 @@ describe('NotifyReuseFormComponent', () => {
   })
 
   describe('email pre-fill', () => {
-    it('pre-fills the email with the owner organization email', () => {
-      component.record = DATASET_RECORD
-      expect(component.email).toBe('contact@owner-org.org')
+    it('pre-fills the email with the logged-in user email', () => {
+      expect(component.email).toBe('logged-user@example.com')
     })
 
-    it('leaves the email empty when the organization has no email', () => {
-      component.record = REUSE_RECORD
-      expect(component.email).toBe('')
-    })
+    it('leaves the email empty when no user is logged in', async () => {
+      const platformService = TestBed.inject(
+        PlatformServiceInterface
+      ) as unknown as PlatformServiceMock
+      platformService.getMe.mockReturnValueOnce(of(null))
 
-    it('leaves the email empty when there is no record', () => {
-      component.record = null
-      expect(component.email).toBe('')
+      const newFixture = TestBed.createComponent(NotifyReuseFormComponent)
+      newFixture.detectChanges()
+
+      expect(newFixture.componentInstance.email).toBe('')
+      newFixture.componentInstance.closeOverlay()
     })
   })
 
@@ -151,8 +171,7 @@ describe('NotifyReuseFormComponent', () => {
   })
 
   describe('clearInputs', () => {
-    it('clears title and url and resets email to the owner organization email', () => {
-      component.record = DATASET_RECORD
+    it('clears title and url and resets email to the logged-in user email', () => {
       component.title = 'My reuse'
       component.url = 'https://example.com'
       component.email = 'changed@example.com'
@@ -161,16 +180,7 @@ describe('NotifyReuseFormComponent', () => {
 
       expect(component.title).toBe('')
       expect(component.url).toBe('')
-      expect(component.email).toBe('contact@owner-org.org')
-    })
-
-    it('resets email to empty when there is no organization email', () => {
-      component.record = REUSE_RECORD
-      component.email = 'changed@example.com'
-
-      component.clearInputs()
-
-      expect(component.email).toBe('')
+      expect(component.email).toBe('logged-user@example.com')
     })
   })
 
@@ -271,7 +281,7 @@ describe('NotifyReuseFormComponent', () => {
       expect(component.loading()).toBe(false)
       expect(component.title).toBe('')
       expect(component.url).toBe('')
-      expect(component.email).toBe('contact@owner-org.org')
+      expect(component.email).toBe('logged-user@example.com')
       expect(overlayContainerElement.textContent).not.toContain(
         'record.notify.reuse.form.title'
       )

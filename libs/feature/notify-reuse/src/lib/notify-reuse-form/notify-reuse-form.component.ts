@@ -39,7 +39,9 @@ import {
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { Subscription, tap } from 'rxjs'
 
 marker('record.notify.reuse.form.error.title')
 marker('record.notify.reuse.form.error.body')
@@ -80,13 +82,13 @@ export class NotifyReuseFormComponent implements OnDestroy {
   private recordsRepository = inject(RecordsRepositoryInterface)
   private readonly translate = inject(TranslateService)
   private readonly notificationsService = inject(NotificationsService)
+  private readonly platformServiceInterface = inject(PlatformServiceInterface)
   reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
 
   @ViewChild('notifyReuseForm') templateRef: TemplateRef<unknown>
 
   @Input() set record(value: Partial<CatalogRecord> | null) {
     this._record = value
-    this.email = value?.ownerOrganization?.email ?? ''
   }
   get record() {
     return this._record
@@ -96,7 +98,18 @@ export class NotifyReuseFormComponent implements OnDestroy {
   title = ''
   url = ''
   email = ''
+  initialEmail = ''
   loading = signal(false)
+  private subscription: Subscription
+
+  constructor() {
+    this.subscription = this.platformServiceInterface
+      .getMe()
+      .subscribe(
+        (activeUser) =>
+          (this.initialEmail = this.email = activeUser?.email ?? '')
+      )
+  }
 
   get isFormModelFilled() {
     return (
@@ -109,7 +122,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
   clearInputs() {
     this.title = ''
     this.url = ''
-    this.email = this.record?.ownerOrganization?.email ?? ''
+    this.email = this.initialEmail ?? ''
   }
 
   toggleOverlay() {
@@ -147,6 +160,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.closeOverlay()
+    this.subscription?.unsubscribe()
   }
 
   submit() {

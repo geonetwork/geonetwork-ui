@@ -38,7 +38,7 @@ describe('Declare a reuse', () => {
 
   describe('when logged in', () => {
     it('declares a reuse', () => {
-      cy.login()
+      cy.login('barbie', 'p4ssworD_')
       cy.visit('/dataset/accroche_velos')
       // stub window.open so navigating to the editor doesn't leave the page
       cy.window().then((win) => cy.stub(win, 'open').as('windowOpen'))
@@ -57,12 +57,12 @@ describe('Declare a reuse', () => {
       cy.get('@overlay').should('contain.text', 'Declare a reuse')
       cy.get('@overlay').find('gn-ui-text-input').should('have.length', 3)
 
-      // it should pre-fill the email with the organization email
+      // it should pre-fill the email with the logged-in user's email
       cy.get('@overlay')
         .find('gn-ui-text-input input')
         .eq(2)
         .invoke('val')
-        .should('not.be.empty')
+        .should('eq', 'barbie@email.org')
 
       // it should keep submit disabled until the required fields are filled
       cy.get('@overlay')
