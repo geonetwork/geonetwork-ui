@@ -1,5 +1,6 @@
 import type { Observable } from 'rxjs'
 import type { UserModel } from './model/user/user.model'
+import type { GroupModel } from './model/user/group.model'
 import type { Organization } from './model/record/organization.model'
 import { CatalogRecord, Keyword, UserFeedback } from './model/record'
 import { KeywordType } from './model/thesaurus'
@@ -28,6 +29,7 @@ export abstract class PlatformServiceInterface {
   abstract getMe(): Observable<UserModel>
   abstract isAnonymous(): Observable<boolean>
   abstract getUsers(): Observable<UserModel[]>
+  abstract getUserPermissionsByGroup(): Observable<GroupModel[]>
   abstract getUsersByOrganization(
     organisation: Organization
   ): Observable<UserModel[]>
