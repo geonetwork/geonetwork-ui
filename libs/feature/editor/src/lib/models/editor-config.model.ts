@@ -58,7 +58,7 @@ export interface EditorField extends EditorFieldIdentification {
 export interface EditorSection {
   labelKey?: string
   descriptionKey?: string
-  hidden: boolean
+  hidden?: boolean
   fields: EditorField[]
 }
 
