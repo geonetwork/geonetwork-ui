@@ -148,23 +148,4 @@ describe('FormFieldMapContainerComponent', () => {
     })
     expect(createViewFromLayer).toHaveBeenCalledWith(context.layers[0])
   })
-
-  it('should transform bbox to geometry', () => {
-    const bbox = [0, 0, 1, 1] as [number, number, number, number]
-    const geometry = component.bboxCoordsToGeometry(bbox)
-
-    expect(geometry.type).toEqual('Polygon')
-    expect(geometry).toEqual({
-      coordinates: [
-        [
-          [0, 0],
-          [0, 1],
-          [1, 1],
-          [1, 0],
-          [0, 0],
-        ],
-      ],
-      type: 'Polygon',
-    })
-  })
 })

@@ -106,6 +106,7 @@ class MdViewFacadeMock {
 
 class MapUtilsServiceMock {
   getRecordExtent = jest.fn(() => recordMapExtent)
+  getRecordExtentLayer = jest.fn(() => null)
 }
 
 const SAMPLE_GEOJSON = {

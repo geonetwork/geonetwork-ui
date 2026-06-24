@@ -431,11 +431,19 @@ export class MapViewComponent implements AfterViewInit {
     }),
     withLatestFrom(this.mdViewFacade.metadata$),
     map(([context, metadata]) => {
-      if (context.view) return context
+      // overlay the record's declared spatial extent on top of the data layers
+      const extentLayer = this.mapUtils.getRecordExtentLayer(metadata)
+      const layers = extentLayer
+        ? [...context.layers, extentLayer]
+        : context.layers
+      // the view (initial zoom) is derived from the data layer or, as a
+      // fallback, from the record extent — independently from the overlay above
+      if (context.view) return { ...context, layers }
       const extent = this.mapUtils.getRecordExtent(metadata)
       const view = extent ? { extent } : null
       return {
         ...context,
+        layers,
         view,
       }
     }),
