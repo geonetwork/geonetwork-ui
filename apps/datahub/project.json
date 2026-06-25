@@ -31,6 +31,16 @@
             "glob": "**/*",
             "input": "assets-common",
             "output": "assets/"
+          },
+          {
+            "glob": "duckdb-*.wasm",
+            "input": "./node_modules/@duckdb/duckdb-wasm/dist",
+            "output": "assets/duckdb/"
+          },
+          {
+            "glob": "duckdb-browser-*.worker.js",
+            "input": "./node_modules/@duckdb/duckdb-wasm/dist",
+            "output": "assets/duckdb/"
           }
         ],
         "styles": [
@@ -48,7 +58,8 @@
           "geojson-validation",
           "basiclightbox",
           "duration-relativetimeformat",
-          "alasql",
+          "@duckdb/duckdb-wasm",
+
           "papaparse",
           "lodash.throttle",
           "lru-cache",

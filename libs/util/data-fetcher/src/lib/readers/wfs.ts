@@ -4,8 +4,9 @@ import { fetchDataAsText } from '../utils'
 import { GmlReader, parseGml } from './gml'
 import { GeojsonReader, parseGeojson } from './geojson'
 import { BaseCacheReader } from './base-cache'
-import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils'
+import { jsonToGeojsonFeature } from '../utils'
 import { generateSqlQuery } from '../sql-utils'
+import { queryJsonItems } from '../duckdb-utils'
 
 export async function getWfsEndpoint(wfsUrl: string): Promise<WfsEndpoint> {
   try {
@@ -157,7 +158,9 @@ export class WfsReader extends BaseCacheReader {
 
   public async getQueryData() {
     const items = (await this.getData()).items
-    const jsonItems = getJsonDataItemsProxy(items)
+    const jsonItems = items.map(
+      (item) => item.properties as Record<string, unknown>
+    )
     const query = generateSqlQuery(
       this.selected,
       this.filter,
@@ -167,9 +170,7 @@ export class WfsReader extends BaseCacheReader {
       this.groupedBy,
       this.aggregations
     )
-    const result = await import('alasql').then((module) =>
-      module.default(query, [jsonItems])
-    )
+    const result = await queryJsonItems(jsonItems, query)
     return result.map(jsonToGeojsonFeature)
   }
 

@@ -16,16 +16,16 @@ describe('data-fetcher utils', () => {
 
   describe('generateSqlQuery', () => {
     it('selects all fields and records by default', () => {
-      expect(generateSqlQuery()).toEqual('SELECT * FROM ?')
+      expect(generateSqlQuery()).toEqual('SELECT * FROM data')
     })
     it('selects specific fields', () => {
       expect(generateSqlQuery(['field1', `champ 2 'quoted'`])).toEqual(
-        `SELECT [field1], [champ 2 'quoted'] FROM ?`
+        `SELECT "field1", "champ 2 'quoted'" FROM data`
       )
     })
     it('adds a limit and offset', () => {
       expect(generateSqlQuery(['field1', 'field2'], null, null, 4, 12)).toEqual(
-        `SELECT [field1], [field2] FROM ? LIMIT 12 OFFSET 4`
+        `SELECT "field1", "field2" FROM data LIMIT 12 OFFSET 4`
       )
     })
     it('adds a sortBy clause', () => {
@@ -34,7 +34,7 @@ describe('data-fetcher utils', () => {
           ['asc', 'field1'],
           ['desc', 'field2'],
         ])
-      ).toEqual(`SELECT * FROM ? ORDER BY [field1] ASC, [field2] DESC`)
+      ).toEqual(`SELECT * FROM data ORDER BY "field1" ASC, "field2" DESC`)
     })
     it('adds a where clause', () => {
       expect(
@@ -49,7 +49,7 @@ describe('data-fetcher utils', () => {
           ],
         ])
       ).toEqual(
-        `SELECT * FROM ? WHERE ([field A] > 1234 OR [field B] = 'string value' OR (NOT ([field C] LIKE '%test%') AND [field D] IN ('option 1', 'option 2', 'option 3')))`
+        `SELECT * FROM data WHERE ("field A" > 1234 OR "field B" = 'string value' OR (NOT ("field C" LIKE '%test%') AND "field D" IN ('option 1', 'option 2', 'option 3')))`
       )
     })
     it('adds a group by clause and aggregations on distinct values', () => {
@@ -70,7 +70,7 @@ describe('data-fetcher utils', () => {
           ]
         )
       ).toEqual(
-        `SELECT COUNT(*) as [count()], MAX([field D]) as [max(field D)], MIN([field D]) as [min(field D)], SUM([field D]) as [sum(field D)], AVG([field D]) as [average(field D)], [field C] as [distinct(field C)] FROM ? GROUP BY [field C] WHERE ([field A] < 1234 AND [field B] != 'test')`
+        `SELECT COUNT(*) as "count()", MAX("field D") as "max(field D)", MIN("field D") as "min(field D)", SUM("field D")::DOUBLE as "sum(field D)", AVG("field D") as "average(field D)", "field C" as "distinct(field C)" FROM data WHERE ("field A" < 1234 AND "field B" != 'test') GROUP BY "field C"`
       )
     })
     it('adds two group by clauses', () => {
@@ -88,7 +88,7 @@ describe('data-fetcher utils', () => {
           [['count']]
         )
       ).toEqual(
-        `SELECT COUNT(*) as [count()], [field C] as [distinct(field C)], [field D] as [distinct(field D)] FROM ? GROUP BY [field C], [field D]`
+        `SELECT COUNT(*) as "count()", "field C" as "distinct(field C)", "field D" as "distinct(field D)" FROM data GROUP BY "field C", "field D"`
       )
     })
     it('adds aggregations for all records', () => {
@@ -109,7 +109,7 @@ describe('data-fetcher utils', () => {
           ]
         )
       ).toEqual(
-        `SELECT COUNT(*) as [count()], MAX([field D]) as [max(field D)], MIN([field D]) as [min(field D)], SUM([field D]) as [sum(field D)], AVG([field D]) as [average(field D)] FROM ? WHERE ([field A] < 1234 AND [field B] != 'test')`
+        `SELECT COUNT(*) as "count()", MAX("field D") as "max(field D)", MIN("field D") as "min(field D)", SUM("field D")::DOUBLE as "sum(field D)", AVG("field D") as "average(field D)" FROM data WHERE ("field A" < 1234 AND "field B" != 'test')`
       )
     })
     it('assembles the different elements in the correct order', () => {
@@ -134,7 +134,7 @@ describe('data-fetcher utils', () => {
           ]
         )
       ).toEqual(
-        `SELECT COUNT(*) as [count()], MAX([field D]) as [max(field D)], MIN([field D]) as [min(field D)], SUM([field D]) as [sum(field D)], AVG([field D]) as [average(field D)], [field C] as [distinct(field C)] FROM ? GROUP BY [field C] ORDER BY [field1] ASC, [field2] DESC WHERE ([field A] < 1234 AND [field B] != 'test') LIMIT 14 OFFSET 8`
+        `SELECT COUNT(*) as "count()", MAX("field D") as "max(field D)", MIN("field D") as "min(field D)", SUM("field D")::DOUBLE as "sum(field D)", AVG("field D") as "average(field D)", "field C" as "distinct(field C)" FROM data WHERE ("field A" < 1234 AND "field B" != 'test') GROUP BY "field C" ORDER BY "field1" ASC, "field2" DESC LIMIT 14 OFFSET 8`
       )
     })
   })
