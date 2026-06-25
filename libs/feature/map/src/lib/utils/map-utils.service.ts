@@ -41,7 +41,7 @@ export class MapUtilsService {
    * which is derived separately (see {@link getRecordExtent}).
    */
   getRecordExtentLayer(record: Partial<CatalogRecord>): MapContextLayer | null {
-    if (!('spatialExtents' in record) || record.spatialExtents.length === 0) {
+    if (!record.spatialExtents?.length) {
       return null
     }
     return {
