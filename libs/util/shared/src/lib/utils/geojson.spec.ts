@@ -1,4 +1,10 @@
-import { getGeometryBoundingBox, getGeometryFromGeoJSON } from './geojson'
+import {
+  bboxToPolygon,
+  getGeometryBoundingBox,
+  getGeometryFromGeoJSON,
+  spatialExtentsToFeatureCollection,
+  spatialExtentToGeometry,
+} from './geojson'
 import {
   GeometryCollection,
   LineString,
@@ -156,6 +162,115 @@ describe('geojson utils', () => {
       }
       const bbox = getGeometryBoundingBox(geom)
       expect(bbox).toEqual([-100, -200, 130, 20])
+    })
+  })
+
+  describe('bboxToPolygon', () => {
+    it('builds a closed polygon ring from a bounding box', () => {
+      expect(bboxToPolygon([0, 0, 1, 1])).toEqual({
+        type: 'Polygon',
+        coordinates: [
+          [
+            [0, 0],
+            [0, 1],
+            [1, 1],
+            [1, 0],
+            [0, 0],
+          ],
+        ],
+      })
+    })
+    it('handles negative coordinates', () => {
+      expect(bboxToPolygon([-10, -5, 10, 5])).toEqual({
+        type: 'Polygon',
+        coordinates: [
+          [
+            [-10, -5],
+            [-10, 5],
+            [10, 5],
+            [10, -5],
+            [-10, -5],
+          ],
+        ],
+      })
+    })
+  })
+
+  describe('spatialExtentToGeometry', () => {
+    const geometry: Polygon = {
+      type: 'Polygon',
+      coordinates: [
+        [
+          [0, 0],
+          [0, 2],
+          [2, 2],
+          [2, 0],
+          [0, 0],
+        ],
+      ],
+    }
+    it('returns the geometry when present', () => {
+      expect(spatialExtentToGeometry({ geometry })).toBe(geometry)
+    })
+    it('prefers the geometry over the bounding box', () => {
+      expect(spatialExtentToGeometry({ geometry, bbox: [0, 0, 1, 1] })).toBe(
+        geometry
+      )
+    })
+    it('derives a polygon from the bounding box when no geometry', () => {
+      expect(spatialExtentToGeometry({ bbox: [0, 0, 1, 1] })).toEqual(
+        bboxToPolygon([0, 0, 1, 1])
+      )
+    })
+    it('returns null when neither geometry nor bbox is set', () => {
+      expect(spatialExtentToGeometry({})).toBeNull()
+    })
+  })
+
+  describe('spatialExtentsToFeatureCollection', () => {
+    const geometry: Polygon = {
+      type: 'Polygon',
+      coordinates: [
+        [
+          [0, 0],
+          [0, 2],
+          [2, 2],
+          [2, 0],
+          [0, 0],
+        ],
+      ],
+    }
+    it('returns an empty feature collection for an empty list', () => {
+      expect(spatialExtentsToFeatureCollection([])).toEqual({
+        type: 'FeatureCollection',
+        features: [],
+      })
+    })
+    it('builds one feature per usable extent (geometry or bbox)', () => {
+      expect(
+        spatialExtentsToFeatureCollection([
+          { geometry },
+          { bbox: [0, 0, 1, 1] },
+        ])
+      ).toEqual({
+        type: 'FeatureCollection',
+        features: [
+          { type: 'Feature', properties: {}, geometry },
+          {
+            type: 'Feature',
+            properties: {},
+            geometry: bboxToPolygon([0, 0, 1, 1]),
+          },
+        ],
+      })
+    })
+    it('skips extents that have neither geometry nor bbox', () => {
+      const fc = spatialExtentsToFeatureCollection([
+        { description: 'no shape' },
+        { bbox: [0, 0, 1, 1] },
+      ])
+      expect(fc.features).toHaveLength(1)
+      expect(fc.features[0].geometry).toEqual(bboxToPolygon([0, 0, 1, 1]))
     })
   })
 })
