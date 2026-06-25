@@ -1,12 +1,24 @@
 import { Injectable } from '@angular/core'
 import { extend } from 'ol/extent.js'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import {
-  BoundingBox,
-  getGeometryBoundingBox,
-  spatialExtentsToFeatureCollection,
-} from '@geonetwork-ui/util/shared'
+import { BoundingBox, getGeometryBoundingBox } from '@geonetwork-ui/util/shared'
 import { MapContextLayer } from '@geospatial-sdk/core'
+import {
+  createSpatialExtentLayer,
+  SpatialExtentLayerStyle,
+} from '@geonetwork-ui/ui/map'
+
+/**
+ * Style of the extent overlay drawn on top of the previewed data: a dashed
+ * black outline over a very light fill, so the extent stays readable without
+ * hiding the data underneath.
+ */
+const RECORD_EXTENT_OVERLAY_STYLE: SpatialExtentLayerStyle = {
+  'stroke-color': 'rgba(0, 0, 0, 0.6)',
+  'stroke-width': 2,
+  'stroke-line-dash': [8, 6],
+  'fill-color': 'rgba(0, 0, 0, 0.03)',
+}
 
 @Injectable({
   providedIn: 'root',
@@ -35,26 +47,16 @@ export class MapUtilsService {
   /**
    * Builds a non-interactive overlay layer drawing the spatial extent(s)
    * declared in the record's metadata (bounding boxes and/or geometries).
-   * Returns null when the record has no spatial extent.
+   * Returns null when the record has no usable spatial extent.
    *
    * This is purely for display and is independent from the map's initial view,
    * which is derived separately (see {@link getRecordExtent}).
    */
   getRecordExtentLayer(record: Partial<CatalogRecord>): MapContextLayer | null {
-    if (!record.spatialExtents?.length) {
-      return null
-    }
-    return {
-      type: 'geojson',
-      data: spatialExtentsToFeatureCollection(record.spatialExtents),
+    return createSpatialExtentLayer(record.spatialExtents ?? [], {
       label: 'Spatial extent',
       clickable: false,
-      style: {
-        'stroke-color': 'rgba(0, 0, 0, 0.6)',
-        'stroke-width': 2,
-        'stroke-line-dash': [8, 6],
-        'fill-color': 'rgba(0, 0, 0, 0.03)',
-      },
-    }
+      style: RECORD_EXTENT_OVERLAY_STYLE,
+    })
   }
 }

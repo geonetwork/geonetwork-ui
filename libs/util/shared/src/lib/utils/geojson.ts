@@ -5,7 +5,7 @@ import type {
   Polygon,
   Position,
 } from 'geojson'
-import { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
+import type { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
 
 /**
  * @returns The geometry if available, otherwise null.
