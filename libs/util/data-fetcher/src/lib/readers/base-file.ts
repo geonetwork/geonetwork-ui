@@ -1,8 +1,9 @@
 import { BaseReader } from './base'
 import { DataItem, DatasetInfo, PropertyInfo } from '../model'
-import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils'
+import { jsonToGeojsonFeature } from '../utils'
 import { generateSqlQuery } from '../sql-utils'
 import { BaseCacheReader } from './base-cache'
+import { queryJsonItems } from '../duckdb-utils'
 
 type ParseResult = {
   items: DataItem[]
@@ -48,7 +49,9 @@ export class BaseFileReader extends BaseCacheReader {
       return items
     }
 
-    const jsonItems = getJsonDataItemsProxy(items)
+    const jsonItems = items.map(
+      (item) => item.properties as Record<string, unknown>
+    )
     const query = generateSqlQuery(
       this.selected,
       this.filter,
@@ -58,9 +61,7 @@ export class BaseFileReader extends BaseCacheReader {
       this.groupedBy,
       this.aggregations
     )
-    const result = await import('alasql').then((module) =>
-      module.default(query, [jsonItems])
-    )
+    const result = await queryJsonItems(jsonItems, query)
     return result.map(jsonToGeojsonFeature)
   }
 }

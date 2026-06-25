@@ -6,6 +6,10 @@ import {
   FieldSort,
 } from './model'
 
+function col(name: string): string {
+  return `"${name}"`
+}
+
 function filterToSql(filter: FieldFilter): string {
   const operator = filter[0]
   const args = filter.slice(1)
@@ -20,12 +24,12 @@ function filterToSql(filter: FieldFilter): string {
     case '=':
     case '!=':
     case 'like':
-      return `[${args[0]}] ${operator.toUpperCase()} ${valueToSql(
+      return `${col(args[0] as string)} ${operator.toUpperCase()} ${valueToSql(
         args[1] as string | number
       )}`
     case 'in': {
       const values = args.slice(1) as string[] | number[]
-      return `[${args[0]}] IN (${values.map(valueToSql).join(', ')})`
+      return `${col(args[0] as string)} IN (${values.map(valueToSql).join(', ')})`
     }
     case 'and':
     case 'or': {
@@ -48,13 +52,15 @@ function aggregationToSql(aggregation: FieldAggregation): string {
 
   switch (operation) {
     case 'average':
-      return `AVG([${field}]) as [average(${field})]`
+      return `AVG(${col(field)}) as ${col(`average(${field})`)}`
     case 'sum':
+      // SUM of integer columns returns HUGEINT in DuckDB which mis-serializes via Arrow; cast to DOUBLE
+      return `SUM(${col(field)})::DOUBLE as ${col(`sum(${field})`)}`
     case 'max':
     case 'min':
-      return `${operation.toUpperCase()}([${field}]) as [${operation}(${field})]`
+      return `${operation.toUpperCase()}(${col(field)}) as ${col(`${operation}(${field})`)}`
     case 'count':
-      return 'COUNT(*) as [count()]'
+      return `COUNT(*) as ${col('count()')}`
   }
 }
 
@@ -78,20 +84,20 @@ export function generateSqlQuery(
   aggregations: FieldAggregation[] = null
 ): string {
   let sqlSelect = 'SELECT *'
-  const sqlFrom = ' FROM ?'
+  const sqlFrom = ' FROM data'
   let sqlOrderBy = ''
   let sqlWhere = ''
   let sqlLimit = ''
   let sqlGroupBy = ''
   if (selected !== null) {
-    sqlSelect = `SELECT ${selected.map((name) => `[${name}]`).join(', ')}`
+    sqlSelect = `SELECT ${selected.map(col).join(', ')}`
   }
   if (filter !== null) {
     sqlWhere = ` WHERE ${filterToSql(filter)}`
   }
   if (sort?.length) {
     sqlOrderBy = ` ORDER BY ${sort
-      .map((sort) => `[${sort[1]}] ${sort[0].toUpperCase()}`)
+      .map((sort) => `${col(sort[1])} ${sort[0].toUpperCase()}`)
       .join(', ')}`
   }
   if (startIndex !== null && count !== null) {
@@ -101,15 +107,15 @@ export function generateSqlQuery(
     sqlSelect = `SELECT ${aggregations.map(aggregationToSql).join(', ')}`
     const groupedByDistinct = groupBy.filter((group) => group[0] === 'distinct')
     const sqlGroupByFields = groupedByDistinct
-      .map((group) => `[${group[1]}]`)
+      .map((group) => col(group[1]))
       .join(', ')
     const sqlGroupBySelect = groupedByDistinct
-      .map((group) => `[${group[1]}] as [distinct(${group[1]})]`)
+      .map((group) => `${col(group[1])} as ${col(`distinct(${group[1]})`)}`)
       .join(', ')
     if (sqlGroupByFields && sqlGroupBySelect) {
       sqlGroupBy = ` GROUP BY ${sqlGroupByFields}`
       sqlSelect += `, ${sqlGroupBySelect}`
     }
   }
-  return sqlSelect + sqlFrom + sqlGroupBy + sqlOrderBy + sqlWhere + sqlLimit
+  return sqlSelect + sqlFrom + sqlWhere + sqlGroupBy + sqlOrderBy + sqlLimit
 }

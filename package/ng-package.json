@@ -20,7 +20,8 @@
     "@ng-icons/tabler-icons",
     "@nx/angular",
     "@rgrove/parse-xml",
-    "alasql",
+    "@duckdb/duckdb-wasm",
+
     "basiclightbox",
     "chart.js",
     "chroma-js",
