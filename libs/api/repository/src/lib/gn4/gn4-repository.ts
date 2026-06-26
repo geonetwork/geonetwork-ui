@@ -3,7 +3,7 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http'
-import { Injectable, InjectionToken, inject } from '@angular/core'
+import { inject, Injectable, InjectionToken } from '@angular/core'
 import {
   assertValidXml,
   BaseConverter,
@@ -337,7 +337,6 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   private canEdit(record: CatalogRecord, allowEditHarvested: boolean): boolean {
     return (
       this.platformService.supportsAuthentication() &&
-      record.kind === 'dataset' &&
       record.extras['edit'] &&
       (!record.extras['isHarvested'] || allowEditHarvested)
     )

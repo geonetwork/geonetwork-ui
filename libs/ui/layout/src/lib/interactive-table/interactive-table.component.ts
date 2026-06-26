@@ -16,9 +16,6 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { Observable, of } from 'rxjs'
 
-marker('editor.record.lock.resourceType')
-marker('editor.record.lock.harvested')
-marker('editor.record.lock.owner')
 @Component({
   selector: 'gn-ui-interactive-table',
   templateUrl: './interactive-table.component.html',
@@ -53,12 +50,10 @@ export class InteractiveTableComponent {
 
   getItemTitle(item: CatalogRecord) {
     if (!this.isDraftPage) {
-      if (item.kind !== 'dataset') {
-        return 'editor.record.lock.resourceType'
-      } else if (item.extras?.isHarvested) {
-        return 'editor.record.lock.harvested'
+      if (item.extras?.isHarvested) {
+        return marker('editor.record.lock.harvested')
       } else if (!item.extras?.edit) {
-        return 'editor.record.lock.owner'
+        return marker('editor.record.lock.owner')
       }
     }
     return ''
