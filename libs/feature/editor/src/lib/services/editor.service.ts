@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { Observable, switchMap } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -27,10 +27,11 @@ export class EditorService {
     // run onSave processes
     for (const field of fields) {
       if (field.onSaveProcess && field.model) {
-        const evaluator = evaluate(field.onSaveProcess)
+        const { evaluator } = evaluate(field.onSaveProcess)
         savedRecord[field.model] = evaluator({
-          model: field.model,
-          value: record[field.model],
+          globals: {
+            record,
+          },
         })
       }
     }
