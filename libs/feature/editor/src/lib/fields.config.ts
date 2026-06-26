@@ -128,6 +128,7 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
               formFieldConfig: {
                 labelKey: marker('editor.record.form.field.temporalExtents'),
               },
+              hidden: '${record.kind == "service"}',
             },
           ],
         },
@@ -161,6 +162,7 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
       sections: [
         // Section: Associated resources (distributions, services, …)
         {
+          hidden: '${record.kind != "dataset"}',
           labelKey: marker(
             'editor.record.form.section.associatedResources.label'
           ),
