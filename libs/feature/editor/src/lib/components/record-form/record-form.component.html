@@ -3,7 +3,7 @@
     section of facade.currentSections$ | async;
     track sectionTracker($index, section)
   ) {
-    @if (!section.hidden) {
+    @if ((evaluateExpression(section.hidden) | async) !== true) {
       <div
         class="flex flex-col gap-6 border p-8 rounded-[8px] shadow scroll-mt-[90px]"
         gnUiFieldFocus
@@ -26,7 +26,7 @@
             field of section.fieldsWithValues;
             track fieldTracker($index, field)
           ) {
-            @if (!field.config.hidden) {
+            @if ((evaluateExpression(field.config.hidden) | async) !== true) {
               <gn-ui-form-field
                 [ngClass]="
                   field.config.gridColumnSpan === 1
