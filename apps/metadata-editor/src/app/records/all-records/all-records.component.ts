@@ -3,12 +3,12 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  inject,
   OnDestroy,
   OnInit,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
-  inject,
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { TranslateDirective } from '@ngx-translate/core'
@@ -72,7 +72,7 @@ export class AllRecordsComponent implements OnInit, OnDestroy {
   importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
   private overlayRef!: OverlayRef
-  searchFields = ['user', 'changeDate']
+  searchFields = ['user', 'changeDate', 'recordKind']
   searchText$: Observable<string | null>
   subscription: Subscription
 
