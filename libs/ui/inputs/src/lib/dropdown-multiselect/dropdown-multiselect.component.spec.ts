@@ -68,7 +68,7 @@ describe('DropdownMultiselectComponent', () => {
         component.openOverlay()
       })
       it('sets the width according to the toggle element', () => {
-        expect(component.overlayWidth).toBe('25px')
+        expect(component.overlayMinWidth).toBe('25px')
       })
     })
     describe('max height (with maxRows set)', () => {
