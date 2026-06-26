@@ -80,14 +80,18 @@ beforeEach(() => {
   // OGC API stubs
   cy.intercept(
     'GET',
-    '/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=json',
+    '/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?limit=1&f=json',
     {
       fixture: 'liste-des-jardins-familiaux-et-partages-de-roubaix_items.json',
     }
   )
-  cy.intercept('GET', '/data/ogcapi/collections/covoit-mel/items?f=json', {
-    fixture: 'covoit-mel_items.json',
-  })
+  cy.intercept(
+    'GET',
+    '/data/ogcapi/collections/covoit-mel/items?limit=1&f=json',
+    {
+      fixture: 'covoit-mel_items.json',
+    }
+  )
   cy.intercept(
     'GET',
     '/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix?f=json',
