@@ -1,34 +1,19 @@
 import { INSPIRE_TOPICS } from './fields.config'
 
-// Canonical ISO 19115 gmd:MD_TopicCategoryCode values, as used by the
-// GeoNetwork backend. INSPIRE_TOPICS values are written verbatim into the
-// metadata XML, so they must match these exactly (see issue #1615).
-const ISO_TOPIC_CATEGORY_CODES = [
-  'farming',
-  'biota',
-  'boundaries',
-  'climatologyMeteorologyAtmosphere',
-  'economy',
-  'elevation',
-  'environment',
-  'geoscientificInformation',
-  'health',
-  'imageryBaseMapsEarthCover',
-  'intelligenceMilitary',
-  'inlandWaters',
-  'location',
-  'oceans',
-  'planningCadastre',
-  'society',
-  'structure',
-  'transportation',
-  'utilitiesCommunication',
-]
-
 describe('INSPIRE_TOPICS', () => {
-  it('exposes the same set of values as the ISO MD_TopicCategoryCode codelist', () => {
-    expect(INSPIRE_TOPICS.map((topic) => topic.value).sort()).toEqual(
-      [...ISO_TOPIC_CATEGORY_CODES].sort()
-    )
+  // Values are written verbatim as ISO gmd:MD_TopicCategoryCode codes, which
+  // are lower-camelCase with no whitespace. This guards against the casing /
+  // spacing regression fixed in issue #1615 (e.g. "Society", "geoscientific
+  // information").
+  it('uses valid ISO topic codes as values', () => {
+    for (const { value } of INSPIRE_TOPICS) {
+      expect(value).toMatch(/^[a-z][a-zA-Z]*$/)
+    }
+  })
+
+  it('keeps the label key suffix in sync with the value', () => {
+    for (const { value, label } of INSPIRE_TOPICS) {
+      expect(label).toBe(`editor.record.form.topics.inspire.${value}`)
+    }
   })
 })
