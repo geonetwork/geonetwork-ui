@@ -2,7 +2,7 @@
   "name": "geonetwork-ui",
   "version": "2.10.0-dev",
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "scripts": {
     "ng": "nx",
