@@ -196,5 +196,15 @@
       "jsdom": "25.0.1",
       "rrweb-cssom": "0.8.0"
     }
+  },
+  "allowScripts": {
+    "@nestjs/core@11.1.19": true,
+    "@nestjs/core@11.1.18": true,
+    "@openapitools/openapi-generator-cli@2.31.1": true,
+    "@scarf/scarf@1.4.0": true,
+    "lmdb@3.4.2": true,
+    "msgpackr-extract@3.0.3": true,
+    "nx@22.0.4": true,
+    "unrs-resolver@1.11.1": true
   }
 }
