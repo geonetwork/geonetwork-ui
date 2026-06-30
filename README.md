@@ -17,7 +17,7 @@ To learn more about the project, visit the [GeoNetwork-UI website](https://geone
 Install first GeoNetwork 4 [from source](https://geonetwork-opensource.org/manuals/4.0.x/eng/users/install-guide/installing-from-source-code.html#building-running)
 or using [docker](https://github.com/geonetwork/docker-geonetwork/tree/master/4.0.1).
 
-Install [Node](https://nodejs.org/): using an LTS is recommended, the minimum required version is 14.17.0. Using [nvm](https://github.com/nvm-sh/nvm) makes this much simpler.
+Install [Node](https://nodejs.org/): using an LTS is recommended, the minimum required version is 24. Using [nvm](https://github.com/nvm-sh/nvm) makes this much simpler.
 
 Run `npm install` to fetch all dependencies of the project.
 
