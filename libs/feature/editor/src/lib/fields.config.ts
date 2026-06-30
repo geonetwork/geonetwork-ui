@@ -381,7 +381,7 @@ export const INSPIRE_TOPICS: INSPIRE_topic[] = [
   },
   { value: 'farming', label: 'editor.record.form.topics.inspire.farming' },
   {
-    value: 'geoscientific information',
+    value: 'geoscientificInformation',
     label: 'editor.record.form.topics.inspire.geoscientific',
   },
   { value: 'health', label: 'editor.record.form.topics.inspire.health' },
@@ -394,16 +394,16 @@ export const INSPIRE_TOPICS: INSPIRE_topic[] = [
     value: 'intelligenceMilitary',
     label: 'editor.record.form.topics.inspire.intelligence',
   },
-  { value: 'Location', label: 'editor.record.form.topics.inspire.location' },
-  { value: 'Oceans', label: 'editor.record.form.topics.inspire.oceans' },
+  { value: 'location', label: 'editor.record.form.topics.inspire.location' },
+  { value: 'oceans', label: 'editor.record.form.topics.inspire.oceans' },
   {
     value: 'planningCadastre',
     label: 'editor.record.form.topics.inspire.planning',
   },
-  { value: 'Society', label: 'editor.record.form.topics.inspire.society' },
-  { value: 'Structure', label: 'editor.record.form.topics.inspire.structure' },
+  { value: 'society', label: 'editor.record.form.topics.inspire.society' },
+  { value: 'structure', label: 'editor.record.form.topics.inspire.structure' },
   {
-    value: 'Transportation',
+    value: 'transportation',
     label: 'editor.record.form.topics.inspire.transportation',
   },
   {
