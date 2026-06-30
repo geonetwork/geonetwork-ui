@@ -2,12 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { EditorFacade } from '../../+state/editor.facade'
 import { RecordFormComponent } from './record-form.component'
 import { FormFieldComponent } from './form-field'
-import { MockBuilder } from 'ng-mocks'
+import { MockBuilder, MockProvider } from 'ng-mocks'
 import {
   datasetRecordsFixture,
   editorConfigFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { BehaviorSubject, Subject } from 'rxjs'
+import { BehaviorSubject, firstValueFrom, Subject } from 'rxjs'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 
 class EditorFacadeMock {
   record$ = new BehaviorSubject(datasetRecordsFixture()[0])
@@ -30,7 +31,10 @@ describe('RecordFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RecordFormComponent],
-      providers: [{ provide: EditorFacade, useClass: EditorFacadeMock }],
+      providers: [
+        { provide: EditorFacade, useClass: EditorFacadeMock },
+        MockProvider(NotificationsService),
+      ],
     }).compileComponents()
 
     facade = TestBed.inject(EditorFacade) as unknown as EditorFacadeMock
@@ -117,6 +121,30 @@ describe('RecordFormComponent', () => {
       const unsubscribeSpy = jest.spyOn(component.subscription, 'unsubscribe')
       component.ngOnDestroy()
       expect(unsubscribeSpy).toHaveBeenCalled()
+    })
+  })
+
+  describe('expression evaluation', () => {
+    it('evaluates an expression and returns the result as an observable', async () => {
+      const result = await firstValueFrom(
+        component.evaluateExpression('${record.uniqueIdentifier}')
+      )
+      expect(result).toBe(datasetRecordsFixture()[0].uniqueIdentifier)
+    })
+
+    it('handles literal values as well', async () => {
+      const result = await firstValueFrom(
+        component.evaluateExpression('hello world')
+      )
+      expect(result).toBe('hello world')
+    })
+
+    it('emits a notification if the expression had compilation errors', async () => {
+      const notifications = TestBed.inject(NotificationsService)
+      await firstValueFrom(component.evaluateExpression('${unknownFunc()}'))
+      expect(notifications.showNotification).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'warning' })
+      )
     })
   })
 })

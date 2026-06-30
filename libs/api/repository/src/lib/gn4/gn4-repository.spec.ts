@@ -1,7 +1,7 @@
 import {
   DEFAULT_RECORD_CONVERTER,
-  Gn4Repository,
   DISABLE_DRAFT,
+  Gn4Repository,
 } from './gn4-repository'
 import {
   RecordsApiService,
@@ -21,10 +21,11 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import {
   datasetRecordsFixture,
+  duplicateDatasetRecordAsXmlFixture,
   simpleDatasetRecordAsXmlFixture,
   simpleDatasetRecordFixture,
   simpleDatasetRecordWithFcatsFixture,
-  duplicateDatasetRecordAsXmlFixture,
+  simpleReuseRecordFixture,
   simpleServiceRecordFixture,
 } from '@geonetwork-ui/common/fixtures'
 import {
@@ -1304,23 +1305,36 @@ describe('Gn4Repository', () => {
   })
 
   describe('canEditIndexedRecord', () => {
-    it('should return true when the record can be edited', () => {
+    it('should return true when the record can be edited (dataset)', () => {
       repository.canEditIndexedRecord(SAMPLE_RECORD).subscribe((canEdit) => {
         expect(canEdit).toEqual(true)
       })
+    })
+    it('should return true when the record can be edited (service)', () => {
+      repository
+        .canEditIndexedRecord({
+          ...simpleServiceRecordFixture(),
+          extras: { edit: true },
+        })
+        .subscribe((canEdit) => {
+          expect(canEdit).toEqual(true)
+        })
+    })
+    it('should return true when the record can be edited (reuse)', () => {
+      repository
+        .canEditIndexedRecord({
+          ...simpleReuseRecordFixture(),
+          extras: { edit: true },
+        })
+        .subscribe((canEdit) => {
+          expect(canEdit).toEqual(true)
+        })
     })
     it('should return false when the authentication features are disabled', () => {
       _supportsAuthentication = false
       repository.canEditIndexedRecord(SAMPLE_RECORD).subscribe((canEdit) => {
         expect(canEdit).toEqual(false)
       })
-    })
-    it('should return false when the record is of the wrong type', () => {
-      repository
-        .canEditIndexedRecord(simpleServiceRecordFixture())
-        .subscribe((canEdit) => {
-          expect(canEdit).toEqual(false)
-        })
     })
     it("should return false when the record has been harvested and the settings don't allow edit on harvested records", () => {
       repository

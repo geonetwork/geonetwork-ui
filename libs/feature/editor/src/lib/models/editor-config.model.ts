@@ -48,8 +48,7 @@ export interface EditorField extends EditorFieldIdentification {
   gridColumnSpan?: number
 
   // a hidden field won't show but can still be used to modify the record
-  // FIXME: currently this is redundant with an absence of formFieldConfig but necessary for clarity
-  hidden?: boolean
+  hidden?: boolean | EditorFieldExpression
 
   // the result of this expression will replace the field value on save
   onSaveProcess?: EditorFieldExpression
@@ -58,7 +57,7 @@ export interface EditorField extends EditorFieldIdentification {
 export interface EditorSection {
   labelKey?: string
   descriptionKey?: string
-  hidden: boolean
+  hidden?: boolean | EditorFieldExpression
   fields: EditorField[]
 }
 

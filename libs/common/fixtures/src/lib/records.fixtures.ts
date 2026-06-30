@@ -3,6 +3,7 @@ import {
   DatasetRecord,
   DatasetSpatialExtent,
   Keyword,
+  ReuseRecord,
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 
@@ -1026,4 +1027,54 @@ export const multilingualDatasetFixture: () => DatasetRecord = () => ({
   overviews: [],
   topics: [],
   recordUpdated: null,
+})
+
+export const simpleReuseRecordFixture = (): ReuseRecord => ({
+  abstract: `Sample reuse record`,
+  kind: 'reuse',
+  reuseType: 'application',
+  recordUpdated: new Date('2023-03-17T07:38:08.875Z'),
+  recordPublished: null,
+  ownerOrganization: null,
+  licenses: [],
+  legalConstraints: [],
+  securityConstraints: [],
+  otherConstraints: [],
+  contacts: [],
+  contactsForResource: [],
+  keywords: [],
+  topics: [],
+  spatialExtents: [],
+  temporalExtents: [],
+  lineage: 'bla',
+  sourceRecords: [],
+  overviews: [],
+  defaultLanguage: null,
+  otherLanguages: [],
+  title: 'Sites de gestion des déchets miniers - Service de visualisation WMS',
+  onlineResources: [
+    {
+      name: 'Rapport de disponibilité du service WMS',
+      description:
+        'Ce service de visualisation WMS permet de consulter la série de couches de données "Sites de gestion des déchets miniers - Série".',
+      mimeType: 'text/html',
+      type: 'link',
+      url: new URL(
+        'https://geoservices.wallonie.be/rapportDisponibilite/wms/sites_de_gestion_des_dechets_miniers_srie.html'
+      ),
+      accessRestricted: false,
+    },
+  ],
+  uniqueIdentifier: '00b22798-ec8e-4500-89e8-90eeeda45919',
+  landingPage: new URL(
+    'http://localhost:4200/geonetwork/srv/fre/catalog.search#/metadata/00b22798-ec8e-4500-89e8-90eeeda45919'
+  ),
+  extras: {
+    isPublishedToAll: true,
+    id: '723',
+    isHarvested: true,
+    ownerInfo: 'admin|admin|admin|Administrator',
+    edit: true,
+  },
+  recordCreated: new Date('2023-03-17T07:38:08.875Z'),
 })

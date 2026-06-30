@@ -15,9 +15,19 @@ import {
   EditorFieldWithValue,
   EditorSectionWithValues,
 } from '../../+state/editor.models'
-import { firstValueFrom, map, Subscription, withLatestFrom } from 'rxjs'
+import {
+  firstValueFrom,
+  map,
+  Observable,
+  of,
+  Subscription,
+  take,
+  withLatestFrom,
+} from 'rxjs'
 import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 import { switchMap } from 'rxjs/operators'
+import { evaluate, isExpression } from '../../expressions'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -29,6 +39,7 @@ import { switchMap } from 'rxjs/operators'
 })
 export class RecordFormComponent implements OnInit, OnDestroy {
   facade = inject(EditorFacade)
+  notifications = inject(NotificationsService)
   subscription = new Subscription()
 
   recordUniqueIdentifier$ = this.facade.record$.pipe(
@@ -95,5 +106,33 @@ export class RecordFormComponent implements OnInit, OnDestroy {
       )
     )
     return pageIndex >= 0 ? pageIndex : null
+  }
+
+  evaluateExpression(
+    expression: string | EditorFieldValue
+  ): Observable<EditorFieldValue> {
+    if (!isExpression(expression)) {
+      return of(expression)
+    }
+    const { evaluator, errors } = evaluate(expression as string)
+    if (errors.length) {
+      console.error(`The following errors happened while evaluating the expression '${expression}':
+${errors.map((err) => `> ${err}`).join('\n')}`)
+      this.notifications.showNotification({
+        type: 'warning',
+        title: 'Technical error',
+        text: 'An error happened while evaluating an expression inside the editor configuration; open the developer console for more information',
+      })
+    }
+    return this.facade.record$.pipe(
+      take(1),
+      map((record) =>
+        evaluator({
+          globals: {
+            record,
+          },
+        })
+      )
+    )
   }
 }
