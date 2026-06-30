@@ -1,4 +1,11 @@
-import type { Feature, FeatureCollection, Geometry, Position } from 'geojson'
+import type {
+  Feature,
+  FeatureCollection,
+  Geometry,
+  Polygon,
+  Position,
+} from 'geojson'
+import type { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
 
 /**
  * @returns The geometry if available, otherwise null.
@@ -92,5 +99,55 @@ export function getGeometryBoundingBox(geometry: Geometry): BoundingBox {
       )
     case 'Point':
       return coordinatesReducer(emptyExtent, geometry.coordinates)
+  }
+}
+
+/**
+ * Builds the closed GeoJSON Polygon matching the given bounding box.
+ */
+export function bboxToPolygon(bbox: BoundingBox): Polygon {
+  const [minX, minY, maxX, maxY] = bbox
+  return {
+    type: 'Polygon',
+    coordinates: [
+      [
+        [minX, minY],
+        [minX, maxY],
+        [maxX, maxY],
+        [maxX, minY],
+        [minX, minY],
+      ],
+    ],
+  }
+}
+
+/**
+ * Returns the geometry carried by a spatial extent, falling back to the polygon
+ * derived from its bounding box. Returns null when the extent has neither.
+ */
+export function spatialExtentToGeometry(
+  extent: DatasetSpatialExtent
+): Geometry | null {
+  if (extent.geometry) return extent.geometry
+  if (extent.bbox) return bboxToPolygon(extent.bbox)
+  return null
+}
+
+/**
+ * Converts a list of dataset spatial extents into a GeoJSON FeatureCollection,
+ * e.g. to be used as the data source of a map layer.
+ */
+export function spatialExtentsToFeatureCollection(
+  extents: DatasetSpatialExtent[]
+): FeatureCollection {
+  return {
+    type: 'FeatureCollection',
+    features: extents.reduce<Feature[]>((features, extent) => {
+      const geometry = spatialExtentToGeometry(extent)
+      if (geometry) {
+        features.push({ type: 'Feature', properties: {}, geometry })
+      }
+      return features
+    }, []),
   }
 }

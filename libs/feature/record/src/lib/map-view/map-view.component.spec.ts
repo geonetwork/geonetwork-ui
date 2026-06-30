@@ -23,7 +23,7 @@ import { Collection } from 'ol'
 import { Interaction } from 'ol/interaction.js'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import * as geoSdkCore from '@geospatial-sdk/core'
-import { MapContext } from '@geospatial-sdk/core'
+import { MapContext, MapContextLayer } from '@geospatial-sdk/core'
 import {
   MapContainerComponent,
   MapLegendComponent,
@@ -106,6 +106,7 @@ class MdViewFacadeMock {
 
 class MapUtilsServiceMock {
   getRecordExtent = jest.fn(() => recordMapExtent)
+  getRecordExtentLayer = jest.fn(() => null)
 }
 
 const SAMPLE_GEOJSON = {
@@ -225,6 +226,52 @@ describe('MapViewComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  describe('record spatial extent overlay', () => {
+    const extentLayer = {
+      type: 'geojson',
+      label: 'Spatial extent',
+      clickable: false,
+      data: { type: 'FeatureCollection', features: [] },
+    } as unknown as MapContextLayer
+    let mapUtils: {
+      getRecordExtent: jest.Mock
+      getRecordExtentLayer: jest.Mock
+    }
+
+    beforeEach(fakeAsync(() => {
+      mapUtils = TestBed.inject(MapUtilsService) as unknown as typeof mapUtils
+      mapUtils.getRecordExtentLayer.mockReturnValue(extentLayer)
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/'),
+          name: 'layer1',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+      tick()
+      fixture.detectChanges()
+    }))
+
+    it('overlays the record extent layer on top of the data layers', () => {
+      expect(mapComponent.context.layers).toEqual([
+        {
+          url: 'http://abcd.com/',
+          name: 'layer1',
+          type: 'wms',
+          format: 'image/png',
+        },
+        extentLayer,
+      ])
+    })
+
+    it('keeps the initial view independent from the overlay', () => {
+      expect(mapUtils.getRecordExtentLayer).toHaveBeenCalled()
+      expect(mapComponent.context.view).toEqual({ extent: recordMapExtent })
+    })
   })
 
   describe('map layers', () => {
