@@ -66,7 +66,7 @@ export const Primary: StoryObj<UserFeedbackItemComponent> = {
       email: 'john@example.com',
       name: 'John',
       surname: 'Doe',
-      profile: 'ADMIN',
+      profile: 'Administrator',
       username: '',
       organisation: '',
     },

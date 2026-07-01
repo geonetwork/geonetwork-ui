@@ -2,7 +2,7 @@
   #input
   class="gn-ui-text-input"
   [ngClass]="extraClass"
-  type="text"
+  [type]="type"
   [value]="value"
   (change)="handleChange($event)"
   (input)="handleChange($event)"
