@@ -219,5 +219,57 @@ describe('FormFieldConstraintsShortcutsComponent', () => {
         })
       }
     )
+
+    describe('for field legalConstraints', () => {
+      it('is visible when no toggle is activated', () => {
+        sampleRecord$.next({
+          ...sampleRecord,
+          legalConstraints: [{ text: 'some regular constraint' }],
+        })
+        fixture.detectChanges()
+        expect(getLastCallForField('legalConstraints')).toEqual([
+          { model: 'legalConstraints' },
+          true,
+        ])
+      })
+      it('is visible when legal constraints are empty and no toggle is activated', () => {
+        sampleRecord$.next({
+          ...sampleRecord,
+          legalConstraints: [],
+        })
+        fixture.detectChanges()
+        expect(getLastCallForField('legalConstraints')).toEqual([
+          { model: 'legalConstraints' },
+          true,
+        ])
+      })
+      it('is hidden when a toggle is activated', () => {
+        sampleRecord$.next({
+          ...sampleRecord,
+          legalConstraints: [NOT_APPLICABLE_CONSTRAINT],
+        })
+        fixture.detectChanges()
+        expect(getLastCallForField('legalConstraints')).toEqual([
+          { model: 'legalConstraints' },
+          false,
+        ])
+      })
+    })
+  })
+
+  describe('unsubscribe on destroy', () => {
+    it('stops updating field visibility once the component is destroyed', () => {
+      fixture.detectChanges()
+      component.ngOnDestroy()
+      ;(editorFacade.setFieldVisibility as jest.Mock).mockClear()
+
+      sampleRecord$.next({
+        ...sampleRecord,
+        securityConstraints: [{ text: 'a new constraint' }],
+      })
+      fixture.detectChanges()
+
+      expect(editorFacade.setFieldVisibility).not.toHaveBeenCalled()
+    })
   })
 })

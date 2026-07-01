@@ -119,6 +119,12 @@ export class FormFieldConstraintsShortcutsComponent implements OnDestroy {
         .subscribe((anyToggleActivated) => {
           if (anyToggleActivated) {
             this.hideAllConstraintSections()
+          } else {
+            // always keep legal constraints open to allow highlighting
+            this.editorFacade.setFieldVisibility(
+              { model: 'legalConstraints' },
+              true
+            )
           }
         })
 
@@ -131,13 +137,12 @@ export class FormFieldConstraintsShortcutsComponent implements OnDestroy {
           map((c) => c.length > 0),
           distinctUntilChanged()
         )
-        combineLatest([
-          isConstraintNotEmpty$,
-          this.anyToggleActivated$,
-        ]).subscribe(([isNotEmpty, anyToggleActivated]) => {
-          const visible = isNotEmpty && !anyToggleActivated
-          this.editorFacade.setFieldVisibility({ model }, visible)
-        })
+        combineLatest([isConstraintNotEmpty$, this.anyToggleActivated$])
+          .pipe(takeUntil(this.onDestroy$))
+          .subscribe(([isNotEmpty, anyToggleActivated]) => {
+            const visible = isNotEmpty && !anyToggleActivated
+            this.editorFacade.setFieldVisibility({ model }, visible)
+          })
       }
       hideEmptyConstraints(this.securityConstraints$, 'securityConstraints')
       hideEmptyConstraints(this.otherConstraints$, 'otherConstraints')
