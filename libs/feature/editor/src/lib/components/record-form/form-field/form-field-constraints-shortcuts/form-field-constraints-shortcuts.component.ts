@@ -119,6 +119,12 @@ export class FormFieldConstraintsShortcutsComponent implements OnDestroy {
         .subscribe((anyToggleActivated) => {
           if (anyToggleActivated) {
             this.hideAllConstraintSections()
+          } else {
+            // always keep legal constraints open to allow highlighting
+            this.editorFacade.setFieldVisibility(
+              { model: 'legalConstraints' },
+              true
+            )
           }
         })
 
