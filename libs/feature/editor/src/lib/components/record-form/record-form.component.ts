@@ -9,7 +9,7 @@ import {
 } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
 import { EditorFieldValue } from '../../models'
-import { FormFieldComponent } from './form-field'
+import { FieldFocusDirective, FormFieldComponent } from './form-field'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
   EditorFieldWithValue,
@@ -25,7 +25,12 @@ import { switchMap } from 'rxjs/operators'
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FormFieldComponent, TranslateDirective],
+  imports: [
+    CommonModule,
+    FormFieldComponent,
+    FieldFocusDirective,
+    TranslateDirective,
+  ],
 })
 export class RecordFormComponent implements OnInit, OnDestroy {
   facade = inject(EditorFacade)
@@ -42,11 +47,22 @@ export class RecordFormComponent implements OnInit, OnDestroy {
   )
 
   formFields = viewChildren(FormFieldComponent)
+  sectionFocusDirectives = viewChildren<FieldFocusDirective>('sectionFocus')
 
-  focusField(model: CatalogRecordKeys) {
-    const fields = this.formFields()
-    const field = fields.find((f) => f.model === model)
-    field?.fieldFocus.focusField()
+  async focusField(model: CatalogRecordKeys) {
+    const field = this.formFields().find((f) => f.model === model)
+    if (field) {
+      field.fieldFocus.focusField()
+      return
+    }
+    // field not rendered (e.g. hidden by constraints toggles): glow its section
+    const sections = await firstValueFrom(this.facade.currentSections$)
+    const sectionIndex = sections
+      .filter((section) => !section.hidden)
+      .findIndex((section) =>
+        section.fieldsWithValues.some((f) => f.config.model === model)
+      )
+    this.sectionFocusDirectives()[sectionIndex]?.focusField()
   }
 
   ngOnInit() {

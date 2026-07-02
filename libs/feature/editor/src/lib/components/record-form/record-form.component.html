@@ -4,7 +4,11 @@
     track sectionTracker($index, section)
   ) {
     @if (!section.hidden) {
-      <div class="flex flex-col gap-6 border p-8 rounded-[8px] shadow">
+      <div
+        class="flex flex-col gap-6 border p-8 rounded-[8px] shadow scroll-mt-[90px]"
+        gnUiFieldFocus
+        #sectionFocus="fieldFocus"
+      >
         <div class="flex flex-col gap-2">
           @if (section.labelKey) {
             <div class="text-2xl font-title text-black" translate>

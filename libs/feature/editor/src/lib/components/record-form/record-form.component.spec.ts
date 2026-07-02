@@ -1,18 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { EditorFacade } from '../../+state/editor.facade'
 import { RecordFormComponent } from './record-form.component'
-import { FormFieldComponent } from './form-field'
+import { FieldFocusDirective, FormFieldComponent } from './form-field'
 import { MockBuilder } from 'ng-mocks'
 import {
   datasetRecordsFixture,
   editorConfigFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject, Subject } from 'rxjs'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { EditorSectionWithValues } from '../../+state/editor.models'
 
 class EditorFacadeMock {
   record$ = new BehaviorSubject(datasetRecordsFixture()[0])
   focusedField$ = new Subject<string | null>()
   editorConfig$ = new BehaviorSubject(editorConfigFixture())
+  currentSections$ = new BehaviorSubject<EditorSectionWithValues[]>([])
   currentPage$ = new BehaviorSubject(0)
   setCurrentPage = jest.fn()
   updateRecordField = jest.fn()
@@ -24,13 +27,17 @@ describe('RecordFormComponent', () => {
   let facade: EditorFacadeMock
 
   beforeEach(() => {
-    return MockBuilder(RecordFormComponent).keep(FormFieldComponent)
+    return MockBuilder(RecordFormComponent)
+      .keep(FormFieldComponent)
+      .keep(FieldFocusDirective)
   })
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RecordFormComponent],
-      providers: [{ provide: EditorFacade, useClass: EditorFacadeMock }],
+      providers: [
+        provideI18n({}, false),
+        { provide: EditorFacade, useClass: EditorFacadeMock },
+      ],
     }).compileComponents()
 
     facade = TestBed.inject(EditorFacade) as unknown as EditorFacadeMock
@@ -103,6 +110,56 @@ describe('RecordFormComponent', () => {
       it('should not navigate to a page', () => {
         expect(facade.setCurrentPage).not.toHaveBeenCalled()
       })
+    })
+  })
+
+  describe('focusField', () => {
+    const sections: EditorSectionWithValues[] = [
+      {
+        hidden: false,
+        fields: [],
+        fieldsWithValues: [
+          {
+            config: {
+              model: 'licenses',
+              formFieldConfig: { labelKey: 'editor.record.form.field.license' },
+            },
+            value: [],
+          },
+          {
+            config: {
+              model: 'legalConstraints',
+              hidden: true,
+              formFieldConfig: {
+                labelKey: 'editor.record.form.field.legalConstraints',
+              },
+            },
+            value: [],
+          },
+        ],
+      },
+    ]
+
+    beforeEach(() => {
+      facade.currentSections$.next(sections)
+      fixture.detectChanges()
+    })
+
+    it('focuses the form field when it is rendered', async () => {
+      const field = component.formFields().find((f) => f.model === 'licenses')
+      const fieldSpy = jest
+        .spyOn(field.fieldFocus, 'focusField')
+        .mockImplementation()
+      await component.focusField('licenses')
+      expect(fieldSpy).toHaveBeenCalled()
+    })
+
+    it('highlights the whole section when the field is not rendered', async () => {
+      const sectionSpy = jest
+        .spyOn(component.sectionFocusDirectives()[0], 'focusField')
+        .mockImplementation()
+      await component.focusField('legalConstraints')
+      expect(sectionSpy).toHaveBeenCalled()
     })
   })
 
