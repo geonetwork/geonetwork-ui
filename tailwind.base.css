@@ -119,6 +119,12 @@
     border-gray-100 focus:ring-4 focus:ring-gray-50;
   }
 
+  .gn-ui-btn-gray-light {
+    @apply gn-ui-btn text-black
+    bg-gray-50 hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-200
+    border-gray-50 focus:ring-4 focus:ring-gray-100;
+  }
+
   .gn-ui-btn-black {
     @apply gn-ui-btn text-white
     bg-black hover:bg-gray-950 focus:bg-gray-950 active:bg-gray-900

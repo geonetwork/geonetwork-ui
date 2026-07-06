@@ -57,6 +57,7 @@ export const Primary: StoryObj<ButtonComponentWithContent> = {
         'outline',
         'light',
         'gray',
+        'gray-light',
         'black',
         'primary-light',
       ],
