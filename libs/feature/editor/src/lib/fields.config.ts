@@ -404,9 +404,7 @@ export const ISO_TOPICS: ISOTopic[] = [
   },
   {
     value: 'imageryBaseMapsEarthCover',
-    label: marker(
-      'editor.record.form.topics.iso.imageryBaseMapsEarthCover'
-    ),
+    label: marker('editor.record.form.topics.iso.imageryBaseMapsEarthCover'),
   },
   {
     value: 'inlandWaters',
