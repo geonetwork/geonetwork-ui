@@ -60,15 +60,36 @@ describe('RecordFormComponent', () => {
     })
   })
 
-  describe('getPageIndexForField', () => {
-    it('should return the page index for a field present in the config', async () => {
-      expect(await component.getPageIndexForField('title')).toBe(0)
+  describe('getFieldLocation', () => {
+    it('returns the page and section index of a field in the config', async () => {
+      expect(await component.getFieldLocation('title')).toEqual({
+        page: 0,
+        section: 0,
+      })
     })
 
-    it('should return null for a field not present in the config', async () => {
-      expect(
-        await component.getPageIndexForField('organisation' as any)
-      ).toBeNull()
+    it('returns nulls for a field not present in the config', async () => {
+      expect(await component.getFieldLocation('organisation' as any)).toEqual({
+        page: null,
+        section: null,
+      })
+    })
+
+    it('counts only non-hidden sections, matching the rendered order', async () => {
+      facade.editorConfig$.next({
+        pages: [
+          {
+            sections: [
+              { hidden: true, fields: [{ model: 'abstract' }] },
+              { hidden: false, fields: [{ model: 'title' }] },
+            ],
+          },
+        ],
+      } as any)
+      expect(await component.getFieldLocation('title')).toEqual({
+        page: 0,
+        section: 0,
+      })
     })
   })
 
@@ -145,20 +166,20 @@ describe('RecordFormComponent', () => {
       fixture.detectChanges()
     })
 
-    it('focuses the form field when it is rendered', async () => {
+    it('focuses the form field when it is rendered', () => {
       const field = component.formFields().find((f) => f.model === 'licenses')
       const fieldSpy = jest
         .spyOn(field.fieldFocus, 'focusField')
         .mockImplementation()
-      await component.focusField('licenses')
+      component.focusField('licenses', null)
       expect(fieldSpy).toHaveBeenCalled()
     })
 
-    it('highlights the whole section when the field is not rendered', async () => {
+    it('highlights the whole section when the field is not rendered', () => {
       const sectionSpy = jest
         .spyOn(component.sectionFocusDirectives()[0], 'focusField')
         .mockImplementation()
-      await component.focusField('legalConstraints')
+      component.focusField('legalConstraints', 0)
       expect(sectionSpy).toHaveBeenCalled()
     })
   })

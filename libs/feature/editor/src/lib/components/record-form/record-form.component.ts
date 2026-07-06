@@ -41,28 +41,22 @@ export class RecordFormComponent implements OnInit, OnDestroy {
   )
 
   focusFieldWithPage$ = this.facade.focusedField$.pipe(
-    switchMap(
-      async (field) => [field, await this.getPageIndexForField(field)] as const
-    )
+    switchMap(async (field) => {
+      const { page, section } = await this.getFieldLocation(field)
+      return [field, page, section] as const
+    })
   )
 
   formFields = viewChildren(FormFieldComponent)
   sectionFocusDirectives = viewChildren<FieldFocusDirective>('sectionFocus')
 
-  async focusField(model: CatalogRecordKeys) {
+  focusField(model: CatalogRecordKeys, section: number | null) {
     const field = this.formFields().find((f) => f.model === model)
     if (field) {
       field.fieldFocus.focusField()
       return
     }
-    // field not rendered (e.g. hidden by constraints toggles): glow its section
-    const sections = await firstValueFrom(this.facade.currentSections$)
-    const sectionIndex = sections
-      .filter((section) => !section.hidden)
-      .findIndex((section) =>
-        section.fieldsWithValues.some((f) => f.config.model === model)
-      )
-    this.sectionFocusDirectives()[sectionIndex]?.focusField()
+    this.sectionFocusDirectives()[section]?.focusField(false)
   }
 
   ngOnInit() {
@@ -71,15 +65,15 @@ export class RecordFormComponent implements OnInit, OnDestroy {
         .pipe(
           withLatestFrom(
             this.facade.currentPage$,
-            ([field, fieldPage], currentPage) =>
-              [field, fieldPage, currentPage] as const
+            ([field, fieldPage, fieldSection], currentPage) =>
+              [field, fieldPage, fieldSection, currentPage] as const
           )
         )
-        .subscribe(([field, fieldPage, currentPage]) => {
+        .subscribe(([field, fieldPage, fieldSection, currentPage]) => {
           if (fieldPage !== null && fieldPage !== currentPage) {
             this.facade.setCurrentPage(fieldPage)
           }
-          setTimeout(() => this.focusField(field))
+          setTimeout(() => this.focusField(field, fieldSection))
         })
     )
   }
@@ -103,13 +97,19 @@ export class RecordFormComponent implements OnInit, OnDestroy {
     return section.labelKey
   }
 
-  async getPageIndexForField(model: CatalogRecordKeys): Promise<number | null> {
+  async getFieldLocation(
+    model: CatalogRecordKeys
+  ): Promise<{ page: number | null; section: number | null }> {
     const config = await firstValueFrom(this.facade.editorConfig$)
-    const pageIndex = config.pages.findIndex((page) =>
-      page.sections.some((section) =>
-        section.fields.some((field) => field.model === model)
-      )
+    const page = config.pages.findIndex((p) =>
+      p.sections.some((s) => s.fields.some((f) => f.model === model))
     )
-    return pageIndex >= 0 ? pageIndex : null
+    if (page < 0) {
+      return { page: null, section: null }
+    }
+    const section = config.pages[page].sections
+      .filter((s) => !s.hidden)
+      .findIndex((s) => s.fields.some((f) => f.model === model))
+    return { page, section: section >= 0 ? section : null }
   }
 }

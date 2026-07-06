@@ -10,7 +10,7 @@ export class FieldFocusDirective {
 
   private el = inject(ElementRef)
 
-  public focusField() {
+  public focusField(focusInnerTarget = true) {
     setTimeout(() => {
       const host = this.el.nativeElement as HTMLElement
       const glowClass = this.gnUiFieldFocusGlowClass
@@ -25,6 +25,9 @@ export class FieldFocusDirective {
       )
 
       host.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      if (!focusInnerTarget) {
+        return
+      }
       const target =
         host.querySelector<HTMLElement>(
           'input, textarea, select, [contenteditable="true"]'
