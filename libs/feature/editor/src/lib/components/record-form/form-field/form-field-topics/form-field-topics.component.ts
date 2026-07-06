@@ -5,7 +5,7 @@ import {
   DropdownMultiselectComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
-import { INSPIRE_TOPICS } from '../../../../fields.config'
+import { ISO_TOPICS } from '../../../../fields.config'
 
 @Component({
   selector: 'gn-ui-form-field-topics',
@@ -22,7 +22,7 @@ export class FormFieldTopicsComponent {
     this.topics = topics
   }
   @Output() valueChange: EventEmitter<string[]> = new EventEmitter()
-  availableTopics = INSPIRE_TOPICS.map((topic) => {
+  availableTopics = ISO_TOPICS.map((topic) => {
     return {
       label: this.translateService.instant(topic.label),
       value: topic.value,

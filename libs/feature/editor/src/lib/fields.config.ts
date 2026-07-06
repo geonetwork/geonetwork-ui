@@ -4,10 +4,12 @@ import {
   EditorField,
   EditorSection,
 } from './models/editor-config.model'
-import {
-  INSPIRE_topic,
-  Keyword,
-} from '@geonetwork-ui/common/domain/model/record'
+import { Keyword } from '@geonetwork-ui/common/domain/model/record'
+
+export interface ISOTopic {
+  value: string
+  label: string
+}
 
 /**
  * This file contains the configuration of the fields that will be displayed in the editor.
@@ -359,87 +361,87 @@ export const SPATIAL_SCOPES: Keyword[] = [
 ]
 
 /************************************************************
- ***************           INSPIRE TOPICS            **************
+ ***************             ISO TOPICS             **************
  ************************************************************
  */
 
 // label keys mirror the ISO MD_TopicCategoryCode value for consistency
-export const INSPIRE_TOPICS: INSPIRE_topic[] = [
-  { value: 'biota', label: marker('editor.record.form.topics.inspire.biota') },
+export const ISO_TOPICS: ISOTopic[] = [
+  { value: 'biota', label: marker('editor.record.form.topics.iso.biota') },
   {
     value: 'boundaries',
-    label: marker('editor.record.form.topics.inspire.boundaries'),
+    label: marker('editor.record.form.topics.iso.boundaries'),
   },
   {
     value: 'climatologyMeteorologyAtmosphere',
     label: marker(
-      'editor.record.form.topics.inspire.climatologyMeteorologyAtmosphere'
+      'editor.record.form.topics.iso.climatologyMeteorologyAtmosphere'
     ),
   },
   {
     value: 'economy',
-    label: marker('editor.record.form.topics.inspire.economy'),
+    label: marker('editor.record.form.topics.iso.economy'),
   },
   {
     value: 'elevation',
-    label: marker('editor.record.form.topics.inspire.elevation'),
+    label: marker('editor.record.form.topics.iso.elevation'),
   },
   {
     value: 'environment',
-    label: marker('editor.record.form.topics.inspire.environment'),
+    label: marker('editor.record.form.topics.iso.environment'),
   },
   {
     value: 'farming',
-    label: marker('editor.record.form.topics.inspire.farming'),
+    label: marker('editor.record.form.topics.iso.farming'),
   },
   {
     value: 'geoscientificInformation',
-    label: marker('editor.record.form.topics.inspire.geoscientificInformation'),
+    label: marker('editor.record.form.topics.iso.geoscientificInformation'),
   },
   {
     value: 'health',
-    label: marker('editor.record.form.topics.inspire.health'),
+    label: marker('editor.record.form.topics.iso.health'),
   },
   {
     value: 'imageryBaseMapsEarthCover',
     label: marker(
-      'editor.record.form.topics.inspire.imageryBaseMapsEarthCover'
+      'editor.record.form.topics.iso.imageryBaseMapsEarthCover'
     ),
   },
   {
     value: 'inlandWaters',
-    label: marker('editor.record.form.topics.inspire.inlandWaters'),
+    label: marker('editor.record.form.topics.iso.inlandWaters'),
   },
   {
     value: 'intelligenceMilitary',
-    label: marker('editor.record.form.topics.inspire.intelligenceMilitary'),
+    label: marker('editor.record.form.topics.iso.intelligenceMilitary'),
   },
   {
     value: 'location',
-    label: marker('editor.record.form.topics.inspire.location'),
+    label: marker('editor.record.form.topics.iso.location'),
   },
   {
     value: 'oceans',
-    label: marker('editor.record.form.topics.inspire.oceans'),
+    label: marker('editor.record.form.topics.iso.oceans'),
   },
   {
     value: 'planningCadastre',
-    label: marker('editor.record.form.topics.inspire.planningCadastre'),
+    label: marker('editor.record.form.topics.iso.planningCadastre'),
   },
   {
     value: 'society',
-    label: marker('editor.record.form.topics.inspire.society'),
+    label: marker('editor.record.form.topics.iso.society'),
   },
   {
     value: 'structure',
-    label: marker('editor.record.form.topics.inspire.structure'),
+    label: marker('editor.record.form.topics.iso.structure'),
   },
   {
     value: 'transportation',
-    label: marker('editor.record.form.topics.inspire.transportation'),
+    label: marker('editor.record.form.topics.iso.transportation'),
   },
   {
     value: 'utilitiesCommunication',
-    label: marker('editor.record.form.topics.inspire.utilitiesCommunication'),
+    label: marker('editor.record.form.topics.iso.utilitiesCommunication'),
   },
 ]

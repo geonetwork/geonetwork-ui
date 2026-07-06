@@ -108,11 +108,6 @@ export interface Keyword {
   translations?: KeywordTranslations
 }
 
-export interface INSPIRE_topic {
-  value: string
-  label: string
-}
-
 export interface ResourceIdentifier {
   code: string
   codeSpace?: string
