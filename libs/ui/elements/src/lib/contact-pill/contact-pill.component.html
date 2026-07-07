@@ -1,5 +1,5 @@
 <gn-ui-button
-  [type]="overlayOpen ? 'primary' : 'primary-light'"
+  [type]="overlayOpen ? 'gray-light' : 'primary-light'"
   extraClass="group w-full min-h-12 gap-3 justify-between py-2 pl-5 pr-4 rounded"
   data-test="contact-pill"
   (buttonClick)="toggleOverlay()"
@@ -7,12 +7,16 @@
   #overlayOrigin="cdkOverlayOrigin"
 >
   <span
-    class="font-title font-medium text-base leading-tight truncate group-hover:text-white"
+    class="font-title font-medium text-base leading-tight truncate"
+    [class]="!overlayOpen ? 'text-primary-black group-hover:text-white' : ''"
     [title]="displayName"
     >{{ displayName }}</span
   >
   <div
-    class="gn-ui-card-icon items-center justify-center w-10 h-8 group-hover:border-white group-hover:text-white"
+    class="gn-ui-card-icon items-center justify-center w-10 h-8"
+    [class]="
+      !overlayOpen ? 'group-hover:border-white group-hover:text-white' : ''
+    "
   >
     @if (overlayOpen) {
       <ng-icon class="!w-6 !h-6 !text-[24px]" name="matClose"></ng-icon>
