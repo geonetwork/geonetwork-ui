@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dct="http://purl.org/dc/elements/1.1/"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+
+  <skos:ConceptScheme rdf:about="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie">
+    <skos:prefLabel xml:lang="nl">conceptscheme MAGDA categorie</skos:prefLabel>
+    <dct:title>conceptscheme MAGDA categorie</dct:title>
+    <skos:definition>Codelijst voor het categoriseren van MAGDA-dataservices.</skos:definition>
+  </skos:ConceptScheme>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Algemeen">
+    <skos:definition>Onder het domein Algemeen vallen diensten die eerder een specifieke functie vervullen dan bepaalde gegevens op te halen.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Algemeen</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">General</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Général</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Dossier">
+    <skos:definition>Diensten in dit domein laten communicatie toe met DOSIS. Dit systeem centraliseert informatie over dossiers die binnen de entiteiten van de Vlaamse overheid bestaan over personen en ondernemingen. De DOSIS databank moet o.a. projecten zoals Mijn Burgerprofiel voeden en zal het mogelijk maken dat burgers of ondernemingen dossiers die over hun bestaan, kunnen consulteren en opvolgen.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Dossier</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">File</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Fichier</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Energie">
+    <skos:definition>Diensten waarmee gegevens kunnen worden opgevraagd uit de Energieprestatiedatabank van VEA (Vlaams Energie Agentschap). Naast EPC/EPB gegevens bevat deze databank nog tal van andere gegevens zoals schildelen, installaties, HESystemen,…</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Energie</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Energy</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Énergie</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Gezin">
+    <skos:definition>De diensten ressorterend onder dit domein zijn oorspronkelijk ontwikkeld in het kader van het groeipakket en geven in dit kader informatie over een kind (zorgtoeslag, kinderbijslag,…).</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Gezin</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Family</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Famille</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Inburgering">
+    <skos:definition>Deze diensten worden gebruikt in het kader van de opvolging van inburgeraars. De gegevens bevatten informatie over de lopende trajecten van de inburgeraar.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Inburgering</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Integration</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Intégration</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Inkomen">
+    <skos:definition>Via de webservice GeefAanslagbiljetPersonenbelasting kan je gegevens van het aanslagbiljet van de personenbelasting opvragen bij de FOD Financiën. Deze dienst wordt voor elke afnemer specifiek geconfigureerd. In samenspraak met de FOD Financiën wordt bepaald aan welke gegevens de afnemer nood heeft.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Inkomen</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Income</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Revenu</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Kadaster">
+    <skos:definition>Via de diensten in dit domein, kan je kadastrale gegevens ophalen bij de Algemene Administratie voor Patrimoniumdocumentatie (AAPD).</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Kadaster</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Land Registry</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Registre foncier</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/LED">
+    <skos:definition>De diensten binnen dit domein zijn ontwikkeld voor onder andere het bevragen van bewijzen (voornamelijk diploma's) uit de Leer-en ErvaringsbewijzenDatabank. Leveranciers van bewijzen aan LED kunnen hier ook de handleidingen terug vinden van de diensten gebruikt om bewijzen te registreren of annuleren.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">LED</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">LED</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">LED</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Milieu">
+    <skos:definition>Diensten nodig voor het opzetten en onderhouden van een Lage Emissie Zone (LEZ) zijn in dit domein terug te vinden. Een ander deel van de diensten nodig voor een LEZ opzet zijn terug te vinden in het domein Mobiliteit.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Milieu</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Environment</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Environnement</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Mobiliteit">
+    <skos:definition>Diensten voor het ophalen van titularisgevens en voertuiggegevens op basis van nummerplaat die o.a. gebruikt worden door de LEZ zones.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Mobiliteit</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Mobility</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Mobilité</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Onderneming">
+    <skos:definition>Dit domein bevat alle diensten die het mogelijk maken om informatie op te vragen over een bepaalde onderneming of vestiging. Het gaat over zowel gegevens vanuit KBO als tewerkstelling en financiële gegevens. Veel diensten onder dit domein bevatten geen persoonsgegevens.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Onderneming</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Enterprise</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Entreprise</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Onderwijs">
+    <skos:definition>Onderwijsinstellingen in Vlaanderen (zowel in leerplicht, hoger als volwassen onderwijs) registreren verschillende gegevens over hun leerlingen. De diensten binnen dit domein ontsluiten deze informatie.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Onderwijs</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Education</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Éducation</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Persoon">
+    <skos:definition>Informatie uit het rijksregister kan opgevraagd worden via de diensten in het domein Persoons. Naast het rijksregister worden de gegevens uit het BIS- en RADregister ook ontsloten via dit domein.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Persoon</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Person</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Personne</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Repertorium">
+    <skos:definition>Het beheer van een (verwijzings)repertorium is één van de opdrachten van de Vlaamse Dienstenintegrator, opgenomen in het VDI-decreet (Hoofdstuk 3, Artikel 4, Paragraaf 6°) en heeft tot doel het verhinderen dat een instantie ongeoorloofd persoonsgegevens consulteert of persoonsgegevens uitwisselt met andere instanties.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Repertorium</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Directory</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Annuaire</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/RuimteEnOmgeving">
+    <skos:definition>De omgevingsvergunning bundelt de vroegere bouwvergunning, de verkavelingsvergunning en de milieuvergunning. Betrokkenen in het vergunningsproces zijn o.a. lokale besturen en de adviesverlenende instanties.  Het Vlaams Loket Woningkwaliteit (VLOK) ondersteunt de lokale besturen bij al hun opdrachten rond woningkwaliteitsbewaking</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Ruimte en Omgeving</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Space and Environment</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Espace et environnement</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/SocialeEconomie">
+    <skos:definition>Dit domein bevat diensten die veelal specifiek voor WSE zijn ontworpen (Sociale Economie) en waarmee gegevens worden opgehaald bij VDAB.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Sociale Economie</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Social Economy</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Économie sociale</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/SocialeZekerheid">
+    <skos:definition>De Kruispuntbank Sociale Zekerheid, maar ook andere actoren zoals VDAB of VAPH, bieden toegang tot gegevens (erkenningen, statuten of uitkeringen) uit de sociale zekerheid: bijvoorbeeld ziekte, ongeval, leefloon, werkloosheid, pensioen, handicap e.d. </skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Sociale Zekerheid</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Social Security</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Sécurité sociale</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Werk">
+    <skos:definition>Het domein werk bevat diensten die arbeidsgegevens, zoals informatie over loopbanen en werkrelaties, bevatten. De meest gebruikte diensten binnen dit domein zijn GeefWerkrelaties en GeefDmfaVoorWerknemer.</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Werk</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Work</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Travail</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/VerzendenEnOntvangen">
+    <skos:definition>Diensten voor het verzenden en ontvangen van digitale facturen en documenten.  Hierbij wordt gebruik gemaakt van federale webservices (respectievelijk KSZ en BOSA/Mercurius).</skos:definition>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Verzenden en ontvangen</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Sending and receiving</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Envoi et réception</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/VlaamsLoketWoningKwaliteit">
+    <skos:definition>Het Vlaams Loket Woningkwaliteit (VLOK) ondersteunt de lokale besturen bij al hun opdrachten rond woningkwaliteitsbewaking.Het is een onmisbaar hulpmiddel bij, onder meer, de volledige opvolging van procedures ongeschikt- en onbewoonbaarheid, de opmaak en het beheer van conformiteitsattesten en het registreren van besluiten met betrekking tot de nieuwe gemeentewet. Via de diensten in dit domein kan er worden gecommuniceerd met het Vlaams Loket Woningkwaliteit.</skos:definition>
+    <skos:inScheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+    <skos:prefLabel xml:lang="nl">Vlaams Loket Woningkwaliteit</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Flemish Housing Quality Office</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Office flamand de la qualité du logement</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie"/>
+  </skos:Concept>
+</rdf:RDF>
