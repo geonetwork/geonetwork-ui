@@ -558,6 +558,8 @@
   "record.metadata.userFeedbacks.sortSelector.choices.oldestFirst": "Älteste zuerst",
   "record.metadata.userFeedbacks.sortSelector.label": "Sortieren nach ...",
   "record.more.details": "Weitere Details",
+  "record.reuse.deleteError.body": "Die Wiederverwendung konnte nicht gelöscht werden.",
+  "record.reuse.deleteError.title": "Fehler beim Löschen der Wiederverwendung",
   "record.tab.chart": "Diagramm",
   "record.tab.data": "Tabelle",
   "record.tab.map": "Karte",

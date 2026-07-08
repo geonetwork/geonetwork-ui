@@ -83,6 +83,18 @@
                   ></ng-icon>
                 </gn-ui-button>
               }
+              @if (showDeleteReuseButton$ | async) {
+                <gn-ui-button
+                  class="self-end"
+                  type="outline"
+                  extraClass="w-fit bg-white"
+                  [style.--gn-ui-button-rounded]="'10px'"
+                  (buttonClick)="deleteReuse()"
+                >
+                  <ng-icon class="text-[1em]" name="matDeleteOutline"></ng-icon>
+                  <span class="sr-only" translate>record.action.delete</span>
+                </gn-ui-button>
+              }
             </div>
           </div>
         }

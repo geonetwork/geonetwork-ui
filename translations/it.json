@@ -558,6 +558,8 @@
   "record.metadata.userFeedbacks.sortSelector.choices.oldestFirst": "Prima il più vecchio",
   "record.metadata.userFeedbacks.sortSelector.label": "Ordina per ...",
   "record.more.details": "Dettagli",
+  "record.reuse.deleteError.body": "",
+  "record.reuse.deleteError.title": "",
   "record.tab.chart": "Grafico",
   "record.tab.data": "Tabella",
   "record.tab.map": "Mappa",

@@ -558,6 +558,8 @@
   "record.metadata.userFeedbacks.sortSelector.choices.oldestFirst": "",
   "record.metadata.userFeedbacks.sortSelector.label": "",
   "record.more.details": "Čítať viac",
+  "record.reuse.deleteError.body": "",
+  "record.reuse.deleteError.title": "",
   "record.tab.chart": "Graf",
   "record.tab.data": "Tabuľka",
   "record.tab.map": "Mapa",

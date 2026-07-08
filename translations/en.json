@@ -558,6 +558,8 @@
   "record.metadata.userFeedbacks.sortSelector.choices.oldestFirst": "Oldest comments first",
   "record.metadata.userFeedbacks.sortSelector.label": "Sort by ...",
   "record.more.details": "Read more",
+  "record.reuse.deleteError.body": "The reuse could not be deleted.",
+  "record.reuse.deleteError.title": "Error deleting reuse",
   "record.tab.chart": "Chart",
   "record.tab.data": "Table",
   "record.tab.map": "Map",

@@ -10,7 +10,7 @@ import {
   MetadataContactComponent,
   MetadataInfoComponent,
 } from '@geonetwork-ui/ui/elements'
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject, of, throwError } from 'rxjs'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
@@ -23,6 +23,9 @@ import { RecordInternalLinksComponent } from '../record-internal-links/record-in
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { REUSE_FORM_URL } from '../record-data-preview/record-data-preview.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -72,6 +75,20 @@ class PlatformServiceMock {
   supportsAuthentication = jest.fn(() => true)
 }
 
+class RecordsRepositoryMock {
+  canDelete = jest.fn(() => of(false))
+  deleteRecord = jest.fn(() => of(undefined))
+  clearRecordDraft = jest.fn()
+}
+
+class RouterFacadeMock {
+  setSearch = jest.fn()
+}
+
+class NotificationsServiceMock {
+  showNotification = jest.fn()
+}
+
 describe('RecordMetadataComponent', () => {
   let component: RecordMetadataComponent
   let fixture: ComponentFixture<RecordMetadataComponent>
@@ -109,6 +126,18 @@ describe('RecordMetadataComponent', () => {
         {
           provide: REUSE_FORM_URL,
           useValue: 'https://example.com/reuse',
+        },
+        {
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryMock,
+        },
+        {
+          provide: RouterFacade,
+          useClass: RouterFacadeMock,
+        },
+        {
+          provide: NotificationsService,
+          useClass: NotificationsServiceMock,
         },
       ],
     }).compileComponents()
@@ -511,6 +540,91 @@ describe('RecordMetadataComponent', () => {
         component.showReuseButton().subscribe((visible) => {
           expect(visible).toBe(true)
         })
+      })
+    })
+  })
+
+  describe('Delete reuse button', () => {
+    let recordsRepository: RecordsRepositoryMock
+    let routerFacade: RouterFacadeMock
+    let notificationsService: NotificationsServiceMock
+
+    beforeEach(() => {
+      recordsRepository = TestBed.inject(
+        RecordsRepositoryInterface
+      ) as unknown as RecordsRepositoryMock
+      routerFacade = TestBed.inject(RouterFacade) as unknown as RouterFacadeMock
+      notificationsService = TestBed.inject(
+        NotificationsService
+      ) as unknown as NotificationsServiceMock
+      component.reuseFormUrl = 'https://example.com/reuse'
+    })
+
+    it('does not display when kind is not reuse', () => {
+      recordsRepository.canDelete.mockReturnValue(of(true))
+      facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'dataset' })
+      let visible: boolean
+      component.showDeleteReuseButton$.subscribe((v) => (visible = v))
+      expect(visible).toBe(false)
+    })
+
+    it('does not display when reuseFormUrl is not set', () => {
+      component.reuseFormUrl = null
+      recordsRepository.canDelete.mockReturnValue(of(true))
+      facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+      let visible: boolean
+      component.showDeleteReuseButton$.subscribe((v) => (visible = v))
+      expect(visible).toBe(false)
+    })
+
+    it('does not display when user has no edit rights', () => {
+      recordsRepository.canDelete.mockReturnValue(of(false))
+      facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+      let visible: boolean
+      component.showDeleteReuseButton$.subscribe((v) => (visible = v))
+      expect(visible).toBe(false)
+    })
+
+    it('displays when kind is reuse, edit rights and reuseFormUrl set', () => {
+      recordsRepository.canDelete.mockReturnValue(of(true))
+      facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+      let visible: boolean
+      component.showDeleteReuseButton$.subscribe((v) => (visible = v))
+      expect(visible).toBe(true)
+    })
+
+    describe('on success', () => {
+      beforeEach(() => {
+        facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+        component.deleteReuse()
+      })
+      it('deletes the record, clears the draft and navigates to search', () => {
+        expect(recordsRepository.deleteRecord).toHaveBeenCalledWith(
+          SAMPLE_RECORD.uniqueIdentifier
+        )
+        expect(recordsRepository.clearRecordDraft).toHaveBeenCalledWith(
+          SAMPLE_RECORD.uniqueIdentifier
+        )
+        expect(routerFacade.setSearch).toHaveBeenCalled()
+        expect(notificationsService.showNotification).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('on error', () => {
+      beforeEach(() => {
+        recordsRepository.deleteRecord.mockReturnValue(
+          throwError(() => 'delete failed')
+        )
+        facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+        component.deleteReuse()
+      })
+      it('shows an error notification and stays on the page', () => {
+        expect(routerFacade.setSearch).not.toHaveBeenCalled()
+        expect(notificationsService.showNotification).toHaveBeenCalledWith(
+          expect.objectContaining({ type: 'error' }),
+          7000,
+          'delete failed'
+        )
       })
     })
   })
