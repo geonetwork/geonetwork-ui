@@ -101,27 +101,68 @@ export const mapContact = (
   }
 }
 
-export const mapKeywords = (thesauri: Thesaurus[], language: string) => {
+export interface KeywordTree {
+  default?: string[]
+}
+
+/**
+ * Resolves a keyword's ancestor path within its thesaurus tree, or null for a
+ * root-level keyword (no ancestors to show). Tree entries are `^`-joined label
+ * paths (default language); they aren't index-aligned with the keywords, so we
+ * match on the last segment (not by position/URI), shortest path on poly-hierarchy.
+ */
+export const getKeywordHierarchyPath = (
+  keywordDefaultLabel: string,
+  tree?: KeywordTree | null
+): string[] | null => {
+  if (!keywordDefaultLabel || !tree?.default) return null
+  const shortest = tree.default
+    .map((entry) => entry.split('^'))
+    .filter((path) => path[path.length - 1] === keywordDefaultLabel)
+    .reduce(
+      (shortest, path) =>
+        !shortest || path.length < shortest.length ? path : shortest,
+      null
+    )
+  return shortest?.length > 1 ? shortest : null
+}
+
+export const mapKeywords = (
+  thesauri: Record<string, Thesaurus>,
+  language: string,
+  source?: SourceWithUnknownProps
+) => {
   const keywords = []
   for (const thesaurusId in thesauri) {
     const rawThesaurus = thesauri[thesaurusId]
+    // thesauri have an `id` (registered) or a `multilingualTitle` (cited);
+    // free-keyword groups only have a machine-key `title` like "otherKeywords-theme"
+    const { id, multilingualTitle, link = null } = rawThesaurus
     let thesaurus = null
-    if (rawThesaurus.id) {
-      const thesaurusSource: SourceWithUnknownProps = { ...rawThesaurus }
-      const url = getAsUrl(selectField(thesaurusSource, 'link'))
-      const name = selectField(thesaurusSource, 'title')
+    if (id || multilingualTitle) {
+      const url = getAsUrl(link)
+      const name = multilingualTitle
+        ? selectTranslatedValue<string>(multilingualTitle, language)
+        : rawThesaurus.title
       thesaurus = {
-        id: rawThesaurus.id,
+        ...(id && { id }),
         ...(name && { name }),
         ...(url && { url }),
       }
     }
+    const tree =
+      source && selectField<KeywordTree>(source, `${thesaurusId}_tree`)
+    // free-keyword groups have no `theme` field; their type is in the group key
+    const typeCode =
+      rawThesaurus.theme || thesaurusId.match(/otherKeywords-(\w+)$/)?.[1]
     for (const keyword of rawThesaurus.keywords) {
+      const hierarchyPath = getKeywordHierarchyPath(keyword.default, tree)
       keywords.push({
         label: selectTranslatedValue<string>(keyword, language),
-        type: getKeywordTypeFromKeywordTypeCode(rawThesaurus.theme),
+        type: getKeywordTypeFromKeywordTypeCode(typeCode),
         ...(keyword.link && { key: keyword.link }),
         ...(thesaurus && { thesaurus }),
+        ...(hierarchyPath && { hierarchyPath }),
       })
     }
   }

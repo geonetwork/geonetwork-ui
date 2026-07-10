@@ -1679,55 +1679,55 @@ describe('Gn4Converter', () => {
               },
               {
                 label: 'Lieux de surveillance',
-                type: 'other',
+                type: 'theme',
               },
               {
                 label: 'Observation',
-                type: 'other',
+                type: 'theme',
               },
               {
                 label: 'Surveillance',
-                type: 'other',
+                type: 'theme',
               },
               {
                 label: 'Environnement',
-                type: 'other',
+                type: 'theme',
               },
               {
                 label: 'Littoral',
-                type: 'other',
+                type: 'theme',
               },
               {
                 label: 'Quadrige',
-                type: 'other',
+                type: 'theme',
               },
               {
                 label: 'DCE',
-                type: 'other',
+                type: 'theme',
               },
               {
                 label: 'DCSMM',
-                type: 'other',
+                type: 'theme',
               },
               {
                 label: 'OSPAR',
-                type: 'other',
+                type: 'theme',
               },
               {
                 label: 'MEDPOL',
-                type: 'other',
+                type: 'theme',
               },
               {
                 label: 'Données ouvertes',
-                type: 'other',
+                type: 'theme',
               },
               {
                 label: 'Open Data',
-                type: 'other',
+                type: 'theme',
               },
               {
                 label: 'Surval',
-                type: 'other',
+                type: 'theme',
               },
             ],
             landingPage: new URL(
@@ -1858,6 +1858,10 @@ describe('Gn4Converter', () => {
                 type: 'theme',
               },
               {
+                hierarchyPath: [
+                  'Allgemeine Angelegenheiten',
+                  'Nachhaltige Entwicklung',
+                ],
                 key: 'http://www.eionet.europa.eu/gemet/concept/8247',
                 label: 'Nachhaltige Entwicklung',
                 thesaurus: {
@@ -1870,6 +1874,10 @@ describe('Gn4Converter', () => {
                 type: 'theme',
               },
               {
+                hierarchyPath: [
+                  'Natürliche Lebensräume, Landschaft, Ökosysteme',
+                  'Raumplanung',
+                ],
                 key: 'http://www.eionet.europa.eu/gemet/concept/6225',
                 label: 'Raumplanung',
                 thesaurus: {
@@ -1882,6 +1890,10 @@ describe('Gn4Converter', () => {
                 type: 'theme',
               },
               {
+                hierarchyPath: [
+                  'Natürliche Lebensräume, Landschaft, Ökosysteme',
+                  'Bergschutz',
+                ],
                 key: 'http://www.eionet.europa.eu/gemet/concept/10236',
                 label: 'Bergschutz',
                 thesaurus: {
@@ -1894,6 +1906,7 @@ describe('Gn4Converter', () => {
                 type: 'theme',
               },
               {
+                hierarchyPath: ['Boden', 'Bodenschutz'],
                 key: 'http://www.eionet.europa.eu/gemet/concept/7852',
                 label: 'Bodenschutz',
                 thesaurus: {
@@ -2353,6 +2366,10 @@ describe('Gn4Converter', () => {
                 },
               },
               {
+                hierarchyPath: [
+                  'Services de gestion des modèles/informations géographiques',
+                  'Service de catalogue',
+                ],
                 label: 'Service de catalogue',
                 type: 'theme',
                 key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService',
@@ -2389,6 +2406,7 @@ describe('Gn4Converter', () => {
                 },
               },
               {
+                hierarchyPath: ['Mobilité', 'Mobilité (autre)'],
                 label: 'Mobilité (autre)',
                 type: 'theme',
                 key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/3099',
@@ -2401,6 +2419,7 @@ describe('Gn4Converter', () => {
                 },
               },
               {
+                hierarchyPath: ['Données de base', 'Données de base (autre)'],
                 label: 'Données de base (autre)',
                 type: 'theme',
                 key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/5099',
@@ -2974,6 +2993,7 @@ describe('Gn4Converter', () => {
                 },
               },
               {
+                hierarchyPath: ['Données de base', 'Cartes anciennes'],
                 label: 'Cartes anciennes',
                 type: 'theme',
                 key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/5040',
@@ -2998,6 +3018,7 @@ describe('Gn4Converter', () => {
                 },
               },
               {
+                hierarchyPath: ['Société et activités', 'Logement et habitat'],
                 label: 'Logement et habitat',
                 type: 'theme',
                 key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/6030',
@@ -3010,6 +3031,10 @@ describe('Gn4Converter', () => {
                 },
               },
               {
+                hierarchyPath: [
+                  'Aménagement du territoire',
+                  'Risques et contraintes',
+                ],
                 label: 'Risques et contraintes',
                 type: 'theme',
                 key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2020',
@@ -3022,6 +3047,10 @@ describe('Gn4Converter', () => {
                 },
               },
               {
+                hierarchyPath: [
+                  'Aménagement du territoire',
+                  'Plans et règlements',
+                ],
                 label: 'Plans et règlements',
                 type: 'theme',
                 key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2010',
@@ -3213,6 +3242,7 @@ describe('Gn4Converter', () => {
             ],
             keywords: [
               {
+                hierarchyPath: ['biologie', 'espèce animale'],
                 label: 'espèce animale',
                 type: 'theme',
                 key: 'http://www.eionet.europa.eu/gemet/concept/10073',
@@ -3225,6 +3255,7 @@ describe('Gn4Converter', () => {
                 },
               },
               {
+                hierarchyPath: ['sylviculture', 'chasse'],
                 label: 'chasse',
                 type: 'theme',
                 key: 'http://www.eionet.europa.eu/gemet/concept/4072',

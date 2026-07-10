@@ -28,7 +28,14 @@ export class PopoverComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   @ViewChild('popoverContent', { static: false }) popoverContent: ElementRef
   @Input() content: string | TemplateRef<any>
-  @Input() theme: 'light' | 'light-border' | 'translucent' | 'material' | ''
+  @Input() theme:
+    | 'light'
+    | 'light-border'
+    | 'translucent'
+    | 'material'
+    | 'dark'
+    | ''
+  @Input() maxWidth?: number
 
   private tippyInstance: Instance
   private view: EmbeddedViewRef<any>
@@ -54,6 +61,7 @@ export class PopoverComponent implements AfterViewInit, OnChanges, OnDestroy {
       content: this.getContent(),
       allowHTML: true,
       theme: this.theme,
+      ...(this.maxWidth && { maxWidth: this.maxWidth }),
     })
   }
 

@@ -19,12 +19,18 @@ import {
   ExpandablePanelComponent,
   MaxLinesComponent,
 } from '@geonetwork-ui/ui/layout'
-import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   BadgeComponent,
   ButtonComponent,
   CopyTextButtonComponent,
 } from '@geonetwork-ui/ui/inputs'
+import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
@@ -34,6 +40,11 @@ import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
 
 import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
 import { ContactPillComponent } from '../contact-pill/contact-pill.component'
+
+marker('domain.record.keywordType.theme')
+marker('domain.record.keywordType.place')
+marker('domain.record.keywordType.temporal')
+marker('domain.record.keywordType.other')
 
 @Component({
   selector: 'gn-ui-metadata-info',
@@ -56,6 +67,7 @@ import { ContactPillComponent } from '../contact-pill/contact-pill.component'
     GnUiHumanizeDateDirective,
     SpatialExtentComponent,
     ContactPillComponent,
+    PopoverComponent,
   ],
   viewProviders: [
     provideIcons({
@@ -66,6 +78,7 @@ import { ContactPillComponent } from '../contact-pill/contact-pill.component'
 })
 export class MetadataInfoComponent {
   private dateService = inject(DateService)
+  private translateService = inject(TranslateService)
 
   @Input() metadata: Partial<CatalogRecord>
   @Input() incomplete: boolean
@@ -166,5 +179,20 @@ export class MetadataInfoComponent {
 
   onKeywordClick(keyword: Keyword) {
     this.keyword.emit(keyword)
+  }
+
+  keywordTooltipSegments(keyword: Keyword): string[] {
+    if (keyword.hierarchyPath?.length) {
+      return keyword.hierarchyPath
+    }
+    if (keyword.thesaurus?.name) {
+      return [keyword.thesaurus.name, keyword.label]
+    }
+    return [
+      this.translateService.instant(
+        `domain.record.keywordType.${keyword.type}`
+      ),
+      keyword.label,
+    ]
   }
 }
