@@ -8,7 +8,6 @@ import {
 
 import { FormFieldRichComponent } from '../record-form/form-field/form-field-rich/form-field-rich.component'
 import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
-import { MatIconModule } from '@angular/material/icon'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { Constraint } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -26,7 +25,6 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
     FormFieldRichComponent,
     UrlInputComponent,
     ButtonComponent,
-    MatIconModule,
     TranslateDirective,
     TranslatePipe,
     NgIconComponent,

@@ -1,5 +1,4 @@
 import {
-  CUSTOM_ELEMENTS_SCHEMA,
   DoBootstrap,
   importProvidersFrom,
   inject,
@@ -131,7 +130,6 @@ const CUSTOM_ELEMENTS: [
       useClass: NoopTitleStrategy,
     },
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class WebcomponentsModule implements DoBootstrap {
   private injector = inject(Injector)
