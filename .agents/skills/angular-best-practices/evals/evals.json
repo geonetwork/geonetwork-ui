@@ -1,0 +1,23 @@
+{
+  "skill_name": "angular-best-practices",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to create a new Angular component for a user profile page. It should display user info, have an edit form, and show a list of their recent orders. The component needs to fetch the user data from an API and handle loading/error states. Can you create src/app/features/profile/user-profile.component.ts for me?",
+      "expected_output": "Component using signals (input(), signal(), computed()), inject(), OnPush, resource() or httpResource() for data fetching, proper TypeScript types",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I have this Angular template that's performing poorly. It has a big list of products with images and filters. Can you review and optimize this template?\n\n```html\n<div *ngIf=\"products$ | async as products\">\n  <div *ngFor=\"let product of products\">\n    <img src=\"{{product.image}}\" />\n    <p>{{getFormattedPrice(product)}}</p>\n    <p>{{product.name | uppercase}}</p>\n  </div>\n</div>\n```\n\nThis is in src/app/features/catalog/product-list.component.html",
+      "expected_output": "Template using @if/@for with track, NgOptimizedImage, pure pipe instead of getFormattedPrice method, virtual scrolling suggestion for large lists",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I need to write unit tests for my Angular OrderService that uses HttpClient and returns observables. The service has methods like getOrders(), createOrder(order), and cancelOrder(id). It also uses an AuthService for getting the auth token. Can you create the spec file at src/app/core/services/order.service.spec.ts?",
+      "expected_output": "Test file using TestBed, HttpClientTestingModule or provideHttpClientTesting, jasmine.createSpyObj for AuthService mock, proper subscribe/expectOne patterns",
+      "files": []
+    }
+  ]
+}
