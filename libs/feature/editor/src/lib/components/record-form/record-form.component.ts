@@ -42,21 +42,21 @@ export class RecordFormComponent implements OnInit, OnDestroy {
 
   focusFieldWithPage$ = this.facade.focusedField$.pipe(
     switchMap(async (field) => {
-      const { page, section } = await this.getFieldLocation(field)
-      return [field, page, section] as const
+      const location = await this.getFieldLocation(field)
+      return [field, location?.page ?? null, location?.section ?? -1] as const
     })
   )
 
   formFields = viewChildren(FormFieldComponent)
   sectionFocusDirectives = viewChildren<FieldFocusDirective>('sectionFocus')
 
-  focusField(model: CatalogRecordKeys, section: number | null) {
+  focusField(model: CatalogRecordKeys, sectionIndex: number) {
     const field = this.formFields().find((f) => f.model === model)
     if (field) {
       field.fieldFocus.focusField()
       return
     }
-    this.sectionFocusDirectives()[section]?.focusField(false)
+    this.sectionFocusDirectives()[sectionIndex]?.focusField(false)
   }
 
   ngOnInit() {
@@ -99,17 +99,17 @@ export class RecordFormComponent implements OnInit, OnDestroy {
 
   async getFieldLocation(
     model: CatalogRecordKeys
-  ): Promise<{ page: number | null; section: number | null }> {
+  ): Promise<{ page: number; section: number } | null> {
     const config = await firstValueFrom(this.facade.editorConfig$)
     const page = config.pages.findIndex((p) =>
       p.sections.some((s) => s.fields.some((f) => f.model === model))
     )
     if (page < 0) {
-      return { page: null, section: null }
+      return null
     }
     const section = config.pages[page].sections
       .filter((s) => !s.hidden)
       .findIndex((s) => s.fields.some((f) => f.model === model))
-    return { page, section: section >= 0 ? section : null }
+    return { page, section }
   }
 }

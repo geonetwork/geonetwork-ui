@@ -68,11 +68,8 @@ describe('RecordFormComponent', () => {
       })
     })
 
-    it('returns nulls for a field not present in the config', async () => {
-      expect(await component.getFieldLocation('organisation' as any)).toEqual({
-        page: null,
-        section: null,
-      })
+    it('returns null for a field not present in the config', async () => {
+      expect(await component.getFieldLocation('organisation' as any)).toBeNull()
     })
 
     it('counts only non-hidden sections, matching the rendered order', async () => {
@@ -171,7 +168,7 @@ describe('RecordFormComponent', () => {
       const fieldSpy = jest
         .spyOn(field.fieldFocus, 'focusField')
         .mockImplementation()
-      component.focusField('licenses', null)
+      component.focusField('licenses', -1)
       expect(fieldSpy).toHaveBeenCalled()
     })
 
