@@ -60,11 +60,6 @@ jobs:
       - run: npx nx affected -t lint --parallel=3
       - run: npx nx affected -t test --parallel=3 --configuration=ci --ci --codeCoverage --coverageReporters=lcov
 
-      - name: Coveralls
-        uses: coverallsapp/github-action@v2
-        with:
-          allow-empty: true
-
   #      - name: Archive Code Coverage Results (on main)
   #        if: github.event_name != 'pull_request'
   #        uses: actions/upload-artifact@v2
