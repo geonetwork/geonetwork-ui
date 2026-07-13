@@ -2,9 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  inject,
   Input,
   Output,
-  inject,
 } from '@angular/core'
 import {
   DateAdapter,
@@ -52,6 +52,6 @@ export class DatePickerComponent {
   @Output() dateChange = new EventEmitter<Date>()
 
   constructor() {
-    this.dateAdapter.setLocale(this.translate.currentLang)
+    this.dateAdapter.setLocale(this.translate.getCurrentLang())
   }
 }

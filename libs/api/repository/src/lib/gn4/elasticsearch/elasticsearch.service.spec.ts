@@ -9,7 +9,7 @@ import { METADATA_LANGUAGE } from '../../metadata-language.token'
 import { TranslateService } from '@ngx-translate/core'
 
 class TranslateServiceMock {
-  currentLang = 'en'
+  getCurrentLang = () => 'en'
 }
 
 let currentMetadataLang: string | (() => string)

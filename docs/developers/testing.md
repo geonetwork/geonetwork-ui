@@ -149,62 +149,28 @@ This makes the HTML template easier to read and avoid confusion with e.g. CSS cl
 
 ### Mocking translations
 
-When testing components that use translations, the [`ngx-translate-testing`](https://github.com/mwootendev/ngx-translate-plugins) package provides a special module that should be used:
+When testing components that use translations, the `provideTranslateTestingService` provider lets you specify the translations to use in the tests:
 
 ```ts
-import { TranslateTestingModule } from 'ngx-translate-testing'
+import { provideTranslateTestingService } from '@geonetwork-ui/util/i18n/test-translate-loader'
 // ...
 
-describe('MyComponent', () => {
+describe('MyStandaloneComponent', () => {
   let component: MyComponent
   let fixture: ComponentFixture<MyComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TranslateTestingModule.withTranslations({
+      providers: [
+        provideTranslateTestingService({
           en: {
             'my.translation.key':
               '{count} objects were found.',
           },
-        })
-          .withDefaultLanguage('en')
-          .withCompiler(new TranslateMessageFormatCompiler()),
+        }),
+        // more providers...
       ]
-    }).compileComponents()
-
-    // ...
-```
-
-For standalone components, the following method should be used instead:
-
-```ts
-import { TranslateTestingModule } from 'ngx-translate-testing'
-// ...
-
-describe('MyStandaloneComponent', () => {
-  let component: MyStandaloneComponent
-  let fixture: ComponentFixture<MyStandaloneComponent>
-
-  beforeEach(() => {
-    const testingModule = TranslateTestingModule.withTranslations({
-      en: {
-        'my.translation.key':
-          '{count} objects were found.',
-      },
     })
-      .withDefaultLanguage('en')
-      .withCompiler(new TranslateMessageFormatCompiler())
-
-    TestBed.configureTestingModule({
-      // ...
-    }).overrideComponent(MyStandaloneComponent, {
-      add: {
-        providers: [...testingModule.providers],
-      },
-    })
-
-    // ...
 ```
 
 ::: tip

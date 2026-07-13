@@ -13,7 +13,9 @@ class MetadataUrlServiceMock {
 }
 
 const translateServiceMock = {
-  currentLang: 'de',
+  getCurrentLang() {
+    return 'de'
+  },
 }
 
 describe('Gn4FieldMapper', () => {
@@ -124,7 +126,7 @@ describe('Gn4FieldMapper', () => {
           })
         })
         it('resourceTitleObject - should return a function that correctly maps the field to default lang', () => {
-          translateService.currentLang = 'en'
+          translateService.getCurrentLang = () => 'en'
           const fieldName = 'resourceTitleObject'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}
@@ -140,7 +142,7 @@ describe('Gn4FieldMapper', () => {
           })
         })
         it('resourceAbstractObject - should return a function that correctly maps the field to fre lang', () => {
-          translateService.currentLang = 'fr'
+          translateService.getCurrentLang = () => 'fr'
           const fieldName = 'resourceAbstractObject'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}
@@ -156,7 +158,7 @@ describe('Gn4FieldMapper', () => {
           })
         })
         it('overview - should return a function that correctly maps the field', () => {
-          translateService.currentLang = 'fr'
+          translateService.getCurrentLang = () => 'fr'
           const fieldName = 'overview'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}

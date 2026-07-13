@@ -8,9 +8,8 @@ import {
   datasetRecordsFixture,
   simpleServiceRecordFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
-import { TranslateTestingModule } from 'ngx-translate-testing'
 import { MetadataInfoComponent } from './metadata-info.component'
+import { provideTranslateTestingService } from '@geonetwork-ui/util/i18n/test-translate-loader'
 
 describe('MetadataInfoComponent', () => {
   let component: MetadataInfoComponent
@@ -29,19 +28,16 @@ describe('MetadataInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TranslateTestingModule.withTranslations({
+      providers: [
+        provideTranslateTestingService({
           en: {
             'domain.record.updateFrequency.notPlanned': 'Not planned',
             'domain.record.updateFrequency.month':
               '{count, plural, =0{0 times} one{once} other{{count} times}} per month',
           },
-        })
-          .withDefaultLanguage('en')
-          .withCompiler(new TranslateMessageFormatCompiler()),
-        MetadataInfoComponent,
+        }),
       ],
-    }).compileComponents()
+    })
   })
 
   describe('abstract', () => {

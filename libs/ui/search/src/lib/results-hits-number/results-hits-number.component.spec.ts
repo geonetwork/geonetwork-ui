@@ -1,9 +1,8 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 import { ResultsHitsNumberComponent } from './results-hits-number.component'
-import { TranslateTestingModule } from 'ngx-translate-testing'
+import { provideTranslateTestingService } from '@geonetwork-ui/util/i18n/test-translate-loader'
 
 describe('ResultsHitsNumberComponent', () => {
   let component: ResultsHitsNumberComponent
@@ -12,20 +11,18 @@ describe('ResultsHitsNumberComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TranslateTestingModule.withTranslations({
+      providers: [
+        provideTranslateTestingService({
           en: {
             'results.records.hits.found':
               '{hits, plural, =0{No documents match the specified search.} one{} other{{hits} records found.}}',
             'results.records.hits.empty.help.html':
               "Suggestions: <ul class='list-disc list-inside'><li>Try other words</li><li>Specify fewer words</li></ul>",
           },
-        })
-          .withDefaultLanguage('en')
-          .withCompiler(new TranslateMessageFormatCompiler()),
+        }),
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

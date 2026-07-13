@@ -128,7 +128,7 @@ export class OrganizationsFromMetadataService
   ) {}
 
   private get langIndex() {
-    return `lang${toLang3(this.translateService.currentLang)}`
+    return `lang${toLang3(this.translateService.getCurrentLang())}`
   }
 
   equalsNormalizedStrings(

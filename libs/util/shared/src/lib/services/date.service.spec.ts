@@ -8,7 +8,11 @@ describe('DateService', () => {
 
   beforeEach(() => {
     // Create a simple stub for TranslateService with currentLang set to 'en-US'
-    const translateServiceStub = { currentLang: 'en-US' }
+    const translateServiceStub = {
+      getCurrentLang() {
+        return 'en-US'
+      },
+    }
 
     TestBed.configureTestingModule({
       providers: [
@@ -125,7 +129,7 @@ describe('DateService', () => {
     })
 
     it('should use the correct locale from TranslateService', async () => {
-      translateService.currentLang = 'fr'
+      translateService.getCurrentLang = () => 'fr'
       const now = new Date()
       const futureDate = new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000)
       const result = await service.formatRelativeDateTime(futureDate)

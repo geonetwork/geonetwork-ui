@@ -6,7 +6,7 @@ import { MockBuilder } from 'ng-mocks'
 
 class TranslateServiceMock {
   use = jest.fn()
-  currentLang = 'en'
+  getCurrentLang = () => 'en'
   get = jest.fn()
 }
 
@@ -40,7 +40,7 @@ describe('LanguageSwitcherComponent', () => {
 
   describe('show current language as selected', () => {
     beforeEach(() => {
-      service.currentLang = 'sk'
+      service.getCurrentLang = () => 'sk'
       fixture.detectChanges()
     })
     it('selects the current language', () => {
