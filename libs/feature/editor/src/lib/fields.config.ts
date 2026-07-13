@@ -366,6 +366,7 @@ export const SPATIAL_SCOPES: Keyword[] = [
  */
 
 // label keys mirror the ISO MD_TopicCategoryCode value for consistency
+// TODO: correctly handle code lists; for instance, this code list is specific to ISO 19139
 export const ISO_TOPICS: ISOTopic[] = [
   { value: 'biota', label: marker('editor.record.form.topics.iso.biota') },
   {
