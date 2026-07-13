@@ -104,6 +104,14 @@ describe('FieldFocusDirective', () => {
       expect(el.classList.contains('gn-ui-field-focus-glow')).toBe(true)
     })
 
+    it('does not focus any descendant when focusInnerTarget is false', () => {
+      directive.focusField(false)
+      jest.runOnlyPendingTimers()
+      expect(document.activeElement).not.toBe(el.querySelector('input'))
+      expect(document.activeElement).not.toBe(el.querySelector('button'))
+      expect(el.classList.contains('gn-ui-field-focus-glow')).toBe(true)
+    })
+
     it('falls back to focusing a button when there is no text input', () => {
       const buttonFixture = TestBed.createComponent(ButtonOnlyHostComponent)
       const buttonEl = buttonFixture.nativeElement.querySelector('div')

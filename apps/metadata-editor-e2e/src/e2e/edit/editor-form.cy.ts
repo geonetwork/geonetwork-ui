@@ -200,6 +200,26 @@ describe('editor form', () => {
       cy.get('gn-ui-record-form')
         .find('gn-ui-form-field.gn-ui-field-focus-glow')
         .should('not.exist')
+
+      // it should highlight the whole section when the target field is hidden
+      // (toggling a shortcut on then off leaves the emptied field hidden)
+      cy.get('[data-cy=constraints-shortcut-toggles]')
+        .find('gn-ui-check-toggle label')
+        .eq(0)
+        .click()
+      cy.get('[data-cy=constraints-shortcut-toggles]')
+        .find('gn-ui-check-toggle label')
+        .eq(0)
+        .click()
+      cy.get('[data-cy=legalConstraints]').should('not.exist')
+      cy.get('gn-ui-metadata-quality-panel')
+        .find(
+          '[data-cy="md-quality-btn-editor.record.form.field.legalConstraints"]'
+        )
+        .click()
+      cy.get('gn-ui-record-form .gn-ui-field-focus-glow')
+        .find('[data-cy=constraints-shortcut-toggles]')
+        .should('exist')
     })
   })
 

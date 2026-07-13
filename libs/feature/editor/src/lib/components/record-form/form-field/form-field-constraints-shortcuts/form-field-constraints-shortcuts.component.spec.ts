@@ -220,4 +220,20 @@ describe('FormFieldConstraintsShortcutsComponent', () => {
       }
     )
   })
+
+  describe('unsubscribe on destroy', () => {
+    it('stops updating field visibility once the component is destroyed', () => {
+      fixture.detectChanges()
+      component.ngOnDestroy()
+      ;(editorFacade.setFieldVisibility as jest.Mock).mockClear()
+
+      sampleRecord$.next({
+        ...sampleRecord,
+        securityConstraints: [{ text: 'a new constraint' }],
+      })
+      fixture.detectChanges()
+
+      expect(editorFacade.setFieldVisibility).not.toHaveBeenCalled()
+    })
+  })
 })
