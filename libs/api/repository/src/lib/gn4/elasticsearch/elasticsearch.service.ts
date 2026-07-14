@@ -1,4 +1,4 @@
-import { Injectable, Injector, inject } from '@angular/core'
+import { inject, Injectable, Injector } from '@angular/core'
 import type { Geometry } from 'geojson'
 import {
   ES_QUERY_FIELDS_PRIORITY,
@@ -234,7 +234,7 @@ export class ElasticsearchService {
     if (this.metadataLang) {
       const lang3 = toLang3(
         this.isCurrentSearchLang()
-          ? this.translateService.currentLang
+          ? this.translateService.getCurrentLang()
           : this.metadataLang
       )
       return `lang${lang3}`

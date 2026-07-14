@@ -2,8 +2,8 @@ import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone'
 import {
   elasticFullResponseFixture,
   elasticHitsOnlyFixture,
-  elasticServiceMetadataHistsFixture,
   elasticReuseMetadataHitsFixture,
+  elasticServiceMetadataHistsFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { Gn4Converter } from './gn4.converter'
 import { of } from 'rxjs'
@@ -38,7 +38,9 @@ class OrganisationsServiceMock {
 }
 
 const translateServiceMock = {
-  currentLang: 'de',
+  getCurrentLang() {
+    return 'de'
+  },
 }
 
 describe('Gn4Converter', () => {

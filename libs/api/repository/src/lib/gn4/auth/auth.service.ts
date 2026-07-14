@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken, inject } from '@angular/core'
+import { inject, Injectable, InjectionToken } from '@angular/core'
 import { toLang2, toLang3 } from '@geonetwork-ui/util/i18n'
 import { TranslateService } from '@ngx-translate/core'
 import { Location } from '@angular/common'
@@ -48,8 +48,8 @@ export class AuthService {
         '${current_path}',
         this.location.prepareExternalUrl(this.location.path())
       )
-      .replace('${lang2}', toLang2(this.translateService.currentLang))
-      .replace('${lang3}', toLang3(this.translateService.currentLang))
+      .replace('${lang2}', toLang2(this.translateService.getCurrentLang()))
+      .replace('${lang3}', toLang3(this.translateService.getCurrentLang()))
   }
 
   get logoutUrl() {
@@ -59,7 +59,7 @@ export class AuthService {
   get settingsUrl() {
     return this.baseSettingsUrl.replace(
       '${lang3}',
-      toLang3(this.translateService.currentLang)
+      toLang3(this.translateService.getCurrentLang())
     )
   }
 }

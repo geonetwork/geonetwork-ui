@@ -7,7 +7,9 @@ import { Configuration } from '@geonetwork-ui/data-access/gn4'
 setupZoneTestEnv()
 
 const translateServiceMock = {
-  currentLang: 'en',
+  getCurrentLang() {
+    return 'en'
+  },
 }
 describe('MetadataUrlService', () => {
   let service: MetadataUrlService

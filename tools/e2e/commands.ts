@@ -50,6 +50,9 @@ declare namespace Cypress {
 Cypress.Commands.add(
   'login',
   (username = 'admin', password = 'admin', redirect = false) => {
+    cy.clearCookie('XSRF-TOKEN', {
+      domain: 'http://localhost:8080/', // we're also clearing the cookie on the geonetwork domain, to make sure it doesn't persist there
+    })
     // first request to get the XSRF cookie
     cy.request({
       method: 'GET',
@@ -253,9 +256,9 @@ Cypress.Commands.add('editor_createRecordCopy', (uuidToCopy, titleToCopy) => {
 
   // Clear any existing copy of the test record
   cy.visit('/catalog/search')
-  cy.wait(400) // wait for the autocomplete debounce ?
   cy.get('gn-ui-fuzzy-search input').type(
-    `{selectall}{del}${recordTitle}{enter}`
+    //`{selectall}{del}${recordTitle}{enter}`
+    `{selectall}{del}{enter}${recordTitle}{enter}` // FIXME: we should not need to press "enter" before typing something to search! there is a debounce problem here
   )
   cy.get('[data-cy="table-row"]')
     .should('have.length.lt', 10) // making sure the records were updated

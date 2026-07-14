@@ -5,8 +5,7 @@ import { By } from '@angular/platform-browser'
 import { BehaviorSubject } from 'rxjs'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { SelectionService } from '@geonetwork-ui/api/repository'
-import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
-import { TranslateTestingModule } from 'ngx-translate-testing'
+import { provideTranslateTestingService } from '@geonetwork-ui/util/i18n/test-translate-loader'
 
 class SearchFacadeMock {
   results$ = new BehaviorSubject(datasetRecordsFixture())
@@ -22,15 +21,6 @@ describe('RecordsCountComponent', () => {
   let fixture: ComponentFixture<RecordsCountComponent>
 
   beforeEach(() => {
-    const testingModule = TranslateTestingModule.withTranslations({
-      en: {
-        'results.records.hits.displayedOn':
-          '{displayed, plural, =0{No record.} one{1 record} other{{displayed} records}} {hits, plural, other{displayed on {hits} total.}}',
-        'results.records.hits.selected': '{ amount } selected',
-      },
-    })
-      .withDefaultLanguage('en')
-      .withCompiler(new TranslateMessageFormatCompiler())
     TestBed.configureTestingModule({
       providers: [
         {
@@ -41,11 +31,14 @@ describe('RecordsCountComponent', () => {
           provide: SelectionService,
           useClass: SelectionServiceMock,
         },
+        provideTranslateTestingService({
+          en: {
+            'results.records.hits.displayedOn':
+              '{displayed, plural, =0{No record.} one{1 record} other{{displayed} records}} {hits, plural, other{displayed on {hits} total.}}',
+            'results.records.hits.selected': '{ amount } selected',
+          },
+        }),
       ],
-    }).overrideComponent(RecordsCountComponent, {
-      add: {
-        providers: [...testingModule.providers],
-      },
     })
 
     fixture = TestBed.createComponent(RecordsCountComponent)

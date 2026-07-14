@@ -47,8 +47,3 @@ gn-ui-autocomplete .gn-ui-text-input {
     box-shadow: 0 0 24px 0 rgba(21, 40, 184, 0.09);
   }
 }
-
-.basicLightbox.basicLightbox--visible {
-  z-index: 1003;
-  /* 1000 is for cdk overlays, 1002 is for nav bar */
-}

@@ -86,9 +86,9 @@ describe('home', () => {
     beforeEach(() => {
       cy.login()
       cy.clearFavorites()
-      cy.visit('/')
+      cy.visit('/search')
     })
-    beforeEach(() => {
+    it('button shows up and works as expected', () => {
       // select the 6th record as the new favorite
       cy.get('gn-ui-results-list-item').eq(6).as('favoriteItem')
       cy.get('@favoriteItem')
@@ -107,8 +107,8 @@ describe('home', () => {
       cy.get('datahub-header-badge-button[label$=favorites] button').click({
         force: true,
       })
-    })
-    it('only shows one record, same as the favorite one', () => {
+
+      // only shows one record, same as the favorite one
       cy.get('gn-ui-results-list-item').should('have.length', 1)
       cy.get('gn-ui-results-list-item')
         .eq(0)

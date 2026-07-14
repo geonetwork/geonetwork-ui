@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { OverlayContainer } from '@angular/cdk/overlay'
+import { Overlay, OverlayContainer } from '@angular/cdk/overlay'
 import { WebcomponentOverlayContainer } from '../webcomponent-overlay-container'
 import {
   MetadataLanguage,
@@ -28,6 +28,7 @@ import {
 
 export const DefaultProviders = [
   SearchFacade,
+  Overlay, // we're providing an overlay service in this context to use the container specitic to each web component
   {
     provide: OverlayContainer,
     useClass: WebcomponentOverlayContainer,
@@ -101,7 +102,7 @@ export class BaseComponent implements OnChanges, OnInit {
       this.translate.use(this.textLanguage)
     }
 
-    this.translate.reloadLang(this.translate.currentLang)
+    this.translate.reloadLang(this.translate.getCurrentLang())
     ThemeService.applyCssVariables(
       this.primaryColor,
       this.secondaryColor,

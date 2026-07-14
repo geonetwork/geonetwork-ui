@@ -1,0 +1,13 @@
+/** the animation values are made to be identical to the cdk overlay values */
+.lightbox-image {
+  animation: show 400ms cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+@keyframes show {
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}

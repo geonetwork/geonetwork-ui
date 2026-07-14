@@ -153,7 +153,7 @@ class Gn4PlatformServiceMock {
 }
 
 class TranslateServiceMock {
-  currentLang = 'de'
+  getCurrentLang = () => 'de'
 }
 
 describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(

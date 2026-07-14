@@ -11,7 +11,7 @@ import {
 import { getGlobalConfig, loadAppConfig } from '@geonetwork-ui/util/app-config'
 import { AsyncPipe } from '@angular/common'
 import { Router } from '@angular/router'
-import { OverlayContainer } from '@angular/cdk/overlay'
+import { Overlay, OverlayContainer } from '@angular/cdk/overlay'
 import { WebcomponentOverlayContainer } from '../../webcomponent-overlay-container'
 import { provideGn4 } from '@geonetwork-ui/api/repository'
 import { copyFontFacesToDocument } from '../base.component'
@@ -48,6 +48,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [
+    Overlay,
     {
       provide: OverlayContainer,
       useClass: WebcomponentOverlayContainer,

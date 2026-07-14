@@ -4,7 +4,8 @@
     "outDir": "../../dist/out-tsc",
     "module": "commonjs",
     "types": ["jest", "node"],
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "isolatedModules": true
   },
   "files": ["src/test-setup.ts"],
   "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts", "jest.config.ts"]

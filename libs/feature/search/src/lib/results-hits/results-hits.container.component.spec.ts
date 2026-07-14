@@ -6,7 +6,6 @@ import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { By } from '@angular/platform-browser'
 import { ResultsHitsSearchKindComponent } from '@geonetwork-ui/ui/search'
@@ -54,7 +53,6 @@ describe('ResultsHitsContainerComponent', () => {
         { provide: FieldsService, useValue: fieldsServiceMock },
       ],
       imports: [CommonModule, TranslateDirective, TranslatePipe],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents()
   })
 

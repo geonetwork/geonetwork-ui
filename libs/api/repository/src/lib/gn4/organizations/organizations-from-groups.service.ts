@@ -52,7 +52,7 @@ export class OrganizationsFromGroupsService
   organisationsCount$ = this.organisations$.pipe(map((orgs) => orgs.length))
 
   private get lang3() {
-    return toLang3(this.translateService.currentLang)
+    return toLang3(this.translateService.getCurrentLang())
   }
 
   constructor(
