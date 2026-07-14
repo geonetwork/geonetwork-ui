@@ -25,7 +25,6 @@
     "document-register-element",
     "duration-relativetimeformat",
     "embla-carousel",
-    "express",
     "flag-icons",
     "geojson-validation",
     "marked",
@@ -38,8 +37,6 @@
     "semver",
     "tippy.js",
     "tslib",
-    "typeorm",
-    "whatwg-fetch",
     "xlsx"
   ]
 }
