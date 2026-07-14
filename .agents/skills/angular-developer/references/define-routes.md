@@ -9,14 +9,14 @@ Define routes in a `Routes` array and provide them using `provideRouter` in your
 ```ts
 // app.routes.ts
 export const routes: Routes = [
-  {path: '', component: HomePage},
-  {path: 'admin', component: AdminPage},
-];
+  { path: '', component: HomePage },
+  { path: 'admin', component: AdminPage },
+]
 
 // app.config.ts
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes)],
-};
+}
 ```
 
 ## URL Paths

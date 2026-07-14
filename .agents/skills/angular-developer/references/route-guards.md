@@ -15,16 +15,16 @@ Guards are typically functional since Angular 15.
 
 ```ts
 export const authGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
+  const authService = inject(AuthService)
+  const router = inject(Router)
 
   if (authService.isLoggedIn()) {
-    return true;
+    return true
   }
 
   // Redirect to login
-  return router.parseUrl('/login');
-};
+  return router.parseUrl('/login')
+}
 ```
 
 ## Applying Guards

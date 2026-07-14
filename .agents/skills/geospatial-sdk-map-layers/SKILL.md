@@ -31,12 +31,7 @@ There are two distinct patterns in the codebase — pick based on what you are t
 The datahub's record preview map (`libs/feature/record/src/lib/map-view/map-view.component.ts`, selector `gn-ui-map-view`) does **not** use the NgRx map state. It builds a `MapContext` reactively from the selected dataset link and binds it straight to the presentation component:
 
 ```html
-<gn-ui-map-container
-  #mapContainer
-  [context]="mapContext$ | async"
-  (featuresClick)="onMapFeatureSelect($event)"
-  (sourceLoadError)="onSourceLoadError($event)"
-></gn-ui-map-container>
+<gn-ui-map-container #mapContainer [context]="mapContext$ | async" (featuresClick)="onMapFeatureSelect($event)" (sourceLoadError)="onSourceLoadError($event)"></gn-ui-map-container>
 ```
 
 The context is derived from the user-selected `DatasetOnlineResource` via `getLayerFromLink(link)` (maps a GN link protocol → a `MapContextLayer`), then a view is computed with `createViewFromLayer(layer)` (auto-zoom to the layer), falling back to the record's spatial extent:
@@ -45,11 +40,11 @@ The context is derived from the user-selected `DatasetOnlineResource` via `getLa
 mapContext$: Observable<MapContext> = this.currentLayers$.pipe(
   switchMap((layers) =>
     from(createViewFromLayer(layers[0])).pipe(
-      catchError(() => of(null)),               // can't zoom on layer → use record extent
-      map((view) => ({ layers, view })),
-    ),
+      catchError(() => of(null)), // can't zoom on layer → use record extent
+      map((view) => ({ layers, view }))
+    )
   ),
-  startWith({ layers: [], view: null }),
+  startWith({ layers: [], view: null })
   // ...fallback: view = record bbox extent when createViewFromLayer returned null
 )
 ```
@@ -64,7 +59,7 @@ Use this pattern when the layer(s) are fully determined by component inputs/stat
 // libs/feature/map/src/lib/+state/map.facade.ts
 @Injectable()
 export class MapFacade {
-  context$: Observable<MapContext>        // current map context
+  context$: Observable<MapContext> // current map context
   selectedFeatures$: Observable<Feature[]>
   applyContext(context: MapContext): void // replaces the whole context
   selectFeatures(features: Feature[]): void
@@ -95,9 +90,7 @@ this.mapFacade.applyContext({
 // UPDATE a layer (e.g. toggle visibility / set opacity)
 this.mapFacade.applyContext({
   ...context,
-  layers: context.layers.map((l, i) =>
-    i === index ? { ...l, visibility: !l.visibility } : l
-  ),
+  layers: context.layers.map((l, i) => (i === index ? { ...l, visibility: !l.visibility } : l)),
 })
 ```
 
@@ -107,28 +100,27 @@ For the direct-binding pattern (#1) the same applies, except you push the new `M
 
 Every layer is a discriminated union on `type`. Build the typed object, then add it to `layers`.
 
-| `type` | Required fields | Notes |
-|---|---|---|
-| `'wms'` | `url`, `name` | opt: `style`, `format` (MIME), `useTiles` (default true), `dimensionValues` |
-| `'wmts'` | `url`, `name` | opt: `style`, `dimensionValues` |
-| `'wfs'` | `url`, `featureType` | vector; opt: `style`, `hoverStyle` (`VectorStyle`) |
-| `'ogcapi'` | `url`, `collection` | opt: `useTiles: 'vector' \| 'map'`, `tileMatrixSet`, `options` |
-| `'geojson'` | `data` **xor** `url` | `data`: `FeatureCollection` or string; never set both |
-| `'xyz'` | `url` | opt: `tileFormat: 'application/vnd.mapbox-vector-tile'` for vector tiles (used for TMS) |
-| `'maplibre-style'` | `styleUrl` | opt: `accessToken` |
-| `'geotiff'` | `url` | raster COG |
+| `type`             | Required fields      | Notes                                                                                   |
+| ------------------ | -------------------- | --------------------------------------------------------------------------------------- |
+| `'wms'`            | `url`, `name`        | opt: `style`, `format` (MIME), `useTiles` (default true), `dimensionValues`             |
+| `'wmts'`           | `url`, `name`        | opt: `style`, `dimensionValues`                                                         |
+| `'wfs'`            | `url`, `featureType` | vector; opt: `style`, `hoverStyle` (`VectorStyle`)                                      |
+| `'ogcapi'`         | `url`, `collection`  | opt: `useTiles: 'vector' \| 'map'`, `tileMatrixSet`, `options`                          |
+| `'geojson'`        | `data` **xor** `url` | `data`: `FeatureCollection` or string; never set both                                   |
+| `'xyz'`            | `url`                | opt: `tileFormat: 'application/vnd.mapbox-vector-tile'` for vector tiles (used for TMS) |
+| `'maplibre-style'` | `styleUrl`           | opt: `accessToken`                                                                      |
+| `'geotiff'`        | `url`                | raster COG                                                                              |
 
 Common optional base props on **every** layer (`MapContextBaseLayer`): `id`, `version` (bump to force a refresh), `label` (shown in layer lists / popups), `visibility` (default `true`), `opacity` (0–1), `attributions`, `clickable` (default `true`), `hoverable` (default `false`), `extras` (app-specific, keep serializable).
 
 Concrete examples (from the `add-layer-from-*` components):
 
 ```ts
-const wms:  MapContextLayer = { type: 'wms', url, name: layer.name, label: layer.title }
-const wfs:  MapContextLayer = { type: 'wfs', url, featureType: layer.name, label: layer.title }
-const geo:  MapContextLayerGeojson = { type: 'geojson', data, label }      // data = parsed FC or raw string
-const ogc:  MapContextLayerOgcApi  = { type: 'ogcapi', url, collection, useTiles: 'vector', label }
-const tms:  MapContextLayer = { type: 'xyz', url: `${base}/${name}/{z}/{x}/{y}.pbf`,
-                                tileFormat: 'application/vnd.mapbox-vector-tile', name }
+const wms: MapContextLayer = { type: 'wms', url, name: layer.name, label: layer.title }
+const wfs: MapContextLayer = { type: 'wfs', url, featureType: layer.name, label: layer.title }
+const geo: MapContextLayerGeojson = { type: 'geojson', data, label } // data = parsed FC or raw string
+const ogc: MapContextLayerOgcApi = { type: 'ogcapi', url, collection, useTiles: 'vector', label }
+const tms: MapContextLayer = { type: 'xyz', url: `${base}/${name}/{z}/{x}/{y}.pbf`, tileFormat: 'application/vnd.mapbox-vector-tile', name }
 ```
 
 ## View (`MapContextView`)

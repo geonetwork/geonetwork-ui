@@ -34,17 +34,17 @@ export class Example {
 If you need to run a function within an injection context (often needed for dynamic component creation or testing), use `runInInjectionContext`. This requires access to an existing injector (like `EnvironmentInjector` or `Injector`).
 
 ```ts
-import {inject, EnvironmentInjector, runInInjectionContext, Service} from '@angular/core';
+import { inject, EnvironmentInjector, runInInjectionContext, Service } from '@angular/core'
 
 @Service()
 export class MyService {
-  private injector = inject(EnvironmentInjector);
+  private injector = inject(EnvironmentInjector)
 
   doSomethingDynamic() {
     runInInjectionContext(this.injector, () => {
       // ✅ Now valid to use inject() here
-      const router = inject(Router);
-    });
+      const router = inject(Router)
+    })
   }
 }
 ```
@@ -54,10 +54,10 @@ export class MyService {
 Use `assertInInjectionContext` in utility functions to guarantee they are called from a valid context. It throws a clear error if not.
 
 ```ts
-import {assertInInjectionContext, inject, ElementRef} from '@angular/core';
+import { assertInInjectionContext, inject, ElementRef } from '@angular/core'
 
 export function injectNativeElement<T extends Element>(): T {
-  assertInInjectionContext(injectNativeElement);
-  return inject(ElementRef).nativeElement;
+  assertInInjectionContext(injectNativeElement)
+  return inject(ElementRef).nativeElement
 }
 ```

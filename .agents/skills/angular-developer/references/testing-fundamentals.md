@@ -16,42 +16,42 @@ This project follows a modern, zoneless testing approach. State changes schedule
 ### Basic Test Structure Example
 
 ```ts
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {MyComponent} from './my.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MyComponent } from './my.component'
 
 describe('MyComponent', () => {
-  let component: MyComponent;
-  let fixture: ComponentFixture<MyComponent>;
-  let h1: HTMLElement;
+  let component: MyComponent
+  let fixture: ComponentFixture<MyComponent>
+  let h1: HTMLElement
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({})
 
     // Create the component fixture
-    fixture = TestBed.createComponent(MyComponent);
-    component = fixture.componentInstance;
-    h1 = fixture.nativeElement.querySelector('h1');
-  });
+    fixture = TestBed.createComponent(MyComponent)
+    component = fixture.componentInstance
+    h1 = fixture.nativeElement.querySelector('h1')
+  })
 
   it('should display the default title', async () => {
     // ACT: (Implicit) Component is created with default state.
     // WAIT for initial data binding.
-    await fixture.whenStable();
+    await fixture.whenStable()
     // ASSERT the initial state.
-    expect(h1.textContent).toContain('Default Title');
-  });
+    expect(h1.textContent).toContain('Default Title')
+  })
 
   it('should display a different title after a change', async () => {
     // ACT: Change the component's title property.
-    component.title.set('New Test Title');
+    component.title.set('New Test Title')
 
     // WAIT for the asynchronous update to complete.
-    await fixture.whenStable();
+    await fixture.whenStable()
 
     // ASSERT the DOM has been updated.
-    expect(h1.textContent).toContain('New Test Title');
-  });
-});
+    expect(h1.textContent).toContain('New Test Title')
+  })
+})
 ```
 
 ## TestBed and ComponentFixture

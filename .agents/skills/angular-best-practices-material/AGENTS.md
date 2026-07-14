@@ -38,14 +38,24 @@ Use Material's M3 theming API with `mat.theme()` to define colors, typography, a
 **Incorrect:**
 
 ```scss
-.mat-mdc-button { background: #1976d2; } /* Hardcoded — breaks dark mode */
+.mat-mdc-button {
+  background: #1976d2;
+} /* Hardcoded — breaks dark mode */
 ```
 
 **Correct:**
 
 ```scss
 @use '@angular/material' as mat;
-html { @include mat.theme((color: (primary: mat.$azure-palette))); }
+html {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+      ),
+    )
+  );
+}
 ```
 
 ### 1.3 Use CDK Utilities Over Custom Implementations
@@ -78,16 +88,16 @@ Use Material's built-in test harnesses (`MatSelectHarness`, `MatInputHarness`, e
 **Incorrect:**
 
 ```typescript
-const select = fixture.debugElement.query(By.css('.mat-mdc-select'));
-select.nativeElement.click(); // Fragile — breaks on Material updates
+const select = fixture.debugElement.query(By.css('.mat-mdc-select'))
+select.nativeElement.click() // Fragile — breaks on Material updates
 ```
 
 **Correct:**
 
 ```typescript
-const select = await loader.getHarness(MatSelectHarness.with({ selector: '#role' }));
-await select.open();
-await select.clickOptions({ text: 'Admin' });
+const select = await loader.getHarness(MatSelectHarness.with({ selector: '#role' }))
+await select.open()
+await select.clickOptions({ text: 'Admin' })
 ```
 
 ---

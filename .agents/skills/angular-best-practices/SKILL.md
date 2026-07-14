@@ -22,15 +22,15 @@ tags:
   - state-management
   - accessibility
 globs:
-  - "**/*.ts"
-  - "**/*.html"
-  - "**/*.scss"
-  - "**/*.css"
-  - "**/*.component.ts"
-  - "**/*.service.ts"
-  - "**/*.spec.ts"
-  - "**/*.routes.ts"
-  - "**/*.store.ts"
+  - '**/*.ts'
+  - '**/*.html'
+  - '**/*.scss'
+  - '**/*.css'
+  - '**/*.component.ts'
+  - '**/*.service.ts'
+  - '**/*.spec.ts'
+  - '**/*.routes.ts'
+  - '**/*.store.ts'
 ---
 
 # Modern Angular Best Practices
@@ -138,53 +138,54 @@ Accessibility spans templates, styles, and components — it's not just an HTML 
 
 ## Quick Reference
 
-| Pattern | Use | Avoid |
-|---------|-----|-------|
-| Signal inputs | `input<T>()` | `@Input()` |
-| Signal outputs | `output<T>()` | `@Output()` |
-| Two-way binding | `model<T>()` | input + output pair |
-| Dependency injection | `inject()` | Constructor injection |
-| Control flow | `@if`, `@for`, `@switch` | `*ngIf`, `*ngFor` |
-| Class binding | `[class.active]` | `[ngClass]` |
-| Change detection | `OnPush` | Default |
-| Derived state | `computed()` | Getters |
-| View queries | `viewChild()` | `@ViewChild()` |
+| Pattern              | Use                      | Avoid                 |
+| -------------------- | ------------------------ | --------------------- |
+| Signal inputs        | `input<T>()`             | `@Input()`            |
+| Signal outputs       | `output<T>()`            | `@Output()`           |
+| Two-way binding      | `model<T>()`             | input + output pair   |
+| Dependency injection | `inject()`               | Constructor injection |
+| Control flow         | `@if`, `@for`, `@switch` | `*ngIf`, `*ngFor`     |
+| Class binding        | `[class.active]`         | `[ngClass]`           |
+| Change detection     | `OnPush`                 | Default               |
+| Derived state        | `computed()`             | Getters               |
+| View queries         | `viewChild()`            | `@ViewChild()`        |
 
 ## Key Code Patterns
 
 Signal inputs and outputs (replaces decorators):
+
 ```typescript
-name = input<string>();           // @Input() replacement
-save = output<Data>();            // @Output() replacement
-value = model<string>();          // two-way binding
+name = input<string>() // @Input() replacement
+save = output<Data>() // @Output() replacement
+value = model<string>() // two-way binding
 ```
 
 Control flow (replaces structural directives):
+
 ```html
-@if (user()) { <profile [user]="user()" /> }
-@for (item of items(); track item.id) { <card [item]="item" /> }
-@defer (on viewport) { <heavy-chart /> }
+@if (user()) { <profile [user]="user()" /> } @for (item of items(); track item.id) { <card [item]="item" /> } @defer (on viewport) { <heavy-chart /> }
 ```
 
 httpResource and resource (signal-based async):
+
 ```typescript
-users = httpResource<User[]>(() => `/api/users?role=${this.role()}`);
-data = resource({ request: () => this.id(), loader: ({request}) => fetch(request) });
+users = httpResource<User[]>(() => `/api/users?role=${this.role()}`)
+data = resource({ request: () => this.id(), loader: ({ request }) => fetch(request) })
 ```
 
 ## Optional Library Skills
 
 Install library-specific rules alongside this core skill:
 
-| Library | Skill Page |
-|---------|------------|
-| NgRx | [angular-best-practices-ngrx](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-ngrx) |
-| SignalStore | [angular-best-practices-signalstore](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-signalstore) |
-| TanStack Query | [angular-best-practices-tanstack](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-tanstack) |
-| Angular Material | [angular-best-practices-material](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-material) |
-| PrimeNG | [angular-best-practices-primeng](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-primeng) |
-| Spartan UI | [angular-best-practices-spartan](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-spartan) |
-| Transloco | [angular-best-practices-transloco](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-transloco) |
+| Library          | Skill Page                                                                                                                     |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| NgRx             | [angular-best-practices-ngrx](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-ngrx)               |
+| SignalStore      | [angular-best-practices-signalstore](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-signalstore) |
+| TanStack Query   | [angular-best-practices-tanstack](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-tanstack)       |
+| Angular Material | [angular-best-practices-material](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-material)       |
+| PrimeNG          | [angular-best-practices-primeng](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-primeng)         |
+| Spartan UI       | [angular-best-practices-spartan](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-spartan)         |
+| Transloco        | [angular-best-practices-transloco](https://skills.sh/alfredoperez/angular-best-practices/angular-best-practices-transloco)     |
 
 ## Links
 

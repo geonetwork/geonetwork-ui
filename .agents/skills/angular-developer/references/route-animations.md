@@ -7,7 +7,7 @@ Angular Router supports the browser's **View Transitions API** for smooth visual
 Add `withViewTransitions()` to your router configuration.
 
 ```ts
-provideRouter(routes, withViewTransitions());
+provideRouter(routes, withViewTransitions())
 ```
 
 This is a **progressive enhancement**. In browsers that don't support the API, the router will still work but without the transition animation.
@@ -41,13 +41,13 @@ Use `onViewTransitionCreated` to skip transitions or customize behavior based on
 
 ```ts
 withViewTransitions({
-  onViewTransitionCreated: ({transition, from, to}) => {
+  onViewTransitionCreated: ({ transition, from, to }) => {
     // Skip animation for specific routes
     if (to.url === '/no-animation') {
-      transition.skipTransition();
+      transition.skipTransition()
     }
   },
-});
+})
 ```
 
 ## Best Practices

@@ -20,12 +20,12 @@ A **service** is the most common way to share data and functionality across an a
 Use the `@Service()` decorator to make the service a singleton available throughout the entire application. This is the recommended approach for most services.
 
 ```ts
-import {Service} from '@angular/core';
+import { Service } from '@angular/core'
 
 @Service()
 export class AnalyticsLogger {
   trackEvent(category: string, value: string) {
-    console.log('Analytics event logged:', {category, value});
+    console.log('Analytics event logged:', { category, value })
   }
 }
 ```
@@ -47,9 +47,9 @@ Use Angular's `inject()` function to request dependencies.
 You can use the `inject()` function to get an instance of a service (or any other provided token).
 
 ```ts
-import {Component, inject} from '@angular/core';
-import {Router} from '@angular/router';
-import {AnalyticsLogger} from './analytics-logger.service';
+import { Component, inject } from '@angular/core'
+import { Router } from '@angular/router'
+import { AnalyticsLogger } from './analytics-logger.service'
 
 @Component({
   selector: 'app-navbar',
@@ -57,13 +57,13 @@ import {AnalyticsLogger} from './analytics-logger.service';
 })
 export class Navbar {
   // Injecting dependencies using class field initializers
-  private readonly router = inject(Router);
-  private readonly analytics = inject(AnalyticsLogger);
+  private readonly router = inject(Router)
+  private readonly analytics = inject(AnalyticsLogger)
 
   navigateToDetail(event: Event) {
-    event.preventDefault();
-    this.analytics.trackEvent('navigation', '/details');
-    this.router.navigate(['/details']);
+    event.preventDefault()
+    this.analytics.trackEvent('navigation', '/details')
+    this.router.navigate(['/details'])
   }
 }
 ```
@@ -80,19 +80,19 @@ Valid places to call `inject()`:
 4.  **Factory functions** used in providers
 
 ```typescript
-import {Component, Directive, Service, inject, ElementRef} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Component, Directive, Service, inject, ElementRef } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
 
 // 1. In a Component (Field Initializer & Constructor)
 @Component({
   /*...*/
 })
 export class Example {
-  private service1 = inject(MyService); // ✅ Field initializer
+  private service1 = inject(MyService) // ✅ Field initializer
 
-  private service2: MyService;
+  private service2: MyService
   constructor() {
-    this.service2 = inject(MyService); // ✅ Constructor body
+    this.service2 = inject(MyService) // ✅ Constructor body
   }
 }
 
@@ -101,18 +101,18 @@ export class Example {
   /*...*/
 })
 export class MyDirective {
-  private element = inject(ElementRef); // ✅ Field initializer
+  private element = inject(ElementRef) // ✅ Field initializer
 }
 
 // 3. In a Service
 @Service()
 export class MyService {
-  private http = inject(HttpClient); // ✅ Field initializer
+  private http = inject(HttpClient) // ✅ Field initializer
 }
 
 // 4. In a Route Guard (Functional)
 export const authGuard = () => {
-  const auth = inject(AuthService); // ✅ Route Guard
-  return auth.isAuthenticated();
-};
+  const auth = inject(AuthService) // ✅ Route Guard
+  return auth.isAuthenticated()
+}
 ```

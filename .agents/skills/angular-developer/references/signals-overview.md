@@ -7,19 +7,19 @@ Signals are the foundation of reactivity in modern Angular applications. A **sig
 Use `signal()` to create state that can be directly updated.
 
 ```ts
-import {signal} from '@angular/core';
+import { signal } from '@angular/core'
 
 // Create a writable signal
-const count = signal(0);
+const count = signal(0)
 
 // Read the value (always requires calling the getter function)
-console.log(count());
+console.log(count())
 
 // Update the value directly
-count.set(3);
+count.set(3)
 
 // Update based on the previous value
-count.update((value) => value + 1);
+count.update((value) => value + 1)
 ```
 
 ### Exposing as Readonly
@@ -41,10 +41,10 @@ Use `computed()` to create read-only signals that derive their value from other 
 - **Dynamic Dependencies**: Only the signals _actually read_ during the derivation are tracked.
 
 ```ts
-import {signal, computed} from '@angular/core';
+import { signal, computed } from '@angular/core'
 
-const count = signal(0);
-const doubleCount = computed(() => count() * 2);
+const count = signal(0)
+const doubleCount = computed(() => count() * 2)
 
 // doubleCount automatically updates when count changes.
 ```
@@ -65,13 +65,13 @@ Angular automatically enters a reactive context when evaluating:
 If you need to read a signal inside a reactive context _without_ creating a dependency (so that the context doesn't re-run when the signal changes), use `untracked()`.
 
 ```ts
-import {effect, untracked} from '@angular/core';
+import { effect, untracked } from '@angular/core'
 
 effect(() => {
   // This effect only runs when currentUser changes.
   // It does NOT run when counter changes, even though counter is read here.
-  console.log(`User: ${currentUser()}, Count: ${untracked(counter)}`);
-});
+  console.log(`User: ${currentUser()}, Count: ${untracked(counter)}`)
+})
 ```
 
 ### Async Operations in Reactive Contexts
@@ -81,14 +81,14 @@ The reactive context is only active for **synchronous** code. Signal reads after
 ```ts
 // ❌ INCORRECT: theme() is not tracked because it is read after await
 effect(async () => {
-  const data = await fetchUserData();
-  console.log(theme());
-});
+  const data = await fetchUserData()
+  console.log(theme())
+})
 
 // ✅ CORRECT: Read the signal before the await
 effect(async () => {
-  const currentTheme = theme();
-  const data = await fetchUserData();
-  console.log(currentTheme);
-});
+  const currentTheme = theme()
+  const data = await fetchUserData()
+  console.log(currentTheme)
+})
 ```

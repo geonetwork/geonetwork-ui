@@ -84,47 +84,58 @@ Comprehensive guidelines for building performant, maintainable Angular applicati
    - 9.7 [Use LRU Cache for SSR Computations](#97-use-lru-cache-for-ssr-computations)
    - 9.8 [Use TransferState to Avoid Refetch](#98-use-transferstate-to-avoid-refetch)
 10. [Forms](#10-forms) — **MEDIUM**
-   - 10.1 [Create Reusable Validators](#101-create-reusable-validators)
-   - 10.2 [Handle Form Submission Properly](#102-handle-form-submission-properly)
-   - 10.3 [Use ControlValueAccessor for Custom Controls](#103-use-controlvalueaccessor-for-custom-controls)
-   - 10.4 [Use ngx-formly for Dynamic Forms](#104-use-ngx-formly-for-dynamic-forms)
+
+- 10.1 [Create Reusable Validators](#101-create-reusable-validators)
+- 10.2 [Handle Form Submission Properly](#102-handle-form-submission-properly)
+- 10.3 [Use ControlValueAccessor for Custom Controls](#103-use-controlvalueaccessor-for-custom-controls)
+- 10.4 [Use ngx-formly for Dynamic Forms](#104-use-ngx-formly-for-dynamic-forms)
+
 11. [Architecture](#11-architecture) — **HIGH**
-   - 11.1 [Enforce Module Boundaries](#111-enforce-module-boundaries)
-   - 11.2 [Use Barrel Files for Public APIs](#112-use-barrel-files-for-public-apis)
-   - 11.3 [Use Domain-Driven Folder Structure](#113-use-domain-driven-folder-structure)
+
+- 11.1 [Enforce Module Boundaries](#111-enforce-module-boundaries)
+- 11.2 [Use Barrel Files for Public APIs](#112-use-barrel-files-for-public-apis)
+- 11.3 [Use Domain-Driven Folder Structure](#113-use-domain-driven-folder-structure)
+
 12. [Testing](#12-testing) — **HIGH**
-   - 12.1 [Automate Accessibility Testing with axe-core](#121-automate-accessibility-testing-with-axe-core)
-   - 12.2 [Component Testing with Angular Testing Library](#122-component-testing-with-angular-testing-library)
-   - 12.3 [Mocking with ng-mocks and MSW](#123-mocking-with-ng-mocks-and-msw)
-   - 12.4 [Test Signals and Computed Values](#124-test-signals-and-computed-values)
-   - 12.5 [Unit Testing with Vitest](#125-unit-testing-with-vitest)
-   - 12.6 [Use CDK Component Test Harnesses](#126-use-cdk-component-test-harnesses)
-   - 12.7 [Use Object Mothers for Test Data](#127-use-object-mothers-for-test-data)
+
+- 12.1 [Automate Accessibility Testing with axe-core](#121-automate-accessibility-testing-with-axe-core)
+- 12.2 [Component Testing with Angular Testing Library](#122-component-testing-with-angular-testing-library)
+- 12.3 [Mocking with ng-mocks and MSW](#123-mocking-with-ng-mocks-and-msw)
+- 12.4 [Test Signals and Computed Values](#124-test-signals-and-computed-values)
+- 12.5 [Unit Testing with Vitest](#125-unit-testing-with-vitest)
+- 12.6 [Use CDK Component Test Harnesses](#126-use-cdk-component-test-harnesses)
+- 12.7 [Use Object Mothers for Test Data](#127-use-object-mothers-for-test-data)
+
 13. [Infrastructure](#13-infrastructure) — **MEDIUM**
-   - 13.1 [Enable Scroll Position Restoration](#131-enable-scroll-position-restoration)
-   - 13.2 [Error Handling Patterns](#132-error-handling-patterns)
-   - 13.3 [Schema-Validate LocalStorage Data](#133-schema-validate-localstorage-data)
-   - 13.4 [Security Patterns](#134-security-patterns)
-   - 13.5 [Use CanDeactivate Guard for Unsaved Changes](#135-use-candeactivate-guard-for-unsaved-changes)
-   - 13.6 [Use Custom Preloading Strategy](#136-use-custom-preloading-strategy)
-   - 13.7 [Use Event Delegation for Lists](#137-use-event-delegation-for-lists)
-   - 13.8 [Use Factory Providers for Complex Setup](#138-use-factory-providers-for-complex-setup)
-   - 13.9 [Use Functional Route Guards](#139-use-functional-route-guards)
-   - 13.10 [Use Functional Route Resolvers](#1310-use-functional-route-resolvers)
-   - 13.11 [Use InjectionToken with Factory for Config](#1311-use-injectiontoken-with-factory-for-config)
-   - 13.12 [Use provideAppInitializer for Startup Logic](#1312-use-provideappinitializer-for-startup-logic)
-   - 13.13 [Use Route Input Binding](#1313-use-route-input-binding)
+
+- 13.1 [Enable Scroll Position Restoration](#131-enable-scroll-position-restoration)
+- 13.2 [Error Handling Patterns](#132-error-handling-patterns)
+- 13.3 [Schema-Validate LocalStorage Data](#133-schema-validate-localstorage-data)
+- 13.4 [Security Patterns](#134-security-patterns)
+- 13.5 [Use CanDeactivate Guard for Unsaved Changes](#135-use-candeactivate-guard-for-unsaved-changes)
+- 13.6 [Use Custom Preloading Strategy](#136-use-custom-preloading-strategy)
+- 13.7 [Use Event Delegation for Lists](#137-use-event-delegation-for-lists)
+- 13.8 [Use Factory Providers for Complex Setup](#138-use-factory-providers-for-complex-setup)
+- 13.9 [Use Functional Route Guards](#139-use-functional-route-guards)
+- 13.10 [Use Functional Route Resolvers](#1310-use-functional-route-resolvers)
+- 13.11 [Use InjectionToken with Factory for Config](#1311-use-injectiontoken-with-factory-for-config)
+- 13.12 [Use provideAppInitializer for Startup Logic](#1312-use-provideappinitializer-for-startup-logic)
+- 13.13 [Use Route Input Binding](#1313-use-route-input-binding)
+
 14. [UI & Accessibility](#14-ui-accessibility) — **MEDIUM**
-   - 14.1 [Ensure Keyboard Navigation](#141-ensure-keyboard-navigation)
-   - 14.2 [Loading State Patterns](#142-loading-state-patterns)
-   - 14.3 [Manage Focus with CDK FocusTrap](#143-manage-focus-with-cdk-focustrap)
-   - 14.4 [Respect prefers-reduced-motion](#144-respect-prefers-reduced-motion)
-   - 14.5 [Theming Patterns](#145-theming-patterns)
-   - 14.6 [Use ARIA Roles and Live Regions](#146-use-aria-roles-and-live-regions)
+
+- 14.1 [Ensure Keyboard Navigation](#141-ensure-keyboard-navigation)
+- 14.2 [Loading State Patterns](#142-loading-state-patterns)
+- 14.3 [Manage Focus with CDK FocusTrap](#143-manage-focus-with-cdk-focustrap)
+- 14.4 [Respect prefers-reduced-motion](#144-respect-prefers-reduced-motion)
+- 14.5 [Theming Patterns](#145-theming-patterns)
+- 14.6 [Use ARIA Roles and Live Regions](#146-use-aria-roles-and-live-regions)
+
 15. [Data Handling](#15-data-handling) — **MEDIUM**
-   - 15.1 [Compose Mappers for Nested Data](#151-compose-mappers-for-nested-data)
-   - 15.2 [Use Functional HTTP Interceptors](#152-use-functional-http-interceptors)
-   - 15.3 [Use Pure Mapper Functions for DTOs](#153-use-pure-mapper-functions-for-dtos)
+
+- 15.1 [Compose Mappers for Nested Data](#151-compose-mappers-for-nested-data)
+- 15.2 [Use Functional HTTP Interceptors](#152-use-functional-http-interceptors)
+- 15.3 [Use Pure Mapper Functions for DTOs](#153-use-pure-mapper-functions-for-dtos)
 
 ---
 
@@ -142,9 +153,9 @@ Move `await` into branches where needed. Check cheapest conditions first (local 
 
 ```typescript
 async function handleRequest(userId: string, skipProcessing: boolean) {
-  if (skipProcessing) return { skipped: true }; // Fast path - no await
-  const userData = await fetchUserData(userId);
-  return processUserData(userData);
+  if (skipProcessing) return { skipped: true } // Fast path - no await
+  const userData = await fetchUserData(userId)
+  return processUserData(userData)
 }
 ```
 
@@ -157,7 +168,7 @@ Execute independent async operations concurrently instead of sequentially. Use `
 **Example:**
 
 ```typescript
-const [user, posts] = await Promise.all([fetchUser(id), fetchPosts(id)]);
+const [user, posts] = await Promise.all([fetchUser(id), fetchPosts(id)])
 ```
 
 ---
@@ -175,15 +186,15 @@ Import directly from source files instead of barrel files (index.ts) to avoid lo
 **Incorrect:**
 
 ```typescript
-import { Check, X, Menu } from 'lucide-angular';
-import { debounce } from 'lodash';
+import { Check, X, Menu } from 'lucide-angular'
+import { debounce } from 'lodash'
 ```
 
 **Correct:**
 
 ```typescript
-import { LucideCheck } from 'lucide-angular/check';
-import debounce from 'lodash/debounce';
+import { LucideCheck } from 'lucide-angular/check'
+import debounce from 'lodash/debounce'
 ```
 
 ### 2.2 Conditional Imports for Features
@@ -195,10 +206,7 @@ Use conditional imports and feature flags to exclude unused code from production
 **Example:**
 
 ```typescript
-providers: [
-  provideRouter(routes),
-  ...(isDevMode() ? [provideDevTools()] : []),
-]
+providers: [provideRouter(routes), ...(isDevMode() ? [provideDevTools()] : [])]
 ```
 
 ### 2.3 Defer Heavy Third-Party Libraries
@@ -225,8 +233,7 @@ Use `withPreloading(PreloadAllModules)` for routes. Use `@defer (prefetch on idl
 **Example:**
 
 ```html
-@defer (on viewport; prefetch on idle) { <app-heavy-component /> }
-@defer (on interaction; prefetch on hover) { <app-modal /> }
+@defer (on viewport; prefetch on idle) { <app-heavy-component /> } @defer (on interaction; prefetch on hover) { <app-modal /> }
 ```
 
 ### 2.5 Use @defer for Lazy Loading
@@ -239,11 +246,11 @@ Use `@defer` for component-level lazy loading. Triggers: `on viewport`, `on inte
 
 ```html
 @defer (on viewport) {
-  <app-heavy-chart [data]="chartData()" />
+<app-heavy-chart [data]="chartData()" />
 } @placeholder {
-  <div class="chart-skeleton"></div>
+<div class="chart-skeleton"></div>
 } @loading (minimum 200ms) {
-  <app-spinner />
+<app-spinner />
 }
 ```
 
@@ -263,16 +270,16 @@ When manipulating the DOM directly, batch all reads together and all writes toge
 
 ```typescript
 for (const el of elements) {
-  const height = el.offsetHeight; // READ - triggers layout
-  el.style.height = `${height * 2}px`; // WRITE - invalidates layout
+  const height = el.offsetHeight // READ - triggers layout
+  el.style.height = `${height * 2}px` // WRITE - invalidates layout
 }
 ```
 
 **Correct:**
 
 ```typescript
-const heights = elements.map(el => el.offsetHeight);
-elements.forEach((el, i) => el.style.height = `${heights[i] * 2}px`);
+const heights = elements.map((el) => el.offsetHeight)
+elements.forEach((el, i) => (el.style.height = `${heights[i] * 2}px`))
 ```
 
 **In Angular, prefer template bindings** which let Angular handle DOM updates efficiently. When direct DOM access is needed, use `requestAnimationFrame()`.
@@ -303,9 +310,7 @@ Use `computed()` for automatic memoization of expensive calculations. Computed s
 **Example:**
 
 ```typescript
-statistics = computed(() =>
-  this.data().reduce((stats, point) => computeStats(stats, point), initial)
-);
+statistics = computed(() => this.data().reduce((stats, point) => computeStats(stats, point), initial))
 
 // Or use TanStack Query with staleTime for API caching
 ```
@@ -319,11 +324,11 @@ When looking up items multiple times, build a Map first. Converts O(n) lookups t
 **Example:**
 
 ```typescript
-const userMap = new Map(users.map(u => [u.id, u]));
-return orders.map(order => ({
+const userMap = new Map(users.map((u) => [u.id, u]))
+return orders.map((order) => ({
   ...order,
   user: userMap.get(order.userId),
-}));
+}))
 ```
 
 ### 3.5 Use content-visibility for Off-Screen Content
@@ -353,15 +358,15 @@ Convert arrays to Set/Map for repeated membership checks. Array `includes()` is 
 **Incorrect (O(n) per check):**
 
 ```typescript
-const allowedIds = ['a', 'b', 'c'];
-const filtered = items.filter(item => allowedIds.includes(item.id));
+const allowedIds = ['a', 'b', 'c']
+const filtered = items.filter((item) => allowedIds.includes(item.id))
 ```
 
 **Correct (O(1) per check):**
 
 ```typescript
-const allowedIds = new Set(['a', 'b', 'c']);
-const filtered = items.filter(item => allowedIds.has(item.id));
+const allowedIds = new Set(['a', 'b', 'c'])
+const filtered = items.filter((item) => allowedIds.has(item.id))
 ```
 
 ---
@@ -379,15 +384,18 @@ Use `as const` objects instead of enums for predictable behavior and tree-shakin
 **Incorrect:**
 
 ```typescript
-enum Direction { Up, Down } // Numeric enums create reverse mappings
-Object.keys(Direction).length; // 4, not 2!
+enum Direction {
+  Up,
+  Down,
+} // Numeric enums create reverse mappings
+Object.keys(Direction).length // 4, not 2!
 ```
 
 **Correct:**
 
 ```typescript
-const Direction = { Up: 'UP', Down: 'DOWN' } as const;
-type Direction = (typeof Direction)[keyof typeof Direction]; // 'UP' | 'DOWN'
+const Direction = { Up: 'UP', Down: 'DOWN' } as const
+type Direction = (typeof Direction)[keyof typeof Direction] // 'UP' | 'DOWN'
 ```
 
 ### 4.2 Declare Return Types for Exported Functions
@@ -405,8 +413,10 @@ With `noUncheckedIndexedAccess`, array/object indexing returns `T | undefined`. 
 **Example:**
 
 ```typescript
-const first = users[0];
-if (first) { console.log(first.name); }
+const first = users[0]
+if (first) {
+  console.log(first.name)
+}
 // Or: console.log(first?.name ?? 'Unknown');
 ```
 
@@ -431,11 +441,7 @@ Model mutually exclusive states with a discriminant property to prevent impossib
 **Example:**
 
 ```typescript
-type State<T> =
-  | { status: 'idle' }
-  | { status: 'loading' }
-  | { status: 'success'; data: T }
-  | { status: 'error'; error: Error };
+type State<T> = { status: 'idle' } | { status: 'loading' } | { status: 'success'; data: T } | { status: 'error'; error: Error }
 ```
 
 ### 4.7 Use import type for Type-Only Imports
@@ -459,10 +465,13 @@ For operations that can fail, return a Result type instead of throwing. Makes er
 **Example:**
 
 ```typescript
-type Result<T> = { ok: true; value: T } | { ok: false; error: Error };
+type Result<T> = { ok: true; value: T } | { ok: false; error: Error }
 function parseJson(input: string): Result<unknown> {
-  try { return { ok: true, value: JSON.parse(input) }; }
-  catch (e) { return { ok: false, error: e as Error }; }
+  try {
+    return { ok: true, value: JSON.parse(input) }
+  } catch (e) {
+    return { ok: false, error: e as Error }
+  }
 }
 ```
 
@@ -476,8 +485,8 @@ Use `as any` inside generic function bodies when TypeScript can't verify conditi
 
 ```typescript
 const flip = <T extends 'a' | 'b'>(x: T): T extends 'a' ? 'b' : 'a' => {
-  return (x === 'a' ? 'b' : 'a') as any; // OK - public API is still typed
-};
+  return (x === 'a' ? 'b' : 'a') as any // OK - public API is still typed
+}
 ```
 
 ### 4.11 When to Use JSDoc Comments
@@ -490,7 +499,7 @@ Use JSDoc for `@deprecated`, `@throws`, and non-obvious behavior. Don't repeat t
 
 ```typescript
 /** @deprecated Use getUserById instead. Removed in v3.0. */
-function fetchUser(id: string): Observable<User> { }
+function fetchUser(id: string): Observable<User> {}
 ```
 
 ---
@@ -509,7 +518,7 @@ Use `computed()` for derived state, not `effect()` with `.set()`. Effects are fo
 
 ```typescript
 // Computed handles derivation without circular dependency risks
-fullName = computed(() => `${this.firstName()} ${this.lastName()}`);
+fullName = computed(() => `${this.firstName()} ${this.lastName()}`)
 ```
 
 ### 5.2 Use Computed for Derived State
@@ -522,7 +531,7 @@ Use `computed()` instead of getters for derived state. Getters re-run on every c
 
 ```typescript
 // Memoized; only runs when firstName or lastName changes
-fullName = computed(() => `${this.firstName()} ${this.lastName()}`);
+fullName = computed(() => `${this.firstName()} ${this.lastName()}`)
 ```
 
 ### 5.3 Use httpResource() for Signal-Based Data Fetching
@@ -545,8 +554,8 @@ ngOnInit() {
 **Correct:**
 
 ```typescript
-userId = input.required<string>();
-user = httpResource<User>(() => `/api/users/${this.userId()}`);
+userId = input.required<string>()
+user = httpResource<User>(() => `/api/users/${this.userId()}`)
 // Access: user.value(), user.isLoading(), user.error()
 ```
 
@@ -567,8 +576,8 @@ constructor() { effect(() => this.selected.set(this.options()[0])); }
 **Correct:**
 
 ```typescript
-options = signal(['Ground', 'Air', 'Sea']);
-selected = linkedSignal(() => this.options()[0]);
+options = signal(['Ground', 'Air', 'Sea'])
+selected = linkedSignal(() => this.options()[0])
 // Writable: selected.set('Air') — auto-resets when options change
 ```
 
@@ -639,8 +648,8 @@ loadUser() { this.loading.set(true); fetch(`/api/users/${this.id()}`).then(r => 
 ```typescript
 userResource = resource({
   params: () => ({ id: this.userId() }),
-  loader: ({ params }) => fetch(`/api/users/${params.id}`).then(r => r.json()),
-});
+  loader: ({ params }) => fetch(`/api/users/${params.id}`).then((r) => r.json()),
+})
 // Access: userResource.value(), userResource.isLoading(), userResource.error()
 ```
 
@@ -660,7 +669,7 @@ ngAfterContentInit() { this.renderTemplate(this.template); }
 **Correct:**
 
 ```typescript
-template = contentChild.required(TemplateRef);
+template = contentChild.required(TemplateRef)
 // Reactive: use template() in computed() or effect(), no lifecycle hooks needed
 ```
 
@@ -680,7 +689,7 @@ ngAfterViewInit() { this.initChart(this.chart.nativeElement); }
 **Correct:**
 
 ```typescript
-chart = viewChild.required<ElementRef>('chart');
+chart = viewChild.required<ElementRef>('chart')
 // Reactive: use chart() in computed() or effect(), no lifecycle hooks needed
 ```
 
@@ -700,7 +709,7 @@ Use `toSignal()` to bridge RxJS observables to signals for simpler template usag
 
 ```typescript
 // Converts observable to signal with automatic subscription management
-params = toSignal(this.route.params);
+params = toSignal(this.route.params)
 ```
 
 ---
@@ -741,7 +750,10 @@ Prefer the `inject()` function over constructor injection for cleaner syntax, be
 ```typescript
 @Component({ selector: 'app-user' })
 export class UserComponent {
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
 }
 ```
 
@@ -750,8 +762,8 @@ export class UserComponent {
 ```typescript
 @Component({ selector: 'app-user' })
 export class UserComponent {
-  private userService = inject(UserService);
-  private router = inject(Router);
+  private userService = inject(UserService)
+  private router = inject(Router)
 }
 ```
 
@@ -770,9 +782,9 @@ Use `switchMap` to cancel previous (search/autocomplete), `exhaustMap` to ignore
 **Correct:**
 
 ```typescript
-search$ = this.query$.pipe(switchMap(q => this.api.search(q)));       // Cancel previous
-submit$ = this.click$.pipe(exhaustMap(() => this.api.save(this.form))); // Ignore while busy
-ordered$ = this.ids$.pipe(concatMap(id => this.api.process(id)));      // Preserve order
+search$ = this.query$.pipe(switchMap((q) => this.api.search(q))) // Cancel previous
+submit$ = this.click$.pipe(exhaustMap(() => this.api.save(this.form))) // Ignore while busy
+ordered$ = this.ids$.pipe(concatMap((id) => this.api.process(id))) // Preserve order
 ```
 
 ### 7.2 Handle Errors in Streams
@@ -786,19 +798,21 @@ Use `catchError` inside `switchMap` to handle errors without terminating the out
 ```typescript
 // Error terminates entire stream - no more searches work
 search$ = this.term$.pipe(
-  switchMap(term => this.api.search(term)),
+  switchMap((term) => this.api.search(term)),
   catchError(() => of([])) // Too late - outer stream dead
-);
+)
 ```
 
 **Correct:**
 
 ```typescript
 search$ = this.term$.pipe(
-  switchMap(term => this.api.search(term).pipe(
-    catchError(() => of([])) // Recovers per-request
-  ))
-);
+  switchMap((term) =>
+    this.api.search(term).pipe(
+      catchError(() => of([])) // Recovers per-request
+    )
+  )
+)
 ```
 
 ### 7.3 Use combineLatest for Multiple Streams
@@ -813,8 +827,8 @@ Use `combineLatest({ user: user$, permissions: perms$ })` to combine multiple st
 vm$ = combineLatest({
   user: this.user$,
   permissions: this.permissions$,
-  settings: this.settings$
-});
+  settings: this.settings$,
+})
 ```
 
 ### 7.4 Use DestroyRef and takeUntilDestroyed
@@ -848,9 +862,7 @@ Use `shareReplay({ bufferSize: 1, refCount: true })` to share results among mult
 **Example:**
 
 ```typescript
-users$ = this.http.get<User[]>('/api/users').pipe(
-  shareReplay({ bufferSize: 1, refCount: true })
-);
+users$ = this.http.get<User[]>('/api/users').pipe(shareReplay({ bufferSize: 1, refCount: true }))
 ```
 
 ---
@@ -868,13 +880,13 @@ Use the `NgOptimizedImage` directive (`ngSrc`) with `priority` for above-fold im
 **Incorrect:**
 
 ```html
-<img src="/assets/hero.png" alt="Hero">
+<img src="/assets/hero.png" alt="Hero" />
 ```
 
 **Correct:**
 
 ```html
-<img ngSrc="/assets/hero.png" width="800" height="400" priority alt="Hero">
+<img ngSrc="/assets/hero.png" width="800" height="400" priority alt="Hero" />
 ```
 
 ### 8.2 Use Pure Pipes for Transforms
@@ -909,7 +921,7 @@ Use `CdkVirtualScrollViewport` with `*cdkVirtualFor` to render only visible item
 
 ```html
 @for (item of items; track item.id) {
-  <div>{{ item.name }}</div>
+<div>{{ item.name }}</div>
 }
 ```
 
@@ -936,9 +948,7 @@ Use `ServerRoute` with `RenderMode.Prerender`, `RenderMode.Server`, or `RenderMo
 **Incorrect:**
 
 ```typescript
-const serverRoutes: ServerRoute[] = [
-  { path: '**', renderMode: RenderMode.Server }
-];
+const serverRoutes: ServerRoute[] = [{ path: '**', renderMode: RenderMode.Server }]
 ```
 
 **Correct:**
@@ -947,8 +957,8 @@ const serverRoutes: ServerRoute[] = [
 const serverRoutes: ServerRoute[] = [
   { path: '', renderMode: RenderMode.Prerender },
   { path: 'dashboard', renderMode: RenderMode.Client },
-  { path: '**', renderMode: RenderMode.Server }
-];
+  { path: '**', renderMode: RenderMode.Server },
+]
 ```
 
 ### 9.2 Enable Client Hydration
@@ -961,11 +971,8 @@ Enable `provideClientHydration(withEventReplay())` to reuse server-rendered DOM 
 
 ```typescript
 bootstrapApplication(AppComponent, {
-  providers: [
-    provideRouter(routes),
-    provideClientHydration(withEventReplay())
-  ]
-});
+  providers: [provideRouter(routes), provideClientHydration(withEventReplay())],
+})
 ```
 
 ### 9.3 Fetch Data in Parallel on Server
@@ -1014,7 +1021,7 @@ Use Angular's `Meta` and `Title` services to set Open Graph, Twitter Card, and c
 
 ```typescript
 export class ProductPage {
-  product = input.required<Product>();
+  product = input.required<Product>()
 }
 ```
 
@@ -1048,7 +1055,7 @@ Enable `provideClientHydration(withIncrementalHydration())` and use `@defer (hyd
 ```html
 <hero-banner />
 @defer (hydrate on viewport) {
-  <comments-section />
+<comments-section />
 }
 ```
 
@@ -1080,11 +1087,7 @@ Use `TransferState` to pass server-fetched data to the client, avoiding duplicat
 **Example:**
 
 ```typescript
-data = this.transferState.hasKey(DATA_KEY)
-  ? this.transferState.get(DATA_KEY, null)
-  : this.http.get('/api/data').pipe(
-      tap(d => this.transferState.set(DATA_KEY, d))
-    );
+data = this.transferState.hasKey(DATA_KEY) ? this.transferState.get(DATA_KEY, null) : this.http.get('/api/data').pipe(tap((d) => this.transferState.set(DATA_KEY, d)))
 ```
 
 ---
@@ -1102,8 +1105,7 @@ Extract common validation logic into reusable `ValidatorFn` functions instead of
 **Example:**
 
 ```typescript
-export const emailValidator: ValidatorFn = (control) =>
-  control.value?.includes('@') ? null : { invalidEmail: true };
+export const emailValidator: ValidatorFn = (control) => (control.value?.includes('@') ? null : { invalidEmail: true })
 
 // Usage: email: ['', [Validators.required, emailValidator]]
 ```
@@ -1136,7 +1138,9 @@ Implement `ControlValueAccessor` to make custom components work with reactive fo
 ```typescript
 @Component({ providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: RatingComponent, multi: true }] })
 export class RatingComponent implements ControlValueAccessor {
-  writeValue(v: number) { this.value.set(v); }
+  writeValue(v: number) {
+    this.value.set(v)
+  }
 }
 ```
 
@@ -1178,15 +1182,15 @@ Use Sheriff or Nx to enforce dependency rules between domains and layers.
 
 ```typescript
 // ui component imports from another domain's data layer
-import { OrderService } from '../../orders/data/order.service'; // Cross-domain!
+import { OrderService } from '../../orders/data/order.service' // Cross-domain!
 ```
 
 **Correct:**
 
 ```typescript
 // ui component only imports from own domain or shared
-import { OrderService } from '../data/order.service';
-import { formatCurrency } from '@app/shared/util';
+import { OrderService } from '../data/order.service'
+import { formatCurrency } from '@app/shared/util'
 ```
 
 Use Sheriff for standalone projects, Nx for monorepos.
@@ -1201,8 +1205,8 @@ Export only what other domains should access via `index.ts` barrel files. This r
 
 ```typescript
 // customers/index.ts - only export public API
-export { Customer } from './model/customer.model';
-export { CustomerService } from './data/customer.service';
+export { Customer } from './model/customer.model'
+export { CustomerService } from './data/customer.service'
 ```
 
 ### 11.3 Use Domain-Driven Folder Structure
@@ -1238,16 +1242,16 @@ Use `vitest-axe` or `jest-axe` to check rendered components for WCAG violations.
 ```typescript
 it('should be accessible', () => {
   // Manual visual check only — misses hidden violations
-});
+})
 ```
 
 **Correct:**
 
 ```typescript
 it('should have no a11y violations', async () => {
-  const { container } = await render(MyComponent);
-  expect(await axe(container)).toHaveNoViolations();
-});
+  const { container } = await render(MyComponent)
+  expect(await axe(container)).toHaveNoViolations()
+})
 ```
 
 ### 12.2 Component Testing with Angular Testing Library
@@ -1260,10 +1264,10 @@ Use Angular Testing Library for user-centric tests. Prefer accessible queries: `
 
 ```typescript
 it('should increment count', async () => {
-  await render(CounterComponent);
-  await userEvent.setup().click(screen.getByRole('button', { name: /increment/i }));
-  expect(screen.getByText('Count: 1')).toBeInTheDocument();
-});
+  await render(CounterComponent)
+  await userEvent.setup().click(screen.getByRole('button', { name: /increment/i }))
+  expect(screen.getByText('Count: 1')).toBeInTheDocument()
+})
 ```
 
 ### 12.3 Mocking with ng-mocks and MSW
@@ -1278,7 +1282,7 @@ Use ng-mocks for component/service mocking. Use `HttpTestingController` for HTTP
 TestBed.configureTestingModule({
   imports: [ParentComponent, MockComponent(ChildComponent)],
   providers: [MockProvider(UserService, { getUsers: () => of([mockUser]) })],
-});
+})
 ```
 
 ### 12.4 Test Signals and Computed Values
@@ -1291,15 +1295,15 @@ Test signals by setting values and asserting computed results. Use `TestBed.flus
 
 ```typescript
 // Testing implementation details instead of behavior
-expect(component['_count']).toBe(1);
+expect(component['_count']).toBe(1)
 ```
 
 **Correct:**
 
 ```typescript
-component.count.set(5);
-expect(component.doubled()).toBe(10);
-TestBed.flushEffects(); // Flush pending effects if needed
+component.count.set(5)
+expect(component.doubled()).toBe(10)
+TestBed.flushEffects() // Flush pending effects if needed
 ```
 
 ### 12.5 Unit Testing with Vitest
@@ -1312,10 +1316,10 @@ Use Vitest for unit testing services, pipes, guards, and signals. For signals, s
 
 ```typescript
 it('should fetch users', async () => {
-  TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
-  const service = TestBed.inject(UserService);
-  expect(await firstValueFrom(service.getUsers())).toBeDefined();
-});
+  TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] })
+  const service = TestBed.inject(UserService)
+  expect(await firstValueFrom(service.getUsers())).toBeDefined()
+})
 ```
 
 ### 12.6 Use CDK Component Test Harnesses
@@ -1327,16 +1331,16 @@ Use CDK test harnesses (`HarnessLoader`) to interact with Angular Material and c
 **Incorrect:**
 
 ```typescript
-const button = fixture.debugElement.query(By.css('.mat-mdc-button'));
-button.nativeElement.click(); // Breaks if class name changes
+const button = fixture.debugElement.query(By.css('.mat-mdc-button'))
+button.nativeElement.click() // Breaks if class name changes
 ```
 
 **Correct:**
 
 ```typescript
-const loader = TestbedHarnessEnvironment.loader(fixture);
-const button = await loader.getHarness(MatButtonHarness.with({ text: 'Save' }));
-await button.click();
+const loader = TestbedHarnessEnvironment.loader(fixture)
+const button = await loader.getHarness(MatButtonHarness.with({ text: 'Save' }))
+await button.click()
 ```
 
 ### 12.7 Use Object Mothers for Test Data
@@ -1348,7 +1352,7 @@ Create factory functions (Object Mothers) that return valid default objects with
 **Incorrect:**
 
 ```typescript
-const user = { id: '1', name: 'John', email: 'j@e.com', role: 'admin', createdAt: new Date() };
+const user = { id: '1', name: 'John', email: 'j@e.com', role: 'admin', createdAt: new Date() }
 // Duplicated in every test file
 ```
 
@@ -1356,8 +1360,11 @@ const user = { id: '1', name: 'John', email: 'j@e.com', role: 'admin', createdAt
 
 ```typescript
 export const createUser = (overrides: Partial<User> = {}): User => ({
-  id: crypto.randomUUID(), name: 'John', email: 'john@example.com', ...overrides,
-});
+  id: crypto.randomUUID(),
+  name: 'John',
+  email: 'john@example.com',
+  ...overrides,
+})
 ```
 
 ---
@@ -1376,15 +1383,13 @@ Use `withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })` to automat
 
 ```typescript
 // Manually scrolling to top on every navigation — loses back-button position
-router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => window.scrollTo(0, 0));
+router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() => window.scrollTo(0, 0))
 ```
 
 **Correct:**
 
 ```typescript
-provideRouter(routes,
-  withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
-)
+provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }))
 ```
 
 ### 13.2 Error Handling Patterns
@@ -1397,10 +1402,12 @@ Use global `ErrorHandler` for unhandled exceptions. Centralize HTTP errors (401,
 
 ```typescript
 export const errorInterceptor: HttpInterceptorFn = (req, next) =>
-  next(req).pipe(catchError(err => {
-    if (err.status === 401) inject(Router).navigate(['/login']);
-    return throwError(() => err);
-  }));
+  next(req).pipe(
+    catchError((err) => {
+      if (err.status === 401) inject(Router).navigate(['/login'])
+      return throwError(() => err)
+    })
+  )
 ```
 
 ### 13.3 Schema-Validate LocalStorage Data
@@ -1412,8 +1419,8 @@ Use typed schemas (Zod) with versioning for localStorage to catch corrupted data
 **Example:**
 
 ```typescript
-const result = StorageSchema.safeParse(JSON.parse(localStorage.getItem('user') ?? 'null'));
-const user = result.success ? result.data.user : migrateOrDefault(result); // fallback on failure
+const result = StorageSchema.safeParse(JSON.parse(localStorage.getItem('user') ?? 'null'))
+const user = result.success ? result.data.user : migrateOrDefault(result) // fallback on failure
 ```
 
 ### 13.4 Security Patterns
@@ -1425,7 +1432,7 @@ Never store tokens in `localStorage` (XSS-vulnerable). Use in-memory signals for
 **Incorrect:**
 
 ```typescript
-localStorage.setItem('accessToken', token); // Vulnerable to XSS
+localStorage.setItem('accessToken', token) // Vulnerable to XSS
 ```
 
 **Correct:**
@@ -1451,8 +1458,7 @@ Implement `CanDeactivateFn` to warn users before navigating away from forms with
 **Correct:**
 
 ```typescript
-export const unsavedChangesGuard: CanDeactivateFn<{ hasUnsavedChanges(): boolean }> =
-  (component) => component.hasUnsavedChanges() ? confirm('Discard changes?') : true;
+export const unsavedChangesGuard: CanDeactivateFn<{ hasUnsavedChanges(): boolean }> = (component) => (component.hasUnsavedChanges() ? confirm('Discard changes?') : true)
 // Usage: { path: 'edit/:id', canDeactivate: [unsavedChangesGuard] }
 ```
 
@@ -1473,8 +1479,7 @@ provideRouter(routes, withPreloading(PreloadAllModules))
 
 ```typescript
 export class SelectivePreload extends PreloadingStrategy {
-  preload = (route: Route, load: () => Observable<any>) =>
-    route.data?.['preload'] ? load() : of(null);
+  preload = (route: Route, load: () => Observable<any>) => (route.data?.['preload'] ? load() : of(null))
 }
 // Route: { path: 'dashboard', loadComponent: ..., data: { preload: true } }
 ```
@@ -1490,7 +1495,7 @@ Attach one event listener to a parent instead of listeners on each child. Use `d
 ```html
 <div (click)="handleClick($event)">
   @for (item of items(); track item.id) {
-    <button [attr.data-id]="item.id">{{ item.name }}</button>
+  <button [attr.data-id]="item.id">{{ item.name }}</button>
   }
 </div>
 <!-- One listener handles all clicks via event.target -->
@@ -1508,7 +1513,11 @@ Use `useFactory` with `inject()` for conditional service creation based on envir
 // Conditional logic in service constructor couples to environment
 @Injectable({ providedIn: 'root' })
 export class LogService {
-  constructor() { if (environment.production) { /* ... */ } }
+  constructor() {
+    if (environment.production) {
+      /* ... */
+    }
+  }
 }
 ```
 
@@ -1532,10 +1541,10 @@ Use functional `CanActivateFn` guards with `inject()` instead of class-based gua
 
 ```typescript
 export const authGuard: CanActivateFn = () => {
-  const auth = inject(AuthService);
-  const router = inject(Router);
-  return auth.isAuthenticated() || router.createUrlTree(['/login']);
-};
+  const auth = inject(AuthService)
+  const router = inject(Router)
+  return auth.isAuthenticated() || router.createUrlTree(['/login'])
+}
 // Usage: { path: 'dashboard', canActivate: [authGuard] }
 ```
 
@@ -1549,7 +1558,9 @@ Use functional `ResolveFn<T>` resolvers to preload data before component renders
 
 ```typescript
 export const userResolver: ResolveFn<User | null> = (route) =>
-  inject(UserService).getById(route.paramMap.get('id')!).pipe(catchError(() => of(null)));
+  inject(UserService)
+    .getById(route.paramMap.get('id')!)
+    .pipe(catchError(() => of(null)))
 ```
 
 ### 13.11 Use InjectionToken with Factory for Config
@@ -1571,7 +1582,7 @@ const el = window.document.getElementById('app');
 ```typescript
 export const API_URL = new InjectionToken<string>('API_URL', {
   factory: () => environment.apiUrl,
-});
+})
 // Usage: private apiUrl = inject(API_URL);
 ```
 
@@ -1586,7 +1597,9 @@ Use `provideAppInitializer()` (Angular 19+) or `{ provide: APP_INITIALIZER, useF
 ```typescript
 // Startup logic in root component — app renders before init completes
 export class AppComponent {
-  constructor(private config: ConfigService) { config.load(); }
+  constructor(private config: ConfigService) {
+    config.load()
+  }
 }
 ```
 
@@ -1595,10 +1608,8 @@ export class AppComponent {
 ```typescript
 // App providers — blocks rendering until init resolves
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideAppInitializer(() => inject(ConfigService).load()),
-  ],
-};
+  providers: [provideAppInitializer(() => inject(ConfigService).load())],
+}
 ```
 
 ### 13.13 Use Route Input Binding
@@ -1628,9 +1639,7 @@ All interactive elements must be keyboard-accessible. Use native `<button>` and 
 **Correct:**
 
 ```html
-<button role="tab" [attr.aria-selected]="isActive(i)" (click)="selectTab(i)">
-  {{ tab.label }}
-</button>
+<button role="tab" [attr.aria-selected]="isActive(i)" (click)="selectTab(i)">{{ tab.label }}</button>
 ```
 
 ### 14.2 Loading State Patterns
@@ -1643,13 +1652,11 @@ Use skeleton loaders matching content shape to prevent CLS. Disable buttons duri
 
 ```html
 @if (loading()) {
-  <app-card-skeleton />
+<app-card-skeleton />
 } @else {
-  <app-card [data]="data()" />
-}
-
-@for (user of users(); track user.id) { ... } @empty {
-  <app-empty-state title="No users found" />
+<app-card [data]="data()" />
+} @for (user of users(); track user.id) { ... } @empty {
+<app-empty-state title="No users found" />
 }
 ```
 
@@ -1686,15 +1693,21 @@ Disable or simplify animations for users who prefer reduced motion. Use the `pre
 **Incorrect:**
 
 ```css
-.card { transition: transform 0.5s ease; }
+.card {
+  transition: transform 0.5s ease;
+}
 ```
 
 **Correct:**
 
 ```css
-.card { transition: transform 0.5s ease; }
+.card {
+  transition: transform 0.5s ease;
+}
 @media (prefers-reduced-motion: reduce) {
-  .card { transition: none; }
+  .card {
+    transition: none;
+  }
 }
 ```
 
@@ -1707,14 +1720,20 @@ Define theme values as CSS custom properties (`--border-color`). Support dark mo
 **Example:**
 
 ```css
-:root { --border-color: #e5e7eb; }
-@media (prefers-color-scheme: dark) { :root { --bg-color: #1f2937; } }
+:root {
+  --border-color: #e5e7eb;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1f2937;
+  }
+}
 ```
 
 **Example:**
 
 ```typescript
-isMobile = toSignal(this.breakpointObserver.observe('(max-width: 768px)').pipe(map(r => r.matches)));
+isMobile = toSignal(this.breakpointObserver.observe('(max-width: 768px)').pipe(map((r) => r.matches)))
 ```
 
 ### 14.6 Use ARIA Roles and Live Regions
@@ -1737,7 +1756,7 @@ Use semantic HTML elements first (`<nav>`, `<main>`, `<button>`). Add ARIA roles
 // Use semantic HTML for navigation
 // template: <nav aria-label="Main"><a routerLink="/">Home</a></nav>
 // Announce dynamic changes for screen readers
-this.liveAnnouncer.announce('Item saved successfully');
+this.liveAnnouncer.announce('Item saved successfully')
 ```
 
 ---
@@ -1758,12 +1777,12 @@ Compose smaller mappers for nested structures. Each mapper handles one entity ty
 const mapOrderItem = (dto: OrderItemDto): OrderItem => ({
   productName: dto.product_name,
   subtotal: dto.quantity * dto.unit_price,
-});
+})
 
 const mapOrder = (dto: OrderDto): Order => ({
   customer: mapCustomer(dto.customer),
   items: dto.items.map(mapOrderItem),
-});
+})
 ```
 
 ### 15.2 Use Functional HTTP Interceptors
@@ -1777,7 +1796,9 @@ Write interceptors as `HttpInterceptorFn` functions and register with `withInter
 ```typescript
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler) { /* ... */ }
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    /* ... */
+  }
 }
 // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
 ```
@@ -1786,9 +1807,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
 ```typescript
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = inject(AuthService).getToken();
-  return next(req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }));
-};
+  const token = inject(AuthService).getToken()
+  return next(req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }))
+}
 // provideHttpClient(withInterceptors([authInterceptor]))
 ```
 
@@ -1806,7 +1827,7 @@ export function mapUserDto(dto: UserDto): User {
     fullName: `${dto.first_name} ${dto.last_name}`,
     email: dto.email_address,
     createdAt: new Date(dto.created_at),
-  };
+  }
 }
 ```
 

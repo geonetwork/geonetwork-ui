@@ -9,12 +9,12 @@ description: >-
 license: MIT
 metadata:
   author: alfredoperez
-  version: "1.2.0"
+  version: '1.2.0'
 tags: [angular, material, cdk, ui-components]
 globs:
-  - "**/*.ts"
-  - "**/*.component.ts"
-  - "**/*.scss"
+  - '**/*.ts'
+  - '**/*.component.ts'
+  - '**/*.scss'
 ---
 
 # Angular Material Best Practices
@@ -38,12 +38,12 @@ skill for comprehensive Angular coverage.
 
 ## Rules
 
-| Rule | Impact | Description |
-|------|--------|-------------|
-| Import Material Modules Selectively | MEDIUM | Tree-shake unused components with standalone imports |
-| Use Angular Material Theming System | MEDIUM | M3 theme API with CSS custom properties |
+| Rule                                          | Impact | Description                                                 |
+| --------------------------------------------- | ------ | ----------------------------------------------------------- |
+| Import Material Modules Selectively           | MEDIUM | Tree-shake unused components with standalone imports        |
+| Use Angular Material Theming System           | MEDIUM | M3 theme API with CSS custom properties                     |
 | Use CDK Utilities Over Custom Implementations | MEDIUM | Battle-tested overlays, virtual scroll, and a11y primitives |
-| Use Test Harnesses for Material Components | HIGH | Stable tests that survive internal DOM changes |
+| Use Test Harnesses for Material Components    | HIGH   | Stable tests that survive internal DOM changes              |
 
 ## Install
 

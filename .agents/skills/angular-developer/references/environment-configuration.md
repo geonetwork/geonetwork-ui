@@ -32,22 +32,22 @@ This creates environment-specific files such as:
 // environment.ts
 export const environment = {
   apiUrl: 'https://api.example.com',
-};
+}
 ```
 
 ```ts
 // environment.development.ts
 export const environment = {
   apiUrl: 'http://localhost:3000',
-};
+}
 ```
 
 Import the environment where needed:
 
 ```ts
-import {environment} from '../environments/environment';
+import { environment } from '../environments/environment'
 
-const apiUrl = environment.apiUrl;
+const apiUrl = environment.apiUrl
 ```
 
 The Angular CLI replaces the appropriate file based on the build configuration.
@@ -79,25 +79,25 @@ initialization.
 Load the configuration before the application starts:
 
 ```ts
-import {Service, inject} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Service, inject } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
 
 @Service()
 export class AppConfigService {
-  private config!: {apiUrl: string};
+  private config!: { apiUrl: string }
 
-  private readonly http = inject(HttpClient);
+  private readonly http = inject(HttpClient)
 
   loadConfig() {
     return this.http.get<AppConfig>('/assets/config.json').pipe(
       tap((data) => {
-        this.config = data;
-      }),
-    );
+        this.config = data
+      })
+    )
   }
 
   get apiUrl(): string {
-    return this.config.apiUrl;
+    return this.config.apiUrl
   }
 }
 ```
@@ -105,12 +105,12 @@ export class AppConfigService {
 Register the loader during application bootstrap:
 
 ```ts
-import {provideAppInitializer, inject} from '@angular/core';
+import { provideAppInitializer, inject } from '@angular/core'
 
 provideAppInitializer(() => {
-  const config = inject(AppConfigService);
-  return config.loadConfig();
-});
+  const config = inject(AppConfigService)
+  return config.loadConfig()
+})
 ```
 
 This ensures configuration is available before the application renders.

@@ -7,7 +7,7 @@ Inputs allow data to flow from a parent component to a child component. Angular 
 Declare inputs using the `input()` function. This returns an `InputSignal`.
 
 ```ts
-import {Component, input, computed} from '@angular/core';
+import { Component, input, computed } from '@angular/core'
 
 @Component({
   selector: 'app-user',
@@ -15,13 +15,13 @@ import {Component, input, computed} from '@angular/core';
 })
 export class User {
   // Optional input with default value
-  readonly name = input('Guest');
+  readonly name = input('Guest')
 
   // Required input
-  readonly age = input.required<number>();
+  readonly age = input.required<number>()
 
   // Inputs are reactive signals
-  protected readonly label = computed(() => `Name: ${this.name()}`);
+  protected readonly label = computed(() => `Name: ${this.name()}`)
 }
 ```
 
@@ -61,10 +61,10 @@ Use `model()` to create an input that supports two-way data binding.
   template: `<button (click)="increment()">+</button>`,
 })
 export class CustomCounter {
-  readonly value = model(0);
+  readonly value = model(0)
 
   increment() {
-    this.value.update((v) => v + 1);
+    this.value.update((v) => v + 1)
   }
 }
 ```

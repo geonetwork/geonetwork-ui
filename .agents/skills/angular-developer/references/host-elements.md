@@ -10,7 +10,7 @@ Use the `host` property in the `@Component` decorator to bind properties, attrib
 @Component({
   selector: 'custom-slider',
   host: {
-    'role': 'slider', // Static attribute
+    role: 'slider', // Static attribute
     '[attr.aria-valuenow]': 'value', // Attribute binding
     '[class.active]': 'isActive()', // Class binding
     '[style.color]': 'color()', // Style binding
@@ -19,10 +19,10 @@ Use the `host` property in the `@Component` decorator to bind properties, attrib
   },
 })
 export class CustomSlider {
-  protected readonly value = 0;
-  protected readonly disabled = false;
-  protected readonly isActive = signal(false);
-  protected readonly color = signal('blue');
+  protected readonly value = 0
+  protected readonly disabled = false
+  protected readonly isActive = signal(false)
+  protected readonly color = signal('blue')
 
   onKeyDown(event: KeyboardEvent) {
     /* ... */
@@ -38,7 +38,7 @@ export class CustomSlider {
 export class CustomSlider {
   @HostBinding('tabIndex')
   get tabIndex() {
-    return this.disabled ? -1 : 0;
+    return this.disabled ? -1 : 0
   }
 
   @HostListener('keydown', ['$event'])
@@ -61,7 +61,7 @@ If both the component (host binding) and the consumer (template binding) bind to
 Use `HostAttributeToken` with the `inject` function to read static attributes from the host element at construction time.
 
 ```ts
-import {Component, HostAttributeToken, inject} from '@angular/core';
+import { Component, HostAttributeToken, inject } from '@angular/core'
 
 @Component({
   selector: 'app-btn',
@@ -69,7 +69,7 @@ import {Component, HostAttributeToken, inject} from '@angular/core';
 })
 export class AppButton {
   // Throws error if 'type' is missing unless injected with { optional: true }
-  type = inject(new HostAttributeToken('type'));
+  type = inject(new HostAttributeToken('type'))
 }
 ```
 

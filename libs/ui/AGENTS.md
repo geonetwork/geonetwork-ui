@@ -12,30 +12,31 @@ Every component is **standalone** and exposed via the `@geonetwork-ui/ui/<lib>` 
 
 Common substitutions:
 
-| Instead of… | Use |
-|---|---|
-| `<button>` | `<gn-ui-button>` |
-| `<input type="text">` | `<gn-ui-text-input>` (or `<gn-ui-url-input>`, `<gn-ui-text-area>`) |
-| `<input type="checkbox">` | `<gn-ui-checkbox>` / `<gn-ui-check-toggle>` |
-| `<select>` | `<gn-ui-dropdown-selector>` / `<gn-ui-dropdown-multiselect>` |
-| a date `<input>` | `<gn-ui-date-picker>` / `<gn-ui-date-range-picker>` |
-| a file `<input>` | `<gn-ui-file-input>` / `<gn-ui-drag-and-drop-file-input>` |
-| a hand-rolled modal | `<gn-ui-modal-dialog>` |
-| a custom spinner/loader | `<gn-ui-spinning-loader>` / `<gn-ui-loading-mask>` |
-| hand-rolled pagination | `<gn-ui-pagination>` |
-| a custom tooltip/popover | `<gn-ui-popover>` |
-| rendering markdown by hand | `<gn-ui-markdown-parser>` |
-| a "copy to clipboard" button | `<gn-ui-copy-text-button>` |
+| Instead of…                  | Use                                                                |
+| ---------------------------- | ------------------------------------------------------------------ |
+| `<button>`                   | `<gn-ui-button>`                                                   |
+| `<input type="text">`        | `<gn-ui-text-input>` (or `<gn-ui-url-input>`, `<gn-ui-text-area>`) |
+| `<input type="checkbox">`    | `<gn-ui-checkbox>` / `<gn-ui-check-toggle>`                        |
+| `<select>`                   | `<gn-ui-dropdown-selector>` / `<gn-ui-dropdown-multiselect>`       |
+| a date `<input>`             | `<gn-ui-date-picker>` / `<gn-ui-date-range-picker>`                |
+| a file `<input>`             | `<gn-ui-file-input>` / `<gn-ui-drag-and-drop-file-input>`          |
+| a hand-rolled modal          | `<gn-ui-modal-dialog>`                                             |
+| a custom spinner/loader      | `<gn-ui-spinning-loader>` / `<gn-ui-loading-mask>`                 |
+| hand-rolled pagination       | `<gn-ui-pagination>`                                               |
+| a custom tooltip/popover     | `<gn-ui-popover>`                                                  |
+| rendering markdown by hand   | `<gn-ui-markdown-parser>`                                          |
+| a "copy to clipboard" button | `<gn-ui-copy-text-button>`                                         |
 
 Before adding a new presentation component, check the lists below (and Storybook via `npm run storybook`) for an existing one. If a close match exists but lacks an input you need, prefer extending it over duplicating it. Only create a new component when nothing fits — and put it in the lib that matches its purpose (see roles below).
 
-**Reuse logic, not only components.** The same instinct applies to behaviour, not just to markup: when the logic you need already lives *inside* a component (a private `bbox`→geometry method, a transform buried in a smart component, …), don't reimplement it elsewhere. Extract it into a shared function/util in a lib both callers can depend on, then have the component and the new caller use it. Finding that a component already does something similar is a cue to **extract and share**, not a reason to write a fresh copy because the whole component can't be dropped in as-is.
+**Reuse logic, not only components.** The same instinct applies to behaviour, not just to markup: when the logic you need already lives _inside_ a component (a private `bbox`→geometry method, a transform buried in a smart component, …), don't reimplement it elsewhere. Extract it into a shared function/util in a lib both callers can depend on, then have the component and the new caller use it. Finding that a component already does something similar is a cue to **extract and share**, not a reason to write a fresh copy because the whole component can't be dropped in as-is.
 
 ## Libraries and their components
 
 > Selectors are listed; the corresponding class is the PascalCase form + `Component` (e.g. `gn-ui-button` → `ButtonComponent`). This list can drift — to regenerate, grep `selector:` in `*.component.ts` files.
 
 ### `ui/inputs` — collect user input
+
 Reusable form fields, buttons, toggles and pickers.
 
 - `gn-ui-button` — button (use instead of native `<button>`)
@@ -64,6 +65,7 @@ Reusable form fields, buttons, toggles and pickers.
 - `gn-ui-viewport-intersector` — emits when its content enters the viewport (lazy load / infinite scroll)
 
 ### `ui/elements` — render specific kinds of information
+
 Cards, badges, contact blocks, downloads, markdown, metadata fragments, etc.
 
 - `gn-ui-api-card` — card describing an API endpoint
@@ -99,6 +101,7 @@ Cards, badges, contact blocks, downloads, markdown, metadata fragments, etc.
 - `gn-ui-content-ghost` — skeleton/ghost placeholder shown while loading
 
 ### `ui/layout` — structural & large-surface components
+
 Containers, panels, tables, pagination, carousels — components that occupy a large part of the screen or wrap other content.
 
 - `gn-ui-modal-dialog` — modal dialog (use instead of hand-rolled modals)
@@ -120,6 +123,7 @@ Containers, panels, tables, pagination, carousels — components that occupy a l
 - `gn-ui-truncated-text` — text truncated with ellipsis/expand
 
 ### `ui/widgets` — small self-contained visual indicators
+
 - `gn-ui-spinning-loader` — spinner / loading indicator
 - `gn-ui-loading-mask` — overlay loading mask
 - `gn-ui-progress-bar` — progress bar
@@ -128,6 +132,7 @@ Containers, panels, tables, pagination, carousels — components that occupy a l
 - `gn-ui-color-scale` — color scale display
 
 ### `ui/search` — search UI presentation
+
 Facets, record previews and result listings (driven by inputs from `feature-search` smart components).
 
 - `gn-ui-facet-list` — list of facets
@@ -149,17 +154,20 @@ Facets, record previews and result listings (driven by inputs from `feature-sear
 - `gn-ui-record-preview-title` — record preview (title only)
 
 ### `ui/dataviz` — data visualization
+
 - `gn-ui-chart` — chart (Chart.js)
 - `gn-ui-data-table` — tabular data view
 - `gn-ui-figure` — KPI figure (icon + title + value)
 
 ### `ui/map` — map-specific presentation
+
 - `gn-ui-map-container` — OpenLayers map container
 - `gn-ui-map-legend` — map legend
 - `gn-ui-feature-detail` — feature attributes detail panel
 - `gn-ui-spatial-extent` — spatial extent (bbox) display/preview
 
 ### `ui/catalog` — catalog & organisations presentation
+
 - `gn-ui-catalog-title` — catalog title/header
 - `gn-ui-language-switcher` — UI language switcher
 - `gn-ui-organisation-preview` — single organisation preview

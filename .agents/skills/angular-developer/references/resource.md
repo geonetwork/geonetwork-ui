@@ -48,7 +48,7 @@ If the `params` signal changes while a previous loader is still running, the `Re
 You can imperatively force the resource to re-run the loader without the params changing by calling `.reload()`.
 
 ```ts
-this.userResource.reload();
+this.userResource.reload()
 ```
 
 ## Resource Status Signals
@@ -66,7 +66,7 @@ The `Resource` object provides several signals to read its current state:
 You can optimistically update the resource's value directly. This changes the status to `'local'`.
 
 ```ts
-this.userResource.value.set({name: 'Optimistic Update'});
+this.userResource.value.set({ name: 'Optimistic Update' })
 ```
 
 ## Reactive Data Fetching with `httpResource`

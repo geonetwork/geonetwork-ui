@@ -17,7 +17,7 @@ Reducers must be pure functions: no side effects, no HTTP calls, no subscription
 **Example:**
 
 ```typescript
-on(UsersActions.load, state => ({ ...state, loading: true }));
+on(UsersActions.load, (state) => ({ ...state, loading: true }))
 // HTTP call goes in UsersEffects
 ```
 
@@ -30,8 +30,8 @@ Use `createFeatureSelector` and `createSelector` for memoized state selection. S
 **Example:**
 
 ```typescript
-const selectCounterState = createFeatureSelector<CounterState>('counter');
-export const selectCount = createSelector(selectCounterState, s => s.count);
+const selectCounterState = createFeatureSelector<CounterState>('counter')
+export const selectCount = createSelector(selectCounterState, (s) => s.count)
 ```
 
 ---

@@ -9,13 +9,13 @@ description: >-
 license: MIT
 metadata:
   author: alfredoperez
-  version: "1.2.0"
+  version: '1.2.0'
 tags: [angular, ngrx, state-management, redux]
 globs:
-  - "**/*.ts"
-  - "**/*.reducer.ts"
-  - "**/*.effects.ts"
-  - "**/*.selectors.ts"
+  - '**/*.ts'
+  - '**/*.reducer.ts'
+  - '**/*.effects.ts'
+  - '**/*.selectors.ts'
 ---
 
 # Angular NgRx Best Practices
@@ -38,9 +38,9 @@ skill for comprehensive Angular coverage.
 
 ## Rules
 
-| Rule | Impact | Description |
-|------|--------|-------------|
-| Keep Reducers Pure | HIGH | No side effects in reducers; move HTTP calls to Effects |
+| Rule                  | Impact | Description                                               |
+| --------------------- | ------ | --------------------------------------------------------- |
+| Keep Reducers Pure    | HIGH   | No side effects in reducers; move HTTP calls to Effects   |
 | Use Feature Selectors | MEDIUM | Memoized selectors that recompute only when inputs change |
 
 ## Install
