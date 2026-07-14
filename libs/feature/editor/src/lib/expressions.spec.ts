@@ -1,5 +1,5 @@
 import { EditorFieldValue } from './models'
-import { evaluate, EvaluationContext } from './expressions'
+import { evaluate, EvaluationContext, isExpression } from './expressions'
 
 const originalDate = window.Date
 window.Date = function () {
@@ -17,7 +17,7 @@ interface TestCase {
 const TEST_CASES: TestCase[] = [
   {
     name: 'number literal',
-    expression: ' 1234 ',
+    expression: '${ 1234 }',
     context: {
       globals: {},
     },
@@ -25,7 +25,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'string literal',
-    expression: ' "hello world" ',
+    expression: '${ "hello world" }',
     context: {
       globals: {},
     },
@@ -33,7 +33,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'equals',
-    expression: ' 11 == "11" ',
+    expression: '${ 11 == "11" }',
     context: {
       globals: {},
     },
@@ -41,7 +41,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'equals (2)',
-    expression: '"34"=="35"',
+    expression: '${"34"=="35"}',
     context: {
       globals: {},
     },
@@ -49,7 +49,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'different',
-    expression: " 11 != '12' ",
+    expression: "${11 != '12' }",
     context: {
       globals: {},
     },
@@ -57,7 +57,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'different (2)',
-    expression: '"34" != 34',
+    expression: '${"34" != 34}',
     context: {
       globals: {},
     },
@@ -65,7 +65,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'global property access',
-    expression: '  myObj.hello',
+    expression: '${  myObj.hello}',
     context: {
       globals: {
         myObj: {
@@ -77,7 +77,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'global property access (2)',
-    expression: 'myObj.hello   ==   "world"',
+    expression: '${myObj.hello   ==   "world"}',
     context: {
       globals: {
         myObj: {
@@ -89,7 +89,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'global property access (3)',
-    expression: 'abc.def==123',
+    expression: '${abc.def==123}',
     context: {
       globals: {
         abc: {
@@ -101,7 +101,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'global property access (4)',
-    expression: '123 != abc.def ',
+    expression: '${123 != abc.def }',
     context: {
       globals: {
         abc: {
@@ -121,18 +121,86 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'ternary expression',
-    expression: '1 ? 2 : 3',
+    expression: '${1 ? 2 : 3}',
     context: {
       globals: {},
     },
     result: 2,
+  },
+  {
+    name: 'operator precedence: equals over ternary',
+    expression: '${1 ? "hello" : "world" == "hello"}',
+    context: {
+      globals: {},
+    },
+    result: 'hello',
+  },
+  {
+    name: 'operator precedence: explicit grouping over ternary',
+    expression: '${1 ? "hello" : ("world" == "hello")}',
+    context: {
+      globals: {},
+    },
+    result: 'hello',
+  },
+  {
+    name: 'operator precedence: explicit grouping over equal',
+    expression: '${(1 ? "hello" : "world") == "hello"}',
+    context: {
+      globals: {},
+    },
+    result: true,
+  },
+  {
+    name: 'operator precedence: equals over ternary (first clause)',
+    expression: "${record.kind == 'dataset' ? 'a' : 'b' }",
+    context: {
+      globals: {
+        record: {
+          kind: 'dataset',
+        },
+      },
+    },
+    result: 'a',
+  },
+  {
+    name: 'operator precedence: explicit grouping over ternary (first clause)',
+    expression: "${(record.kind == 'dataset') ? 'a' : 'b' }",
+    context: {
+      globals: {
+        record: {
+          kind: 'dataset',
+        },
+      },
+    },
+    result: 'a',
+  },
+  {
+    name: 'operator precedence: explicit grouping over equals',
+    expression: "${record.kind == ('dataset' ? 'a' : 'b')}",
+    context: {
+      globals: {
+        record: {
+          kind: 'dataset',
+        },
+      },
+    },
+    result: false,
+  },
+  {
+    name: 'nested groups',
+    expression: "${('aa' == (1 ? 'aa' : 'bb'))}",
+    context: {
+      globals: {},
+    },
+    result: true,
   },
 
   // ERRORS
 
   {
     name: 'unknown function',
-    expression: 'unknownFunc()',
+    expression: '${unknownFunc()}',
     context: {
       globals: {},
     },
@@ -141,7 +209,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'unexpected character',
-    expression: '@value',
+    expression: '${@value}',
     context: {
       globals: {},
     },
@@ -150,7 +218,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'unclosed string literal',
-    expression: '"hello world',
+    expression: '${"hello world}',
     context: {
       globals: {},
     },
@@ -161,7 +229,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'ternary missing colon separator',
-    expression: '1 ? 2',
+    expression: '${1 ? 2}',
     context: {
       globals: {},
     },
@@ -170,7 +238,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'symbol followed by unexpected character',
-    expression: 'myObj + 1',
+    expression: '${myObj + 1}',
     context: {
       globals: {},
     },
@@ -181,7 +249,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'function call with unsupported arguments',
-    expression: 'dateNow(abc)',
+    expression: '${dateNow(abc)}',
     context: {
       globals: {},
     },
@@ -190,7 +258,7 @@ const TEST_CASES: TestCase[] = [
   },
   {
     name: 'property access with missing property name',
-    expression: 'myObj. ',
+    expression: '${myObj. }',
     context: {
       globals: {},
     },
@@ -198,6 +266,15 @@ const TEST_CASES: TestCase[] = [
     errors: [
       "Expected a property name after '.' at position 6, got ' ' instead",
     ],
+  },
+  {
+    name: 'unclosed group',
+    expression: '${(1 == 2}',
+    context: {
+      globals: {},
+    },
+    result: undefined,
+    errors: ["Reached end of expression before finding expected token ')'"],
   },
 ]
 
@@ -209,17 +286,39 @@ describe('expressions', () => {
     expect(evaluator(context)).toStrictEqual(result)
   })
 
-  it('throws when accessing an unknown global variable at runtime', () => {
-    const { evaluator } = evaluate('myObj.hello')
-    expect(() => evaluator({ globals: {} })).toThrow(
-      "Unknown global variable 'myObj'"
-    )
+  it('returns undefined when accessing an unknown global variable at runtime', () => {
+    const { evaluator } = evaluate('${myObj.hello}')
+    expect(evaluator({ globals: {} })).toBeUndefined()
   })
 
-  it('throws when accessing an unknown property on a global variable at runtime', () => {
-    const { evaluator } = evaluate('myObj.missing')
-    expect(() => evaluator({ globals: { myObj: { hello: 'world' } } })).toThrow(
-      "Unknown property 'missing' in global variable 'myObj'"
-    )
+  it('returns undefined when accessing an unknown property on a global variable at runtime', () => {
+    const { evaluator } = evaluate('${myObj.missing}')
+    expect(
+      evaluator({ globals: { myObj: { hello: 'world' } } })
+    ).toBeUndefined()
+  })
+
+  describe('isExpression', () => {
+    it('returns true for a valid expression', () => {
+      expect(isExpression('${something}')).toBe(true)
+    })
+
+    it('returns false for a plain string', () => {
+      expect(isExpression('not an expression')).toBe(false)
+    })
+
+    it('returns false for a non-string value', () => {
+      expect(isExpression(123)).toBe(false)
+      expect(isExpression(null)).toBe(false)
+      expect(isExpression(undefined)).toBe(false)
+    })
+  })
+
+  describe('evaluate', () => {
+    it('throws for a malformed expression missing ${} enclosure', () => {
+      expect(() => evaluate('not an expression')).toThrow(
+        'Malformed expression: missing ${} enclosure'
+      )
+    })
   })
 })
