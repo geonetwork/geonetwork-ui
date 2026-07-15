@@ -34,6 +34,8 @@ describe('MetadataInfoComponent', () => {
             'domain.record.updateFrequency.notPlanned': 'Not planned',
             'domain.record.updateFrequency.month':
               '{count, plural, =0{0 times} one{once} other{{count} times}} per month',
+            'domain.record.keywordType.theme': 'Theme',
+            'domain.record.keywordType.other': 'Keywords',
           },
         }),
       ],
@@ -107,6 +109,76 @@ describe('MetadataInfoComponent', () => {
           '.metadata-info-keywords'
         )
         expect(displayedElement).toBeFalsy()
+      })
+    })
+    describe('keywordTooltipSegments', () => {
+      beforeEach(() => {
+        fixture = TestBed.createComponent(MetadataInfoComponent)
+        component = fixture.componentInstance
+      })
+      it('returns the hierarchy path when the keyword has one', () => {
+        expect(
+          component.keywordTooltipSegments({
+            label: 'foo',
+            type: 'theme',
+            hierarchyPath: ['Root', 'foo'],
+          })
+        ).toEqual(['Root', 'foo'])
+      })
+      it('returns the thesaurus name and the label when there is no hierarchy path', () => {
+        expect(
+          component.keywordTooltipSegments({
+            label: 'foo',
+            type: 'theme',
+            thesaurus: { id: '1', name: 'Some thesaurus' },
+          })
+        ).toEqual(['Some thesaurus', 'foo'])
+      })
+      it('returns the translated type label and the label for a free keyword', () => {
+        expect(
+          component.keywordTooltipSegments({
+            label: 'éolienne',
+            type: 'theme',
+          })
+        ).toEqual(['Theme', 'éolienne'])
+        expect(
+          component.keywordTooltipSegments({
+            label: 'données ouvertes',
+            type: 'other',
+          })
+        ).toEqual(['Keywords', 'données ouvertes'])
+      })
+    })
+    describe('tooltip rendering', () => {
+      it('wraps every keyword pill in a popover', () => {
+        fixture = TestBed.createComponent(MetadataInfoComponent)
+        component = fixture.componentInstance
+        component.metadata = {
+          ...datasetRecordsFixture()[0],
+          keywords: [
+            { label: 'foo', type: 'theme', hierarchyPath: ['Root', 'foo'] },
+            { label: 'bar', type: 'other' },
+          ],
+        } as DatasetRecord
+        fixture.detectChanges()
+        const popovers = fixture.debugElement.queryAll(By.css('gn-ui-popover'))
+        expect(popovers.length).toBe(2)
+      })
+      it('still emits the keyword event when clicked through the popover', () => {
+        fixture = TestBed.createComponent(MetadataInfoComponent)
+        component = fixture.componentInstance
+        component.metadata = {
+          ...datasetRecordsFixture()[0],
+          keywords: [
+            { label: 'foo', type: 'theme', hierarchyPath: ['Root', 'foo'] },
+          ],
+        } as DatasetRecord
+        let emitted
+        component.keyword.subscribe((k) => (emitted = k))
+        fixture.detectChanges()
+        const button = fixture.debugElement.query(By.css('gn-ui-button'))
+        button.triggerEventHandler('buttonClick', null)
+        expect(emitted.label).toBe('foo')
       })
     })
   })

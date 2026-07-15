@@ -1,7 +1,8 @@
 export type KeywordType = 'place' | 'temporal' | 'theme' | 'other'
 
 export interface ThesaurusModel {
-  id: string
+  // absent when the source provides no identifier for the thesaurus
+  id?: string
   name?: string
   url?: URL
   thesaurusKey?: string

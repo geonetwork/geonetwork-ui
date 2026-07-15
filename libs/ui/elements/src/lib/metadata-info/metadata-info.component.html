@@ -28,13 +28,23 @@
       <gn-ui-max-lines [maxLines]="7">
         <div class="metadata-info-keywords sm:pb-4 flex flex-wrap gap-2">
           @for (keyword of metadata.keywords; track keyword) {
-            <gn-ui-button
-              type="primary-light"
-              class="inline-block opacity-70"
-              extraClass="lowercase text-sm py-1 px-2"
-              (buttonClick)="onKeywordClick(keyword)"
-              >{{ keyword.label }}</gn-ui-button
-            >
+            <ng-template #keywordTooltip>
+              @for (segment of keywordTooltipSegments(keyword); track $index) {
+                <span [class.font-bold]="$last">{{ segment }}</span>
+                @if (!$last) {
+                  <span> &gt; </span>
+                }
+              }
+            </ng-template>
+            <gn-ui-popover [content]="keywordTooltip" theme="dark">
+              <gn-ui-button
+                type="primary-light"
+                class="inline-block opacity-70"
+                extraClass="lowercase text-sm py-1 px-2"
+                (buttonClick)="onKeywordClick(keyword)"
+                >{{ keyword.label }}</gn-ui-button
+              >
+            </gn-ui-popover>
           }
         </div>
       </gn-ui-max-lines>

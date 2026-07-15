@@ -240,8 +240,9 @@ export class Gn4FieldMapper {
     allKeywords: (output, source) => ({
       ...output,
       keywords: mapKeywords(
-        selectField<Thesaurus[]>(source, 'allKeywords'),
-        this.getLocalizedIndexKey
+        selectField<Record<string, Thesaurus>>(source, 'allKeywords'),
+        this.getLocalizedIndexKey,
+        source
       ),
     }),
     inspireTheme: (output, source) => ({

@@ -62,6 +62,7 @@ type ThesaurusName = string
 export interface Thesaurus {
   id?: string
   title?: string
+  multilingualTitle?: MultilingualField
   theme?: string
   link?: string
   keywords: MultilingualField[]

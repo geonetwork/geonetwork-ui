@@ -104,6 +104,8 @@ export interface Keyword {
   type: KeywordType
   thesaurus?: ThesaurusModel
   bbox?: [number, number, number, number]
+  // thesaurus hierarchy path incl. the keyword as last element; unset for root-level keywords
+  hierarchyPath?: string[]
 
   translations?: KeywordTranslations
 }
