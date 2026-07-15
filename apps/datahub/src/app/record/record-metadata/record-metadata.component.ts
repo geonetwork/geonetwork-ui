@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  ViewChild,
-  inject,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, ViewChild, } from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
@@ -13,17 +6,15 @@ import {
   ErrorType,
   MetadataCatalogComponent,
   MetadataContactComponent,
+  MetadataDoiComponent,
   MetadataInfoComponent,
   MetadataQualityComponent,
   ServiceCapabilitiesComponent,
 } from '@geonetwork-ui/ui/elements'
-import { combineLatest, Observable } from 'rxjs'
+import { combineLatest, Observable, of } from 'rxjs'
 import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import {
-  Keyword,
-  Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+import { Keyword, Organization, } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { CommonModule } from '@angular/common'
 import { MatTabsModule } from '@angular/material/tabs'
@@ -34,20 +25,13 @@ import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlink
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
+import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matChatOutline } from '@ng-icons/material-icons/outline'
 import { iconoirAppWindow } from '@ng-icons/iconoir'
 import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-feature-catalog.component'
-import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
-import {
-  NotifyReuseFormComponent,
-  REUSE_FORM_URL,
-} from '@geonetwork-ui/feature/notify-reuse'
-
-const WRITE_PROFILES = ['Editor', 'Reviewer', 'UserAdmin', 'Administrator']
+import { NotifyReuseFormComponent, REUSE_FORM_URL, } from '@geonetwork-ui/feature/notify-reuse'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -70,7 +54,6 @@ const WRITE_PROFILES = ['Editor', 'Reviewer', 'UserAdmin', 'Administrator']
     RecordInternalLinksComponent,
     RecordDataPreviewComponent,
     ButtonComponent,
-    NgIcon,
     ServiceCapabilitiesComponent,
     RecordFeatureCatalogComponent,
     RecordLinkedRecordsComponent,
@@ -118,14 +101,6 @@ export class RecordMetadataComponent {
       api: (links) => links?.length > 0,
     },
   }
-  activeUserCanWrite$ = this.platformServiceInterface
-    .getMe()
-    .pipe(
-      map(
-        (activeUser) =>
-          !!activeUser?.id && WRITE_PROFILES.includes(activeUser.profile)
-      )
-    )
 
   private getDisplayCondition(
     kind: 'dataset' | 'service' | 'reuse',
@@ -251,6 +226,23 @@ export class RecordMetadataComponent {
 
   feedbacksAllowed$ = this.platformServiceInterface.getFeedbacksAllowed()
 
+  writableGroupId$: Observable<string | null> = this.platformServiceInterface
+    .getUserPermissionsByGroup()
+    .pipe(
+      map(
+        (permissions) =>
+          permissions.find((p) => p.canApprove)?.groupId?.toString() ??
+          permissions.find((p) => p.canEdit)?.groupId?.toString() ??
+          null
+      )
+    )
+  reuseNotificationAllowed$: Observable<boolean> = this.reuseFormUrl
+    ? combineLatest([this.writableGroupId$, this.kind$]).pipe(
+        map(([groupId, kind]) => groupId !== null && kind === 'dataset'),
+        startWith(false)
+      )
+    : of(false)
+
   errorTypes = ErrorType
 
   get isAuthDisabled(): boolean {
@@ -273,18 +265,5 @@ export class RecordMetadataComponent {
         behavior: 'smooth',
       })
     }
-  }
-
-  showReuseButton(): Observable<boolean> {
-    return combineLatest([
-      this.activeUserCanWrite$.pipe(startWith(false)),
-      this.kind$.pipe(startWith(null)),
-    ]).pipe(
-      map(
-        ([canWrite, kind]) =>
-          canWrite && !!this.reuseFormUrl && kind === 'dataset'
-      ),
-      startWith(false)
-    )
   }
 }

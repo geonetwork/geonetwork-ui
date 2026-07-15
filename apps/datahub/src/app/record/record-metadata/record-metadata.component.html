@@ -55,7 +55,7 @@
                   </gn-ui-metadata-catalog>
                 </div>
               }
-              @if ((feedbacksAllowed$ | async) === true && !isAuthDisabled) {
+              @if ((feedbacksAllowed$ | async) && !isAuthDisabled) {
                 <gn-ui-button
                   type="outline"
                   extraClass="w-full flex flex-row justify-between bg-white"
@@ -69,7 +69,7 @@
                   ></ng-icon>
                 </gn-ui-button>
               }
-              @if (showReuseButton() | async) {
+              @if (reuseNotificationAllowed$ | async) {
                 <gn-ui-notify-reuse-form
                   [record]="metadataViewFacade.metadata$ | async"
                 ></gn-ui-notify-reuse-form>

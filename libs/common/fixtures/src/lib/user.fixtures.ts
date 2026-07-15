@@ -31,7 +31,7 @@ export const barbieUserFixture = (): UserModel =>
 export const johnDoeUserFixture = (): UserModel =>
   createUserFixture({
     id: '12345',
-    profile: 'RegisteredUser',
+    profile: 'User',
     username: 'johndoe',
     name: 'John',
     surname: 'Doe',

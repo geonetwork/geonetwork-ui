@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'gn-ui-spinning-loader',
@@ -6,6 +6,4 @@ import { Component, Input } from '@angular/core'
   styleUrls: ['./spinning-loader.component.css'],
   standalone: true,
 })
-export class SpinningLoaderComponent {
-  @Input() layoutClasses = 'h-8 w-8 text-primary'
-}
+export class SpinningLoaderComponent {}

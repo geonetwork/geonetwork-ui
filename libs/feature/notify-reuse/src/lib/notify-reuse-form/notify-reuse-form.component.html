@@ -91,9 +91,7 @@
         (buttonClick)="submit()"
       >
         @if (loading()) {
-          <gn-ui-spinning-loader
-            [layoutClasses]="'h-6 w-6 text-white'"
-          ></gn-ui-spinning-loader>
+          <gn-ui-spinning-loader></gn-ui-spinning-loader>
         } @else {
           <span translate>record.notify.reuse.form.submit</span>
           <ng-icon name="iconoirPlusCircle" size="1.5em"></ng-icon>
