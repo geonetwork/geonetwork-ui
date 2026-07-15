@@ -1,0 +1,4 @@
+:host {
+  --gn-ui-button-height: 56px;
+  --gn-ui-button-rounded: 0;
+}

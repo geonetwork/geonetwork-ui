@@ -2,6 +2,7 @@ import { Route } from '@angular/router'
 import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { EditPageComponent } from './edit/edit-page.component'
 import { EditRecordResolver } from './edit-record.resolver'
+import { LightEditPageComponent } from './light-edit/light-edit-page.component'
 import { MyDraftComponent } from './records/my-draft/my-draft.component'
 import { TemplatesComponent } from './records/templates/templates.component'
 import { MyOrgUsersComponent } from './my-org-users/my-org-users.component'
@@ -111,6 +112,11 @@ export const appRoutes: Route[] = [
       {
         path: 'edit/:uuid',
         component: EditPageComponent,
+        resolve: { record: EditRecordResolver },
+      },
+      {
+        path: 'light-edit/:uuid',
+        component: LightEditPageComponent,
         resolve: { record: EditRecordResolver },
       },
     ],

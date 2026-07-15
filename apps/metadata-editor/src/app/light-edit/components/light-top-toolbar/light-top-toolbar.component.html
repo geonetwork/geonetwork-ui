@@ -1,0 +1,38 @@
+<div
+  class="flex flex-row items-center w-full h-14 shrink-0 border-b-[1px] px-5 gap-5"
+>
+  <gn-ui-button
+    type="outline"
+    extraClass="border-primary-lighter"
+    [style.--gn-ui-button-rounded]="'8px'"
+    [style.--gn-ui-button-height]="'auto'"
+    [style.--gn-ui-button-padding]="'10px 16px'"
+    (buttonClick)="leave.emit()"
+    [disabled]="saving$ | async"
+    data-cy="leave-button"
+  >
+    <div class="flex flex-row items-center gap-2">
+      <ng-icon name="iconoirArrowLeft"></ng-icon>
+      <span translate>editor.record.reuse.leave</span>
+    </div>
+  </gn-ui-button>
+  <div class="grow"></div>
+  <gn-ui-button
+    type="primary"
+    [style.--gn-ui-button-rounded]="'8px'"
+    [style.--gn-ui-button-height]="'auto'"
+    [style.--gn-ui-button-padding]="'10px 16px'"
+    (buttonClick)="saveRecord()"
+    [disabled]="saving$ | async"
+    data-cy="save-button"
+  >
+    <div class="flex flex-row items-center gap-2">
+      <span translate>editor.record.reuse.save</span>
+      @if (saving$ | async) {
+        <mat-spinner [diameter]="16"></mat-spinner>
+      } @else {
+        <ng-icon name="iconoirFloppyDisk"></ng-icon>
+      }
+    </div>
+  </gn-ui-button>
+</div>
