@@ -8,7 +8,9 @@ export interface ISOTopic {
 }
 
 /**
- * This file contains the configuration of the fields that will be displayed in the editor.
+ * This file contains the configuration of the fields
+ * that will be displayed in the editor
+ * and the reuse light editor.
  */
 
 // keeping track of labels to not lose existing translations
@@ -273,6 +275,47 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
             {
               model: 'contacts',
               formFieldConfig: { labelKey: '' },
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+// reduced configuration used by the light edition page for reuse records;
+// the point of contact is edited outside the record form on that page
+export const REUSE_LIGHT_CONFIGURATION: EditorConfig = {
+  pages: [
+    {
+      sections: [
+        {
+          hidden: false,
+          fields: [
+            {
+              model: 'title',
+              formFieldConfig: {
+                labelKey: marker('editor.record.form.field.title'),
+              },
+            },
+            {
+              model: 'abstract',
+              formFieldConfig: {
+                labelKey: marker('editor.record.form.field.abstract'),
+              },
+            },
+            {
+              model: 'onlineResources',
+              modelSpecifier: 'onlineResourceType:singleLink',
+              formFieldConfig: {
+                labelKey: marker('editor.record.form.field.reuseUrl'),
+              },
+            },
+            {
+              model: 'overviews',
+              formFieldConfig: {
+                labelKey: marker('editor.record.form.field.overviews'),
+              },
             },
           ],
         },

@@ -1,0 +1,54 @@
+<div class="flex flex-row h-full">
+  @if (isLoading) {
+    <div class="flex justify-center w-full p-[145px]">
+      <gn-ui-spinning-loader></gn-ui-spinning-loader>
+    </div>
+  }
+  @if (!isLoading && (facade.canEditRecord$ | async) === true) {
+    <div class="flex flex-col h-full w-full">
+      <div class="w-full h-auto shrink-0 relative">
+        <md-editor-light-top-toolbar
+          (leave)="leave()"
+        ></md-editor-light-top-toolbar>
+        <div class="absolute top-full left-0 w-2/3 z-10 pointer-events-none">
+          <gn-ui-notifications-container></gn-ui-notifications-container>
+        </div>
+      </div>
+      <div class="flex flex-row flex-1 min-h-0">
+        <div class="grow overflow-auto p-[32px] relative">
+          <div
+            class="absolute top-0 inset-x-0 h-[344px] opacity-[0.15] pointer-events-none"
+            [style.background]="backgroundCss"
+            data-test="light-edit-background"
+          ></div>
+          <div class="container-lg mx-auto flex flex-col gap-[32px] relative">
+            <gn-ui-record-form></gn-ui-record-form>
+            <div
+              class="flex flex-col gap-6 border p-8 rounded-[8px] shadow bg-white"
+              data-test="reuse-point-of-contact"
+            >
+              <div class="flex flex-col gap-2">
+                <div class="text-2xl font-title text-black" translate>
+                  editor.record.form.section.reusePointOfContact.label
+                </div>
+              </div>
+              @if (pointOfContact$ | async; as pointOfContact) {
+                <gn-ui-contact-details-form
+                  [contact]="pointOfContact"
+                  (contactChange)="handleContactChange($event)"
+                ></gn-ui-contact-details-form>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+  @if ((facade.canEditRecord$ | async) === false) {
+    <div class="flex flex-col h-full w-full">
+      <div class="flex justify-center pt-20">
+        <md-editor-page-error></md-editor-page-error>
+      </div>
+    </div>
+  }
+</div>

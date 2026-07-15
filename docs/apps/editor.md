@@ -13,6 +13,7 @@ The **Metadata Editor** application offers a user-friendly interface to create, 
 - Create, duplicate and delete records
 - Import remote records using a URL
 - Keep a draft while editing a record, with the ability to rollback to the published version and discard changes
+- A simplified "light" edition page, used by other applications (e.g. the Datahub for reuses) to let users edit a record without the full editor interface
 
 ## Run & deploy
 
@@ -61,6 +62,16 @@ The REVIEWER rights are also needed for the publication step.
 
 - EDITOR
 - REVIEWER
+
+## Light edition page
+
+Opening `/light-edit/{uuid}` shows a simplified edition page for the given record, without the dashboard sidebar or page navigation. It is used by the Datahub to edit reuse records, but any application can link to it.
+
+The top bar offers a "leave" button and a "save" button; there is no draft handling and no separate publication step on this page.
+
+### URL parameters
+
+- `redirect_on_leave` (optional): a URL-encoded absolute `http(s)` URL the user is sent back to when clicking the "leave" button. The calling application is responsible for building the complete URL, including the record's UUID if it wants the user to come back to the record's page (e.g. `/light-edit/{uuid}?redirect_on_leave=https%3A%2F%2Fexample.com%2Fdatahub%2Freuse%2F{uuid}`). When the parameter is absent or invalid, the user is redirected to the editor dashboard instead.
 
 ## Multilingual support
 
