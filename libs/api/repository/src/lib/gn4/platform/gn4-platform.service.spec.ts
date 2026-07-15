@@ -407,11 +407,11 @@ describe('Gn4PlatformService', () => {
         const permissions = await permissionsPromise
         expect(permissions).toEqual([
           {
-            groupId: 105,
-            groupName: 'Groupe Reviewers',
+            groupId: 22,
+            groupName: 'Autre groupe',
             isMember: false,
             canEdit: false,
-            canApprove: true,
+            canApprove: false,
             canAdministrate: false,
           },
           {
@@ -423,11 +423,11 @@ describe('Gn4PlatformService', () => {
             canAdministrate: false,
           },
           {
-            groupId: 22,
-            groupName: 'Autre groupe',
+            groupId: 105,
+            groupName: 'Groupe Reviewers',
             isMember: false,
             canEdit: false,
-            canApprove: false,
+            canApprove: true,
             canAdministrate: false,
           },
         ])
