@@ -35,7 +35,6 @@ export class PopoverComponent implements AfterViewInit, OnChanges, OnDestroy {
     | 'material'
     | 'dark'
     | ''
-  @Input() maxWidth?: number
 
   private tippyInstance: Instance
   private view: EmbeddedViewRef<any>
@@ -61,7 +60,6 @@ export class PopoverComponent implements AfterViewInit, OnChanges, OnDestroy {
       content: this.getContent(),
       allowHTML: true,
       theme: this.theme,
-      ...(this.maxWidth && { maxWidth: this.maxWidth }),
     })
   }
 
