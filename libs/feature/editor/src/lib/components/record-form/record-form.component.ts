@@ -2,9 +2,12 @@ import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   OnDestroy,
   OnInit,
+  Signal,
+  signal,
   viewChildren,
 } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
@@ -15,17 +18,10 @@ import {
   EditorFieldWithValue,
   EditorSectionWithValues,
 } from '../../+state/editor.models'
-import {
-  firstValueFrom,
-  map,
-  Observable,
-  of,
-  Subscription,
-  take,
-  withLatestFrom,
-} from 'rxjs'
+import { firstValueFrom, map, Subscription, withLatestFrom } from 'rxjs'
 import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 import { switchMap } from 'rxjs/operators'
+import { toSignal } from '@angular/core/rxjs-interop'
 import { evaluate, isExpression } from '../../expressions'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 
@@ -124,13 +120,23 @@ export class RecordFormComponent implements OnInit, OnDestroy {
     return { page, section }
   }
 
+  private recordSignal = toSignal(this.facade.record$, { requireSync: true })
+  private expressionCache = new Map<string, Signal<EditorFieldValue>>()
+
+  // only compiles the expression into an evaluator the first time;
+  // then we store a computed() signal in the cache so that the evaluator is
+  // run again if the record changes
   evaluateExpression(
-    expression: string | EditorFieldValue
-  ): Observable<EditorFieldValue> {
-    if (!isExpression(expression)) {
-      return of(expression)
+    expressionOrValue: string | EditorFieldValue
+  ): Signal<EditorFieldValue> {
+    if (!isExpression(expressionOrValue)) {
+      return signal(expressionOrValue as EditorFieldValue)
     }
-    const { evaluator, errors } = evaluate(expression as string)
+    const expression = expressionOrValue as string
+    if (this.expressionCache.has(expression)) {
+      return this.expressionCache.get(expression)
+    }
+    const { evaluator, errors } = evaluate(expression)
     if (errors.length) {
       console.error(`The following errors happened while evaluating the expression '${expression}':
 ${errors.map((err) => `> ${err}`).join('\n')}`)
@@ -140,15 +146,10 @@ ${errors.map((err) => `> ${err}`).join('\n')}`)
         text: 'An error happened while evaluating an expression inside the editor configuration; open the developer console for more information',
       })
     }
-    return this.facade.record$.pipe(
-      take(1),
-      map((record) =>
-        evaluator({
-          globals: {
-            record,
-          },
-        })
-      )
+    this.expressionCache.set(
+      expression,
+      computed(() => evaluator({ globals: { record: this.recordSignal() } }))
     )
+    return this.expressionCache.get(expression)
   }
 }
