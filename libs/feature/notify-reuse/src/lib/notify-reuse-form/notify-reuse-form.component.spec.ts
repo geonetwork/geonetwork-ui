@@ -11,6 +11,8 @@ import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { TranslateService } from '@ngx-translate/core'
 import { Observable, of, throwError } from 'rxjs'
+import { MockBuilder } from 'ng-mocks'
+import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
 
 const REUSE_RECORD: ReuseRecord = {
   uniqueIdentifier: 'test-reuse-001',
@@ -73,6 +75,10 @@ describe('NotifyReuseFormComponent', () => {
   let recordsRepository: RecordsRepositoryMock
   let overlayContainerElement: HTMLElement
 
+  beforeEach(() =>
+    MockBuilder(NotifyReuseFormComponent).keep(TextInputComponent)
+  )
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
@@ -86,7 +92,6 @@ describe('NotifyReuseFormComponent', () => {
           useClass: PlatformServiceMock,
         },
       ],
-      imports: [NotifyReuseFormComponent],
     }).compileComponents()
 
     recordsRepository = TestBed.inject(
@@ -112,14 +117,13 @@ describe('NotifyReuseFormComponent', () => {
   })
 
   it('should accept a ReuseRecord as input', () => {
-    component.record = REUSE_RECORD
-    fixture.detectChanges()
-    expect(component.record.kind).toBe('reuse')
+    fixture.componentRef.setInput('record', REUSE_RECORD)
+    expect(component.record()?.kind).toBe('reuse')
   })
 
   describe('email pre-fill', () => {
     it('pre-fills the email with the logged-in user email', () => {
-      expect(component.email).toBe('logged-user@example.com')
+      expect(component.email()).toBe('logged-user@example.com')
     })
 
     it('leaves the email empty when no user is logged in', async () => {
@@ -131,56 +135,61 @@ describe('NotifyReuseFormComponent', () => {
       const newFixture = TestBed.createComponent(NotifyReuseFormComponent)
       newFixture.detectChanges()
 
-      expect(newFixture.componentInstance.email).toBe('')
+      expect(newFixture.componentInstance.email()).toBe('')
       newFixture.componentInstance.closeOverlay()
     })
   })
 
-  describe('isFormModelFilled', () => {
+  describe('isFormValid()', () => {
     beforeEach(() => {
-      component.record = null
+      fixture.componentRef.setInput('record', null)
+      component.openOverlay()
     })
 
     it('is not filled when fields are empty', () => {
-      component.title = ''
-      component.url = ''
-      component.email = ''
-      expect(component.isFormModelFilled).toBe(false)
+      component.title.set('')
+      component.url.set('')
+      component.email.set('')
+      fixture.detectChanges()
+      expect(component.isFormValid()).toBe(false)
     })
 
     it('is not filled when only whitespace is provided', () => {
-      component.title = '   '
-      component.url = '   '
-      component.email = '   '
-      expect(component.isFormModelFilled).toBe(false)
+      component.title.set('   ')
+      component.url.set('   ')
+      component.email.set('   ')
+      fixture.detectChanges()
+      expect(component.isFormValid()).toBe(false)
     })
 
     it('is not filled when one field is missing', () => {
-      component.title = 'My reuse'
-      component.url = 'https://example.com'
-      component.email = ''
-      expect(component.isFormModelFilled).toBe(false)
+      component.title.set('My reuse')
+      component.url.set('https://example.com')
+      component.email.set('')
+      fixture.detectChanges()
+      expect(component.isFormValid()).toBe(false)
     })
 
     it('is filled when all fields are filled', () => {
-      component.title = 'My reuse'
-      component.url = 'https://example.com'
-      component.email = 'me@example.com'
-      expect(component.isFormModelFilled).toBe(true)
+      component.title.set('My reuse')
+      component.url.set('https://example.com')
+      component.email.set('me@example.com')
+      fixture.detectChanges()
+      expect(component.isFormValid()).toBe(true)
     })
   })
 
   describe('clearInputs', () => {
     it('clears title and url and resets email to the logged-in user email', () => {
-      component.title = 'My reuse'
-      component.url = 'https://example.com'
-      component.email = 'changed@example.com'
+      component.title.set('My reuse')
+      component.url.set('https://example.com')
+      component.email.set('changed@example.com')
 
       component.clearInputs()
 
-      expect(component.title).toBe('')
-      expect(component.url).toBe('')
-      expect(component.email).toBe('logged-user@example.com')
+      expect(component.title()).toBe('')
+      expect(component.url()).toBe('')
+      expect(component.email()).toBe('logged-user@example.com')
     })
   })
 
@@ -222,14 +231,17 @@ describe('NotifyReuseFormComponent', () => {
 
   describe('submit', () => {
     beforeEach(() => {
-      component.record = DATASET_RECORD
-      component.title = 'My great reuse'
-      component.url = 'https://example.com/my-reuse'
-      component.email = 'reuser@example.com'
+      fixture.componentRef.setInput('record', DATASET_RECORD)
+      component.openOverlay()
+      component.title.set('My great reuse')
+      component.url.set('https://example.com/my-reuse')
+      component.email.set('reuser@example.com')
+      fixture.detectChanges()
     })
 
     it('does not save when the form is invalid', () => {
-      component.title = ''
+      component.title.set('')
+      fixture.detectChanges()
       component.submit()
       expect(recordsRepository.saveRecord).not.toHaveBeenCalled()
     })
@@ -279,12 +291,10 @@ describe('NotifyReuseFormComponent', () => {
       component.submit()
 
       expect(component.loading()).toBe(false)
-      expect(component.title).toBe('')
-      expect(component.url).toBe('')
-      expect(component.email).toBe('logged-user@example.com')
-      expect(overlayContainerElement.textContent).not.toContain(
-        'record.notify.reuse.form.title'
-      )
+      expect(component.title()).toBe('')
+      expect(component.url()).toBe('')
+      expect(component.email()).toBe('logged-user@example.com')
+      expect(component['overlayRef']).toBeFalsy()
     })
 
     it('clears the loading state, closes the overlay and notifies on error', () => {
@@ -302,9 +312,7 @@ describe('NotifyReuseFormComponent', () => {
       component.submit()
 
       expect(component.loading()).toBe(false)
-      expect(overlayContainerElement.textContent).not.toContain(
-        'record.notify.reuse.form.title'
-      )
+      expect(component['overlayRef']).toBeFalsy()
       expect(showNotification).toHaveBeenCalledWith(
         expect.objectContaining({
           type: 'error',

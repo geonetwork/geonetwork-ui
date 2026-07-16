@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, ViewChild, } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  Input,
+  ViewChild,
+} from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
@@ -14,7 +21,10 @@ import {
 import { combineLatest, Observable, of } from 'rxjs'
 import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { Keyword, Organization, } from '@geonetwork-ui/common/domain/model/record'
+import {
+  Keyword,
+  Organization,
+} from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { CommonModule } from '@angular/common'
 import { MatTabsModule } from '@angular/material/tabs'
@@ -25,13 +35,17 @@ import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlink
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matChatOutline } from '@ng-icons/material-icons/outline'
 import { iconoirAppWindow } from '@ng-icons/iconoir'
 import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-feature-catalog.component'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { NotifyReuseFormComponent, REUSE_FORM_URL, } from '@geonetwork-ui/feature/notify-reuse'
+import {
+  NotifyReuseFormComponent,
+  REUSE_FORM_URL,
+} from '@geonetwork-ui/feature/notify-reuse'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -61,6 +75,7 @@ import { NotifyReuseFormComponent, REUSE_FORM_URL, } from '@geonetwork-ui/featur
     TranslatePipe,
     MetadataDoiComponent,
     NotifyReuseFormComponent,
+    NgIcon,
   ],
   viewProviders: [
     provideIcons({ matChatOutline, iconoirAppWindow }),

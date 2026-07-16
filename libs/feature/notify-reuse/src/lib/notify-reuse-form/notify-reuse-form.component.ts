@@ -1,14 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  InjectionToken,
-  Input,
-  OnDestroy,
-  TemplateRef,
-  ViewChild,
-  ViewContainerRef,
+  computed,
   inject,
+  InjectionToken,
+  input,
+  OnDestroy,
   signal,
+  TemplateRef,
+  viewChild,
+  ViewContainerRef,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
@@ -31,22 +32,20 @@ import {
   TranslateService,
 } from '@ngx-translate/core'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
-import {
-  iconoirAppWindow,
-  iconoirPlusCircle,
-  iconoirXmark,
-} from '@ng-icons/iconoir'
+import { iconoirAppWindow, iconoirPlusCircle } from '@ng-icons/iconoir'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { Subscription, tap } from 'rxjs'
+import { matCloseOutline } from '@ng-icons/material-icons/outline'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { toSignal } from '@angular/core/rxjs-interop'
+import { MatProgressSpinner } from '@angular/material/progress-spinner'
 
 marker('record.notify.reuse.form.error.title')
 marker('record.notify.reuse.form.error.body')
 
 export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
+
 @Component({
   selector: 'gn-ui-notify-reuse-form',
   standalone: true,
@@ -55,10 +54,10 @@ export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
     OverlayModule,
     TextInputComponent,
     ButtonComponent,
-    SpinningLoaderComponent,
     TranslatePipe,
     TranslateDirective,
     NgIcon,
+    MatProgressSpinner,
   ],
   templateUrl: './notify-reuse-form.component.html',
   styleUrl: './notify-reuse-form.component.css',
@@ -67,7 +66,7 @@ export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
     provideIcons({
       iconoirAppWindow,
       iconoirPlusCircle,
-      iconoirXmark,
+      matCloseOutline,
     }),
     provideNgIconsConfig({
       size: '1.5em',
@@ -85,44 +84,33 @@ export class NotifyReuseFormComponent implements OnDestroy {
   private readonly platformServiceInterface = inject(PlatformServiceInterface)
   reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
 
-  @ViewChild('notifyReuseForm') templateRef: TemplateRef<unknown>
+  me = toSignal(this.platformServiceInterface.getMe())
+  initialEmail = computed(() => this.me()?.email)
+  templateRef = viewChild<TemplateRef<HTMLElement>>('notifyReuseForm')
+  record = input<Partial<CatalogRecord | null>>(null)
 
-  @Input() set record(value: Partial<CatalogRecord> | null) {
-    this._record = value
-  }
-  get record() {
-    return this._record
-  }
-  private _record: Partial<CatalogRecord> | null = null
+  // TODO: use a form() signal once migrated to Angular 22
+  title = signal('')
+  url = signal('')
+  email = signal(this.initialEmail() ?? '')
 
-  title = ''
-  url = ''
-  email = ''
-  initialEmail = ''
+  titleInput = viewChild<TextInputComponent>('titleInput')
+  urlInput = viewChild<TextInputComponent>('urlInput')
+  emailInput = viewChild<TextInputComponent>('emailInput')
+
   loading = signal(false)
-  private subscription: Subscription
 
-  constructor() {
-    this.subscription = this.platformServiceInterface
-      .getMe()
-      .subscribe(
-        (activeUser) =>
-          (this.initialEmail = this.email = activeUser?.email ?? '')
-      )
-  }
-
-  get isFormModelFilled() {
-    return (
-      this.title.trim() !== '' &&
-      this.url.trim() !== '' &&
-      this.email.trim() !== ''
-    )
-  }
+  isFormValid = computed(
+    () =>
+      this.titleInput().isValid() &&
+      this.urlInput().isValid() &&
+      this.emailInput().isValid()
+  )
 
   clearInputs() {
-    this.title = ''
-    this.url = ''
-    this.email = this.initialEmail ?? ''
+    this.title.set('')
+    this.url.set('')
+    this.email.set(this.initialEmail() ?? '')
   }
 
   toggleOverlay() {
@@ -148,7 +136,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
     })
 
     this.overlayRef.attach(
-      new TemplatePortal(this.templateRef, this.viewContainerRef)
+      new TemplatePortal(this.templateRef(), this.viewContainerRef)
     )
     this.overlayRef.backdropClick().subscribe(() => this.closeOverlay())
   }
@@ -160,27 +148,26 @@ export class NotifyReuseFormComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.closeOverlay()
-    this.subscription?.unsubscribe()
   }
 
   submit() {
-    if (!this.isFormModelFilled) return
+    if (!this.isFormValid()) return
     const onlineResource: OnlineLinkResource = {
       type: 'link',
-      url: new URL(this.url),
+      url: new URL(this.url()),
       name: this.translate.instant('record.notify.reuse.resource.name'),
       description: this.translate.instant(
         'record.notify.reuse.resource.description'
       ),
     }
     const contact: Individual = {
-      email: this.email,
+      email: this.email(),
       role: 'point_of_contact',
     }
     const reuseRecord: ReuseRecord = {
       uniqueIdentifier: '',
       kind: 'reuse',
-      title: this.title,
+      title: this.title(),
       abstract: '',
       ownerOrganization: { name: '' },
       contacts: [contact],
@@ -199,8 +186,8 @@ export class NotifyReuseFormComponent implements OnDestroy {
       reuseType: 'application',
       sourceRecords: [
         {
-          uuid: this.record?.uniqueIdentifier ?? '',
-          title: this.record?.title ?? '',
+          uuid: this.record()?.uniqueIdentifier ?? '',
+          title: this.record()?.title ?? '',
         },
       ],
       onlineResources: [onlineResource],
@@ -210,10 +197,6 @@ export class NotifyReuseFormComponent implements OnDestroy {
     this.loading.set(true)
     this.recordsRepository.saveRecord(reuseRecord).subscribe({
       next: (uniqueIdentifier) => {
-        console.log(
-          'Reuse record saved with unique identifier:',
-          uniqueIdentifier
-        )
         this.loading.set(false)
         this.clearInputs()
         this.closeOverlay()

@@ -58,15 +58,12 @@
               @if ((feedbacksAllowed$ | async) && !isAuthDisabled) {
                 <gn-ui-button
                   type="outline"
-                  extraClass="w-full flex flex-row justify-between bg-white"
+                  extraClass="w-full flex flex-row justify-between"
                   [style.--gn-ui-button-rounded]="'10px'"
                   (buttonClick)="scrollToQuestions()"
                 >
                   <span translate>service.metadata.question</span>
-                  <ng-icon
-                    class="mr-[5px] text-[1em]"
-                    name="matChatOutline"
-                  ></ng-icon>
+                  <ng-icon class="mr-[5px]" name="matChatOutline"></ng-icon>
                 </gn-ui-button>
               }
               @if (reuseNotificationAllowed$ | async) {

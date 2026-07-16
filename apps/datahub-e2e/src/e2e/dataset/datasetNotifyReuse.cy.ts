@@ -109,7 +109,7 @@ describe('Declare a reuse', () => {
 
       // it should close the overlay with the close button
       cy.get('@reuseForm').find('gn-ui-button').first().click()
-      cy.get('@overlay').find('button[aria-label="Close"]').click()
+      cy.get('@overlay').find('gn-ui-button[aria-label="Close"]').click()
       cy.get('.cdk-overlay-container').should(
         'not.contain.text',
         'Declare a reuse'

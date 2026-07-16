@@ -1,11 +1,11 @@
 <gn-ui-button
   type="outline"
-  extraClass="w-full flex flex-row justify-between bg-white"
+  extraClass="w-full flex flex-row justify-between"
   [style.--gn-ui-button-rounded]="'10px'"
   (buttonClick)="toggleOverlay()"
 >
   <span translate>service.metadata.reuse</span>
-  <ng-icon class="mr-[5px] text-[1em]" name="iconoirAppWindow"></ng-icon>
+  <ng-icon class="mr-[5px]" name="iconoirAppWindow"></ng-icon>
 </gn-ui-button>
 <ng-template #notifyReuseForm>
   <div
@@ -16,14 +16,20 @@
         <p class="text-xl font-medium text-black" translate>
           record.notify.reuse.form.title
         </p>
-        <button
-          type="button"
-          class="flex items-center justify-center size-6 text-black"
-          [attr.aria-label]="'record.notify.reuse.form.close' | translate"
-          (click)="closeOverlay()"
+        <gn-ui-button
+          type="light"
+          class="shrink-0"
+          (buttonClick)="closeOverlay()"
+          [style.--gn-ui-button-padding]="0"
+          [style.--gn-ui-button-width]="'21px'"
+          [style.--gn-ui-button-height]="'21px'"
+          aria-label="Close"
         >
-          <ng-icon name="iconoirXmark" size="1.5em"></ng-icon>
-        </button>
+          <ng-icon
+            class="text-[22px] !w-[21px] !h-[21px]"
+            name="matCloseOutline"
+          ></ng-icon>
+        </gn-ui-button>
       </div>
 
       <div class="flex flex-col gap-[10px]">
@@ -35,6 +41,7 @@
             </label>
           </div>
           <gn-ui-text-input
+            #titleInput
             [(value)]="title"
             [placeholder]="
               'record.notify.reuse.form.field.title.placeholder' | translate
@@ -51,6 +58,7 @@
             </label>
           </div>
           <gn-ui-text-input
+            #urlInput
             [(value)]="url"
             [type]="'url'"
             [placeholder]="
@@ -68,6 +76,7 @@
             </label>
           </div>
           <gn-ui-text-input
+            #emailInput
             [(value)]="email"
             [type]="'email'"
             [placeholder]="
@@ -87,11 +96,11 @@
       <gn-ui-button
         type="primary"
         extraClass="w-full h-8 justify-center gap-2"
-        [disabled]="!isFormModelFilled"
+        [disabled]="!isFormValid() || loading()"
         (buttonClick)="submit()"
       >
         @if (loading()) {
-          <gn-ui-spinning-loader></gn-ui-spinning-loader>
+          <mat-spinner [diameter]="16"></mat-spinner>
         } @else {
           <span translate>record.notify.reuse.form.submit</span>
           <ng-icon name="iconoirPlusCircle" size="1.5em"></ng-icon>
