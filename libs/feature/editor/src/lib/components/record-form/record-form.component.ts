@@ -46,6 +46,7 @@ export class RecordFormComponent implements OnInit, OnDestroy {
   recordUniqueIdentifier$ = this.facade.record$.pipe(
     map((record) => record.uniqueIdentifier)
   )
+  recordKind$ = this.facade.record$.pipe(map((record) => record.kind))
 
   focusFieldWithPage$ = this.facade.focusedField$.pipe(
     switchMap(async (field) => {

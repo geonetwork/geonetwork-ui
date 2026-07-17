@@ -37,7 +37,7 @@
       (click)="handleRowClick(item)"
       data-cy="table-row"
       [attr.data-cy-title]="item.title"
-      [title]="getItemTitle(item) | translate"
+      [title]="getItemTitle(item) | translate: { recordKind: item['kind'] }"
     >
       <div
         class="relative h-0"

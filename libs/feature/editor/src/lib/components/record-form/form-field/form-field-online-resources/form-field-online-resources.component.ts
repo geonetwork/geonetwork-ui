@@ -3,11 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  inject,
   Input,
   Output,
   TemplateRef,
   ViewChild,
-  inject,
 } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'

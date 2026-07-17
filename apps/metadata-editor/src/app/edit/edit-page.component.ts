@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common'
 import {
   Component,
   ElementRef,
+  inject,
   OnDestroy,
   OnInit,
   ViewChild,
-  inject,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -83,6 +83,8 @@ export class EditPageComponent implements OnInit, OnDestroy {
   )
   hasRecordChanged$ = this.facade.hasRecordChanged$.pipe(skip(1))
 
+  recordKind$ = this.facade.record$.pipe(map((record) => record.kind))
+
   newRecord = false
   isLoading = true
   sidePanelOpen: 'multilingual' | 'metadataQuality' | null = null
@@ -107,20 +109,23 @@ export class EditPageComponent implements OnInit, OnDestroy {
     )
 
     this.subscription.add(
-      this.facade.saveError$.subscribe((error) => {
+      this.facade.saveError$.subscribe(async (error) => {
+        const recordKind = await firstValueFrom(this.recordKind$)
         if (error instanceof PublicationVersionError) {
           this.notificationsService.showNotification(
             {
               type: 'error',
               title: this.translateService.instant(
-                'editor.record.publishVersionError.title'
+                'editor.record.publishVersionError.title',
+                { recordKind }
               ),
               text: this.translateService.instant(
                 'editor.record.publishVersionError.body',
-                { currentVersion: error.detectedApiVersion }
+                { currentVersion: error.detectedApiVersion, recordKind }
               ),
               closeMessage: this.translateService.instant(
-                'editor.record.publishVersionError.closeMessage'
+                'editor.record.publishVersionError.closeMessage',
+                { recordKind }
               ),
             },
             undefined,
@@ -131,13 +136,16 @@ export class EditPageComponent implements OnInit, OnDestroy {
             {
               type: 'error',
               title: this.translateService.instant(
-                'editor.record.publishError.title'
+                'editor.record.publishError.title',
+                { recordKind }
               ),
               text: `${this.translateService.instant(
-                'editor.record.publishError.body'
+                'editor.record.publishError.body',
+                { recordKind }
               )} ${error.message}`,
               closeMessage: this.translateService.instant(
-                'editor.record.publishError.closeMessage'
+                'editor.record.publishError.closeMessage',
+                { recordKind }
               ),
             },
             undefined,
@@ -148,16 +156,19 @@ export class EditPageComponent implements OnInit, OnDestroy {
     )
 
     this.subscription.add(
-      this.facade.saveSuccess$.subscribe(() => {
+      this.facade.saveSuccess$.subscribe(async () => {
+        const recordKind = await firstValueFrom(this.recordKind$)
         if (!this.newRecord) {
           this.notificationsService.showNotification(
             {
               type: 'success',
               title: this.translateService.instant(
-                'editor.record.publishSuccess.title'
+                'editor.record.publishSuccess.title',
+                { recordKind }
               ),
               text: `${this.translateService.instant(
-                'editor.record.publishSuccess.body'
+                'editor.record.publishSuccess.body',
+                { recordKind }
               )}`,
             },
             2500

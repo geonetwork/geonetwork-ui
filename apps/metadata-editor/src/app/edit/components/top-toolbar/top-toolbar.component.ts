@@ -3,8 +3,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Output,
   inject,
+  Output,
 } from '@angular/core'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatTooltipModule } from '@angular/material/tooltip'
@@ -17,7 +17,7 @@ import {
   TranslatePipe,
   TranslateService,
 } from '@ngx-translate/core'
-import { combineLatest, Observable } from 'rxjs'
+import { combineLatest, firstValueFrom, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { PublishButtonComponent } from '../publish-button/publish-button.component'
 import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component'
@@ -52,8 +52,8 @@ import { matCircle } from '@ng-icons/material-icons/baseline'
     MatTooltipModule,
     MatDialogModule,
     MetadataQualityComponent,
-    TranslateDirective,
     TranslatePipe,
+    TranslateDirective,
     NgIconComponent,
   ],
   providers: [
@@ -112,21 +112,27 @@ export class TopToolbarComponent {
     map((record) => record.otherLanguages.length)
   )
   record$ = this.editorFacade.record$
+  recordKind$ = this.record$.pipe(map((record) => record.kind))
 
-  confirmUndo() {
+  async confirmUndo() {
+    const { kind: recordKind } = await firstValueFrom(this.record$)
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         title: this.translateService.instant(
-          'editor.record.undo.confirmation.title'
+          'editor.record.undo.confirmation.title',
+          { recordKind }
         ),
         message: this.translateService.instant(
-          'editor.record.undo.confirmation.message'
+          'editor.record.undo.confirmation.message',
+          { recordKind }
         ),
         confirmText: this.translateService.instant(
-          'editor.record.undo.confirmation.confirmText'
+          'editor.record.undo.confirmation.confirmText',
+          { recordKind }
         ),
         cancelText: this.translateService.instant(
-          'editor.record.undo.confirmation.cancelText'
+          'editor.record.undo.confirmation.cancelText',
+          { recordKind }
         ),
       },
       restoreFocus: true,

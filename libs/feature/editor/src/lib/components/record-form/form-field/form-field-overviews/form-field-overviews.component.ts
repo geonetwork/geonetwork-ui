@@ -3,11 +3,14 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  inject,
   Input,
   Output,
-  inject,
 } from '@angular/core'
-import { GraphicOverview } from '@geonetwork-ui/common/domain/model/record'
+import {
+  GraphicOverview,
+  RecordKind,
+} from '@geonetwork-ui/common/domain/model/record'
 import { ImageInputComponent } from '@geonetwork-ui/ui/elements'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
@@ -30,6 +33,7 @@ export class FormFieldOverviewsComponent {
   private cd = inject(ChangeDetectorRef)
 
   @Input() metadataUuid: string
+  @Input() recordKind: RecordKind
   @Input() value: Array<GraphicOverview>
   @Output() valueChange: EventEmitter<Array<GraphicOverview>> =
     new EventEmitter()
@@ -111,13 +115,16 @@ export class FormFieldOverviewsComponent {
       {
         type: 'error',
         title: this.translateService.instant(
-          'editor.record.resourceError.title'
+          'editor.record.resourceError.title',
+          { recordKind: this.recordKind }
         ),
         text: `${this.translateService.instant(
-          'editor.record.resourceError.body'
+          'editor.record.resourceError.body',
+          { recordKind: this.recordKind }
         )} ${error.message}`,
         closeMessage: this.translateService.instant(
-          'editor.record.resourceError.closeMessage'
+          'editor.record.resourceError.closeMessage',
+          { recordKind: this.recordKind }
         ),
       },
       undefined,
