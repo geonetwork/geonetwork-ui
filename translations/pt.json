@@ -267,7 +267,7 @@
   "editor.record.form.topics.iso.transportation": "",
   "editor.record.form.topics.iso.utilitiesCommunication": "",
   "editor.record.form.topics.placeholder": "",
-  "editor.record.form.updateFrequency.planned": "Este conjunto de dados é atualizado regularmente.",
+  "editor.record.form.updateFrequency.planned": "{recordKind, select, dataset{Este conjunto de dados} service{Este serviço} reuse{Esta reutilização} other{Este registo}} é atualizado regularmente.",
   "editor.record.importFromExternalFile.failure.body": "",
   "editor.record.importFromExternalFile.failure.title": "",
   "editor.record.importFromExternalFile.success.body": "",

@@ -267,7 +267,7 @@
   "editor.record.form.topics.iso.transportation": "",
   "editor.record.form.topics.iso.utilitiesCommunication": "",
   "editor.record.form.topics.placeholder": "",
-  "editor.record.form.updateFrequency.planned": "Táto množina údajov sa pravidelne aktualizuje",
+  "editor.record.form.updateFrequency.planned": "{recordKind, select, dataset{Táto dátová sada} service{Táto služba} reuse{Toto opätovné použitie} other{Tento záznam}} sa pravidelne aktualizuje",
   "editor.record.importFromExternalFile.failure.body": "",
   "editor.record.importFromExternalFile.failure.title": "",
   "editor.record.importFromExternalFile.success.body": "",
