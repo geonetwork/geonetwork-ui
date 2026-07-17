@@ -21,6 +21,11 @@ import {
   UpdateFrequency,
 } from '@geonetwork-ui/common/domain/model/record'
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import {
+  matEditOutline,
+  matHelpOutline,
+} from '@ng-icons/material-icons/outline'
 import { TranslatePipe } from '@ngx-translate/core'
 import {
   FieldFocusDirective,
@@ -78,7 +83,9 @@ import { FormFieldTopicsComponent } from './form-field-topics/form-field-topics.
     FormFieldSpatialToggleComponent,
     FormFieldTopicsComponent,
     TextFieldModule,
+    NgIconComponent,
   ],
+  providers: [provideIcons({ matEditOutline, matHelpOutline })],
   hostDirectives: [FieldFocusDirective],
 })
 export class FormFieldComponent {

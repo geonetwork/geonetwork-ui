@@ -9,11 +9,11 @@
     "
     (buttonClick)="togglePreview()"
   >
-    <span
-      class="material-symbols-outlined gn-ui-icon-small"
+    <ng-icon
+      [name]="preview ? 'matVisibilityOffOutline' : 'matVisibilityOutline'"
+      size="16"
       [ngClass]="{ 'text-primary': !preview }"
-      >{{ preview ? 'visibility_off' : 'visibility' }}</span
-    >
+    ></ng-icon>
     &nbsp;
     {{ preview ? 'Edit' : 'Preview' }}
   </gn-ui-button>

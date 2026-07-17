@@ -15,6 +15,11 @@ import {
   TemplateRef,
 } from '@angular/core'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import {
+  matCloseOutline,
+  matDragHandleOutline,
+} from '@ng-icons/material-icons/outline'
 
 @Component({
   selector: 'gn-ui-sortable-list',
@@ -22,7 +27,15 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
   styleUrls: ['sortable-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, CdkDropList, CdkDrag, CdkDragHandle, ButtonComponent],
+  imports: [
+    CommonModule,
+    CdkDropList,
+    CdkDrag,
+    CdkDragHandle,
+    ButtonComponent,
+    NgIconComponent,
+  ],
+  providers: [provideIcons({ matDragHandleOutline, matCloseOutline })],
 })
 export class SortableListComponent {
   @Input() elementTemplate: TemplateRef<unknown>

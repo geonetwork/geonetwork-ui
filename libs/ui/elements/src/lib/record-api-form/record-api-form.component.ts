@@ -15,6 +15,8 @@ import {
 import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import { matWarningOutline } from '@ng-icons/material-icons/outline'
 
 const DEFAULT_PARAMS = {
   OFFSET: '',
@@ -35,7 +37,9 @@ const DEFAULT_PARAMS = {
     CopyTextButtonComponent,
     TranslateDirective,
     MatTooltipModule,
+    NgIconComponent,
   ],
+  providers: [provideIcons({ matWarningOutline })],
 })
 export class RecordApiFormComponent {
   @Input() set apiLink(value: DatasetServiceDistribution) {

@@ -38,19 +38,20 @@
           "
         ></textarea>
         <div class="flex flex-row justify-between self-start mt-0.5">
-          <span
-            class="material-symbols-outlined gn-ui-icon-small m-2 cursor-pointer"
+          <ng-icon
+            name="matEditOutline"
+            size="16"
+            class="m-2 cursor-pointer"
             (click)="focusTitleInput()"
-            >edit</span
-          >
-          <span
+          ></ng-icon>
+          <ng-icon
             *ngIf="config.hintKey"
-            class="material-symbols-outlined gn-ui-icon-small m-2"
+            name="matHelpOutline"
+            size="16"
+            class="m-2"
             [matTooltip]="config.hintKey! | translate"
             matTooltipPosition="above"
-          >
-            help
-          </span>
+          ></ng-icon>
         </div>
       </div>
     </ng-container>

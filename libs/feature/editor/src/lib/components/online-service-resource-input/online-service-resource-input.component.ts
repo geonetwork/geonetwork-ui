@@ -30,6 +30,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirRefresh } from '@ng-icons/iconoir'
+import { matHelpOutline } from '@ng-icons/material-icons/outline'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import {
   BehaviorSubject,
@@ -65,7 +66,7 @@ marker(
     UrlInputComponent,
   ],
   providers: [
-    provideIcons({ iconoirRefresh }),
+    provideIcons({ iconoirRefresh, matHelpOutline }),
     provideNgIconsConfig({
       size: '1.5em',
     }),

@@ -52,12 +52,11 @@
           </gn-ui-text-input>
           @if (!supportOffset) {
             <div class="flex items-center gap-2 text-orange-500 z-10 ml-3">
-              <span
-                class="material-symbols-outlined"
+              <ng-icon
+                name="matWarningOutline"
+                size="24"
                 matTooltip="Not supported on this service"
-              >
-                warning
-              </span>
+              ></ng-icon>
             </div>
           }
         </div>
