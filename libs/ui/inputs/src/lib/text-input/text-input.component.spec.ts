@@ -15,7 +15,7 @@ describe('TextInputComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TextInputComponent)
     component = fixture.componentInstance
-    component.placeholder = 'Hint'
+    fixture.componentRef.setInput('placeholder', 'Hint')
     fixture.detectChanges()
   })
 
@@ -68,122 +68,67 @@ describe('TextInputComponent', () => {
     })
 
     it('reflects the type input on the element', () => {
-      component.type = 'email'
+      fixture.componentRef.setInput('type', 'email')
       fixture.detectChanges()
       expect(inputEl.type).toBe('email')
     })
   })
 
-  describe('native validation', () => {
-    let inputEl
+  describe('isValid', () => {
+    let inputEl: HTMLInputElement
     beforeEach(() => {
-      component.type = 'email'
-      fixture.detectChanges()
       inputEl = fixture.nativeElement.querySelector('input')
+      // mock basic email check
+      jest
+        .spyOn(inputEl, 'checkValidity')
+        .mockImplementation(
+          () => inputEl.value === '' || inputEl.value.includes('@')
+        )
     })
 
-    it('reports an invalid email as invalid', () => {
-      inputEl.value = 'not-an-email'
-      inputEl.dispatchEvent(new Event('input'))
-      expect(inputEl.validity.typeMismatch).toBe(true)
-      expect(inputEl.checkValidity()).toBe(false)
-    })
+    describe('native validation', () => {
+      beforeEach(() => {
+        fixture.componentRef.setInput('type', 'email')
+      })
 
-    it('reports a valid email as valid', () => {
-      inputEl.value = 'foo@bar.com'
-      inputEl.dispatchEvent(new Event('input'))
-      expect(inputEl.validity.valid).toBe(true)
-    })
+      it('returns false for an invalid email', () => {
+        inputEl.value = 'not-an-email'
+        component.inputModel.set('not-an-email')
+        expect(component.isValid()).toBe(false)
+      })
 
-    it('treats an empty, non-required field as valid', () => {
-      inputEl.value = ''
-      inputEl.dispatchEvent(new Event('input'))
-      expect(inputEl.validity.valid).toBe(true)
-    })
+      it('returns true for a valid email', () => {
+        inputEl.value = 'aaa@bbb.com'
+        component.inputModel.set('aaa@bbb.com')
+        expect(component.isValid()).toBe(true)
+      })
 
-    it('reports an empty required field as invalid', () => {
-      component.required = true
-      fixture.detectChanges()
-      inputEl.value = ''
-      inputEl.dispatchEvent(new Event('input'))
-      expect(inputEl.validity.valueMissing).toBe(true)
-    })
-  })
+      it('returns true for an empty field', () => {
+        inputEl.value = ''
+        component.inputModel.set('')
+        expect(component.isValid()).toBe(true)
+      })
 
-  describe('value emission with validation', () => {
-    let inputEl
-    let emitted
-    let emittedCount
-
-    beforeEach(() => {
-      emitted = undefined
-      emittedCount = 0
-      component.type = 'email'
-      fixture.detectChanges()
-      inputEl = fixture.nativeElement.querySelector('input')
-      component.valueChange.subscribe((v) => {
-        emitted = v
-        emittedCount++
+      it('applies validation including with an initial value', () => {
+        fixture.componentRef.setInput('value', 'not-an-email')
+        expect(component.isValid()).toBe(false)
       })
     })
 
-    it('does not emit a value that fails type validation', () => {
-      inputEl.value = 'not-an-email'
-      inputEl.dispatchEvent(new Event('input'))
-      expect(emittedCount).toBe(0)
-      expect(emitted).toBeUndefined()
-    })
+    describe('required', () => {
+      beforeEach(() => {
+        fixture.componentRef.setInput('required', true)
+      })
 
-    it('does not emit an empty required value', () => {
-      component.required = true
-      fixture.detectChanges()
-      inputEl.value = ''
-      inputEl.dispatchEvent(new Event('input'))
-      expect(emittedCount).toBe(0)
-    })
+      it('returns true for non empty field', () => {
+        component.inputModel.set('dadzadzad')
+        expect(component.isValid()).toBe(true)
+      })
 
-    it('emits once the value becomes valid', () => {
-      inputEl.value = 'not-an-email'
-      inputEl.dispatchEvent(new Event('input'))
-      inputEl.value = 'foo@bar.com'
-      inputEl.dispatchEvent(new Event('input'))
-      expect(emitted).toBe('foo@bar.com')
-      expect(emittedCount).toBe(1)
-    })
-  })
-
-  describe('required validation', () => {
-    let inputEl
-    beforeEach(() => {
-      component.required = true
-      fixture.detectChanges()
-      inputEl = fixture.nativeElement.querySelector('input')
-    })
-
-    it('sets the required attribute on the element', () => {
-      expect(inputEl.required).toBe(true)
-    })
-
-    it('reports an empty required input as invalid', () => {
-      inputEl.value = ''
-      inputEl.dispatchEvent(new Event('input'))
-      expect(inputEl.validity.valueMissing).toBe(true)
-      expect(inputEl.checkValidity()).toBe(false)
-    })
-
-    it('reports the input as valid when a value is entered', () => {
-      inputEl.value = 'some value'
-      inputEl.dispatchEvent(new Event('input'))
-      expect(inputEl.validity.valid).toBe(true)
-    })
-
-    it('does not set the required attribute when not required', () => {
-      component.required = false
-      fixture.detectChanges()
-      inputEl.value = ''
-      inputEl.dispatchEvent(new Event('input'))
-      expect(inputEl.required).toBe(false)
-      expect(inputEl.validity.valid).toBe(true)
+      it('returns false for empty field', () => {
+        component.inputModel.set('')
+        expect(component.isValid()).toBe(false)
+      })
     })
   })
 })

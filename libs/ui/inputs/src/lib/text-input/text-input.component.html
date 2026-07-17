@@ -1,13 +1,17 @@
 <input
   #input
   class="gn-ui-text-input"
-  [ngClass]="extraClass"
-  [type]="type"
-  [value]="value"
+  [class]="extraClass()"
+  [ngClass]="{
+    'border-red-400 focus:border-red-800 hover:border-red-800 text-red-800':
+      !isValid(),
+  }"
+  [type]="type()"
+  [(ngModel)]="inputModel"
   (change)="handleChange($event)"
   (input)="handleChange($event)"
-  [placeholder]="placeholder"
-  [attr.aria-label]="placeholder"
-  [attr.required]="required || null"
-  [disabled]="disabled"
+  [placeholder]="placeholder()"
+  [attr.aria-label]="placeholder()"
+  [attr.required]="required() || null"
+  [disabled]="disabled()"
 />
