@@ -7,44 +7,20 @@ import {
   inject,
 } from '@angular/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { AutocompleteComponent, BadgeComponent } from '@geonetwork-ui/ui/inputs'
-import { KeywordTooltipComponent } from '@geonetwork-ui/ui/elements'
-import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
+import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
+import { KeywordBadgeComponent } from '@geonetwork-ui/ui/elements'
 import { map } from 'rxjs'
 import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
-import { TranslatePipe } from '@ngx-translate/core'
-import {
-  NgIconComponent,
-  provideIcons,
-  provideNgIconsConfig,
-} from '@ng-icons/core'
-import { matWarningAmberOutline } from '@ng-icons/material-icons/outline'
 
 type AutocompleteItem = { title: string; value: Keyword }
 
 @Component({
   selector: 'gn-ui-generic-keywords',
   templateUrl: './generic-keywords.component.html',
-  styleUrls: ['./generic-keywords.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    AutocompleteComponent,
-    NgIconComponent,
-    BadgeComponent,
-    TranslatePipe,
-    PopoverComponent,
-    KeywordTooltipComponent,
-  ],
-  providers: [
-    provideIcons({
-      matWarningAmberOutline,
-    }),
-    provideNgIconsConfig({
-      size: '1.5em',
-    }),
-  ],
+  imports: [AutocompleteComponent, KeywordBadgeComponent],
 })
 export class GenericKeywordsComponent {
   private platformService = inject(PlatformServiceInterface)
@@ -90,10 +66,5 @@ export class GenericKeywordsComponent {
     this.keywords = this.keywords.filter((k) => k.label !== keyword.label)
     this.changedKeywords.emit(this.keywords)
     this.deletedKeyword.emit(keyword)
-  }
-
-  isPlaceWithoutExtent(keyword: Keyword): boolean {
-    if (keyword.type !== 'place') return false
-    return !keyword.bbox
   }
 }

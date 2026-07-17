@@ -52,14 +52,14 @@ describe('GenericKeywordsComponent', () => {
     expect(component.displayWithFn(item)).toBe('Address (Address-Thesaurus)')
   })
 
-  it('wraps every keyword badge in a popover', () => {
+  it('renders a keyword badge for every keyword', () => {
     fixture.componentRef.setInput('keywords', [
       { label: 'foo', type: 'theme', thesaurus: { id: '1' } },
       { label: 'bar', type: 'other' },
     ] as Keyword[])
     fixture.detectChanges()
-    const popovers = fixture.debugElement.queryAll(By.css('gn-ui-popover'))
-    expect(popovers.length).toBe(2)
+    const badges = fixture.debugElement.queryAll(By.css('gn-ui-keyword-badge'))
+    expect(badges.length).toBe(2)
   })
 
   it('should search keywords', () => {
@@ -127,34 +127,6 @@ describe('GenericKeywordsComponent', () => {
       expect(emittedKeywords).toEqual([])
       expect(emittedAddedKeyword).toEqual(null)
       expect(emittedDeletedKeyword).toEqual(keyword)
-    })
-  })
-
-  describe('isPlaceWithoutExtent', () => {
-    it('should return true if keyword is a place and does not have a bbox', () => {
-      const keyword: Keyword = {
-        label: 'Address',
-        thesaurus: { id: '1' },
-        type: 'place',
-      }
-      expect(component.isPlaceWithoutExtent(keyword)).toBeTruthy()
-    })
-    it('should return false if keyword is not a place', () => {
-      const keyword: Keyword = {
-        label: 'Address',
-        thesaurus: { id: '1' },
-        type: 'theme',
-      }
-      expect(component.isPlaceWithoutExtent(keyword)).toBeFalsy()
-    })
-    it('should return false if keyword is a place and has a bbox', () => {
-      const keyword: Keyword = {
-        label: 'Address',
-        thesaurus: { id: '1' },
-        type: 'place',
-        bbox: [1, 2, 3, 4],
-      }
-      expect(component.isPlaceWithoutExtent(keyword)).toBeFalsy()
     })
   })
 })

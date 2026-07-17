@@ -16,3 +16,8 @@
   --gn-ui-badge-background-color: var(--color-primary-white);
   --gn-ui-badge-text-color: var(--color-primary-darkest);
 }
+
+.metadata-info-keywords {
+  --gn-ui-badge-padding: 0.25rem 0.5rem;
+  text-transform: lowercase;
+}

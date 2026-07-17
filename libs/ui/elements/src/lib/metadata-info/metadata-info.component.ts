@@ -22,12 +22,10 @@ import {
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import {
   BadgeComponent,
-  ButtonComponent,
   CopyTextButtonComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
-import { KeywordTooltipComponent } from '../keyword-tooltip/keyword-tooltip.component'
+import { KeywordBadgeComponent } from '../keyword-badge/keyword-badge.component'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 import { matMailOutline } from '@ng-icons/material-icons/outline'
@@ -48,7 +46,6 @@ import { ContactPillComponent } from '../contact-pill/contact-pill.component'
     TranslatePipe,
     MarkdownParserComponent,
     ExpandablePanelComponent,
-    ButtonComponent,
     BadgeComponent,
     ContentGhostComponent,
     MaxLinesComponent,
@@ -58,8 +55,7 @@ import { ContactPillComponent } from '../contact-pill/contact-pill.component'
     GnUiHumanizeDateDirective,
     SpatialExtentComponent,
     ContactPillComponent,
-    PopoverComponent,
-    KeywordTooltipComponent,
+    KeywordBadgeComponent,
   ],
   viewProviders: [
     provideIcons({

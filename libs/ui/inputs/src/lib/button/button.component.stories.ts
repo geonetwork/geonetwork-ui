@@ -60,6 +60,7 @@ export const Primary: StoryObj<ButtonComponentWithContent> = {
         'gray-light',
         'black',
         'primary-light',
+        'unstyled',
       ],
     },
   },

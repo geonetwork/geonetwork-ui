@@ -34,6 +34,7 @@ export class BadgeComponent {
   @Input() clickable? = false
   @Input() removable? = false
   @Output() badgeRemoveClicked = new EventEmitter<void>()
+  @Output() badgeClicked = new EventEmitter<void>()
 
   removeBadge() {
     this.badgeRemoveClicked.emit()

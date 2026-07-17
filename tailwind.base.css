@@ -151,6 +151,10 @@
       border-transparent;
   }
 
+  .gn-ui-btn-unstyled {
+    @apply appearance-none;
+  }
+
   .gn-ui-card-s {
     @apply min-h-[64px] w-full xs:min-w-[260px] xs:max-w-[280px] sm:min-w-[300px] sm:max-w-[500px] md:min-w-[230px];
   }
@@ -186,6 +190,7 @@
     --text-color: var(--gn-ui-badge-text-color, var(--color-gray-50));
     --background-color: var(--gn-ui-badge-background-color, black);
     --opacity: var(--gn-ui-badge-opacity, 0.7);
+    text-transform: inherit;
     @apply opacity-[--opacity] p-[--padding] rounded-[--rounded]
       font-[--font-weight] text-[length:--text-size] text-[color:--text-color] bg-[color:--background-color] flex justify-center items-center content-center;
   }
@@ -241,13 +246,4 @@
 
 html {
   --mat-typography-font-family: var(--font-family-main);
-}
-
-/* dark theme for gn-ui-popover tooltips (tippy.js) */
-.tippy-box[data-theme~='dark'] {
-  background-color: var(--color-gray-950);
-}
-
-.tippy-box[data-theme~='dark'] .tippy-arrow {
-  color: var(--color-gray-950);
 }

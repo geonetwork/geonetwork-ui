@@ -11,25 +11,11 @@
   ></gn-ui-autocomplete>
   <div class="flex gap-2 flex-wrap">
     @for (keyword of keywords; track keyword) {
-      <ng-template #keywordTooltip>
-        <gn-ui-keyword-tooltip [keyword]="keyword"></gn-ui-keyword-tooltip>
-      </ng-template>
-      <gn-ui-popover [content]="keywordTooltip" theme="dark">
-        <gn-ui-badge
-          [removable]="true"
-          (badgeRemoveClicked)="removeKeyword(keyword)"
-          >{{ keyword.label }}
-          @if (isPlaceWithoutExtent(keyword)) {
-            <ng-icon
-              [title]="
-                'editor.record.form.keywords.place.withoutExtent' | translate
-              "
-              class="badge-warning"
-              name="matWarningAmberOutline"
-            ></ng-icon>
-          }
-        </gn-ui-badge>
-      </gn-ui-popover>
+      <gn-ui-keyword-badge
+        [keyword]="keyword"
+        [editMode]="true"
+        (remove)="removeKeyword($event)"
+      ></gn-ui-keyword-badge>
     }
   </div>
 </div>

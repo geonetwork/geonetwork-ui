@@ -579,7 +579,7 @@ describe('editor form', () => {
         .should('have.length', 42)
         .last()
         .find('span')
-        .should('have.text', 'Addresses ')
+        .should('have.text', 'Addresses')
 
       // should close the autocomplete and clear the input after selecting a keyword
       cy.get('gn-ui-form-field-keywords').find('gn-ui-autocomplete').type('a')
