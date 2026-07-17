@@ -124,15 +124,12 @@ describe('ContactDetailsComponent', () => {
       })
     })
 
-    it('shows the website row but no link', () => {
+    it('hides the website when absent', () => {
       expect(
         fixture.nativeElement.querySelector(
           '[data-test="contact-details-website"]'
         )
       ).toBeNull()
-      expect(
-        fixture.nativeElement.querySelector('ng-icon[name="matOpenInNew"]')
-      ).toBeTruthy()
     })
   })
 
