@@ -8,6 +8,8 @@ import {
 } from '@angular/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { AutocompleteComponent, BadgeComponent } from '@geonetwork-ui/ui/inputs'
+import { KeywordTooltipComponent } from '@geonetwork-ui/ui/elements'
+import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
 import { map } from 'rxjs'
 import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
@@ -32,6 +34,8 @@ type AutocompleteItem = { title: string; value: Keyword }
     NgIconComponent,
     BadgeComponent,
     TranslatePipe,
+    PopoverComponent,
+    KeywordTooltipComponent,
   ],
   providers: [
     provideIcons({

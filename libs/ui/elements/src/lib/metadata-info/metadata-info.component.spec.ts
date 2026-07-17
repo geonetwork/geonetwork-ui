@@ -111,44 +111,6 @@ describe('MetadataInfoComponent', () => {
         expect(displayedElement).toBeFalsy()
       })
     })
-    describe('keywordTooltipSegments', () => {
-      beforeEach(() => {
-        fixture = TestBed.createComponent(MetadataInfoComponent)
-        component = fixture.componentInstance
-      })
-      it('returns the hierarchy path when the keyword has one', () => {
-        expect(
-          component.keywordTooltipSegments({
-            label: 'foo',
-            type: 'theme',
-            hierarchyPath: ['Root', 'foo'],
-          })
-        ).toEqual(['Root', 'foo'])
-      })
-      it('returns the thesaurus name and the label when there is no hierarchy path', () => {
-        expect(
-          component.keywordTooltipSegments({
-            label: 'foo',
-            type: 'theme',
-            thesaurus: { id: '1', name: 'Some thesaurus' },
-          })
-        ).toEqual(['Some thesaurus', 'foo'])
-      })
-      it('returns the translated type label and the label for a free keyword', () => {
-        expect(
-          component.keywordTooltipSegments({
-            label: 'éolienne',
-            type: 'theme',
-          })
-        ).toEqual(['Theme', 'éolienne'])
-        expect(
-          component.keywordTooltipSegments({
-            label: 'données ouvertes',
-            type: 'other',
-          })
-        ).toEqual(['Keywords', 'données ouvertes'])
-      })
-    })
     describe('tooltip rendering', () => {
       it('wraps every keyword pill in a popover', () => {
         fixture = TestBed.createComponent(MetadataInfoComponent)

@@ -29,12 +29,9 @@
         <div class="metadata-info-keywords sm:pb-4 flex flex-wrap gap-2">
           @for (keyword of metadata.keywords; track keyword) {
             <ng-template #keywordTooltip>
-              @for (segment of keywordTooltipSegments(keyword); track $index) {
-                <span [class.font-bold]="$last">{{ segment }}</span>
-                @if (!$last) {
-                  <span> &gt; </span>
-                }
-              }
+              <gn-ui-keyword-tooltip
+                [keyword]="keyword"
+              ></gn-ui-keyword-tooltip>
             </ng-template>
             <gn-ui-popover [content]="keywordTooltip" theme="dark">
               <gn-ui-button

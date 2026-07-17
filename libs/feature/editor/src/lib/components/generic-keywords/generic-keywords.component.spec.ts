@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
 
 import { GenericKeywordsComponent } from './generic-keywords.component'
 import { of } from 'rxjs'
@@ -49,6 +50,16 @@ describe('GenericKeywordsComponent', () => {
       value: { thesaurus: { name: 'Address-Thesaurus' } },
     } as any
     expect(component.displayWithFn(item)).toBe('Address (Address-Thesaurus)')
+  })
+
+  it('wraps every keyword badge in a popover', () => {
+    fixture.componentRef.setInput('keywords', [
+      { label: 'foo', type: 'theme', thesaurus: { id: '1' } },
+      { label: 'bar', type: 'other' },
+    ] as Keyword[])
+    fixture.detectChanges()
+    const popovers = fixture.debugElement.queryAll(By.css('gn-ui-popover'))
+    expect(popovers.length).toBe(2)
   })
 
   it('should search keywords', () => {

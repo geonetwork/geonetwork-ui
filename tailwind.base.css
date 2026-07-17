@@ -242,3 +242,12 @@
 html {
   --mat-typography-font-family: var(--font-family-main);
 }
+
+/* dark theme for gn-ui-popover tooltips (tippy.js) */
+.tippy-box[data-theme~='dark'] {
+  background-color: var(--color-gray-950);
+}
+
+.tippy-box[data-theme~='dark'] .tippy-arrow {
+  color: var(--color-gray-950);
+}
