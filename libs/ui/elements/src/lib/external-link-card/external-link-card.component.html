@@ -54,8 +54,9 @@
         class="inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded transition-opacity opacity-70 group-hover:opacity-100"
         [style.background-color]="getLinkColor(link)"
         data-cy="download-format"
+        translate
       >
-        {{ getLinkFormat(link) || ('downloads.format.unknown' | translate) }}
+        downloads.format.{{ getLinkFormat(link) || 'unknown' }}
       </span>
     </div>
   </div>

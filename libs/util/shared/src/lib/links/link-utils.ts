@@ -171,6 +171,28 @@ export const FORMATS = {
   },
 } as const
 
+marker('downloads.format.csv')
+marker('downloads.format.excel')
+marker('downloads.format.geojson')
+marker('downloads.format.json')
+marker('downloads.format.shp')
+marker('downloads.format.gml')
+marker('downloads.format.kml')
+marker('downloads.format.gpkg')
+marker('downloads.format.zip')
+marker('downloads.format.pdf')
+marker('downloads.format.jpg')
+marker('downloads.format.png')
+marker('downloads.format.tiff')
+marker('downloads.format.svg')
+marker('downloads.format.dxf')
+marker('downloads.format.html')
+marker('downloads.format.xml')
+marker('downloads.format.fgb')
+marker('downloads.format.jsonfg')
+marker('downloads.format.webp')
+marker('downloads.format.postgis')
+
 export type FileFormat = keyof typeof FORMATS
 
 export function getFormatPriority(linkFormat: FileFormat): number {
