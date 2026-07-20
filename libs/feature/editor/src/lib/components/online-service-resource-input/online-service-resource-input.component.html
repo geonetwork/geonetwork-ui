@@ -3,13 +3,13 @@
     editor.record.form.field.onlineResource.edit.protocol
   </h3>
   @if (protocolHint) {
-    <span
-      class="material-symbols-outlined m-2 gn-ui-icon-small"
+    <ng-icon
+      name="matHelpOutline"
+      size="16"
+      class="m-2"
       [matTooltip]="protocolHint"
       matTooltipPosition="above"
-    >
-      help
-    </span>
+    ></ng-icon>
   }
 </div>
 <div class="flex flex-row items-center gap-4 h-[48px]">

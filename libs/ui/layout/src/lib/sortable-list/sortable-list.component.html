@@ -5,12 +5,12 @@
 >
   @for (item of items; track trackByFn(index); let index = $index) {
     <div class="sortable-box bg-white flex items-center" cdkDrag>
-      <span
+      <ng-icon
         cdkDragHandle
-        class="material-symbols-outlined mx-[10px] cursor-grab gn-ui-icon-medium flex-none"
-      >
-        drag_handle
-      </span>
+        name="matDragHandleOutline"
+        size="20"
+        class="mx-[10px] cursor-grab flex-none"
+      ></ng-icon>
       <div class="flex-1">
         <ng-container
           *ngTemplateOutlet="
@@ -29,8 +29,8 @@
         class="ml-[8px] mr-[10px]"
         (buttonClick)="removeItem(index)"
         data-test="remove-item"
-        ><span class="material-symbols-outlined gn-ui-icon-medium">close</span>
-      </gn-ui-button>
+        ><ng-icon name="matCloseOutline" size="20"></ng-icon
+      ></gn-ui-button>
     </div>
   }
 </div>
