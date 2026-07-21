@@ -16,7 +16,8 @@ export class EditorService {
   saveRecord(
     record: CatalogRecord,
     recordSource: string,
-    fieldsConfig: EditorConfig
+    fieldsConfig: EditorConfig,
+    publish: boolean
   ): Observable<[CatalogRecord, string]> {
     const savedRecord = { ...record }
 
@@ -34,15 +35,9 @@ export class EditorService {
         })
       }
     }
-    let publishToAll = true
-    // if the record is new, generate a new unique identifier and pass publishToAll as false
-    if (!record.uniqueIdentifier) {
-      savedRecord.uniqueIdentifier = null
-      publishToAll = false
-    }
 
     return this.recordsRepository
-      .saveRecord(savedRecord, recordSource, publishToAll)
+      .saveRecord(savedRecord, recordSource, publish)
       .pipe(
         switchMap((uniqueIdentifier) =>
           this.recordsRepository.openRecordForEdition(uniqueIdentifier)

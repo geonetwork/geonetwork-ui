@@ -54,7 +54,11 @@ export class EditorFacade {
   }
 
   saveRecord() {
-    this.store.dispatch(EditorActions.saveRecord())
+    this.store.dispatch(EditorActions.saveRecord({ publish: false }))
+  }
+
+  saveAndPublishRecord() {
+    this.store.dispatch(EditorActions.saveRecord({ publish: true }))
   }
 
   undoRecordDraft() {

@@ -78,18 +78,20 @@ describe('EditorEffects', () => {
 
   describe('saveRecord$', () => {
     describe('when api success', () => {
-      it('dispatch saveRecordSuccess', () => {
+      it('dispatch saveRecordSuccess and isPublished', () => {
         actions = hot('-a---|', {
-          a: EditorActions.saveRecord(),
+          a: EditorActions.saveRecord({ publish: true }),
         })
-        const expected = hot('-a---|', {
+        const expected = hot('-(ab)|', {
           a: EditorActions.saveRecordSuccess(),
+          b: EditorActions.isPublished({ isPublished: true }),
         })
         expect(effects.saveRecord$).toBeObservable(expected)
         expect(service.saveRecord).toHaveBeenCalledWith(
           datasetRecordsFixture()[0],
           '<xml>blabla</xml>',
-          []
+          [],
+          true
         )
       })
     })
@@ -102,7 +104,7 @@ describe('EditorEffects', () => {
       })
       it('dispatch saveRecordFailure', () => {
         actions = hot('-a-|', {
-          a: EditorActions.saveRecord(),
+          a: EditorActions.saveRecord({ publish: true }),
         })
         const expected = hot('-a-|', {
           a: EditorActions.saveRecordFailure({ error: new Error('oopsie') }),

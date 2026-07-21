@@ -29,7 +29,10 @@ export const markRecordAsChanged = createAction(
   '[Editor] Mark record as changed'
 )
 
-export const saveRecord = createAction('[Editor] Save record')
+export const saveRecord = createAction(
+  '[Editor] Save record',
+  props<{ publish: boolean }>()
+)
 export const saveRecordSuccess = createAction('[Editor] Save record success')
 export const saveRecordFailure = createAction(
   '[Editor] Save record failure',
