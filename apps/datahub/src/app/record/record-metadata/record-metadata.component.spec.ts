@@ -10,7 +10,7 @@ import {
   MetadataContactComponent,
   MetadataInfoComponent,
 } from '@geonetwork-ui/ui/elements'
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
@@ -23,6 +23,7 @@ import { RecordInternalLinksComponent } from '../record-internal-links/record-in
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { REUSE_FORM_URL } from '@geonetwork-ui/feature/notify-reuse'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import type { GroupModel } from '@geonetwork-ui/common/domain/model/user'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -70,7 +71,33 @@ class PlatformServiceMock {
   getMe = jest.fn(() => of(null))
   getFeedbacksAllowed = jest.fn(() => of(true))
   supportsAuthentication = jest.fn(() => true)
+  _userPermissions$ = new BehaviorSubject<GroupModel[]>([])
+  getUserPermissionsByGroup = jest.fn(() => this._userPermissions$)
 }
+
+const providers = [
+  provideI18n(),
+  {
+    provide: MdViewFacade,
+    useClass: MdViewFacadeMock,
+  },
+  {
+    provide: SearchService,
+    useClass: SearchServiceMock,
+  },
+  {
+    provide: SourcesService,
+    useClass: SourcesServiceMock,
+  },
+  {
+    provide: OrganizationsServiceInterface,
+    useClass: OrganisationsServiceMock,
+  },
+  {
+    provide: PlatformServiceInterface,
+    useClass: PlatformServiceMock,
+  },
+]
 
 describe('RecordMetadataComponent', () => {
   let component: RecordMetadataComponent
@@ -85,27 +112,7 @@ describe('RecordMetadataComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        provideI18n(),
-        {
-          provide: MdViewFacade,
-          useClass: MdViewFacadeMock,
-        },
-        {
-          provide: SearchService,
-          useClass: SearchServiceMock,
-        },
-        {
-          provide: SourcesService,
-          useClass: SourcesServiceMock,
-        },
-        {
-          provide: OrganizationsServiceInterface,
-          useClass: OrganisationsServiceMock,
-        },
-        {
-          provide: PlatformServiceInterface,
-          useClass: PlatformServiceMock,
-        },
+        ...providers,
         {
           provide: REUSE_FORM_URL,
           useValue: 'https://example.com/reuse',
@@ -471,72 +478,109 @@ describe('RecordMetadataComponent', () => {
   })
   describe('Reuse Button', () => {
     describe('display rules for reuse button', () => {
-      let visible: boolean
-
-      const subscribeVisible = () => {
-        component.showReuseButton().subscribe((v) => (visible = v))
-      }
-
+      let userPermissions$: BehaviorSubject<GroupModel[]>
       beforeEach(() => {
-        visible = undefined
-        component.reuseFormUrl = 'https://example.com/reuse'
-        component.activeUserCanWrite$ = of(true)
-        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'dataset' } })
-        fixture.detectChanges()
+        const platformService = TestBed.inject(PlatformServiceInterface)
+        userPermissions$ =
+          platformService.getUserPermissionsByGroup() as unknown as BehaviorSubject<
+            GroupModel[]
+          >
+        facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'dataset' })
       })
 
-      it('does not display reuse button when user has no write access', () => {
-        component.activeUserCanWrite$ = of(false)
-        subscribeVisible()
+      it('does not display reuse button when no permission present', async () => {
+        userPermissions$.next([])
+        const visible = await firstValueFrom(
+          component.reuseNotificationAllowed$
+        )
         expect(visible).toBe(false)
       })
 
-      it('does not display reuse button when kind is not dataset', () => {
+      it('does not display reuse button when user has no write access', async () => {
+        userPermissions$.next([
+          {
+            groupId: 105,
+            groupName: 'Groupe 1',
+            isMember: true,
+            canEdit: false,
+            canApprove: false,
+            canAdministrate: false,
+          },
+          {
+            groupId: 103,
+            groupName: 'Groupe 2',
+            isMember: true,
+            canEdit: false,
+            canApprove: false,
+            canAdministrate: false,
+          },
+        ])
+        const visible = await firstValueFrom(
+          component.reuseNotificationAllowed$
+        )
+        expect(visible).toBe(false)
+      })
+
+      it('does not display reuse button when kind is not dataset', async () => {
         facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'service' } })
-        subscribeVisible()
+        const visible = await firstValueFrom(
+          component.reuseNotificationAllowed$
+        )
         expect(visible).toBe(false)
       })
 
-      it('does not display reuse button when reuseFormUrl is not defined', () => {
-        component.reuseFormUrl = null
-        subscribeVisible()
-        expect(visible).toBe(false)
-      })
-
-      it('displays reuse button when all conditions are met', () => {
-        subscribeVisible()
-        expect(visible).toBe(true)
-      })
-    })
-
-    describe('activeUserCanWrite$', () => {
-      let canWrite: boolean
-
-      const createWith = (user) => {
-        ;(platformService.getMe as jest.Mock).mockReturnValue(of(user))
+      it('does not display reuse button when reuseFormUrl is not defined', async () => {
+        TestBed.resetTestingModule()
+        await TestBed.configureTestingModule({
+          providers: [
+            ...providers,
+            {
+              provide: REUSE_FORM_URL,
+              useValue: null,
+            },
+          ],
+        }).compileComponents()
         fixture = TestBed.createComponent(RecordMetadataComponent)
         component = fixture.componentInstance
-        component.activeUserCanWrite$.subscribe((v) => (canWrite = v))
-      }
-
-      it('is false when no user is logged in', () => {
-        createWith(null)
-        expect(canWrite).toBe(false)
+        userPermissions$.next([
+          {
+            groupId: 105,
+            groupName: 'Groupe Reviewers',
+            isMember: true,
+            canEdit: true,
+            canApprove: true,
+            canAdministrate: false,
+          },
+        ])
+        const visible = await firstValueFrom(
+          component.reuseNotificationAllowed$
+        )
+        expect(visible).toBe(false)
       })
 
-      it('is false when the user profile has no write access', () => {
-        createWith({ id: 'user1', profile: 'RegisteredUser' })
-        expect(canWrite).toBe(false)
-      })
-
-      it('is true for an Editor', () => {
-        createWith({ id: 'user1', profile: 'Editor' })
-        expect(canWrite).toBe(true)
-      })
-
-      it('is true for an Administrator', () => {
-        createWith({ id: 'user1', profile: 'Administrator' })
-        expect(canWrite).toBe(true)
+      it('displays reuse button when all conditions are met', async () => {
+        userPermissions$.next([
+          {
+            groupId: 105,
+            groupName: 'Groupe Reviewers',
+            isMember: true,
+            canEdit: true,
+            canApprove: true,
+            canAdministrate: false,
+          },
+          {
+            groupId: 103,
+            groupName: 'Groupe Editors',
+            isMember: true,
+            canEdit: true,
+            canApprove: false,
+            canAdministrate: false,
+          },
+        ])
+        const visible = await firstValueFrom(
+          component.reuseNotificationAllowed$
+        )
+        expect(visible).toBe(true)
       })
     })
   })

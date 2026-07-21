@@ -253,8 +253,7 @@ export class RecordMetadataComponent {
     )
   reuseNotificationAllowed$: Observable<boolean> = this.reuseFormUrl
     ? combineLatest([this.writableGroupId$, this.kind$]).pipe(
-        map(([groupId, kind]) => groupId !== null && kind === 'dataset'),
-        startWith(false)
+        map(([groupId, kind]) => groupId !== null && kind === 'dataset')
       )
     : of(false)
 
