@@ -18,6 +18,7 @@ import {
   Individual,
   Keyword,
   OnlineResource,
+  RecordKind,
   UpdateFrequency,
 } from '@geonetwork-ui/common/domain/model/record'
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
@@ -90,6 +91,7 @@ import { FormFieldTopicsComponent } from './form-field-topics/form-field-topics.
 })
 export class FormFieldComponent {
   @Input() uniqueIdentifier: string
+  @Input() recordKind: RecordKind
   @Input() model: CatalogRecordKeys
   @Input() modelSpecifier: FieldModelSpecifier
   @Input() componentName: FormFieldComponentName

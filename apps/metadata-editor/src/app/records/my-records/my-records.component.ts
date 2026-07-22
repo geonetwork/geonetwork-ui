@@ -2,11 +2,11 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  inject,
   OnInit,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
-  inject,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
@@ -80,7 +80,7 @@ export class MyRecordsComponent implements OnInit {
   private importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
   private overlayRef!: OverlayRef
-  searchFields = ['changeDate']
+  searchFields = ['changeDate', 'recordKind']
 
   isImportMenuOpen = false
 

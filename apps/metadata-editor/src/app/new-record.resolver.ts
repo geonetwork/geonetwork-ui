@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import {
   CatalogRecord,
   Individual,
@@ -26,9 +26,12 @@ export class NewRecordResolver {
       this.translateService.currentLang
     return this.getCurrentUserAsPointOfContact().pipe(
       map((userContact) => {
+        const recordKind = 'dataset'
         const catalogRecord: CatalogRecord = {
           uniqueIdentifier: null,
-          title: this.translateService.instant('editor.new.record.title'),
+          title: this.translateService.instant('editor.new.record.title', {
+            recordKind,
+          }),
           abstract: '',
           ownerOrganization: {
             name: 'Owner organization',
@@ -46,7 +49,7 @@ export class NewRecordResolver {
           otherConstraints: [],
           overviews: [],
           contactsForResource: userContact ? [userContact] : [],
-          kind: 'dataset',
+          kind: recordKind,
           status: 'ongoing',
           lineage: '',
           sourceRecords: [],

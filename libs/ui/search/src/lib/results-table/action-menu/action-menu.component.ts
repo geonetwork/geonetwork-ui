@@ -2,15 +2,16 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  inject,
   Input,
   Output,
   ViewChild,
-  inject,
 } from '@angular/core'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+import { RecordKind } from '@geonetwork-ui/common/domain/model'
 
 type ActionMenuPage = 'mainMenu' | 'deleteMenu' | 'rollbackMenu'
 
@@ -35,6 +36,7 @@ export class ActionMenuComponent {
   @Input() isDuplicating: boolean
   @Input() canDelete = true
   @Input() page: 'draft' | 'main' | 'record'
+  @Input() recordKind: RecordKind
   @Output() duplicate = new EventEmitter<void>()
   @Output() delete = new EventEmitter<void>()
   @Output() closeActionMenu = new EventEmitter<void>()

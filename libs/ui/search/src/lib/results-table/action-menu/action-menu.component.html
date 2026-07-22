@@ -52,10 +52,10 @@
       class="w-72 p-6 flex flex-col gap-3 mt-2 border border-gray-100 bg-white shadow-2xl rounded-2xl"
     >
       <span class="text-lg font-bold text-center">{{
-        'editor.record.delete.confirmation.title' | translate
+        'editor.record.delete.confirmation.title' | translate: { recordKind }
       }}</span>
       <span class="text-center">{{
-        'editor.record.delete.confirmation.message' | translate
+        'editor.record.delete.confirmation.message' | translate: { recordKind }
       }}</span>
       <div class="flex flex-row gap-8 justify-center">
         <gn-ui-button
@@ -65,14 +65,16 @@
           data-cy="confirm-button"
           [style.--gn-ui-button-width]="'100px'"
           >{{
-            'editor.record.delete.confirmation.confirmText' | translate
+            'editor.record.delete.confirmation.confirmText'
+              | translate: { recordKind }
           }}</gn-ui-button
         >
         <gn-ui-button
           [style.--gn-ui-button-width]="'100px'"
           (buttonClick)="closeActionMenu.emit()"
           >{{
-            'editor.record.delete.confirmation.cancelText' | translate
+            'editor.record.delete.confirmation.cancelText'
+              | translate: { recordKind }
           }}</gn-ui-button
         >
       </div>
@@ -84,10 +86,10 @@
       class="w-80 p-6 flex flex-col gap-3 mt-2 border border-gray-100 bg-white shadow-2xl rounded-2xl"
     >
       <span class="text-lg font-bold text-center">{{
-        'editor.record.undo.confirmation.title' | translate
+        'editor.record.undo.confirmation.title' | translate: { recordKind }
       }}</span>
       <span class="text-center">{{
-        'editor.record.undo.confirmation.message' | translate
+        'editor.record.undo.confirmation.message' | translate: { recordKind }
       }}</span>
       <div class="flex flex-row gap-8 justify-center">
         <gn-ui-button
@@ -97,14 +99,16 @@
           data-cy="confirm-button"
           [style.--gn-ui-button-width]="'120px'"
           >{{
-            'editor.record.undo.confirmation.confirmText' | translate
+            'editor.record.undo.confirmation.confirmText'
+              | translate: { recordKind }
           }}</gn-ui-button
         >
         <gn-ui-button
           [style.--gn-ui-button-width]="'120px'"
           (buttonClick)="closeActionMenu.emit()"
           >{{
-            'editor.record.undo.confirmation.cancelText' | translate
+            'editor.record.undo.confirmation.cancelText'
+              | translate: { recordKind }
           }}</gn-ui-button
         >
       </div>

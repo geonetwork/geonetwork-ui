@@ -2,9 +2,12 @@ import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   OnDestroy,
   OnInit,
+  Signal,
+  signal,
   viewChildren,
 } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
@@ -18,6 +21,9 @@ import {
 import { firstValueFrom, map, Subscription, withLatestFrom } from 'rxjs'
 import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 import { switchMap } from 'rxjs/operators'
+import { toSignal } from '@angular/core/rxjs-interop'
+import { evaluate, isExpression } from '../../expressions'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -34,11 +40,13 @@ import { switchMap } from 'rxjs/operators'
 })
 export class RecordFormComponent implements OnInit, OnDestroy {
   facade = inject(EditorFacade)
+  notifications = inject(NotificationsService)
   subscription = new Subscription()
 
   recordUniqueIdentifier$ = this.facade.record$.pipe(
     map((record) => record.uniqueIdentifier)
   )
+  recordKind$ = this.facade.record$.pipe(map((record) => record.kind))
 
   focusFieldWithPage$ = this.facade.focusedField$.pipe(
     switchMap(async (field) => {
@@ -111,5 +119,38 @@ export class RecordFormComponent implements OnInit, OnDestroy {
       .filter((s) => !s.hidden)
       .findIndex((s) => s.fields.some((f) => f.model === model))
     return { page, section }
+  }
+
+  private recordSignal = toSignal(this.facade.record$, { requireSync: true })
+  private expressionCache = new Map<string, Signal<EditorFieldValue>>()
+
+  // only compiles the expression into an evaluator the first time;
+  // then we store a computed() signal in the cache so that the evaluator is
+  // run again if the record changes
+  evaluateExpression(
+    expressionOrValue: string | EditorFieldValue
+  ): Signal<EditorFieldValue> {
+    if (!isExpression(expressionOrValue)) {
+      return signal(expressionOrValue as EditorFieldValue)
+    }
+    const expression = expressionOrValue as string
+    if (this.expressionCache.has(expression)) {
+      return this.expressionCache.get(expression)
+    }
+    const { evaluator, errors } = evaluate(expression)
+    if (errors.length) {
+      console.error(`The following errors happened while evaluating the expression '${expression}':
+${errors.map((err) => `> ${err}`).join('\n')}`)
+      this.notifications.showNotification({
+        type: 'warning',
+        title: 'Technical error',
+        text: 'An error happened while evaluating an expression inside the editor configuration; open the developer console for more information',
+      })
+    }
+    this.expressionCache.set(
+      expression,
+      computed(() => evaluator({ globals: { record: this.recordSignal() } }))
+    )
+    return this.expressionCache.get(expression)
   }
 }

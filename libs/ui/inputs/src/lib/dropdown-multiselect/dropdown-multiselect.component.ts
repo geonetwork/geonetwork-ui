@@ -3,12 +3,12 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  inject,
   Input,
   Output,
   QueryList,
   ViewChild,
   ViewChildren,
-  inject,
 } from '@angular/core'
 import {
   CdkConnectedOverlay,
@@ -85,7 +85,7 @@ export class DropdownMultiselectComponent {
   ]
   scrollStrategy = this.scrollStrategies.reposition()
   overlayOpen = false
-  overlayWidth = 'auto'
+  overlayMinWidth = 'none'
   overlayMaxHeight = 'none'
   id = `dropdown-multiselect-${Math.floor(Math.random() * 10000)}`
 
@@ -120,7 +120,7 @@ export class DropdownMultiselectComponent {
   }
 
   openOverlay() {
-    this.overlayWidth =
+    this.overlayMinWidth =
       this.overlayOrigin.elementRef.nativeElement.getBoundingClientRect()
         .width + 'px'
     this.overlayMaxHeight = this.maxRows

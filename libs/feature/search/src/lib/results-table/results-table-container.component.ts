@@ -1,10 +1,10 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   OnDestroy,
   Output,
-  inject,
 } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SearchFacade } from '../state/search.facade'
@@ -67,6 +67,7 @@ export class ResultsTableContainerComponent implements OnDestroy {
 
   async handleDeleteRecord(item: unknown) {
     const uniqueIdentifier = (item as CatalogRecord).uniqueIdentifier
+    const recordKind = (item as CatalogRecord).kind
     this.subscription.add(
       this.recordsRepository.deleteRecord(uniqueIdentifier).subscribe({
         next: () => {
@@ -76,10 +77,12 @@ export class ResultsTableContainerComponent implements OnDestroy {
             {
               type: 'success',
               title: this.translateService.instant(
-                'editor.record.deleteSuccess.title'
+                'editor.record.deleteSuccess.title',
+                { recordKind }
               ),
               text: `${this.translateService.instant(
-                'editor.record.deleteSuccess.body'
+                'editor.record.deleteSuccess.body',
+                { recordKind }
               )}`,
             },
             2500
@@ -90,10 +93,12 @@ export class ResultsTableContainerComponent implements OnDestroy {
             {
               type: 'error',
               title: this.translateService.instant(
-                'editor.record.deleteError.title'
+                'editor.record.deleteError.title',
+                { recordKind }
               ),
               text: `${this.translateService.instant(
-                'editor.record.deleteError.body'
+                'editor.record.deleteError.body',
+                { recordKind }
               )} ${error}`,
               closeMessage: this.translateService.instant(
                 'editor.record.deleteError.closeMessage'

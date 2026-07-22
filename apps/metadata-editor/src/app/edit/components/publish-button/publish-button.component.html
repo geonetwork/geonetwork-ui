@@ -5,7 +5,9 @@
     *ngSwitchCase="'hasChanges'"
     type="primary"
     (buttonClick)="verifyPublishConditions()"
-    [matTooltip]="'editor.record.publish' | translate"
+    [matTooltip]="
+      'editor.record.publish' | translate: { recordKind: recordKind$ | async }
+    "
   >
     <ng-icon name="iconoirCloudUpload"></ng-icon>
   </gn-ui-button>
@@ -19,7 +21,9 @@
     type="secondary"
     [disabled]="true"
     (buttonClick)="verifyPublishConditions()"
-    [matTooltip]="'editor.record.upToDate' | translate"
+    [matTooltip]="
+      'editor.record.upToDate' | translate: { recordKind: recordKind$ | async }
+    "
   >
     <ng-icon name="matCheckCircleOutline"></ng-icon>
   </gn-ui-button>
@@ -34,6 +38,7 @@
         [translateParams]="{
           date: formatDate(publishWarning.date),
           user: publishWarning.user,
+          recordKind: recordKind$ | async,
         }"
         >editor.record.publish.confirmation.message</span
       >
@@ -42,7 +47,8 @@
           [style.--gn-ui-button-width]="'100px'"
           (buttonClick)="cancelPublish()"
           >{{
-            'editor.record.publish.confirmation.cancelText' | translate
+            'editor.record.publish.confirmation.cancelText'
+              | translate: { recordKind: recordKind$ | async }
           }}</gn-ui-button
         >
         <gn-ui-button
@@ -52,7 +58,8 @@
           data-cy="publish-confirm-button"
           [style.--gn-ui-button-width]="'100px'"
           >{{
-            'editor.record.publish.confirmation.confirmText' | translate
+            'editor.record.publish.confirmation.confirmText'
+              | translate: { recordKind: recordKind$ | async }
           }}</gn-ui-button
         >
       </div>

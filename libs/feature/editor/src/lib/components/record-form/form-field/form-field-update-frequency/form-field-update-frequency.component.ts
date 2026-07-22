@@ -2,12 +2,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  inject,
   Input,
   OnInit,
   Output,
-  inject,
 } from '@angular/core'
 import {
+  RecordKind,
   UpdateFrequency,
   UpdateFrequencyCode,
   updateFrequencyCodeValues,
@@ -37,6 +38,7 @@ export class FormFieldUpdateFrequencyComponent implements OnInit {
   private translateService = inject(TranslateService)
 
   @Input() value: UpdateFrequency
+  @Input() recordKind: RecordKind
   @Output() valueChange: EventEmitter<UpdateFrequency> = new EventEmitter()
 
   protected choices: DropdownChoice[] = []

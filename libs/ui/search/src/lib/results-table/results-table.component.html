@@ -172,6 +172,7 @@
           (delete)="handleDelete(item)"
           (closeActionMenu)="closeActionMenu()"
           (rollback)="handleRollback(item)"
+          [recordKind]="item.kind"
         >
         </gn-ui-action-menu>
       </ng-template>

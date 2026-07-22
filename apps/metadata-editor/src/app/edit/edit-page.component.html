@@ -29,6 +29,7 @@
                     [translateParams]="{
                       date: formatDate(hasChanged.date),
                       user: hasChanged.user,
+                      recordKind: recordKind$ | async,
                     }"
                     data-test="draft-alert"
                   >

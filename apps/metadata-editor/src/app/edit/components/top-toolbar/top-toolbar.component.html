@@ -29,7 +29,7 @@
         (saveStatus === 'draft_changes_pending'
           ? 'editor.record.undo.tooltip.enabled'
           : 'editor.record.undo.tooltip.disabled'
-        ) | translate
+        ) | translate: { recordKind: recordKind$ | async }
       "
       data-cy="undo-button"
     >
@@ -44,15 +44,21 @@
     @switch (saveStatus$ | async) {
       @case ('record_not_published') {
         <ng-icon class="text-lime-400" name="iconoirCheckCircle"></ng-icon>
-        <span translate>editor.record.saveStatus.recordNotPublished</span>
+        <span translate [translateParams]="{ recordKind: recordKind$ | async }"
+          >editor.record.saveStatus.recordNotPublished</span
+        >
       }
       @case ('record_up_to_date') {
         <ng-icon class="text-lime-400" name="iconoirCheckCircle"></ng-icon>
-        <span translate>editor.record.saveStatus.recordUpToDate</span>
+        <span translate [translateParams]="{ recordKind: recordKind$ | async }"
+          >editor.record.saveStatus.recordUpToDate</span
+        >
       }
       @case ('draft_changes_pending') {
         <ng-icon class="text-sky-300" name="matPendingOutline"></ng-icon>
-        <span translate>editor.record.saveStatus.draftWithChangesPending</span>
+        <span translate [translateParams]="{ recordKind: recordKind$ | async }"
+          >editor.record.saveStatus.draftWithChangesPending</span
+        >
       }
     }
   </div>

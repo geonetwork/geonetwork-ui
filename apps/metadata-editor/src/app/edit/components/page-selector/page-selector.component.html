@@ -27,6 +27,9 @@
         class="ms-[16px] transition-colors"
         [ngClass]="isCurrentPage ? 'text-black font-bold' : 'text-gray-600'"
         translate
+        [translateParams]="{
+          recordKind: (facade.record$ | async)?.kind,
+        }"
       >
         {{ page.labelKey }}
       </div>

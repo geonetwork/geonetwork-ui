@@ -2,12 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { EditorFacade } from '../../+state/editor.facade'
 import { RecordFormComponent } from './record-form.component'
 import { FieldFocusDirective, FormFieldComponent } from './form-field'
-import { MockBuilder } from 'ng-mocks'
+import { MockBuilder, MockProvider } from 'ng-mocks'
 import {
   datasetRecordsFixture,
   editorConfigFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject, Subject } from 'rxjs'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { EditorSectionWithValues } from '../../+state/editor.models'
 
@@ -35,6 +36,8 @@ describe('RecordFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
+        { provide: EditorFacade, useClass: EditorFacadeMock },
+        MockProvider(NotificationsService),
         provideI18n({}, false),
         { provide: EditorFacade, useClass: EditorFacadeMock },
       ],
@@ -192,6 +195,34 @@ describe('RecordFormComponent', () => {
       const unsubscribeSpy = jest.spyOn(component.subscription, 'unsubscribe')
       component.ngOnDestroy()
       expect(unsubscribeSpy).toHaveBeenCalled()
+    })
+  })
+
+  describe('expression evaluation', () => {
+    it('evaluates an expression and returns the result as a signal', () => {
+      const result = component.evaluateExpression('${record.uniqueIdentifier}')
+      expect(result()).toBe(datasetRecordsFixture()[0].uniqueIdentifier)
+    })
+
+    it('handles literal values as well', () => {
+      const result = component.evaluateExpression('hello world')
+      expect(result()).toBe('hello world')
+    })
+
+    it('emits a notification if the expression had compilation errors', () => {
+      const notifications = TestBed.inject(NotificationsService)
+      component.evaluateExpression('${unknownFunc()}')
+      expect(notifications.showNotification).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'warning' })
+      )
+    })
+
+    it('does not compile the same expression multiple times', () => {
+      const notifications = TestBed.inject(NotificationsService)
+      component.evaluateExpression('${unknownFunc()}')
+      component.evaluateExpression('${unknownFunc()}')
+      component.evaluateExpression('${unknownFunc()}')
+      expect(notifications.showNotification).toHaveBeenCalledTimes(1)
     })
   })
 })

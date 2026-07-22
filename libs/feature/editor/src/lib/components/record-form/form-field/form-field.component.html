@@ -12,8 +12,8 @@
   </ng-container>
   <ng-template #withGenericWrapper>
     <gn-ui-form-field-wrapper
-      [label]="config.labelKey! | translate"
-      [hint]="config.hintKey! | translate"
+      [label]="config.labelKey! | translate: { recordKind }"
+      [hint]="config.hintKey! | translate: { recordKind }"
     >
       <ng-container *ngTemplateOutlet="fieldContent"></ng-container>
     </gn-ui-form-field-wrapper>
@@ -34,7 +34,8 @@
           [value]="valueAsString"
           (change)="valueChange.emit($event.target.value)"
           [placeholder]="
-            'editor.record.form.field.title.placeholder' | translate
+            'editor.record.form.field.title.placeholder'
+              | translate: { recordKind }
           "
         ></textarea>
         <div class="flex flex-row justify-between self-start mt-0.5">
@@ -49,7 +50,7 @@
             name="matHelpOutline"
             size="16"
             class="m-2"
-            [matTooltip]="config.hintKey! | translate"
+            [matTooltip]="config.hintKey! | translate: { recordKind }"
             matTooltipPosition="above"
           ></ng-icon>
         </div>
@@ -57,8 +58,8 @@
     </ng-container>
     <ng-container *ngSwitchCase="'abstract'">
       <gn-ui-form-field-rich
-        [label]="config.labelKey! | translate"
-        [hint]="config.hintKey! | translate"
+        [label]="config.labelKey! | translate: { recordKind }"
+        [hint]="config.hintKey! | translate: { recordKind }"
         [value]="valueAsString"
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-rich>
@@ -66,6 +67,7 @@
     <ng-container *ngSwitchCase="'overviews'">
       <gn-ui-form-field-overviews
         [metadataUuid]="uniqueIdentifier"
+        [recordKind]="recordKind"
         [value]="valueAsOverviews"
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-overviews>
@@ -93,6 +95,7 @@
       <gn-ui-form-field-update-frequency
         [value]="valueAsUpdateFrequency"
         (valueChange)="valueChange.emit($event)"
+        [recordKind]="recordKind"
       ></gn-ui-form-field-update-frequency>
     </ng-container>
     <ng-container *ngSwitchCase="'temporalExtents'">
@@ -118,7 +121,7 @@
     </ng-container>
     <ng-container *ngSwitchCase="'licenses'">
       <gn-ui-form-field-license
-        [label]="config.labelKey! | translate"
+        [label]="config.labelKey! | translate: { recordKind }"
         [recordLicences]="valueAsConstraints"
         (recordLicencesChange)="valueChange.emit($event)"
       ></gn-ui-form-field-license>
