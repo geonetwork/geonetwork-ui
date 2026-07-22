@@ -64,7 +64,7 @@ describe('KeywordBadgeComponent', () => {
     })
   })
 
-  describe('clickable (datahub) mode', () => {
+  describe('clickable mode', () => {
     beforeEach(() => {
       component.keyword = { label: 'foo', type: 'theme' }
       fixture.detectChanges()
@@ -77,15 +77,15 @@ describe('KeywordBadgeComponent', () => {
     })
   })
 
-  describe('edit (editor) mode', () => {
+  describe('editable mode', () => {
     beforeEach(() => {
       component.keyword = { label: 'Paris', type: 'place' }
-      component.editMode = true
+      component.editable = true
       fixture.detectChanges()
     })
     it('emits remove when the badge remove is clicked', () => {
       const emitted: unknown[] = []
-      component.remove.subscribe((k) => emitted.push(k))
+      component.keywordRemove.subscribe((k) => emitted.push(k))
       badge().triggerEventHandler('badgeRemoveClicked', undefined)
       expect(emitted).toEqual([component.keyword])
     })

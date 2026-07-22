@@ -1,14 +1,16 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
+  inject,
   Input,
   Output,
-  inject,
+  ViewChild,
 } from '@angular/core'
 import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
-import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
@@ -17,6 +19,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { matWarningAmberOutline } from '@ng-icons/material-icons/outline'
+import tippy from 'tippy.js'
 
 marker('domain.record.keywordType.theme')
 marker('domain.record.keywordType.place')
@@ -28,7 +31,7 @@ marker('domain.record.keywordType.other')
   templateUrl: './keyword-badge.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [BadgeComponent, PopoverComponent, NgIconComponent, TranslatePipe],
+  imports: [BadgeComponent, NgIconComponent, TranslatePipe],
   providers: [
     provideIcons({
       matWarningAmberOutline,
@@ -38,14 +41,14 @@ marker('domain.record.keywordType.other')
     }),
   ],
 })
-export class KeywordBadgeComponent {
+export class KeywordBadgeComponent implements AfterViewInit {
   private translateService = inject(TranslateService)
 
   @Input() keyword: Keyword
-  /** edit mode shows a removable badge (editor); otherwise a clickable badge (datahub) */
-  @Input() editMode = false
+  @Input() editable = false // if false, keyword is only clickable
   @Output() keywordClick = new EventEmitter<Keyword>()
-  @Output() remove = new EventEmitter<Keyword>()
+  @Output() keywordRemove = new EventEmitter<Keyword>()
+  @ViewChild(BadgeComponent, { read: ElementRef }) badgeComponent: ElementRef
 
   get segments(): string[] {
     if (this.keyword.hierarchyPath?.length) {
@@ -64,5 +67,19 @@ export class KeywordBadgeComponent {
 
   get isPlaceWithoutExtent(): boolean {
     return this.keyword.type === 'place' && !this.keyword.bbox
+  }
+
+  ngAfterViewInit() {
+    const content = this.segments
+      .map(
+        (segment, i, arr) =>
+          `<span ${i === arr.length - 1 ? 'class="font-bold"' : ''}>${segment}</span>`
+      )
+      .join(' &gt; ')
+    tippy(this.badgeComponent.nativeElement, {
+      appendTo: () => document.body,
+      content,
+      allowHTML: true,
+    })
   }
 }

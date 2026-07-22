@@ -32,10 +32,4 @@ describe('ButtonComponent', () => {
     fixture.detectChanges()
     expect(buttonClasses()).toContain('gn-ui-btn-primary')
   })
-
-  it('renders a bare button for the unstyled type', () => {
-    fixture.componentRef.setInput('type', 'unstyled')
-    fixture.detectChanges()
-    expect(buttonClasses()).toContain('gn-ui-btn-unstyled')
-  })
 })

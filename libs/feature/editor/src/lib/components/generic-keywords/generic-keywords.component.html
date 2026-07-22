@@ -13,8 +13,8 @@
     @for (keyword of keywords; track keyword) {
       <gn-ui-keyword-badge
         [keyword]="keyword"
-        [editMode]="true"
-        (remove)="removeKeyword($event)"
+        [editable]="true"
+        (keywordRemove)="removeKeyword($event)"
       ></gn-ui-keyword-badge>
     }
   </div>

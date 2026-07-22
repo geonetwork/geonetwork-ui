@@ -1,24 +1,14 @@
-<ng-template #keywordTooltip>
-  @for (segment of segments; track $index) {
-    <span [class.font-bold]="$last">{{ segment }}</span>
-    @if (!$last) {
-      <span> &gt; </span>
-    }
+<gn-ui-badge
+  [clickable]="!editable"
+  [removable]="editable"
+  (badgeClicked)="keywordClick.emit(keyword)"
+  (badgeRemoveClicked)="keywordRemove.emit(keyword)"
+  ><ng-container>{{ keyword.label }}</ng-container>
+  @if (editable && isPlaceWithoutExtent) {
+    <ng-icon
+      [title]="'editor.record.form.keywords.place.withoutExtent' | translate"
+      class="!text-[1.4em] ml-1"
+      name="matWarningAmberOutline"
+    ></ng-icon>
   }
-</ng-template>
-<gn-ui-popover [content]="keywordTooltip">
-  <gn-ui-badge
-    [clickable]="!editMode"
-    [removable]="editMode"
-    (badgeClicked)="keywordClick.emit(keyword)"
-    (badgeRemoveClicked)="remove.emit(keyword)"
-    ><ng-container>{{ keyword.label }}</ng-container>
-    @if (editMode && isPlaceWithoutExtent) {
-      <ng-icon
-        [title]="'editor.record.form.keywords.place.withoutExtent' | translate"
-        class="!text-[1.4em] ml-1"
-        name="matWarningAmberOutline"
-      ></ng-icon>
-    }
-  </gn-ui-badge>
-</gn-ui-popover>
+</gn-ui-badge>

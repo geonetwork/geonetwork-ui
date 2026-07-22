@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 
 import { BadgeComponent } from './badge.component'
-import { ButtonComponent } from '../button/button.component'
 
 @Component({
   imports: [BadgeComponent],
@@ -38,10 +37,10 @@ describe('BadgeComponent', () => {
     fixture.componentRef.setInput('clickable', true)
     fixture.detectChanges()
 
-    const button = fixture.debugElement.query(By.directive(ButtonComponent))
+    const button = fixture.debugElement.query(By.css('button'))
     expect(button).toBeTruthy()
 
-    button.query(By.css('button')).nativeElement.click()
+    button.nativeElement.click()
     expect(badgeClicked).toHaveBeenCalledTimes(1)
   })
 
