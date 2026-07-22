@@ -111,7 +111,7 @@
     "@ngrx/schematics": "20.1.0",
     "@ngrx/store": "20.1.0",
     "@ngrx/store-devtools": "20.1.0",
-    "@nx/angular": "~22.6.0",
+    "@nx/angular": "~23.1.0",
     "@nx/cypress": "22.0.4",
     "@nx/eslint": "22.0.4",
     "@nx/eslint-plugin": "22.0.4",
