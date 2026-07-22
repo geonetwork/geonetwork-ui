@@ -62,10 +62,17 @@ describe('EditorFacade', () => {
       expect(spy).toHaveBeenCalledWith(setPage)
     })
 
-    it('saveRecord() should dispatch saveRecord action', () => {
+    it('saveRecord() should dispatch saveRecord action with publish flag set to false', () => {
       const spy = jest.spyOn(store, 'dispatch')
       facade.saveRecord()
-      const action = EditorActions.saveRecord()
+      const action = EditorActions.saveRecord({ publish: false })
+      expect(spy).toHaveBeenCalledWith(action)
+    })
+
+    it('saveAndPublishRecord() should dispatch saveRecord action with publish flag set to true', () => {
+      const spy = jest.spyOn(store, 'dispatch')
+      facade.saveAndPublishRecord()
+      const action = EditorActions.saveRecord({ publish: true })
       expect(spy).toHaveBeenCalledWith(action)
     })
 

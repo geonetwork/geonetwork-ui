@@ -28,30 +28,37 @@ export class EditorEffects {
         this.store.select(selectRecordSource),
         this.store.select(selectEditorConfig)
       ),
-      switchMap(([, record, recordSource, fieldsConfig]) =>
-        this.editorService.saveRecord(record, recordSource, fieldsConfig).pipe(
-          switchMap(([savedRecord, savedRecordSource]) => {
-            const actions: Action[] = [EditorActions.saveRecordSuccess()]
+      switchMap(([{ publish }, record, recordSource, fieldsConfig]) =>
+        this.editorService
+          .saveRecord(record, recordSource, fieldsConfig, publish)
+          .pipe(
+            switchMap(([savedRecord, savedRecordSource]) => {
+              const actions: Action[] = [EditorActions.saveRecordSuccess()]
 
-            if (!record?.uniqueIdentifier) {
-              actions.push(
-                EditorActions.openRecord({
-                  record: savedRecord,
-                  recordSource: savedRecordSource,
+              if (publish) {
+                // saving without publishing doesn't unpublish
+                actions.push(EditorActions.isPublished({ isPublished: true }))
+              }
+
+              if (!record?.uniqueIdentifier) {
+                actions.push(
+                  EditorActions.openRecord({
+                    record: savedRecord,
+                    recordSource: savedRecordSource,
+                  })
+                )
+              }
+
+              return of(...actions)
+            }),
+            catchError((error) =>
+              of(
+                EditorActions.saveRecordFailure({
+                  error,
                 })
               )
-            }
-
-            return of(...actions)
-          }),
-          catchError((error) =>
-            of(
-              EditorActions.saveRecordFailure({
-                error,
-              })
             )
           )
-        )
       )
     )
   )

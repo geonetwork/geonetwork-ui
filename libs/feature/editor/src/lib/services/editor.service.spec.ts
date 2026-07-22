@@ -54,18 +54,19 @@ describe('EditorService', () => {
   })
 
   describe('saveRecord', () => {
-    describe('Existing records', () => {
-      let savedRecord: [CatalogRecord, string, boolean]
+    describe('Existing records, publish true', () => {
+      let savedRecord: [CatalogRecord, string]
       beforeEach(async () => {
         savedRecord = await firstValueFrom(
           service.saveRecord(
             SAMPLE_RECORD,
             '<xml>blabla</xml>',
-            DEFAULT_CONFIGURATION
+            DEFAULT_CONFIGURATION,
+            true
           )
         )
       })
-      it('calls with publishToAll true for existing records', () => {
+      it('calls with publishToAll', () => {
         const expected = {
           ...SAMPLE_RECORD,
           recordUpdated: expect.any(Date),
@@ -85,8 +86,8 @@ describe('EditorService', () => {
         expect(arg.recordUpdated).not.toEqual(SAMPLE_RECORD.recordUpdated)
       })
     })
-    describe('New records', () => {
-      let savedRecord: [CatalogRecord, string, boolean]
+    describe('New records, publish false', () => {
+      let savedRecord: [CatalogRecord, string]
       const NEW_RECORD = {
         ...SAMPLE_RECORD,
         uniqueIdentifier: null,
@@ -97,7 +98,8 @@ describe('EditorService', () => {
           service.saveRecord(
             NEW_RECORD,
             '<xml>blabla</xml>',
-            DEFAULT_CONFIGURATION
+            DEFAULT_CONFIGURATION,
+            false
           )
         )
       })

@@ -20,7 +20,7 @@ class EditorFacadeMock {
     recordUpdated: new Date('2023-01-01'),
     extras: { ownerInfo: '1|John|Doe' },
   })
-  saveRecord = jest.fn()
+  saveAndPublishRecord = jest.fn()
   saveSuccess$ = new BehaviorSubject(true)
   checkHasRecordChanged = jest.fn()
   hasRecordChanged$ = new Subject()
@@ -144,12 +144,12 @@ describe('PublishButtonComponent', () => {
     })
   })
 
-  describe('#saveRecord', () => {
+  describe('#saveAndPublishRecord', () => {
     beforeEach(async () => {
-      await component.saveRecord()
+      await component.saveAndPublishRecord()
     })
-    it('should call facade.saveRecord', () => {
-      expect(facade.saveRecord).toHaveBeenCalled()
+    it('should call facade.saveAndPublishRecord', () => {
+      expect(facade.saveAndPublishRecord).toHaveBeenCalled()
       expect(recordsApiService.setRecordOwnership).toHaveBeenCalledWith(
         304,
         0,
@@ -158,10 +158,13 @@ describe('PublishButtonComponent', () => {
     })
   })
   describe('#confirmPublish', () => {
-    it('should call saveRecord', () => {
-      const saveRecordSpy = jest.spyOn(component, 'saveRecord')
+    it('should call saveAndPublishRecord', () => {
+      const saveAndPublishRecordSpy = jest.spyOn(
+        component,
+        'saveAndPublishRecord'
+      )
       component.confirmPublish()
-      expect(saveRecordSpy).toHaveBeenCalled()
+      expect(saveAndPublishRecordSpy).toHaveBeenCalled()
     })
   })
 
@@ -179,28 +182,34 @@ describe('PublishButtonComponent', () => {
         component,
         'openConfirmationMenu'
       )
-      const saveRecordSpy = jest.spyOn(component, 'saveRecord')
+      const saveAndPublishRecordSpy = jest.spyOn(
+        component,
+        'saveAndPublishRecord'
+      )
 
       component.verifyPublishConditions()
       facade.hasRecordChanged$.next(null)
       facade.hasRecordChanged$.next({ date: new Date(), user: 'John Doe' })
 
       expect(openConfirmationMenuSpy).toHaveBeenCalled()
-      expect(saveRecordSpy).not.toHaveBeenCalled()
+      expect(saveAndPublishRecordSpy).not.toHaveBeenCalled()
     })
 
-    it('should call saveRecord if hasRecordChanged emits without a date', () => {
+    it('should call saveAndPublishRecord if hasRecordChanged emits without a date', () => {
       const openConfirmationMenuSpy = jest.spyOn(
         component,
         'openConfirmationMenu'
       )
-      const saveRecordSpy = jest.spyOn(component, 'saveRecord')
+      const saveAndPublishRecordSpy = jest.spyOn(
+        component,
+        'saveAndPublishRecord'
+      )
 
       component.verifyPublishConditions()
       facade.hasRecordChanged$.next(null)
       facade.hasRecordChanged$.next({ date: undefined, user: undefined })
 
-      expect(saveRecordSpy).toHaveBeenCalled()
+      expect(saveAndPublishRecordSpy).toHaveBeenCalled()
       expect(openConfirmationMenuSpy).not.toHaveBeenCalled()
     })
   })
