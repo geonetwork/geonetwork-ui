@@ -41,8 +41,8 @@
       class="block w-full"
       extraClass="w-full"
       [type]="'email'"
-      [value]="contact.organization?.email ?? ''"
-      (valueChange)="handleOrganizationChange({ email: $event })"
+      [value]="contact.email ?? ''"
+      (valueChange)="emitContactChange()"
       [placeholder]="
         'editor.record.form.field.contactDetails.email.placeholder' | translate
       "
