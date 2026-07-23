@@ -39,7 +39,8 @@ export abstract class RecordsRepositoryInterface {
    * @returns Observable<[CatalogRecord, string, boolean] | null>
    */
   abstract openRecordForEdition(
-    uniqueIdentifier: string
+    uniqueIdentifier: string,
+    disableDraft?: boolean
   ): Observable<[CatalogRecord, string, boolean] | null>
 
   /**

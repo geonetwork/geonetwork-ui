@@ -15,9 +15,8 @@ describe('ContactDetailsFormComponent', () => {
     lastName: 'Doe',
     organization: {
       name: 'Org1',
-      email: 'john.doe@example.com',
     } as Organization,
-    email: '',
+    email: 'john.doe@example.com',
     role: 'point_of_contact',
     address: '',
     phone: '',
@@ -61,14 +60,9 @@ describe('ContactDetailsFormComponent', () => {
     })
 
     it('emits the updated email', () => {
-      component.handleOrganizationChange({ email: 'jane@example.com' })
-      expect(emitted).toEqual({
-        ...mockContact,
-        organization: {
-          ...mockContact.organization,
-          email: 'jane@example.com',
-        },
-      })
+      component.contact.email = 'jane@example.com'
+      component.emitContactChange()
+      expect(emitted.email).toEqual('jane@example.com')
     })
 
     it('emits the updated organization name', () => {
@@ -111,13 +105,6 @@ describe('ContactDetailsFormComponent', () => {
         role: 'unspecified',
         organization: undefined,
       }
-    })
-
-    it('creates the organization when setting the email', () => {
-      let emitted: Individual
-      component.contactChange.subscribe((c) => (emitted = c))
-      component.handleOrganizationChange({ email: 'john@example.com' })
-      expect(emitted.organization).toEqual({ email: 'john@example.com' })
     })
 
     it('creates the organization when setting the name', () => {

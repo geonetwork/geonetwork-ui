@@ -44,6 +44,7 @@ import { FormFieldContactsComponent } from './form-field-contacts/form-field-con
 import { FormFieldKeywordsComponent } from './form-field-keywords/form-field-keywords.component'
 import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-resources/form-field-online-link-resources.component'
 import { FormFieldOnlineResourcesComponent } from './form-field-online-resources/form-field-online-resources.component'
+import { FormFieldOnlineSingleLinkResourceComponent } from './form-field-online-single-link-resource/form-field-online-single-link-resource.component'
 import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
@@ -78,6 +79,7 @@ import { FormFieldTopicsComponent } from './form-field-topics/form-field-topics.
     FormFieldContactsForResourceComponent,
     FormFieldOnlineResourcesComponent,
     FormFieldOnlineLinkResourcesComponent,
+    FormFieldOnlineSingleLinkResourceComponent,
     FormFieldContactsComponent,
     FormFieldConstraintsComponent,
     FormFieldConstraintsShortcutsComponent,

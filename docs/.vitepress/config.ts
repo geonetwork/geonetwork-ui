@@ -131,6 +131,7 @@ function sidebarForDevelopers() {
         { text: 'Coding guidelines', link: '/developers/code-guide' },
         { text: 'Styling guidelines', link: '/developers/styling-guide' },
         { text: 'Caching', link: '/developers/caching' },
+        { text: 'Editor draft system', link: '/developers/editor-draft' },
         { text: 'ElasticSearch index', link: '/developers/elasticsearch' },
         { text: 'Internationalization', link: '/developers/i18n' },
         { text: 'Interactive maps', link: '/developers/maps' },
