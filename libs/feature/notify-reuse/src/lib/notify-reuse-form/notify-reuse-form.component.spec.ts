@@ -255,10 +255,12 @@ describe('NotifyReuseFormComponent', () => {
       expect(saved.reuseType).toBe('application')
       expect(saved.title).toBe('My great reuse')
       expect(saved.onlineResources).toEqual([
-        expect.objectContaining({
+        {
           type: 'link',
           url: new URL('https://example.com/my-reuse'),
-        }),
+          name: 'record.notify.reuse.resource.name',
+          description: 'record.notify.reuse.resource.description',
+        },
       ])
       expect(saved.contacts).toEqual([
         { email: 'reuser@example.com', role: 'point_of_contact' },
@@ -297,7 +299,7 @@ describe('NotifyReuseFormComponent', () => {
       expect(component['overlayRef']).toBeFalsy()
     })
 
-    it('clears the loading state, closes the overlay and notifies on error', () => {
+    it('clears the loading state, keeps the overlay open and notifies on error', () => {
       recordsRepository.saveRecord.mockReturnValueOnce(
         throwError(() => new Error('save failed'))
       )
@@ -312,14 +314,14 @@ describe('NotifyReuseFormComponent', () => {
       component.submit()
 
       expect(component.loading()).toBe(false)
-      expect(component['overlayRef']).toBeFalsy()
+      expect(component['overlayRef']).toBeTruthy()
       expect(showNotification).toHaveBeenCalledWith(
         expect.objectContaining({
           type: 'error',
           title: 'record.notify.reuse.form.error.title',
           text: 'record.notify.reuse.form.error.body',
         }),
-        7000,
+        undefined,
         expect.any(Error)
       )
     })

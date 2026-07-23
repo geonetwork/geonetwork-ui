@@ -130,7 +130,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
 
     this.overlayRef = this.overlay.create({
       positionStrategy,
-      hasBackdrop: true,
+      hasBackdrop: false,
       backdropClass: 'cdk-overlay-transparent-backdrop',
       scrollStrategy: this.scrollStrategies.noop(),
     })
@@ -142,6 +142,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
   }
 
   closeOverlay() {
+    this.clearInputs()
     this.overlayRef?.dispose()
     this.overlayRef = null
   }
@@ -195,18 +196,15 @@ export class NotifyReuseFormComponent implements OnDestroy {
       temporalExtents: [],
     }
     this.loading.set(true)
-    this.recordsRepository.saveRecord(reuseRecord).subscribe({
+    this.recordsRepository.saveRecord(reuseRecord, undefined, false).subscribe({
       next: (uniqueIdentifier) => {
         this.loading.set(false)
-        this.clearInputs()
         this.closeOverlay()
         const baseUrl = `${this.reuseFormUrl ?? ''}`.replace(/\/+$/, '')
         window.open(`${baseUrl}/edit/${uniqueIdentifier}`, '_self')
       },
       error: (err) => {
         this.loading.set(false)
-        this.clearInputs()
-        this.closeOverlay()
         this.notificationsService.showNotification(
           {
             type: 'error',
@@ -215,7 +213,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
             ),
             text: this.translate.instant('record.notify.reuse.form.error.body'),
           },
-          7000,
+          undefined,
           err
         )
       },
