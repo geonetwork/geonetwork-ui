@@ -118,6 +118,9 @@ export const appRoutes: Route[] = [
         path: 'light-edit/:uuid',
         component: LightEditPageComponent,
         resolve: { record: EditRecordResolver },
+        data: {
+          disableDraft: true,
+        },
       },
     ],
   },

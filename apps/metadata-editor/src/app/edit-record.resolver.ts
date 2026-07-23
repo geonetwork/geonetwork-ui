@@ -17,8 +17,9 @@ export class EditRecordResolver {
   resolve(
     route: ActivatedRouteSnapshot
   ): Observable<[CatalogRecord, string, boolean]> {
+    const disableDraft = route.data['disableDraft']
     return this.recordsRepository
-      .openRecordForEdition(route.paramMap.get('uuid'))
+      .openRecordForEdition(route.paramMap.get('uuid'), disableDraft)
       .pipe(
         catchError((error) => {
           this.notificationsService.showNotification(
