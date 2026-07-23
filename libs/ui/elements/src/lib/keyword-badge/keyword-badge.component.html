@@ -1,0 +1,14 @@
+<gn-ui-badge
+  [clickable]="!editable"
+  [removable]="editable"
+  (badgeClicked)="keywordClick.emit(keyword)"
+  (badgeRemoveClicked)="keywordRemove.emit(keyword)"
+  ><ng-container>{{ keyword.label }}</ng-container>
+  @if (editable && isPlaceWithoutExtent) {
+    <ng-icon
+      [title]="'editor.record.form.keywords.place.withoutExtent' | translate"
+      class="!text-[1.4em] ml-1"
+      name="matWarningAmberOutline"
+    ></ng-icon>
+  }
+</gn-ui-badge>

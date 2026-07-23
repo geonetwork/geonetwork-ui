@@ -39,14 +39,6 @@ html.record-page-active {
   @apply text-primary-lightest;
 }
 
-.tippy-box[data-theme~='dark'] {
-  background-color: var(--color-gray-950);
-}
-
-.tippy-box[data-theme~='dark'] .tippy-arrow {
-  color: var(--color-gray-950);
-}
-
 /* this targets the main search field */
 gn-ui-autocomplete .gn-ui-text-input {
   @apply focus:outline-white focus:outline-2 focus:outline-dotted focus:outline-offset-2 shadow-xl;

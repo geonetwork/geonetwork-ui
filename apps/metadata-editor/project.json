@@ -38,6 +38,7 @@
           "tailwind.base.css",
           "apps/metadata-editor/src/styles.css",
           "node_modules/ol/ol.css",
+          "node_modules/tippy.js/dist/tippy.css",
           "node_modules/flag-icons/css/flag-icons.min.css"
         ],
         "scripts": [],

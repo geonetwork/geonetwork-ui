@@ -161,7 +161,7 @@ describe('Sections', () => {
 
     // it should display the keywords
     cy.get('.metadata-info-keywords')
-      .find('gn-ui-button')
+      .find('gn-ui-badge')
       .should('have.length.gt', 0)
 
     // it should display four expandable panels
@@ -263,7 +263,7 @@ describe('Sections', () => {
 
     // it should go to dataset search page when clicking on keyword and filter by keyword
     cy.get('.metadata-info-keywords')
-      .find('gn-ui-button')
+      .find('gn-ui-badge')
       .should('have.length.gt', 0)
       .eq(2)
       .as('keyword')

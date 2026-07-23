@@ -564,9 +564,8 @@ describe('editor form', () => {
     it('classification', () => {
       // keywords
       // should show the current keywords
-      cy.get('gn-ui-form-field-keywords')
-        .find('gn-ui-badge')
-        .should('have.length', 41)
+      cy.get('gn-ui-form-field-keywords').find('gn-ui-badge').as('keywords')
+      cy.get('@keywords').should('have.length', 41)
 
       // should add a keyword
       cy.editor_wrapPreviousDraft(recordUuid)
@@ -574,12 +573,8 @@ describe('editor form', () => {
       cy.get('mat-option').first().click()
       cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
-      cy.get('gn-ui-form-field-keywords')
-        .find('gn-ui-badge')
-        .should('have.length', 42)
-        .last()
-        .find('span')
-        .should('have.text', 'Addresses ')
+      cy.get('@keywords').should('have.length', 42)
+      cy.get('@keywords').last().should('have.text', 'Addresses')
 
       // should close the autocomplete and clear the input after selecting a keyword
       cy.get('gn-ui-form-field-keywords').find('gn-ui-autocomplete').type('a')
@@ -592,22 +587,15 @@ describe('editor form', () => {
 
       // should delete a keyword
       cy.editor_wrapPreviousDraft(recordUuid)
-      cy.get('gn-ui-form-field-keywords')
-        .find('gn-ui-badge')
-        .last()
-        .find('gn-ui-button')
-        .click()
+      cy.get('@keywords').last().find('gn-ui-button').click()
       cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
-      cy.get('gn-ui-form-field-keywords')
-        .find('gn-ui-badge')
-        .should('have.length', 41)
+      cy.get('@keywords').should('have.length', 41)
 
       // Topics
       // should show the current topics
-      cy.get('gn-ui-form-field-topics')
-        .find('gn-ui-badge')
-        .should('have.length', 1)
+      cy.get('gn-ui-form-field-topics').find('gn-ui-badge').as('topics')
+      cy.get('@topics').should('have.length', 1)
 
       // should add a topic
       cy.editor_wrapPreviousDraft(recordUuid)
@@ -618,25 +606,17 @@ describe('editor form', () => {
       cy.clickOnBody()
       cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
-      cy.get('gn-ui-form-field-topics')
-        .find('gn-ui-badge')
+      cy.get('@topics')
         .should('have.length', 2)
         .last()
-        .find('span')
         .should('have.text', 'Economy ')
 
       // should delete a topic
       cy.editor_wrapPreviousDraft(recordUuid)
-      cy.get('gn-ui-form-field-topics')
-        .find('gn-ui-badge')
-        .last()
-        .find('gn-ui-button')
-        .click()
+      cy.get('@topics').last().find('gn-ui-button').click()
       cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
-      cy.get('gn-ui-form-field-topics')
-        .find('gn-ui-badge')
-        .should('have.length', 1)
+      cy.get('@topics').should('have.length', 1)
     })
 
     it('licenses & constraints', () => {

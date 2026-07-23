@@ -111,46 +111,8 @@ describe('MetadataInfoComponent', () => {
         expect(displayedElement).toBeFalsy()
       })
     })
-    describe('keywordTooltipSegments', () => {
-      beforeEach(() => {
-        fixture = TestBed.createComponent(MetadataInfoComponent)
-        component = fixture.componentInstance
-      })
-      it('returns the hierarchy path when the keyword has one', () => {
-        expect(
-          component.keywordTooltipSegments({
-            label: 'foo',
-            type: 'theme',
-            hierarchyPath: ['Root', 'foo'],
-          })
-        ).toEqual(['Root', 'foo'])
-      })
-      it('returns the thesaurus name and the label when there is no hierarchy path', () => {
-        expect(
-          component.keywordTooltipSegments({
-            label: 'foo',
-            type: 'theme',
-            thesaurus: { id: '1', name: 'Some thesaurus' },
-          })
-        ).toEqual(['Some thesaurus', 'foo'])
-      })
-      it('returns the translated type label and the label for a free keyword', () => {
-        expect(
-          component.keywordTooltipSegments({
-            label: 'éolienne',
-            type: 'theme',
-          })
-        ).toEqual(['Theme', 'éolienne'])
-        expect(
-          component.keywordTooltipSegments({
-            label: 'données ouvertes',
-            type: 'other',
-          })
-        ).toEqual(['Keywords', 'données ouvertes'])
-      })
-    })
-    describe('tooltip rendering', () => {
-      it('wraps every keyword pill in a popover', () => {
+    describe('keyword badges', () => {
+      it('renders a keyword badge for every keyword', () => {
         fixture = TestBed.createComponent(MetadataInfoComponent)
         component = fixture.componentInstance
         component.metadata = {
@@ -161,23 +123,28 @@ describe('MetadataInfoComponent', () => {
           ],
         } as DatasetRecord
         fixture.detectChanges()
-        const popovers = fixture.debugElement.queryAll(By.css('gn-ui-popover'))
-        expect(popovers.length).toBe(2)
+        const badges = fixture.debugElement.queryAll(
+          By.css('gn-ui-keyword-badge')
+        )
+        expect(badges.length).toBe(2)
       })
-      it('still emits the keyword event when clicked through the popover', () => {
+      it('emits the keyword event when a keyword badge is clicked', () => {
         fixture = TestBed.createComponent(MetadataInfoComponent)
         component = fixture.componentInstance
+        const keyword = {
+          label: 'foo',
+          type: 'theme',
+          hierarchyPath: ['Root', 'foo'],
+        }
         component.metadata = {
           ...datasetRecordsFixture()[0],
-          keywords: [
-            { label: 'foo', type: 'theme', hierarchyPath: ['Root', 'foo'] },
-          ],
+          keywords: [keyword],
         } as DatasetRecord
         let emitted
         component.keyword.subscribe((k) => (emitted = k))
         fixture.detectChanges()
-        const button = fixture.debugElement.query(By.css('gn-ui-button'))
-        button.triggerEventHandler('buttonClick', null)
+        const badge = fixture.debugElement.query(By.css('gn-ui-keyword-badge'))
+        badge.triggerEventHandler('keywordClick', keyword)
         expect(emitted.label).toBe('foo')
       })
     })

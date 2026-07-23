@@ -13,6 +13,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { matClose } from '@ng-icons/material-icons/baseline'
+import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-badge',
@@ -34,8 +35,16 @@ export class BadgeComponent {
   @Input() clickable? = false
   @Input() removable? = false
   @Output() badgeRemoveClicked = new EventEmitter<void>()
+  @Output() badgeClicked = new EventEmitter<void>()
 
   removeBadge() {
     this.badgeRemoveClicked.emit()
+  }
+
+  handleClick(event: MouseEvent) {
+    this.badgeClicked.emit()
+    event.preventDefault()
+    ;(event.currentTarget as HTMLElement).blur()
+    propagateToDocumentOnly(event)
   }
 }
