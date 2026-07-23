@@ -361,8 +361,10 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   }
 
   openRecordForEdition(
-    uniqueIdentifier: string
+    uniqueIdentifier: string,
+    disableDraft?: boolean
   ): Observable<[CatalogRecord, string, boolean] | null> {
+    this.disableDraft = disableDraft ?? this.disableDraft
     const draft$ = this.disableDraft
       ? of(null)
       : of(this.getRecordFromLocalStorage(uniqueIdentifier))
