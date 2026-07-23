@@ -197,7 +197,7 @@ describe('NotifyReuseFormComponent', () => {
     it('opens the overlay', () => {
       component.openOverlay()
       expect(overlayContainerElement.textContent).toContain(
-        'record.notify.reuse.form.title'
+        'notify.reuse.form.title'
       )
     })
 
@@ -205,18 +205,18 @@ describe('NotifyReuseFormComponent', () => {
       component.openOverlay()
       component.closeOverlay()
       expect(overlayContainerElement.textContent).not.toContain(
-        'record.notify.reuse.form.title'
+        'notify.reuse.form.title'
       )
     })
 
     it('toggles the overlay open then closed', () => {
       component.toggleOverlay()
       expect(overlayContainerElement.textContent).toContain(
-        'record.notify.reuse.form.title'
+        'notify.reuse.form.title'
       )
       component.toggleOverlay()
       expect(overlayContainerElement.textContent).not.toContain(
-        'record.notify.reuse.form.title'
+        'notify.reuse.form.title'
       )
     })
 
@@ -224,7 +224,7 @@ describe('NotifyReuseFormComponent', () => {
       component.openOverlay()
       component.ngOnDestroy()
       expect(overlayContainerElement.textContent).not.toContain(
-        'record.notify.reuse.form.title'
+        'notify.reuse.form.title'
       )
     })
   })
@@ -258,8 +258,8 @@ describe('NotifyReuseFormComponent', () => {
         {
           type: 'link',
           url: new URL('https://example.com/my-reuse'),
-          name: 'record.notify.reuse.resource.name',
-          description: 'record.notify.reuse.resource.description',
+          name: 'https://example.com/my-reuse',
+          description: 'notify.reuse.link.description',
         },
       ])
       expect(saved.contacts).toEqual([
@@ -318,8 +318,8 @@ describe('NotifyReuseFormComponent', () => {
       expect(showNotification).toHaveBeenCalledWith(
         expect.objectContaining({
           type: 'error',
-          title: 'record.notify.reuse.form.error.title',
-          text: 'record.notify.reuse.form.error.body',
+          title: 'notify.reuse.form.error.title',
+          text: 'notify.reuse.form.error.body',
         }),
         undefined,
         expect.any(Error)

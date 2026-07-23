@@ -41,8 +41,8 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { toSignal } from '@angular/core/rxjs-interop'
 import { MatProgressSpinner } from '@angular/material/progress-spinner'
 
-marker('record.notify.reuse.form.error.title')
-marker('record.notify.reuse.form.error.body')
+marker('notify.reuse.form.error.title')
+marker('notify.reuse.form.error.body')
 
 export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
 
@@ -156,10 +156,8 @@ export class NotifyReuseFormComponent implements OnDestroy {
     const onlineResource: OnlineLinkResource = {
       type: 'link',
       url: new URL(this.url()),
-      name: this.translate.instant('record.notify.reuse.resource.name'),
-      description: this.translate.instant(
-        'record.notify.reuse.resource.description'
-      ),
+      name: this.url(),
+      description: this.translate.instant('notify.reuse.link.description'),
     }
     const contact: Individual = {
       email: this.email(),
@@ -208,10 +206,8 @@ export class NotifyReuseFormComponent implements OnDestroy {
         this.notificationsService.showNotification(
           {
             type: 'error',
-            title: this.translate.instant(
-              'record.notify.reuse.form.error.title'
-            ),
-            text: this.translate.instant('record.notify.reuse.form.error.body'),
+            title: this.translate.instant('notify.reuse.form.error.title'),
+            text: this.translate.instant('notify.reuse.form.error.body'),
           },
           undefined,
           err
