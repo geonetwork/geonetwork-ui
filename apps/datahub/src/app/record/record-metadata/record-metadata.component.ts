@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,9 +7,27 @@ import {
   Input,
   ViewChild,
 } from '@angular/core'
+import { MatDialog, MatDialogModule } from '@angular/material/dialog'
+import { MatTabsModule } from '@angular/material/tabs'
+import {
+  CatalogRecord,
+  Keyword,
+  Organization,
+} from '@geonetwork-ui/common/domain/model/record'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
+import {
+  NotifyReuseFormComponent,
+  REUSE_FORM_URL,
+} from '@geonetwork-ui/feature/notify-reuse'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
+  ConfirmationDialogComponent,
   ErrorComponent,
   ErrorType,
   MetadataCatalogComponent,
@@ -18,8 +37,19 @@ import {
   MetadataQualityComponent,
   ServiceCapabilitiesComponent,
 } from '@geonetwork-ui/ui/elements'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
+import { iconoirAppWindow } from '@ng-icons/iconoir'
+import {
+  matChatOutline,
+  matDeleteOutline,
+} from '@ng-icons/material-icons/outline'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { combineLatest, Observable, of } from 'rxjs'
-import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import {
   filter,
   map,
@@ -28,48 +58,14 @@ import {
   switchMap,
   take,
 } from 'rxjs/operators'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import {
-  CatalogRecord,
-  Keyword,
-  Organization,
-} from '@geonetwork-ui/common/domain/model/record'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { CommonModule } from '@angular/common'
-import { MatTabsModule } from '@angular/material/tabs'
-import { RecordUserFeedbacksComponent } from '../record-user-feedbacks/record-user-feedbacks.component'
-import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
 import { RecordApisComponent } from '../record-apis/record-apis.component'
-import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
-import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
-import {
-  matChatOutline,
-  matDeleteOutline,
-} from '@ng-icons/material-icons/outline'
-import { iconoirAppWindow } from '@ng-icons/iconoir'
+import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
 import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-feature-catalog.component'
+import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import {
-  NotifyReuseFormComponent,
-  REUSE_FORM_URL,
-} from '@geonetwork-ui/feature/notify-reuse'
-import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import {
-  TranslateDirective,
-  TranslatePipe,
-  TranslateService,
-} from '@ngx-translate/core'
-import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
-import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
+import { RecordUserFeedbacksComponent } from '../record-user-feedbacks/record-user-feedbacks.component'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -100,6 +96,7 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
     MetadataDoiComponent,
     NotifyReuseFormComponent,
     NgIcon,
+    MatDialogModule,
   ],
   viewProviders: [
     provideIcons({ matChatOutline, iconoirAppWindow, matDeleteOutline }),
@@ -118,6 +115,7 @@ export class RecordMetadataComponent {
   private notificationsService = inject(NotificationsService)
   private routerFacade = inject(RouterFacade)
   private translateService = inject(TranslateService)
+  private dialog = inject(MatDialog)
   reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
 
   @Input() metadataQualityDisplay: boolean
@@ -267,8 +265,7 @@ export class RecordMetadataComponent {
         record?.kind === 'reuse' && this.reuseFormUrl
           ? this.recordsRepository.canDelete(record as CatalogRecord)
           : of(false)
-      ),
-      startWith(false)
+      )
     )
 
   sourceLabel$ = this.metadataViewFacade.metadata$.pipe(
@@ -320,10 +317,36 @@ export class RecordMetadataComponent {
   }
 
   deleteReuse() {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: this.translateService.instant(
+          'record.reuse.delete.confirmation.title'
+        ),
+        message: this.translateService.instant(
+          'record.reuse.delete.confirmation.message'
+        ),
+        confirmText: this.translateService.instant(
+          'record.reuse.delete.confirmation.confirmText'
+        ),
+        cancelText: this.translateService.instant(
+          'record.reuse.delete.confirmation.cancelText'
+        ),
+        focusCancel: true,
+      },
+      restoreFocus: true,
+    })
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.performReuseDeletion()
+      }
+    })
+  }
+
+  private performReuseDeletion() {
     this.metadataUuid$.pipe(take(1)).subscribe((uuid) =>
       this.recordsRepository.deleteRecord(uuid).subscribe({
         next: () => {
-          this.recordsRepository.clearRecordDraft(uuid)
           this.routerFacade.setSearch()
         },
         error: (error) => {
@@ -333,11 +356,11 @@ export class RecordMetadataComponent {
               title: this.translateService.instant(
                 'record.reuse.deleteError.title'
               ),
-              text: this.translateService.instant(
+              text: `${this.translateService.instant(
                 'record.reuse.deleteError.body'
-              ),
+              )} ${error}`,
             },
-            7000,
+            undefined,
             error
           )
         },
