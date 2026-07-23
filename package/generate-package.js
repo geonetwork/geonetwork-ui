@@ -135,10 +135,6 @@ copySourceDirectories()
       path.join(PROJECT_ROOT_PATH, 'tailwind.base.config.js'),
       PACKAGE_DIST_PATH
     )
-    await copyFile(
-      path.join(PROJECT_ROOT_PATH, 'material-styles.css'),
-      PACKAGE_DIST_PATH
-    )
     await copyFile(path.join(CURRENT_DIR_PATH, 'style.css'), PACKAGE_DIST_PATH)
     await copyFile(path.join(CURRENT_DIR_PATH, 'index.ts'), PACKAGE_DIST_PATH)
     await fs.cp(
