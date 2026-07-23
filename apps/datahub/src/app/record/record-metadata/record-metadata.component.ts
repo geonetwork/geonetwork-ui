@@ -9,10 +9,12 @@ import {
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
+  ConfirmationDialogComponent,
   ErrorComponent,
   ErrorType,
   MetadataCatalogComponent,
   MetadataContactComponent,
+  MetadataDoiComponent,
   MetadataInfoComponent,
   MetadataQualityComponent,
   ServiceCapabilitiesComponent,
@@ -61,9 +63,9 @@ import { RecordLinkedRecordsComponent } from '../record-linked-records/record-li
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -93,6 +95,7 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
     TranslateDirective,
     TranslatePipe,
     MetadataDoiComponent,
+    MatDialogModule,
   ],
   viewProviders: [
     provideIcons({ matChatOutline, iconoirAppWindow, matDeleteOutline }),
@@ -111,6 +114,7 @@ export class RecordMetadataComponent {
   private notificationsService = inject(NotificationsService)
   private routerFacade = inject(RouterFacade)
   private translateService = inject(TranslateService)
+  private dialog = inject(MatDialog)
   reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
 
   @Input() metadataQualityDisplay: boolean
@@ -261,8 +265,7 @@ export class RecordMetadataComponent {
         record?.kind === 'reuse' && this.reuseFormUrl
           ? this.recordsRepository.canDelete(record as CatalogRecord)
           : of(false)
-      ),
-      startWith(false)
+      )
     )
 
   sourceLabel$ = this.metadataViewFacade.metadata$.pipe(
@@ -322,10 +325,36 @@ export class RecordMetadataComponent {
   }
 
   deleteReuse() {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: this.translateService.instant(
+          'record.reuse.delete.confirmation.title'
+        ),
+        message: this.translateService.instant(
+          'record.reuse.delete.confirmation.message'
+        ),
+        confirmText: this.translateService.instant(
+          'record.reuse.delete.confirmation.confirmText'
+        ),
+        cancelText: this.translateService.instant(
+          'record.reuse.delete.confirmation.cancelText'
+        ),
+        focusCancel: true,
+      },
+      restoreFocus: true,
+    })
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.performReuseDeletion()
+      }
+    })
+  }
+
+  private performReuseDeletion() {
     this.metadataUuid$.pipe(take(1)).subscribe((uuid) =>
       this.recordsRepository.deleteRecord(uuid).subscribe({
         next: () => {
-          this.recordsRepository.clearRecordDraft(uuid)
           this.routerFacade.setSearch()
         },
         error: (error) => {
@@ -335,11 +364,11 @@ export class RecordMetadataComponent {
               title: this.translateService.instant(
                 'record.reuse.deleteError.title'
               ),
-              text: this.translateService.instant(
+              text: `${this.translateService.instant(
                 'record.reuse.deleteError.body'
-              ),
+              )} ${error}`,
             },
-            7000,
+            undefined,
             error
           )
         },

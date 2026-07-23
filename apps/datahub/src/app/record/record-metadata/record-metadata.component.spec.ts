@@ -10,7 +10,7 @@ import {
   MetadataContactComponent,
   MetadataInfoComponent,
 } from '@geonetwork-ui/ui/elements'
-import { BehaviorSubject, of, throwError } from 'rxjs'
+import { BehaviorSubject, of, Subject, throwError } from 'rxjs'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
@@ -26,6 +26,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { MatDialog } from '@angular/material/dialog'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -78,7 +79,6 @@ class PlatformServiceMock {
 class RecordsRepositoryMock {
   canDelete = jest.fn(() => of(false))
   deleteRecord = jest.fn(() => of(undefined))
-  clearRecordDraft = jest.fn()
 }
 
 class RouterFacadeMock {
@@ -87,6 +87,14 @@ class RouterFacadeMock {
 
 class NotificationsServiceMock {
   showNotification = jest.fn()
+}
+
+class MatDialogMock {
+  _subject = new Subject<boolean>()
+  _closeWithValue = (v: boolean) => this._subject.next(v)
+  open = jest.fn(() => ({
+    afterClosed: () => this._subject,
+  }))
 }
 
 describe('RecordMetadataComponent', () => {
@@ -548,6 +556,7 @@ describe('RecordMetadataComponent', () => {
     let recordsRepository: RecordsRepositoryMock
     let routerFacade: RouterFacadeMock
     let notificationsService: NotificationsServiceMock
+    let dialog: MatDialogMock
 
     beforeEach(() => {
       recordsRepository = TestBed.inject(
@@ -557,6 +566,9 @@ describe('RecordMetadataComponent', () => {
       notificationsService = TestBed.inject(
         NotificationsService
       ) as unknown as NotificationsServiceMock
+      dialog = new MatDialogMock()
+      ;(component as unknown as { dialog: MatDialog }).dialog =
+        dialog as unknown as MatDialog
       component.reuseFormUrl = 'https://example.com/reuse'
     })
 
@@ -593,16 +605,33 @@ describe('RecordMetadataComponent', () => {
       expect(visible).toBe(true)
     })
 
+    it('opens a confirmation dialog and does not delete until confirmed', () => {
+      facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+      component.deleteReuse()
+      expect(dialog.open).toHaveBeenCalled()
+      expect(recordsRepository.deleteRecord).not.toHaveBeenCalled()
+    })
+
+    describe('when the deletion is cancelled', () => {
+      beforeEach(() => {
+        facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+        component.deleteReuse()
+        dialog._closeWithValue(false)
+      })
+      it('does not delete the record', () => {
+        expect(recordsRepository.deleteRecord).not.toHaveBeenCalled()
+        expect(routerFacade.setSearch).not.toHaveBeenCalled()
+      })
+    })
+
     describe('on success', () => {
       beforeEach(() => {
         facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
         component.deleteReuse()
+        dialog._closeWithValue(true)
       })
-      it('deletes the record, clears the draft and navigates to search', () => {
+      it('deletes the record and navigates to search', () => {
         expect(recordsRepository.deleteRecord).toHaveBeenCalledWith(
-          SAMPLE_RECORD.uniqueIdentifier
-        )
-        expect(recordsRepository.clearRecordDraft).toHaveBeenCalledWith(
           SAMPLE_RECORD.uniqueIdentifier
         )
         expect(routerFacade.setSearch).toHaveBeenCalled()
@@ -617,12 +646,16 @@ describe('RecordMetadataComponent', () => {
         )
         facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
         component.deleteReuse()
+        dialog._closeWithValue(true)
       })
       it('shows an error notification and stays on the page', () => {
         expect(routerFacade.setSearch).not.toHaveBeenCalled()
         expect(notificationsService.showNotification).toHaveBeenCalledWith(
-          expect.objectContaining({ type: 'error' }),
-          7000,
+          expect.objectContaining({
+            type: 'error',
+            text: expect.stringContaining('delete failed'),
+          }),
+          undefined,
           'delete failed'
         )
       })
