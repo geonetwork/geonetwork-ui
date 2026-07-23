@@ -27,7 +27,7 @@ ENTRYPOINT ["sh", "/docker-entrypoint.sh", "nginx", "-g", "daemon off;"]
 
 # OCI image labels (https://github.com/opencontainers/image-spec/blob/main/annotations.md)
 LABEL org.opencontainers.image.title="GeoNetwork-UI - ${APP_NAME}"
-LABEL org.opencontainers.image.description="Modern UI on top of a GeoNetwork 4 catalog backend"
+LABEL org.opencontainers.image.description="Modern UI on top of a GeoNetwork catalog backend"
 LABEL org.opencontainers.image.source="https://github.com/geonetwork/geonetwork-ui"
 LABEL org.opencontainers.image.url="https://github.com/geonetwork/geonetwork-ui"
 LABEL org.opencontainers.image.documentation="https://geonetwork.github.io/geonetwork-ui"
