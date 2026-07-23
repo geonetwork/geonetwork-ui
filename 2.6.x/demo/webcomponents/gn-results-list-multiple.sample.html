@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Web Component Demo</title>
+    <base href="./" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      html,
+      body {
+        font-family: var(--font-family-main);
+      }
+      .container {
+        max-width: 1024px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 3rem;
+      }
+      button {
+        padding: 10px 20px;
+        border: none;
+        font-size: 18px;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: var(--color-primary);
+        margin: 30px 16px;
+      }
+      .first-list {
+        --color-primary: #c40;
+      }
+      h2 {
+        color: var(--color-primary);
+      }
+    </style>
+  </head>
+  <body>
+    <script src="gn-wc.js"></script>
+    <main class="container">
+      <div style="margin: 60px 16px">
+        <p>
+          You can insert several <b><i>gn-results-list</i></b> web component in
+          the same page.
+        </p>
+        <p>
+          To bind your component to a dedicated search state, provide the
+          <b><i>search-id</i></b> input
+        </p>
+      </div>
+      <div class="first-list">
+        <h2>SCoT</h2>
+        <gn-results-list
+          api-url="https://www.geo2france.fr/geonetwork/srv/api"
+          catalog-url="https://www.geo2france.fr/datahub/dataset/{uuid}"
+          size="5"
+          layout="TITLE"
+          query="scot"
+        ></gn-results-list>
+      </div>
+      <h2>Vélo</h2>
+      <gn-results-list
+        api-url="https://www.geo2france.fr/geonetwork/srv/api"
+        catalog-url="https://www.geo2france.fr/datahub/dataset/{uuid}"
+        size="5"
+        primary-color="#343e9c"
+        main-font="'Roboto', sans-serif"
+        search-id="velo"
+        query="velo"
+        layout="TITLE"
+      ></gn-results-list>
+    </main>
+  </body>
+</html>

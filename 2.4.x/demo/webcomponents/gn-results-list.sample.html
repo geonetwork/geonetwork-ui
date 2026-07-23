@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Web Component Demo</title>
+    <base href="./" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@200;300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      html,
+      body {
+        font-family: var(--font-family-main);
+      }
+      .container {
+        max-width: 1024px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <div style="margin: 60px 16px">
+        <p>
+          Configure your <b><i>gn-results-list</i></b> web component
+        </p>
+        <ul>
+          <li>Fonts</li>
+          <li>Colors</li>
+          <li>Size</li>
+          <li>Layout</li>
+          <li>API URL</li>
+          <li>Action on click</li>
+          <li>"Show more" strategy</li>
+        </ul>
+      </div>
+
+      <script src="gn-wc.js"></script>
+      <!--
+        api-url="https://geo2france.fr/geonetwork/srv/api"
+        catalog-url="https://geo2france.fr/datahub/dataset/{uuid}"
+      -->
+      <gn-results-list
+        api-url="https://www.geo2france.fr/geonetwork/srv/api"
+        catalog-url="https://www.geo2france.fr/datahub/dataset/{uuid}"
+        size="5"
+        primary-color="#0f4395"
+        secondary-color="#8bc832"
+        main-color="#555"
+        background-color="#fdfbff"
+        main-font="'Inter', sans-serif"
+        title-font="'DM Serif Display', serif"
+        layout="ROW"
+        show-more="button"
+      ></gn-results-list>
+    </main>
+  </body>
+</html>
