@@ -454,6 +454,7 @@
   "record.kind.reuse": "",
   "record.kind.service": "",
   "record.metadata.about": "",
+  "record.metadata.abstract.empty": "",
   "record.metadata.api": "",
   "record.metadata.api.accessServiceProtocol.GPFDL": "",
   "record.metadata.api.accessServiceProtocol.esriRest": "",

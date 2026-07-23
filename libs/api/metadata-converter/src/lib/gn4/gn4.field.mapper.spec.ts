@@ -16,6 +16,9 @@ const translateServiceMock = {
   getCurrentLang() {
     return 'de'
   },
+  instant(key: string) {
+    return key
+  },
 }
 
 describe('Gn4FieldMapper', () => {

@@ -454,6 +454,7 @@
   "record.kind.reuse": "Wiederverwendung",
   "record.kind.service": "Webdienste",
   "record.metadata.about": "Beschreibung",
+  "record.metadata.abstract.empty": "Keine Beschreibung verfügbar",
   "record.metadata.api": "API",
   "record.metadata.api.accessServiceProtocol.GPFDL": "",
   "record.metadata.api.accessServiceProtocol.esriRest": "",

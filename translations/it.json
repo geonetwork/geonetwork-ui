@@ -454,6 +454,7 @@
   "record.kind.reuse": "riutilizzato",
   "record.kind.service": "servizio",
   "record.metadata.about": "Descrizione",
+  "record.metadata.abstract.empty": "Nesuna descrizione disponibile",
   "record.metadata.api": "API",
   "record.metadata.api.accessServiceProtocol.GPFDL": "",
   "record.metadata.api.accessServiceProtocol.esriRest": "",
