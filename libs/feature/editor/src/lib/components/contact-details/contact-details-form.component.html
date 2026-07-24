@@ -7,8 +7,8 @@
       <gn-ui-text-input
         class="block w-full"
         extraClass="w-full"
-        [(value)]="contact.lastName"
-        (valueChange)="emitContactChange()"
+        [value]="contact.lastName ?? ''"
+        (valueChange)="handleChange({ lastName: $event })"
         [placeholder]="
           'editor.record.form.field.contactDetails.lastName.placeholder'
             | translate
@@ -23,8 +23,8 @@
       <gn-ui-text-input
         class="block w-full"
         extraClass="w-full"
-        [(value)]="contact.firstName"
-        (valueChange)="emitContactChange()"
+        [value]="contact.firstName ?? ''"
+        (valueChange)="handleChange({ firstName: $event })"
         [placeholder]="
           'editor.record.form.field.contactDetails.firstName.placeholder'
             | translate
@@ -42,7 +42,7 @@
       extraClass="w-full"
       [type]="'email'"
       [value]="contact.email ?? ''"
-      (valueChange)="emitContactChange()"
+      (valueChange)="handleChange({ email: $event })"
       [placeholder]="
         'editor.record.form.field.contactDetails.email.placeholder' | translate
       "

@@ -7,9 +7,7 @@
   @if (!isLoading && (facade.canEditRecord$ | async) === true) {
     <div class="flex flex-col h-full w-full">
       <div class="w-full h-auto shrink-0 relative">
-        <md-editor-light-top-toolbar
-          (leave)="leave()"
-        ></md-editor-light-top-toolbar>
+        <md-editor-light-top-toolbar></md-editor-light-top-toolbar>
         <div class="absolute top-full left-0 w-2/3 z-10 pointer-events-none">
           <gn-ui-notifications-container></gn-ui-notifications-container>
         </div>
@@ -29,7 +27,7 @@
             >
               <div class="flex flex-col gap-2">
                 <div class="text-2xl font-title text-black" translate>
-                  editor.record.form.section.reusePointOfContact.label
+                  editor.record.form.section.lightPointOfContact.label
                 </div>
               </div>
               @if (pointOfContact$ | async; as pointOfContact) {

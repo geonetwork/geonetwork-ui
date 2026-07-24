@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ActivatedRoute } from '@angular/router'
 import { LightTopToolbarComponent } from './light-top-toolbar.component'
 import { BehaviorSubject } from 'rxjs'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
@@ -9,18 +10,35 @@ class EditorFacadeMock {
   saveRecord = jest.fn()
 }
 
+let queryParams: Record<string, string> = {}
+
+const getRoute = () => ({
+  snapshot: {
+    queryParamMap: {
+      get: (key: string) => queryParams[key] ?? null,
+    },
+  },
+})
+
 describe('LightTopToolbarComponent', () => {
   let component: LightTopToolbarComponent
   let fixture: ComponentFixture<LightTopToolbarComponent>
   let editorFacade: EditorFacadeMock
 
   beforeEach(async () => {
+    queryParams = {
+      redirect_on_leave: 'https://example.com/datahub/reuse/1234',
+    }
     await TestBed.configureTestingModule({
       providers: [
         provideI18n(),
         {
           provide: EditorFacade,
           useClass: EditorFacadeMock,
+        },
+        {
+          provide: ActivatedRoute,
+          useFactory: getRoute,
         },
       ],
     }).compileComponents()
@@ -60,14 +78,45 @@ describe('LightTopToolbarComponent', () => {
   })
 
   describe('leave button', () => {
-    it('emits leave on click', () => {
-      const emitted = jest.fn()
-      component.leave.subscribe(emitted)
+    let windowOpenSpy: jest.SpyInstance
+    beforeEach(() => {
+      windowOpenSpy = jest.spyOn(window, 'open').mockImplementation(() => null)
+    })
+    afterEach(() => {
+      windowOpenSpy.mockRestore()
+    })
+
+    it('opens the redirect_on_leave url in the same tab on click', () => {
       const leaveButton = fixture.nativeElement.querySelector(
         '[data-cy="leave-button"] button'
       )
       leaveButton.click()
-      expect(emitted).toHaveBeenCalled()
+      expect(windowOpenSpy).toHaveBeenCalledWith(
+        'https://example.com/datahub/reuse/1234',
+        '_self'
+      )
+    })
+    it('is not displayed when the redirect param is absent', () => {
+      queryParams = {}
+      fixture = TestBed.createComponent(LightTopToolbarComponent)
+      fixture.detectChanges()
+      expect(
+        fixture.nativeElement.querySelector('[data-cy="leave-button"]')
+      ).toBeFalsy()
+    })
+    it('is not displayed when the redirect param is not an http(s) url', () => {
+      queryParams = { redirect_on_leave: 'javascript:alert(1)' }
+      fixture = TestBed.createComponent(LightTopToolbarComponent)
+      fixture.detectChanges()
+      expect(
+        fixture.nativeElement.querySelector('[data-cy="leave-button"]')
+      ).toBeFalsy()
+    })
+    it('does not open a window when there is no usable redirect', () => {
+      queryParams = {}
+      fixture = TestBed.createComponent(LightTopToolbarComponent)
+      fixture.componentInstance.leave()
+      expect(windowOpenSpy).not.toHaveBeenCalled()
     })
   })
 })

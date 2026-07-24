@@ -71,7 +71,7 @@ The top bar offers a "leave" button and a "save" button; there is no draft handl
 
 ### URL parameters
 
-- `redirect_on_leave` (optional): a URL-encoded absolute `http(s)` URL the user is sent back to when clicking the "leave" button. The calling application is responsible for building the complete URL, including the record's UUID if it wants the user to come back to the record's page (e.g. `/light-edit/{uuid}?redirect_on_leave=https%3A%2F%2Fexample.com%2Fdatahub%2Freuse%2F{uuid}`). When the parameter is absent or invalid, the user is redirected to the editor dashboard instead.
+- `redirect_on_leave` (optional): a URL-encoded absolute `http(s)` URL the user is sent back to when clicking the "leave" button. The calling application is responsible for building the complete URL, including the record's UUID if it wants the user to come back to the record's page (e.g. `/light-edit/{uuid}?redirect_on_leave=https%3A%2F%2Fexample.com%2Fdatahub%2Freuse%2F{uuid}`). When the parameter is absent or invalid, the "leave" button is not displayed.
 
 ## Multilingual support
 

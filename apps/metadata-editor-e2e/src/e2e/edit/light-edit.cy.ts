@@ -1,37 +1,44 @@
-// Skipped: every test here requires opening /light-edit/<reuse-uuid> to
-// actually show the record form, which depends on Gn4Repository.canEdit()
-// allowing kind === 'reuse'. That relaxation is a separate, undecided
-// authorization change (see PR #1607's own to-do) and is not shipped with
-// this PR. Un-skip once that change lands (either here or in its own PR).
-describe.skip('light edit page', () => {
-  // seeded reuse record (also used by datahub-e2e reuse specs)
+describe('light edit page', () => {
+  // seeded reuse record (also used by datahub-e2e reuse specs) - read only here
   const reuseUuid = '7eb795c2-d612-4b5e-b15e-d985b0f4e697'
+  const reuseTitle =
+    'Carte dynamique sur la répartition des ongulés sauvages en France'
 
-  beforeEach(() => {
+  it('light edit page tests', () => {
     cy.login('admin', 'admin', false)
     cy.clearRecordDrafts()
-  })
 
-  describe('display', () => {
-    beforeEach(() => {
-      cy.visit(`/light-edit/${reuseUuid}`)
-    })
-    it('shows the record form without the full editor tools', () => {
-      cy.get('gn-ui-record-form').should('be.visible')
-      cy.get('md-editor-sidebar').should('not.exist')
-      cy.get('md-editor-page-selector').should('not.exist')
-      cy.get('md-editor-publish-button').should('not.exist')
-      cy.get('[data-cy="undo-button"]').should('not.exist')
-      cy.get('[data-cy="save-status"]').should('not.exist')
-      cy.get('[data-test="light-edit-background"]').should('exist')
-      cy.get('[data-cy="leave-button"]').should('be.visible')
-      cy.get('[data-cy="save-button"]').should('be.visible')
-    })
-  })
+    // Display
+    // should show the record form without the full editor tools
+    cy.visit(`/light-edit/${reuseUuid}`)
+    cy.get('gn-ui-record-form').should('be.visible')
+    cy.get('md-editor-sidebar').should('not.exist')
+    cy.get('md-editor-page-selector').should('not.exist')
+    cy.get('md-editor-publish-button').should('not.exist')
+    cy.get('[data-cy="undo-button"]').should('not.exist')
+    cy.get('[data-cy="save-status"]').should('not.exist')
+    cy.get('[data-test="light-edit-background"]').should('exist')
+    cy.get('[data-cy="save-button"]').should('be.visible')
+    // should not show the leave button without a redirect_on_leave param
+    cy.get('[data-cy="leave-button"]').should('not.exist')
 
-  describe('save', () => {
-    it('saves the record and shows a success notification', () => {
-      cy.visit(`/light-edit/${reuseUuid}`)
+    // Leave
+    // should navigate to the redirect_on_leave url
+    const redirectUrl = `${Cypress.config('baseUrl')}/catalog/search?from=light-edit`
+    cy.visit(
+      `/light-edit/${reuseUuid}?redirect_on_leave=${encodeURIComponent(
+        redirectUrl
+      )}`
+    )
+    cy.get('gn-ui-record-form').should('be.visible')
+    cy.get('[data-cy="leave-button"]').should('be.visible').click()
+    cy.url().should('include', 'from=light-edit')
+
+    // Save
+    // should save the record and show a success notification
+    // edit a disposable copy so the seeded record is left untouched
+    cy.editor_createRecordCopy(reuseUuid, reuseTitle).then((copyUuid) => {
+      cy.visit(`/light-edit/${copyUuid}`)
       cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
         'abstractField'
       )
@@ -42,28 +49,7 @@ describe.skip('light edit page', () => {
         'contain',
         'Reuse saved'
       )
-      cy.url().should('include', `/light-edit/${reuseUuid}`)
-    })
-  })
-
-  describe('leave', () => {
-    it('navigates to the redirect_on_leave url', () => {
-      const redirectUrl = `${Cypress.config('baseUrl')}/catalog/search?from=light-edit`
-      cy.visit(
-        `/light-edit/${reuseUuid}?redirect_on_leave=${encodeURIComponent(
-          redirectUrl
-        )}`
-      )
-      cy.get('gn-ui-record-form').should('be.visible')
-      cy.get('[data-cy="leave-button"]').click()
-      cy.url().should('include', 'from=light-edit')
-    })
-    it('falls back to the dashboard when the param is absent', () => {
-      cy.visit(`/light-edit/${reuseUuid}`)
-      cy.get('gn-ui-record-form').should('be.visible')
-      cy.get('[data-cy="leave-button"]').click()
-      cy.url().should('include', '/catalog/search')
-      cy.url().should('not.include', 'from=light-edit')
+      cy.url().should('include', `/light-edit/${copyUuid}`)
     })
   })
 })

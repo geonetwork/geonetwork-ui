@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import { Individual } from '@geonetwork-ui/common/domain/model/record'
 import {
   ContactDetailsFormComponent,
@@ -22,10 +21,10 @@ import { map, Subscription, take } from 'rxjs'
 import { PageErrorComponent } from '../edit/components/page-error/page-error.component'
 import { LightTopToolbarComponent } from './components/light-top-toolbar/light-top-toolbar.component'
 
-marker('editor.record.reuse.saveSuccess.title')
-marker('editor.record.reuse.saveSuccess.body')
-marker('editor.record.reuse.saveError.title')
-marker('editor.record.reuse.saveError.body')
+marker('editor.record.light.saveSuccess.title')
+marker('editor.record.light.saveSuccess.body')
+marker('editor.record.light.saveError.title')
+marker('editor.record.light.saveError.body')
 
 @Component({
   selector: 'md-editor-light-edit',
@@ -48,7 +47,6 @@ export class LightEditPageComponent implements OnInit, OnDestroy {
   protected facade = inject(EditorFacade)
   private notificationsService = inject(NotificationsService)
   private translateService = inject(TranslateService)
-  private router = inject(Router)
 
   subscription = new Subscription()
 
@@ -59,7 +57,7 @@ export class LightEditPageComponent implements OnInit, OnDestroy {
     `center /cover url('assets/img/header_bg.webp')`
 
   private contacts: Individual[] = []
-  // copy of the first contact: ContactDetailsFormComponent mutates its input
+  // the record's first contact, with empty defaults for any missing field
   pointOfContact$ = this.facade.record$.pipe(
     map((record) => ({
       firstName: '',
@@ -92,42 +90,22 @@ export class LightEditPageComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.facade.saveError$.subscribe((error) => {
-        if (error instanceof PublicationVersionError) {
-          this.notificationsService.showNotification(
-            {
-              type: 'error',
-              title: this.translateService.instant(
-                'editor.record.publishVersionError.title'
-              ),
-              text: this.translateService.instant(
-                'editor.record.publishVersionError.body',
-                { currentVersion: error.detectedApiVersion }
-              ),
-              closeMessage: this.translateService.instant(
-                'editor.record.publishVersionError.closeMessage'
-              ),
-            },
-            undefined,
-            error
-          )
-        } else {
-          this.notificationsService.showNotification(
-            {
-              type: 'error',
-              title: this.translateService.instant(
-                'editor.record.reuse.saveError.title'
-              ),
-              text: `${this.translateService.instant(
-                'editor.record.reuse.saveError.body'
-              )} ${error.message}`,
-              closeMessage: this.translateService.instant(
-                'editor.record.loadError.closeMessage'
-              ),
-            },
-            undefined,
-            error
-          )
-        }
+        this.notificationsService.showNotification(
+          {
+            type: 'error',
+            title: this.translateService.instant(
+              'editor.record.light.saveError.title'
+            ),
+            text: `${this.translateService.instant(
+              'editor.record.light.saveError.body'
+            )} ${error.message}`,
+            closeMessage: this.translateService.instant(
+              'editor.record.loadError.closeMessage'
+            ),
+          },
+          undefined,
+          error
+        )
       })
     )
 
@@ -137,10 +115,10 @@ export class LightEditPageComponent implements OnInit, OnDestroy {
           {
             type: 'success',
             title: this.translateService.instant(
-              'editor.record.reuse.saveSuccess.title'
+              'editor.record.light.saveSuccess.title'
             ),
             text: this.translateService.instant(
-              'editor.record.reuse.saveSuccess.body'
+              'editor.record.light.saveSuccess.body'
             ),
           },
           2500
@@ -160,15 +138,5 @@ export class LightEditPageComponent implements OnInit, OnDestroy {
       contact,
       ...this.contacts.slice(1),
     ])
-  }
-
-  leave() {
-    const url = this.route.snapshot.queryParamMap.get('redirect_on_leave')
-    // only allow http(s) redirect targets (e.g. no javascript: urls)
-    if (url && /^https?:\/\//.test(url)) {
-      window.open(url, '_self')
-    } else {
-      this.router.navigate(['catalog', 'search'])
-    }
   }
 }

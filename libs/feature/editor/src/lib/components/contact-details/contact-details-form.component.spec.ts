@@ -55,21 +55,18 @@ describe('ContactDetailsFormComponent', () => {
     })
 
     it('emits the updated first name', () => {
-      component.contact.firstName = 'Jane'
-      component.emitContactChange()
-      expect(emitted.firstName).toEqual('Jane')
+      component.handleChange({ firstName: 'Jane' })
+      expect(emitted).toEqual({ ...mockContact, firstName: 'Jane' })
     })
 
     it('emits the updated last name', () => {
-      component.contact.lastName = 'Smith'
-      component.emitContactChange()
-      expect(emitted.lastName).toEqual('Smith')
+      component.handleChange({ lastName: 'Smith' })
+      expect(emitted).toEqual({ ...mockContact, lastName: 'Smith' })
     })
 
     it('emits the updated email', () => {
-      component.contact.email = 'jane@example.com'
-      component.emitContactChange()
-      expect(emitted.email).toEqual('jane@example.com')
+      component.handleChange({ email: 'jane@example.com' })
+      expect(emitted).toEqual({ ...mockContact, email: 'jane@example.com' })
     })
 
     it('emits the updated organization name', () => {
@@ -78,6 +75,12 @@ describe('ContactDetailsFormComponent', () => {
         ...mockContact,
         organization: { ...mockContact.organization, name: 'New Org' },
       })
+    })
+
+    it('does not mutate the input contact', () => {
+      component.handleChange({ firstName: 'Jane' })
+      component.handleOrganizationChange({ name: 'New Org' })
+      expect(component.contact).toEqual(mockContact)
     })
   })
 
@@ -97,9 +100,8 @@ describe('ContactDetailsFormComponent', () => {
     it('emits the typed first name preserving other empty fields', () => {
       let emitted: Individual
       component.contactChange.subscribe((c) => (emitted = c))
-      component.contact.firstName = 'Jane'
-      component.emitContactChange()
-      expect(emitted.firstName).toEqual('Jane')
+      component.handleChange({ firstName: 'Jane' })
+      expect(emitted).toEqual({ ...emptyContact, firstName: 'Jane' })
     })
   })
 
