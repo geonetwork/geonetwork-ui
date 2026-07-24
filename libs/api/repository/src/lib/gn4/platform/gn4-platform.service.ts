@@ -177,26 +177,15 @@ export class Gn4PlatformService implements PlatformServiceInterface {
         const editorIds = meResponse.groupsWithEditor ?? []
         const memberIds = meResponse.groupsWithRegisteredUser ?? []
         const adminIds = meResponse.groupsWithUserAdmin ?? []
-        const groupsById = new Map(groups.map((g) => [g.id, g]))
-        return [
-          ...new Set([
-            ...reviewerIds,
-            ...editorIds,
-            ...groups.map((g) => g.id),
-          ]),
-        ]
-          .filter((id) => groupsById.has(id))
-          .map((id) => {
-            const group = groupsById.get(id)
-            return {
-              groupId: group.id,
-              groupName: group.name,
-              isMember: memberIds.includes(id),
-              canEdit: editorIds.includes(id),
-              canApprove: reviewerIds.includes(id),
-              canAdministrate: adminIds.includes(id),
-            }
-          })
+
+        return groups.map((group) => ({
+          groupId: group.id,
+          groupName: group.name,
+          isMember: memberIds.includes(group.id),
+          canEdit: editorIds.includes(group.id),
+          canApprove: reviewerIds.includes(group.id),
+          canAdministrate: adminIds.includes(group.id),
+        }))
       })
     )
   }

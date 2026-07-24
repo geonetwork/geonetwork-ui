@@ -84,7 +84,7 @@ export class Gn4FieldMapper {
           'resourceAbstractObject',
           this.getLocalizedIndexKey
         ),
-        'no title'
+        this.translateService.instant('record.metadata.abstract.empty')
       ),
     }),
     overview: (output, source) => {

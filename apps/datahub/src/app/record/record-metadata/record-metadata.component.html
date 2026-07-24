@@ -55,33 +55,21 @@
                   </gn-ui-metadata-catalog>
                 </div>
               }
-              @if ((feedbacksAllowed$ | async) === true && !isAuthDisabled) {
+              @if ((feedbacksAllowed$ | async) && !isAuthDisabled) {
                 <gn-ui-button
                   type="outline"
-                  extraClass="w-full flex flex-row justify-between bg-white"
+                  extraClass="w-full flex flex-row justify-between"
                   [style.--gn-ui-button-rounded]="'10px'"
                   (buttonClick)="scrollToQuestions()"
                 >
                   <span translate>service.metadata.question</span>
-                  <ng-icon
-                    class="mr-[5px] text-[1em]"
-                    name="matChatOutline"
-                  ></ng-icon>
+                  <ng-icon class="mr-[5px]" name="matChatOutline"></ng-icon>
                 </gn-ui-button>
               }
-              @if (showReuseButton() | async) {
-                <gn-ui-button
-                  type="outline"
-                  extraClass="w-full flex flex-row justify-between bg-white"
-                  [style.--gn-ui-button-rounded]="'10px'"
-                  (buttonClick)="navigateToReuseForm()"
-                >
-                  <span translate>service.metadata.reuse</span>
-                  <ng-icon
-                    class="mr-[5px] text-[1em]"
-                    name="iconoirAppWindow"
-                  ></ng-icon>
-                </gn-ui-button>
+              @if (reuseNotificationAllowed$ | async) {
+                <gn-ui-notify-reuse-form
+                  [record]="metadataViewFacade.metadata$ | async"
+                ></gn-ui-notify-reuse-form>
               }
             </div>
           </div>
