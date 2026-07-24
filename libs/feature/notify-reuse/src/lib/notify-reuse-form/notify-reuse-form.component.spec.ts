@@ -276,16 +276,22 @@ describe('NotifyReuseFormComponent', () => {
       ])
     })
 
-    it('opens the saved reuse record in the metadata editor', () => {
+    it('opens the saved reuse record in the metadata editor with correct redirect_on_leave param', () => {
       component.reuseFormUrl = 'http://my-metadata-editor/'
+
+      jest
+        .spyOn(component['locationStrategy'], 'getBaseHref')
+        .mockReturnValue('/')
       const openSpy = jest.spyOn(window, 'open').mockImplementation(() => null)
+
+      const expectedRedirect = encodeURIComponent(
+        'http://localhost/reuse/new-reuse-uuid'
+      )
+      const expectedUrl = `http://my-metadata-editor/edit/new-reuse-uuid?redirect_on_leave=${expectedRedirect}`
 
       component.submit()
 
-      expect(openSpy).toHaveBeenCalledWith(
-        'http://my-metadata-editor/edit/new-reuse-uuid',
-        '_self'
-      )
+      expect(openSpy).toHaveBeenCalledWith(expectedUrl, '_self')
     })
 
     it('clears the loading state and inputs after a successful save', () => {

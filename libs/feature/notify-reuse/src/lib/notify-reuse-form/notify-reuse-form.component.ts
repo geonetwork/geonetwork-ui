@@ -1,4 +1,12 @@
 import {
+  Overlay,
+  OverlayModule,
+  OverlayRef,
+  ScrollStrategyOptions,
+} from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
+import { CommonModule, LocationStrategy } from '@angular/common'
+import {
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -11,35 +19,27 @@ import {
   viewChild,
   ViewContainerRef,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import {
-  Overlay,
-  OverlayModule,
-  OverlayRef,
-  ScrollStrategyOptions,
-} from '@angular/cdk/overlay'
-import { TemplatePortal } from '@angular/cdk/portal'
+import { toSignal } from '@angular/core/rxjs-interop'
+import { MatProgressSpinner } from '@angular/material/progress-spinner'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   CatalogRecord,
   Individual,
   OnlineLinkResource,
   ReuseRecord,
 } from '@geonetwork-ui/common/domain/model/record'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { ButtonComponent, TextInputComponent } from '@geonetwork-ui/ui/inputs'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
+import { iconoirAppWindow, iconoirPlusCircle } from '@ng-icons/iconoir'
+import { matCloseOutline } from '@ng-icons/material-icons/outline'
 import {
   TranslateDirective,
   TranslatePipe,
   TranslateService,
 } from '@ngx-translate/core'
-import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
-import { iconoirAppWindow, iconoirPlusCircle } from '@ng-icons/iconoir'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { matCloseOutline } from '@ng-icons/material-icons/outline'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { toSignal } from '@angular/core/rxjs-interop'
-import { MatProgressSpinner } from '@angular/material/progress-spinner'
 
 marker('notify.reuse.form.error.title')
 marker('notify.reuse.form.error.body')
@@ -83,6 +83,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
   private readonly notificationsService = inject(NotificationsService)
   private readonly platformServiceInterface = inject(PlatformServiceInterface)
   reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
+  private locationStrategy = inject(LocationStrategy)
 
   me = toSignal(this.platformServiceInterface.getMe())
   initialEmail = computed(() => this.me()?.email)
@@ -199,7 +200,17 @@ export class NotifyReuseFormComponent implements OnDestroy {
         this.loading.set(false)
         this.closeOverlay()
         const baseUrl = `${this.reuseFormUrl ?? ''}`.replace(/\/+$/, '')
-        window.open(`${baseUrl}/edit/${uniqueIdentifier}`, '_self')
+        // Normalisation du baseHref pour éviter les doubles /
+        const baseHrefClean = this.locationStrategy
+          .getBaseHref()
+          .replace(/^\/+|\/+$/g, '')
+        const prefix = baseHrefClean ? `/${baseHrefClean}` : ''
+        const rawRedirectUrl = `${window.location.origin}${prefix}/reuse/${uniqueIdentifier}`
+        const redirect_on_leave = encodeURIComponent(rawRedirectUrl)
+        window.open(
+          `${baseUrl}/edit/${uniqueIdentifier}?redirect_on_leave=${redirect_on_leave}`,
+          '_self'
+        )
       },
       error: (err) => {
         this.loading.set(false)
