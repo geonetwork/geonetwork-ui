@@ -51,10 +51,18 @@ describe('Declare a reuse', () => {
         .first()
         .should('contain.text', 'Declare a reuse')
 
-      // it should open the form with a title and three fields
+      // it should open and open the overlay with the reuse button
       cy.get('@reuseForm').find('gn-ui-button').first().click()
       cy.get('.cdk-overlay-container').as('overlay')
       cy.get('@overlay').should('contain.text', 'Declare a reuse')
+      cy.get('@reuseForm').find('gn-ui-button').first().click()
+      cy.get('.cdk-overlay-container').should(
+        'not.contain.text',
+        'Declare a reuse'
+      )
+
+      // it should open the form with a title and three fields
+      cy.get('@reuseForm').find('gn-ui-button').first().click()
       cy.get('@overlay').find('gn-ui-text-input').should('have.length', 3)
 
       // it should pre-fill the email with the logged-in user's email
@@ -94,7 +102,7 @@ describe('Declare a reuse', () => {
         .find('button')
         .should('not.be.disabled')
 
-      // it should show an error toast and keep the editor closed when saving fails
+      // it should show an error toast and not open the editor when saving fails
       cy.intercept(
         { method: 'PUT', pathname: '**/records' },
         { statusCode: 500, body: {} }
@@ -105,11 +113,11 @@ describe('Declare a reuse', () => {
         'contain.text',
         'Error saving the reuse'
       )
+      cy.get('gn-ui-notification').find('gn-ui-button').first().click()
       cy.get('@windowOpen').should('not.have.been.called')
 
       // it should close the overlay with the close button
-      cy.get('@reuseForm').find('gn-ui-button').first().click()
-      cy.get('@overlay').find('gn-ui-button[aria-label="Close"]').click()
+      cy.get('.cdk-overlay-container').find('gn-ui-button').first().click()
       cy.get('.cdk-overlay-container').should(
         'not.contain.text',
         'Declare a reuse'
@@ -148,7 +156,7 @@ describe('Declare a reuse', () => {
       )
       cy.get('@windowOpen').should(
         'have.been.calledWith',
-        'http://my-metadata-editor/edit/new-reuse-uuid',
+        'http://my-metadata-editor/edit/new-reuse-uuid?redirect_on_leave=http%3A%2F%2Flocalhost%3A4200%2Freuse%2Fnew-reuse-uuid',
         '_self'
       )
     })
