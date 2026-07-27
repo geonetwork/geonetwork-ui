@@ -3,6 +3,7 @@ import {
   DatasetRecord,
   Individual,
   LanguageCode,
+  ReuseRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
   allChildrenElement,
@@ -566,7 +567,10 @@ export function writeOtherLanguages(record: DatasetRecord, rootEl: XmlElement) {
   )(rootEl)
 }
 
-export function writeSourceRecords(record: DatasetRecord, rootEl: XmlElement) {
+export function writeSourceRecords(
+  record: DatasetRecord | ReuseRecord,
+  rootEl: XmlElement
+) {
   pipe(
     findNestedChildOrCreate('mdb:resourceLineage', 'mrl:LI_Lineage'),
     appendSourceRecords(record.sourceRecords)

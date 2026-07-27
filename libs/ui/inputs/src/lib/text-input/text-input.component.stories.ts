@@ -21,6 +21,21 @@ export const Primary: StoryObj<TextInputComponent> = {
   },
 }
 
+export const EmailField: StoryObj<TextInputComponent> = {
+  args: {
+    value: '',
+    type: 'email',
+    placeholder: 'This only accepts an email and should not be empty',
+    required: true,
+    disabled: false,
+  },
+  argTypes: {
+    valueChange: {
+      action: 'valueChange',
+    },
+  },
+}
+
 export const WithCustomStyle: StoryObj<TextInputComponent> = {
   args: {
     value: '',
@@ -36,7 +51,7 @@ export const WithCustomStyle: StoryObj<TextInputComponent> = {
     props: args,
     template: `
     <div style="--gn-ui-text-input-rounded: 8px; --gn-ui-text-input-padding: 14px">
-      <gn-ui-text-input [value]='value' [disabled]='disabled' [placeholder]='placeholder'>
+      <gn-ui-text-input [value]='value' [disabled]='disabled' [placeholder]='placeholder' [type]='email'>
       </gn-ui-text-input>
     </div>`,
   }),

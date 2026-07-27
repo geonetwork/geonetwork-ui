@@ -43,7 +43,6 @@ marker('record.metadata.preview.config.saved')
 marker('record.metadata.preview.config.error')
 
 export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
-export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
 
 @Component({
   selector: 'datahub-record-data-preview',
@@ -69,7 +68,6 @@ export class RecordDataPreviewComponent implements OnInit, OnDestroy {
   private maxFeatureCount = Number(
     inject(MAX_FEATURE_COUNT, { optional: true })
   )
-  reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
   private platformServiceInterface = inject(PlatformServiceInterface)
   private cdr = inject(ChangeDetectorRef)
 

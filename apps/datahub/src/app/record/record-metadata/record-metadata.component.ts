@@ -2,9 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  inject,
   Input,
   ViewChild,
-  inject,
 } from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
@@ -13,11 +13,12 @@ import {
   ErrorType,
   MetadataCatalogComponent,
   MetadataContactComponent,
+  MetadataDoiComponent,
   MetadataInfoComponent,
   MetadataQualityComponent,
   ServiceCapabilitiesComponent,
 } from '@geonetwork-ui/ui/elements'
-import { combineLatest, Observable } from 'rxjs'
+import { combineLatest, Observable, of } from 'rxjs'
 import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
@@ -32,20 +33,19 @@ import { RecordDownloadsComponent } from '../record-downloads/record-downloads.c
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
-import {
-  RecordDataPreviewComponent,
-  REUSE_FORM_URL,
-} from '../record-data-preview/record-data-preview.component'
+import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matChatOutline } from '@ng-icons/material-icons/outline'
 import { iconoirAppWindow } from '@ng-icons/iconoir'
 import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-feature-catalog.component'
-import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
+import {
+  NotifyReuseFormComponent,
+  REUSE_FORM_URL,
+} from '@geonetwork-ui/feature/notify-reuse'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -68,13 +68,14 @@ import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
     RecordInternalLinksComponent,
     RecordDataPreviewComponent,
     ButtonComponent,
-    NgIcon,
     ServiceCapabilitiesComponent,
     RecordFeatureCatalogComponent,
     RecordLinkedRecordsComponent,
     TranslateDirective,
     TranslatePipe,
     MetadataDoiComponent,
+    NotifyReuseFormComponent,
+    NgIcon,
   ],
   viewProviders: [
     provideIcons({ matChatOutline, iconoirAppWindow }),
@@ -115,7 +116,6 @@ export class RecordMetadataComponent {
       api: (links) => links?.length > 0,
     },
   }
-  activeUser$: Observable<UserModel>
 
   private getDisplayCondition(
     kind: 'dataset' | 'service' | 'reuse',
@@ -241,11 +241,23 @@ export class RecordMetadataComponent {
 
   feedbacksAllowed$ = this.platformServiceInterface.getFeedbacksAllowed()
 
-  errorTypes = ErrorType
+  writableGroupId$: Observable<string | null> = this.platformServiceInterface
+    .getUserPermissionsByGroup()
+    .pipe(
+      map(
+        (permissions) =>
+          permissions.find((p) => p.canApprove)?.groupId?.toString() ??
+          permissions.find((p) => p.canEdit)?.groupId?.toString() ??
+          null
+      )
+    )
+  reuseNotificationAllowed$: Observable<boolean> = this.reuseFormUrl
+    ? combineLatest([this.writableGroupId$, this.kind$]).pipe(
+        map(([groupId, kind]) => groupId !== null && kind === 'dataset')
+      )
+    : of(false)
 
-  constructor() {
-    this.activeUser$ = this.platformServiceInterface.getMe()
-  }
+  errorTypes = ErrorType
 
   get isAuthDisabled(): boolean {
     return !this.platformServiceInterface.supportsAuthentication()
@@ -267,25 +279,5 @@ export class RecordMetadataComponent {
         behavior: 'smooth',
       })
     }
-  }
-
-  showReuseButton(): Observable<boolean> {
-    return combineLatest([
-      this.activeUser$.pipe(startWith(null)),
-      this.kind$.pipe(startWith(null)),
-    ]).pipe(
-      map(([activeUser, kind]) => {
-        return activeUser?.id && this.reuseFormUrl && kind === 'dataset'
-      }),
-      startWith(false)
-    )
-  }
-
-  navigateToReuseForm() {
-    this.metadataUuid$.subscribe((uuid) => {
-      if (uuid && this.reuseFormUrl) {
-        window.open(`${this.reuseFormUrl}/${uuid}`, '_blank')
-      }
-    })
   }
 }

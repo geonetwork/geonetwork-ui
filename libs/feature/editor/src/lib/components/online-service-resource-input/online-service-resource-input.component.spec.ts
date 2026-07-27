@@ -3,6 +3,8 @@ import { By } from '@angular/platform-browser'
 import { OnlineServiceResourceInputComponent } from './online-service-resource-input.component'
 import { getLayers } from '@geonetwork-ui/util/shared'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { MockBuilder } from 'ng-mocks'
+import { UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 
 jest.mock('@geonetwork-ui/util/shared', () => ({
   ...jest.requireActual('@geonetwork-ui/util/shared'),
@@ -12,6 +14,10 @@ jest.mock('@geonetwork-ui/util/shared', () => ({
 describe('OnlineServiceResourceInputComponent', () => {
   let component: OnlineServiceResourceInputComponent
   let fixture: ComponentFixture<OnlineServiceResourceInputComponent>
+
+  beforeEach(() =>
+    MockBuilder(OnlineServiceResourceInputComponent).keep(UrlInputComponent)
+  )
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

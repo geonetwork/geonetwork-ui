@@ -1252,7 +1252,10 @@ export function appendSourceRecords(
   )
 }
 
-export function writeSourceRecords(record: DatasetRecord, rootEl: XmlElement) {
+export function writeSourceRecords(
+  record: DatasetRecord | ReuseRecord,
+  rootEl: XmlElement
+) {
   pipe(
     findNestedChildOrCreate(
       'gmd:dataQualityInfo',

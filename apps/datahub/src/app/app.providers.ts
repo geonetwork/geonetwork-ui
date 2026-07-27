@@ -48,10 +48,8 @@ import {
   DO_NOT_USE_DEFAULT_BASEMAP,
   MAP_VIEW_CONSTRAINTS,
 } from '@geonetwork-ui/ui/map'
-import {
-  MAX_FEATURE_COUNT,
-  REUSE_FORM_URL,
-} from './record/record-data-preview/record-data-preview.component'
+import { MAX_FEATURE_COUNT } from './record/record-data-preview/record-data-preview.component'
+import { REUSE_FORM_URL } from '@geonetwork-ui/feature/notify-reuse'
 import { DatahubRouterService } from './router/datahub-router.service'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'

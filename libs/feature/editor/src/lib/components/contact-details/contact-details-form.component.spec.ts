@@ -40,6 +40,13 @@ describe('ContactDetailsFormComponent', () => {
     expect(component).toBeTruthy()
   })
 
+  it('renders the email field as an email input', () => {
+    const emailInput = fixture.nativeElement.querySelector(
+      '[data-test="contactDetailsEmail"] input'
+    )
+    expect(emailInput.getAttribute('type')).toEqual('email')
+  })
+
   describe('emitting changes', () => {
     let emitted: Individual
 
