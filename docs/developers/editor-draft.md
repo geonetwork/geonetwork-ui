@@ -4,7 +4,7 @@ outline: deep
 
 # Editor draft system
 
-The editor feature in GeoNetwork-UI relies on a draft system. 
+The editor feature in GeoNetwork-UI relies on a draft system.
 
 The original purpose was to let the user keep their ongoing edition, even when the GeoNetwork session expires. The edition can then be restored, even several days later. This can add complexity for the user, as they need to decide how to resolve conflict when saving from an outdated draft, and they also need to manage the draft status of their records, and be able to rollback.
 
