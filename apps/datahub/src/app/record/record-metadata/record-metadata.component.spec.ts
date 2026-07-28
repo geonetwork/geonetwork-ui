@@ -1,6 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatDialog } from '@angular/material/dialog'
 import { By } from '@angular/platform-browser'
+import type { GroupModel } from '@geonetwork-ui/common/domain/model/user'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
+import { REUSE_FORM_URL } from '@geonetwork-ui/feature/notify-reuse'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
   ErrorComponent,
@@ -10,20 +20,14 @@ import {
   MetadataContactComponent,
   MetadataInfoComponent,
 } from '@geonetwork-ui/ui/elements'
-import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
-import { RecordMetadataComponent } from './record-metadata.component'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { MockBuilder } from 'ng-mocks'
-import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
-import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
-import { RecordApisComponent } from '../record-apis/record-apis.component'
-import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { REUSE_FORM_URL } from '@geonetwork-ui/feature/notify-reuse'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import type { GroupModel } from '@geonetwork-ui/common/domain/model/user'
+import { MockBuilder } from 'ng-mocks'
+import { BehaviorSubject, firstValueFrom, of, Subject, throwError } from 'rxjs'
+import { RecordApisComponent } from '../record-apis/record-apis.component'
+import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
+import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
+import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
+import { RecordMetadataComponent } from './record-metadata.component'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -75,6 +79,27 @@ class PlatformServiceMock {
   getUserPermissionsByGroup = jest.fn(() => this._userPermissions$)
 }
 
+class RecordsRepositoryMock {
+  canDelete = jest.fn(() => of(false))
+  deleteRecord = jest.fn(() => of(undefined))
+}
+
+class RouterFacadeMock {
+  setSearch = jest.fn()
+}
+
+class NotificationsServiceMock {
+  showNotification = jest.fn()
+}
+
+class MatDialogMock {
+  _subject = new Subject<boolean>()
+  _closeWithValue = (v: boolean) => this._subject.next(v)
+  open = jest.fn(() => ({
+    afterClosed: () => this._subject,
+  }))
+}
+
 const providers = [
   provideI18n(),
   {
@@ -96,6 +121,18 @@ const providers = [
   {
     provide: PlatformServiceInterface,
     useClass: PlatformServiceMock,
+  },
+  {
+    provide: RecordsRepositoryInterface,
+    useClass: RecordsRepositoryMock,
+  },
+  {
+    provide: RouterFacade,
+    useClass: RouterFacadeMock,
+  },
+  {
+    provide: NotificationsService,
+    useClass: NotificationsServiceMock,
   },
 ]
 
@@ -581,6 +618,116 @@ describe('RecordMetadataComponent', () => {
           component.reuseNotificationAllowed$
         )
         expect(visible).toBe(true)
+      })
+    })
+  })
+
+  describe('Delete reuse button', () => {
+    let recordsRepository: RecordsRepositoryMock
+    let routerFacade: RouterFacadeMock
+    let notificationsService: NotificationsServiceMock
+    let dialog: MatDialogMock
+
+    beforeEach(() => {
+      recordsRepository = TestBed.inject(
+        RecordsRepositoryInterface
+      ) as unknown as RecordsRepositoryMock
+      routerFacade = TestBed.inject(RouterFacade) as unknown as RouterFacadeMock
+      notificationsService = TestBed.inject(
+        NotificationsService
+      ) as unknown as NotificationsServiceMock
+      dialog = new MatDialogMock()
+      ;(component as unknown as { dialog: MatDialog }).dialog =
+        dialog as unknown as MatDialog
+      component.reuseFormUrl = 'https://example.com/reuse'
+    })
+
+    it('does not display when kind is not reuse', () => {
+      recordsRepository.canDelete.mockReturnValue(of(true))
+      facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'dataset' })
+      let visible: boolean
+      component.showDeleteReuseButton$.subscribe((v) => (visible = v))
+      expect(visible).toBe(false)
+    })
+
+    it('does not display when reuseFormUrl is not set', () => {
+      component.reuseFormUrl = null
+      recordsRepository.canDelete.mockReturnValue(of(true))
+      facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+      let visible: boolean
+      component.showDeleteReuseButton$.subscribe((v) => (visible = v))
+      expect(visible).toBe(false)
+    })
+
+    it('does not display when user has no edit rights', () => {
+      recordsRepository.canDelete.mockReturnValue(of(false))
+      facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+      let visible: boolean
+      component.showDeleteReuseButton$.subscribe((v) => (visible = v))
+      expect(visible).toBe(false)
+    })
+
+    it('displays when kind is reuse, edit rights and reuseFormUrl set', () => {
+      recordsRepository.canDelete.mockReturnValue(of(true))
+      facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+      let visible: boolean
+      component.showDeleteReuseButton$.subscribe((v) => (visible = v))
+      expect(visible).toBe(true)
+    })
+
+    it('opens a confirmation dialog and does not delete until confirmed', () => {
+      facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+      component.deleteReuse()
+      expect(dialog.open).toHaveBeenCalled()
+      expect(recordsRepository.deleteRecord).not.toHaveBeenCalled()
+    })
+
+    describe('when the deletion is cancelled', () => {
+      beforeEach(() => {
+        facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+        component.deleteReuse()
+        dialog._closeWithValue(false)
+      })
+      it('does not delete the record', () => {
+        expect(recordsRepository.deleteRecord).not.toHaveBeenCalled()
+        expect(routerFacade.setSearch).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('on success', () => {
+      beforeEach(() => {
+        facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+        component.deleteReuse()
+        dialog._closeWithValue(true)
+      })
+      it('deletes the record and navigates to search', () => {
+        expect(recordsRepository.deleteRecord).toHaveBeenCalledWith(
+          SAMPLE_RECORD.uniqueIdentifier
+        )
+        expect(routerFacade.setSearch).toHaveBeenCalled()
+        expect(notificationsService.showNotification).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('on error', () => {
+      beforeEach(() => {
+        recordsRepository.deleteRecord.mockReturnValue(
+          throwError(() => 'delete failed')
+        )
+        facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
+        component.deleteReuse()
+        dialog._closeWithValue(true)
+      })
+      it('shows an error notification and stays on the page', () => {
+        expect(routerFacade.setSearch).not.toHaveBeenCalled()
+        expect(notificationsService.showNotification).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: 'error',
+            text: expect.stringContaining('delete failed'),
+          }),
+          undefined,
+          'delete failed'
+        )
       })
     })
   })

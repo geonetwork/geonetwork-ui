@@ -71,6 +71,18 @@
                   [record]="metadataViewFacade.metadata$ | async"
                 ></gn-ui-notify-reuse-form>
               }
+              @if (showDeleteReuseButton$ | async) {
+                <gn-ui-button
+                  type="outline"
+                  extraClass="bg-white"
+                  [style.--gn-ui-button-rounded]="'10px'"
+                  [title]="'record.action.delete' | translate"
+                  (buttonClick)="deleteReuse()"
+                  data-cy="deleteReuseButton"
+                >
+                  <ng-icon class="text-[1em]" name="matDeleteOutline"></ng-icon>
+                </gn-ui-button>
+              }
             </div>
           </div>
         }
