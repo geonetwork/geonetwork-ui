@@ -287,7 +287,7 @@ describe('NotifyReuseFormComponent', () => {
       const expectedRedirect = encodeURIComponent(
         'http://localhost/reuse/new-reuse-uuid'
       )
-      const expectedUrl = `http://my-metadata-editor/edit/new-reuse-uuid?redirect_on_leave=${expectedRedirect}`
+      const expectedUrl = `http://my-metadata-editor/light-edit/new-reuse-uuid?redirect_on_leave=${expectedRedirect}`
 
       component.submit()
 

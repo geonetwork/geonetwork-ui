@@ -443,6 +443,8 @@
   "notify.reuse.form.title": "Declarar una reutilización",
   "notify.reuse.link.description": "Un recurso de reutilización creado a través del Datahub",
   "notify.reuse.record.action.declare": "Declarar una reutilización",
+  "notify.reuse.record.action.delete": "Eliminar la reutilización",
+  "notify.reuse.record.action.edit": "Editar la reutilización",
   "ogc.geojson.notsupported": "",
   "ogc.unreachable.unknown": "",
   "organisation.filter.placeholder": "",

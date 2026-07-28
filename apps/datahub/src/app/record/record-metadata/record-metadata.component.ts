@@ -7,7 +7,7 @@ import {
   Input,
   ViewChild,
 } from '@angular/core'
-import { MatDialog, MatDialogModule } from '@angular/material/dialog'
+import { MatDialogModule } from '@angular/material/dialog'
 import { MatTabsModule } from '@angular/material/tabs'
 import {
   CatalogRecord,
@@ -18,16 +18,14 @@ import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/orga
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
-import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import {
+  EditDeleteReuseButtonsComponent,
   NotifyReuseFormComponent,
   REUSE_FORM_URL,
 } from '@geonetwork-ui/feature/notify-reuse'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
-  ConfirmationDialogComponent,
   ErrorComponent,
   ErrorType,
   MetadataCatalogComponent,
@@ -43,21 +41,11 @@ import { iconoirAppWindow } from '@ng-icons/iconoir'
 import {
   matChatOutline,
   matDeleteOutline,
+  matEditOutline,
 } from '@ng-icons/material-icons/outline'
-import {
-  TranslateDirective,
-  TranslatePipe,
-  TranslateService,
-} from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { combineLatest, Observable, of } from 'rxjs'
-import {
-  filter,
-  map,
-  mergeMap,
-  startWith,
-  switchMap,
-  take,
-} from 'rxjs/operators'
+import { filter, map, mergeMap, startWith, switchMap } from 'rxjs/operators'
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
 import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
@@ -95,11 +83,17 @@ import { RecordUserFeedbacksComponent } from '../record-user-feedbacks/record-us
     TranslatePipe,
     MetadataDoiComponent,
     NotifyReuseFormComponent,
+    EditDeleteReuseButtonsComponent,
     NgIcon,
     MatDialogModule,
   ],
   viewProviders: [
-    provideIcons({ matChatOutline, iconoirAppWindow, matDeleteOutline }),
+    provideIcons({
+      matChatOutline,
+      iconoirAppWindow,
+      matEditOutline,
+      matDeleteOutline,
+    }),
     provideNgIconsConfig({
       size: '1.5em',
     }),
@@ -112,11 +106,9 @@ export class RecordMetadataComponent {
   private orgsService = inject(OrganizationsServiceInterface)
   private readonly platformServiceInterface = inject(PlatformServiceInterface)
   private recordsRepository = inject(RecordsRepositoryInterface)
-  private notificationsService = inject(NotificationsService)
-  private routerFacade = inject(RouterFacade)
-  private translateService = inject(TranslateService)
-  private dialog = inject(MatDialog)
   reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
+
+  errorTypes = ErrorType
 
   @Input() metadataQualityDisplay: boolean
   @ViewChild('userFeedbacks') userFeedbacks: ElementRef<HTMLElement>
@@ -259,15 +251,6 @@ export class RecordMetadataComponent {
     filter(Boolean)
   )
 
-  showDeleteReuseButton$: Observable<boolean> =
-    this.metadataViewFacade.metadata$.pipe(
-      switchMap((record) =>
-        record?.kind === 'reuse' && this.reuseFormUrl
-          ? this.recordsRepository.canDelete(record as CatalogRecord)
-          : of(false)
-      )
-    )
-
   sourceLabel$ = this.metadataViewFacade.metadata$.pipe(
     map((record) => record?.extras?.catalogUuid as string),
     filter((uuid) => !!uuid),
@@ -275,6 +258,10 @@ export class RecordMetadataComponent {
   )
 
   feedbacksAllowed$ = this.platformServiceInterface.getFeedbacksAllowed()
+
+  get isAuthDisabled(): boolean {
+    return !this.platformServiceInterface.supportsAuthentication()
+  }
 
   writableGroupId$: Observable<string | null> = this.platformServiceInterface
     .getUserPermissionsByGroup()
@@ -286,17 +273,22 @@ export class RecordMetadataComponent {
           null
       )
     )
+
   reuseNotificationAllowed$: Observable<boolean> = this.reuseFormUrl
     ? combineLatest([this.writableGroupId$, this.kind$]).pipe(
         map(([groupId, kind]) => groupId !== null && kind === 'dataset')
       )
     : of(false)
 
-  errorTypes = ErrorType
-
-  get isAuthDisabled(): boolean {
-    return !this.platformServiceInterface.supportsAuthentication()
-  }
+  showEditDeleteReuseButtons$: Observable<boolean> =
+    this.metadataViewFacade.metadata$.pipe(
+      switchMap((record) =>
+        record?.kind === 'reuse' && this.reuseFormUrl
+          ? // keeping it simple here for now, as edit and delete use the same conditions
+            this.recordsRepository.canEditIndexedRecord(record as CatalogRecord)
+          : of(false)
+      )
+    )
 
   onInfoKeywordClick(keyword: Keyword) {
     this.searchService.updateFilters({ any: keyword.label })
@@ -314,57 +306,5 @@ export class RecordMetadataComponent {
         behavior: 'smooth',
       })
     }
-  }
-
-  deleteReuse() {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: {
-        title: this.translateService.instant(
-          'record.reuse.delete.confirmation.title'
-        ),
-        message: this.translateService.instant(
-          'record.reuse.delete.confirmation.message'
-        ),
-        confirmText: this.translateService.instant(
-          'record.reuse.delete.confirmation.confirmText'
-        ),
-        cancelText: this.translateService.instant(
-          'record.reuse.delete.confirmation.cancelText'
-        ),
-        focusCancel: true,
-      },
-      restoreFocus: true,
-    })
-
-    dialogRef.afterClosed().subscribe((confirmed) => {
-      if (confirmed) {
-        this.performReuseDeletion()
-      }
-    })
-  }
-
-  private performReuseDeletion() {
-    this.metadataUuid$.pipe(take(1)).subscribe((uuid) =>
-      this.recordsRepository.deleteRecord(uuid).subscribe({
-        next: () => {
-          this.routerFacade.setSearch()
-        },
-        error: (error) => {
-          this.notificationsService.showNotification(
-            {
-              type: 'error',
-              title: this.translateService.instant(
-                'record.reuse.deleteError.title'
-              ),
-              text: `${this.translateService.instant(
-                'record.reuse.deleteError.body'
-              )} ${error}`,
-            },
-            undefined,
-            error
-          )
-        },
-      })
-    )
   }
 }

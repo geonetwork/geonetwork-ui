@@ -22,7 +22,7 @@ import {
 } from '@geonetwork-ui/ui/elements'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { MockBuilder } from 'ng-mocks'
-import { BehaviorSubject, firstValueFrom, of, Subject, throwError } from 'rxjs'
+import { BehaviorSubject, firstValueFrom, of, Subject } from 'rxjs'
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
@@ -80,8 +80,7 @@ class PlatformServiceMock {
 }
 
 class RecordsRepositoryMock {
-  canDelete = jest.fn(() => of(false))
-  deleteRecord = jest.fn(() => of(undefined))
+  canEditIndexedRecord = jest.fn(() => of(false))
 }
 
 class RouterFacadeMock {
@@ -622,7 +621,7 @@ describe('RecordMetadataComponent', () => {
     })
   })
 
-  describe('Delete reuse button', () => {
+  describe('Edit and delete reuse buttons', () => {
     let recordsRepository: RecordsRepositoryMock
     let routerFacade: RouterFacadeMock
     let notificationsService: NotificationsServiceMock
@@ -643,92 +642,36 @@ describe('RecordMetadataComponent', () => {
     })
 
     it('does not display when kind is not reuse', () => {
-      recordsRepository.canDelete.mockReturnValue(of(true))
+      recordsRepository.canEditIndexedRecord.mockReturnValue(of(true))
       facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'dataset' })
       let visible: boolean
-      component.showDeleteReuseButton$.subscribe((v) => (visible = v))
+      component.showEditDeleteReuseButtons$.subscribe((v) => (visible = v))
       expect(visible).toBe(false)
     })
 
     it('does not display when reuseFormUrl is not set', () => {
       component.reuseFormUrl = null
-      recordsRepository.canDelete.mockReturnValue(of(true))
+      recordsRepository.canEditIndexedRecord.mockReturnValue(of(true))
       facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
       let visible: boolean
-      component.showDeleteReuseButton$.subscribe((v) => (visible = v))
+      component.showEditDeleteReuseButtons$.subscribe((v) => (visible = v))
       expect(visible).toBe(false)
     })
 
     it('does not display when user has no edit rights', () => {
-      recordsRepository.canDelete.mockReturnValue(of(false))
+      recordsRepository.canEditIndexedRecord.mockReturnValue(of(false))
       facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
       let visible: boolean
-      component.showDeleteReuseButton$.subscribe((v) => (visible = v))
+      component.showEditDeleteReuseButtons$.subscribe((v) => (visible = v))
       expect(visible).toBe(false)
     })
 
     it('displays when kind is reuse, edit rights and reuseFormUrl set', () => {
-      recordsRepository.canDelete.mockReturnValue(of(true))
+      recordsRepository.canEditIndexedRecord.mockReturnValue(of(true))
       facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
       let visible: boolean
-      component.showDeleteReuseButton$.subscribe((v) => (visible = v))
+      component.showEditDeleteReuseButtons$.subscribe((v) => (visible = v))
       expect(visible).toBe(true)
-    })
-
-    it('opens a confirmation dialog and does not delete until confirmed', () => {
-      facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
-      component.deleteReuse()
-      expect(dialog.open).toHaveBeenCalled()
-      expect(recordsRepository.deleteRecord).not.toHaveBeenCalled()
-    })
-
-    describe('when the deletion is cancelled', () => {
-      beforeEach(() => {
-        facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
-        component.deleteReuse()
-        dialog._closeWithValue(false)
-      })
-      it('does not delete the record', () => {
-        expect(recordsRepository.deleteRecord).not.toHaveBeenCalled()
-        expect(routerFacade.setSearch).not.toHaveBeenCalled()
-      })
-    })
-
-    describe('on success', () => {
-      beforeEach(() => {
-        facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
-        component.deleteReuse()
-        dialog._closeWithValue(true)
-      })
-      it('deletes the record and navigates to search', () => {
-        expect(recordsRepository.deleteRecord).toHaveBeenCalledWith(
-          SAMPLE_RECORD.uniqueIdentifier
-        )
-        expect(routerFacade.setSearch).toHaveBeenCalled()
-        expect(notificationsService.showNotification).not.toHaveBeenCalled()
-      })
-    })
-
-    describe('on error', () => {
-      beforeEach(() => {
-        recordsRepository.deleteRecord.mockReturnValue(
-          throwError(() => 'delete failed')
-        )
-        facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'reuse' })
-        component.deleteReuse()
-        dialog._closeWithValue(true)
-      })
-      it('shows an error notification and stays on the page', () => {
-        expect(routerFacade.setSearch).not.toHaveBeenCalled()
-        expect(notificationsService.showNotification).toHaveBeenCalledWith(
-          expect.objectContaining({
-            type: 'error',
-            text: expect.stringContaining('delete failed'),
-          }),
-          undefined,
-          'delete failed'
-        )
-      })
     })
   })
 

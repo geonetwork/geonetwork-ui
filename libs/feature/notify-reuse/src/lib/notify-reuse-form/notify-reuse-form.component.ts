@@ -40,6 +40,7 @@ import {
   TranslatePipe,
   TranslateService,
 } from '@ngx-translate/core'
+import { navigateToLightEdit } from '../utils/url'
 
 marker('notify.reuse.form.error.title')
 marker('notify.reuse.form.error.body')
@@ -199,17 +200,10 @@ export class NotifyReuseFormComponent implements OnDestroy {
       next: (uniqueIdentifier) => {
         this.loading.set(false)
         this.closeOverlay()
-        const baseUrl = `${this.reuseFormUrl ?? ''}`.replace(/\/+$/, '')
-        // Normalisation du baseHref pour éviter les doubles /
-        const baseHrefClean = this.locationStrategy
-          .getBaseHref()
-          .replace(/^\/+|\/+$/g, '')
-        const prefix = baseHrefClean ? `/${baseHrefClean}` : ''
-        const rawRedirectUrl = `${window.location.origin}${prefix}/reuse/${uniqueIdentifier}`
-        const redirect_on_leave = encodeURIComponent(rawRedirectUrl)
-        window.open(
-          `${baseUrl}/edit/${uniqueIdentifier}?redirect_on_leave=${redirect_on_leave}`,
-          '_self'
+        navigateToLightEdit(
+          this.reuseFormUrl,
+          this.locationStrategy.getBaseHref(),
+          uniqueIdentifier
         )
       },
       error: (err) => {

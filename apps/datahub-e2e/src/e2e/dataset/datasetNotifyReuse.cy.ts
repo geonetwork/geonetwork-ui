@@ -51,7 +51,7 @@ describe('Declare a reuse', () => {
         .first()
         .should('contain.text', 'Declare a reuse')
 
-      // it should open and open the overlay with the reuse button
+      // it should open and close the overlay with the reuse button
       cy.get('@reuseForm').find('gn-ui-button').first().click()
       cy.get('.cdk-overlay-container').as('overlay')
       cy.get('@overlay').should('contain.text', 'Declare a reuse')
@@ -156,7 +156,7 @@ describe('Declare a reuse', () => {
       )
       cy.get('@windowOpen').should(
         'have.been.calledWith',
-        'http://my-metadata-editor/edit/new-reuse-uuid?redirect_on_leave=http%3A%2F%2Flocalhost%3A4200%2Freuse%2Fnew-reuse-uuid',
+        'http://my-metadata-editor/light-edit/new-reuse-uuid?redirect_on_leave=http%3A%2F%2Flocalhost%3A4200%2Freuse%2Fnew-reuse-uuid',
         '_self'
       )
     })

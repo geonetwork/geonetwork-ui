@@ -1,0 +1,23 @@
+<div class="flex flex-row gap-6">
+  <gn-ui-button
+    class="grow"
+    type="primary"
+    extraClass="w-full flex flex-row justify-between"
+    [style.--gn-ui-button-rounded]="'10px'"
+    (buttonClick)="editReuse()"
+    data-cy="editReuseButton"
+  >
+    <span translate>notify.reuse.record.action.edit</span>
+    <ng-icon class="mr-[5px]" name="iconoirEdit"></ng-icon>
+  </gn-ui-button>
+  <gn-ui-button
+    type="outline"
+    [style.--gn-ui-button-rounded]="'10px'"
+    [style.--gn-ui-button-height]="'50px'"
+    [title]="'notify.reuse.record.action.delete' | translate"
+    (buttonClick)="deleteReuse()"
+    data-cy="deleteReuseButton"
+  >
+    <ng-icon name="iconoirTrash"></ng-icon>
+  </gn-ui-button>
+</div>
