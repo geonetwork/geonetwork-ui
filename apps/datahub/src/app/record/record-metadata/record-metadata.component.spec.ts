@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatDialog } from '@angular/material/dialog'
 import { By } from '@angular/platform-browser'
 import type { GroupModel } from '@geonetwork-ui/common/domain/model/user'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
@@ -21,29 +22,12 @@ import {
 } from '@geonetwork-ui/ui/elements'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { MockBuilder } from 'ng-mocks'
-import { BehaviorSubject, firstValueFrom, of, throwError } from 'rxjs'
+import { BehaviorSubject, firstValueFrom, of, Subject, throwError } from 'rxjs'
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordMetadataComponent } from './record-metadata.component'
-import { BehaviorSubject, of, Subject, throwError } from 'rxjs'
-import { RecordMetadataComponent } from './record-metadata.component'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { MockBuilder } from 'ng-mocks'
-import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
-import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
-import { RecordApisComponent } from '../record-apis/record-apis.component'
-import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
-import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { REUSE_FORM_URL } from '../record-data-preview/record-data-preview.component'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { MatDialog } from '@angular/material/dialog'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -138,6 +122,18 @@ const providers = [
     provide: PlatformServiceInterface,
     useClass: PlatformServiceMock,
   },
+  {
+    provide: RecordsRepositoryInterface,
+    useClass: RecordsRepositoryMock,
+  },
+  {
+    provide: RouterFacade,
+    useClass: RouterFacadeMock,
+  },
+  {
+    provide: NotificationsService,
+    useClass: NotificationsServiceMock,
+  },
 ]
 
 describe('RecordMetadataComponent', () => {
@@ -157,18 +153,6 @@ describe('RecordMetadataComponent', () => {
         {
           provide: REUSE_FORM_URL,
           useValue: 'https://example.com/reuse',
-        },
-        {
-          provide: RecordsRepositoryInterface,
-          useClass: RecordsRepositoryMock,
-        },
-        {
-          provide: RouterFacade,
-          useClass: RouterFacadeMock,
-        },
-        {
-          provide: NotificationsService,
-          useClass: NotificationsServiceMock,
         },
       ],
     }).compileComponents()
