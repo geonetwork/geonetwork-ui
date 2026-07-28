@@ -327,8 +327,10 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.settingsService.allowEditHarvested$.pipe(
       map((allowEditHarvested) => {
         return (
-          record.extras['edit'] &&
-          (!record.extras['isHarvested'] || allowEditHarvested)
+          (this.platformService.supportsAuthentication() &&
+            record.extras?.['edit'] &&
+            (!record.extras?.['isHarvested'] || allowEditHarvested)) ??
+          false
         )
       })
     )
