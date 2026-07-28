@@ -136,6 +136,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
 
 As such, **it is not very interesting at all.**`,
     sourceRecords: [],
+    associatedRecords: [],
     licenses: [
       {
         text: 'Licence ODbL mai 2013 (basée sur ODbL 1.0)',
@@ -313,6 +314,7 @@ Malgré l'attention portée à la création de ces données, il est rappelé que
     lineage: `Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG par le Service d'Information Géographique de l'Agglomération de la Région de Compiègne.
 Ce lot de données produit en 2019, a été numérisé à partir du PCI Vecteur de 2019 et contrôlé par le Service d'Information Géographique de l'Agglomération de la Région de Compiègne.`,
     sourceRecords: [],
+    associatedRecords: [],
     legalConstraints: [],
     securityConstraints: [],
     otherConstraints: [],
@@ -365,6 +367,7 @@ export const simpleDatasetRecordFixture = (): DatasetRecord => ({
   spatialExtents: [],
   temporalExtents: [],
   sourceRecords: [],
+  associatedRecords: [],
   onlineResources: [
     {
       type: 'download',
@@ -418,6 +421,7 @@ export const simpleDatasetRecordWithFcatsFixture = (): DatasetRecord => ({
   spatialExtents: [],
   temporalExtents: [],
   sourceRecords: [],
+  associatedRecords: [],
   onlineResources: [],
   updateFrequency: { per: 'month', updatedTimes: 3 },
   translations: {},
@@ -847,6 +851,7 @@ export const simpleServiceRecordFixture = (): ServiceRecord => ({
   topics: [],
   spatialExtents: [],
   overviews: [],
+  associatedRecords: [],
   defaultLanguage: null,
   otherLanguages: [],
   title: 'Sites de gestion des déchets miniers - Service de visualisation WMS',
@@ -984,6 +989,7 @@ export const multilingualDatasetFixture: () => DatasetRecord = () => ({
   abstract: 'English Abstract',
   lineage: 'English Lineage',
   sourceRecords: [],
+  associatedRecords: [],
   translations: {
     title: { fr: 'Titre Français', de: 'Titel DE' },
     abstract: { fr: 'Résumé Français', de: 'Beschreibung DE' },
@@ -1048,6 +1054,7 @@ export const simpleReuseRecordFixture = (): ReuseRecord => ({
   temporalExtents: [],
   lineage: 'bla',
   sourceRecords: [],
+  associatedRecords: [],
   overviews: [],
   defaultLanguage: null,
   otherLanguages: [],

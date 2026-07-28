@@ -647,6 +647,7 @@ export const EU_SURVEY_DATASET_RECORD: DatasetRecord = {
   ],
   lineage: '',
   sourceRecords: [],
+  associatedRecords: [],
   ownerOrganization: {
     name: 'http://publications.europa.eu/resource/authority/corporate-body/FRA',
   },
@@ -737,6 +738,7 @@ export const EU_WHOISWHO_DATASET_RECORD: DatasetRecord = {
                     [Privacy statement of EU Whoiswho](https://op.europa.eu/en/web/about-us/legal-notices/op_whoiswho).`,
   lineage: '',
   sourceRecords: [],
+  associatedRecords: [],
   ownerOrganization: undefined,
   recordUpdated: undefined,
   status: 'completed',

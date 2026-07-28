@@ -21,6 +21,7 @@ import {
 } from '../xml-utils'
 import {
   readAbstract,
+  readAssociatedRecords,
   readContacts,
   readContactsForResource,
   readDefaultLanguage,
@@ -53,6 +54,7 @@ import {
 } from './read-parts'
 import {
   writeAbstract,
+  writeAssociatedRecords,
   writeContacts,
   writeContactsForResource,
   writeDefaultLanguage,
@@ -115,6 +117,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     overviews: readOverviews,
     lineage: readLineage,
     sourceRecords: readSourceRecords,
+    associatedRecords: readAssociatedRecords,
     onlineResources: readOnlineResources,
     temporalExtents: readTemporalExtents,
     spatialExtents: readSpatialExtents,
@@ -157,6 +160,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     overviews: writeGraphicOverviews,
     lineage: writeLineage,
     sourceRecords: writeSourceRecords,
+    associatedRecords: writeAssociatedRecords,
     onlineResources: writeOnlineResources,
     temporalExtents: writeTemporalExtents,
     spatialExtents: writeSpatialExtents,
@@ -253,6 +257,7 @@ export class Iso19139Converter extends BaseConverter<string> {
       url?: string
     }>
     const spatialExtents = this.readers['spatialExtents'](rootEl, tr)
+    const associatedRecords = this.readers['associatedRecords'](rootEl, tr)
 
     return {
       uniqueIdentifier,
@@ -280,6 +285,7 @@ export class Iso19139Converter extends BaseConverter<string> {
       overviews,
       spatialExtents,
       onlineResources,
+      associatedRecords,
       translations: tr,
       ...(landingPage && { landingPage }),
     } as CatalogRecord
@@ -405,6 +411,8 @@ export class Iso19139Converter extends BaseConverter<string> {
       this.writers['onlineResources'](record, rootEl)
     fieldChanged('resourceIdentifiers') &&
       this.writers['resourceIdentifiers'](record, rootEl)
+    fieldChanged('associatedRecords') &&
+      this.writers['associatedRecords'](record, rootEl)
 
     if (record.kind === 'dataset') {
       fieldChanged('status') && this.writers['status'](record, rootEl)

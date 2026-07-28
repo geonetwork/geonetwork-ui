@@ -22,6 +22,7 @@ const REUSE_RECORD: ReuseRecord = {
   reuseType: 'application',
   lineage: '',
   sourceRecords: [],
+  associatedRecords: [],
   onlineResources: [],
   spatialExtents: [],
   temporalExtents: [],

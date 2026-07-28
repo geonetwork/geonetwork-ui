@@ -371,6 +371,7 @@ export const OPENDATASWISS_DATASET_RECORD: DatasetRecord = {
   ],
   lineage: '',
   sourceRecords: [],
+  associatedRecords: [],
   ownerOrganization: {
     name: 'Bundesamt für Energie',
   },

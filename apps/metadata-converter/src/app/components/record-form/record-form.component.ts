@@ -102,6 +102,7 @@ export class RecordFormComponent implements AfterViewInit {
       otherLanguages: [],
       defaultLanguage: 'en',
       overviews: [],
+      associatedRecords: hasPrevious ? this.record.associatedRecords : [],
     }
     if (kind === 'dataset') {
       this.record = {

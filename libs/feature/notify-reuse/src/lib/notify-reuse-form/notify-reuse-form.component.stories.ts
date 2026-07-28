@@ -13,6 +13,7 @@ const RECORD: ReuseRecord = {
   reuseType: 'map',
   lineage: '',
   sourceRecords: [],
+  associatedRecords: [],
   onlineResources: [
     {
       type: 'link',

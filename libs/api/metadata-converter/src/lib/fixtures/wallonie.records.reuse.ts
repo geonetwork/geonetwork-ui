@@ -455,5 +455,6 @@ export const WALLONIE_REUSE_SPW_RECORD: ReuseRecord = {
       href: 'https://metawal.wallonie.be/geonetwork/srv/api/records/ee965118-2416-4d48-b07e-bbc696f002c2',
     },
   ],
+  associatedRecords: [],
   temporalExtents: [],
 }

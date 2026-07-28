@@ -190,6 +190,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
           title: this.record()?.title ?? '',
         },
       ],
+      associatedRecords: [],
       onlineResources: [onlineResource],
       spatialExtents: [],
       temporalExtents: [],

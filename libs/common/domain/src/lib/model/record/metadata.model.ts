@@ -144,6 +144,7 @@ export interface BaseRecord {
   resourceCreated?: Date
   resourcePublished?: Date
   resourceUpdated?: Date
+  associatedRecords: Array<AssociatedRecord>
 
   // multilingual support
   defaultLanguage: LanguageCode
@@ -258,6 +259,14 @@ export interface SourceRecord {
   uuid?: string
   title?: string
   href?: string
+}
+
+/**
+ * Represents another record associated with this one (e.g. a parent/sibling dataset).
+ */
+export interface AssociatedRecord {
+  uuid: string
+  associationType: string
 }
 
 export interface DatasetRecord extends BaseRecord {

@@ -193,6 +193,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
 
 As such, **it is not very interesting at all.**`,
   sourceRecords: [],
+  associatedRecords: [],
   otherConstraints: [
     { text: 'Should only be used as a testing tool', translations: {} },
     { text: 'Might cause minor annoyance in people', translations: {} },

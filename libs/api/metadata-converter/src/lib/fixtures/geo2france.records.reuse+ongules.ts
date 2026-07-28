@@ -244,6 +244,7 @@ export const GEO2FRANCE_REUSE_ONGULES_RECORD: ReuseRecord = {
       href: 'https://data.ofb.fr/catalogue/Donnees-geographiques-OFB/fre/csw?service=CSW&request=GetRecordById&version=2.0.2&outputSchema=http://www.isotc211.org/2005/gmd&elementSetName=full&id=67c60362-0461-4574-8975-f4e7cfa64d20',
     },
   ],
+  associatedRecords: [],
   temporalExtents: [
     {
       start: null,

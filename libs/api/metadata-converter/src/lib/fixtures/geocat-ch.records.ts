@@ -547,6 +547,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   lineage:
     'Digitalisiert nach den administrativen Einheiten der Schweiz, die im Anhang des Übereinkommens erscheinen.',
   sourceRecords: [],
+  associatedRecords: [],
   licenses: [
     {
       text: "Licence passée entre l'Office fédéral de l'environnement (OFEV), et le canton de Fribourg, représenté par la Coordination SIT (SITel)",
@@ -638,6 +639,7 @@ Die Quelle ist zu bezeichnen: „Quelle: Stadt Zürich“.`,
 export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
   uniqueIdentifier: '4a008c24-ecf1-4430-b7e7-cb76b2856bad-8371',
   kind: 'service',
+  associatedRecords: [],
   ownerOrganization: {
     name: 'Amt für Raumentwicklung und Geoinformation (SG)',
     website: new URL('https://www.sg.ch/bauen/geoinformation/datenbezug.html'),

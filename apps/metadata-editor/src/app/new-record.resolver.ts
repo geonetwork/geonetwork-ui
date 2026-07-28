@@ -53,6 +53,7 @@ export class NewRecordResolver {
           status: 'ongoing',
           lineage: '',
           sourceRecords: [],
+          associatedRecords: [],
           onlineResources: [],
           spatialExtents: [],
           temporalExtents: [],

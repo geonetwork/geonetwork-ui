@@ -3,6 +3,7 @@ import { XmlElement } from '@rgrove/parse-xml'
 import { Iso19139Converter } from '../iso19139'
 import { renameElements } from '../xml-utils'
 import {
+  readAssociatedRecords,
   readContacts,
   readContactsForResource,
   readDefaultLanguage,
@@ -20,6 +21,7 @@ import {
   readUniqueIdentifier,
 } from './read-parts'
 import {
+  writeAssociatedRecords,
   writeContacts,
   writeContactsForResource,
   writeDefaultLanguage,
@@ -56,6 +58,7 @@ export class Iso191153Converter extends Iso19139Converter {
     this.readers['landingPage'] = readLandingPage
     this.readers['lineage'] = readLineage
     this.readers['sourceRecords'] = readSourceRecords
+    this.readers['associatedRecords'] = readAssociatedRecords
     this.readers['onlineResources'] = readOnlineResources
     this.readers['defaultLanguage'] = readDefaultLanguage
     this.readers['otherLanguages'] = readOtherLanguages
@@ -76,6 +79,7 @@ export class Iso191153Converter extends Iso19139Converter {
     this.writers['landingPage'] = writeLandingPage
     this.writers['lineage'] = writeLineage
     this.writers['sourceRecords'] = writeSourceRecords
+    this.writers['associatedRecords'] = writeAssociatedRecords
     this.writers['onlineResources'] = writeOnlineResources
     this.writers['status'] = writeStatus
     this.writers['spatialRepresentation'] = writeSpatialRepresentation

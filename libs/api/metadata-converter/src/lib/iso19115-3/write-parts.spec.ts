@@ -1,6 +1,7 @@
 import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
 import { GEO2FRANCE_REUSE_ROILAYE_RECORD } from '../fixtures/geo2france.records.reuse+roilaye'
 import {
+  writeAssociatedRecords,
   writeContacts,
   writeContactsForResource,
   writeDefaultLanguage,
@@ -824,6 +825,166 @@ describe('write parts', () => {
             <gmd:source uuidref="dataset-uuid" xlink:title="Source Dataset"/>
         </mrl:LI_Lineage>
     </mdb:resourceLineage>
+</root>`)
+      })
+    })
+  })
+
+  describe('writeAssociatedRecords', () => {
+    describe('associatedRecords is empty array', () => {
+      it('removes existing associatedResource elements when identification exists', () => {
+        const sample = parseXmlString(`
+<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <mri:associatedResource>
+                <mri:MD_AssociatedResource>
+                    <mri:associationType>
+                        <mri:DS_AssociationTypeCode codeListValue="crossReference"/>
+                    </mri:associationType>
+                    <mri:metadataReference uuidref="old-uuid"/>
+                </mri:MD_AssociatedResource>
+            </mri:associatedResource>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+        rootEl = getRootElement(sample)
+        writeAssociatedRecords(
+          { ...datasetRecord, associatedRecords: [] },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification/>
+    </gmd:identificationInfo>
+</root>`)
+      })
+    })
+
+    describe('associatedRecords has an entry with an empty uuid', () => {
+      it('does not serialize it', () => {
+        writeAssociatedRecords(
+          {
+            ...datasetRecord,
+            associatedRecords: [
+              { uuid: '', associationType: 'crossReference' },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification/>
+    </gmd:identificationInfo>
+</root>`)
+      })
+    })
+
+    describe('one association', () => {
+      it('writes the associatedResource element', () => {
+        writeAssociatedRecords(
+          {
+            ...datasetRecord,
+            associatedRecords: [
+              { uuid: 'abc-123', associationType: 'crossReference' },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <mri:associatedResource>
+                <mri:MD_AssociatedResource>
+                    <mri:associationType>
+                        <mri:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="crossReference"/>
+                    </mri:associationType>
+                    <mri:metadataReference uuidref="abc-123"/>
+                </mri:MD_AssociatedResource>
+            </mri:associatedResource>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+      })
+    })
+
+    describe('multiple associations', () => {
+      it('writes one associatedResource element per association, in order', () => {
+        writeAssociatedRecords(
+          {
+            ...datasetRecord,
+            associatedRecords: [
+              { uuid: 'uuid-1', associationType: 'crossReference' },
+              { uuid: 'uuid-2', associationType: 'largerWorkCitation' },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <mri:associatedResource>
+                <mri:MD_AssociatedResource>
+                    <mri:associationType>
+                        <mri:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="crossReference"/>
+                    </mri:associationType>
+                    <mri:metadataReference uuidref="uuid-1"/>
+                </mri:MD_AssociatedResource>
+            </mri:associatedResource>
+            <mri:associatedResource>
+                <mri:MD_AssociatedResource>
+                    <mri:associationType>
+                        <mri:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="largerWorkCitation"/>
+                    </mri:associationType>
+                    <mri:metadataReference uuidref="uuid-2"/>
+                </mri:MD_AssociatedResource>
+            </mri:associatedResource>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+      })
+    })
+
+    describe('replaces existing associations', () => {
+      it('wipes old associatedResource elements and writes only new ones', () => {
+        const sample = parseXmlString(`
+<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <mri:associatedResource>
+                <mri:MD_AssociatedResource>
+                    <mri:associationType>
+                        <mri:DS_AssociationTypeCode codeListValue="source"/>
+                    </mri:associationType>
+                    <mri:metadataReference uuidref="old-uuid"/>
+                </mri:MD_AssociatedResource>
+            </mri:associatedResource>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+        rootEl = getRootElement(sample)
+        writeAssociatedRecords(
+          {
+            ...datasetRecord,
+            associatedRecords: [
+              { uuid: 'new-uuid', associationType: 'stereoMate' },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <mri:associatedResource>
+                <mri:MD_AssociatedResource>
+                    <mri:associationType>
+                        <mri:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="stereoMate"/>
+                    </mri:associationType>
+                    <mri:metadataReference uuidref="new-uuid"/>
+                </mri:MD_AssociatedResource>
+            </mri:associatedResource>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
 </root>`)
       })
     })
