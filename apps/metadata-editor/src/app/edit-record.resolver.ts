@@ -17,6 +17,7 @@ export class EditRecordResolver {
   resolve(
     route: ActivatedRouteSnapshot
   ): Observable<[CatalogRecord, string, boolean]> {
+    // FIXME: The `disableDraft` behavior should be handled in the repository, by overloading the DISABLE_DRAFT token through the DI system.
     const disableDraft = route.data['disableDraft']
     return this.recordsRepository
       .openRecordForEdition(route.paramMap.get('uuid'), disableDraft)
