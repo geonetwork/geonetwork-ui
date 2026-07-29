@@ -18,10 +18,11 @@ class RecordsRepositoryMock {
 }
 
 const activatedRoute = {
+  data: { disableDraft: false },
   paramMap: convertToParamMap({
     id: datasetRecordsFixture()[0].uniqueIdentifier,
   }),
-} as ActivatedRouteSnapshot
+} as unknown as ActivatedRouteSnapshot
 
 describe('EditRecordResolver', () => {
   let resolver: EditRecordResolver

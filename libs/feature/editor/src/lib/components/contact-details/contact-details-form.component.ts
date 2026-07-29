@@ -24,16 +24,18 @@ export class ContactDetailsFormComponent {
   @Input() contact: Individual
   @Output() contactChange = new EventEmitter<Individual>()
 
-  emitContactChange() {
-    this.contactChange.emit(this.contact)
+  // emit a fresh contact on each change; never mutate the @Input
+  handleChange(change: Partial<Individual>) {
+    this.contactChange.emit({ ...this.contact, ...change })
   }
 
   handleOrganizationChange(change: Partial<Organization>) {
-    this.contact.organization = {
-      ...(this.contact.organization ?? ({} as Organization)),
-      ...change,
-    } as Organization
-
-    this.emitContactChange()
+    this.contactChange.emit({
+      ...this.contact,
+      organization: {
+        ...(this.contact.organization ?? ({} as Organization)),
+        ...change,
+      } as Organization,
+    })
   }
 }
