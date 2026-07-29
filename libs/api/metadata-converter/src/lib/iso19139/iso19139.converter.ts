@@ -205,7 +205,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     record.contacts.map((c) => fixLanguages(c.organization))
     record.contactsForResource.map((c) => fixLanguages(c.organization))
     fixLanguages(record.ownerOrganization)
-    if (record.kind === 'dataset') {
+    if (record.kind === 'dataset' || record.kind === 'reuse') {
       record.spatialExtents.map(fixLanguages)
     }
 
@@ -408,6 +408,8 @@ export class Iso19139Converter extends BaseConverter<string> {
 
     if (record.kind === 'dataset') {
       fieldChanged('status') && this.writers['status'](record, rootEl)
+    }
+    if (record.kind === 'dataset' || record.kind === 'reuse') {
       fieldChanged('updateFrequency') &&
         this.writers['updateFrequency'](record, rootEl)
       fieldChanged('spatialRepresentation') &&
@@ -417,9 +419,6 @@ export class Iso19139Converter extends BaseConverter<string> {
         this.writers['temporalExtents'](record, rootEl)
       fieldChanged('spatialExtents') &&
         this.writers['spatialExtents'](record, rootEl)
-    }
-
-    if (record.kind === 'dataset' || record.kind === 'reuse') {
       ;(fieldChanged('lineage') || fieldChanged('translations')) &&
         this.writers['lineage'](record, rootEl)
       fieldChanged('sourceRecords') &&
