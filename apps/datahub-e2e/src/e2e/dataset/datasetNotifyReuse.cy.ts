@@ -145,11 +145,12 @@ describe('Declare a reuse', () => {
         .eq(1)
         .type('https://example.com/my-reuse')
       cy.get('@overlay').find('gn-ui-button').last().find('button').click()
-      // the serialized record carries the entered title (linking the reuse
-      // back to the source dataset)
       cy.wait('@saveRecord')
         .its('request.body')
         .should('contain', 'My great reuse')
+        .should('contain', 'Barbara')
+        .should('contain', 'Roberts')
+        .should('contain', 'Barbie Inc.')
       cy.get('.cdk-overlay-container').should(
         'not.contain.text',
         'Declare a reuse'

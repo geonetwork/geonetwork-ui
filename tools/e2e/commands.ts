@@ -26,7 +26,9 @@ declare namespace Cypress {
     deleteRecord(uuid: string): void
     editor_createRecordCopy(
       uuidToCopy?: string,
-      titleToCopy?: string
+      titleToCopy?: string,
+      username?: string,
+      password?: string
     ): Chainable<string | number | string[]>
     editor_readFormUniqueIdentifier(): Chainable<string | number | string[]>
     editor_wrapPreviousDraft(uuid: string): void
@@ -245,39 +247,42 @@ Cypress.Commands.add('deleteRecord', (uuid: string) => {
     })
 })
 
-Cypress.Commands.add('editor_createRecordCopy', (uuidToCopy, titleToCopy) => {
-  cy.login('admin', 'admin', false)
-  cy.viewport(1920, 2400)
+Cypress.Commands.add(
+  'editor_createRecordCopy',
+  (uuidToCopy, titleToCopy, username, password) => {
+    cy.login(username ?? 'admin', password ?? 'admin', false)
+    cy.viewport(1920, 2400)
 
-  cy.clearRecordDrafts()
+    cy.clearRecordDrafts()
 
-  const recordTitle = titleToCopy ?? 'station épuration'
-  const recordUuid = uuidToCopy ?? '011963da-afc0-494c-a2cc-5cbd59e122e4'
+    const recordTitle = titleToCopy ?? 'station épuration'
+    const recordUuid = uuidToCopy ?? '011963da-afc0-494c-a2cc-5cbd59e122e4'
 
-  // Clear any existing copy of the test record
-  cy.visit('/catalog/search')
-  cy.get('gn-ui-fuzzy-search input').type(
-    //`{selectall}{del}${recordTitle}{enter}`
-    `{selectall}{del}{enter}${recordTitle}{enter}` // FIXME: we should not need to press "enter" before typing something to search! there is a debounce problem here
-  )
-  cy.get('[data-cy="table-row"]')
-    .should('have.length.lt', 10) // making sure the records were updated
-    .then((rows$) => {
-      if (rows$.length === 1) {
-        return
-      }
-      // there is a copy: delete it
-      cy.get('[data-test="record-menu-button"]').eq(1).click()
-      cy.get('[data-test="record-menu-delete-button"]').click()
-      cy.get('[data-cy="confirm-button"]').click()
-      cy.log('An existing copy of the test record was found and deleted.')
-    })
+    // Clear any existing copy of the test record
+    cy.visit('/catalog/search')
+    cy.get('gn-ui-fuzzy-search input').type(
+      //`{selectall}{del}${recordTitle}{enter}`
+      `{selectall}{del}{enter}${recordTitle}{enter}` // FIXME: we should not need to press "enter" before typing something to search! there is a debounce problem here
+    )
+    cy.get('[data-cy="table-row"]')
+      .should('have.length.lt', 10) // making sure the records were updated
+      .then((rows$) => {
+        if (rows$.length === 1) {
+          return
+        }
+        // there is a copy: delete it
+        cy.get('[data-test="record-menu-button"]').eq(1).click()
+        cy.get('[data-test="record-menu-delete-button"]').click()
+        cy.get('[data-cy="confirm-button"]').click()
+        cy.log('An existing copy of the test record was found and deleted.')
+      })
 
-  // Duplicate the Stations d'épuration record
-  cy.visit(`/duplicate/${recordUuid}`)
-  cy.url().should('include', '/edit/')
-  return cy.editor_readFormUniqueIdentifier()
-})
+    // Duplicate the Stations d'épuration record
+    cy.visit(`/duplicate/${recordUuid}`)
+    cy.url().should('include', '/edit/')
+    return cy.editor_readFormUniqueIdentifier()
+  }
+)
 
 Cypress.Commands.add('editor_readFormUniqueIdentifier', () => {
   // wait for the url to contain edit
