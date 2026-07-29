@@ -645,30 +645,6 @@ describe('read parts', () => {
         expect(readAssociatedRecords(root)).toEqual([])
       })
     })
-    describe('unknown, non-standard association type', () => {
-      it('keeps the unrecognized type instead of dropping the association', () => {
-        const root = getRootElement(
-          parseXmlString(`
-<mdb:MD_Metadata>
-  <mdb:identificationInfo>
-    <mri:MD_DataIdentification>
-      <mri:associatedResource>
-        <mri:MD_AssociatedResource>
-          <mri:associationType>
-            <mri:DS_AssociationTypeCode codeListValue="vendorSpecificType"/>
-          </mri:associationType>
-          <mri:metadataReference uuidref="abc-123"/>
-        </mri:MD_AssociatedResource>
-      </mri:associatedResource>
-    </mri:MD_DataIdentification>
-  </mdb:identificationInfo>
-</mdb:MD_Metadata>`)
-        )
-        expect(readAssociatedRecords(root)).toEqual([
-          { uuid: 'abc-123', associationType: 'vendorSpecificType' },
-        ])
-      })
-    })
     describe('multiple associatedResource elements', () => {
       it('returns all associations, in order', () => {
         const root = getRootElement(

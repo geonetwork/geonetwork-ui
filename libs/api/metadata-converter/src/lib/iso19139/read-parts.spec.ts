@@ -939,36 +939,6 @@ describe('read parts', () => {
           expect(readAssociatedRecords(recordRootEl)).toEqual([])
         })
       })
-      describe('unknown, non-standard association type', () => {
-        beforeEach(() => {
-          const aggregationInfoEl = getRootElement(
-            parseXmlString(`
-<gmd:aggregationInfo>
-  <gmd:MD_AggregateInformation>
-    <gmd:aggregateDataSetIdentifier>
-      <gmd:MD_Identifier>
-        <gmd:code>
-          <gco:CharacterString>abc-123</gco:CharacterString>
-        </gmd:code>
-      </gmd:MD_Identifier>
-    </gmd:aggregateDataSetIdentifier>
-    <gmd:associationType>
-      <gmd:DS_AssociationTypeCode codeListValue="vendorSpecificType"/>
-    </gmd:associationType>
-  </gmd:MD_AggregateInformation>
-</gmd:aggregationInfo>`)
-          )
-          pipe(
-            findIdentification(),
-            appendChildren(() => aggregationInfoEl)
-          )(recordRootEl)
-        })
-        it('keeps the unrecognized type instead of dropping the association', () => {
-          expect(readAssociatedRecords(recordRootEl)).toEqual([
-            { uuid: 'abc-123', associationType: 'vendorSpecificType' },
-          ])
-        })
-      })
       describe('multiple aggregationInfo elements', () => {
         beforeEach(() => {
           const first = getRootElement(

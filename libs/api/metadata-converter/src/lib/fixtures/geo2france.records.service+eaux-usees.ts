@@ -171,7 +171,6 @@ export const GEO2FRANCE_SERVICE_EAUXUSEES_RECORD: ServiceRecord = {
   ],
   otherConstraints: [],
   overviews: [],
-  associatedRecords: [],
   onlineResources: [
     {
       type: 'endpoint',

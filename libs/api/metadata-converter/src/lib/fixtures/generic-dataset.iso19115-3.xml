@@ -509,6 +509,46 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     </mdb:geographicElement>
                 </mdb:EX_Extent>
             </mdb:extent>
+            <mri:associatedResource>
+                <mri:MD_AssociatedResource>
+                    <mri:associationType>
+                        <mri:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="crossReference"/>
+                    </mri:associationType>
+                    <mri:metadataReference uuidref="b1882436-3016-421e-9dfd-0326cca998f2"/>
+                </mri:MD_AssociatedResource>
+            </mri:associatedResource>
+            <mri:associatedResource>
+                <mri:MD_AssociatedResource>
+                    <mri:associationType>
+                        <mri:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="crossReference"/>
+                    </mri:associationType>
+                    <mri:metadataReference uuidref="b1741571-bbda-4732-a807-cbc36b64d54f"/>
+                </mri:MD_AssociatedResource>
+            </mri:associatedResource>
+            <mri:associatedResource>
+                <mri:MD_AssociatedResource>
+                    <mri:associationType>
+                        <mri:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="crossReference"/>
+                    </mri:associationType>
+                    <mri:metadataReference uuidref="bdcb789c-4b02-4c0c-863a-98dac4ed0240"/>
+                </mri:MD_AssociatedResource>
+            </mri:associatedResource>
+            <mri:associatedResource>
+                <mri:MD_AssociatedResource>
+                    <mri:associationType>
+                        <mri:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="partOfSeamlessDatabase"/>
+                    </mri:associationType>
+                    <mri:metadataReference uuidref="c0112b86-a6e3-4df3-9da1-2927376076f4"/>
+                </mri:MD_AssociatedResource>
+            </mri:associatedResource>
+            <mri:associatedResource>
+                <mri:MD_AssociatedResource>
+                    <mri:associationType>
+                        <mri:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="largerWorkCitation"/>
+                    </mri:associationType>
+                    <mri:metadataReference uuidref="7451e2bd-22e8-4a74-a999-01c58b630369"/>
+                </mri:MD_AssociatedResource>
+            </mri:associatedResource>
         </mri:MD_DataIdentification>
     </mdb:identificationInfo>
     <mdb:distributionInfo>

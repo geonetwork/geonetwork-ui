@@ -286,12 +286,6 @@ export class DcatApConverter extends BaseConverter<string> {
       tr,
       defaultLanguage
     )
-    const associatedRecords = this.readers['associatedRecords'](
-      dataStore,
-      catalogRecord,
-      tr,
-      defaultLanguage
-    )
 
     if (kind === 'dataset') {
       const status = this.readers['status'](
@@ -325,6 +319,12 @@ export class DcatApConverter extends BaseConverter<string> {
         defaultLanguage
       )
       const sourceRecords = this.readers['sourceRecords'](
+        dataStore,
+        catalogRecord,
+        tr,
+        defaultLanguage
+      )
+      const associatedRecords = this.readers['associatedRecords'](
         dataStore,
         catalogRecord,
         tr,
@@ -409,7 +409,6 @@ export class DcatApConverter extends BaseConverter<string> {
         otherConstraints,
         overviews,
         onlineResources,
-        associatedRecords,
         ...(landingPage && { landingPage }),
         translations: tr,
       } as ServiceRecord

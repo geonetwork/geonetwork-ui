@@ -1268,7 +1268,7 @@ export function writeSourceRecords(
 }
 
 export function writeAssociatedRecords(
-  record: CatalogRecord,
+  record: DatasetRecord | ReuseRecord,
   rootEl: XmlElement
 ) {
   pipe(

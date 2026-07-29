@@ -851,7 +851,6 @@ export const simpleServiceRecordFixture = (): ServiceRecord => ({
   topics: [],
   spatialExtents: [],
   overviews: [],
-  associatedRecords: [],
   defaultLanguage: null,
   otherLanguages: [],
   title: 'Sites de gestion des déchets miniers - Service de visualisation WMS',

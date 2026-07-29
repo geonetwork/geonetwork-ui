@@ -4,7 +4,6 @@ export const WALLONIE_SERVICE_NAPITSWALLONIA_RECORD: ServiceRecord = {
   uniqueIdentifier: 'fe1c1a3d-c75b-435c-a1d1-48426818f54d',
   resourceIdentifiers: [{ code: 'fe1c1a3d-c75b-435c-a1d1-48426818f54d' }],
   kind: 'service',
-  associatedRecords: [],
   otherLanguages: [],
   defaultLanguage: 'fr',
   recordCreated: new Date('2023-12-18T12:25:26.465Z'),

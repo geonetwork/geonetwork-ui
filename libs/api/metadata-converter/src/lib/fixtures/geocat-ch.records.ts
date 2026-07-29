@@ -639,7 +639,6 @@ Die Quelle ist zu bezeichnen: „Quelle: Stadt Zürich“.`,
 export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
   uniqueIdentifier: '4a008c24-ecf1-4430-b7e7-cb76b2856bad-8371',
   kind: 'service',
-  associatedRecords: [],
   ownerOrganization: {
     name: 'Amt für Raumentwicklung und Geoinformation (SG)',
     website: new URL('https://www.sg.ch/bauen/geoinformation/datenbezug.html'),

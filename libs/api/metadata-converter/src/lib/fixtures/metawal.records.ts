@@ -662,7 +662,6 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
   ],
   otherConstraints: [],
   overviews: [],
-  associatedRecords: [],
   ownerOrganization: {
     name: "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées)",
     translations: {},
