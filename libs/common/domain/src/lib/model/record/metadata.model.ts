@@ -260,6 +260,16 @@ export interface SourceRecord {
   href?: string
 }
 
+marker('domain.record.associationType.crossReference')
+marker('domain.record.associationType.largerWorkCitation')
+marker('domain.record.associationType.partOfSeamlessDatabase')
+marker('domain.record.associationType.stereoMate')
+marker('domain.record.associationType.isComposedOf')
+marker('domain.record.associationType.collectiveTitle')
+marker('domain.record.associationType.series')
+marker('domain.record.associationType.dependency')
+marker('domain.record.associationType.revisionOf')
+
 // DS_AssociationTypeCode values of the ISO19115-3 codelist, any unrecognized value
 // being mapped to 'crossReference'
 export const associationTypeValues = [
