@@ -28,15 +28,17 @@ export class NewRecordResolver {
       map((userContact) => {
         const recordKind = 'dataset'
         const catalogRecord: CatalogRecord = {
+          kind: recordKind,
+          status: 'ongoing',
           uniqueIdentifier: null,
           title: this.translateService.instant('editor.new.record.title', {
             recordKind,
           }),
           abstract: '',
+          overviews: [],
           ownerOrganization: {
             name: 'Owner organization',
           },
-          contacts: userContact ? [userContact] : [],
           recordUpdated: new Date(),
           updateFrequency: 'unknown',
           otherLanguages: [],
@@ -47,10 +49,8 @@ export class NewRecordResolver {
           legalConstraints: [NOT_KNOWN_CONSTRAINT],
           securityConstraints: [],
           otherConstraints: [],
-          overviews: [],
+          contacts: userContact ? [userContact] : [],
           contactsForResource: userContact ? [userContact] : [],
-          kind: recordKind,
-          status: 'ongoing',
           lineage: '',
           sourceRecords: [],
           associatedRecords: [],

@@ -66,6 +66,7 @@ class PlatformServiceMock {
       name: 'John',
       surname: 'Doe',
       email: 'logged-user@example.com',
+      organisation: 'Owner Org',
     })
   )
 }
@@ -259,12 +260,17 @@ describe('NotifyReuseFormComponent', () => {
         {
           type: 'link',
           url: new URL('https://example.com/my-reuse'),
-          name: 'https://example.com/my-reuse',
           description: 'notify.reuse.link.description',
         },
       ])
       expect(saved.contacts).toEqual([
-        { email: 'reuser@example.com', role: 'point_of_contact' },
+        {
+          firstName: 'John',
+          lastName: 'Doe',
+          email: 'reuser@example.com',
+          role: 'point_of_contact',
+          organization: { name: 'Owner Org' },
+        },
       ])
     })
 

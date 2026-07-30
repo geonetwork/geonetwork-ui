@@ -30,8 +30,10 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { NOT_KNOWN_CONSTRAINT } from '@geonetwork-ui/feature/editor'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { ButtonComponent, TextInputComponent } from '@geonetwork-ui/ui/inputs'
+import { getOptionalEditorConfig } from '@geonetwork-ui/util/app-config'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { iconoirAppWindow, iconoirPlusCircle } from '@ng-icons/iconoir'
 import { matCloseOutline } from '@ng-icons/material-icons/outline'
@@ -155,36 +157,44 @@ export class NotifyReuseFormComponent implements OnDestroy {
 
   submit() {
     if (!this.isFormValid()) return
+    const defaultLang =
+      getOptionalEditorConfig()?.NEW_RECORD_DEFAULT_LANGUAGE ??
+      this.translate.currentLang
     const onlineResource: OnlineLinkResource = {
       type: 'link',
       url: new URL(this.url()),
-      name: this.url(),
       description: this.translate.instant('notify.reuse.link.description'),
     }
     const contact: Individual = {
+      firstName: this.me()?.name,
+      lastName: this.me()?.surname,
       email: this.email(),
       role: 'point_of_contact',
+      organization: { name: this.me()?.organisation },
     }
     const reuseRecord: ReuseRecord = {
-      uniqueIdentifier: '',
       kind: 'reuse',
+      reuseType: 'application',
+      uniqueIdentifier: null,
       title: this.title(),
       abstract: '',
-      ownerOrganization: { name: '' },
-      contacts: [contact],
-      contactsForResource: [],
+      overviews: [],
+      ownerOrganization: {
+        name: 'Owner organization',
+      },
       recordUpdated: new Date(),
+      updateFrequency: 'unknown',
+      otherLanguages: [],
+      defaultLanguage: defaultLang,
       topics: [],
       keywords: [],
       licenses: [],
-      legalConstraints: [],
+      legalConstraints: [NOT_KNOWN_CONSTRAINT],
       securityConstraints: [],
       otherConstraints: [],
-      overviews: [],
-      defaultLanguage: 'en',
-      otherLanguages: [],
+      contacts: [contact],
+      contactsForResource: [],
       lineage: '',
-      reuseType: 'application',
       sourceRecords: [
         {
           uuid: this.record()?.uniqueIdentifier ?? '',

@@ -508,6 +508,8 @@ export class DcatApConverter extends BaseConverter<string> {
     if (record.kind === 'dataset') {
       fieldChanged('status') &&
         this.writers['status'](record, dataStore, recordNode)
+    }
+    if (record.kind === 'dataset' || record.kind === 'reuse') {
       fieldChanged('updateFrequency') &&
         this.writers['updateFrequency'](record, dataStore, recordNode)
       fieldChanged('spatialRepresentation') &&
