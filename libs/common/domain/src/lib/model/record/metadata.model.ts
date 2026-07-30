@@ -260,11 +260,20 @@ export interface SourceRecord {
   href?: string
 }
 
+/**
+ * Represents another record associated with this one (e.g. a parent/sibling dataset).
+ */
+export interface AssociatedRecord {
+  uuid: string
+  associationType: string
+}
+
 export interface DatasetRecord extends BaseRecord {
   kind: 'dataset'
   status: RecordStatus
   lineage: string // Explanation of the origin of this record (e.g: how, why)"
   sourceRecords: Array<SourceRecord>
+  associatedRecords: Array<AssociatedRecord>
   onlineResources: Array<DatasetOnlineResource>
   spatialExtents: Array<DatasetSpatialExtent>
   temporalExtents: Array<DatasetTemporalExtent>
@@ -293,6 +302,7 @@ export interface ReuseRecord extends BaseRecord {
   kind: 'reuse'
   lineage: string // Explanation of the origin of this record (e.g: how, why)"
   sourceRecords: Array<SourceRecord>
+  associatedRecords: Array<AssociatedRecord>
   onlineResources: Array<DatasetOnlineResource>
   reuseType: ReuseType
   spatialExtents: Array<DatasetSpatialExtent>

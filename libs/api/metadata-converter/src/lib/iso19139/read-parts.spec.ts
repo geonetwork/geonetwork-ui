@@ -16,6 +16,7 @@ import {
 import {
   findIdentification,
   getUpdateFrequencyFromCustomPeriod,
+  readAssociatedRecords,
   readContacts,
   readDefaultLanguage,
   readSourceRecords,
@@ -821,6 +822,169 @@ describe('read parts', () => {
           expect(readSourceRecords(recordRootEl)).toEqual([
             { uuid: 'uuid-1', title: 'Source One' },
             { uuid: 'uuid-2' },
+          ])
+        })
+      })
+    })
+
+    describe('readAssociatedRecords', () => {
+      describe('no aggregationInfo elements present', () => {
+        it('returns an empty array', () => {
+          expect(readAssociatedRecords(recordRootEl)).toEqual([])
+        })
+      })
+      describe('one aggregationInfo with uuid and type', () => {
+        beforeEach(() => {
+          const aggregationInfoEl = getRootElement(
+            parseXmlString(`
+<gmd:aggregationInfo>
+  <gmd:MD_AggregateInformation>
+    <gmd:aggregateDataSetIdentifier>
+      <gmd:MD_Identifier>
+        <gmd:code>
+          <gco:CharacterString>abc-123</gco:CharacterString>
+        </gmd:code>
+      </gmd:MD_Identifier>
+    </gmd:aggregateDataSetIdentifier>
+    <gmd:associationType>
+      <gmd:DS_AssociationTypeCode codeListValue="crossReference"/>
+    </gmd:associationType>
+  </gmd:MD_AggregateInformation>
+</gmd:aggregationInfo>`)
+          )
+          pipe(
+            findIdentification(),
+            appendChildren(() => aggregationInfoEl)
+          )(recordRootEl)
+        })
+        it('returns the association', () => {
+          expect(readAssociatedRecords(recordRootEl)).toEqual([
+            { uuid: 'abc-123', associationType: 'crossReference' },
+          ])
+        })
+      })
+      describe('uuid stored as gmx:Anchor', () => {
+        beforeEach(() => {
+          const aggregationInfoEl = getRootElement(
+            parseXmlString(`
+<gmd:aggregationInfo>
+  <gmd:MD_AggregateInformation>
+    <gmd:aggregateDataSetIdentifier>
+      <gmd:MD_Identifier>
+        <gmd:code>
+          <gmx:Anchor xlink:href="https://example.com/records/anchor-uuid">anchor-uuid</gmx:Anchor>
+        </gmd:code>
+      </gmd:MD_Identifier>
+    </gmd:aggregateDataSetIdentifier>
+    <gmd:associationType>
+      <gmd:DS_AssociationTypeCode codeListValue="source"/>
+    </gmd:associationType>
+  </gmd:MD_AggregateInformation>
+</gmd:aggregationInfo>`)
+          )
+          pipe(
+            findIdentification(),
+            appendChildren(() => aggregationInfoEl)
+          )(recordRootEl)
+        })
+        it('returns the association with the anchor text as uuid', () => {
+          expect(readAssociatedRecords(recordRootEl)).toEqual([
+            { uuid: 'anchor-uuid', associationType: 'source' },
+          ])
+        })
+      })
+      describe('missing uuid', () => {
+        beforeEach(() => {
+          const aggregationInfoEl = getRootElement(
+            parseXmlString(`
+<gmd:aggregationInfo>
+  <gmd:MD_AggregateInformation>
+    <gmd:associationType>
+      <gmd:DS_AssociationTypeCode codeListValue="crossReference"/>
+    </gmd:associationType>
+  </gmd:MD_AggregateInformation>
+</gmd:aggregationInfo>`)
+          )
+          pipe(
+            findIdentification(),
+            appendChildren(() => aggregationInfoEl)
+          )(recordRootEl)
+        })
+        it('ignores the association', () => {
+          expect(readAssociatedRecords(recordRootEl)).toEqual([])
+        })
+      })
+      describe('missing association type', () => {
+        beforeEach(() => {
+          const aggregationInfoEl = getRootElement(
+            parseXmlString(`
+<gmd:aggregationInfo>
+  <gmd:MD_AggregateInformation>
+    <gmd:aggregateDataSetIdentifier>
+      <gmd:MD_Identifier>
+        <gmd:code>
+          <gco:CharacterString>abc-123</gco:CharacterString>
+        </gmd:code>
+      </gmd:MD_Identifier>
+    </gmd:aggregateDataSetIdentifier>
+  </gmd:MD_AggregateInformation>
+</gmd:aggregationInfo>`)
+          )
+          pipe(
+            findIdentification(),
+            appendChildren(() => aggregationInfoEl)
+          )(recordRootEl)
+        })
+        it('ignores the association', () => {
+          expect(readAssociatedRecords(recordRootEl)).toEqual([])
+        })
+      })
+      describe('multiple aggregationInfo elements', () => {
+        beforeEach(() => {
+          const first = getRootElement(
+            parseXmlString(`
+<gmd:aggregationInfo>
+  <gmd:MD_AggregateInformation>
+    <gmd:aggregateDataSetIdentifier>
+      <gmd:MD_Identifier>
+        <gmd:code>
+          <gco:CharacterString>uuid-1</gco:CharacterString>
+        </gmd:code>
+      </gmd:MD_Identifier>
+    </gmd:aggregateDataSetIdentifier>
+    <gmd:associationType>
+      <gmd:DS_AssociationTypeCode codeListValue="crossReference"/>
+    </gmd:associationType>
+  </gmd:MD_AggregateInformation>
+</gmd:aggregationInfo>`)
+          )
+          const second = getRootElement(
+            parseXmlString(`
+<gmd:aggregationInfo>
+  <gmd:MD_AggregateInformation>
+    <gmd:aggregateDataSetIdentifier>
+      <gmd:MD_Identifier>
+        <gmd:code>
+          <gco:CharacterString>uuid-2</gco:CharacterString>
+        </gmd:code>
+      </gmd:MD_Identifier>
+    </gmd:aggregateDataSetIdentifier>
+    <gmd:associationType>
+      <gmd:DS_AssociationTypeCode codeListValue="largerWorkCitation"/>
+    </gmd:associationType>
+  </gmd:MD_AggregateInformation>
+</gmd:aggregationInfo>`)
+          )
+          pipe(
+            findIdentification(),
+            appendChildren(() => first),
+            appendChildren(() => second)
+          )(recordRootEl)
+        })
+        it('returns all associations, in order', () => {
+          expect(readAssociatedRecords(recordRootEl)).toEqual([
+            { uuid: 'uuid-1', associationType: 'crossReference' },
+            { uuid: 'uuid-2', associationType: 'largerWorkCitation' },
           ])
         })
       })

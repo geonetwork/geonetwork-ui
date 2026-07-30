@@ -13,6 +13,7 @@ import {
 } from '../xml-utils'
 import {
   getISODuration,
+  writeAssociatedRecords,
   writeContacts,
   writeContactsForResource,
   writeDefaultLanguage,
@@ -1244,6 +1245,202 @@ describe('write parts', () => {
             </gmd:lineage>
         </gmd:DQ_DataQuality>
     </gmd:dataQualityInfo>
+</root>`)
+      })
+    })
+  })
+
+  describe('writeAssociatedRecords', () => {
+    describe('associatedRecords is empty array', () => {
+      it('removes existing aggregationInfo elements when identification exists', () => {
+        const sample = parseXmlString(`
+<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:aggregationInfo>
+                <gmd:MD_AggregateInformation>
+                    <gmd:aggregateDataSetIdentifier>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>old-uuid</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:aggregateDataSetIdentifier>
+                    <gmd:associationType>
+                        <gmd:DS_AssociationTypeCode codeListValue="crossReference"/>
+                    </gmd:associationType>
+                </gmd:MD_AggregateInformation>
+            </gmd:aggregationInfo>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+        rootEl = getRootElement(sample)
+        writeAssociatedRecords(
+          { ...datasetRecord, associatedRecords: [] },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification/>
+    </gmd:identificationInfo>
+</root>`)
+      })
+    })
+
+    describe('associatedRecords has an entry with an empty uuid', () => {
+      it('does not serialize it', () => {
+        writeAssociatedRecords(
+          {
+            ...datasetRecord,
+            associatedRecords: [
+              { uuid: '', associationType: 'crossReference' },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification/>
+    </gmd:identificationInfo>
+</root>`)
+      })
+    })
+
+    describe('one association', () => {
+      it('writes the aggregationInfo element', () => {
+        writeAssociatedRecords(
+          {
+            ...datasetRecord,
+            associatedRecords: [
+              { uuid: 'abc-123', associationType: 'crossReference' },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:aggregationInfo>
+                <gmd:MD_AggregateInformation>
+                    <gmd:aggregateDataSetIdentifier>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>abc-123</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:aggregateDataSetIdentifier>
+                    <gmd:associationType>
+                        <gmd:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="crossReference"/>
+                    </gmd:associationType>
+                </gmd:MD_AggregateInformation>
+            </gmd:aggregationInfo>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+      })
+    })
+
+    describe('multiple associations', () => {
+      it('writes one aggregationInfo element per association, in order', () => {
+        writeAssociatedRecords(
+          {
+            ...datasetRecord,
+            associatedRecords: [
+              { uuid: 'uuid-1', associationType: 'crossReference' },
+              { uuid: 'uuid-2', associationType: 'largerWorkCitation' },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:aggregationInfo>
+                <gmd:MD_AggregateInformation>
+                    <gmd:aggregateDataSetIdentifier>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>uuid-1</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:aggregateDataSetIdentifier>
+                    <gmd:associationType>
+                        <gmd:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="crossReference"/>
+                    </gmd:associationType>
+                </gmd:MD_AggregateInformation>
+            </gmd:aggregationInfo>
+            <gmd:aggregationInfo>
+                <gmd:MD_AggregateInformation>
+                    <gmd:aggregateDataSetIdentifier>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>uuid-2</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:aggregateDataSetIdentifier>
+                    <gmd:associationType>
+                        <gmd:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="largerWorkCitation"/>
+                    </gmd:associationType>
+                </gmd:MD_AggregateInformation>
+            </gmd:aggregationInfo>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+      })
+    })
+
+    describe('replaces existing associations', () => {
+      it('wipes old aggregationInfo elements and writes only new ones', () => {
+        const sample = parseXmlString(`
+<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:aggregationInfo>
+                <gmd:MD_AggregateInformation>
+                    <gmd:aggregateDataSetIdentifier>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>old-uuid</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:aggregateDataSetIdentifier>
+                    <gmd:associationType>
+                        <gmd:DS_AssociationTypeCode codeListValue="source"/>
+                    </gmd:associationType>
+                </gmd:MD_AggregateInformation>
+            </gmd:aggregationInfo>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+        rootEl = getRootElement(sample)
+        writeAssociatedRecords(
+          {
+            ...datasetRecord,
+            associatedRecords: [
+              { uuid: 'new-uuid', associationType: 'stereoMate' },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:aggregationInfo>
+                <gmd:MD_AggregateInformation>
+                    <gmd:aggregateDataSetIdentifier>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>new-uuid</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:aggregateDataSetIdentifier>
+                    <gmd:associationType>
+                        <gmd:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="stereoMate"/>
+                    </gmd:associationType>
+                </gmd:MD_AggregateInformation>
+            </gmd:aggregationInfo>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
 </root>`)
       })
     })

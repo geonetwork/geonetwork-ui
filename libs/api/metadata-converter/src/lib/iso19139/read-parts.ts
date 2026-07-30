@@ -1,4 +1,5 @@
 import {
+  AssociatedRecord,
   Constraint,
   ConstraintTranslations,
   DatasetOnlineResource,
@@ -925,6 +926,45 @@ export function readSourceRecords(rootEl: XmlElement): SourceRecord[] {
       )
     )(rootEl)
   )
+}
+
+export function extractAssociatedRecords(
+  containerName: string,
+  aggregateName: string,
+  readUuid: ChainableFunction<XmlElement, string>
+): ChainableFunction<XmlElement, AssociatedRecord[]> {
+  return pipe(
+    findChildrenElement(containerName, false),
+    mapArray((el) => {
+      const aggregateEl = findChildElement(aggregateName, false)(el)
+      const uuid = readUuid(aggregateEl)
+      const associationType = pipe(
+        findNestedElement('gmd:associationType', 'gmd:DS_AssociationTypeCode'),
+        readAttribute('codeListValue')
+      )(aggregateEl)
+      if (!uuid || !associationType) return null
+      return { uuid, associationType }
+    }),
+    filterArray((r): r is AssociatedRecord => r !== null)
+  )
+}
+
+export function readAssociatedRecords(rootEl: XmlElement): AssociatedRecord[] {
+  return pipe(
+    findIdentification(),
+    extractAssociatedRecords(
+      'gmd:aggregationInfo',
+      'gmd:MD_AggregateInformation',
+      pipe(
+        findNestedElement(
+          'gmd:aggregateDataSetIdentifier',
+          'gmd:MD_Identifier',
+          'gmd:code'
+        ),
+        extractCharacterString()
+      )
+    )
+  )(rootEl)
 }
 
 export function readUpdateFrequency(rootEl: XmlElement): UpdateFrequency {

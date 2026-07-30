@@ -10,6 +10,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { readKeywords } from '../iso19139/read-parts'
 import {
+  readAssociatedRecords,
   readDefaultLanguage,
   readSourceRecords,
   readOtherLanguages,
@@ -569,6 +570,111 @@ describe('read parts', () => {
         expect(readSourceRecords(root)).toEqual([
           { uuid: 'uuid-1', title: 'Source One' },
           { uuid: 'uuid-2' },
+        ])
+      })
+    })
+  })
+  describe('readAssociatedRecords', () => {
+    describe('no associatedResource elements present', () => {
+      it('returns an empty array', () => {
+        const root = getRootElement(parseXmlString(`<mdb:MD_Metadata/>`))
+        expect(readAssociatedRecords(root)).toEqual([])
+      })
+    })
+    describe('one associatedResource with uuidref and type', () => {
+      it('returns the association', () => {
+        const root = getRootElement(
+          parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:identificationInfo>
+    <mri:MD_DataIdentification>
+      <mri:associatedResource>
+        <mri:MD_AssociatedResource>
+          <mri:associationType>
+            <mri:DS_AssociationTypeCode codeListValue="crossReference"/>
+          </mri:associationType>
+          <mri:metadataReference uuidref="abc-123"/>
+        </mri:MD_AssociatedResource>
+      </mri:associatedResource>
+    </mri:MD_DataIdentification>
+  </mdb:identificationInfo>
+</mdb:MD_Metadata>`)
+        )
+        expect(readAssociatedRecords(root)).toEqual([
+          { uuid: 'abc-123', associationType: 'crossReference' },
+        ])
+      })
+    })
+    describe('missing uuidref', () => {
+      it('ignores the association', () => {
+        const root = getRootElement(
+          parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:identificationInfo>
+    <mri:MD_DataIdentification>
+      <mri:associatedResource>
+        <mri:MD_AssociatedResource>
+          <mri:associationType>
+            <mri:DS_AssociationTypeCode codeListValue="crossReference"/>
+          </mri:associationType>
+        </mri:MD_AssociatedResource>
+      </mri:associatedResource>
+    </mri:MD_DataIdentification>
+  </mdb:identificationInfo>
+</mdb:MD_Metadata>`)
+        )
+        expect(readAssociatedRecords(root)).toEqual([])
+      })
+    })
+    describe('missing association type', () => {
+      it('ignores the association', () => {
+        const root = getRootElement(
+          parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:identificationInfo>
+    <mri:MD_DataIdentification>
+      <mri:associatedResource>
+        <mri:MD_AssociatedResource>
+          <mri:metadataReference uuidref="abc-123"/>
+        </mri:MD_AssociatedResource>
+      </mri:associatedResource>
+    </mri:MD_DataIdentification>
+  </mdb:identificationInfo>
+</mdb:MD_Metadata>`)
+        )
+        expect(readAssociatedRecords(root)).toEqual([])
+      })
+    })
+    describe('multiple associatedResource elements', () => {
+      it('returns all associations, in order', () => {
+        const root = getRootElement(
+          parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:identificationInfo>
+    <mri:MD_DataIdentification>
+      <mri:associatedResource>
+        <mri:MD_AssociatedResource>
+          <mri:associationType>
+            <mri:DS_AssociationTypeCode codeListValue="crossReference"/>
+          </mri:associationType>
+          <mri:metadataReference uuidref="uuid-1"/>
+        </mri:MD_AssociatedResource>
+      </mri:associatedResource>
+      <mri:associatedResource>
+        <mri:MD_AssociatedResource>
+          <mri:associationType>
+            <mri:DS_AssociationTypeCode codeListValue="largerWorkCitation"/>
+          </mri:associationType>
+          <mri:metadataReference uuidref="uuid-2"/>
+        </mri:MD_AssociatedResource>
+      </mri:associatedResource>
+    </mri:MD_DataIdentification>
+  </mdb:identificationInfo>
+</mdb:MD_Metadata>`)
+        )
+        expect(readAssociatedRecords(root)).toEqual([
+          { uuid: 'uuid-1', associationType: 'crossReference' },
+          { uuid: 'uuid-2', associationType: 'largerWorkCitation' },
         ])
       })
     })

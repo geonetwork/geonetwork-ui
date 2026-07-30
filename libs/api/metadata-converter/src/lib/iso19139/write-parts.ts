@@ -1267,6 +1267,49 @@ export function writeSourceRecords(
   )(rootEl)
 }
 
+export function writeAssociatedRecords(
+  record: DatasetRecord | ReuseRecord,
+  rootEl: XmlElement
+) {
+  pipe(
+    findOrCreateIdentification(),
+    removeChildrenByName('gmd:aggregationInfo'),
+    appendChildren(
+      ...record.associatedRecords
+        .filter((assoc) => assoc.uuid && assoc.associationType)
+        .map((assoc) =>
+          pipe(
+            createNestedElement(
+              'gmd:aggregationInfo',
+              'gmd:MD_AggregateInformation'
+            ),
+            appendChildren(
+              pipe(
+                createNestedElement(
+                  'gmd:aggregateDataSetIdentifier',
+                  'gmd:MD_Identifier',
+                  'gmd:code'
+                ),
+                writeCharacterString(assoc.uuid)
+              ),
+              pipe(
+                createNestedElement(
+                  'gmd:associationType',
+                  'gmd:DS_AssociationTypeCode'
+                ),
+                writeAttribute(
+                  'codeList',
+                  'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_AssociationTypeCode'
+                ),
+                writeAttribute('codeListValue', assoc.associationType)
+              )
+            )
+          )
+        )
+    )
+  )(rootEl)
+}
+
 export function getServiceEndpointProtocol(endpoint: ServiceEndpoint): string {
   switch (endpoint.accessServiceProtocol.toLowerCase()) {
     case 'wfs':

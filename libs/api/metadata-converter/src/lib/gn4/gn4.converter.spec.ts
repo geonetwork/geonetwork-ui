@@ -112,6 +112,7 @@ describe('Gn4Converter', () => {
             status: null,
             lineage: null,
             sourceRecords: [],
+            associatedRecords: [],
             recordPublished: null,
             recordUpdated: null,
             resourceIdentifiers: [
@@ -168,6 +169,7 @@ describe('Gn4Converter', () => {
             status: null,
             lineage: null,
             sourceRecords: [],
+            associatedRecords: [],
             recordPublished: null,
             recordUpdated: null,
             resourceIdentifiers: [
@@ -1741,6 +1743,7 @@ describe('Gn4Converter', () => {
             lineage:
               'Les données sont bancarisées dans la base de données Quadrige.',
             sourceRecords: [],
+            associatedRecords: [],
             overviews: [
               {
                 description: 'parametres.gif',
@@ -2069,6 +2072,7 @@ describe('Gn4Converter', () => {
             lineage:
               'Digitalisiert nach den administrativen Einheiten der Schweiz, die im Anhang des Übereinkommens erscheinen.',
             sourceRecords: [],
+            associatedRecords: [],
             onlineResources: [
               {
                 description: 'Vorschau map.geo.admin.ch',
@@ -2220,6 +2224,7 @@ describe('Gn4Converter', () => {
             status: null,
             lineage: null,
             sourceRecords: [],
+            associatedRecords: [],
             recordUpdated: new Date('2024-10-15T07:37:39.350Z'),
             recordPublished: null,
             resourceIdentifiers: [
@@ -2537,6 +2542,7 @@ describe('Gn4Converter', () => {
             lineage:
               "Localisation par un ponctuel de l'ouvrage de dépollution a partir d'un fichier csv collecté sur le site du ministère : http://assainissement.developpement-durable.gouv.fr/. \nLa table des ponctuels comprend désormais tous les points de localisation des stations d'épuration calculés à partir des centroïdes de leur emprise. \nFréquence de mise à jour : annuel. \nQualité des données : Variable selon le type de saisie.",
             sourceRecords: [],
+            associatedRecords: [],
             recordUpdated: new Date('2024-05-29T11:58:54.326Z'),
             recordPublished: null,
             ownerOrganization: {
@@ -3091,6 +3097,7 @@ describe('Gn4Converter', () => {
             lineage:
               "L'application a été développée sur base de l'API GeoViewer",
             sourceRecords: [],
+            associatedRecords: [],
             onlineResources: [
               {
                 description:
@@ -3191,6 +3198,7 @@ describe('Gn4Converter', () => {
             status: null,
             lineage: null,
             sourceRecords: [],
+            associatedRecords: [],
             recordUpdated: new Date('2024-09-26T13:34:25.803Z'),
             recordPublished: null,
             ownerOrganization: {
@@ -3457,6 +3465,7 @@ describe('Gn4Converter', () => {
             status: 'completed',
             lineage: null,
             sourceRecords: [],
+            associatedRecords: [],
             recordUpdated: new Date('2024-01-25T07:45:05.215Z'),
             recordPublished: null,
             recordCreated: new Date('2024-01-25T07:19:13.493Z'),
