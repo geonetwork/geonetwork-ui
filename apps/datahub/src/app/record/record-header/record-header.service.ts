@@ -23,7 +23,9 @@ export class RecordHeaderService {
   canEditFromUrl$ = this.metadata$.pipe(
     switchMap((metadata) =>
       getGlobalConfig().EDIT_URL_TEMPLATE
-        ? this.recordsRepository.canEditIndexedRecord(metadata)
+        ? getGlobalConfig().REUSE_FORM_URL
+          ? of(false)
+          : this.recordsRepository.canEditIndexedRecord(metadata)
         : of(false)
     )
   )

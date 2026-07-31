@@ -7,11 +7,13 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 let _edit_url_template = 'http://edit/${record_id}'
+let _reuse_form_url = ''
 jest.mock('@geonetwork-ui/util/app-config', () => {
   return {
     getGlobalConfig() {
       return {
         EDIT_URL_TEMPLATE: _edit_url_template,
+        REUSE_FORM_URL: _reuse_form_url,
       }
     },
   }
@@ -80,8 +82,22 @@ describe('RecordHeaderService', () => {
       })
     })
 
-    it('should call repository if EDIT_URL_TEMPLATE is present', (done) => {
+    it('should return of(false) if EDIT_URL_TEMPLATE is present but REUSE_FORM_URL is also present', (done) => {
       service.metadata$.next({ uniqueIdentifier: 'test' } as any)
+      _edit_url_template = 'http://edit/${record_id}'
+      _reuse_form_url = 'http://reuse-form'
+
+      service.canEditFromUrl$.subscribe((result) => {
+        expect(result).toBe(false)
+        expect(recordsRepoMock.canEditIndexedRecord).not.toHaveBeenCalled()
+        done()
+      })
+    })
+
+    it('should call repository if EDIT_URL_TEMPLATE is present and REUSE_FORM_URL is absent', (done) => {
+      service.metadata$.next({ uniqueIdentifier: 'test' } as any)
+      _edit_url_template = 'http://edit/${record_id}'
+      _reuse_form_url = ''
       recordsRepoMock.canEditIndexedRecord.mockReturnValue(of(true))
 
       service.canEditFromUrl$.subscribe((result) => {
