@@ -316,6 +316,7 @@ describe('editor form', () => {
 
       // it allows to add an alternative text
       cy.get('gn-ui-image-input').find('gn-ui-button').eq(2).click()
+      cy.get('gn-ui-image-input').find('gn-ui-text-input').scrollIntoView()
       cy.get('gn-ui-image-input').find('gn-ui-text-input').should('be.visible')
 
       // it shows and modifies alternative text for an image
@@ -638,7 +639,7 @@ describe('editor form', () => {
       cy.get('gn-ui-form-field-topics')
         .find('gn-ui-dropdown-multiselect')
         .click()
-      cy.get('label').eq(4).click()
+      cy.get('[id^=dropdown-multiselect-] label').contains('Economy').click()
       cy.clickOnBody()
       cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
