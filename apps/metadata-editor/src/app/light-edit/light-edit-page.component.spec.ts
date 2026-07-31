@@ -150,6 +150,63 @@ describe('LightEditPageComponent', () => {
     })
   })
 
+  describe('contactForResource handling', () => {
+    it('emits the existing contact merged with defaults when contactsForResource has data', (done) => {
+      const existingContact = {
+        firstName: 'Jean',
+        lastName: 'Dupont',
+        email: 'jean.dupont@example.com',
+        role: 'author' as const,
+        organization: { name: 'GéoOrganisation' },
+      }
+
+      ;(facade.record$ as BehaviorSubject<any>).next({
+        ...simpleReuseRecordFixture(),
+        contactsForResource: [existingContact],
+      })
+
+      component.firstContactForResource$.subscribe((contact) => {
+        expect(contact).toEqual(existingContact)
+        done()
+      })
+    })
+
+    it('updates contactsForResource on facade when handleContactChange is called', () => {
+      facade.updateRecordField = jest.fn()
+
+      const initialContacts = [
+        { firstName: 'Old', lastName: 'Contact', email: 'old@example.com' },
+        {
+          firstName: 'Second',
+          lastName: 'Contact',
+          email: 'second@example.com',
+        },
+      ]
+
+      ;(facade.record$ as BehaviorSubject<any>).next({
+        ...simpleReuseRecordFixture(),
+        contactsForResource: initialContacts,
+      })
+
+      fixture.detectChanges()
+
+      const updatedContact = {
+        firstName: 'New',
+        lastName: 'Contact',
+        email: 'new@example.com',
+        role: 'point_of_contact' as const,
+        organization: { name: 'New Org' },
+      }
+
+      component.handleContactChange(updatedContact as any)
+
+      expect(facade.updateRecordField).toHaveBeenCalledWith(
+        'contactsForResource',
+        [updatedContact, initialContacts[1]]
+      )
+    })
+  })
+
   describe('notifications', () => {
     beforeEach(() => {
       fixture.detectChanges()

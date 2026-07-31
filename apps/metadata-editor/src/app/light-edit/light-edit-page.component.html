@@ -30,9 +30,9 @@
                   editor.record.form.section.lightPointOfContact.label
                 </div>
               </div>
-              @if (pointOfContact$ | async; as pointOfContact) {
+              @if (firstContactForResource$ | async; as contact) {
                 <gn-ui-contact-details-form
-                  [contact]="pointOfContact"
+                  [contact]="contact"
                   (contactChange)="handleContactChange($event)"
                 ></gn-ui-contact-details-form>
               }

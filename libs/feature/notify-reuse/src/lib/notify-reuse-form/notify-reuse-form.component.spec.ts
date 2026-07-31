@@ -263,7 +263,7 @@ describe('NotifyReuseFormComponent', () => {
           description: 'notify.reuse.link.description',
         },
       ])
-      expect(saved.contacts).toEqual([
+      expect(saved.contactsForResource).toEqual([
         {
           firstName: 'John',
           lastName: 'Doe',
