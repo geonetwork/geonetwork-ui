@@ -57,16 +57,8 @@ export class LightEditPageComponent implements OnInit, OnDestroy {
     `center /cover url('assets/img/header_bg.webp')`
 
   private contacts: Individual[] = []
-  // the record's first contact, with empty defaults for any missing field
-  pointOfContact$ = this.facade.record$.pipe(
-    map((record) => ({
-      firstName: '',
-      lastName: '',
-      email: '',
-      role: 'point_of_contact' as const,
-      organization: { name: '' },
-      ...record.contacts?.[0],
-    }))
+  firstContactForResource$ = this.facade.record$.pipe(
+    map((record) => record.contactsForResource?.[0])
   )
 
   ngOnInit(): void {
@@ -84,7 +76,7 @@ export class LightEditPageComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.facade.record$.subscribe((record) => {
-        this.contacts = record.contacts ?? []
+        this.contacts = record.contactsForResource ?? []
       })
     )
 
@@ -134,7 +126,7 @@ export class LightEditPageComponent implements OnInit, OnDestroy {
   }
 
   handleContactChange(contact: Individual) {
-    this.facade.updateRecordField('contacts', [
+    this.facade.updateRecordField('contactsForResource', [
       contact,
       ...this.contacts.slice(1),
     ])

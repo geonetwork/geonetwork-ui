@@ -192,8 +192,8 @@ export class NotifyReuseFormComponent implements OnDestroy {
       legalConstraints: [NOT_KNOWN_CONSTRAINT],
       securityConstraints: [],
       otherConstraints: [],
-      contacts: [contact],
-      contactsForResource: [],
+      contacts: [],
+      contactsForResource: [contact],
       lineage: '',
       sourceRecords: [
         {
