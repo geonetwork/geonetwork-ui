@@ -1,14 +1,53 @@
-import { EndpointError, WfsEndpoint, WfsVersion } from '@camptocamp/ogc-client'
-import { DataItem, DatasetInfo, FetchError, PropertyInfo } from '../model'
-import {
-  fetchDataAsText,
-  getJsonDataItemsProxy,
-  jsonToGeojsonFeature,
-} from '../utils'
-import { GmlReader, parseGml } from './gml'
-import { GeojsonReader, parseGeojson } from './geojson'
 import { BaseCacheReader } from './base-cache'
-import { generateSqlQuery } from '../sql-utils'
+import { EndpointError, WfsEndpoint } from '@camptocamp/ogc-client'
+import { DataItem, DatasetInfo, FetchError, PropertyInfo } from '../model'
+import { fetchDataAsText } from '../utils'
+import WFS from 'ol/format/WFS'
+import GeoJSON from 'ol/format/GeoJSON'
+import { GeojsonReader } from './geojson'
+import { GmlReader } from './gml'
+
+const formatGeojson = new GeoJSON()
+
+export function parseGeojson(text: string): DataItem[] {
+  const parsed = JSON.parse(text)
+  const features =
+    parsed.type === 'FeatureCollection' ? parsed.features : parsed
+  if (!Array.isArray(features)) {
+    throw new Error(
+      'Could not parse GeoJSON, expected a features collection or an array of features at root level'
+    )
+  }
+  return features
+}
+
+export function parseGml(
+  text: string,
+  featureType: string,
+  version: string
+): DataItem[] {
+  const parts = featureType.split(':')
+  const regex = new RegExp(`xmlns:${parts[0]}=["']([^'"]*)["']`)
+  const match = regex.exec(text)
+  if (match && match.length >= 2) {
+    const wf = new WFS({
+      featureNS: match[1],
+      featureType: parts[1],
+      version: version,
+    })
+    let features
+    try {
+      features = wf.readFeatures(text)
+    } catch (e: unknown) {
+      throw Error(
+        `Couldn't parse WFS with GML features: ${(e as Error).message}`
+      )
+    }
+    const geojsonItem = formatGeojson.writeFeaturesObject(features)
+    return geojsonItem.features
+  }
+  throw Error("Couldn't retrieve namespace url")
+}
 
 export async function getWfsEndpoint(wfsUrl: string): Promise<WfsEndpoint> {
   try {
@@ -38,31 +77,33 @@ export async function getWfsEndpoint(wfsUrl: string): Promise<WfsEndpoint> {
 
 export class WfsReader extends BaseCacheReader {
   endpoint: WfsEndpoint
-  featureTypeName: string
-  version: WfsVersion
+  featureType: string
 
   constructor(
     url: string,
-    wfsEndpoint: WfsEndpoint,
-    featureTypeName: string,
+    endpoint: WfsEndpoint,
+    featureType: string,
     cacheActive?: boolean
   ) {
     super(url, cacheActive)
-    this.endpoint = wfsEndpoint
-    this.featureTypeName = featureTypeName
-    this.version = this.endpoint.getVersion()
+    this.featureType = featureType
+    this.endpoint = endpoint
   }
 
   get properties(): Promise<PropertyInfo[]> {
     return this.endpoint
-      .getFeatureTypeFull(this.featureTypeName)
+      .getFeatureTypeFull(this.featureType)
       .then((featureType) =>
         Object.keys(featureType.properties).map((prop) => {
           const originalType = featureType.properties[prop]
-          const type =
-            originalType === 'float' || originalType === 'integer'
-              ? 'number'
-              : (originalType as PropertyInfo['type']) // FIXME: ogc-client typing is incorrect, should be a string union
+          let type: PropertyInfo['type']
+          if (originalType === 'float' || originalType === 'integer') {
+            type = 'number'
+          } else if (originalType === 'boolean') {
+            type = 'string' // we don't handle booleans yet in the data fetcher
+          } else {
+            type = originalType
+          }
           return {
             name: prop,
             label: prop,
@@ -73,10 +114,11 @@ export class WfsReader extends BaseCacheReader {
   }
 
   get info(): Promise<DatasetInfo> {
-    return this.endpoint.getFeatureTypeFull(this.featureTypeName).then(
+    return this.endpoint.getFeatureTypeFull(this.featureType).then(
       (result) =>
         ({
           itemsCount: result.objectCount,
+          hasGeometry: !!result.geometryName,
         }) as DatasetInfo
     )
   }
@@ -116,64 +158,11 @@ export class WfsReader extends BaseCacheReader {
               f.toLowerCase().includes('gml')
             ),
             outputCrs: 'EPSG:4326',
-          }),
-          featureType.name,
-          wfsEndpoint.getVersion()
+          })
         )
       }
       throw new Error('wfs.geojsongml.notsupported')
     }
-  }
-
-  public async getData(aggregation?, groupedBy?) {
-    if (aggregation || groupedBy) {
-      return { items: await this.getQueryData() }
-    }
-    const asJson = this.endpoint.supportsJson(this.featureTypeName)
-    const attributes = this.selected ?? undefined
-    let url = this.endpoint.getFeatureUrl(this.featureTypeName, {
-      ...(this.startIndex !== null && { startIndex: this.startIndex }),
-      ...(this.count !== null && { maxFeatures: this.count }),
-      asJson,
-      outputCrs: 'EPSG:4326',
-      attributes,
-      // sortBy: this.sort // TODO: no sort in ogc-client?
-    })
-
-    if (Array.isArray(this.sort) && this.sort.length > 0) {
-      const finalUrl = new URL(url)
-      const sorts = this.sort
-        .map(
-          (fieldSort) => `${fieldSort[1]}+${fieldSort[0] === 'asc' ? 'A' : 'D'}`
-        )
-        .join(',')
-      // Direct update on string url to prevent encoding of +A and +D
-      url = `${url}${finalUrl.search ? '&' : ''}SORTBY=${sorts}`
-    }
-
-    return fetchDataAsText(url, this.cacheActive).then((text) =>
-      asJson
-        ? parseGeojson(text)
-        : parseGml(text, this.featureTypeName, this.version)
-    )
-  }
-
-  public async getQueryData() {
-    const items = (await this.getData()).items
-    const jsonItems = getJsonDataItemsProxy(items)
-    const query = generateSqlQuery(
-      this.selected,
-      this.filter,
-      this.sort,
-      this.startIndex,
-      this.count,
-      this.groupedBy,
-      this.aggregations
-    )
-    const result: any[] = await import('alasql').then((module) =>
-      module.default(query, [jsonItems])
-    )
-    return result.map(jsonToGeojsonFeature)
   }
 
   load() {
@@ -181,6 +170,32 @@ export class WfsReader extends BaseCacheReader {
   }
 
   async read(): Promise<DataItem[]> {
-    return (await this.getData(this.aggregations, this.groupedBy)).items
+    // asking for aggregations or groupedby will yield nothing if using WFS protocol
+    if (this.aggregations || this.groupedBy) {
+      return []
+    }
+    const asJson = this.endpoint.supportsJson(this.featureType)
+    const attributes = this.selected ?? undefined
+    let sortBy = null
+    if (this.sort) {
+      const mapSort = (s) => [s[0] === 'desc' ? 'D' : 'A', s[1]]
+      sortBy = Array.isArray(this.sort[0])
+        ? this.sort.map(mapSort)
+        : mapSort(this.sort)
+    }
+    const url = this.endpoint.getFeatureUrl(this.featureType, {
+      ...(this.startIndex !== null && { startIndex: this.startIndex }),
+      ...(this.count !== null && { maxFeatures: this.count }),
+      asJson,
+      outputCrs: 'EPSG:4326',
+      attributes,
+      sortBy,
+    })
+
+    return fetchDataAsText(url, this.cacheActive).then((text) =>
+      asJson
+        ? parseGeojson(text)
+        : parseGml(text, this.featureType, this.endpoint.getVersion())
+    )
   }
 }

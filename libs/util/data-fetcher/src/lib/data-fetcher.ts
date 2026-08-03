@@ -7,17 +7,16 @@ import { DataItem, DatasetHeaders, FetchError, SupportedType } from './model'
 import { inferDatasetType } from './utils'
 import { BaseReader } from './readers/base'
 import { GmlReader } from './readers/gml'
-import { WfsVersion } from '@camptocamp/ogc-client'
 import { WfsReader } from './readers/wfs'
+
+interface OpenDatasetOptions {
+  wfsFeatureType?: string
+}
 
 export async function openDataset(
   url: string,
   typeHint?: SupportedType,
-  options?: {
-    namespace?: string
-    wfsVersion?: WfsVersion
-    wfsFeatureType?: string
-  },
+  options?: OpenDatasetOptions,
   cacheActive?: boolean
 ): Promise<BaseReader> {
   const fileType = await inferDatasetType(url, typeHint)
@@ -43,7 +42,7 @@ export async function openDataset(
         reader = new ExcelReader(url)
         break
       case 'gml':
-        reader = new GmlReader(url, options.namespace, options.wfsVersion)
+        reader = new GmlReader(url)
         break
       case 'wfs':
         reader = await WfsReader.createReader(url, options.wfsFeatureType)
@@ -52,10 +51,10 @@ export async function openDataset(
     reader.setCacheActive(cacheActive)
     reader.load()
     return reader
-  } catch (e: any) {
-    //WfsReader may already raise a FetchError
+  } catch (e: unknown) {
+    // WfsReader may already raise a FetchError
     if (e instanceof FetchError) throw e
-    else throw FetchError.parsingFailed(e.message)
+    else throw FetchError.parsingFailed((e as Error).message)
   }
 }
 
@@ -71,14 +70,14 @@ export async function openDataset(
 export async function readDataset(
   url: string,
   typeHint?: SupportedType,
-  options?: any,
+  options?: OpenDatasetOptions,
   cacheActive = true
 ): Promise<DataItem[]> {
   const reader = await openDataset(url, typeHint, options, cacheActive)
   try {
     return await reader.read()
-  } catch (e: any) {
-    throw FetchError.parsingFailed(e.message)
+  } catch (e: unknown) {
+    throw FetchError.parsingFailed((e as Error).message)
   }
 }
 

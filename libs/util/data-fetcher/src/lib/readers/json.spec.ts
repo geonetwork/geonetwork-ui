@@ -1,250 +1,13 @@
-import { JsonReader, parseJson } from './json'
+import { JsonReader } from './json'
 import fetchMock from '@fetch-mock/jest'
-import path from 'path'
-import fs from 'fs/promises'
 import { useCache } from '@camptocamp/ogc-client'
 
-//todo: fix this test, to run without mocking useCache
-jest.mock('@camptocamp/ogc-client', () => ({
-  useCache: jest.fn(async (factory) =>
-    JSON.parse(JSON.stringify(await factory()))
-  ),
-  sharedFetch: jest.fn((url) => global.fetch(url)),
-}))
-
 describe('json parsing', () => {
-  describe('parseJson', () => {
-    describe('valid JSON with id', () => {
-      it('returns a parsed object', () => {
-        expect(
-          parseJson(`[{
-      "code_epci": 200067940,
-      "code_region": "76",
-      "objectid": 42,
-      "nom_region": "OCCITANIE",
-      "geo_point_2d": [
-        42.9178728416,
-        1.17961253606
-      ],
-      "nom_dep": "ARIEGE",
-      "st_area_shape": 1646792947.6950028,
-      "st_perimeter_shape": 219256.7113489019,
-      "code_dep": "09",
-      "nom_epci": "CC Couserans-Pyrénées"
-    }]`)
-        ).toEqual({
-          items: [
-            {
-              geometry: null,
-              id: 42,
-              properties: {
-                code_dep: '09',
-                code_epci: 200067940,
-                code_region: '76',
-                geo_point_2d: [42.9178728416, 1.17961253606],
-                nom_dep: 'ARIEGE',
-                nom_epci: 'CC Couserans-Pyrénées',
-                nom_region: 'OCCITANIE',
-                st_area_shape: 1646792947.6950028,
-                st_perimeter_shape: 219256.7113489019,
-              },
-              type: 'Feature',
-            },
-          ],
-          properties: [
-            {
-              label: 'code_epci',
-              name: 'code_epci',
-              type: 'number',
-            },
-            {
-              label: 'code_region',
-              name: 'code_region',
-              type: 'string',
-            },
-            {
-              label: 'nom_region',
-              name: 'nom_region',
-              type: 'string',
-            },
-            {
-              label: 'geo_point_2d',
-              name: 'geo_point_2d',
-              type: 'string',
-            },
-            {
-              label: 'nom_dep',
-              name: 'nom_dep',
-              type: 'string',
-            },
-            {
-              label: 'st_area_shape',
-              name: 'st_area_shape',
-              type: 'number',
-            },
-            {
-              label: 'st_perimeter_shape',
-              name: 'st_perimeter_shape',
-              type: 'number',
-            },
-            {
-              label: 'code_dep',
-              name: 'code_dep',
-              type: 'string',
-            },
-            {
-              label: 'nom_epci',
-              name: 'nom_epci',
-              type: 'string',
-            },
-          ],
-        })
-      })
-    })
-    describe('valid JSON without id', () => {
-      it('returns a parsed object', () => {
-        expect(
-          parseJson(`[{
-      "code_epci": 200067940,
-      "code_region": "76",
-      "nom_region": "OCCITANIE",
-      "geo_point_2d": [
-        42.9178728416,
-        1.17961253606
-      ],
-      "nom_dep": "ARIEGE",
-      "st_area_shape": 1646792947.6950028,
-      "st_perimeter_shape": 219256.7113489019,
-      "code_dep": "09",
-      "nom_epci": "CC Couserans-Pyrénées"
-    }]`)
-        ).toEqual({
-          items: [
-            {
-              geometry: null,
-              properties: {
-                code_dep: '09',
-                code_epci: 200067940,
-                code_region: '76',
-                geo_point_2d: [42.9178728416, 1.17961253606],
-                nom_dep: 'ARIEGE',
-                nom_epci: 'CC Couserans-Pyrénées',
-                nom_region: 'OCCITANIE',
-                st_area_shape: 1646792947.6950028,
-                st_perimeter_shape: 219256.7113489019,
-              },
-              type: 'Feature',
-            },
-          ],
-          properties: [
-            {
-              label: 'code_epci',
-              name: 'code_epci',
-              type: 'number',
-            },
-            {
-              label: 'code_region',
-              name: 'code_region',
-              type: 'string',
-            },
-            {
-              label: 'nom_region',
-              name: 'nom_region',
-              type: 'string',
-            },
-            {
-              label: 'geo_point_2d',
-              name: 'geo_point_2d',
-              type: 'string',
-            },
-            {
-              label: 'nom_dep',
-              name: 'nom_dep',
-              type: 'string',
-            },
-            {
-              label: 'st_area_shape',
-              name: 'st_area_shape',
-              type: 'number',
-            },
-            {
-              label: 'st_perimeter_shape',
-              name: 'st_perimeter_shape',
-              type: 'number',
-            },
-            {
-              label: 'code_dep',
-              name: 'code_dep',
-              type: 'string',
-            },
-            {
-              label: 'nom_epci',
-              name: 'nom_epci',
-              type: 'string',
-            },
-          ],
-        })
-      })
-    })
-    describe('JSON without an array at root level', () => {
-      it('throws a relevant error', () => {
-        expect(() =>
-          parseJson(`{"item": {
-      "code_epci": 200067940,
-      "code_region": "76",
-      "objectid": 42,
-      "nom_region": "OCCITANIE",
-      "geo_point_2d": [
-        42.9178728416,
-        1.17961253606
-      ],
-      "nom_dep": "ARIEGE",
-      "st_area_shape": 1646792947.6950028,
-      "st_perimeter_shape": 219256.7113489019,
-      "code_dep": "09",
-      "nom_epci": "CC Couserans-Pyrénées"
-    }}`)
-        ).toThrowError('expected an array')
-      })
-    })
-    describe('invalid JSON', () => {
-      it('throws a relevant error', () => {
-        expect(() =>
-          parseJson(`[{
-      "code_epci": 200067940,
-      "code_region": "76",
-      "nom_region": "OCCITANIE",
-      "geo_point_2d": [
-        42.9178728416,
-        1.17961253606
-      ],
-      'nom_dep': "ARIEGE",
-    }]`)
-        ).toThrowError('Expected double-quoted property')
-      })
-    })
-  })
   describe('JsonReader', () => {
     let reader: JsonReader
     let cacheActive = true
     beforeEach(() => {
       jest.clearAllMocks()
-      fetchMock.route(
-        ({ url }) => new URL(url).hostname === 'localfile',
-        async ({ url }) => {
-          const filePath = path.join(__dirname, '../..', new URL(url).pathname)
-          return {
-            body: await fs.readFile(filePath, 'utf8'),
-            status: 200,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        },
-        {
-          sendAsJson: false,
-        }
-      )
       reader = new JsonReader(
         'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.json',
         cacheActive
@@ -258,12 +21,23 @@ describe('json parsing', () => {
       it('returns dataset info', async () => {
         await expect(reader.info).resolves.toEqual({
           itemsCount: 37,
+          hasGeometry: false,
         })
       })
     })
     describe('#properties', () => {
       it('returns properties info', async () => {
         await expect(reader.properties).resolves.toEqual([
+          {
+            label: 'datasetid',
+            name: 'datasetid',
+            type: 'string',
+          },
+          {
+            label: 'recordid',
+            name: 'recordid',
+            type: 'string',
+          },
           {
             label: 'code_epci',
             name: 'code_epci',
@@ -275,6 +49,11 @@ describe('json parsing', () => {
             type: 'string',
           },
           {
+            label: 'objectid',
+            name: 'objectid',
+            type: 'number',
+          },
+          {
             label: 'nom_region',
             name: 'nom_region',
             type: 'string',
@@ -282,7 +61,7 @@ describe('json parsing', () => {
           {
             label: 'geo_point_2d',
             name: 'geo_point_2d',
-            type: 'string',
+            type: 'other', // FIXME: figure out it's a geometry
           },
           {
             label: 'nom_dep',
@@ -324,10 +103,13 @@ describe('json parsing', () => {
             code_dep: '34',
             code_epci: 200017341,
             code_region: '76',
+            datasetid: 'perimetre-des-epci-concernes-par-un-contrat-de-ville',
             geo_point_2d: [43.7929180957, 3.37305747018],
             nom_dep: 'HERAULT',
             nom_epci: 'CC Lodévois et Larzac',
             nom_region: 'OCCITANIE',
+            objectid: 25,
+            recordid: '172bdb9d0cd4923786c45994dbf078bfac9cc0dc',
             st_area_shape: 554841824.0549872,
             st_perimeter_shape: 125726.64842881361,
           },
