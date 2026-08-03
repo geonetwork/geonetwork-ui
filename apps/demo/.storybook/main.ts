@@ -12,6 +12,8 @@ const config: StorybookConfig = {
     options: {},
   },
 
+  addons: ['@storybook/addon-docs'],
+
   staticDirs: [{ from: '../../../translations/', to: '/assets/i18n' }],
 
   async webpackFinal(config) {
