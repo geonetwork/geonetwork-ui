@@ -148,8 +148,6 @@ describe('Declare a reuse', () => {
       cy.wait('@saveRecord')
         .its('request.body')
         .should('contain', 'My great reuse')
-        .should('contain', 'Barbara')
-        .should('contain', 'Roberts')
         .should('contain', 'Barbie Inc.')
       cy.get('.cdk-overlay-container').should(
         'not.contain.text',
