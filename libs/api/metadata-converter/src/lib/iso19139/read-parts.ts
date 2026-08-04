@@ -1,5 +1,6 @@
 import {
   AssociatedRecord,
+  AssociationType,
   Constraint,
   ConstraintTranslations,
   DatasetOnlineResource,
@@ -931,19 +932,20 @@ export function readSourceRecords(rootEl: XmlElement): SourceRecord[] {
 export function extractAssociatedRecords(
   containerName: string,
   aggregateName: string,
-  readUuid: ChainableFunction<XmlElement, string>
+  readIdentifier: ChainableFunction<XmlElement, string>
 ): ChainableFunction<XmlElement, AssociatedRecord[]> {
   return pipe(
     findChildrenElement(containerName, false),
     mapArray((el) => {
       const aggregateEl = findChildElement(aggregateName, false)(el)
-      const uuid = readUuid(aggregateEl)
+      const uniqueIdentifier = readIdentifier(aggregateEl)
+      // kept as read, so that a value outside the codelist survives a round trip
       const associationType = pipe(
         findNestedElement('gmd:associationType', 'gmd:DS_AssociationTypeCode'),
         readAttribute('codeListValue')
-      )(aggregateEl)
-      if (!uuid || !associationType) return null
-      return { uuid, associationType }
+      )(aggregateEl) as AssociationType
+      if (!uniqueIdentifier || !associationType) return null
+      return { uniqueIdentifier, associationType }
     }),
     filterArray((r): r is AssociatedRecord => r !== null)
   )

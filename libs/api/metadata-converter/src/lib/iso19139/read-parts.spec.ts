@@ -833,7 +833,7 @@ describe('read parts', () => {
           expect(readAssociatedRecords(recordRootEl)).toEqual([])
         })
       })
-      describe('one aggregationInfo with uuid and type', () => {
+      describe('one aggregationInfo with an identifier and a type', () => {
         beforeEach(() => {
           const aggregationInfoEl = getRootElement(
             parseXmlString(`
@@ -859,11 +859,11 @@ describe('read parts', () => {
         })
         it('returns the association', () => {
           expect(readAssociatedRecords(recordRootEl)).toEqual([
-            { uuid: 'abc-123', associationType: 'crossReference' },
+            { uniqueIdentifier: 'abc-123', associationType: 'crossReference' },
           ])
         })
       })
-      describe('uuid stored as gmx:Anchor', () => {
+      describe('identifier stored as gmx:Anchor', () => {
         beforeEach(() => {
           const aggregationInfoEl = getRootElement(
             parseXmlString(`
@@ -887,13 +887,13 @@ describe('read parts', () => {
             appendChildren(() => aggregationInfoEl)
           )(recordRootEl)
         })
-        it('returns the association with the anchor text as uuid', () => {
+        it('returns the association with the anchor text as the identifier', () => {
           expect(readAssociatedRecords(recordRootEl)).toEqual([
-            { uuid: 'anchor-uuid', associationType: 'source' },
+            { uniqueIdentifier: 'anchor-uuid', associationType: 'source' },
           ])
         })
       })
-      describe('missing uuid', () => {
+      describe('missing identifier', () => {
         beforeEach(() => {
           const aggregationInfoEl = getRootElement(
             parseXmlString(`
@@ -983,8 +983,11 @@ describe('read parts', () => {
         })
         it('returns all associations, in order', () => {
           expect(readAssociatedRecords(recordRootEl)).toEqual([
-            { uuid: 'uuid-1', associationType: 'crossReference' },
-            { uuid: 'uuid-2', associationType: 'largerWorkCitation' },
+            { uniqueIdentifier: 'uuid-1', associationType: 'crossReference' },
+            {
+              uniqueIdentifier: 'uuid-2',
+              associationType: 'largerWorkCitation',
+            },
           ])
         })
       })
