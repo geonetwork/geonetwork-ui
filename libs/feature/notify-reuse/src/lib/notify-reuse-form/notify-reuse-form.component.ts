@@ -166,8 +166,6 @@ export class NotifyReuseFormComponent implements OnDestroy {
       description: this.translate.instant('notify.reuse.link.description'),
     }
     const contact: Individual = {
-      firstName: this.me()?.name,
-      lastName: this.me()?.surname,
       email: this.email(),
       role: 'point_of_contact',
       organization: { name: this.me()?.organisation },

@@ -265,8 +265,6 @@ describe('NotifyReuseFormComponent', () => {
       ])
       expect(saved.contactsForResource).toEqual([
         {
-          firstName: 'John',
-          lastName: 'Doe',
           email: 'reuser@example.com',
           role: 'point_of_contact',
           organization: { name: 'Owner Org' },
