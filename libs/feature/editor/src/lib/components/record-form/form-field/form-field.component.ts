@@ -11,6 +11,7 @@ import {
 } from '@angular/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import {
+  AssociatedRecord,
   CatalogRecordKeys,
   Constraint,
   DatasetTemporalExtent,
@@ -39,6 +40,7 @@ import {
   FormFieldComponentName,
   FormFieldConfig,
 } from '../../../models'
+import { FormFieldAssociatedRecordsComponent } from './form-field-associated-records/form-field-associated-records.component'
 import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource/form-field-contacts-for-resource.component'
 import { FormFieldContactsComponent } from './form-field-contacts/form-field-contacts.component'
 import { FormFieldKeywordsComponent } from './form-field-keywords/form-field-keywords.component'
@@ -70,6 +72,7 @@ import { FormFieldTopicsComponent } from './form-field-topics/form-field-topics.
     FormFieldLicenseComponent,
     FormFieldDateComponent,
     FormFieldUpdateFrequencyComponent,
+    FormFieldAssociatedRecordsComponent,
     FormFieldTemporalExtentsComponent,
     FormFieldSimpleComponent,
     FormFieldRichComponent,
@@ -139,6 +142,9 @@ export class FormFieldComponent {
   }
   get valueAsUpdateFrequency() {
     return this.value as UpdateFrequency
+  }
+  get valueAsAssociatedRecords() {
+    return this.value as Array<AssociatedRecord>
   }
   get valueAsTemporalExtents() {
     return this.value as Array<DatasetTemporalExtent>

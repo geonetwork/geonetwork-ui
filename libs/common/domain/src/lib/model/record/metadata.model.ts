@@ -260,6 +260,19 @@ export interface SourceRecord {
   href?: string
 }
 
+marker('domain.record.associationType.crossReference')
+marker('domain.record.associationType.largerWorkCitation')
+marker('domain.record.associationType.partOfSeamlessDatabase')
+marker('domain.record.associationType.stereoMate')
+
+// hardcoded from the ISO19139 and ISO19115-3 DS_AssociationTypeCode codelists, shared values only
+export const associationTypeValues = [
+  'crossReference',
+  'largerWorkCitation',
+  'partOfSeamlessDatabase',
+  'stereoMate',
+] as const
+
 /**
  * Represents another record associated with this one (e.g. a parent/sibling dataset).
  */

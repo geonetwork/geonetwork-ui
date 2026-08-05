@@ -316,6 +316,7 @@ describe('editor form', () => {
 
       // it allows to add an alternative text
       cy.get('gn-ui-image-input').find('gn-ui-button').eq(2).click()
+      cy.get('gn-ui-image-input').find('gn-ui-text-input').scrollIntoView()
       cy.get('gn-ui-image-input').find('gn-ui-text-input').should('be.visible')
 
       // it shows and modifies alternative text for an image
@@ -505,6 +506,42 @@ describe('editor form', () => {
         .invoke('text')
         .should('eq', ' Data is repeatedly and frequently updated ')
 
+      // associated records
+      // it should allow toggling on and filling in a parent link
+      cy.editor_wrapPreviousDraft(recordUuid)
+      cy.get('gn-ui-form-field-associated-records')
+        .find('gn-ui-check-toggle label')
+        .click()
+      cy.get('gn-ui-form-field-associated-records')
+        .find('gn-ui-text-input input')
+        .type('a2f7f166-9643-4101-8227-5c4acddb0c21')
+      cy.get('gn-ui-form-field-associated-records')
+        .find('gn-ui-dropdown-selector')
+        .selectDropdownOption('largerWorkCitation')
+      cy.editor_publishAndReload(recordUuid)
+      cy.get('@saveStatus').should('eq', 'record_up_to_date')
+      cy.get('gn-ui-form-field-associated-records')
+        .find('gn-ui-text-input input')
+        .invoke('val')
+        .should('eq', 'a2f7f166-9643-4101-8227-5c4acddb0c21')
+      cy.get('gn-ui-form-field-associated-records')
+        .find('gn-ui-dropdown-selector')
+        .find('button')
+        .find('div')
+        .invoke('text')
+        .should('eq', ' Larger work citation ')
+
+      // it should remove the parent link when the toggle is switched off
+      cy.editor_wrapPreviousDraft(recordUuid)
+      cy.get('gn-ui-form-field-associated-records')
+        .find('gn-ui-check-toggle label')
+        .click()
+      cy.editor_publishAndReload(recordUuid)
+      cy.get('@saveStatus').should('eq', 'record_up_to_date')
+      cy.get('gn-ui-form-field-associated-records')
+        .find('gn-ui-text-input')
+        .should('not.exist')
+
       // temporal extents
       // it should show the two extents buttons
       cy.get('gn-ui-form-field-temporal-extents')
@@ -602,7 +639,7 @@ describe('editor form', () => {
       cy.get('gn-ui-form-field-topics')
         .find('gn-ui-dropdown-multiselect')
         .click()
-      cy.get('label').eq(4).click()
+      cy.get('[id^=dropdown-multiselect-] label').contains('Economy').click()
       cy.clickOnBody()
       cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
