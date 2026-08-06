@@ -601,7 +601,7 @@ describe('read parts', () => {
 </mdb:MD_Metadata>`)
         )
         expect(readAssociatedRecords(root)).toEqual([
-          { uuid: 'abc-123', associationType: 'crossReference' },
+          { uniqueIdentifier: 'abc-123', associationType: 'crossReference' },
         ])
       })
     })
@@ -673,8 +673,8 @@ describe('read parts', () => {
 </mdb:MD_Metadata>`)
         )
         expect(readAssociatedRecords(root)).toEqual([
-          { uuid: 'uuid-1', associationType: 'crossReference' },
-          { uuid: 'uuid-2', associationType: 'largerWorkCitation' },
+          { uniqueIdentifier: 'uuid-1', associationType: 'crossReference' },
+          { uniqueIdentifier: 'uuid-2', associationType: 'largerWorkCitation' },
         ])
       })
     })
