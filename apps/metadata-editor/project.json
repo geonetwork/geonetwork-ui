@@ -52,8 +52,6 @@
           "semver",
           "duration-relativetimeformat",
           "@rgrove/parse-xml",
-          "alasql",
-          "papaparse",
           "lodash.throttle",
           "cross-fetch",
           "@frogcat/ttl2jsonld",

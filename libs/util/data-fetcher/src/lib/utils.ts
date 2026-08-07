@@ -121,30 +121,6 @@ export function tryParseNumber(input: string): number | null {
   return isNaN(parsed) ? null : parsed
 }
 
-export function jsonToGeojsonFeature(object: { [key: string]: any }): DataItem {
-  const { id, properties } = Object.keys(object)
-    .map((property) => (property ? property : 'unknown')) //prevent empty strings
-    .reduce(
-      (prev, curr) =>
-        curr.toLowerCase().endsWith('id')
-          ? {
-              ...prev,
-              id: object[curr],
-            }
-          : {
-              ...prev,
-              properties: { ...prev.properties, [curr]: object[curr] },
-            },
-      { id: undefined, properties: {} }
-    )
-  return {
-    type: 'Feature',
-    geometry: null,
-    properties,
-    ...(id !== undefined && { id }),
-  }
-}
-
 function mutateProperties(
   items: DataItem[],
   mutators: { [fieldName: string]: (value: unknown) => unknown }

@@ -1,6 +1,3 @@
-/**
- * @jest-environment jest-fixed-jsdom
- */
 import fetchMock from '@fetch-mock/jest'
 import fs from 'fs'
 import path from 'path'
@@ -20,7 +17,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
       return Promise.resolve(this)
     }
     getVersion() {
-      return '2.0.0'
+      return '1.0.0'
     }
     getFeatureTypes() {
       return [
@@ -50,7 +47,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
       return false
     }
     supportsStartIndex() {
-      return true
+      return false // wfs parsing will fallback to duckdb
     }
   },
 }))
@@ -213,7 +210,7 @@ describe('data-fetcher', () => {
             'Lieu de surveillance : Mnémonique': '001-P-022',
             'Passage : Commentaire': '',
             'Passage : Commentaire de qualification': '',
-            'Passage : Date': new Date('2008-04-15T00:00'),
+            'Passage : Date': new Date('2008-04-15T00:00Z'),
             'Passage : Date de qualification': '',
             'Passage : Date de validation': null,
             'Passage : Niveau de qualité': 'Non qualifié',
@@ -262,11 +259,12 @@ describe('data-fetcher', () => {
         )
         expect(csv[0]).toEqual({
           geometry: null,
-          id: '1',
+          id: 1,
           properties: {
             COMMUNE: 'ANGLEFORT',
             DEP_NOM: 'AIN',
-            DEP_NUM: 1,
+            DEP_NUM: '01',
+            ID: 1,
             FACADE: 'Métropole',
             FRANCE: 'Métropole',
             LAT: null,
@@ -322,10 +320,13 @@ describe('data-fetcher', () => {
             code_dep: '34',
             code_epci: 200017341,
             code_region: '76',
+            datasetid: 'perimetre-des-epci-concernes-par-un-contrat-de-ville',
             geo_point_2d: [43.7929180957, 3.37305747018],
             nom_dep: 'HERAULT',
             nom_epci: 'CC Lodévois et Larzac',
             nom_region: 'OCCITANIE',
+            objectid: 25,
+            recordid: '172bdb9d0cd4923786c45994dbf078bfac9cc0dc',
             st_area_shape: 554841824.0549872,
             st_perimeter_shape: 125726.64842881361,
           },
@@ -343,6 +344,7 @@ describe('data-fetcher', () => {
             coordinates: [3.37305747018, 43.7929180957],
             type: 'Point',
           },
+          id: 25,
           properties: {
             code_dep: '34',
             code_epci: 200017341,
@@ -369,7 +371,9 @@ describe('data-fetcher', () => {
           id: 0,
           properties: {
             ENS_POTENT: 'Th 023',
+            FID: 'ENS_CG02.1',
             Gestion: 'o',
+            ID: 0,
             ID_ENS: 'TH 023',
             PERIMETRE: 1448.09054340757,
             SUPERFICIE: 86511.35571961474,
@@ -385,16 +389,15 @@ describe('data-fetcher', () => {
         const gml = await readDataset(
           'http://localfile/fixtures/wfs-gml.xml',
           'gml',
-          { namespace: 'ms:n_mat_eolien_p_r32', wfsVersion: '2.0.0' }
+          { wfsFeatureType: 'ms:n_mat_eolien_p_r32' }
         )
         expect(gml[0]).toEqual({
           type: 'Feature',
           geometry: {
             type: 'Point',
-            coordinates: [1.548145, 50.054755, 0],
+            coordinates: [1.548145, 50.054755],
           },
           properties: {
-            boundedBy: [1.548145, 50.054755, 1.548145, 50.054755],
             id_map: 1862,
             id_mat: 1862,
             nom_parc: 'PARC EOLIEN DE CHASSE MAREE II',
@@ -417,24 +420,16 @@ describe('data-fetcher', () => {
             en_service: 'NON',
             etat_eolie: 'AB',
             alt_base: null,
-            code_icpe: undefined,
-            date_crea: undefined,
             date_decis: null,
-            date_depot: undefined,
             date_maj: null,
-            date_prod: undefined,
-            date_real: undefined,
             diam_rotor: null,
-            exploitant: undefined,
             gardesol: null,
+            gml_id: '',
             ht_nacelle: null,
-            id_parc: undefined,
-            id_pc: undefined,
-            n_parcel: undefined,
-            operateur: undefined,
-            precis_pos: undefined,
-            srce_geom: undefined,
-            sys_coord: undefined,
+            upperCorner: '50.054755 1.548145',
+            lowerCorner: '50.054755 1.548145',
+            operateur: null,
+            sys_coord: null,
             x_pc: null,
             y_pc: null,
           },
@@ -447,18 +442,16 @@ describe('data-fetcher', () => {
           'http://localfile/fixtures/wfs-gml.xml',
           'wfs',
           {
-            namespace: 'ms:n_mat_eolien_p_r32',
-            wfsVersion: '2.0.0',
+            wfsFeatureType: 'ms:n_mat_eolien_p_r32',
           }
         )
         expect(wfs[0]).toEqual({
           type: 'Feature',
           geometry: {
             type: 'Point',
-            coordinates: [1.548145, 50.054755, 0],
+            coordinates: [1.548145, 50.054755],
           },
           properties: {
-            boundedBy: [1.548145, 50.054755, 1.548145, 50.054755],
             id_map: 1862,
             id_mat: 1862,
             nom_parc: 'PARC EOLIEN DE CHASSE MAREE II',
@@ -481,26 +474,18 @@ describe('data-fetcher', () => {
             en_service: 'NON',
             etat_eolie: 'AB',
             alt_base: null,
-            code_icpe: undefined,
-            date_crea: undefined,
             date_decis: null,
-            date_depot: undefined,
             date_maj: null,
-            date_prod: undefined,
-            date_real: undefined,
             diam_rotor: null,
-            exploitant: undefined,
             gardesol: null,
             ht_nacelle: null,
-            id_parc: undefined,
-            id_pc: undefined,
-            n_parcel: undefined,
-            operateur: undefined,
-            precis_pos: undefined,
-            srce_geom: undefined,
-            sys_coord: undefined,
+            operateur: null,
+            sys_coord: null,
             x_pc: null,
             y_pc: null,
+            gml_id: '',
+            lowerCorner: '50.054755 1.548145',
+            upperCorner: '50.054755 1.548145',
           },
         })
       })

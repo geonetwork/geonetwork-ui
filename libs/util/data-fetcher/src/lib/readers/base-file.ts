@@ -1,65 +1,76 @@
 import { DataItem, DatasetInfo, PropertyInfo } from '../model'
-import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils'
-import { generateSqlQuery } from '../sql-utils'
+import { generateSqlQuery } from '../engine/sql-utils'
 import { BaseCacheReader } from './base-cache'
+import { Engine, getEngine } from '../engine/duckdb'
 
-type ParseResult = {
-  items: DataItem[]
-  properties: PropertyInfo[]
-}
+// type ParseResult = {
+//   items: DataItem[]
+//   properties: PropertyInfo[]
+// }
 
+/**
+ * This reader handles file formats supported natively by DuckDB
+ */
 export class BaseFileReader extends BaseCacheReader {
-  private parseResult_: Promise<ParseResult>
+  private loaded: Promise<void>
+  protected engine: Engine
+  protected datasetId: string
+  protected properties_: PropertyInfo[]
+  protected geometryColumn: string
+  protected rowsCount: number
 
-  protected getData(): Promise<ParseResult> {
+  protected async getLoadQuery(): Promise<string> {
     throw new Error('not implemented')
   }
 
-  load() {
-    this.parseResult_ = this.getData()
+  async load() {
+    this.datasetId = `datafetcher${Math.floor(Math.random() * 1000000)}`
+    this.loaded = getEngine()
+      .then((engine) => {
+        this.engine = engine
+        return this.getLoadQuery()
+      })
+      .then((loadQuery) => this.engine.loadFile(this.datasetId, loadQuery))
+      .then((datasetInfo) => {
+        this.properties_ = datasetInfo.properties
+        this.geometryColumn = datasetInfo.geometryColumn
+        this.rowsCount = datasetInfo.rowsCount
+        // returns void for the loaded promise
+      })
+      .catch((e) => {
+        console.error(e.stack ?? e.message)
+      })
   }
 
   get properties(): Promise<PropertyInfo[]> {
-    return this.parseResult_.then((result) => result.properties)
+    return this.loaded.then(() => this.properties_)
   }
 
   get info(): Promise<DatasetInfo> {
-    return this.parseResult_.then(
-      (result) =>
-        ({
-          itemsCount: result.items.length,
-        }) as DatasetInfo
-    )
+    return this.loaded.then(() => ({
+      itemsCount: this.rowsCount,
+      hasGeometry: !!this.geometryColumn,
+    }))
   }
 
   async read(): Promise<DataItem[]> {
-    const items = (await this.parseResult_).items
-    // no query defined: return the full results as is
-    if (
-      this.groupedBy == null &&
-      this.aggregations == null &&
-      this.selected == null &&
-      this.sort == null &&
-      this.filter == null &&
-      this.startIndex == null &&
-      this.count == null
-    ) {
-      return items
-    }
+    await this.loaded
 
-    const jsonItems = getJsonDataItemsProxy(items)
+    // if only certain fields are selected, omit the geometry
+    const geometryColumn = this.selected === null ? this.geometryColumn : null
+
     const query = generateSqlQuery(
+      this.datasetId,
       this.selected,
       this.filter,
       this.sort,
       this.startIndex,
       this.count,
       this.groupedBy,
-      this.aggregations
+      this.aggregations,
+      geometryColumn
     )
-    const result: any[] = await import('alasql').then((module) =>
-      module.default(query, [jsonItems])
-    )
-    return result.map(jsonToGeojsonFeature)
+
+    return this.engine.queryItems(query)
   }
 }

@@ -97,11 +97,12 @@ export interface DatasetHeaders {
 export interface PropertyInfo {
   name: string
   label: string
-  type: 'number' | 'date' | 'url' | 'string'
+  type: 'number' | 'date' | 'boolean' | 'string' | 'other'
 }
 
 export interface DatasetInfo {
   itemsCount: number
+  hasGeometry: boolean
 }
 
 export type FieldName = string
