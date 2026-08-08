@@ -1,33 +1,33 @@
-import { DataItem, PropertyInfo } from '../model'
-import {
-  fetchDataAsArrayBuffer,
-  jsonToGeojsonFeature,
-  processItemProperties,
-} from '../utils'
 import { BaseFileReader } from './base-file'
-
-/**
- * This will read the first sheet of the excel workbook and expect the first
- * line to contain the properties names
- * @param buffer
- */
-export function parseExcel(buffer: ArrayBuffer): Promise<{
-  items: DataItem[]
-  properties: PropertyInfo[]
-}> {
-  return import('xlsx').then(({ read, utils }) => {
-    const workbook = read(buffer)
-    const sheet = workbook.Sheets[workbook.SheetNames[0]]
-    let json = utils.sheet_to_json(sheet)
-    if (!json.length) {
-      json = []
-    }
-    return processItemProperties(json.map(jsonToGeojsonFeature), true)
-  })
-}
+import { fetchDataAsArrayBuffer } from '../utils'
 
 export class ExcelReader extends BaseFileReader {
-  getData() {
-    return fetchDataAsArrayBuffer(this.url, this.cacheActive).then(parseExcel)
+  protected async getLoadQuery(): Promise<string> {
+    // we download the file as an array buffer first, in order to be able to check if it's an XLS file
+    let buffer = await fetchDataAsArrayBuffer(this.url, false)
+    const bufferHandle = `B${this.datasetId}`
+
+    // checking against the magic number at the beginning of XLS files, see https://en.wikipedia.org/wiki/List_of_file_signatures
+    const magicNumber = new Uint8Array(buffer, 0, 8) // first 8 bytes
+    const isXls =
+      Array.from(magicNumber)
+        .map((n) => n.toString(16).toUpperCase())
+        .join(' ') === 'D0 CF 11 E0 A1 B1 1A E1'
+
+    // uh oh, this is a XLS file (not supported by duckdb); convert it to CSV using the xlsx package
+    if (isXls) {
+      buffer = await import('xlsx').then(({ read, utils }) => {
+        const workbook = read(buffer)
+        const json = utils.sheet_to_json(
+          workbook.Sheets[workbook.SheetNames[0]]
+        )
+        return new TextEncoder().encode(JSON.stringify(json)).buffer
+      })
+    }
+    const duckDbFn = isXls ? 'read_json' : 'read_xlsx'
+
+    await this.engine.registerData(bufferHandle, new Uint8Array(buffer))
+    return `
+CREATE TABLE ${this.datasetId} AS SELECT * FROM ${duckDbFn}("${bufferHandle}");`
   }
 }
