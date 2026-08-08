@@ -155,7 +155,7 @@
     "ng-mocks": "~14.15.3",
     "ng-packagr": "20.3.2",
     "ngrx-store-freeze": "^0.2.4",
-    "nx": "22.0.4",
+    "nx": "22.7.7",
     "postcss": "^8.5.18",
     "prettier": "3.4.2",
     "storybook": "9.1.19",
