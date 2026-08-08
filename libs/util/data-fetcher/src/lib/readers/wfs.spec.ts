@@ -13,26 +13,12 @@ import { FetchError } from '../model'
 const urlGeojson =
   'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson'
 const urlGml = 'http://localfile/fixtures/wfs-gml.xml'
-const urlGeojsonLegacy = 'https://mygeojsonreader.edu'
-const urlGmlLegacy = 'https://mygmlreader.edu'
+const urlGeojsonLegacy = 'https://mygeojsonreader.edu/legacy/'
+const urlGmlLegacy = 'https://mygmlreader.edu/legacy/'
 
-jest.mock('./gml', () => ({
-  GmlReader: jest.fn().mockImplementation((cacheActive) => ({})),
-  parseGml: jest.fn(() => ({
-    items: [{ id: 1, name: 'Mocked ParsedGml Item 1' }],
-  })),
-}))
+jest.mock('./gml')
 
-jest.mock('./geojson', () => ({
-  GeojsonReader: jest.fn().mockImplementation((cacheActive) => ({
-    getData: jest.fn().mockResolvedValue({
-      items: [{ id: 1, name: 'Mocked Geojson Item 1' }],
-    }),
-  })),
-  parseGeojson: jest.fn(() => ({
-    items: [{ id: 1, name: 'Mocked Geojson Item 1' }],
-  })),
-}))
+jest.mock('./geojson')
 
 jest.mock('@camptocamp/ogc-client', () => ({
   useCache: jest.fn(async (factory) =>
@@ -59,10 +45,10 @@ jest.mock('@camptocamp/ogc-client', () => ({
       }
     }
     getVersion() {
-      if (this.url === urlGeojson || this.url === urlGml) {
-        return '2.0.0'
-      } else {
+      if (this.url.indexOf('legacy') > -1) {
         return '1.0.0'
+      } else {
+        return '2.0.0'
       }
     }
     getFeatureTypes() {
@@ -82,7 +68,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
       }
     }
     getFeatureUrl(featureTypeName: string, options) {
-      return `${this.url}?1=1&STARTINDEX=${options.startIndex}&MAXFEATURES=${options.maxFeatures}`
+      return `${this.url}?1=1&STARTINDEX=${options.startIndex}&MAXFEATURES=${options.maxFeatures}&SORTBY=${options.sortBy?.toString()}`
     }
     getFeatureTypeFull() {
       let properties
@@ -117,12 +103,12 @@ jest.mock('@camptocamp/ogc-client', () => ({
           ht_mat: 'integer',
           ht_nacelle: 'integer',
           diam_rotor: 'integer',
-          gardesol: 'number',
+          gardesol: 'float',
           type_proce: 'string',
           etat_proce: 'string',
           date_depot: 'string',
           date_decis: 'date',
-          contentieu: 'number',
+          contentieu: 'float',
           etat_mat: 'string',
           date_real: 'string',
           date_prod: 'string',
@@ -149,6 +135,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
       return Promise.resolve({
         objectCount: 442,
         properties,
+        geometryName: 'geom',
       })
     }
     supportsJson() {
@@ -159,11 +146,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
       }
     }
     supportsStartIndex() {
-      if (this.url === urlGeojson) {
-        return true
-      } else {
-        return false
-      }
+      return this.url.indexOf('legacy') === -1
     }
   },
 }))
@@ -202,6 +185,7 @@ describe('WfsReader', () => {
       it('returns dataset info', async () => {
         await expect(reader.info).resolves.toEqual({
           itemsCount: 442,
+          hasGeometry: true,
         })
       })
     })
@@ -264,7 +248,25 @@ describe('WfsReader', () => {
     describe('#read', () => {
       it('reads data', async () => {
         const items = await reader.read()
-        expect(items[0]).toEqual({ id: 1, name: 'Mocked Geojson Item 1' })
+        expect(items[0]).toEqual({
+          geometry: {
+            coordinates: [3.37305747018, 43.7929180957],
+            type: 'Point',
+          },
+          properties: {
+            code_dep: '34',
+            code_epci: 200017341,
+            code_region: '76',
+            geo_point_2d: [43.7929180957, 3.37305747018],
+            nom_dep: 'HERAULT',
+            nom_epci: 'CC Lodévois et Larzac',
+            nom_region: 'OCCITANIE',
+            objectid: 25,
+            st_area_shape: 554841824.0549872,
+            st_perimeter_shape: 125726.64842881361,
+          },
+          type: 'Feature',
+        })
       })
 
       it('reads data with pagination (limits)', async () => {
@@ -276,6 +278,7 @@ describe('WfsReader', () => {
           outputCrs: 'EPSG:4326',
           startIndex: 2,
           maxFeatures: 42,
+          sortBy: null,
         })
       })
 
@@ -287,6 +290,7 @@ describe('WfsReader', () => {
           asJson: true,
           outputCrs: 'EPSG:4326',
           attributes: ['code_dep', 'nom_epci'],
+          sortBy: null,
         })
       })
     })
@@ -300,9 +304,21 @@ describe('WfsReader', () => {
         reader.orderBy(['asc', 'ville'], ['desc', 'epci'])
         await reader.read()
         expect(fetchDataAsTextSpy).toHaveBeenCalledWith(
-          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson?1=1&STARTINDEX=42&MAXFEATURES=10&SORTBY=ville+A,epci+D',
+          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson?1=1&STARTINDEX=42&MAXFEATURES=10&SORTBY=A,ville,D,epci', // actual sortby parameter will be computed by ogc-client
           cacheActive
         )
+      })
+    })
+
+    describe('When aggregations are requested', () => {
+      it('returns an empty array', async () => {
+        reader.aggregate(['sum', 'code_dep'])
+        let items = await reader.read()
+        expect(items).toEqual([])
+        reader.selectAll()
+        reader.groupBy(['distinct', 'code_dep'])
+        items = await reader.read()
+        expect(items).toEqual([])
       })
     })
   })
@@ -337,6 +353,7 @@ describe('WfsReader', () => {
       it('returns dataset info', async () => {
         await expect(reader.info).resolves.toEqual({
           itemsCount: 442,
+          hasGeometry: true,
         })
       })
 
@@ -429,21 +446,19 @@ describe('WfsReader', () => {
     })
     it('returns an instance of WfsReader', async () => {
       await expect(
-        WfsReader.createReader(urlGeojson, urlGeojson)
+        WfsReader.createReader(urlGeojson, 'myFeatureType')
       ).resolves.toBeInstanceOf(WfsReader)
     })
-    it('returns an instance of GeojsonReader', async () => {
-      await WfsReader.createReader(urlGeojsonLegacy, urlGeojsonLegacy)
+    it('returns an instance of GeojsonReader for versions < 2.0.0', async () => {
+      await WfsReader.createReader(urlGeojsonLegacy, 'myFeatureType')
       expect(GeojsonReader).toHaveBeenCalledWith(
-        'https://mygeojsonreader.edu?1=1&STARTINDEX=undefined&MAXFEATURES=undefined'
+        'https://mygeojsonreader.edu/legacy/?1=1&STARTINDEX=undefined&MAXFEATURES=undefined&SORTBY=undefined'
       )
     })
-    it('returns an instance of GmlReader', async () => {
-      await WfsReader.createReader(urlGmlLegacy, urlGmlLegacy)
+    it('returns an instance of GmlReader for versions < 2.0.0', async () => {
+      await WfsReader.createReader(urlGmlLegacy, 'myFeatureType')
       expect(GmlReader).toHaveBeenCalledWith(
-        'https://mygmlreader.edu?1=1&STARTINDEX=undefined&MAXFEATURES=undefined',
-        'any',
-        '1.0.0'
+        'https://mygmlreader.edu/legacy/?1=1&STARTINDEX=undefined&MAXFEATURES=undefined&SORTBY=undefined'
       )
     })
 
@@ -464,35 +479,6 @@ describe('WfsReader', () => {
           const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
           await reader.read()
           expect(useCacheSpy).not.toHaveBeenCalled()
-        })
-      })
-    })
-    describe('Aggregations', () => {
-      describe('When aggregations are requested', () => {
-        it('calls getQueryData and returns the proper data', async () => {
-          const getQueryDataSpy = jest.spyOn(reader, 'getQueryData')
-          reader.aggregations = ['sum', 'code_dep'] as any
-          const items = await reader.getData(reader.aggregations)
-          expect(getQueryDataSpy).toHaveBeenCalledTimes(1)
-          expect(items).toEqual({
-            items: [
-              {
-                id: 1,
-                properties: {
-                  name: 'Mocked ParsedGml Item 1',
-                },
-                type: 'Feature',
-                geometry: null,
-              },
-            ],
-          })
-        })
-      })
-      describe('When aggregations are NOT requested', () => {
-        it('should not call getQueryData', async () => {
-          const getQueryDataSpy = jest.spyOn(reader, 'getQueryData')
-          reader.aggregations = null
-          expect(getQueryDataSpy).toHaveBeenCalledTimes(0)
         })
       })
     })
