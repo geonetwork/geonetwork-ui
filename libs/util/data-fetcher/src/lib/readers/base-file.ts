@@ -1,12 +1,12 @@
 import { DataItem, DatasetInfo, PropertyInfo } from '../model'
 import { generateSqlQuery } from '../engine/sql-utils'
-import { BaseCacheReader } from './base-cache'
 import { Engine, getEngine } from '../engine/duckdb'
+import { BaseReader } from './base'
 
 /**
  * This reader handles file formats supported natively by DuckDB
  */
-export class BaseFileReader extends BaseCacheReader {
+export class BaseFileReader extends BaseReader {
   private loaded: Promise<void>
   protected engine: Engine
   protected datasetId: string
@@ -36,7 +36,9 @@ export class BaseFileReader extends BaseCacheReader {
         this.engine = engine
         return this.getLoadQuery()
       })
-      .then((loadQuery) => this.engine.loadFile(this.datasetId, loadQuery))
+      .then((loadQuery) =>
+        this.engine.loadFile(this.datasetId, loadQuery, !this.cacheEnabled)
+      )
       .then((datasetInfo) => {
         this.properties_ = datasetInfo.properties
         this.geometryColumn = datasetInfo.geometryColumn

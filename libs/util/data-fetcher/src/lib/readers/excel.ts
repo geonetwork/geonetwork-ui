@@ -4,7 +4,7 @@ import { fetchDataAsArrayBuffer } from '../utils'
 export class ExcelReader extends BaseFileReader {
   protected async getLoadQuery(): Promise<string> {
     // we download the file as an array buffer first, in order to be able to check if it's an XLS file
-    let buffer = await fetchDataAsArrayBuffer(this.url, false)
+    let buffer = await fetchDataAsArrayBuffer(this.url, this.cacheEnabled)
     const bufferHandle = `B${this.datasetId}`
 
     // checking against the magic number at the beginning of XLS files, see https://en.wikipedia.org/wiki/List_of_file_signatures

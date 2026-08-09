@@ -1,10 +1,9 @@
 import fetchMock from '@fetch-mock/jest'
 import fs from 'fs'
 import path from 'path'
-import { readDataset } from './data-fetcher'
+import { openDataset, readDataset } from './data-fetcher'
 import { CsvReader } from './readers/csv'
 import { GeojsonReader } from './readers/geojson'
-import { sharedFetch, useCache } from '@camptocamp/ogc-client'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   useCache: jest.fn(async (factory) =>
@@ -386,11 +385,9 @@ describe('data-fetcher', () => {
     })
     describe('Gml file', () => {
       it('returns the objects in the file', async () => {
-        const gml = await readDataset(
-          'http://localfile/fixtures/wfs-gml.xml',
-          'gml',
-          { wfsFeatureType: 'ms:n_mat_eolien_p_r32' }
-        )
+        const gml = await readDataset('http://localfile/fixtures/wfs-gml.xml', {
+          typeHint: 'gml',
+        })
         expect(gml[0]).toEqual({
           type: 'Feature',
           geometry: {
@@ -438,13 +435,10 @@ describe('data-fetcher', () => {
     })
     describe('Wfs service', () => {
       it('reads the content from the service', async () => {
-        const wfs = await readDataset(
-          'http://localfile/fixtures/wfs-gml.xml',
-          'wfs',
-          {
-            wfsFeatureType: 'ms:n_mat_eolien_p_r32',
-          }
-        )
+        const wfs = await readDataset('http://localfile/fixtures/wfs-gml.xml', {
+          typeHint: 'wfs',
+          wfsFeatureType: 'ms:n_mat_eolien_p_r32',
+        })
         expect(wfs[0]).toEqual({
           type: 'Feature',
           geometry: {
@@ -493,10 +487,9 @@ describe('data-fetcher', () => {
     describe('specifying a type hint', () => {
       it('ignores the advertised content type and follows the type hint instead', async () => {
         try {
-          await readDataset(
-            'http://localfile/fixtures/small.json',
-            'csv'
-          ).catch(console.warn)
+          await readDataset('http://localfile/fixtures/small.json', {
+            typeHint: 'csv',
+          }).catch(console.warn)
         } catch {} // eslint-disable-line
         expect(CsvReader.prototype.read).toHaveBeenCalled()
       })
@@ -520,38 +513,28 @@ describe('data-fetcher', () => {
         })
       })
     })
-    describe('use ogc-client utils for caching', () => {
-      beforeEach(() => {
-        readDataset(
+    describe('correctly sets caching on the reader caching', () => {
+      it('uses cache by default', async () => {
+        const dataset = await openDataset(
           'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson',
-          'geojson'
+          { typeHint: 'geojson' }
         )
+        expect(dataset['cacheEnabled']).toBe(true)
       })
-      it('uses cache by default', () => {
-        expect(useCache).toHaveBeenCalledTimes(1)
-      })
-      it('avoids identical concurrent requests', () => {
-        expect(sharedFetch).toHaveBeenCalledTimes(1)
-      })
-    })
-    describe('when no use of ogc-client cache', () => {
-      beforeEach(() => {
-        const cacheActive = false
-        readDataset(
+      it('disables cache if specified', async () => {
+        const dataset = await openDataset(
           'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson',
-          'geojson',
-          undefined,
-          cacheActive
+          { typeHint: 'geojson', enableCache: false }
         )
-      })
-      it('does not use ogc-client cache', () => {
-        expect(useCache).not.toHaveBeenCalled()
+        expect(dataset['cacheEnabled']).toBe(false)
       })
     })
     describe('invalid file', () => {
       it('throws an explicit error', () => {
         return expect(
-          readDataset('http://localfile/fixtures/wfs-gml.xml', 'json')
+          readDataset('http://localfile/fixtures/wfs-gml.xml', {
+            typeHint: 'json',
+          })
         ).rejects.toMatchObject({
           info: expect.stringContaining('Malformed JSON'),
           type: 'parse',

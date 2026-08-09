@@ -56,7 +56,7 @@ export const WithGeojson: StoryObj<DataTableComponent> = {
     async () => ({
       dataset: await openDataset(
         'https://france-geojson.gregoiredavid.fr/repo/departements.geojson',
-        'geojson'
+        { typeHint: 'geojson' }
       ),
     }),
   ],
@@ -72,10 +72,7 @@ export const WithWfs: StoryObj<DataTableComponent> = {
     async () => ({
       dataset: await openDataset(
         'https://www.geo2france.fr/geoserver/cr_hdf/ows',
-        'wfs',
-        {
-          wfsFeatureType: 'accidento_hdf_L93',
-        }
+        { typeHint: 'wfs', wfsFeatureType: 'accidento_hdf_L93' }
       ),
     }),
   ],

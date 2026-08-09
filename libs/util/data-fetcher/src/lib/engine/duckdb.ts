@@ -81,10 +81,12 @@ export class Engine {
    * - the name of the dataset geometry column (null if no geometry present)
    * @param datasetId name of the table under which the dataset will be stored
    * @param loadQuery duckdb-specific query for creating a table out of the data
+   * @param forceReload if true, any existing data will be dropped and redownloaded
    */
   async loadFile(
     datasetId: string,
-    loadQuery: string
+    loadQuery: string,
+    forceReload = false
   ): Promise<{
     properties: PropertyInfo[]
     geometryColumn: string | null
@@ -93,11 +95,14 @@ export class Engine {
     const conn = await this.db.connect()
     let results: Table
 
-    // unless we want to recreate the table, let's keep it if it already exists
-    const safeLoadQuery = loadQuery.replace(
-      /CREATE TABLE(?! IF NOT EXISTS)/gi,
-      'CREATE TABLE IF NOT EXISTS'
-    )
+    // either we want to recreate the table, or we keep it if it already exists
+    const safeLoadQuery = forceReload
+      ? `DROP TABLE IF EXISTS ${datasetId};
+${loadQuery}`
+      : loadQuery.replace(
+          /CREATE TABLE(?! IF NOT EXISTS)/gi,
+          'CREATE TABLE IF NOT EXISTS'
+        )
 
     // create the table
     try {

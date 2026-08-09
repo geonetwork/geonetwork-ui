@@ -10,16 +10,16 @@ import { GmlReader } from './readers/gml'
 import { WfsReader } from './readers/wfs'
 
 interface OpenDatasetOptions {
+  typeHint?: SupportedType
   wfsFeatureType?: string
+  enableCache?: boolean // by default cache will be used if this is not set to false
 }
 
 export async function openDataset(
   url: string,
-  typeHint?: SupportedType,
-  options?: OpenDatasetOptions,
-  cacheActive?: boolean
+  options?: OpenDatasetOptions
 ): Promise<BaseReader> {
-  const fileType = await inferDatasetType(url, typeHint)
+  const fileType = await inferDatasetType(url, options?.typeHint)
   let reader:
     | CsvReader
     | JsonReader
@@ -45,10 +45,10 @@ export async function openDataset(
         reader = new GmlReader(url)
         break
       case 'wfs':
-        reader = await WfsReader.createReader(url, options.wfsFeatureType)
+        reader = await WfsReader.createReader(url, options?.wfsFeatureType)
         break
     }
-    reader.setCacheActive(cacheActive)
+    reader.enableCache(options?.enableCache ?? true)
     reader.load()
     return reader
   } catch (e: unknown) {
@@ -62,18 +62,16 @@ export async function openDataset(
  * This fetches the full dataset at the given URL and parses it according to its mime type.
  * All items in the dataset are converted to GeoJSON features, even if they do not bear any spatial geometry.
  * File type can be either inferred (from the HTTP headers or the URL), or hinted using the 2nd argument
- * File type is determined liked so:
+ * File type is determined like so:
  *  1. if a type hint is given, use it
  *  2. otherwise, look for a Content-Type header in the response with a supported mime type
  *  3. if no valid mime type was found, look for an explicit file extension in the url (.csv, .geojson etc.)
  */
 export async function readDataset(
   url: string,
-  typeHint?: SupportedType,
-  options?: OpenDatasetOptions,
-  cacheActive = true
+  options?: OpenDatasetOptions
 ): Promise<DataItem[]> {
-  const reader = await openDataset(url, typeHint, options, cacheActive)
+  const reader = await openDataset(url, options)
   try {
     return await reader.read()
   } catch (e: unknown) {

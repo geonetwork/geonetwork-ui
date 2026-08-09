@@ -18,7 +18,13 @@ export class BaseReader {
   protected startIndex: number = null
   protected count: number = null
 
+  protected cacheEnabled = false
+
   constructor(protected url: string) {}
+
+  enableCache(enabled: boolean) {
+    this.cacheEnabled = enabled
+  }
 
   load() {
     throw new Error('not implemented')

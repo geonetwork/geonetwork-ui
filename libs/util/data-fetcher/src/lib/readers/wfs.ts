@@ -1,4 +1,3 @@
-import { BaseCacheReader } from './base-cache'
 import { EndpointError, WfsEndpoint } from '@camptocamp/ogc-client'
 import { DataItem, DatasetInfo, FetchError, PropertyInfo } from '../model'
 import { fetchDataAsText } from '../utils'
@@ -6,6 +5,7 @@ import WFS from 'ol/format/WFS'
 import GeoJSON from 'ol/format/GeoJSON'
 import { GeojsonReader } from './geojson'
 import { GmlReader } from './gml'
+import { BaseReader } from './base'
 
 const formatGeojson = new GeoJSON()
 
@@ -75,17 +75,12 @@ export async function getWfsEndpoint(wfsUrl: string): Promise<WfsEndpoint> {
   }
 }
 
-export class WfsReader extends BaseCacheReader {
+export class WfsReader extends BaseReader {
   endpoint: WfsEndpoint
   featureType: string
 
-  constructor(
-    url: string,
-    endpoint: WfsEndpoint,
-    featureType: string,
-    cacheActive?: boolean
-  ) {
-    super(url, cacheActive)
+  constructor(url: string, endpoint: WfsEndpoint, featureType: string) {
+    super(url)
     this.featureType = featureType
     this.endpoint = endpoint
   }
@@ -192,7 +187,7 @@ export class WfsReader extends BaseCacheReader {
       sortBy,
     })
 
-    return fetchDataAsText(url, this.cacheActive).then((text) =>
+    return fetchDataAsText(url, this.cacheEnabled).then((text) =>
       asJson
         ? parseGeojson(text)
         : parseGml(text, this.featureType, this.endpoint.getVersion())

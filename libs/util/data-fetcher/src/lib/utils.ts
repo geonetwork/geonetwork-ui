@@ -1,4 +1,10 @@
-import { DataItem, DatasetHeaders, FetchError, SupportedType, SupportedTypes, } from './model'
+import {
+  DataItem,
+  DatasetHeaders,
+  FetchError,
+  SupportedType,
+  SupportedTypes,
+} from './model'
 import { sharedFetch, useCache } from '@camptocamp/ogc-client'
 import { parseHeaders } from './headers'
 
