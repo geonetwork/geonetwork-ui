@@ -505,8 +505,8 @@ describe('data-fetcher', () => {
         )
         expect(GeojsonReader.prototype.read).toHaveBeenCalled()
       })
-      it('fails if no recognized extension in the url', async () => {
-        expect(
+      it('fails if no recognized extension in the url', () => {
+        return expect(
           readDataset('http://localfile/fixtures/unrecognized.txt?noheader')
         ).rejects.toMatchObject({
           type: expect.stringContaining('unknown'),
@@ -520,6 +520,7 @@ describe('data-fetcher', () => {
           { typeHint: 'geojson' }
         )
         expect(dataset['cacheEnabled']).toBe(true)
+        await dataset.isLoaded // this makes sure that the test does not terminate before all operations on DuckDB are finished
       })
       it('disables cache if specified', async () => {
         const dataset = await openDataset(
@@ -527,6 +528,7 @@ describe('data-fetcher', () => {
           { typeHint: 'geojson', enableCache: false }
         )
         expect(dataset['cacheEnabled']).toBe(false)
+        await dataset.isLoaded // this makes sure that the test does not terminate before all operations on DuckDB are finished
       })
     })
     describe('invalid file', () => {

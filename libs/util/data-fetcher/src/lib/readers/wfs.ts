@@ -3,6 +3,7 @@ import { DataItem, DatasetInfo, FetchError, PropertyInfo } from '../model'
 import { fetchDataAsText } from '../utils'
 import WFS from 'ol/format/WFS'
 import GeoJSON from 'ol/format/GeoJSON'
+import Feature from 'ol/Feature'
 import { GeojsonReader } from './geojson'
 import { GmlReader } from './gml'
 import { BaseReader } from './base'
@@ -30,14 +31,14 @@ export function parseGml(
   const regex = new RegExp(`xmlns:${parts[0]}=["']([^'"]*)["']`)
   const match = regex.exec(text)
   if (match && match.length >= 2) {
-    const wf = new WFS({
+    const wfs = new WFS({
       featureNS: match[1],
       featureType: parts[1],
       version: version,
     })
-    let features
+    let features: Feature[]
     try {
-      features = wf.readFeatures(text)
+      features = wfs.readFeatures(text)
     } catch (e: unknown) {
       throw Error(
         `Couldn't parse WFS with GML features: ${(e as Error).message}`

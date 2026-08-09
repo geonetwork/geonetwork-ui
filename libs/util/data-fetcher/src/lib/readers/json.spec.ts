@@ -1,16 +1,14 @@
 import { JsonReader } from './json'
 import fetchMock from '@fetch-mock/jest'
-import { useCache } from '@camptocamp/ogc-client'
+import { Engine, getEngine } from '../engine/duckdb'
 
 describe('json parsing', () => {
   describe('JsonReader', () => {
     let reader: JsonReader
-    let cacheActive = true
     beforeEach(() => {
       jest.clearAllMocks()
       reader = new JsonReader(
-        'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.json',
-        cacheActive
+        'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.json'
       )
       reader.load()
     })
@@ -120,21 +118,39 @@ describe('json parsing', () => {
         })
       })
     })
-    describe('When cache should be used', () => {
-      it('uses the cache', async () => {
-        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
-        await reader.read()
-        expect(useCacheSpy).toHaveBeenCalledTimes(1)
+    describe('Caching', () => {
+      let engine: Engine
+      beforeEach(async () => {
+        engine = await getEngine()
+        jest.spyOn(engine['db'].logger, 'log')
       })
-    })
-    describe('When cache should not be used', () => {
-      beforeAll(() => {
-        cacheActive = false
-      })
-      it('does not use the cache', async () => {
-        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+      it('drops any existing table if caching is disabled', async () => {
+        reader = new JsonReader(
+          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.json'
+        )
+        reader.enableCache(false)
+        await reader.load()
         await reader.read()
-        expect(useCacheSpy).not.toHaveBeenCalled()
+        expect(engine['db'].logger.log).toHaveBeenCalledWith(
+          expect.objectContaining({
+            value: expect.stringContaining(`DROP TABLE IF EXISTS datafetcher_`),
+          })
+        )
+      })
+      it('keeps any existing table if caching is enabled', async () => {
+        reader = new JsonReader(
+          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.json'
+        )
+        reader.enableCache(true)
+        await reader.load()
+        await reader.read()
+        expect(engine['db'].logger.log).toHaveBeenCalledWith(
+          expect.objectContaining({
+            value: expect.stringContaining(
+              `CREATE TABLE IF NOT EXISTS datafetcher_`
+            ),
+          })
+        )
       })
     })
   })

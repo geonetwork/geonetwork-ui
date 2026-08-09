@@ -17,6 +17,7 @@ export class BaseReader {
   protected sort: FieldSort[] = null
   protected startIndex: number = null
   protected count: number = null
+  protected loadPromise_: Promise<void> = Promise.resolve()
 
   protected cacheEnabled = false
 
@@ -28,6 +29,10 @@ export class BaseReader {
 
   load() {
     throw new Error('not implemented')
+  }
+
+  get isLoaded() {
+    return this.loadPromise_
   }
 
   get properties(): Promise<PropertyInfo[]> {

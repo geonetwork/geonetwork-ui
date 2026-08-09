@@ -1,7 +1,6 @@
 import { CsvReader } from './csv'
 import fetchMock from '@fetch-mock/jest'
-import { useCache } from '@camptocamp/ogc-client'
-import { getEngine } from '../engine/duckdb'
+import { Engine, getEngine } from '../engine/duckdb'
 
 afterEach(() => {
   jest.clearAllMocks()
@@ -10,17 +9,12 @@ afterEach(() => {
 describe('CSV parsing', () => {
   describe('CsvReader', () => {
     let reader: CsvReader
-    let cacheActive = true
     beforeEach(() => {
-      reader = new CsvReader(
-        'http://localfile/fixtures/rephytox.csv',
-        cacheActive
-      )
+      reader = new CsvReader('http://localfile/fixtures/rephytox.csv')
       reader.load()
     })
     afterEach(() => {
       fetchMock.mockReset()
-      cacheActive = true
     })
     it('received a stable dataset id', () => {
       expect(reader['datasetId']).toMatch(/^datafetcher_[0-9a-z]+$/)
@@ -569,37 +563,46 @@ describe('CSV parsing', () => {
         })
       })
     })
-    describe('When cache should be used', () => {
-      it('uses the cache', async () => {
-        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
-        await reader.read()
-        expect(useCacheSpy).toHaveBeenCalledTimes(1)
-      })
+  })
+
+  describe('Caching', () => {
+    let engine: Engine
+    beforeEach(async () => {
+      engine = await getEngine()
+      jest.spyOn(engine['db'].logger, 'log')
     })
-    describe('When cache should not be used', () => {
-      beforeAll(() => {
-        cacheActive = false
-      })
-      it('does not use the cache', async () => {
-        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
-        await reader.read()
-        expect(useCacheSpy).not.toHaveBeenCalled()
-      })
+    it('drops any existing table if caching is disabled', async () => {
+      const reader = new CsvReader('http://localfile/fixtures/rephytox.csv')
+      reader.enableCache(false)
+      await reader.load()
+      await reader.read()
+      expect(engine['db'].logger.log).toHaveBeenCalledWith(
+        expect.objectContaining({
+          value: expect.stringContaining(`DROP TABLE IF EXISTS datafetcher_`),
+        })
+      )
+    })
+    it('keeps any existing table if caching is enabled', async () => {
+      const reader = new CsvReader('http://localfile/fixtures/rephytox.csv')
+      reader.enableCache(true)
+      await reader.load()
+      await reader.read()
+      expect(engine['db'].logger.log).toHaveBeenCalledWith(
+        expect.objectContaining({
+          value: expect.stringContaining(
+            `CREATE TABLE IF NOT EXISTS datafetcher_`
+          ),
+        })
+      )
     })
   })
 
   describe('multiple readers targeting the same URL', () => {
     it('does not recreate a new table each time', async () => {
-      const reader1 = new CsvReader(
-        'http://localfile/fixtures/rephytox.csv',
-        false
-      )
+      const reader1 = new CsvReader('http://localfile/fixtures/rephytox.csv')
       await reader1.load()
       await reader1.read()
-      const reader2 = new CsvReader(
-        'http://localfile/fixtures/rephytox.csv',
-        false
-      )
+      const reader2 = new CsvReader('http://localfile/fixtures/rephytox.csv')
       await reader2.load()
       await reader2.read()
 
@@ -618,6 +621,7 @@ describe('CSV parsing', () => {
           table_name: 'datafetcher_758f8d32',
         },
       ])
+      conn.close()
     })
   })
 })

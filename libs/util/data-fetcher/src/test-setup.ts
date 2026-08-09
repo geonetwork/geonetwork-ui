@@ -58,14 +58,14 @@ let currentEngine = null
 jest.mock('./lib/engine/duckdb', () => {
   const originalModule = jest.requireActual('./lib/engine/duckdb')
   class ReplacedEngine extends originalModule.Engine {
-    loadFile(datasetId, loadQuery) {
+    loadFile(datasetId, loadQuery, forceReload) {
       let modifiedQuery = loadQuery
       if (/http:\/\/localfile/.test(modifiedQuery)) {
         modifiedQuery = modifiedQuery
           .replace(/http:\/\/localfile/g, __dirname)
           .replace(/\?noheader/g, '') // this is used in some tests as well
       }
-      return super.loadFile(datasetId, modifiedQuery)
+      return super.loadFile(datasetId, modifiedQuery, forceReload)
     }
   }
   return {

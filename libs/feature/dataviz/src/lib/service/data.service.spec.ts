@@ -568,7 +568,7 @@ describe('DataService', () => {
             service.getWfsFeatureCount(wfsUrl, featureTypeName)
           )
         } catch (e) {
-          expect(e.message).toBe('wfs.unreachable.cors')
+          expect((e as Error).message).toBe('wfs.unreachable.cors')
         }
       })
 
@@ -580,7 +580,7 @@ describe('DataService', () => {
             service.getWfsFeatureCount(wfsUrl, featureTypeName)
           )
         } catch (e) {
-          expect(e.message).toBe('wfs.unreachable.http')
+          expect((e as Error).message).toBe('wfs.unreachable.http')
         }
       })
 
@@ -592,7 +592,7 @@ describe('DataService', () => {
             service.getWfsFeatureCount(wfsUrl, featureTypeName)
           )
         } catch (e) {
-          expect(e.message).toBe('wfs.unreachable.unknown')
+          expect((e as Error).message).toBe('wfs.unreachable.unknown')
         }
       })
     })
@@ -730,7 +730,7 @@ describe('DataService', () => {
               accessServiceProtocol: 'ogcFeatures',
             })
           } catch (e) {
-            expect(e.message).toBe('ogc.unreachable.unknown')
+            expect((e as Error).message).toBe('ogc.unreachable.unknown')
           }
         })
       })
@@ -831,12 +831,10 @@ describe('DataService', () => {
             },
             cacheActive
           )
-          expect(openDataset).toHaveBeenCalledWith(
-            'http://sample/geojson',
-            'csv',
-            undefined,
-            true
-          )
+          expect(openDataset).toHaveBeenCalledWith('http://sample/geojson', {
+            enableCache: true,
+            typeHint: 'csv',
+          })
         })
         it('returns an observable that emits the array of features', async () => {
           const result = await lastValueFrom(
@@ -1030,9 +1028,7 @@ describe('DataService', () => {
         )
         expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fesri.rest%2Flocal%2Fquery%3Ff%3Dgeojson%26where%3D1%3D1%26outFields%3D*',
-          'geojson',
-          undefined,
-          true
+          { enableCache: true, typeHint: 'geojson' }
         )
       })
     })
@@ -1049,9 +1045,10 @@ describe('DataService', () => {
         )
         expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
-          'csv',
-          undefined,
-          true
+          {
+            enableCache: true,
+            typeHint: 'csv',
+          }
         )
       })
       it('does not apply the proxy twice', () => {
@@ -1067,9 +1064,7 @@ describe('DataService', () => {
         )
         expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
-          'csv',
-          undefined,
-          true
+          { enableCache: true, typeHint: 'csv' }
         )
       })
     })

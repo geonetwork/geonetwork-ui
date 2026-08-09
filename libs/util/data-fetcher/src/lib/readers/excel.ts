@@ -14,7 +14,7 @@ export class ExcelReader extends BaseFileReader {
         .map((n) => n.toString(16).toUpperCase())
         .join(' ') === 'D0 CF 11 E0 A1 B1 1A E1'
 
-    // uh oh, this is a XLS file (not supported by duckdb); convert it to CSV using the xlsx package
+    // uh oh, this is an XLS file (not supported by duckdb); convert it to CSV using the xlsx package
     if (isXls) {
       buffer = await import('xlsx').then(({ read, utils }) => {
         const workbook = read(buffer)

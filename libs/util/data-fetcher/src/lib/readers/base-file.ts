@@ -7,7 +7,6 @@ import { BaseReader } from './base'
  * This reader handles file formats supported natively by DuckDB
  */
 export class BaseFileReader extends BaseReader {
-  private loaded: Promise<void>
   protected engine: Engine
   protected datasetId: string
   protected properties_: PropertyInfo[]
@@ -31,7 +30,7 @@ export class BaseFileReader extends BaseReader {
 
   async load() {
     this.datasetId = this.generateDatasetId()
-    this.loaded = getEngine()
+    this.loadPromise_ = getEngine()
       .then((engine) => {
         this.engine = engine
         return this.getLoadQuery()
@@ -48,18 +47,18 @@ export class BaseFileReader extends BaseReader {
   }
 
   get properties(): Promise<PropertyInfo[]> {
-    return this.loaded.then(() => this.properties_)
+    return this.isLoaded.then(() => this.properties_)
   }
 
   get info(): Promise<DatasetInfo> {
-    return this.loaded.then(() => ({
+    return this.isLoaded.then(() => ({
       itemsCount: this.rowsCount,
       hasGeometry: !!this.geometryColumn,
     }))
   }
 
   async read(): Promise<DataItem[]> {
-    await this.loaded
+    await this.isLoaded
 
     // if only certain fields are selected, omit the geometry
     const geometryColumn = this.selected === null ? this.geometryColumn : null

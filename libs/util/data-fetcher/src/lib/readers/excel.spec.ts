@@ -2,12 +2,14 @@ import fs from 'fs'
 import path from 'path'
 import { ExcelReader } from './excel'
 import fetchMock from '@fetch-mock/jest'
-import { useCache } from '@camptocamp/ogc-client'
+import * as ogcClient from '@camptocamp/ogc-client'
+import { Engine, getEngine } from '../engine/duckdb'
+
+jest.spyOn(ogcClient, 'useCache')
 
 describe('Excel parsing', () => {
   describe('ExcelReader', () => {
     let reader: ExcelReader
-    let cacheActive = true
     beforeEach(() => {
       jest.clearAllMocks()
       fetchMock.route(
@@ -30,10 +32,7 @@ describe('Excel parsing', () => {
 
     describe('XLS format', () => {
       beforeEach(() => {
-        reader = new ExcelReader(
-          'http://localfile/fixtures/ENS_CG02.xls',
-          cacheActive
-        )
+        reader = new ExcelReader('http://localfile/fixtures/ENS_CG02.xls')
         reader.load()
       })
       afterEach(() => {
@@ -119,29 +118,46 @@ describe('Excel parsing', () => {
           })
         })
       })
-      describe('When cache should be used', () => {
-        it('uses the cache', async () => {
-          const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
-          await reader.read()
-          expect(useCacheSpy).toHaveBeenCalledTimes(1)
+      describe('Caching', () => {
+        let engine: Engine
+        beforeEach(async () => {
+          engine = await getEngine()
+          jest.spyOn(engine['db'].logger, 'log')
         })
-      })
-      describe('When cache should not be used', () => {
-        beforeAll(() => {
-          cacheActive = false
-        })
-        it('does not use the cache', async () => {
-          const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+        it('drops any existing table if caching is disabled and do not cache requests', async () => {
+          reader = new ExcelReader('http://localfile/fixtures/ENS_CG02.xls')
+          reader.enableCache(false)
+          await reader.load()
           await reader.read()
-          expect(useCacheSpy).not.toHaveBeenCalled()
+          expect(engine['db'].logger.log).toHaveBeenCalledWith(
+            expect.objectContaining({
+              value: expect.stringContaining(
+                `DROP TABLE IF EXISTS datafetcher_`
+              ),
+            })
+          )
+          expect(ogcClient.useCache).not.toHaveBeenCalled()
+        })
+        it('keeps any existing table if caching is enabled and cache requests', async () => {
+          reader = new ExcelReader('http://localfile/fixtures/ENS_CG02.xls')
+          reader.enableCache(true)
+          await reader.load()
+          await reader.read()
+          expect(engine['db'].logger.log).toHaveBeenCalledWith(
+            expect.objectContaining({
+              value: expect.stringContaining(
+                `CREATE TABLE IF NOT EXISTS datafetcher_`
+              ),
+            })
+          )
+          expect(ogcClient.useCache).toHaveBeenCalledTimes(1)
         })
       })
     })
     describe('XLSX format', () => {
       beforeEach(() => {
         reader = new ExcelReader(
-          'http://localfile/fixtures/eaux-baignades.xlsx',
-          cacheActive
+          'http://localfile/fixtures/eaux-baignades.xlsx'
         )
         reader.load()
       })
@@ -293,21 +309,44 @@ describe('Excel parsing', () => {
           })
         })
       })
-      describe('When cache should be used', () => {
-        it('uses the cache', async () => {
-          const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
-          await reader.read()
-          expect(useCacheSpy).toHaveBeenCalledTimes(1)
+
+      describe('Caching', () => {
+        let engine: Engine
+        beforeEach(async () => {
+          engine = await getEngine()
+          jest.spyOn(engine['db'].logger, 'log')
         })
-      })
-      describe('When cache should not be used', () => {
-        beforeAll(() => {
-          cacheActive = false
-        })
-        it('does not use the cache', async () => {
-          const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+        it('drops any existing table if caching is disabled and do not cache requests', async () => {
+          reader = new ExcelReader(
+            'http://localfile/fixtures/eaux-baignades.xlsx'
+          )
+          reader.enableCache(false)
+          await reader.load()
           await reader.read()
-          expect(useCacheSpy).not.toHaveBeenCalled()
+          expect(engine['db'].logger.log).toHaveBeenCalledWith(
+            expect.objectContaining({
+              value: expect.stringContaining(
+                `DROP TABLE IF EXISTS datafetcher_`
+              ),
+            })
+          )
+          expect(ogcClient.useCache).not.toHaveBeenCalled()
+        })
+        it('keeps any existing table if caching is enabled and cache requests', async () => {
+          reader = new ExcelReader(
+            'http://localfile/fixtures/eaux-baignades.xlsx'
+          )
+          reader.enableCache(true)
+          await reader.load()
+          await reader.read()
+          expect(engine['db'].logger.log).toHaveBeenCalledWith(
+            expect.objectContaining({
+              value: expect.stringContaining(
+                `CREATE TABLE IF NOT EXISTS datafetcher_`
+              ),
+            })
+          )
+          expect(ogcClient.useCache).toHaveBeenCalledTimes(1)
         })
       })
     })

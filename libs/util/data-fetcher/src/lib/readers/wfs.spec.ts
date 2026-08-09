@@ -151,10 +151,13 @@ jest.mock('@camptocamp/ogc-client', () => ({
   },
 }))
 
+afterEach(() => {
+  jest.clearAllMocks()
+})
+
 describe('WfsReader', () => {
   describe('WfsReader - Wfs is version 2.0.0 geojson', () => {
     let reader: WfsReader
-    const cacheActive = true
     const wfsEndpoint = new WfsEndpoint(urlGeojson)
 
     beforeEach(() => {
@@ -174,7 +177,8 @@ describe('WfsReader', () => {
           sendAsJson: false,
         }
       )
-      reader = new WfsReader(urlGeojson, wfsEndpoint, 'epci', cacheActive)
+      reader = new WfsReader(urlGeojson, wfsEndpoint, 'epci')
+      reader.enableCache(true)
       reader.load()
     })
     afterEach(() => {
@@ -305,7 +309,7 @@ describe('WfsReader', () => {
         await reader.read()
         expect(fetchDataAsTextSpy).toHaveBeenCalledWith(
           'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson?1=1&STARTINDEX=42&MAXFEATURES=10&SORTBY=A,ville,D,epci', // actual sortby parameter will be computed by ogc-client
-          cacheActive
+          true
         )
       })
     })
@@ -407,11 +411,35 @@ describe('WfsReader', () => {
         })
       })
     })
+
+    describe('Caching', () => {
+      it('caches the request when needed', async () => {
+        const reader = new WfsReader(
+          urlGeojson,
+          new WfsEndpoint(urlGeojson),
+          'myFeatureType'
+        )
+        reader.enableCache(true)
+        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+        await reader.read()
+        expect(useCacheSpy).toHaveBeenCalledTimes(1)
+      })
+      it('does not cache the requests otherwise', async () => {
+        const reader = new WfsReader(
+          urlGeojson,
+          new WfsEndpoint(urlGeojson),
+          'myFeatureType'
+        )
+        reader.enableCache(false)
+        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+        await reader.read()
+        expect(useCacheSpy).not.toHaveBeenCalled()
+      })
+    })
   })
 
   describe('#createReader', () => {
     let reader: WfsReader
-    let cacheActive = true
     let GmlReaderSpy: jest.SpyInstance
     beforeEach(() => {
       GmlReaderSpy = jest.spyOn({ GmlReader }, 'GmlReader')
@@ -432,12 +460,7 @@ describe('WfsReader', () => {
         }
       )
       const wfsEndpoint = new WfsEndpoint(urlGml)
-      reader = new WfsReader(
-        urlGml,
-        wfsEndpoint,
-        'ms:n_mat_eolien_p_r32',
-        cacheActive
-      )
+      reader = new WfsReader(urlGml, wfsEndpoint, 'ms:n_mat_eolien_p_r32')
       reader.load()
     })
     afterEach(() => {
@@ -460,27 +483,6 @@ describe('WfsReader', () => {
       expect(GmlReader).toHaveBeenCalledWith(
         'https://mygmlreader.edu/legacy/?1=1&STARTINDEX=undefined&MAXFEATURES=undefined&SORTBY=undefined'
       )
-    })
-
-    describe('Cache', () => {
-      describe('When cache should be used', () => {
-        it('uses the cache', async () => {
-          const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
-          await reader.read()
-          expect(useCacheSpy).toHaveBeenCalledTimes(1)
-        })
-      })
-      describe('When cache should not be used', () => {
-        beforeAll(() => {
-          jest.clearAllMocks()
-          cacheActive = false
-        })
-        it('does not use the cache', async () => {
-          const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
-          await reader.read()
-          expect(useCacheSpy).not.toHaveBeenCalled()
-        })
-      })
     })
   })
 })
