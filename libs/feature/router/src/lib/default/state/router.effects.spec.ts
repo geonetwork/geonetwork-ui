@@ -112,11 +112,7 @@ describe('RouterEffects', () => {
           useClass: FieldsServiceMock,
         },
         MockProvider(RouterService, {
-          getDefaultSort: () => [
-            ['desc', 'revisionDateForResource'],
-            ['desc', 'publicationDateForResource'],
-            ['desc', 'creationDateForResource'],
-          ],
+          getDefaultSort: () => ['desc', 'resourceDate'],
         }),
       ],
     })
@@ -266,14 +262,7 @@ describe('RouterEffects', () => {
           a: new SetFilters({ any: 'any' }, 'main'),
           b: new SetSortBy(['desc', 'createDate'], 'main'),
           c: new Paginate(2, 'main'),
-          d: new SetSortBy(
-            [
-              ['desc', 'revisionDateForResource'],
-              ['desc', 'publicationDateForResource'],
-              ['desc', 'creationDateForResource'],
-            ],
-            'main'
-          ),
+          d: new SetSortBy(['desc', 'resourceDate'], 'main'),
           e: new Paginate(1, 'main'),
         })
         expect(effects.syncSearchState$).toBeObservable(expected)
@@ -295,14 +284,7 @@ describe('RouterEffects', () => {
           a: new SetFilters({ any: 'any' }, 'main'),
           b: new SetSortBy(['desc', 'createDate'], 'main'),
           c: new Paginate(2, 'main'),
-          d: new SetSortBy(
-            [
-              ['desc', 'revisionDateForResource'],
-              ['desc', 'publicationDateForResource'],
-              ['desc', 'creationDateForResource'],
-            ],
-            'main'
-          ),
+          d: new SetSortBy(['desc', 'resourceDate'], 'main'),
           e: new Paginate(12, 'main'),
         })
         expect(effects.syncSearchState$).toBeObservable(expected)

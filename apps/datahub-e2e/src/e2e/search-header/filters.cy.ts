@@ -22,10 +22,7 @@ describe('filters and sorts', () => {
     cy.get('gn-ui-sort-by gn-ui-dropdown-selector')
       .getActiveDropdownOption()
       .invoke('attr', 'data-cy-value')
-      .should(
-        'equal',
-        'desc,revisionDateForResource,desc,publicationDateForResource,desc,creationDateForResource'
-      )
+      .should('equal', 'desc,resourceDate')
     cy.screenshot({ capture: 'viewport' })
   })
 

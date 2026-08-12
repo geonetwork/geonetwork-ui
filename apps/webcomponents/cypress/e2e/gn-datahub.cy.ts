@@ -42,6 +42,7 @@ it('gn-datahub', () => {
     'have.length.above',
     0
   )
+  cy.get('gn-ui-kind-badge').eq(1).click()
   cy.get('gn-ui-results-list gn-ui-results-list-item')
     .first()
     .find('a[href]')
@@ -54,7 +55,8 @@ it('gn-datahub', () => {
   cy.url().should('contain', '#/search')
 
   // navigate to a record
-  cy.get('gn-ui-results-list gn-ui-results-list-item').eq(7).click()
+  cy.get('gn-ui-kind-badge').eq(1).click()
+  cy.get('[data-cy="7eb795c2-d612-4b5e-b15e-d985b0f4e697"]').click()
   cy.get('datahub-record-page').should('be.visible')
   cy.get('datahub-record-header').should('be.visible')
   cy.get('datahub-record-header header .font-title')

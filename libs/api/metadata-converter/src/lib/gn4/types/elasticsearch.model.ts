@@ -2,7 +2,19 @@ export type SortOrder = 'asc' | 'desc'
 interface SortParam {
   [key: string]: SortOrder
 }
-export type SortParams = string | SortParam | (string | SortParam)[]
+type EsFieldSort = {
+  order: SortOrder
+  mode?: 'max' | 'min'
+  missing?: '_last'
+  nested?: {
+    path: string
+  }
+}
+export type SortParams =
+  | string
+  | SortParam
+  | (string | SortParam)[]
+  | { [property: string]: EsFieldSort }
 
 export interface EsRequestAggTerm {
   field?: string

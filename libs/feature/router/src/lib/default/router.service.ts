@@ -62,6 +62,6 @@ export class RouterService {
   }
 
   getDefaultSort(): SortByField {
-    return SortByEnum.RESOURCE_DATES
+    return SortByEnum.RESOURCE_DATE
   }
 }

@@ -9,6 +9,7 @@ describe('datasets', () => {
     cy.get('[data-cy="ed34db28-5dd4-480f-bf29-dc08f0086131"]').as(
       'sampleResult'
     )
+    cy.get('[data-cy="04bcec79-5b25-4b16-b635-73115f7456e4"]').as('inseeResult')
     cy.get('@results')
       .then(($results) => $results.length)
       .as('resultsCount')
@@ -49,18 +50,12 @@ describe('datasets', () => {
       cy.get('@sortBy')
         .getActiveDropdownOption()
         .invoke('attr', 'data-cy-value')
-        .should(
-          'equal',
-          'desc,revisionDateForResource,desc,publicationDateForResource,desc,creationDateForResource'
-        )
+        .should('equal', 'desc,resourceDate')
     })
   })
 
   describe('display of dataset previews', () => {
-    it('should display a placeholder for sampleResult and a logo for second results item', () => {
-      cy.get('@sortBy').selectDropdownOption(
-        'desc,revisionDateForResource,desc,publicationDateForResource,desc,creationDateForResource'
-      ) // this makes the order reliable
+    it('should display a placeholder for sampleResult and a logo for inseeResult', () => {
       cy.get('@sampleResult')
         .find('gn-ui-thumbnail')
         .find('img')
@@ -74,8 +69,7 @@ describe('datasets', () => {
         .children('div')
         .invoke('attr', 'data-cy-is-placeholder')
         .should('equal', 'true')
-      cy.get('@results')
-        .eq(1)
+      cy.get('@inseeResult')
         .find('gn-ui-thumbnail')
         .children('div')
         .invoke('attr', 'data-cy-is-placeholder')
@@ -529,9 +523,7 @@ describe('datasets', () => {
       })
 
       it('should display quality widget', () => {
-        cy.get('@sortBy').selectDropdownOption(
-          'desc,revisionDateForResource,desc,publicationDateForResource,desc,creationDateForResource'
-        )
+        cy.get('@sortBy').selectDropdownOption('desc,resourceDate')
         cy.get(
           '[data-cy="ed34db28-5dd4-480f-bf29-dc08f0086131"] gn-ui-progress-bar'
         ).should('have.attr', 'ng-reflect-value', 100)

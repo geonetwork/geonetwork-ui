@@ -200,6 +200,19 @@ export class ElasticsearchService {
 
   private buildPayloadSort(sortBy: SortByField): SortParams {
     if (sortBy === null) return undefined
+    // Sort by resourceDate only works with the explicit syntax
+    if (sortBy[1] === 'resourceDate') {
+      return {
+        'resourceDate.date': {
+          order: sortBy[0] as 'desc' | 'asc',
+          mode: sortBy[0] === 'desc' ? 'max' : 'min',
+          missing: '_last',
+          nested: {
+            path: 'resourceDate',
+          },
+        },
+      }
+    }
     const fields = Array.isArray(sortBy[0]) ? sortBy : [sortBy]
     return fields.map((field) => ({ [field[1]]: field[0] }))
   }
