@@ -136,12 +136,12 @@ git push upstream 2.7.x # replace "upstream" with your remote repo name
 
 #### With the backport bot
 
-On a PR that needs to be backported, (create and) add the ``backport-to-2.7.x` label (replace `2.7.x` with the wanted patch branch name).
+On a PR that needs to be backported, (create and) add the `backport-to-2.7.x` label (replace `2.7.x` with the wanted patch branch name).
 
 A new PR should automatically be created on the `2.7.x` branch, with the commits cherry-picked, or an indication of commits that couldn't be cherry-picked.
 
 #### Manually
 
-If the automatic backport is not successfull, you can either resolve the conflicts, or try to cherry-pick the needed correctly.
+If the automatic backport is not successful, you can either resolve the conflicts, or try to cherry-pick the needed commits manually.
 
-Be careful that comitting outside a PR will prevent the release notes on this next version to be generated automatically.
+Be careful that committing outside a PR will prevent the release notes on this next version to be generated automatically.

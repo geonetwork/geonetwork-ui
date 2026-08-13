@@ -6,7 +6,7 @@ This file provides guidance to AI coding agents (Claude Code, and any tool that 
 
 GeoNetwork-UI is an Nx monorepo of Angular applications and Web Components that provide a modern UI on top of a GeoNetwork 4 catalog backend. It is built on Angular 20, NgRx, RxJS, Tailwind, and OpenLayers.
 
-Node version is pinned in `.nvmrc` (currently 20.19.0); `engines` requires Node >= 20.
+Node version is pinned in `.nvmrc` (currently 24); `engines` requires Node >= 24.
 
 ## Commands
 
