@@ -34,7 +34,11 @@ import {
   LanguageCode,
 } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
-import { getGeometryBoundingBox } from '@geonetwork-ui/util/shared'
+import {
+  bboxToPolygon,
+  getGeometryBoundingBox,
+  isBoundingBox,
+} from '@geonetwork-ui/util/shared'
 import { getLength as getGeodesicLength } from 'ol/sphere.js'
 import { LineString } from 'ol/geom.js'
 
@@ -285,6 +289,7 @@ export class ElasticsearchService {
         ? filters
         : Object.keys(filters)
             .filter((fieldname) => fieldname !== 'gn-ui-crossFieldFilter')
+            .filter((fieldname) => !isBoundingBox(filters[fieldname]))
             .filter((fieldname) => !isDateRange(filters[fieldname]))
             .filter(
               (fieldname) =>
@@ -309,6 +314,9 @@ export class ElasticsearchService {
           dateRange: DateRange
         }
       })[0]
+    const spatialFilterExtent = Object.entries(filters)
+      .filter(([, value]) => isBoundingBox(value))
+      .map(([, extent]) => extent)[0]
     const queryParts = [
       queryString && {
         query_string: {
@@ -329,6 +337,21 @@ export class ElasticsearchService {
             },
           },
         },
+      spatialFilterExtent && {
+        geo_shape: {
+          geom: {
+            shape: {
+              type: 'envelope',
+              // spatialFilterExtent is [minX, minY, maxX, maxY]; envelope coordinates are [top-left, bottom-right]
+              coordinates: [
+                [spatialFilterExtent[0], spatialFilterExtent[3]],
+                [spatialFilterExtent[2], spatialFilterExtent[1]],
+              ],
+            },
+            relation: 'intersects',
+          },
+        },
+      },
     ].filter(Boolean)
     return queryParts.length > 0 ? (queryParts as FilterQuery) : undefined
   }
@@ -378,7 +401,13 @@ export class ElasticsearchService {
         },
       })
     }
-    if (geometry) {
+    // a spatial extent filter takes precedence over the preference geometry for boosting
+    const spatialFilterExtent =
+      Object.values(fieldSearchFilters).find(isBoundingBox)
+    const boostGeometry = spatialFilterExtent
+      ? bboxToPolygon(spatialFilterExtent)
+      : geometry
+    if (boostGeometry) {
       // boosts applied using the filter geometry:
       // * records completely within the geometry receive a boost of 5
       // * records intersecting the geometry receive a boost of 2
@@ -388,7 +417,7 @@ export class ElasticsearchService {
         {
           geo_shape: {
             geom: {
-              shape: geometry,
+              shape: boostGeometry,
               relation: 'within',
             },
             boost: 5.0,
@@ -397,7 +426,7 @@ export class ElasticsearchService {
         {
           geo_shape: {
             geom: {
-              shape: geometry,
+              shape: boostGeometry,
               relation: 'intersects',
             },
             boost: 2.0,
@@ -408,7 +437,7 @@ export class ElasticsearchService {
       // this will boost the results variably depending on their distance from the given geometry
       // note: this takes into account the `location` field of a record; this is generally the center of all spatial extents
       // combined, and thus the actual size/coverage of the record spatial extent isn't relevant here
-      const bbox = getGeometryBoundingBox(geometry)
+      const bbox = getGeometryBoundingBox(boostGeometry)
       const center = [(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2]
       const northToCenter = new LineString([
         [center[0], bbox[3]],
