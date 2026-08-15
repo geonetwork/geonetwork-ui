@@ -55,6 +55,71 @@ describe('OnlineServiceResourceInputComponent', () => {
         'wmts',
       ])
     })
+
+    it('replaces the other option with the stored unrepresented protocol and Other label', () => {
+      component.service = {
+        type: 'service',
+        url: new URL('https://example.com/stac'),
+        accessServiceProtocol: 'stac' as any,
+      }
+      const options = component.availableProtocolOptions
+      const otherOption = options.find((o) => o.value === ('stac' as any))
+      expect(otherOption).toBeDefined()
+      expect(otherOption?.label).toBe(
+        'editor.record.onlineResource.protocol.other'
+      )
+      expect(options.some((o) => o.value === 'other')).toBe(false)
+    })
+
+    it('appends unrepresented protocol when other is not in protocolOptions', () => {
+      component.protocolOptions = ['wms', 'wfs']
+      component.service = {
+        type: 'service',
+        url: new URL('https://example.com/stac'),
+        accessServiceProtocol: 'stac' as any,
+      }
+      const options = component.availableProtocolOptions
+      expect(options.map((o) => o.value)).toEqual(['wms', 'wfs', 'stac'])
+    })
+
+    it('does not mutate allProtocolOptions or protocolOptions when computing availableProtocolOptions', () => {
+      const initialAll = JSON.parse(
+        JSON.stringify(component.allProtocolOptions)
+      )
+      const initialConfigured = ['wms', 'other'] as any[]
+      component.protocolOptions = [...initialConfigured]
+      component.service = {
+        type: 'service',
+        url: new URL('https://example.com/stac'),
+        accessServiceProtocol: 'stac' as any,
+      }
+      const _ = component.availableProtocolOptions
+      expect(component.allProtocolOptions).toEqual(initialAll)
+      expect(component.protocolOptions).toEqual(initialConfigured)
+    })
+
+    it('restores normal options when switched from unrepresented to known protocol', () => {
+      const initialExpected = component.allProtocolOptions.map((o) => o.value)
+      component.service = {
+        type: 'service',
+        url: new URL('https://example.com/stac'),
+        accessServiceProtocol: 'stac' as any,
+      }
+      expect(
+        component.availableProtocolOptions.some(
+          (o) => o.value === ('stac' as any)
+        )
+      ).toBe(true)
+
+      component.service = {
+        type: 'service',
+        url: new URL('https://example.com/wms'),
+        accessServiceProtocol: 'wms',
+      }
+      expect(component.availableProtocolOptions.map((o) => o.value)).toEqual(
+        initialExpected
+      )
+    })
   })
 
   describe('url display', () => {

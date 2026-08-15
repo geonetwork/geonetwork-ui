@@ -129,10 +129,41 @@ export class OnlineServiceResourceInputComponent {
   ]
 
   get availableProtocolOptions() {
-    if (!this.protocolOptions) return this.allProtocolOptions
-    return this.protocolOptions.flatMap(
-      (v) => this.allProtocolOptions.find((o) => o.value === v) ?? []
-    )
+    const baseOptions = !this.protocolOptions
+      ? this.allProtocolOptions
+      : this.protocolOptions.flatMap(
+          (v) => this.allProtocolOptions.find((o) => o.value === v) ?? []
+        )
+
+    const currentProtocol = this._service?.accessServiceProtocol
+    if (
+      !currentProtocol ||
+      baseOptions.some((o) => o.value === currentProtocol)
+    ) {
+      return baseOptions
+    }
+
+    const otherLabel = marker('editor.record.onlineResource.protocol.other')
+    const hasOtherOption = baseOptions.some((o) => o.value === 'other')
+
+    if (hasOtherOption) {
+      return baseOptions.map((o) =>
+        o.value === 'other'
+          ? {
+              label: otherLabel,
+              value: currentProtocol,
+            }
+          : o
+      )
+    }
+
+    return [
+      ...baseOptions,
+      {
+        label: otherLabel,
+        value: currentProtocol,
+      },
+    ]
   }
 
   get activeLayerSuggestion() {
