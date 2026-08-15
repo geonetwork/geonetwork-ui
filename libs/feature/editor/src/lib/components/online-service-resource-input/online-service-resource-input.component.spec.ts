@@ -55,6 +55,76 @@ describe('OnlineServiceResourceInputComponent', () => {
         'wmts',
       ])
     })
+
+    it('represents a stored unlisted protocol with the Other label', () => {
+      component.service = {
+        type: 'service',
+        url: new URL('https://example.com/stac'),
+        accessServiceProtocol: 'stac',
+      }
+
+      const options = component.availableProtocolOptions
+      expect(options.find((option) => option.value === 'stac')).toEqual({
+        label: 'editor.record.onlineResource.protocol.other',
+        value: 'stac',
+      })
+      expect(options.some((option) => option.value === 'other')).toBe(false)
+    })
+
+    it('appends a stored unlisted protocol when Other is not configured', () => {
+      component.protocolOptions = ['wms', 'wfs']
+      component.service = {
+        type: 'service',
+        url: new URL('https://example.com/stac'),
+        accessServiceProtocol: 'stac',
+      }
+
+      expect(component.availableProtocolOptions.map((o) => o.value)).toEqual([
+        'wms',
+        'wfs',
+        'stac',
+      ])
+    })
+
+    it('does not mutate configured options while representing a stored protocol', () => {
+      const allOptions = component.allProtocolOptions.map((option) => ({
+        ...option,
+      }))
+      const configuredOptions = ['wms', 'other'] as const
+      component.protocolOptions = [...configuredOptions]
+      component.service = {
+        type: 'service',
+        url: new URL('https://example.com/stac'),
+        accessServiceProtocol: 'stac',
+      }
+
+      void component.availableProtocolOptions
+
+      expect(component.allProtocolOptions).toEqual(allOptions)
+      expect(component.protocolOptions).toEqual(configuredOptions)
+    })
+
+    it('restores standard options after selecting a represented protocol', () => {
+      component.service = {
+        type: 'service',
+        url: new URL('https://example.com/stac'),
+        accessServiceProtocol: 'stac',
+      }
+      expect(
+        component.availableProtocolOptions.some(
+          (option) => option.value === 'stac'
+        )
+      ).toBe(true)
+
+      component.service = {
+        type: 'service',
+        url: new URL('https://example.com/wms'),
+        accessServiceProtocol: 'wms',
+      }
+      expect(component.availableProtocolOptions).toEqual(
+        component.allProtocolOptions
+      )
+    })
   })
 
   describe('url display', () => {

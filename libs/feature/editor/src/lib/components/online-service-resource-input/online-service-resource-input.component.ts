@@ -44,6 +44,9 @@ marker('editor.record.form.field.onlineResource.edit.identifier.placeholder')
 marker(
   'editor.record.form.field.onlineResource.edit.identifier.placeholder.wps'
 )
+const OTHER_PROTOCOL_LABEL = marker(
+  'editor.record.onlineResource.protocol.other'
+)
 
 @Component({
   selector: 'gn-ui-online-service-resource-input',
@@ -123,16 +126,40 @@ export class OnlineServiceResourceInputComponent {
       value: 'esriRest',
     },
     {
-      label: marker('editor.record.onlineResource.protocol.other'),
+      label: OTHER_PROTOCOL_LABEL,
       value: 'other',
     },
   ]
 
   get availableProtocolOptions() {
-    if (!this.protocolOptions) return this.allProtocolOptions
-    return this.protocolOptions.flatMap(
-      (v) => this.allProtocolOptions.find((o) => o.value === v) ?? []
-    )
+    const baseOptions = !this.protocolOptions
+      ? this.allProtocolOptions
+      : this.protocolOptions.flatMap(
+          (value) =>
+            this.allProtocolOptions.find((option) => option.value === value) ??
+            []
+        )
+    const currentProtocol = this._service?.accessServiceProtocol
+
+    if (
+      !currentProtocol ||
+      baseOptions.some((option) => option.value === currentProtocol)
+    ) {
+      return baseOptions
+    }
+
+    const currentProtocolOption = {
+      label: OTHER_PROTOCOL_LABEL,
+      value: currentProtocol,
+    }
+
+    if (baseOptions.some((option) => option.value === 'other')) {
+      return baseOptions.map((option) =>
+        option.value === 'other' ? currentProtocolOption : option
+      )
+    }
+
+    return [...baseOptions, currentProtocolOption]
   }
 
   get activeLayerSuggestion() {
