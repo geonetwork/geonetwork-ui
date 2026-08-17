@@ -939,7 +939,7 @@ export function extractAssociatedRecords(
     mapArray((el) => {
       const aggregateEl = findChildElement(aggregateName, false)(el)
       const uniqueIdentifier = readIdentifier(aggregateEl)
-      // kept as read, so that a value outside the codelist survives a round trip
+      // kept as read, so that a value outside the shared set survives a round trip
       const associationType = pipe(
         findNestedElement('gmd:associationType', 'gmd:DS_AssociationTypeCode'),
         readAttribute('codeListValue')
