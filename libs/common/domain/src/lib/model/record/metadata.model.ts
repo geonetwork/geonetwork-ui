@@ -260,12 +260,14 @@ export interface SourceRecord {
   href?: string
 }
 
-// DS_AssociationTypeCode values shared by ISO19139 and ISO19115-3
+// DS_AssociationTypeCode values shared by ISO19139 and ISO19115-3, any other value
+// being mapped to 'other'
 export const associationTypeValues = [
   'crossReference',
   'largerWorkCitation',
   'partOfSeamlessDatabase',
   'stereoMate',
+  'other',
 ] as const
 
 export type AssociationType = (typeof associationTypeValues)[number]

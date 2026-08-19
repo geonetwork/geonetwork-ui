@@ -877,7 +877,7 @@ describe('read parts', () => {
       </gmd:MD_Identifier>
     </gmd:aggregateDataSetIdentifier>
     <gmd:associationType>
-      <gmd:DS_AssociationTypeCode codeListValue="source"/>
+      <gmd:DS_AssociationTypeCode codeListValue="crossReference"/>
     </gmd:associationType>
   </gmd:MD_AggregateInformation>
 </gmd:aggregationInfo>`)
@@ -889,7 +889,10 @@ describe('read parts', () => {
         })
         it('returns the association with the anchor text as the identifier', () => {
           expect(readAssociatedRecords(recordRootEl)).toEqual([
-            { uniqueIdentifier: 'anchor-uuid', associationType: 'source' },
+            {
+              uniqueIdentifier: 'anchor-uuid',
+              associationType: 'crossReference',
+            },
           ])
         })
       })
@@ -912,6 +915,36 @@ describe('read parts', () => {
         })
         it('ignores the association', () => {
           expect(readAssociatedRecords(recordRootEl)).toEqual([])
+        })
+      })
+      describe('association type outside the shared values', () => {
+        beforeEach(() => {
+          const aggregationInfoEl = getRootElement(
+            parseXmlString(`
+<gmd:aggregationInfo>
+  <gmd:MD_AggregateInformation>
+    <gmd:aggregateDataSetIdentifier>
+      <gmd:MD_Identifier>
+        <gmd:code>
+          <gco:CharacterString>abc-123</gco:CharacterString>
+        </gmd:code>
+      </gmd:MD_Identifier>
+    </gmd:aggregateDataSetIdentifier>
+    <gmd:associationType>
+      <gmd:DS_AssociationTypeCode codeListValue="isComposedOf"/>
+    </gmd:associationType>
+  </gmd:MD_AggregateInformation>
+</gmd:aggregationInfo>`)
+          )
+          pipe(
+            findIdentification(),
+            appendChildren(() => aggregationInfoEl)
+          )(recordRootEl)
+        })
+        it('maps the association type to other', () => {
+          expect(readAssociatedRecords(recordRootEl)).toEqual([
+            { uniqueIdentifier: 'abc-123', associationType: 'other' },
+          ])
         })
       })
       describe('missing association type', () => {

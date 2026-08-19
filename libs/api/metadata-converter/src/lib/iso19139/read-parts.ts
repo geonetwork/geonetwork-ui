@@ -1,6 +1,5 @@
 import {
   AssociatedRecord,
-  AssociationType,
   Constraint,
   ConstraintTranslations,
   DatasetOnlineResource,
@@ -52,6 +51,7 @@ import {
   readText,
   XmlElement,
 } from '../xml-utils'
+import { getAssociationTypeFromCode } from './utils/association-type.mapper'
 import { readGeometry } from './utils/geometry'
 import { fullNameToParts } from './utils/individual-name'
 import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
@@ -939,13 +939,15 @@ export function extractAssociatedRecords(
     mapArray((el) => {
       const aggregateEl = findChildElement(aggregateName, false)(el)
       const uniqueIdentifier = readIdentifier(aggregateEl)
-      // kept as read, so that a value outside the shared set survives a round trip
-      const associationType = pipe(
+      const associationTypeCode = pipe(
         findNestedElement('gmd:associationType', 'gmd:DS_AssociationTypeCode'),
         readAttribute('codeListValue')
-      )(aggregateEl) as AssociationType
-      if (!uniqueIdentifier || !associationType) return null
-      return { uniqueIdentifier, associationType }
+      )(aggregateEl)
+      if (!uniqueIdentifier || !associationTypeCode) return null
+      return {
+        uniqueIdentifier,
+        associationType: getAssociationTypeFromCode(associationTypeCode),
+      }
     }),
     filterArray((r): r is AssociatedRecord => r !== null)
   )
