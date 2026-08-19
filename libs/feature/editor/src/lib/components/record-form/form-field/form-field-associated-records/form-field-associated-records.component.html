@@ -7,13 +7,13 @@
   ></gn-ui-check-toggle>
   @if (hasParentLink) {
     <gn-ui-form-field-wrapper
-      [label]="'editor.record.form.field.parentUuid' | translate"
+      [label]="'editor.record.form.field.parentIdentifier' | translate"
     >
       <gn-ui-text-input
-        [value]="uuid"
-        (valueChange)="onUuidChange($event)"
+        [value]="uniqueIdentifier"
+        (valueChange)="onUniqueIdentifierChange($event)"
         placeholder=""
-        data-cy="associated-record-uuid"
+        data-cy="associated-record-identifier"
       ></gn-ui-text-input>
     </gn-ui-form-field-wrapper>
     <gn-ui-form-field-wrapper

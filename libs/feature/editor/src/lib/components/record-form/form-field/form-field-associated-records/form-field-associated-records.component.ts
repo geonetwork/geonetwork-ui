@@ -7,6 +7,7 @@ import {
 } from '@angular/core'
 import {
   AssociatedRecord,
+  AssociationType,
   associationTypeValues,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -49,44 +50,44 @@ export class FormFieldAssociatedRecordsComponent {
   get hasParentLink() {
     return this.list.length > 0
   }
-  get uuid() {
-    return this.first?.uuid ?? ''
+  get uniqueIdentifier() {
+    return this.first?.uniqueIdentifier ?? ''
   }
   get selectedType() {
     return this.first?.associationType
   }
   get choices(): DropdownChoice[] {
-    const base = associationTypeValues.map((value) => ({
+    return associationTypeValues.map((value) => ({
       value,
       label: `domain.record.associationType.${value}`,
     }))
-    const current = this.first?.associationType
-    const isKnown = associationTypeValues.some((value) => value === current)
-    return current && !isKnown
-      ? [{ value: current, label: current }, ...base]
-      : base
   }
 
   onToggle(checked: boolean) {
     this.valueChange.emit(
       checked
         ? [
-            { uuid: '', associationType: associationTypeValues[0] },
+            {
+              uniqueIdentifier: '',
+              associationType: associationTypeValues[0],
+            },
             ...this.rest,
           ]
         : this.rest
     )
   }
 
-  onUuidChange(uuid: string) {
+  onUniqueIdentifierChange(uniqueIdentifier: string) {
     this.valueChange.emit(
-      uuid ? [{ ...this.first, uuid }, ...this.rest] : this.rest
+      uniqueIdentifier
+        ? [{ ...this.first, uniqueIdentifier }, ...this.rest]
+        : this.rest
     )
   }
 
   onTypeChange(associationType: DropdownChoice['value']) {
     this.valueChange.emit([
-      { ...this.first, associationType: associationType as string },
+      { ...this.first, associationType: associationType as AssociationType },
       ...this.rest,
     ])
   }

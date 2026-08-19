@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormFieldAssociatedRecordsComponent } from './form-field-associated-records.component'
 import { provideTranslateService } from '@ngx-translate/core'
+import { associationTypeValues } from '@geonetwork-ui/common/domain/model/record'
 
 describe('FormFieldAssociatedRecordsComponent', () => {
   let component: FormFieldAssociatedRecordsComponent
@@ -43,7 +44,9 @@ describe('FormFieldAssociatedRecordsComponent', () => {
 
   describe('when value contains one association', () => {
     beforeEach(() => {
-      component.value = [{ uuid: 'abc-123', associationType: 'crossReference' }]
+      component.value = [
+        { uniqueIdentifier: 'abc-123', associationType: 'crossReference' },
+      ]
       fixture.detectChanges()
     })
 
@@ -51,8 +54,8 @@ describe('FormFieldAssociatedRecordsComponent', () => {
       expect(component.hasParentLink).toBeTruthy()
     })
 
-    it('exposes its uuid and type', () => {
-      expect(component.uuid).toEqual('abc-123')
+    it('exposes its identifier and type', () => {
+      expect(component.uniqueIdentifier).toEqual('abc-123')
       expect(component.selectedType).toEqual('crossReference')
     })
   })
@@ -60,34 +63,34 @@ describe('FormFieldAssociatedRecordsComponent', () => {
   describe('when value contains several associations', () => {
     beforeEach(() => {
       component.value = [
-        { uuid: 'abc-123', associationType: 'crossReference' },
-        { uuid: 'def-456', associationType: 'largerWorkCitation' },
-        { uuid: 'ghi-789', associationType: 'stereoMate' },
+        { uniqueIdentifier: 'abc-123', associationType: 'crossReference' },
+        { uniqueIdentifier: 'def-456', associationType: 'largerWorkCitation' },
+        { uniqueIdentifier: 'ghi-789', associationType: 'stereoMate' },
       ]
       fixture.detectChanges()
     })
 
     it('shows only the first association', () => {
-      expect(component.uuid).toEqual('abc-123')
+      expect(component.uniqueIdentifier).toEqual('abc-123')
       expect(component.selectedType).toEqual('crossReference')
     })
 
     it('preserves the other associations when the first is edited', () => {
       const spy = jest.spyOn(component.valueChange, 'emit')
-      component.onUuidChange('abc-999')
+      component.onUniqueIdentifierChange('abc-999')
       expect(spy).toHaveBeenCalledWith([
-        { uuid: 'abc-999', associationType: 'crossReference' },
-        { uuid: 'def-456', associationType: 'largerWorkCitation' },
-        { uuid: 'ghi-789', associationType: 'stereoMate' },
+        { uniqueIdentifier: 'abc-999', associationType: 'crossReference' },
+        { uniqueIdentifier: 'def-456', associationType: 'largerWorkCitation' },
+        { uniqueIdentifier: 'ghi-789', associationType: 'stereoMate' },
       ])
     })
 
     it('preserves the other associations when the first is removed', () => {
       const spy = jest.spyOn(component.valueChange, 'emit')
-      component.onUuidChange('')
+      component.onUniqueIdentifierChange('')
       expect(spy).toHaveBeenCalledWith([
-        { uuid: 'def-456', associationType: 'largerWorkCitation' },
-        { uuid: 'ghi-789', associationType: 'stereoMate' },
+        { uniqueIdentifier: 'def-456', associationType: 'largerWorkCitation' },
+        { uniqueIdentifier: 'ghi-789', associationType: 'stereoMate' },
       ])
     })
 
@@ -95,8 +98,8 @@ describe('FormFieldAssociatedRecordsComponent', () => {
       const spy = jest.spyOn(component.valueChange, 'emit')
       component.onToggle(false)
       expect(spy).toHaveBeenCalledWith([
-        { uuid: 'def-456', associationType: 'largerWorkCitation' },
-        { uuid: 'ghi-789', associationType: 'stereoMate' },
+        { uniqueIdentifier: 'def-456', associationType: 'largerWorkCitation' },
+        { uniqueIdentifier: 'ghi-789', associationType: 'stereoMate' },
       ])
     })
   })
@@ -107,29 +110,23 @@ describe('FormFieldAssociatedRecordsComponent', () => {
       fixture.detectChanges()
     })
 
-    it('emits an association with an empty uuid and the default type', () => {
+    it('emits an association with an empty identifier and the default type', () => {
       const spy = jest.spyOn(component.valueChange, 'emit')
       component.onToggle(true)
       expect(spy).toHaveBeenCalledWith([
-        { uuid: '', associationType: 'crossReference' },
+        { uniqueIdentifier: '', associationType: 'crossReference' },
       ])
     })
   })
 
-  describe('when the associationType is outside the hardcoded list', () => {
-    beforeEach(() => {
-      component.value = [
-        { uuid: 'abc-123', associationType: 'revisionOf' },
-        { uuid: 'def-456', associationType: 'revisionOf' },
-      ]
-      fixture.detectChanges()
-    })
-
-    it('adds it to the dropdown choices instead of leaving it blank', () => {
-      expect(component.choices).toContainEqual({
-        value: 'revisionOf',
-        label: 'revisionOf',
-      })
+  describe('dropdown choices', () => {
+    it('offers every association type of the codelist', () => {
+      expect(component.choices).toEqual(
+        associationTypeValues.map((value) => ({
+          value,
+          label: `domain.record.associationType.${value}`,
+        }))
+      )
     })
   })
 })
