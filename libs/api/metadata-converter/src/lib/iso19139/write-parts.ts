@@ -1276,7 +1276,7 @@ export function writeAssociatedRecords(
     removeChildrenByName('gmd:aggregationInfo'),
     appendChildren(
       ...record.associatedRecords
-        .filter((assoc) => assoc.uuid && assoc.associationType)
+        .filter((assoc) => assoc.uniqueIdentifier && assoc.associationType)
         .map((assoc) =>
           pipe(
             createNestedElement(
@@ -1290,7 +1290,7 @@ export function writeAssociatedRecords(
                   'gmd:MD_Identifier',
                   'gmd:code'
                 ),
-                writeCharacterString(assoc.uuid)
+                writeCharacterString(assoc.uniqueIdentifier)
               ),
               pipe(
                 createNestedElement(

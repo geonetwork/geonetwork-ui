@@ -51,6 +51,7 @@ import {
   readText,
   XmlElement,
 } from '../xml-utils'
+import { getAssociationTypeFromCode } from './utils/association-type.mapper'
 import { readGeometry } from './utils/geometry'
 import { fullNameToParts } from './utils/individual-name'
 import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
@@ -931,19 +932,22 @@ export function readSourceRecords(rootEl: XmlElement): SourceRecord[] {
 export function extractAssociatedRecords(
   containerName: string,
   aggregateName: string,
-  readUuid: ChainableFunction<XmlElement, string>
+  readIdentifier: ChainableFunction<XmlElement, string>
 ): ChainableFunction<XmlElement, AssociatedRecord[]> {
   return pipe(
     findChildrenElement(containerName, false),
     mapArray((el) => {
       const aggregateEl = findChildElement(aggregateName, false)(el)
-      const uuid = readUuid(aggregateEl)
-      const associationType = pipe(
+      const uniqueIdentifier = readIdentifier(aggregateEl)
+      const associationTypeCode = pipe(
         findNestedElement('gmd:associationType', 'gmd:DS_AssociationTypeCode'),
         readAttribute('codeListValue')
       )(aggregateEl)
-      if (!uuid || !associationType) return null
-      return { uuid, associationType }
+      if (!uniqueIdentifier || !associationTypeCode) return null
+      return {
+        uniqueIdentifier,
+        associationType: getAssociationTypeFromCode(associationTypeCode),
+      }
     }),
     filterArray((r): r is AssociatedRecord => r !== null)
   )

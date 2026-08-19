@@ -195,23 +195,23 @@ As such, **it is not very interesting at all.**`,
   sourceRecords: [],
   associatedRecords: [
     {
-      uuid: 'b1882436-3016-421e-9dfd-0326cca998f2',
+      uniqueIdentifier: 'b1882436-3016-421e-9dfd-0326cca998f2',
       associationType: 'crossReference',
     },
     {
-      uuid: 'b1741571-bbda-4732-a807-cbc36b64d54f',
+      uniqueIdentifier: 'b1741571-bbda-4732-a807-cbc36b64d54f',
       associationType: 'crossReference',
     },
     {
-      uuid: 'bdcb789c-4b02-4c0c-863a-98dac4ed0240',
+      uniqueIdentifier: 'bdcb789c-4b02-4c0c-863a-98dac4ed0240',
       associationType: 'crossReference',
     },
     {
-      uuid: 'c0112b86-a6e3-4df3-9da1-2927376076f4',
+      uniqueIdentifier: 'c0112b86-a6e3-4df3-9da1-2927376076f4',
       associationType: 'partOfSeamlessDatabase',
     },
     {
-      uuid: '7451e2bd-22e8-4a74-a999-01c58b630369',
+      uniqueIdentifier: '7451e2bd-22e8-4a74-a999-01c58b630369',
       associationType: 'largerWorkCitation',
     },
   ],

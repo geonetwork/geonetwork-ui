@@ -587,7 +587,7 @@ export function writeAssociatedRecords(
     removeChildrenByName('mri:associatedResource'),
     appendChildren(
       ...record.associatedRecords
-        .filter((assoc) => assoc.uuid && assoc.associationType)
+        .filter((assoc) => assoc.uniqueIdentifier && assoc.associationType)
         .map((assoc) =>
           pipe(
             createNestedElement(
@@ -608,7 +608,7 @@ export function writeAssociatedRecords(
               ),
               pipe(
                 createElement('mri:metadataReference'),
-                writeAttribute('uuidref', assoc.uuid)
+                writeAttribute('uuidref', assoc.uniqueIdentifier)
               )
             )
           )

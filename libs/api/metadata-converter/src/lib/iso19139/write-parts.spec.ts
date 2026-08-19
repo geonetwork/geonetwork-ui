@@ -1287,13 +1287,13 @@ describe('write parts', () => {
       })
     })
 
-    describe('associatedRecords has an entry with an empty uuid', () => {
+    describe('associatedRecords has an entry with an empty identifier', () => {
       it('does not serialize it', () => {
         writeAssociatedRecords(
           {
             ...datasetRecord,
             associatedRecords: [
-              { uuid: '', associationType: 'crossReference' },
+              { uniqueIdentifier: '', associationType: 'crossReference' },
             ],
           },
           rootEl
@@ -1312,7 +1312,10 @@ describe('write parts', () => {
           {
             ...datasetRecord,
             associatedRecords: [
-              { uuid: 'abc-123', associationType: 'crossReference' },
+              {
+                uniqueIdentifier: 'abc-123',
+                associationType: 'crossReference',
+              },
             ],
           },
           rootEl
@@ -1346,8 +1349,11 @@ describe('write parts', () => {
           {
             ...datasetRecord,
             associatedRecords: [
-              { uuid: 'uuid-1', associationType: 'crossReference' },
-              { uuid: 'uuid-2', associationType: 'largerWorkCitation' },
+              { uniqueIdentifier: 'uuid-1', associationType: 'crossReference' },
+              {
+                uniqueIdentifier: 'uuid-2',
+                associationType: 'largerWorkCitation',
+              },
             ],
           },
           rootEl
@@ -1417,7 +1423,7 @@ describe('write parts', () => {
           {
             ...datasetRecord,
             associatedRecords: [
-              { uuid: 'new-uuid', associationType: 'stereoMate' },
+              { uniqueIdentifier: 'new-uuid', associationType: 'stereoMate' },
             ],
           },
           rootEl

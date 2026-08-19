@@ -260,12 +260,28 @@ export interface SourceRecord {
   href?: string
 }
 
+// DS_AssociationTypeCode values of the ISO19115-3 codelist, any unrecognized value
+// being mapped to 'crossReference'
+export const associationTypeValues = [
+  'crossReference',
+  'largerWorkCitation',
+  'partOfSeamlessDatabase',
+  'stereoMate',
+  'isComposedOf',
+  'collectiveTitle',
+  'series',
+  'dependency',
+  'revisionOf',
+] as const
+
+export type AssociationType = (typeof associationTypeValues)[number]
+
 /**
  * Represents another record associated with this one (e.g. a parent/sibling dataset).
  */
 export interface AssociatedRecord {
-  uuid: string
-  associationType: string
+  uniqueIdentifier: string
+  associationType: AssociationType
 }
 
 export interface DatasetRecord extends BaseRecord {
