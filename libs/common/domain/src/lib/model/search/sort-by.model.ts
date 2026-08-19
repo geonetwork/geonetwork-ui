@@ -6,5 +6,5 @@ export const SortByEnum: Record<string, SortByField> = {
   RELEVANCY: ['desc', '_score'],
   QUALITY_SCORE: ['desc', 'qualityScore'],
   CHANGE_DATE: ['desc', 'changeDate'],
-  RESOURCE_DATE: ['desc', 'resourceDate'],
+  RESOURCE_DATE: ['desc', 'resourceDate.date'],
 }

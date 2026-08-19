@@ -222,7 +222,7 @@ For a detailed explanation on the classification system, see [this documentation
   - a name for the preset, which can be a translation key (mandatory)
   - a sort criteria (prepend the field name with - to do a descending sort):
 
-    - `-resourceDate`
+    - `-resourceDate.date`
     - `-userSavedcount`
     - `-qualityScore`
     - `-_score`
@@ -247,7 +247,7 @@ For a detailed explanation on the classification system, see [this documentation
   filters.publicationYear = ['2023', '2022']
   filters.isSpatial = ['yes']
   filters.license = ['unknown']
-  sort = '-resourceDate'
+  sort = '-resourceDate.date'
 
   [[search_preset]]
   name = 'otherFilter'

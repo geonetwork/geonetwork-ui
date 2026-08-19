@@ -50,7 +50,7 @@ describe('datasets', () => {
       cy.get('@sortBy')
         .getActiveDropdownOption()
         .invoke('attr', 'data-cy-value')
-        .should('equal', 'desc,resourceDate')
+        .should('equal', 'desc,resourceDate.date')
     })
   })
 
@@ -523,7 +523,7 @@ describe('datasets', () => {
       })
 
       it('should display quality widget', () => {
-        cy.get('@sortBy').selectDropdownOption('desc,resourceDate')
+        cy.get('@sortBy').selectDropdownOption('desc,resourceDate.date')
         cy.get(
           '[data-cy="ed34db28-5dd4-480f-bf29-dc08f0086131"] gn-ui-progress-bar'
         ).should('have.attr', 'ng-reflect-value', 100)

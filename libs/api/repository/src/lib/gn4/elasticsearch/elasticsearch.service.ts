@@ -200,15 +200,19 @@ export class ElasticsearchService {
 
   private buildPayloadSort(sortBy: SortByField): SortParams {
     if (sortBy === null) return undefined
-    // Sort by resourceDate only works with the explicit syntax
-    if (sortBy[1] === 'resourceDate') {
+    // Sort by nested array of dates only works with the explicit syntax
+    if (
+      typeof sortBy[1] === 'string' &&
+      (sortBy[1] as string).endsWith('.date')
+    ) {
+      const nestedPath = sortBy[1].slice(0, sortBy[1].lastIndexOf('.date'))
       return {
-        'resourceDate.date': {
+        [sortBy[1]]: {
           order: sortBy[0] as 'desc' | 'asc',
           mode: sortBy[0] === 'desc' ? 'max' : 'min',
           missing: '_last',
           nested: {
-            path: 'resourceDate',
+            path: nestedPath,
           },
         },
       }

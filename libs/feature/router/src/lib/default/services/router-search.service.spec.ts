@@ -123,7 +123,7 @@ describe('RouterSearchService', () => {
       expect(routerFacade.setSearch).toHaveBeenCalledWith({
         q: ['any'],
         publisher: ['Org'],
-        _sort: '-resourceDate',
+        _sort: '-resourceDate.date',
       })
     })
   })

@@ -112,7 +112,7 @@ describe('RouterEffects', () => {
           useClass: FieldsServiceMock,
         },
         MockProvider(RouterService, {
-          getDefaultSort: () => ['desc', 'resourceDate'],
+          getDefaultSort: () => ['desc', 'resourceDate.date'],
         }),
       ],
     })
@@ -262,7 +262,7 @@ describe('RouterEffects', () => {
           a: new SetFilters({ any: 'any' }, 'main'),
           b: new SetSortBy(['desc', 'createDate'], 'main'),
           c: new Paginate(2, 'main'),
-          d: new SetSortBy(['desc', 'resourceDate'], 'main'),
+          d: new SetSortBy(['desc', 'resourceDate.date'], 'main'),
           e: new Paginate(1, 'main'),
         })
         expect(effects.syncSearchState$).toBeObservable(expected)
@@ -284,7 +284,7 @@ describe('RouterEffects', () => {
           a: new SetFilters({ any: 'any' }, 'main'),
           b: new SetSortBy(['desc', 'createDate'], 'main'),
           c: new Paginate(2, 'main'),
-          d: new SetSortBy(['desc', 'resourceDate'], 'main'),
+          d: new SetSortBy(['desc', 'resourceDate.date'], 'main'),
           e: new Paginate(12, 'main'),
         })
         expect(effects.syncSearchState$).toBeObservable(expected)
