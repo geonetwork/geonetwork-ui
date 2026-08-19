@@ -1,17 +1,21 @@
-<div class="flex gap-2 mb-2">
-  @for (addOption of addOptions$ | async; track addOption) {
-    <gn-ui-button type="gray" (buttonClick)="onAdd(addOption.eventName)">
-      <ng-icon name="iconoirPlus" class="text-primary"></ng-icon> &nbsp;{{
-        addOption.buttonLabel
-      }}</gn-ui-button
-    >
+<div class="flex flex-col gap-2">
+  <div class="flex gap-2">
+    @for (addOption of addOptions$ | async; track addOption) {
+      <gn-ui-button type="gray" (buttonClick)="onAdd(addOption.eventName)">
+        <ng-icon name="iconoirPlus" class="text-primary"></ng-icon> &nbsp;{{
+          addOption.buttonLabel
+        }}</gn-ui-button
+      >
+    }
+  </div>
+  @if (extents.length) {
+    <gn-ui-sortable-list
+      [items]="extents"
+      (itemsOrderChange)="onItemsOrderChange($event)"
+      [elementTemplate]="template"
+    ></gn-ui-sortable-list>
   }
 </div>
-<gn-ui-sortable-list
-  [items]="extents"
-  (itemsOrderChange)="onItemsOrderChange($event)"
-  [elementTemplate]="template"
-></gn-ui-sortable-list>
 <ng-template #template let-extent let-index="index">
   @if (extent.end === undefined) {
     <div class="border rounded-lg px-4 pb-4">

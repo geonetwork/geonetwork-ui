@@ -128,15 +128,15 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
               formFieldConfig: {},
             },
             {
-              model: 'associatedRecords',
-              formFieldConfig: {},
-              hidden: '${record.kind == "service"}',
-            },
-            {
               model: 'temporalExtents',
               formFieldConfig: {
                 labelKey: marker('editor.record.form.field.temporalExtents'),
               },
+              hidden: '${record.kind == "service"}',
+            },
+            {
+              model: 'associatedRecords',
+              formFieldConfig: {},
               hidden: '${record.kind == "service"}',
             },
           ],
