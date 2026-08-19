@@ -8,5 +8,5 @@ export function getAssociationTypeFromCode(
 ): AssociationType {
   return associationTypeValues.includes(associationTypeCode as AssociationType)
     ? (associationTypeCode as AssociationType)
-    : 'other'
+    : 'crossReference'
 }

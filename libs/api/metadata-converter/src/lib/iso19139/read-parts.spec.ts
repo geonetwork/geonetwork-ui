@@ -917,7 +917,7 @@ describe('read parts', () => {
           expect(readAssociatedRecords(recordRootEl)).toEqual([])
         })
       })
-      describe('association type outside the shared values', () => {
+      describe('association type outside the codelist', () => {
         beforeEach(() => {
           const aggregationInfoEl = getRootElement(
             parseXmlString(`
@@ -931,7 +931,7 @@ describe('read parts', () => {
       </gmd:MD_Identifier>
     </gmd:aggregateDataSetIdentifier>
     <gmd:associationType>
-      <gmd:DS_AssociationTypeCode codeListValue="isComposedOf"/>
+      <gmd:DS_AssociationTypeCode codeListValue="source"/>
     </gmd:associationType>
   </gmd:MD_AggregateInformation>
 </gmd:aggregationInfo>`)
@@ -941,9 +941,9 @@ describe('read parts', () => {
             appendChildren(() => aggregationInfoEl)
           )(recordRootEl)
         })
-        it('maps the association type to other', () => {
+        it('maps the association type to crossReference', () => {
           expect(readAssociatedRecords(recordRootEl)).toEqual([
-            { uniqueIdentifier: 'abc-123', associationType: 'other' },
+            { uniqueIdentifier: 'abc-123', associationType: 'crossReference' },
           ])
         })
       })
