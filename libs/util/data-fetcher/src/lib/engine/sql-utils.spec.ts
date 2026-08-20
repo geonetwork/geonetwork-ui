@@ -64,7 +64,7 @@ describe('data-fetcher utils', () => {
           ]
         )
       ).toEqual(
-        `SELECT CAST(COUNT(*) AS INTEGER) as "count()", MAX("field D") as "max(field D)", MIN("field D") as "min(field D)", SUM("field D") as "sum(field D)", AVG("field D") as "average(field D)", "field C" as "distinct(field C)" FROM myDataset GROUP BY "field C" WHERE ("field A" < 1234 AND "field B" != 'test')`
+        `SELECT CAST(COUNT(*) AS INTEGER) as "count()", CAST(MAX("field D") AS DOUBLE) as "max(field D)", CAST(MIN("field D") AS DOUBLE) as "min(field D)", CAST(SUM("field D") AS DOUBLE) as "sum(field D)", CAST(AVG("field D") AS DOUBLE) as "average(field D)", "field C" as "distinct(field C)" FROM myDataset GROUP BY "field C" WHERE ("field A" < 1234 AND "field B" != 'test')`
       )
     })
     it('adds two group by clauses', () => {
@@ -105,7 +105,7 @@ describe('data-fetcher utils', () => {
           ]
         )
       ).toEqual(
-        `SELECT CAST(COUNT(*) AS INTEGER) as "count()", MAX("field D") as "max(field D)", MIN("field D") as "min(field D)", SUM("field D") as "sum(field D)", AVG("field D") as "average(field D)" FROM myDataset WHERE ("field A" < 1234 AND "field B" != 'test')`
+        `SELECT CAST(COUNT(*) AS INTEGER) as "count()", CAST(MAX("field D") AS DOUBLE) as "max(field D)", CAST(MIN("field D") AS DOUBLE) as "min(field D)", CAST(SUM("field D") AS DOUBLE) as "sum(field D)", CAST(AVG("field D") AS DOUBLE) as "average(field D)" FROM myDataset WHERE ("field A" < 1234 AND "field B" != 'test')`
       )
     })
     it('assembles the different elements in the correct order', () => {
@@ -131,7 +131,7 @@ describe('data-fetcher utils', () => {
           ]
         )
       ).toEqual(
-        `SELECT CAST(COUNT(*) AS INTEGER) as "count()", MAX("field D") as "max(field D)", MIN("field D") as "min(field D)", SUM("field D") as "sum(field D)", AVG("field D") as "average(field D)", "field C" as "distinct(field C)" FROM myDataset GROUP BY "field C" ORDER BY "field1" ASC, "field2" DESC WHERE ("field A" < 1234 AND "field B" != 'test') LIMIT 14 OFFSET 8`
+        `SELECT CAST(COUNT(*) AS INTEGER) as "count()", CAST(MAX("field D") AS DOUBLE) as "max(field D)", CAST(MIN("field D") AS DOUBLE) as "min(field D)", CAST(SUM("field D") AS DOUBLE) as "sum(field D)", CAST(AVG("field D") AS DOUBLE) as "average(field D)", "field C" as "distinct(field C)" FROM myDataset GROUP BY "field C" WHERE ("field A" < 1234 AND "field B" != 'test') ORDER BY "field1" ASC, "field2" DESC LIMIT 14 OFFSET 8`
       )
     })
   })

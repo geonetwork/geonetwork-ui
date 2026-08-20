@@ -54,11 +54,11 @@ function aggregationToSql(aggregation: FieldAggregation): string {
 
   switch (operation) {
     case 'average':
-      return `AVG(${fieldToSql(field)}) as ${fieldToSql(`average(${field})`)}`
+      return `CAST(AVG(${fieldToSql(field)}) AS DOUBLE) as ${fieldToSql(`average(${field})`)}`
     case 'sum':
     case 'max':
     case 'min':
-      return `${operation.toUpperCase()}(${fieldToSql(field)}) as ${fieldToSql(`${operation}(${field})`)}`
+      return `CAST(${operation.toUpperCase()}(${fieldToSql(field)}) AS DOUBLE) as ${fieldToSql(`${operation}(${field})`)}`
     case 'count':
       return 'CAST(COUNT(*) AS INTEGER) as "count()"' // we don't need Bigint precision here
   }
@@ -126,5 +126,5 @@ export function generateSqlQuery(
       sqlSelect += `, ${sqlGroupBySelect}`
     }
   }
-  return sqlSelect + sqlFrom + sqlGroupBy + sqlOrderBy + sqlWhere + sqlLimit
+  return sqlSelect + sqlFrom + sqlGroupBy + sqlWhere + sqlOrderBy + sqlLimit
 }
