@@ -545,7 +545,7 @@
   "record.metadata.download": "Sťahovania",
   "record.metadata.feature.catalog": "",
   "record.metadata.formats": "Formáty",
-  "record.metadata.isGeographical": "Súbor geografických údajov",
+  "record.metadata.isGeographical": "geo",
   "record.metadata.keywords": "Kľúčové slová",
   "record.metadata.languages": "",
   "record.metadata.link.postgis.table": "",
