@@ -55,7 +55,7 @@ export class Engine {
       )
     }
     const worker = new Worker(worker_url)
-    const logger = new duckdb.ConsoleLogger(duckdb.LogLevel.INFO)
+    const logger = new duckdb.ConsoleLogger(duckdb.LogLevel.WARNING)
     this.db = new duckdb.AsyncDuckDB(logger, worker)
     await this.db.instantiate(bundle.mainModule, bundle.pthreadWorker)
 
@@ -63,7 +63,8 @@ export class Engine {
     const conn = await this.db.connect()
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
     await conn.query(`INSTALL spatial; LOAD spatial;`)
-    await conn.query(`SET TimeZone = '${timezone}'`)
+    await conn.query(`SET TimeZone = '${timezone}';`)
+    await conn.query(`SET preserve_insertion_order = false;`) // this reduces memory usage when loading a dataset
     conn.close()
     return this
   }
