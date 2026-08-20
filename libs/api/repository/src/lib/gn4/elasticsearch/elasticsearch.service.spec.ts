@@ -50,12 +50,42 @@ describe('ElasticsearchService', () => {
       expect(sort).toEqual([{ changeDate: 'desc' }])
     })
 
+    it('One nested ".date" sort and DESC direction', () => {
+      const sort = service['buildPayloadSort'](['desc', 'resourceDate.date'])
+      expect(sort).toEqual([
+        {
+          'resourceDate.date': {
+            order: 'desc',
+            mode: 'max',
+            missing: '_last',
+            nested: {
+              path: 'resourceDate',
+            },
+          },
+        },
+      ])
+    })
+
     it('Multiple sorts', () => {
       const sort = service['buildPayloadSort']([
         ['asc', '_score'],
         ['desc', 'changeDate'],
+        ['desc', 'resourceDate.date'],
       ])
-      expect(sort).toEqual([{ _score: 'asc' }, { changeDate: 'desc' }])
+      expect(sort).toEqual([
+        { _score: 'asc' },
+        { changeDate: 'desc' },
+        {
+          'resourceDate.date': {
+            order: 'desc',
+            mode: 'max',
+            missing: '_last',
+            nested: {
+              path: 'resourceDate',
+            },
+          },
+        },
+      ])
     })
   })
   describe('#stateFiltersToQueryString', () => {
