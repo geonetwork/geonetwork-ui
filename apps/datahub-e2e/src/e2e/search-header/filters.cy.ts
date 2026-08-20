@@ -22,14 +22,15 @@ describe('filters and sorts', () => {
     cy.get('gn-ui-sort-by gn-ui-dropdown-selector')
       .getActiveDropdownOption()
       .invoke('attr', 'data-cy-value')
-      .should(
-        'equal',
-        'desc,revisionDateForResource,desc,publicationDateForResource,desc,creationDateForResource'
-      )
+      .should('equal', 'desc,resourceDate.date')
+    cy.get('@inlineFilter-dataset').check({ force: true }) // To get same result local and CI
+    cy.get('gn-ui-results-list-item')
+      .first()
+      .should('have.attr', 'data-cy', '85fb799c-aa0e-4d3a-8d6c-a574fde607e0')
     cy.screenshot({ capture: 'viewport' })
   })
 
-  it('should filter results by popularity', () => {
+  it('should sort results by popularity', () => {
     cy.get('gn-ui-fuzzy-search')
       .next()
       .find('button')

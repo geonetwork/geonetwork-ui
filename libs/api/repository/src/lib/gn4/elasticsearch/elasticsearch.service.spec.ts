@@ -40,6 +40,21 @@ describe('ElasticsearchService', () => {
   })
 
   describe('#Sort', () => {
+    it('Null sort', () => {
+      const sort = service['buildPayloadSort'](null)
+      expect(sort).toBeUndefined()
+    })
+
+    it('Undefined sort', () => {
+      const sort = service['buildPayloadSort'](undefined)
+      expect(sort).toBeUndefined()
+    })
+
+    it('Empty sort array', () => {
+      const sort = service['buildPayloadSort']([])
+      expect(sort).toBeUndefined()
+    })
+
     it('One sort and default direction', () => {
       const sort = service['buildPayloadSort'](['asc', '_score'])
       expect(sort).toEqual([{ _score: 'asc' }])
@@ -50,12 +65,42 @@ describe('ElasticsearchService', () => {
       expect(sort).toEqual([{ changeDate: 'desc' }])
     })
 
+    it('One nested ".date" sort and DESC direction', () => {
+      const sort = service['buildPayloadSort'](['desc', 'resourceDate.date'])
+      expect(sort).toEqual([
+        {
+          'resourceDate.date': {
+            order: 'desc',
+            mode: 'max',
+            missing: '_last',
+            nested: {
+              path: 'resourceDate',
+            },
+          },
+        },
+      ])
+    })
+
     it('Multiple sorts', () => {
       const sort = service['buildPayloadSort']([
         ['asc', '_score'],
         ['desc', 'changeDate'],
+        ['desc', 'resourceDate.date'],
       ])
-      expect(sort).toEqual([{ _score: 'asc' }, { changeDate: 'desc' }])
+      expect(sort).toEqual([
+        { _score: 'asc' },
+        { changeDate: 'desc' },
+        {
+          'resourceDate.date': {
+            order: 'desc',
+            mode: 'max',
+            missing: '_last',
+            nested: {
+              path: 'resourceDate',
+            },
+          },
+        },
+      ])
     })
   })
   describe('#stateFiltersToQueryString', () => {

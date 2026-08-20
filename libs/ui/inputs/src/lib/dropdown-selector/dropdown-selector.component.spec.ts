@@ -26,11 +26,7 @@ describe('DropdownSelectorComponent', () => {
       },
       {
         label: 'results.sortBy.dateStamp',
-        value: [
-          ['desc', 'revisionDateForResource'],
-          ['desc', 'publicationDateForResource'],
-          ['desc', 'creationDateForResource'],
-        ],
+        value: ['desc', 'resourceDate.date'],
       },
     ]
     fixture.detectChanges()
@@ -77,20 +73,12 @@ describe('DropdownSelectorComponent', () => {
 
     describe('when the provided value is a nested array', () => {
       beforeEach(() => {
-        component.selected = [
-          ['desc', 'revisionDateForResource'],
-          ['desc', 'publicationDateForResource'],
-          ['desc', 'creationDateForResource'],
-        ]
+        component.selected = ['desc', 'resourceDate.date']
       })
       it('selects the corresponding choice', () => {
         expect(component.selectedChoice).toEqual({
           label: 'results.sortBy.dateStamp',
-          value: [
-            ['desc', 'revisionDateForResource'],
-            ['desc', 'publicationDateForResource'],
-            ['desc', 'creationDateForResource'],
-          ],
+          value: ['desc', 'resourceDate.date'],
         })
       })
     })
