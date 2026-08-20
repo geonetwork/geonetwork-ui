@@ -134,6 +134,11 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
               },
               hidden: '${record.kind == "service"}',
             },
+            {
+              model: 'associatedRecords',
+              formFieldConfig: {},
+              hidden: '${record.kind == "service"}',
+            },
           ],
         },
 

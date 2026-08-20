@@ -98,6 +98,12 @@
         [recordKind]="recordKind"
       ></gn-ui-form-field-update-frequency>
     </ng-container>
+    <ng-container *ngSwitchCase="'associatedRecords'">
+      <gn-ui-form-field-associated-records
+        [value]="valueAsAssociatedRecords"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-associated-records>
+    </ng-container>
     <ng-container *ngSwitchCase="'temporalExtents'">
       <gn-ui-form-field-temporal-extents
         [value]="valueAsTemporalExtents"

@@ -8,6 +8,7 @@ import { FormFieldRichComponent } from './form-field-rich/form-field-rich.compon
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents/form-field-temporal-extents.component'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
+import { FormFieldAssociatedRecordsComponent } from './form-field-associated-records/form-field-associated-records.component'
 import { FormFieldComponent } from './form-field.component'
 import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-resources/form-field-online-link-resources.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
@@ -99,6 +100,19 @@ describe('FormFieldComponent', () => {
       ).componentInstance
     })
     it('creates an update frequency form field', () => {
+      expect(formField).toBeTruthy()
+    })
+  })
+  describe('associated records field', () => {
+    let formField
+    beforeEach(() => {
+      component.model = 'associatedRecords'
+      fixture.detectChanges()
+      formField = fixture.debugElement.query(
+        By.directive(FormFieldAssociatedRecordsComponent)
+      ).componentInstance
+    })
+    it('creates an associated records form field', () => {
       expect(formField).toBeTruthy()
     })
   })

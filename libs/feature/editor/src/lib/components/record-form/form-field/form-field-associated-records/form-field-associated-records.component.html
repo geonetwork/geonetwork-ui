@@ -1,0 +1,33 @@
+<div class="flex flex-col gap-2">
+  <gn-ui-check-toggle
+    [label]="'editor.record.form.field.parentLink' | translate"
+    [value]="hasParentLink"
+    (toggled)="onToggle($event)"
+    data-cy="associated-record-toggle"
+  ></gn-ui-check-toggle>
+  @if (hasParentLink) {
+    <gn-ui-form-field-wrapper
+      [label]="'editor.record.form.field.parentIdentifier' | translate"
+    >
+      <gn-ui-text-input
+        [value]="uniqueIdentifier"
+        (valueChange)="onUniqueIdentifierChange($event)"
+        placeholder=""
+        data-cy="associated-record-identifier"
+      ></gn-ui-text-input>
+    </gn-ui-form-field-wrapper>
+    <gn-ui-form-field-wrapper
+      [label]="'editor.record.form.field.parentType' | translate"
+    >
+      <gn-ui-dropdown-selector
+        [title]="'editor.record.form.field.parentType' | translate"
+        [showTitle]="false"
+        [choices]="choices"
+        [selected]="selectedType"
+        (selectValue)="onTypeChange($event)"
+        [extraBtnClass]="'input-as-button gn-ui-text-input'"
+        data-cy="associated-record-type"
+      ></gn-ui-dropdown-selector>
+    </gn-ui-form-field-wrapper>
+  }
+</div>
