@@ -40,6 +40,21 @@ describe('ElasticsearchService', () => {
   })
 
   describe('#Sort', () => {
+    it('Null sort', () => {
+      const sort = service['buildPayloadSort'](null)
+      expect(sort).toBeUndefined()
+    })
+
+    it('Undefined sort', () => {
+      const sort = service['buildPayloadSort'](undefined)
+      expect(sort).toBeUndefined()
+    })
+
+    it('Empty sort array', () => {
+      const sort = service['buildPayloadSort']([])
+      expect(sort).toBeUndefined()
+    })
+
     it('One sort and default direction', () => {
       const sort = service['buildPayloadSort'](['asc', '_score'])
       expect(sort).toEqual([{ _score: 'asc' }])

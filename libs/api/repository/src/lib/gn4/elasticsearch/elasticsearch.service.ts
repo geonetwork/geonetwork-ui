@@ -200,7 +200,7 @@ export class ElasticsearchService {
   }
 
   private buildPayloadSort(sortBy: SortByField): SortParams {
-    if (sortBy === null) return undefined
+    if (!sortBy || sortBy.length === 0) return undefined
     const fields = Array.isArray(sortBy[0])
       ? (sortBy as FieldSort[])
       : [sortBy as FieldSort]
