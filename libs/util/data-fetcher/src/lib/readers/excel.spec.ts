@@ -350,5 +350,111 @@ describe('Excel parsing', () => {
         })
       })
     })
+
+    describe('XLSX format (other file)', () => {
+      beforeEach(() => {
+        reader = new ExcelReader(
+          'http://localfile/fixtures/aide_biocarburant.xlsx'
+        )
+        reader.load()
+      })
+      afterEach(() => {
+        fetchMock.mockReset()
+      })
+      describe('#info', () => {
+        it('returns dataset info', async () => {
+          await expect(reader.info).resolves.toEqual({
+            itemsCount: 50,
+            hasGeometry: false,
+          })
+        })
+      })
+      describe('#properties', () => {
+        it('returns properties info', async () => {
+          await expect(reader.properties).resolves.toEqual([
+            {
+              label: 'INSEE_domicile',
+              name: 'INSEE_domicile',
+              type: 'string',
+            },
+            {
+              label: 'Commune_domicile',
+              name: 'Commune_domicile',
+              type: 'string',
+            },
+            {
+              label: 'DPT',
+              name: 'DPT',
+              type: 'string',
+            },
+            {
+              label: 'id',
+              name: 'id',
+              type: 'number',
+            },
+            {
+              label: 'Age_véhicule',
+              name: 'Age_véhicule',
+              type: 'number',
+            },
+            {
+              label: 'Chevaux_Fiscaux',
+              name: 'Chevaux_Fiscaux',
+              type: 'number',
+            },
+            {
+              label: 'INSEE_Commune_Installateur',
+              name: 'INSEE_Commune_Installateur',
+              type: 'string',
+            },
+            {
+              label: 'Commune_Installateur',
+              name: 'Commune_Installateur',
+              type: 'string',
+            },
+            {
+              label: 'Marque_Boitier',
+              name: 'Marque_Boitier',
+              type: 'string',
+            },
+            {
+              label: 'Boitier_Autre',
+              name: 'Boitier_Autre',
+              type: 'number', // this should be string but the duckdb reader only infers types from the first line
+            },
+            {
+              label: 'Bonus_CD80',
+              name: 'Bonus_CD80',
+              type: 'string',
+            },
+          ])
+        })
+      })
+      describe('#read', () => {
+        it('reads data', async () => {
+          const start = performance.now()
+          const items = await reader.read()
+          console.log(`took ${(performance.now() - start).toFixed(1)}ms`)
+          expect(items[0]).toEqual({
+            geometry: null,
+            id: 1,
+            properties: {
+              Age_véhicule: 2,
+              Boitier_Autre: null,
+              Bonus_CD80: 'NON',
+              Chevaux_Fiscaux: 6,
+              Commune_Installateur: 'BOULZICOURT',
+              Commune_domicile: 'ANY-MARTIN-RIEUX',
+              DPT: '02',
+              INSEE_Commune_Installateur: '08076',
+              INSEE_domicile: '02020',
+              Marque_Boitier: 'Flexfuel',
+              id: 1,
+            },
+            type: 'Feature',
+          })
+        })
+      })
+    })
   })
 })

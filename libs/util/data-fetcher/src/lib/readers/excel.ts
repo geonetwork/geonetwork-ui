@@ -28,6 +28,6 @@ export class ExcelReader extends BaseFileReader {
 
     await this.engine.registerData(bufferHandle, new Uint8Array(buffer))
     return `
-CREATE TABLE ${this.datasetId} AS SELECT * FROM ${duckDbFn}("${bufferHandle}");`
+CREATE TABLE ${this.datasetId} AS SELECT * FROM ${duckDbFn}("${bufferHandle}", ignore_errors = true);`
   }
 }
