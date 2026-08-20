@@ -11,6 +11,7 @@ import {
   AggregationsParams,
   FieldFilter,
   FieldFilters,
+  FieldSort,
   FilterQuery,
   FiltersAggregationParams,
   SortByField,
@@ -200,25 +201,26 @@ export class ElasticsearchService {
 
   private buildPayloadSort(sortBy: SortByField): SortParams {
     if (sortBy === null) return undefined
-    // Sort by nested array of dates only works with the explicit syntax
-    if (
-      typeof sortBy[1] === 'string' &&
-      (sortBy[1] as string).endsWith('.date')
-    ) {
-      const nestedPath = sortBy[1].slice(0, sortBy[1].lastIndexOf('.date'))
-      return {
-        [sortBy[1]]: {
-          order: sortBy[0] as 'desc' | 'asc',
-          mode: sortBy[0] === 'desc' ? 'max' : 'min',
-          missing: '_last',
-          nested: {
-            path: nestedPath,
+    const fields = Array.isArray(sortBy[0])
+      ? (sortBy as FieldSort[])
+      : [sortBy as FieldSort]
+    return fields.map((field) => {
+      // Sort by nested array of dates only works with the explicit syntax
+      if (field[1].endsWith('.date')) {
+        const nestedPath = field[1].slice(0, field[1].lastIndexOf('.date'))
+        return {
+          [field[1]]: {
+            order: field[0] as 'desc' | 'asc',
+            mode: field[0] === 'desc' ? 'max' : 'min',
+            missing: '_last',
+            nested: {
+              path: nestedPath,
+            },
           },
-        },
+        }
       }
-    }
-    const fields = Array.isArray(sortBy[0]) ? sortBy : [sortBy]
-    return fields.map((field) => ({ [field[1]]: field[0] }))
+      return { [field[1]]: field[0] }
+    })
   }
 
   private injectLangInQueryStringFields(

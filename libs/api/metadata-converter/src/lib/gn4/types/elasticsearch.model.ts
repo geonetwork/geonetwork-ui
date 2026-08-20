@@ -13,8 +13,8 @@ type EsFieldSort = {
 export type SortParams =
   | string
   | SortParam
-  | (string | SortParam)[]
   | { [property: string]: EsFieldSort }
+  | (string | SortParam | { [property: string]: EsFieldSort })[]
 
 export interface EsRequestAggTerm {
   field?: string
