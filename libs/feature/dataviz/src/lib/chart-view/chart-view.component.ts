@@ -2,9 +2,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  inject,
   Input,
   Output,
-  inject,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
@@ -183,7 +183,7 @@ export class ChartViewComponent {
   yChoices$ = this.properties$.pipe(
     map((properties) =>
       properties
-        .filter((prop) => prop.type === 'number' || prop.type === 'date')
+        .filter((prop) => prop.type === 'number')
         .map((prop) => ({ value: prop.name, label: prop.label || prop.name }))
     ),
     tap((choices) => {

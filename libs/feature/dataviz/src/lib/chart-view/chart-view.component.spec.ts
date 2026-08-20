@@ -400,9 +400,7 @@ describe('ChartViewComponent', () => {
       component.aggregation$.next('sum')
       component.link = {
         ...aSetOfLinksFixture().dataCsv(),
-        url: new URL(
-          'http://server.org/no-number-props/no-date-props/more-results/'
-        ),
+        url: new URL('http://server.org/no-number-props/more-results/'),
       }
       component.yProperty$.next('')
       flushMicrotasks()
