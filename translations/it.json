@@ -545,7 +545,7 @@
   "record.metadata.download": "Download",
   "record.metadata.feature.catalog": "Catalogo dei oggetti",
   "record.metadata.formats": "Formati",
-  "record.metadata.isGeographical": "dati geografici",
+  "record.metadata.isGeographical": "geo",
   "record.metadata.keywords": "Parole chiave",
   "record.metadata.languages": "Lingue",
   "record.metadata.link.postgis.table": "",
