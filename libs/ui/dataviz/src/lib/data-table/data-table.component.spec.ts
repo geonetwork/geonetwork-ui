@@ -1,39 +1,38 @@
 import { ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatSort } from '@angular/material/sort'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
   someHabTableItemFixture,
   tableItemsFixture,
 } from './data-table.fixtures'
 import { DataTableComponent } from './data-table.component'
 import { By } from '@angular/platform-browser'
-import {
-  BaseFileReader,
-  DataItem,
-  PropertyInfo,
-} from '@geonetwork-ui/data-fetcher'
-import { firstValueFrom } from 'rxjs'
+import { BaseReader, DataItem, PropertyInfo } from '@geonetwork-ui/data-fetcher'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
-const ITEMS_COUNT = 153
-export class MockBaseReader extends BaseFileReader {
+export class MockBaseReader extends BaseReader {
   data: {
     items: DataItem[]
     properties: PropertyInfo[]
   }
   constructor(data: { items: DataItem[]; properties: PropertyInfo[] }) {
-    super('')
+    super((Math.random() * 100000).toString()) // we want a different dataset id every time
     this.data = data
   }
-  override getData(): Promise<{
-    items: DataItem[]
-    properties: PropertyInfo[]
-  }> {
-    return Promise.resolve(this.data)
+  override load() {
+    // do nothing
   }
-  override get info(): Promise<{ itemsCount: number }> {
-    return Promise.resolve({ itemsCount: ITEMS_COUNT })
+  override read() {
+    return Promise.resolve(this.data.items)
+  }
+  override get info() {
+    return Promise.resolve({
+      itemsCount: this.data.items.length,
+      hasGeometry: false,
+    })
+  }
+  override get properties() {
+    return Promise.resolve(this.data.properties)
   }
 }
 
@@ -44,7 +43,6 @@ describe('DataTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule],
       providers: [provideI18n()],
     })
       .overrideComponent(DataTableComponent, {
@@ -73,16 +71,17 @@ describe('DataTableComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('computes data properties', async () => {
+  it('computes data properties', () => {
     fixture.detectChanges()
-    const properties = await firstValueFrom(component.properties$)
-    expect(properties).toEqual(['id', 'firstName', 'lastName'])
+    expect(component.columnNames).toEqual(['id', 'firstName', 'lastName'])
   })
 
   it('displays the amount of objects in the dataset', () => {
     fixture.detectChanges()
     const countEl = fixture.debugElement.query(By.css('.count')).nativeElement
-    expect(countEl.textContent).toEqual(ITEMS_COUNT.toString())
+    expect(countEl.textContent).toEqual(
+      tableItemsFixture.items.length.toString()
+    )
   })
 
   describe('input data change', () => {
@@ -106,8 +105,8 @@ describe('DataTableComponent', () => {
     it('updates the internal data source', () => {
       expect(component.dataSource).not.toBe(previousDataSource)
     })
-    it('recomputes the data properties', async () => {
-      const properties = await firstValueFrom(component.properties$)
+    it('recomputes the data properties', () => {
+      const properties = component.columnNames
       expect(properties).toEqual(['id', 'name', 'pop'])
     })
   })
@@ -124,7 +123,7 @@ describe('DataTableComponent', () => {
       expect(dataset.limit).toHaveBeenCalledWith(0, 10)
     })
     it('compute the correct amount of pages', () => {
-      expect(component.count).toEqual(ITEMS_COUNT)
+      expect(component.count).toEqual(tableItemsFixture.items.length)
     })
     it('calls reader.limit when pagination changes', () => {
       component.paginator.pageIndex = 3
@@ -164,6 +163,7 @@ describe('DataTableComponent', () => {
         .mockImplementation(
           () => new Promise((resolver) => (dataResolver = resolver))
         )
+      component.readData()
     })
     it('displays a loading spinner initially until properties and data are loaded', async () => {
       expect(getSpinner()).toBeTruthy()

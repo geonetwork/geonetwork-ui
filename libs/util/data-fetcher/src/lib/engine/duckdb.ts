@@ -64,6 +64,8 @@ export class Engine {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
     await conn.query(`INSTALL spatial; LOAD spatial;`)
     await conn.query(`SET TimeZone = '${timezone}';`)
+    await conn.query(`SET threads = 1;`)
+    // await conn.query(`SET memory_limit = '2GB';`) // used for experimenting when we encounter memory issues
     await conn.query(`SET preserve_insertion_order = false;`) // this reduces memory usage when loading a dataset
     conn.close()
     return this
