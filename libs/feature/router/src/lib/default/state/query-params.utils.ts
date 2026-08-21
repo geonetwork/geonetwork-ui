@@ -22,7 +22,7 @@ export function flattenQueryParams(
       const start = (flattened[key] as DateRange).start
       const end = (flattened[key] as DateRange).end
       flattened[key] = [
-        `${start ? formatDate(start) : ''}..${formatDate(end) || ''}`,
+        `${start ? formatDate(start) : ''}..${end ? formatDate(end) : ''}`,
       ]
     }
   }
