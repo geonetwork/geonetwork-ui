@@ -47,57 +47,65 @@
   (detach)="closeOverlay()"
 >
   <div
-    class="bg-white border border-gray-300 rounded shadow-lg p-3 flex flex-col gap-2 overlay-container"
+    class="bg-white border border-gray-400 rounded shadow-lg pt-[12px] px-[16px] overlay-container w-[280px] flex flex-col gap-2"
     [style.min-width]="overlayMinWidth"
   >
-    <div class="text-sm text-gray-500">
+    <div class="text-xs text-black">
       {{ 'search.filters.spatialExtent.helpText' | translate }}
     </div>
 
-    <input
-      #fileInput
-      type="file"
-      accept=".json,.geojson"
-      class="hidden"
-      (change)="handleFileInput($event)"
-    />
-    <gn-ui-button
-      type="outline"
-      extraClass="w-full !justify-between"
-      (buttonClick)="triggerFileSelection()"
-      data-cy="importGeojson"
-    >
-      <span>{{ 'search.filters.spatialExtent.import' | translate }}</span>
-      <ng-icon name="iconoirImport"></ng-icon>
-    </gn-ui-button>
+    <div class="border-b-[1px] border-gray-400 pb-[20px] text-black">
+      <input
+        #fileInput
+        type="file"
+        accept=".json,.geojson"
+        class="hidden"
+        (change)="handleFileInput($event)"
+      />
+      <gn-ui-button
+        type="outline"
+        extraClass="w-full h-[32px] justify-between items-center text-black hover:text-black hover:border-[#D7D7DB] hover:bg-[#0000001A]"
+        (buttonClick)="triggerFileSelection()"
+        data-cy="importGeojson"
+      >
+        <span>{{ 'search.filters.spatialExtent.import' | translate }}</span>
+        <ng-icon name="iconoirImport" class="text-gray-950"></ng-icon>
+      </gn-ui-button>
+    </div>
 
     @if (hasSelection) {
-      <div
-        class="flex items-center justify-between gap-2 bg-primary-lighter text-white rounded px-3 py-2 cursor-default"
+      <gn-ui-popover
+        [content]="displayFileName"
+        theme="light"
         data-test="spatial-extent-selected-item"
       >
-        <div class="flex items-center gap-2 overflow-hidden">
-          <ng-icon name="iconoirSquareDashed" class="shrink-0"></ng-icon>
-          <span class="truncate text-sm">
-            <span class="mr-1">{{
+        <button
+          (click)="removeSelection($event)"
+          type="button"
+          class="flex group items-center justify-between w-full bg-primary-lighter hover:bg-primary text-white rounded px-[8px] py-[4px] mb-[12px] cursor-pointer h-[28px]">
+          <ng-icon
+            name="iconoirSquareDashed"
+            class="shrink-0"
+            size="15px"
+          ></ng-icon>
+          <span class="truncate text-sm max-w-[198px]">
+            {{
               'search.filters.spatialExtent.bboxPrefix' | translate
-            }}</span>
+            }}
             {{ displayFileName }}
           </span>
-        </div>
-        <button
-          type="button"
-          class="shrink-0"
-          (click)="removeSelection($event)"
-          data-cy="removeGeojson"
-        >
-          <ng-icon name="iconoirCheck" class="group-hover:hidden"></ng-icon>
+          <ng-icon
+            name="iconoirCheckCircle"
+            class="group-hover:hidden shrink-0"
+            size="14px"
+          ></ng-icon>
           <ng-icon
             name="iconoirTrash"
-            class="hidden group-hover:block"
+            class="!hidden group-hover:!block shrink-0"
+            size="15px"
           ></ng-icon>
         </button>
-      </div>
+      </gn-ui-popover>
     }
   </div>
 </ng-template>
