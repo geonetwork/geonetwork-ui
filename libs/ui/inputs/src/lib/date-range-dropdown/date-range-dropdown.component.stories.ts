@@ -6,7 +6,7 @@ import {
   Meta,
   StoryObj,
 } from '@storybook/angular'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { DateRangeDropdownComponent } from './date-range-dropdown.component'
 
 export default {
@@ -14,10 +14,7 @@ export default {
   component: DateRangeDropdownComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        importProvidersFrom(BrowserAnimationsModule),
-        importProvidersFrom(TranslateModule.forRoot()),
-      ],
+      providers: [importProvidersFrom(BrowserAnimationsModule), provideI18n()],
     }),
     componentWrapperDecorator(
       (story) =>

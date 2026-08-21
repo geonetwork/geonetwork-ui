@@ -15,6 +15,7 @@ import {
   DateRangeDropdownComponent,
   DropdownMultiselectComponent,
 } from '@geonetwork-ui/ui/inputs'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject<any>({})
@@ -62,6 +63,7 @@ describe('FilterDropdownComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        provideI18n(),
         {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
@@ -275,6 +277,44 @@ describe('FilterDropdownComponent', () => {
       expect(searchService.updateFilters).toHaveBeenCalledWith({
         'converted from values': {
           someDateField: { start, end },
+        },
+      })
+    })
+    it('applies an open interval with only a start date', () => {
+      dateRangeDropdown.startDateChange.emit(start)
+      expect(fieldsService.buildFiltersFromFieldValues).toHaveBeenCalledWith({
+        someDateField: { start },
+      })
+      expect(searchService.updateFilters).toHaveBeenCalledWith({
+        'converted from values': {
+          someDateField: { start },
+        },
+      })
+    })
+    it('applies an open interval with only an end date', () => {
+      dateRangeDropdown.endDateChange.emit(end)
+      expect(fieldsService.buildFiltersFromFieldValues).toHaveBeenCalledWith({
+        someDateField: { end },
+      })
+      expect(searchService.updateFilters).toHaveBeenCalledWith({
+        'converted from values': {
+          someDateField: { end },
+        },
+      })
+    })
+    it('drops a bound that is unset again', () => {
+      dateRangeDropdown.startDateChange.emit(start)
+      dateRangeDropdown.endDateChange.emit(end)
+      dateRangeDropdown.endDateChange.emit(null)
+      expect(component.dateRange).toEqual({ start })
+    })
+    it('removes the filter when the range is cleared', () => {
+      dateRangeDropdown.startDateChange.emit(start)
+      dateRangeDropdown.dateRangeClear.emit()
+      expect(component.dateRange).toEqual({})
+      expect(searchService.updateFilters).toHaveBeenCalledWith({
+        'converted from values': {
+          someDateField: {},
         },
       })
     })

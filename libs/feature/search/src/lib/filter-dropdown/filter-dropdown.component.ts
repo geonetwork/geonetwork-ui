@@ -11,7 +11,7 @@ import {
   DropdownMultiselectComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { Observable, of, switchMap } from 'rxjs'
-import { catchError, filter, map, startWith } from 'rxjs/operators'
+import { catchError, filter, map, startWith, tap } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
@@ -44,7 +44,7 @@ export class FilterDropdownComponent implements OnInit {
   @Input() title: string
 
   fieldType: FieldType
-  dateRange: DateRange
+  dateRange: DateRange = {}
   choices$: Observable<Choice[]>
   selected$ = this.searchFacade.searchFilters$.pipe(
     switchMap((filters) =>
@@ -57,7 +57,8 @@ export class FilterDropdownComponent implements OnInit {
   ) as Observable<FieldValue[]>
 
   selectedDateRange$ = this.selected$.pipe(
-    map((selectedDateRange) => selectedDateRange as DateRange)
+    map((selected) => (Array.isArray(selected) ? {} : (selected as DateRange))),
+    tap((dateRange) => (this.dateRange = dateRange))
   ) as Observable<DateRange>
 
   onSelectedValues(values: unknown[]) {
@@ -81,21 +82,27 @@ export class FilterDropdownComponent implements OnInit {
   }
 
   onStartDateChange(start: Date) {
-    if (!start) return
-    this.dateRange = { ...this.dateRange, start }
+    this.applyDateRange({ ...this.dateRange, start })
   }
 
   onEndDateChange(end: Date) {
-    if (!end) return
-    this.dateRange = { ...this.dateRange, end }
-    if (this.dateRange.start && this.dateRange.end) {
-      this.fieldsService
-        .buildFiltersFromFieldValues({
-          [this.fieldName]: this.dateRange,
-        })
-        .subscribe((filters) => {
-          return this.searchService.updateFilters(filters)
-        })
+    this.applyDateRange({ ...this.dateRange, end })
+  }
+
+  onDateRangeClear() {
+    this.applyDateRange({})
+  }
+
+  private applyDateRange(dateRange: DateRange) {
+    this.dateRange = {
+      ...(dateRange.start && { start: dateRange.start }),
+      ...(dateRange.end && { end: dateRange.end }),
     }
+    console.log('Applying date range filter:', this.dateRange)
+    this.fieldsService
+      .buildFiltersFromFieldValues({
+        [this.fieldName]: this.dateRange,
+      })
+      .subscribe((filters) => this.searchService.updateFilters(filters))
   }
 }

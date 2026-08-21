@@ -5,6 +5,7 @@
     [endDate]="(selectedDateRange$ | async)?.end"
     (startDateChange)="onStartDateChange($event)"
     (endDateChange)="onEndDateChange($event)"
+    (dateRangeClear)="onDateRangeClear()"
   ></gn-ui-date-range-dropdown>
 } @else {
   <gn-ui-dropdown-multiselect
