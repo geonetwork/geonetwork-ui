@@ -9,6 +9,7 @@ import {
   Choice,
   DateRangeDropdownComponent,
   DropdownMultiselectComponent,
+  SpatialExtentDropdownComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { Observable, of, switchMap } from 'rxjs'
 import { catchError, filter, map, startWith } from 'rxjs/operators'
@@ -22,6 +23,7 @@ import {
 } from '../utils/service/fields'
 import { DateRange } from '@geonetwork-ui/api/repository'
 import { CommonModule } from '@angular/common'
+import { BoundingBox } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-filter-dropdown',
@@ -33,6 +35,7 @@ import { CommonModule } from '@angular/common'
     CommonModule,
     DateRangeDropdownComponent,
     DropdownMultiselectComponent,
+    SpatialExtentDropdownComponent,
   ],
 })
 export class FilterDropdownComponent implements OnInit {
@@ -64,6 +67,10 @@ export class FilterDropdownComponent implements OnInit {
     this.fieldsService
       .buildFiltersFromFieldValues({ [this.fieldName]: values as FieldValue[] })
       .subscribe((filters) => this.searchService.updateFilters(filters))
+  }
+
+  onBboxChange(bbox: BoundingBox | null) {
+    console.log(bbox)
   }
 
   ngOnInit() {
