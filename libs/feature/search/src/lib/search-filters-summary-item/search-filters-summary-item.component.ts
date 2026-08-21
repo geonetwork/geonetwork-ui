@@ -21,6 +21,8 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 marker('search.filters.summaryLabel.user')
 marker('search.filters.summaryLabel.changeDate')
 
+const OPEN_BOUND = '…'
+
 interface DisplayedValue {
   label: string
   value: FieldValue | DateRange
@@ -82,12 +84,10 @@ export class SearchFiltersSummaryItemComponent implements OnInit {
   getReadableValues(fieldValues: FieldValue[] | DateRange[]): DisplayedValue[] {
     return fieldValues.map((value) => {
       if (this.fieldType === 'dateRange') {
+        const { start, end } = value as DateRange
         return {
           value,
-          label: `${this.datePipe.transform(
-            value.start,
-            'dd.MM.yyyy'
-          )} - ${this.datePipe.transform(value.end, 'dd.MM.yyyy')}`,
+          label: `${this.formatBound(start)} - ${this.formatBound(end)}`,
         }
       } else if (this.fieldName === 'user') {
         return { value, label: formatUserInfo(value) }
@@ -95,6 +95,10 @@ export class SearchFiltersSummaryItemComponent implements OnInit {
         return { value, label: value }
       }
     })
+  }
+
+  private formatBound(date: Date | undefined): string {
+    return date ? this.datePipe.transform(date, 'dd.MM.yyyy') : OPEN_BOUND
   }
 
   async removeFilterValue(fieldValue: FieldValue | DateRange) {
