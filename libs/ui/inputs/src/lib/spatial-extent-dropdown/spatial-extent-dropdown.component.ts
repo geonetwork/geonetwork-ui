@@ -20,7 +20,7 @@ import {
 import { ButtonComponent } from '../button/button.component'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import {
-  iconoirCheck,
+  iconoirCheckCircle,
   iconoirImport,
   iconoirSquareDashed,
   iconoirTrash,
@@ -32,6 +32,7 @@ import {
 } from '@ng-icons/material-icons/baseline'
 import { TranslatePipe } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
 import {
   BoundingBox,
   getGeometryBoundingBox,
@@ -46,6 +47,7 @@ const MAX_FILE_SIZE_MB = 2
 marker('search.filters.spatialExtent.import')
 marker('search.filters.spatialExtent.helpText')
 marker('search.filters.spatialExtent.bboxPrefix')
+marker('search.filters.spatialExtent.error.title')
 marker('search.filters.spatialExtent.error.invalidFormat')
 marker('search.filters.spatialExtent.error.fileTooLarge')
 marker('search.filters.spatialExtent.error.noGeometry')
@@ -53,10 +55,16 @@ marker('search.filters.spatialExtent.error.noGeometry')
 @Component({
   selector: 'gn-ui-spatial-extent-dropdown',
   standalone: true,
-  imports: [ButtonComponent, NgIcon, OverlayModule, TranslatePipe],
+  imports: [
+    ButtonComponent,
+    NgIcon,
+    OverlayModule,
+    PopoverComponent,
+    TranslatePipe,
+  ],
   providers: [
     provideIcons({
-      iconoirCheck,
+      iconoirCheckCircle,
       iconoirImport,
       iconoirSquareDashed,
       iconoirTrash,
@@ -75,6 +83,7 @@ export class SpatialExtentDropdownComponent {
 
   @Input() title: string
   @Output() bboxChange = new EventEmitter<BoundingBox | null>()
+  @Output() error = new EventEmitter<string>()
 
   bbox: BoundingBox | null = null
   fileName: string | null = null
@@ -153,14 +162,19 @@ export class SpatialExtentDropdownComponent {
     propagateToDocumentOnly(event)
   }
 
+  private setError(errorKey: string) {
+    this.errorKey = errorKey
+    this.error.emit(errorKey)
+  }
+
   private handleFile(file: File) {
     this.errorKey = null
     if (!this.isFileExtensionValid(file)) {
-      this.errorKey = 'search.filters.spatialExtent.error.invalidFormat'
+      this.setError('search.filters.spatialExtent.error.invalidFormat')
       return
     }
     if (file.size > megabytesToBytes(MAX_FILE_SIZE_MB)) {
-      this.errorKey = 'search.filters.spatialExtent.error.fileTooLarge'
+      this.setError('search.filters.spatialExtent.error.fileTooLarge')
       return
     }
     const reader = new FileReader()
@@ -169,7 +183,7 @@ export class SpatialExtentDropdownComponent {
       this.cd.markForCheck()
     }
     reader.onerror = () => {
-      this.errorKey = 'search.filters.spatialExtent.error.invalidFormat'
+      this.setError('search.filters.spatialExtent.error.invalidFormat')
       this.cd.markForCheck()
     }
     reader.readAsText(file)
@@ -180,12 +194,12 @@ export class SpatialExtentDropdownComponent {
     try {
       parsed = JSON.parse(content)
     } catch {
-      this.errorKey = 'search.filters.spatialExtent.error.invalidFormat'
+      this.setError('search.filters.spatialExtent.error.invalidFormat')
       return
     }
     const geometry = getGeometryFromGeoJSON(parsed)
     if (!geometry) {
-      this.errorKey = 'search.filters.spatialExtent.error.noGeometry'
+      this.setError('search.filters.spatialExtent.error.noGeometry')
       return
     }
     const bbox = getGeometryBoundingBox(geometry)

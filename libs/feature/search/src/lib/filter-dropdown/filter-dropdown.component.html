@@ -10,6 +10,7 @@
   <gn-ui-spatial-extent-dropdown
     [title]="title"
     (bboxChange)="onBboxChange($event)"
+    (error)="onSpatialExtentError($event)"
   ></gn-ui-spatial-extent-dropdown>
 } @else {
   <gn-ui-dropdown-multiselect

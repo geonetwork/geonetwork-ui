@@ -24,6 +24,8 @@ import {
 import { DateRange } from '@geonetwork-ui/api/repository'
 import { CommonModule } from '@angular/common'
 import { BoundingBox } from '@geonetwork-ui/util/shared'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-filter-dropdown',
@@ -42,6 +44,8 @@ export class FilterDropdownComponent implements OnInit {
   private searchFacade = inject(SearchFacade)
   private searchService = inject(SearchService)
   private fieldsService = inject(FieldsService)
+  private notificationsService = inject(NotificationsService)
+  private translateService = inject(TranslateService)
 
   @Input() fieldName: string
   @Input() title: string
@@ -71,6 +75,16 @@ export class FilterDropdownComponent implements OnInit {
 
   onBboxChange(bbox: BoundingBox | null) {
     console.log(bbox)
+  }
+
+  onSpatialExtentError(errorKey: string) {
+    this.notificationsService.showNotification({
+      type: 'error',
+      title: this.translateService.instant(
+        'search.filters.spatialExtent.error.title'
+      ),
+      text: this.translateService.instant(errorKey),
+    })
   }
 
   ngOnInit() {

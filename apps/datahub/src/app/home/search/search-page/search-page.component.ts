@@ -23,6 +23,7 @@ import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
   RESULTS_LAYOUT_CONFIG,
 } from '@geonetwork-ui/ui/search'
+import { NotificationsContainerComponent } from '@geonetwork-ui/feature/notifications'
 
 @Component({
   selector: 'datahub-search-page',
@@ -35,6 +36,7 @@ import {
     SearchFiltersComponent,
     ResultsHitsContainerComponent,
     ResultsListContainerComponent,
+    NotificationsContainerComponent,
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DEFAULT_RESULTS_LAYOUT_CONFIG },
