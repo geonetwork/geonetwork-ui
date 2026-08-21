@@ -14,6 +14,8 @@ import {
 } from '@geonetwork-ui/api/metadata-converter'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import {
+  AssociatedRecord,
+  AssociationType,
   CatalogRecord,
   DatasetFeatureCatalog,
   DatasetFeatureType,
@@ -145,7 +147,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'bucket',
-        ['fcats', 'hassources'],
+        ['fcats', 'hassources', 'siblings', 'associated'],
         JSON.stringify(
           this.gn4SearchHelper.getMetadataByIdsPayload([uniqueIdentifier])
         )
@@ -263,6 +265,43 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     ] as string[]
     if (sourceOfIdentifiers && sourceOfIdentifiers.length > 0) {
       return this.getMultipleRecords(sourceOfIdentifiers)
+    }
+    return of(null)
+  }
+
+  getSiblings(
+    record: CatalogRecord
+  ): Observable<Partial<Record<AssociationType, CatalogRecord[]>>> {
+    const siblings = record.extras?.['siblings'] as AssociatedRecord[]
+    if (siblings && siblings.length > 0) {
+      return this.getMultipleRecords(
+        siblings.map(({ uniqueIdentifier }) => uniqueIdentifier)
+      ).pipe(
+        map((records) =>
+          records?.reduce(
+            (groups, record) => {
+              const { associationType } = siblings.find(
+                ({ uniqueIdentifier }) =>
+                  uniqueIdentifier === record.uniqueIdentifier
+              )
+              groups[associationType] ??= []
+              groups[associationType].push(record)
+              return groups
+            },
+            {} as Partial<Record<AssociationType, CatalogRecord[]>>
+          )
+        )
+      )
+    }
+    return of(null)
+  }
+
+  getAssociated(record: CatalogRecord): Observable<CatalogRecord[]> {
+    const associatedIdentifiers = record.extras?.[
+      'associatedIdentifiers'
+    ] as string[]
+    if (associatedIdentifiers && associatedIdentifiers.length > 0) {
+      return this.getMultipleRecords(associatedIdentifiers)
     }
     return of(null)
   }

@@ -1,6 +1,7 @@
 import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { createAction, props } from '@ngrx/store'
 import {
+  AssociationType,
   CatalogRecord,
   DatasetFeatureCatalog,
   UserFeedback,
@@ -62,6 +63,16 @@ export const setSources = createAction(
 export const setSourceOf = createAction(
   '[Metadata view] Set has sources',
   props<{ sourceOf: CatalogRecord[] }>()
+)
+
+export const setSiblings = createAction(
+  '[Metadata view] Set siblings',
+  props<{ siblings: Partial<Record<AssociationType, CatalogRecord[]>> }>()
+)
+
+export const setAssociated = createAction(
+  '[Metadata view] Set associated',
+  props<{ associated: CatalogRecord[] }>()
 )
 
 /*

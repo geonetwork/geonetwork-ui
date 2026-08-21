@@ -31,6 +31,8 @@ export class RecordLinkedRecordsComponent {
   linkedServices$ = this.metadataViewFacade.sourceOf$.pipe(
     map((records) => records?.filter((record) => record?.kind === 'service'))
   )
+  siblings$ = this.metadataViewFacade.siblings$
+  associated$ = this.metadataViewFacade.associated$
 
   get hasSourceDatasets$() {
     return this.sourceDatasets$.pipe(map((records) => records?.length > 0))
@@ -43,5 +45,8 @@ export class RecordLinkedRecordsComponent {
   }
   get hasLinkedServices$() {
     return this.linkedServices$.pipe(map((records) => records?.length > 0))
+  }
+  get hasAssociated$() {
+    return this.associated$.pipe(map((records) => records?.length > 0))
   }
 }

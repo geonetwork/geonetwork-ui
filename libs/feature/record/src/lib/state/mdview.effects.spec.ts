@@ -34,6 +34,8 @@ class RecordsRepositoryMock {
   getSimilarRecords = jest.fn(() => of(datasetRecordsFixture()))
   getSources = jest.fn(() => of(datasetRecordsFixture()))
   getSourceOf = jest.fn(() => of(datasetRecordsFixture()))
+  getSiblings = jest.fn(() => of({ crossReference: datasetRecordsFixture() }))
+  getAssociated = jest.fn(() => of(datasetRecordsFixture()))
 }
 
 class PlatformServiceInterfaceMock {
@@ -209,6 +211,68 @@ describe('MdViewEffects', () => {
             a: MdViewActions.setSourceOf({ sourceOf: null }),
           })
           expect(effects.loadSourceOf$).toBeObservable(expected)
+        })
+      })
+    })
+  })
+
+  describe('loadSiblings$', () => {
+    describe('when load full success', () => {
+      it('dispatch setSiblings', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
+        })
+        const expected = hot('-a-|', {
+          a: MdViewActions.setSiblings({
+            siblings: {
+              crossReference: datasetRecordsFixture() as CatalogRecord[],
+            },
+          }),
+        })
+        expect(effects.loadSiblings$).toBeObservable(expected)
+      })
+      describe('when api fails', () => {
+        beforeEach(() => {
+          repository.getSiblings = jest.fn(() => throwError(() => 'api'))
+        })
+        it('dispatch setSiblings with null', () => {
+          actions = hot('-a-|', {
+            a: MdViewActions.loadFullMetadataSuccess({ full }),
+          })
+          const expected = hot('-(a|)', {
+            a: MdViewActions.setSiblings({ siblings: null }),
+          })
+          expect(effects.loadSiblings$).toBeObservable(expected)
+        })
+      })
+    })
+  })
+
+  describe('loadAssociated$', () => {
+    describe('when load full success', () => {
+      it('dispatch setAssociated', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
+        })
+        const expected = hot('-a-|', {
+          a: MdViewActions.setAssociated({
+            associated: datasetRecordsFixture() as CatalogRecord[],
+          }),
+        })
+        expect(effects.loadAssociated$).toBeObservable(expected)
+      })
+      describe('when api fails', () => {
+        beforeEach(() => {
+          repository.getAssociated = jest.fn(() => throwError(() => 'api'))
+        })
+        it('dispatch setAssociated with null', () => {
+          actions = hot('-a-|', {
+            a: MdViewActions.loadFullMetadataSuccess({ full }),
+          })
+          const expected = hot('-(a|)', {
+            a: MdViewActions.setAssociated({ associated: null }),
+          })
+          expect(effects.loadAssociated$).toBeObservable(expected)
         })
       })
     })

@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store'
 import * as MetadataViewActions from './mdview.actions'
 import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
+  AssociationType,
   CatalogRecord,
   DatasetFeatureCatalog,
   UserFeedback,
@@ -16,6 +17,8 @@ export interface MetadataViewState {
   related?: CatalogRecord[]
   sources?: CatalogRecord[]
   sourceOf?: CatalogRecord[]
+  siblings?: Partial<Record<AssociationType, CatalogRecord[]>>
+  associated?: CatalogRecord[]
   userFeedbacks?: UserFeedback[]
   allUserFeedbacksLoading: boolean
   addUserFeedbackLoading: boolean
@@ -85,6 +88,16 @@ const metadataViewReducer = createReducer(
   on(MetadataViewActions.setSourceOf, (state, { sourceOf }) => ({
     ...state,
     sourceOf,
+  })),
+
+  on(MetadataViewActions.setSiblings, (state, { siblings }) => ({
+    ...state,
+    siblings,
+  })),
+
+  on(MetadataViewActions.setAssociated, (state, { associated }) => ({
+    ...state,
+    associated,
   })),
 
   /*

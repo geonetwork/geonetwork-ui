@@ -418,7 +418,7 @@ describe('Gn4Repository', () => {
       it('calls the API with correct parameters', () => {
         expect(spySearch).toHaveBeenCalledWith(
           'bucket',
-          ['fcats', 'hassources'],
+          ['fcats', 'hassources', 'siblings', 'associated'],
           '{"uuids":["feature-catalog-identifier"]}'
         )
       })
@@ -599,6 +599,102 @@ describe('Gn4Repository', () => {
       const recordWithoutSourceOf = { ...mockRecord, extras: {} }
       const result = await lastValueFrom(
         repository.getSourceOf(recordWithoutSourceOf)
+      )
+      expect(result).toBeNull()
+    })
+  })
+  describe('getSiblings', () => {
+    let siblings: Record<string, CatalogRecord[]>
+    const mockRecord = {
+      ...SAMPLE_RECORD_WITH_EXTRAS,
+      extras: {
+        siblings: [
+          {
+            uniqueIdentifier: 'sibling-1',
+            associationType: 'crossReference',
+          },
+          {
+            uniqueIdentifier: 'sibling-2',
+            associationType: 'largerWorkCitation',
+          },
+          {
+            uniqueIdentifier: 'sibling-3',
+            associationType: 'crossReference',
+          },
+          {
+            uniqueIdentifier: 'not-in-catalog',
+            associationType: 'crossReference',
+          },
+        ],
+      },
+    }
+    beforeEach(async () => {
+      repository.getMultipleRecords = jest
+        .fn()
+        .mockImplementation((ids) =>
+          of(
+            ids
+              .filter((id) => id !== 'not-in-catalog')
+              .map((id) => ({ uniqueIdentifier: id }))
+          )
+        )
+      siblings = await lastValueFrom(repository.getSiblings(mockRecord))
+    })
+    it('calls getMultipleRecords for sibling identifiers', () => {
+      expect(repository.getMultipleRecords).toHaveBeenCalledWith([
+        'sibling-1',
+        'sibling-2',
+        'sibling-3',
+        'not-in-catalog',
+      ])
+    })
+    it('returns the siblings bucketed by association type, without the identifiers missing from the catalog', () => {
+      expect(siblings).toEqual({
+        crossReference: [
+          { uniqueIdentifier: 'sibling-1' },
+          { uniqueIdentifier: 'sibling-3' },
+        ],
+        largerWorkCitation: [{ uniqueIdentifier: 'sibling-2' }],
+      })
+    })
+    it('returns null if no siblings are defined', async () => {
+      const recordWithoutSiblings = { ...mockRecord, extras: {} }
+      const result = await lastValueFrom(
+        repository.getSiblings(recordWithoutSiblings)
+      )
+      expect(result).toBeNull()
+    })
+  })
+  describe('getAssociated', () => {
+    let associated: CatalogRecord[]
+    const mockRecord = {
+      ...SAMPLE_RECORD_WITH_EXTRAS,
+      extras: {
+        associatedIdentifiers: ['associated-1', 'associated-2'],
+      },
+    }
+    beforeEach(async () => {
+      repository.getMultipleRecords = jest
+        .fn()
+        .mockImplementation((ids) => of(ids.map((id) => ({ uuid: id }))))
+      associated = await lastValueFrom(repository.getAssociated(mockRecord))
+    })
+    it('calls getMultipleRecords for associated identifiers', () => {
+      expect(repository.getMultipleRecords).toHaveBeenCalledWith([
+        'associated-1',
+        'associated-2',
+      ])
+    })
+    it('returns the associated records as an array of CatalogRecord', () => {
+      expect(associated).toEqual([
+        { uuid: 'associated-1' },
+        { uuid: 'associated-2' },
+      ])
+    })
+    it('returns null if no associatedIdentifiers are defined', async () => {
+      const recordWithoutAssociated = { ...mockRecord, extras: {} }
+      const result = await lastValueFrom(
+        repository.getAssociated(recordWithoutAssociated)
       )
       expect(result).toBeNull()
     })

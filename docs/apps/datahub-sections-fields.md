@@ -8,9 +8,9 @@ outline: deep
 
 ### Linked records
 
-The section about linked records is displayed only when the record's ES indexation contains links of type `source` or `hassource` to other records.
+The section about linked records is displayed only when the record's ES indexation contains links of type `source`, `hassource`, `siblings` or `associated` to other records.
 
-These links are indexed when the underlying records contains lineage information:
+The `source` and `hassource` links are indexed when the underlying records contains lineage information:
 
 - iso 19139
 
@@ -46,6 +46,56 @@ The `source` elements can be repeated as many times as necessary.
 A source containing only an `uuidref` is still valid and will be indexed.
 
 The reverse link will be created as long as the `uuidref` points to an existing record in the catalog.
+
+#### Record associations
+
+Below those grids, one grid is displayed per association type, followed by a grid of the reverse associations (the records pointing at this one).
+
+The `siblings` and `associated` links are indexed when the underlying records contains association information:
+
+- iso 19139
+
+```
+  <gmd:aggregationInfo>
+     <gmd:MD_AggregateInformation>
+        <gmd:aggregateDataSetIdentifier>
+           <gmd:MD_Identifier>
+              <gmd:code>
+                 <gco:CharacterString>789c5bab-157a-46cd-babe-12de5128eea9</gco:CharacterString>
+              </gmd:code>
+           </gmd:MD_Identifier>
+        </gmd:aggregateDataSetIdentifier>
+        <gmd:associationType>
+           <gmd:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_AssociationTypeCode"
+                                       codeListValue="largerWorkCitation"/>
+        </gmd:associationType>
+     </gmd:MD_AggregateInformation>
+  </gmd:aggregationInfo>
+```
+
+- iso 19115-3
+
+```
+  <mri:associatedResource>
+     <mri:MD_AssociatedResource>
+        <mri:associationType>
+           <mri:DS_AssociationTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode"
+                                       codeListValue="crossReference"/>
+        </mri:associationType>
+        <mri:metadataReference uuidref="789c5bab-157a-46cd-babe-12de5128eea9"/>
+     </mri:MD_AssociatedResource>
+  </mri:associatedResource>
+```
+
+The `aggregationInfo` / `associatedResource` elements can be repeated as many times as necessary.
+
+Each grid is titled after the association type.
+
+The reverse grid has no association type, as that information belongs to the other record.
+
+A record already listed under an association type is left out of the reverse grid, the association being the more precise relation.
+
+A card is only displayed as long as the identifier points to an existing record in the catalog.
 
 ## Dataset
 

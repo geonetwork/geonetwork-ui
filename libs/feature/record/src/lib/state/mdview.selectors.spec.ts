@@ -163,6 +163,26 @@ describe('MdView Selectors', () => {
       })
     })
 
+    describe('getSiblings', () => {
+      it('returns sibling records bucketed by association type', () => {
+        const results = MdViewSelectors.getSiblings.projector({
+          ...state,
+          siblings: { crossReference: [relatedRecord] },
+        })
+        expect(results).toEqual({ crossReference: [relatedRecord] })
+      })
+    })
+
+    describe('getAssociated', () => {
+      it('returns associated records', () => {
+        const results = MdViewSelectors.getAssociated.projector({
+          ...state,
+          associated: [relatedRecord],
+        })
+        expect(results).toEqual([relatedRecord])
+      })
+    })
+
     describe('getChartConfig', () => {
       it('returns chart config', () => {
         const results = MdViewSelectors.getChartConfig.projector({

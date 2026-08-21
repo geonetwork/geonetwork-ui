@@ -15,9 +15,11 @@ import {
 } from './atomic-operations'
 import { MetadataUrlService } from './metadata-url.service'
 import { inject, Injectable } from '@angular/core'
+import { getAssociationTypeFromCode } from '../iso19139/utils/association-type.mapper'
 import { getStatusFromStatusCode } from '../iso19139/utils/status.mapper'
 import { getUpdateFrequencyFromFrequencyCode } from '../iso19139/utils/update-frequency.mapper'
 import {
+  AssociatedRecord,
   CatalogRecord,
   Constraint,
   DatasetSpatialExtent,
@@ -318,25 +320,16 @@ export class Gn4FieldMapper {
         output
       ),
     related: (output, source) => {
+      const related = <SourceWithUnknownProps>selectField(source, 'related')
       const fcatSource = selectField(
-        getFirstValue(
-          selectField(
-            <SourceWithUnknownProps>selectField(source, 'related'),
-            'fcats'
-          )
-        ) ?? {},
+        getFirstValue(selectField(related, 'fcats')) ?? {},
         '_source'
       )
       const featureCatalogIdentifier: string = selectField(
         <SourceWithUnknownProps>fcatSource,
         'uuid'
       )
-      const sourceOfLinks = getAsArray(
-        selectField(
-          <SourceWithUnknownProps>selectField(source, 'related'),
-          'hassources'
-        )
-      )
+      const sourceOfLinks = getAsArray(selectField(related, 'hassources'))
       const sourceOfIdentifiers: string[] = sourceOfLinks
         .filter((link) => link['origin'] === 'catalog')
         .map((link) => {
@@ -345,12 +338,49 @@ export class Gn4FieldMapper {
             'uuid'
           )
         })
-      const extraValues: Record<string, string | string[]> = {}
+      const siblingLinks = getAsArray(selectField(related, 'siblings'))
+      const siblings: AssociatedRecord[] = siblingLinks
+        .filter((link) => link['origin'] === 'catalog')
+        .map((link) => ({
+          uniqueIdentifier: selectField<string>(
+            selectField(<SourceWithUnknownProps>link, '_source'),
+            'uuid'
+          ),
+          associationType: getAssociationTypeFromCode(
+            selectField<string>(
+              selectField(<SourceWithUnknownProps>link, 'properties'),
+              'associationType'
+            )
+          ),
+        }))
+      const associatedLinks = getAsArray(selectField(related, 'associated'))
+      const associatedIdentifiers: string[] = associatedLinks
+        .filter((link) => link['origin'] === 'catalog')
+        .map((link) => {
+          return selectField<string>(
+            selectField(<SourceWithUnknownProps>link, '_source'),
+            'uuid'
+          )
+        })
+        .filter(
+          (uuid) =>
+            !siblings.some((sibling) => sibling.uniqueIdentifier === uuid)
+        )
+      const extraValues: Record<
+        string,
+        string | string[] | AssociatedRecord[]
+      > = {}
       if (featureCatalogIdentifier) {
         extraValues.featureCatalogIdentifier = featureCatalogIdentifier
       }
       if (sourceOfIdentifiers && sourceOfIdentifiers.length > 0) {
         extraValues.sourceOfIdentifiers = sourceOfIdentifiers
+      }
+      if (associatedIdentifiers && associatedIdentifiers.length > 0) {
+        extraValues.associatedIdentifiers = associatedIdentifiers
+      }
+      if (siblings && siblings.length > 0) {
+        extraValues.siblings = siblings
       }
       return Object.keys(extraValues).length > 0
         ? this.addExtra(extraValues, output)

@@ -50,6 +50,16 @@ export const getSourceOf = createSelector(
   getMdViewState,
   (state: MetadataViewState) => state.sourceOf
 )
+
+export const getSiblings = createSelector(
+  getMdViewState,
+  (state: MetadataViewState) => state.siblings
+)
+
+export const getAssociated = createSelector(
+  getMdViewState,
+  (state: MetadataViewState) => state.associated
+)
 /*
   Metadata selectors
 */

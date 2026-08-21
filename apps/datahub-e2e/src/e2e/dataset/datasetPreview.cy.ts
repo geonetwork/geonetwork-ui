@@ -597,7 +597,7 @@ describe('Preview section', () => {
         beforeEach(() => {
           cy.intercept(
             'POST',
-            '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats&relatedType=hassources',
+            '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats&relatedType=hassources&relatedType=siblings&relatedType=associated',
             {
               fixture: 'tms-record-source-removed.json',
             }

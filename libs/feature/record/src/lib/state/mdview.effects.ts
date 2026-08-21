@@ -92,6 +92,28 @@ export class MdViewEffects {
     )
   )
 
+  loadSiblings$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MdViewActions.loadFullMetadataSuccess),
+      switchMap(({ full }) => this.recordsRepository.getSiblings(full)),
+      map((siblings) => {
+        return MdViewActions.setSiblings({ siblings })
+      }),
+      catchError(() => of(MdViewActions.setSiblings({ siblings: null })))
+    )
+  )
+
+  loadAssociated$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MdViewActions.loadFullMetadataSuccess),
+      switchMap(({ full }) => this.recordsRepository.getAssociated(full)),
+      map((associated) => {
+        return MdViewActions.setAssociated({ associated })
+      }),
+      catchError(() => of(MdViewActions.setAssociated({ associated: null })))
+    )
+  )
+
   /*
     UserFeedback effects
   */

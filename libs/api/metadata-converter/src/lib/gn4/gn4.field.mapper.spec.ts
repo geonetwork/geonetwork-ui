@@ -251,6 +251,52 @@ describe('Gn4FieldMapper', () => {
                   },
                 },
               ],
+              siblings: [
+                {
+                  origin: 'catalog',
+                  properties: { associationType: 'crossReference' },
+                  _source: {
+                    uuid: 'sibling-001',
+                  },
+                },
+                {
+                  origin: 'catalog',
+                  properties: { associationType: 'largerWorkCitation' },
+                  _source: {
+                    uuid: 'sibling-002',
+                  },
+                },
+                {
+                  origin: 'remote',
+                  properties: { associationType: 'crossReference' },
+                  _source: {
+                    uuid: 'sibling-003',
+                  },
+                },
+              ],
+              associated: [
+                {
+                  origin: 'catalog',
+                  properties: null,
+                  _source: {
+                    uuid: 'associated-001',
+                  },
+                },
+                {
+                  origin: 'remote',
+                  properties: null,
+                  _source: {
+                    uuid: 'associated-002',
+                  },
+                },
+                {
+                  origin: 'catalog',
+                  properties: null,
+                  _source: {
+                    uuid: 'sibling-001',
+                  },
+                },
+              ],
             },
           }
           const result = mappingFn(output, source)
@@ -258,6 +304,17 @@ describe('Gn4FieldMapper', () => {
             extras: {
               featureCatalogIdentifier: 'featurecatalog-001',
               sourceOfIdentifiers: ['hassource-001'],
+              siblings: [
+                {
+                  uniqueIdentifier: 'sibling-001',
+                  associationType: 'crossReference',
+                },
+                {
+                  uniqueIdentifier: 'sibling-002',
+                  associationType: 'largerWorkCitation',
+                },
+              ],
+              associatedIdentifiers: ['associated-001'],
             },
           })
         })

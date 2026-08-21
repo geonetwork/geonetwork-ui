@@ -3,7 +3,7 @@ beforeEach(() => {
   // Note: The links to the reuse and service also exist in the dump, but not all the links between the datasets
   cy.intercept(
     'POST',
-    '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats&relatedType=hassources',
+    '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats&relatedType=hassources&relatedType=siblings&relatedType=associated',
     {
       fixture: 'alea-de-debordement.json',
     }
@@ -55,10 +55,34 @@ describe('dataset: linked records', () => {
       .should('contain', 'Associated services')
     cy.get('@associatedServicesTitle').next('span').should('contain', '(1)')
 
-    // it should generate a total of 8 internal link cards for all linked records
+    // it should display one grid per sibling association type, below the source grids
+    cy.get('datahub-record-internal-links')
+      .find('h3')
+      .eq(4)
+      .as('crossReferenceTitle')
+      .should('contain', 'Cross reference')
+    cy.get('@crossReferenceTitle').next('span').should('contain', '(2)')
+
+    cy.get('datahub-record-internal-links')
+      .find('h3')
+      .eq(5)
+      .as('largerWorkTitle')
+      .should('contain', 'Larger work citation')
+    cy.get('@largerWorkTitle').next('span').should('contain', '(1)')
+
+    // it should display the reverse (untyped) associations last, leaving out the one
+    // record that is already listed as a sibling
+    cy.get('datahub-record-internal-links')
+      .find('h3')
+      .eq(6)
+      .as('associatedRecordsTitle')
+      .should('contain', 'Records referencing this record')
+    cy.get('@associatedRecordsTitle').next('span').should('contain', '(1)')
+
+    // it should generate a total of 12 internal link cards for all linked records
     cy.get('datahub-record-linked-records')
       .find('datahub-record-internal-links')
       .find('gn-ui-internal-link-card')
-      .should('have.length', 8)
+      .should('have.length', 12)
   })
 })
