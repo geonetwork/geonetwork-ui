@@ -123,6 +123,20 @@ describe('SearchFiltersSummaryItemComponent', () => {
         },
       ])
     })
+    it('shows an ellipsis for the unset bound of an open interval', () => {
+      component.fieldName = 'changeDate'
+      component.fieldType = 'dateRange'
+
+      const startOnly = component.getReadableValues([
+        { start: new Date('2024-11-01T00:00:00.000Z') },
+      ])
+      const endOnly = component.getReadableValues([
+        { end: new Date('2024-11-29T00:00:00.000Z') },
+      ])
+
+      expect(startOnly[0].label).toBe('01.11.2024 - …')
+      expect(endOnly[0].label).toBe('… - 29.11.2024')
+    })
   })
 
   describe('translateLabel', () => {
