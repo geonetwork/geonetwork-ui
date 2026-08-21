@@ -23,7 +23,7 @@ import {
 import { formatUserInfo } from '@geonetwork-ui/util/shared'
 import { PossibleResourceTypes } from '@geonetwork-ui/api/metadata-converter'
 
-export type FieldType = 'values' | 'dateRange'
+export type FieldType = 'values' | 'dateRange' | 'spatialExtent'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -428,6 +428,21 @@ export class DateRangeSearchField extends SimpleSearchField {
 
   getType(): FieldType {
     return 'dateRange'
+  }
+}
+
+export class SpatialExtentSearchField extends SimpleSearchField {
+  constructor(injector: Injector) {
+    super('spatialExtent', injector, 'asc')
+  }
+
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
+    // TODO: return an array of spatial extents to show which ones are available in the dropdown
+    return of([])
+  }
+
+  getType(): FieldType {
+    return 'spatialExtent'
   }
 }
 

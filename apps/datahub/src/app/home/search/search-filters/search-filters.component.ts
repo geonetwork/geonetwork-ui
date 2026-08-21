@@ -117,6 +117,7 @@ export class SearchFiltersComponent implements OnInit {
         'topic',
         'isSpatial',
         'license',
+        'spatialExtent',
       ]
     )
       .filter((adv_filter) => {

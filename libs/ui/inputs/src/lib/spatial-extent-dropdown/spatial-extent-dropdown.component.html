@@ -1,0 +1,103 @@
+<gn-ui-button
+  type="outline"
+  extraClass="bg-background w-full !p-[8px] !pl-[16px]"
+  [title]="title"
+  (buttonClick)="toggleOverlay()"
+  cdkOverlayOrigin
+  #overlayOrigin="cdkOverlayOrigin"
+>
+  <div class="grow flex items-center mr-2 gap-2 overflow-hidden">
+    <div class="text-left font-medium truncate py-1">
+      {{ title }}
+    </div>
+    @if (hasSelection) {
+      <div
+        class="bg-primary-lighter text-white shrink-0 rounded-full font-bold text-[12px] w-[22px] h-[22px] flex items-center justify-center"
+      >
+        1
+      </div>
+    }
+  </div>
+  <button class="h-6 w-6" data-cy="clearSelection">
+    @if (hasSelection && !overlayOpen) {
+      <ng-icon
+        class="shrink-0 opacity-40 mr-1.5 hover:opacity-80 transition-colors clear-btn"
+        (click)="removeSelection($event)"
+        name="matClose"
+      ></ng-icon>
+    }
+  </button>
+  <ng-icon
+    [name]="overlayOpen ? 'matExpandLess' : 'matExpandMore'"
+    class="shrink-0 opacity-40"
+  >
+  </ng-icon>
+</gn-ui-button>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOrigin]="overlayOrigin"
+  [cdkConnectedOverlayOpen]="overlayOpen"
+  [cdkConnectedOverlayPositions]="overlayPositions"
+  [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+  [cdkConnectedOverlayFlexibleDimensions]="true"
+  (overlayOutsideClick)="closeOverlay()"
+  (detach)="closeOverlay()"
+>
+  <div
+    class="bg-white border border-gray-300 rounded shadow-lg p-3 flex flex-col gap-2 overlay-container"
+    [style.min-width]="overlayMinWidth"
+  >
+    <div class="text-sm text-gray-500">
+      {{ 'search.filters.spatialExtent.helpText' | translate }}
+    </div>
+
+    <input
+      #fileInput
+      type="file"
+      accept=".json,.geojson"
+      class="hidden"
+      (change)="handleFileInput($event)"
+    />
+    <gn-ui-button
+      type="outline"
+      extraClass="w-full !justify-between"
+      (buttonClick)="triggerFileSelection()"
+      data-cy="importGeojson"
+    >
+      <span>{{ 'search.filters.spatialExtent.import' | translate }}</span>
+      <ng-icon name="iconoirImport"></ng-icon>
+    </gn-ui-button>
+
+    @if (hasSelection) {
+      <div
+        class="flex items-center justify-between gap-2 bg-primary-lighter text-white rounded px-3 py-2 cursor-default"
+        data-test="spatial-extent-selected-item"
+      >
+        <div class="flex items-center gap-2 overflow-hidden">
+          <ng-icon name="iconoirSquareDashed" class="shrink-0"></ng-icon>
+          <span class="truncate text-sm">
+            <span class="mr-1">{{
+              'search.filters.spatialExtent.bboxPrefix' | translate
+            }}</span>
+            {{ displayFileName }}
+          </span>
+        </div>
+        <button
+          type="button"
+          class="shrink-0"
+          (click)="removeSelection($event)"
+          data-cy="removeGeojson"
+        >
+          <ng-icon name="iconoirCheck" class="group-hover:hidden"></ng-icon>
+          <ng-icon
+            name="iconoirTrash"
+            class="hidden group-hover:block"
+          ></ng-icon>
+        </button>
+      </div>
+    }
+  </div>
+</ng-template>
