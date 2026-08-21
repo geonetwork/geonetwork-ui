@@ -1,5 +1,3 @@
-:host {
-  .mat-date-range-input-container {
-    display: none;
-  }
+mat-calendar {
+  width: 100%;
 }

@@ -331,11 +331,15 @@ describe('dashboard (landing page)', () => {
         .each(($checkbox) => cy.wrap($checkbox).uncheck())
     }
     function selectDateRange() {
+      // the dropdown opens on the "from" calendar
       cy.get('mat-calendar-header').find('button').first().click()
       cy.get('mat-multi-year-view').contains('button', '2024').click()
       cy.get('mat-year-view').contains('button', 'AUG').click()
       cy.get('mat-month-view').contains('button', '1').click()
+      // picking the start date unfolds the "to" calendar, which starts at the start date
       cy.get('mat-month-view').contains('button', '30').click()
+      // the panel stays open so that either bound can still be changed
+      cy.clickOnBody()
     }
     function checkFilterByChangeDate() {
       cy.get('gn-ui-interactive-table')
@@ -375,14 +379,21 @@ describe('dashboard (landing page)', () => {
 
       // it should display the expand icon for the date range dropdown correctly
       cy.get('md-editor-search-filters')
-        .find('gn-ui-date-range-dropdown')
-        .find('ng-icon')
+        .find('gn-ui-date-range-dropdown [data-cy="dateRangeToggle"]')
         .should('have.attr', 'ng-reflect-name', 'matExpandMore')
       cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
       cy.get('md-editor-search-filters')
-        .find('gn-ui-date-range-dropdown')
-        .find('ng-icon')
+        .find('gn-ui-date-range-dropdown [data-cy="dateRangeToggle"]')
         .should('have.attr', 'ng-reflect-name', 'matExpandLess')
+
+      // it should clear both bounds at once
+      cy.clickOnBody()
+      cy.get('md-editor-search-filters')
+        .find('gn-ui-date-range-dropdown [data-cy="clearDateRange"]')
+        .click()
+      cy.get('gn-ui-interactive-table')
+        .find('[data-cy="table-row"]')
+        .should('have.length.greaterThan', 1)
     })
     it('myRecords search filters', () => {
       cy.visit('/my-space/my-records')
