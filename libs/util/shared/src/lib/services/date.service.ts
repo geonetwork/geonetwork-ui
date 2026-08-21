@@ -35,10 +35,10 @@ export class DateService {
     return { locale, dateObj }
   }
 
-  private async getDateLocale(): Promise<Locale> {
+  async getDateFnsLocale(): Promise<Locale> {
     const lang = this.translateService.getCurrentLang() || DEFAULT_LANGUAGE
     const locales = await this.dateLocales
-    return locales[lang]
+    return locales[lang] ?? locales[DEFAULT_LANGUAGE]
   }
 
   formatDate(
@@ -61,7 +61,7 @@ export class DateService {
     const dateObj = this.getDateObject(date)
 
     const now = new Date()
-    const locale = await this.getDateLocale()
+    const locale = await this.getDateFnsLocale()
 
     return formatDistance(dateObj, now, {
       addSuffix: true,
