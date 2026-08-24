@@ -341,6 +341,18 @@ describe('dashboard (landing page)', () => {
       // the panel stays open so that either bound can still be changed
       cy.clickOnBody()
     }
+    /** the bounds are typeable; e2e runs in English, so MM/DD/YYYY */
+    function typeDateRange(start: string, end: string) {
+      if (start !== null) {
+        cy.get('[data-cy="startDateInput"]').clear()
+        cy.get('[data-cy="startDateInput"]').type(`${start}{enter}`)
+      }
+      if (end !== null) {
+        cy.get('[data-cy="endDateInput"]').clear()
+        cy.get('[data-cy="endDateInput"]').type(`${end}{enter}`)
+      }
+      cy.clickOnBody()
+    }
     function checkFilterByChangeDate() {
       cy.get('gn-ui-interactive-table')
         .find('[data-cy="table-row"]')
@@ -394,6 +406,27 @@ describe('dashboard (landing page)', () => {
       cy.get('gn-ui-interactive-table')
         .find('[data-cy="table-row"]')
         .should('have.length.greaterThan', 1)
+
+      // it should filter from a date range typed with the keyboard
+      cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
+      typeDateRange('08/01/2024', '08/30/2024')
+      checkFilterByChangeDate()
+
+      // it should filter on an open interval with only a start date
+      cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
+      cy.get('[data-cy="endDateInput"]').clear()
+      cy.get('[data-cy="endDateInput"]').type('{enter}')
+      cy.clickOnBody()
+      // the badge shows the missing bound as an ellipsis
+      cy.get('gn-ui-search-filters-summary')
+        .find('gn-ui-badge')
+        .invoke('text')
+        .should('eq', '01.08.2024 - …')
+      // and a single set bound still counts as one active filter
+      cy.get('md-editor-search-filters')
+        .find('gn-ui-date-range-dropdown .selected-count')
+        .invoke('text')
+        .should('eq', ' 1 ')
     })
     it('myRecords search filters', () => {
       cy.visit('/my-space/my-records')

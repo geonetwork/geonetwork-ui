@@ -137,7 +137,6 @@ export class FilterDropdownComponent implements OnInit {
       ...(dateRange.start && { start: dateRange.start }),
       ...(dateRange.end && { end: dateRange.end }),
     }
-    console.log('Applying date range filter:', this.dateRange)
     this.fieldsService
       .buildFiltersFromFieldValues({
         [this.fieldName]: this.dateRange,
