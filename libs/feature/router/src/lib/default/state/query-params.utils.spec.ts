@@ -25,6 +25,22 @@ describe('query params utilities', () => {
       })
     })
 
+    it('serializes an open interval with only a start date', () => {
+      expect(
+        flattenQueryParams({
+          changeDate: { start: new Date('2010-03-10T14:50:12') },
+        })
+      ).toEqual({ changeDate: ['2010-03-10..'] })
+    })
+
+    it('serializes an open interval with only an end date', () => {
+      expect(
+        flattenQueryParams({
+          changeDate: { end: new Date('2014-01-01T00:00:00') },
+        })
+      ).toEqual({ changeDate: ['..2014-01-01'] })
+    })
+
     it('correctly encodes organization names with commas', () => {
       const params = flattenQueryParams({
         organization: ['Société, Inc., Main Branch', 'Other Org'],
@@ -64,6 +80,12 @@ describe('query params utilities', () => {
         },
       })
     })
+    it('restores an open interval with only a start date', () => {
+      expect(expandQueryParams({ changeDate: ['2010-03-10..'] })).toEqual({
+        changeDate: { start: new Date('2010-03-10T00:00:00') },
+      })
+    })
+
     it('correctly handles organization names with commas', () => {
       const params = expandQueryParams({
         organization: ['Société%2C Inc.%2C Main Branch,Other Org'],

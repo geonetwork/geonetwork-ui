@@ -6,6 +6,8 @@ import {
   MatDateFormats,
 } from '@angular/material/core'
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter'
+import { type Locale } from 'date-fns/locale'
+import { fr } from 'date-fns/locale/fr'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 import { DateRangeDropdownComponent } from './date-range-dropdown.component'
@@ -197,6 +199,18 @@ describe('DateRangeDropdownComponent', () => {
 
       expect(component.startDate).toEqual(new Date(2024, 0, 15))
       expect(component.invalidBounds.start).toBe(true)
+    })
+    it('redraws the fields when the lazily loaded locale reaches the adapter', () => {
+      const adapter =
+        fixture.debugElement.injector.get<DateAdapter<Date, Locale>>(
+          DateAdapter
+        )
+      expect(startInput().value).toBe('01/15/2024')
+
+      adapter.setLocale(fr)
+      fixture.detectChanges()
+
+      expect(startInput().value).toBe('15/01/2024')
     })
     it('sizes its icons itself, with no ancestor ng-icons config', () => {
       // otherwise they inherit whatever the host app configures, which differs
