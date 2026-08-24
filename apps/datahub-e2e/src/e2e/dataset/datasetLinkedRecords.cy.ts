@@ -76,7 +76,7 @@ describe('dataset: linked records', () => {
       .find('h3')
       .eq(6)
       .as('associatedRecordsTitle')
-      .should('contain', 'Records referencing this record')
+      .should('contain', 'Records referencing the current one')
     cy.get('@associatedRecordsTitle').next('span').should('contain', '(1)')
 
     // it should generate a total of 12 internal link cards for all linked records
