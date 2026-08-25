@@ -7,8 +7,8 @@ import fs from 'fs/promises'
 import { getWfsEndpoint, WfsReader } from './wfs'
 import { useCache, WfsEndpoint } from '@camptocamp/ogc-client'
 import { GeojsonReader } from './geojson'
-import { GmlReader } from './gml'
 import { FetchError } from '../model'
+import { GmlReader } from './gml'
 
 const urlGeojson =
   'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson'
@@ -60,19 +60,12 @@ jest.mock('@camptocamp/ogc-client', () => ({
         },
       ]
     }
-    getFeatureTypeSummary() {
-      return {
-        name: 'any',
-        outputFormats: ['gml'],
-        defaultCrs: 'EPSG:4326',
-      }
-    }
     getFeatureUrl(featureTypeName: string, options) {
       return `${this.url}?1=1&STARTINDEX=${options.startIndex}&MAXFEATURES=${options.maxFeatures}&SORTBY=${options.sortBy?.toString()}`
     }
-    getFeatureTypeFull() {
+    getFeatureTypeFull(name: string) {
       let properties
-      if (this.url === urlGml) {
+      if (this.url === urlGml || this.url === urlGmlLegacy) {
         properties = {
           boundedBy: 'string',
           id_map: 'float',
@@ -133,9 +126,12 @@ jest.mock('@camptocamp/ogc-client', () => ({
         }
       }
       return Promise.resolve({
+        name,
         objectCount: 442,
         properties,
         geometryName: 'geom',
+        outputFormats: ['gml'],
+        defaultCrs: 'EPSG:4326',
       })
     }
     supportsJson() {
@@ -158,7 +154,6 @@ afterEach(() => {
 describe('WfsReader', () => {
   describe('WfsReader - Wfs is version 2.0.0 geojson', () => {
     let reader: WfsReader
-    const wfsEndpoint = new WfsEndpoint(urlGeojson)
 
     beforeEach(() => {
       fetchMock.route(
@@ -177,7 +172,7 @@ describe('WfsReader', () => {
           sendAsJson: false,
         }
       )
-      reader = new WfsReader(urlGeojson, wfsEndpoint, 'epci')
+      reader = new WfsReader(urlGeojson, 'epci')
       reader.enableCache(true)
       reader.load()
     })
@@ -274,7 +269,10 @@ describe('WfsReader', () => {
       })
 
       it('reads data with pagination (limits)', async () => {
-        const getFeatureUrlSpy = jest.spyOn(wfsEndpoint, 'getFeatureUrl')
+        const getFeatureUrlSpy = jest.spyOn(
+          WfsEndpoint.prototype,
+          'getFeatureUrl'
+        )
         reader.limit(2, 42)
         await reader.read()
         expect(getFeatureUrlSpy).toHaveBeenCalledWith('epci', {
@@ -287,7 +285,10 @@ describe('WfsReader', () => {
       })
 
       it('reads data with only certain fields', async () => {
-        const getFeatureUrlSpy = jest.spyOn(wfsEndpoint, 'getFeatureUrl')
+        const getFeatureUrlSpy = jest.spyOn(
+          WfsEndpoint.prototype,
+          'getFeatureUrl'
+        )
         reader.select('code_dep', 'nom_epci')
         await reader.read()
         expect(getFeatureUrlSpy).toHaveBeenCalledWith('epci', {
@@ -313,18 +314,6 @@ describe('WfsReader', () => {
         )
       })
     })
-
-    describe('When aggregations are requested', () => {
-      it('returns an empty array', async () => {
-        reader.aggregate(['sum', 'code_dep'])
-        let items = await reader.read()
-        expect(items).toEqual([])
-        reader.selectAll()
-        reader.groupBy(['distinct', 'code_dep'])
-        items = await reader.read()
-        expect(items).toEqual([])
-      })
-    })
   })
 
   describe('WfsReader - Wfs is version 2.0.0 gml', () => {
@@ -346,8 +335,7 @@ describe('WfsReader', () => {
           sendAsJson: false,
         }
       )
-      const wfsEndpoint = new WfsEndpoint(urlGml)
-      reader = new WfsReader(urlGml, wfsEndpoint, 'ms:n_mat_eolien_p_r32')
+      reader = new WfsReader(urlGml, 'ms:n_mat_eolien_p_r32')
       reader.load()
     })
     afterEach(() => {
@@ -414,22 +402,14 @@ describe('WfsReader', () => {
 
     describe('Caching', () => {
       it('caches the request when needed', async () => {
-        const reader = new WfsReader(
-          urlGeojson,
-          new WfsEndpoint(urlGeojson),
-          'myFeatureType'
-        )
+        const reader = new WfsReader(urlGeojson, 'myFeatureType')
         reader.enableCache(true)
         const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
         await reader.read()
         expect(useCacheSpy).toHaveBeenCalledTimes(1)
       })
       it('does not cache the requests otherwise', async () => {
-        const reader = new WfsReader(
-          urlGeojson,
-          new WfsEndpoint(urlGeojson),
-          'myFeatureType'
-        )
+        const reader = new WfsReader(urlGeojson, 'myFeatureType')
         reader.enableCache(false)
         const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
         await reader.read()
@@ -438,51 +418,58 @@ describe('WfsReader', () => {
     })
   })
 
-  describe('#createReader', () => {
+  describe('backup reader', () => {
     let reader: WfsReader
-    let GmlReaderSpy: jest.SpyInstance
-    beforeEach(() => {
-      GmlReaderSpy = jest.spyOn({ GmlReader }, 'GmlReader')
-      fetchMock.route(
-        ({ url }) => new URL(url).hostname === 'localfile',
-        async ({ url }) => {
-          const filePath = path.join(__dirname, '../..', new URL(url).pathname)
-          return {
-            body: await fs.readFile(filePath, 'utf8'),
-            status: 200,
-            headers: {
-              'Content-Type': 'text/csv',
-            },
-          }
-        },
-        {
-          sendAsJson: false,
-        }
-      )
-      const wfsEndpoint = new WfsEndpoint(urlGml)
-      reader = new WfsReader(urlGml, wfsEndpoint, 'ms:n_mat_eolien_p_r32')
-      reader.load()
-    })
-    afterEach(() => {
-      fetchMock.mockReset()
-      GmlReaderSpy.mockRestore()
-    })
-    it('returns an instance of WfsReader', async () => {
-      await expect(
-        WfsReader.createReader(urlGeojson, 'myFeatureType')
-      ).resolves.toBeInstanceOf(WfsReader)
-    })
-    it('returns an instance of GeojsonReader for versions < 2.0.0', async () => {
-      await WfsReader.createReader(urlGeojsonLegacy, 'myFeatureType')
+
+    it('creates a fallback GeojsonReader when the endpoint does not support pagination and serves geojson', async () => {
+      reader = new WfsReader(urlGeojsonLegacy, 'myFeatureType')
+      await reader.read()
       expect(GeojsonReader).toHaveBeenCalledWith(
         'https://mygeojsonreader.edu/legacy/?1=1&STARTINDEX=undefined&MAXFEATURES=undefined&SORTBY=undefined'
       )
     })
-    it('returns an instance of GmlReader for versions < 2.0.0', async () => {
-      await WfsReader.createReader(urlGmlLegacy, 'myFeatureType')
+    it('creates a fallback GmlReader when the endpoint does not support pagination and does not serve geojson', async () => {
+      reader = new WfsReader(urlGmlLegacy, 'myFeatureType')
+      await reader.read()
       expect(GmlReader).toHaveBeenCalledWith(
         'https://mygmlreader.edu/legacy/?1=1&STARTINDEX=undefined&MAXFEATURES=undefined&SORTBY=undefined'
       )
+    })
+    it('applies the same parameters of the WFS reader to the backup reader', async () => {
+      reader = new WfsReader(urlGeojsonLegacy, 'myFeatureType')
+
+      const backupReader = await reader.backupReader
+      jest
+        .spyOn(backupReader, 'read')
+        .mockImplementation(() => Promise.resolve(['hello', 'world'] as any))
+      reader.select('aaa', 'bbb')
+      reader.orderBy(['asc', 'ccc'])
+      reader.limit(12, 34)
+      const result = await reader.read()
+
+      expect(backupReader.selectAll).toHaveBeenCalledTimes(1)
+      expect(backupReader.select).toHaveBeenCalledWith('aaa', 'bbb')
+      expect(backupReader.orderBy).toHaveBeenCalledWith(['asc', 'ccc'])
+      expect(backupReader.limit).toHaveBeenCalledWith(12, 34)
+      expect(backupReader.read).toHaveBeenCalledTimes(1)
+      expect(result).toEqual(['hello', 'world'])
+    })
+    it('uses the backup reader if requesting aggregations or grouping', async () => {
+      reader = new WfsReader(urlGeojson, 'myFeatureType')
+
+      const backupReader = await reader.backupReader
+      jest
+        .spyOn(backupReader, 'read')
+        .mockImplementation(() => Promise.resolve(['hello', 'world'] as any))
+      reader.groupBy(['distinct', 'ddd'])
+      reader.aggregate(['sum', 'eee'])
+      const result = await reader.read()
+
+      expect(backupReader.selectAll).toHaveBeenCalledTimes(1)
+      expect(backupReader.groupBy).toHaveBeenCalledWith(['distinct', 'ddd'])
+      expect(backupReader.aggregate).toHaveBeenCalledWith(['sum', 'eee'])
+      expect(backupReader.read).toHaveBeenCalledTimes(1)
+      expect(result).toEqual(['hello', 'world'])
     })
   })
 })

@@ -45,7 +45,7 @@ export async function openDataset(
         reader = new GmlReader(url)
         break
       case 'wfs':
-        reader = await WfsReader.createReader(url, options?.wfsFeatureType)
+        reader = new WfsReader(url, options?.wfsFeatureType)
         break
     }
     reader.enableCache(options?.enableCache ?? true)

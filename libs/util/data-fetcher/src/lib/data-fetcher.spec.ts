@@ -27,18 +27,14 @@ jest.mock('@camptocamp/ogc-client', () => ({
         },
       ]
     }
-    getFeatureTypeSummary() {
-      return {
-        name: 'ms:n_mat_eolien_p_r32',
-        outputFormats: ['gml'],
-        defaultCrs: 'EPSG:4326',
-      }
-    }
     getFeatureUrl() {
       return this.url
     }
     getFeatureTypeFull() {
       return Promise.resolve({
+        name: 'ms:n_mat_eolien_p_r32',
+        outputFormats: ['gml'],
+        defaultCrs: 'EPSG:4326',
         objectCount: 442,
       })
     }
