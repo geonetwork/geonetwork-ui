@@ -1,5 +1,4 @@
 import { provideHttpClient } from '@angular/common/http'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
   applicationConfig,
@@ -10,7 +9,6 @@ import {
 } from '@storybook/angular'
 import { ChartViewComponent } from './chart-view.component'
 import { ChartComponent } from '@geonetwork-ui/ui/dataviz'
-import { importProvidersFrom } from '@angular/core'
 
 export default {
   title: 'Smart/Dataviz/ChartView',
@@ -20,11 +18,7 @@ export default {
       imports: [ChartComponent],
     }),
     applicationConfig({
-      providers: [
-        importProvidersFrom(BrowserAnimationsModule),
-        provideHttpClient(),
-        provideI18n(),
-      ],
+      providers: [provideHttpClient(), provideI18n()],
     }),
     componentWrapperDecorator(
       (story) =>
@@ -35,18 +29,18 @@ export default {
 
 const LINKS = {
   wfs: {
-    description: 'US states',
-    name: 'topp:states',
+    description: 'Population density in Europe',
+    name: 'geonode:population_density',
     url: new URL(
-      'https://ahocevar.com/geoserver/wfs?service=WFS&version=1.1.0&request=GetCapabilities'
+      'https://maps.eurac.edu/geoserver/ows?service=WFS&version=2.0.0'
     ),
     type: 'service',
     accessServiceProtocol: 'wfs',
   },
   csv: {
-    description: 'France departments',
+    description: 'Prix des carburants en France ',
     url: new URL(
-      'https://www.data.gouv.fr/fr/datasets/r/70cef74f-70b1-495a-8500-c089229c0254'
+      'https://www.data.gouv.fr/api/1/datasets/r/edd67f5b-46d0-4663-9de9-e5db1c880160'
     ),
     type: 'download',
   },

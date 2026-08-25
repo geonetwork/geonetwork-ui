@@ -222,6 +222,7 @@ export class ChartViewComponent {
     switchMap(([dataset, xProp, yProp, aggregation]) => {
       const fieldAgg: FieldAggregation =
         aggregation === 'count' ? ['count'] : [aggregation, yProp]
+      this.loading = true
       return dataset
         .groupBy(['distinct', xProp])
         .aggregate(fieldAgg)
