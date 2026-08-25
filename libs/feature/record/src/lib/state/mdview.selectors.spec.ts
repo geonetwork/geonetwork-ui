@@ -143,11 +143,11 @@ describe('MdView Selectors', () => {
       })
     })
 
-    describe('getAssociatedRecords', () => {
+    describe('getLinkedRecords', () => {
       it('returns associated records', () => {
-        const results = MdViewSelectors.getAssociatedRecords.projector({
+        const results = MdViewSelectors.getLinkedRecords.projector({
           ...state,
-          associatedRecords: [{ record: relatedRecord, relation: 'sibling' }],
+          linkedRecords: [{ record: relatedRecord, relation: 'sibling' }],
         })
         expect(results).toEqual([
           { record: relatedRecord, relation: 'sibling' },

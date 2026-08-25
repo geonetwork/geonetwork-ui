@@ -26,8 +26,8 @@ import {
 export class RecordLinkedRecordsComponent {
   protected metadataViewFacade = inject(MdViewFacade)
 
-  private associatedRecords$ = this.metadataViewFacade.associatedRecords$.pipe(
-    map((associatedRecords) => associatedRecords ?? [])
+  private linkedRecords$ = this.metadataViewFacade.linkedRecords$.pipe(
+    map((linkedRecords) => linkedRecords ?? [])
   )
 
   sourceDatasets$ = this.recordsOf('source')
@@ -36,9 +36,9 @@ export class RecordLinkedRecordsComponent {
   linkedServices$ = this.recordsOf('sourceOf', 'service')
   associated$ = this.recordsOf('associated')
 
-  siblings$ = this.associatedRecords$.pipe(
-    map((associatedRecords) =>
-      associatedRecords
+  siblings$ = this.linkedRecords$.pipe(
+    map((linkedRecords) =>
+      linkedRecords
         .filter(({ relation }) => relation === 'sibling')
         .reduce(
           (groups, { record, associationType }) => {
@@ -66,9 +66,9 @@ export class RecordLinkedRecordsComponent {
   hasAssociated$ = this.associated$.pipe(map((records) => records.length > 0))
 
   private recordsOf(relation: RecordRelation, kind?: CatalogRecord['kind']) {
-    return this.associatedRecords$.pipe(
-      map((associatedRecords) =>
-        associatedRecords
+    return this.linkedRecords$.pipe(
+      map((linkedRecords) =>
+        linkedRecords
           .filter((associated) => associated.relation === relation)
           .map(({ record }) => record)
           .filter((record) => !kind || record.kind === kind)

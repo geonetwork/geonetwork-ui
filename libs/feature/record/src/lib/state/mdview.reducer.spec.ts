@@ -135,24 +135,24 @@ describe('metadataViewReducer', () => {
     })
   })
 
-  describe('setAssociatedRecords', () => {
+  describe('setLinkedRecords', () => {
     let action
-    const associatedRecords = [
+    const linkedRecords = [
       {
         record: datasetRecordsFixture()[1],
         relation: 'sourceOf' as const,
       },
     ]
     beforeEach(() => {
-      action = MdViewActions.setAssociatedRecords({
-        associatedRecords,
+      action = MdViewActions.setLinkedRecords({
+        linkedRecords,
       })
     })
     it('set associated records', () => {
       const state = reducer({ ...initialMetadataViewState }, action)
       expect(state).toEqual({
         ...initialMetadataViewState,
-        associatedRecords,
+        linkedRecords,
       })
     })
   })

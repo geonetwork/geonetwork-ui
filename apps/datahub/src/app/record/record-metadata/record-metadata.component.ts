@@ -208,8 +208,8 @@ export class RecordMetadataComponent {
     map((records) => records?.length > 0)
   )
 
-  displayLinked$ = this.metadataViewFacade.associatedRecords$.pipe(
-    map((associatedRecords) => associatedRecords?.length > 0)
+  displayLinked$ = this.metadataViewFacade.linkedRecords$.pipe(
+    map((linkedRecords) => linkedRecords?.length > 0)
   )
 
   displayFeatureCatalog$ = combineLatest([

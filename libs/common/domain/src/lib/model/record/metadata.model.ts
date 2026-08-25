@@ -300,7 +300,7 @@ export interface AssociatedRecord {
  */
 export type RecordRelation = 'source' | 'sourceOf' | 'sibling' | 'associated'
 
-export interface RelatedRecord {
+export interface LinkedRecord {
   record: CatalogRecord
   relation: RecordRelation
   associationType?: AssociationType

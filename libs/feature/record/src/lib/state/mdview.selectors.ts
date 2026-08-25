@@ -41,9 +41,9 @@ export const getRelated = createSelector(
   (state: MetadataViewState) => state.related
 )
 
-export const getAssociatedRecords = createSelector(
+export const getLinkedRecords = createSelector(
   getMdViewState,
-  (state: MetadataViewState) => state.associatedRecords
+  (state: MetadataViewState) => state.linkedRecords
 )
 /*
   Metadata selectors

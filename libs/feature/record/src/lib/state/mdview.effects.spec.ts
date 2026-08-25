@@ -18,7 +18,7 @@ import { MdViewEffects } from './mdview.effects'
 import { hot } from 'jasmine-marbles'
 import {
   CatalogRecord,
-  RelatedRecord,
+  LinkedRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
@@ -35,7 +35,7 @@ class RecordsRepositoryMock {
   search = jest.fn(() => of(searchResultsFixture()))
   getRecord = jest.fn(() => of(datasetRecordsFixture()[0]))
   getSimilarRecords = jest.fn(() => of(datasetRecordsFixture()))
-  getAssociatedRecords = jest.fn(() =>
+  getLinkedRecords = jest.fn(() =>
     of(
       datasetRecordsFixture().map((record) => ({
         record,
@@ -164,36 +164,36 @@ describe('MdViewEffects', () => {
     })
   })
 
-  describe('loadAssociatedRecords$', () => {
+  describe('loadLinkedRecords$', () => {
     describe('when load full success', () => {
-      it('dispatch setAssociatedRecords', () => {
+      it('dispatch setLinkedRecords', () => {
         actions = hot('-a-|', {
           a: MdViewActions.loadFullMetadataSuccess({ full }),
         })
         const expected = hot('-a-|', {
-          a: MdViewActions.setAssociatedRecords({
-            associatedRecords: datasetRecordsFixture().map((record) => ({
+          a: MdViewActions.setLinkedRecords({
+            linkedRecords: datasetRecordsFixture().map((record) => ({
               record,
               relation: 'sibling',
               associationType: 'crossReference',
-            })) as RelatedRecord[],
+            })) as LinkedRecord[],
           }),
         })
-        expect(effects.loadAssociatedRecords$).toBeObservable(expected)
+        expect(effects.loadLinkedRecords$).toBeObservable(expected)
       })
     })
     describe('when api fails', () => {
       beforeEach(() => {
-        repository.getAssociatedRecords = jest.fn(() => throwError(() => 'api'))
+        repository.getLinkedRecords = jest.fn(() => throwError(() => 'api'))
       })
-      it('dispatch setAssociatedRecords with null', () => {
+      it('dispatch setLinkedRecords with null', () => {
         actions = hot('-a-|', {
           a: MdViewActions.loadFullMetadataSuccess({ full }),
         })
         const expected = hot('-(a|)', {
-          a: MdViewActions.setAssociatedRecords({ associatedRecords: null }),
+          a: MdViewActions.setLinkedRecords({ linkedRecords: null }),
         })
-        expect(effects.loadAssociatedRecords$).toBeObservable(expected)
+        expect(effects.loadLinkedRecords$).toBeObservable(expected)
       })
     })
   })

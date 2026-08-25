@@ -48,7 +48,7 @@ class MdViewFacadeMock {
   otherLinks$ = new BehaviorSubject([])
   stacLinks$ = new BehaviorSubject([])
   related$ = new BehaviorSubject(null)
-  associatedRecords$ = new BehaviorSubject([])
+  linkedRecords$ = new BehaviorSubject([])
   featureCatalog$ = new BehaviorSubject(null)
   error$ = new BehaviorSubject(null)
   isMetadataLoading$ = new BehaviorSubject(false)
@@ -415,7 +415,7 @@ describe('RecordMetadataComponent', () => {
       expect(linkedSection()).toBeFalsy()
     })
     it('renders for a record having any linked record', () => {
-      facade.associatedRecords$.next([
+      facade.linkedRecords$.next([
         { record: { title: 'a sibling' }, relation: 'sibling' },
       ])
       fixture.detectChanges()

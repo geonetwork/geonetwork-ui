@@ -37,7 +37,7 @@ import {
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
-  RelatedRecord,
+  LinkedRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { map } from 'rxjs/operators'
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http'
@@ -535,8 +535,8 @@ describe('Gn4Repository', () => {
       expect(results).toStrictEqual(datasetRecordsFixture())
     })
   })
-  describe('getAssociatedRecords', () => {
-    let associatedRecords: RelatedRecord[]
+  describe('getLinkedRecords', () => {
+    let linkedRecords: LinkedRecord[]
     const mockRecord = {
       ...SAMPLE_RECORD_WITH_EXTRAS,
       extras: {
@@ -566,8 +566,8 @@ describe('Gn4Repository', () => {
               .map((id) => ({ uniqueIdentifier: id }))
           )
         )
-      associatedRecords = await lastValueFrom(
-        repository.getAssociatedRecords(mockRecord)
+      linkedRecords = await lastValueFrom(
+        repository.getLinkedRecords(mockRecord)
       )
     })
     it('calls getMultipleRecords once per relation holding identifiers', () => {
@@ -587,7 +587,7 @@ describe('Gn4Repository', () => {
       ])
     })
     it('tags each record with its relation, keeping a record related twice under both relations', () => {
-      expect(associatedRecords).toEqual([
+      expect(linkedRecords).toEqual([
         {
           record: { uniqueIdentifier: 'source-1' },
           relation: 'source',
@@ -633,7 +633,7 @@ describe('Gn4Repository', () => {
               )
         )
       const result = await lastValueFrom(
-        repository.getAssociatedRecords(mockRecord)
+        repository.getLinkedRecords(mockRecord)
       )
       expect(result.map(({ relation }) => relation)).toEqual([
         'source',
@@ -646,7 +646,7 @@ describe('Gn4Repository', () => {
     it('returns an empty array if the record has no relation at all', async () => {
       const recordWithoutRelations = { ...mockRecord, extras: {} }
       const result = await lastValueFrom(
-        repository.getAssociatedRecords(recordWithoutRelations)
+        repository.getLinkedRecords(recordWithoutRelations)
       )
       expect(result).toEqual([])
     })

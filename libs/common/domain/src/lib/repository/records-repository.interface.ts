@@ -10,7 +10,7 @@ import {
   CatalogRecord,
   DatasetFeatureCatalog,
   LanguageCode,
-  RelatedRecord,
+  LinkedRecord,
 } from '../model/record'
 
 export abstract class RecordsRepositoryInterface {
@@ -24,9 +24,7 @@ export abstract class RecordsRepositoryInterface {
   abstract getSimilarRecords(
     similarTo: CatalogRecord
   ): Observable<CatalogRecord[]>
-  abstract getAssociatedRecords(
-    record: CatalogRecord
-  ): Observable<RelatedRecord[]>
+  abstract getLinkedRecords(record: CatalogRecord): Observable<LinkedRecord[]>
   abstract fuzzySearch(query: string): Observable<SearchResults>
   abstract canDuplicate(record: CatalogRecord): boolean
   abstract canDelete(record: CatalogRecord): Observable<boolean>

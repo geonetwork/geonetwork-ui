@@ -19,8 +19,8 @@ import {
   DatasetFeatureCatalog,
   DatasetFeatureType,
   LanguageCode,
+  LinkedRecord,
   RecordRelation,
-  RelatedRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
   Aggregations,
@@ -252,7 +252,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
-  getAssociatedRecords(record: CatalogRecord): Observable<RelatedRecord[]> {
+  getLinkedRecords(record: CatalogRecord): Observable<LinkedRecord[]> {
     const siblings = (record.extras?.['siblings'] ?? []) as AssociatedRecord[]
     const relations: Array<[RecordRelation, string[]]> = [
       ['source', (record.extras?.['sourcesIdentifiers'] ?? []) as string[]],
@@ -281,7 +281,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
                   ? siblings.find(
                       ({ uniqueIdentifier }) =>
                         uniqueIdentifier === record.uniqueIdentifier
-                    ).associationType
+                    )?.associationType
                   : undefined,
             }))
           ),

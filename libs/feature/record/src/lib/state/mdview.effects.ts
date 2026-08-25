@@ -70,17 +70,15 @@ export class MdViewEffects {
     )
   )
 
-  loadAssociatedRecords$ = createEffect(() =>
+  loadLinkedRecords$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MdViewActions.loadFullMetadataSuccess),
-      switchMap(({ full }) =>
-        this.recordsRepository.getAssociatedRecords(full)
-      ),
-      map((associatedRecords) => {
-        return MdViewActions.setAssociatedRecords({ associatedRecords })
+      switchMap(({ full }) => this.recordsRepository.getLinkedRecords(full)),
+      map((linkedRecords) => {
+        return MdViewActions.setLinkedRecords({ linkedRecords })
       }),
       catchError(() =>
-        of(MdViewActions.setAssociatedRecords({ associatedRecords: null }))
+        of(MdViewActions.setLinkedRecords({ linkedRecords: null }))
       )
     )
   )
