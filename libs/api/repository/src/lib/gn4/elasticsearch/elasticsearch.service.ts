@@ -141,6 +141,7 @@ export class ElasticsearchService {
           values: uuids,
         },
       },
+      size: uuids.length,
     }
   }
 

@@ -810,13 +810,14 @@ describe('ElasticsearchService', () => {
       uuid = '132132132132321'
       payload = service.getMetadataByIdsPayload([uuid])
     })
-    it('returns ES payload', () => {
+    it('returns ES payload sized to the number of ids', () => {
       expect(payload).toEqual({
         query: {
           ids: {
             values: [uuid],
           },
         },
+        size: 1,
       })
     })
   })
