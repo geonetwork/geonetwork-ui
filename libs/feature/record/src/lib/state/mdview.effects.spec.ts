@@ -16,7 +16,10 @@ import { Observable, of, throwError } from 'rxjs'
 import * as MdViewActions from './mdview.actions'
 import { MdViewEffects } from './mdview.effects'
 import { hot } from 'jasmine-marbles'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  RelatedRecord,
+} from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { Router } from '@angular/router'
@@ -32,10 +35,15 @@ class RecordsRepositoryMock {
   search = jest.fn(() => of(searchResultsFixture()))
   getRecord = jest.fn(() => of(datasetRecordsFixture()[0]))
   getSimilarRecords = jest.fn(() => of(datasetRecordsFixture()))
-  getSources = jest.fn(() => of(datasetRecordsFixture()))
-  getSourceOf = jest.fn(() => of(datasetRecordsFixture()))
-  getSiblings = jest.fn(() => of({ crossReference: datasetRecordsFixture() }))
-  getAssociated = jest.fn(() => of(datasetRecordsFixture()))
+  getAssociatedRecords = jest.fn(() =>
+    of(
+      datasetRecordsFixture().map((record) => ({
+        record,
+        relation: 'sibling',
+        associationType: 'crossReference',
+      }))
+    )
+  )
 }
 
 class PlatformServiceInterfaceMock {
@@ -156,128 +164,39 @@ describe('MdViewEffects', () => {
     })
   })
 
-  describe('loadSources$', () => {
+  describe('loadAssociatedRecords$', () => {
     describe('when load full success', () => {
-      it('dispatch setSources', () => {
+      it('dispatch setAssociatedRecords', () => {
         actions = hot('-a-|', {
           a: MdViewActions.loadFullMetadataSuccess({ full }),
         })
         const expected = hot('-a-|', {
-          a: MdViewActions.setSources({
-            sources: datasetRecordsFixture() as CatalogRecord[],
+          a: MdViewActions.setAssociatedRecords({
+            associatedRecords: datasetRecordsFixture().map((record) => ({
+              record,
+              relation: 'sibling',
+              associationType: 'crossReference',
+            })) as RelatedRecord[],
           }),
         })
-        expect(effects.loadSources$).toBeObservable(expected)
+        expect(effects.loadAssociatedRecords$).toBeObservable(expected)
       })
     })
     describe('when api fails', () => {
       beforeEach(() => {
-        repository.getSources = jest.fn(() => throwError(() => 'api'))
+        repository.getAssociatedRecords = jest.fn(() => throwError(() => 'api'))
       })
-      it('dispatch loadFullFailure', () => {
+      it('dispatch setAssociatedRecords with null', () => {
         actions = hot('-a-|', {
           a: MdViewActions.loadFullMetadataSuccess({ full }),
         })
         const expected = hot('-(a|)', {
-          a: MdViewActions.setSources({ sources: null }),
+          a: MdViewActions.setAssociatedRecords({ associatedRecords: null }),
         })
-        expect(effects.loadSources$).toBeObservable(expected)
+        expect(effects.loadAssociatedRecords$).toBeObservable(expected)
       })
     })
   })
-
-  describe('loadSourceOf$', () => {
-    describe('when load full success', () => {
-      it('dispatch setSourceOf', () => {
-        actions = hot('-a-|', {
-          a: MdViewActions.loadFullMetadataSuccess({ full }),
-        })
-        const expected = hot('-a-|', {
-          a: MdViewActions.setSourceOf({
-            sourceOf: datasetRecordsFixture() as CatalogRecord[],
-          }),
-        })
-        expect(effects.loadSourceOf$).toBeObservable(expected)
-      })
-      describe('when api fails', () => {
-        beforeEach(() => {
-          repository.getSourceOf = jest.fn(() => throwError(() => 'api'))
-        })
-        it('dispatch loadFullFailure', () => {
-          actions = hot('-a-|', {
-            a: MdViewActions.loadFullMetadataSuccess({ full }),
-          })
-          const expected = hot('-(a|)', {
-            a: MdViewActions.setSourceOf({ sourceOf: null }),
-          })
-          expect(effects.loadSourceOf$).toBeObservable(expected)
-        })
-      })
-    })
-  })
-
-  describe('loadSiblings$', () => {
-    describe('when load full success', () => {
-      it('dispatch setSiblings', () => {
-        actions = hot('-a-|', {
-          a: MdViewActions.loadFullMetadataSuccess({ full }),
-        })
-        const expected = hot('-a-|', {
-          a: MdViewActions.setSiblings({
-            siblings: {
-              crossReference: datasetRecordsFixture() as CatalogRecord[],
-            },
-          }),
-        })
-        expect(effects.loadSiblings$).toBeObservable(expected)
-      })
-      describe('when api fails', () => {
-        beforeEach(() => {
-          repository.getSiblings = jest.fn(() => throwError(() => 'api'))
-        })
-        it('dispatch setSiblings with null', () => {
-          actions = hot('-a-|', {
-            a: MdViewActions.loadFullMetadataSuccess({ full }),
-          })
-          const expected = hot('-(a|)', {
-            a: MdViewActions.setSiblings({ siblings: null }),
-          })
-          expect(effects.loadSiblings$).toBeObservable(expected)
-        })
-      })
-    })
-  })
-
-  describe('loadAssociated$', () => {
-    describe('when load full success', () => {
-      it('dispatch setAssociated', () => {
-        actions = hot('-a-|', {
-          a: MdViewActions.loadFullMetadataSuccess({ full }),
-        })
-        const expected = hot('-a-|', {
-          a: MdViewActions.setAssociated({
-            associated: datasetRecordsFixture() as CatalogRecord[],
-          }),
-        })
-        expect(effects.loadAssociated$).toBeObservable(expected)
-      })
-      describe('when api fails', () => {
-        beforeEach(() => {
-          repository.getAssociated = jest.fn(() => throwError(() => 'api'))
-        })
-        it('dispatch setAssociated with null', () => {
-          actions = hot('-a-|', {
-            a: MdViewActions.loadFullMetadataSuccess({ full }),
-          })
-          const expected = hot('-(a|)', {
-            a: MdViewActions.setAssociated({ associated: null }),
-          })
-          expect(effects.loadAssociated$).toBeObservable(expected)
-        })
-      })
-    })
-  })
-
   describe('loadUserFeedbacks$', () => {
     describe('when loadUserFeedbacks success', () => {
       it('should dispatch loadUserFeedbacksSuccess when API call is successful', () => {

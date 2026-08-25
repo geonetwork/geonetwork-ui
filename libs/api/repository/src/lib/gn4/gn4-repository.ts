@@ -15,11 +15,12 @@ import {
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import {
   AssociatedRecord,
-  AssociationType,
   CatalogRecord,
   DatasetFeatureCatalog,
   DatasetFeatureType,
   LanguageCode,
+  RecordRelation,
+  RelatedRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
   Aggregations,
@@ -251,59 +252,43 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
-  getSources(record: CatalogRecord): Observable<CatalogRecord[]> {
-    const sourcesIdentifiers = record.extras?.['sourcesIdentifiers'] as string[]
-    if (sourcesIdentifiers && sourcesIdentifiers.length > 0) {
-      return this.getMultipleRecords(sourcesIdentifiers)
+  getAssociatedRecords(record: CatalogRecord): Observable<RelatedRecord[]> {
+    const siblings = (record.extras?.['siblings'] ?? []) as AssociatedRecord[]
+    const relations: Array<[RecordRelation, string[]]> = [
+      ['source', (record.extras?.['sourcesIdentifiers'] ?? []) as string[]],
+      ['sourceOf', (record.extras?.['sourceOfIdentifiers'] ?? []) as string[]],
+      ['sibling', siblings.map(({ uniqueIdentifier }) => uniqueIdentifier)],
+      [
+        'associated',
+        (record.extras?.['associatedIdentifiers'] ?? []) as string[],
+      ],
+    ]
+    const requested = relations.filter(
+      ([, identifiers]) => identifiers.length > 0
+    )
+    if (requested.length === 0) {
+      return of([])
     }
-    return of(null)
-  }
-
-  getSourceOf(record: CatalogRecord): Observable<CatalogRecord[]> {
-    const sourceOfIdentifiers = record.extras?.[
-      'sourceOfIdentifiers'
-    ] as string[]
-    if (sourceOfIdentifiers && sourceOfIdentifiers.length > 0) {
-      return this.getMultipleRecords(sourceOfIdentifiers)
-    }
-    return of(null)
-  }
-
-  getSiblings(
-    record: CatalogRecord
-  ): Observable<Partial<Record<AssociationType, CatalogRecord[]>>> {
-    const siblings = record.extras?.['siblings'] as AssociatedRecord[]
-    if (siblings && siblings.length > 0) {
-      return this.getMultipleRecords(
-        siblings.map(({ uniqueIdentifier }) => uniqueIdentifier)
-      ).pipe(
-        map((records) =>
-          records?.reduce(
-            (groups, record) => {
-              const { associationType } = siblings.find(
-                ({ uniqueIdentifier }) =>
-                  uniqueIdentifier === record.uniqueIdentifier
-              )
-              groups[associationType] ??= []
-              groups[associationType].push(record)
-              return groups
-            },
-            {} as Partial<Record<AssociationType, CatalogRecord[]>>
-          )
+    return forkJoin(
+      requested.map(([relation, identifiers]) =>
+        this.getMultipleRecords(identifiers).pipe(
+          map((records) =>
+            (records ?? []).map((record) => ({
+              record,
+              relation,
+              associationType:
+                relation === 'sibling'
+                  ? siblings.find(
+                      ({ uniqueIdentifier }) =>
+                        uniqueIdentifier === record.uniqueIdentifier
+                    ).associationType
+                  : undefined,
+            }))
+          ),
+          catchError(() => of([]))
         )
       )
-    }
-    return of(null)
-  }
-
-  getAssociated(record: CatalogRecord): Observable<CatalogRecord[]> {
-    const associatedIdentifiers = record.extras?.[
-      'associatedIdentifiers'
-    ] as string[]
-    if (associatedIdentifiers && associatedIdentifiers.length > 0) {
-      return this.getMultipleRecords(associatedIdentifiers)
-    }
-    return of(null)
+    ).pipe(map((groups) => groups.flat()))
   }
 
   aggregate(params: AggregationsParams): Observable<Aggregations> {

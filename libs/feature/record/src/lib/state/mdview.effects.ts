@@ -70,47 +70,18 @@ export class MdViewEffects {
     )
   )
 
-  loadSources$ = createEffect(() =>
+  loadAssociatedRecords$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MdViewActions.loadFullMetadataSuccess),
-      switchMap(({ full }) => this.recordsRepository.getSources(full)),
-      map((sources) => {
-        return MdViewActions.setSources({ sources })
+      switchMap(({ full }) =>
+        this.recordsRepository.getAssociatedRecords(full)
+      ),
+      map((associatedRecords) => {
+        return MdViewActions.setAssociatedRecords({ associatedRecords })
       }),
-      catchError(() => of(MdViewActions.setSources({ sources: null })))
-    )
-  )
-
-  loadSourceOf$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(MdViewActions.loadFullMetadataSuccess),
-      switchMap(({ full }) => this.recordsRepository.getSourceOf(full)),
-      map((sourceOf) => {
-        return MdViewActions.setSourceOf({ sourceOf })
-      }),
-      catchError(() => of(MdViewActions.setSourceOf({ sourceOf: null })))
-    )
-  )
-
-  loadSiblings$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(MdViewActions.loadFullMetadataSuccess),
-      switchMap(({ full }) => this.recordsRepository.getSiblings(full)),
-      map((siblings) => {
-        return MdViewActions.setSiblings({ siblings })
-      }),
-      catchError(() => of(MdViewActions.setSiblings({ siblings: null })))
-    )
-  )
-
-  loadAssociated$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(MdViewActions.loadFullMetadataSuccess),
-      switchMap(({ full }) => this.recordsRepository.getAssociated(full)),
-      map((associated) => {
-        return MdViewActions.setAssociated({ associated })
-      }),
-      catchError(() => of(MdViewActions.setAssociated({ associated: null })))
+      catchError(() =>
+        of(MdViewActions.setAssociatedRecords({ associatedRecords: null }))
+      )
     )
   )
 

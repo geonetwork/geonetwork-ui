@@ -48,10 +48,7 @@ class MdViewFacadeMock {
   otherLinks$ = new BehaviorSubject([])
   stacLinks$ = new BehaviorSubject([])
   related$ = new BehaviorSubject(null)
-  sources$ = new BehaviorSubject([])
-  sourceOf$ = new BehaviorSubject([])
-  siblings$ = new BehaviorSubject({})
-  associated$ = new BehaviorSubject([])
+  associatedRecords$ = new BehaviorSubject([])
   featureCatalog$ = new BehaviorSubject(null)
   error$ = new BehaviorSubject(null)
   isMetadataLoading$ = new BehaviorSubject(false)
@@ -417,18 +414,10 @@ describe('RecordMetadataComponent', () => {
       fixture.detectChanges()
       expect(linkedSection()).toBeFalsy()
     })
-    it('renders for a record having only source datasets', () => {
-      facade.sources$.next([{ title: 'a source' }])
-      fixture.detectChanges()
-      expect(linkedSection()).toBeTruthy()
-    })
-    it('renders for a record having only siblings', () => {
-      facade.siblings$.next({ crossReference: [{ title: 'a sibling' }] })
-      fixture.detectChanges()
-      expect(linkedSection()).toBeTruthy()
-    })
-    it('renders for a record having only reverse associations', () => {
-      facade.associated$.next([{ title: 'an associated record' }])
+    it('renders for a record having any linked record', () => {
+      facade.associatedRecords$.next([
+        { record: { title: 'a sibling' }, relation: 'sibling' },
+      ])
       fixture.detectChanges()
       expect(linkedSection()).toBeTruthy()
     })
