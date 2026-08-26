@@ -294,6 +294,18 @@ export interface AssociatedRecord {
   associationType: AssociationType
 }
 
+/**
+ * Nature of the link between a record and another one; the association type is
+ * only known for 'sibling' relations, as it is held by the declaring record.
+ */
+export type RecordRelation = 'source' | 'sourceOf' | 'sibling' | 'associated'
+
+export interface LinkedRecord {
+  record: CatalogRecord
+  relation: RecordRelation
+  associationType?: AssociationType
+}
+
 export interface DatasetRecord extends BaseRecord {
   kind: 'dataset'
   status: RecordStatus

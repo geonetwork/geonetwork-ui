@@ -1418,6 +1418,70 @@
               },
               "_id": "7eb795c2-d612-4b5e-b15e-d985b0f4e697"
             }
+          ],
+          "siblings": [
+            {
+              "origin": "catalog",
+              "properties": {
+                "associationType": "crossReference",
+                "initiativeType": ""
+              },
+              "_source": {
+                "uuid": "e27e7006-fdf9-4004-b6c5-af2a5a5c025c"
+              },
+              "_id": "e27e7006-fdf9-4004-b6c5-af2a5a5c025c"
+            },
+            {
+              "origin": "catalog",
+              "properties": {
+                "associationType": "crossReference",
+                "initiativeType": ""
+              },
+              "_source": {
+                "uuid": "a3774ef6-809d-4dd1-984f-9254f49cbd0a"
+              },
+              "_id": "a3774ef6-809d-4dd1-984f-9254f49cbd0a"
+            },
+            {
+              "origin": "catalog",
+              "properties": {
+                "associationType": "largerWorkCitation",
+                "initiativeType": ""
+              },
+              "_source": {
+                "uuid": "ee965118-2416-4d48-b07e-bbc696f002c2"
+              },
+              "_id": "ee965118-2416-4d48-b07e-bbc696f002c2"
+            },
+            {
+              "origin": "remote",
+              "properties": {
+                "associationType": "crossReference",
+                "initiativeType": ""
+              },
+              "_source": {
+                "uuid": "04bcec79-5b25-4b16-b635-73115f7456e4"
+              },
+              "_id": "04bcec79-5b25-4b16-b635-73115f7456e4"
+            }
+          ],
+          "associated": [
+            {
+              "origin": "catalog",
+              "properties": null,
+              "_source": {
+                "uuid": "ce551730-ee1a-4de3-9b49-7e432375d08a"
+              },
+              "_id": "ce551730-ee1a-4de3-9b49-7e432375d08a"
+            },
+            {
+              "origin": "catalog",
+              "properties": null,
+              "_source": {
+                "uuid": "e27e7006-fdf9-4004-b6c5-af2a5a5c025c"
+              },
+              "_id": "e27e7006-fdf9-4004-b6c5-af2a5a5c025c"
+            }
           ]
         }
       }

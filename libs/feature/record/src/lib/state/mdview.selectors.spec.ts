@@ -143,23 +143,15 @@ describe('MdView Selectors', () => {
       })
     })
 
-    describe('getSources', () => {
-      it('returns sources records', () => {
-        const results = MdViewSelectors.getSources.projector({
+    describe('getLinkedRecords', () => {
+      it('returns associated records', () => {
+        const results = MdViewSelectors.getLinkedRecords.projector({
           ...state,
-          sources: [relatedRecord],
+          linkedRecords: [{ record: relatedRecord, relation: 'sibling' }],
         })
-        expect(results).toEqual([relatedRecord])
-      })
-    })
-
-    describe('getSourceOf', () => {
-      it('returns has sources records', () => {
-        const results = MdViewSelectors.getSourceOf.projector({
-          ...state,
-          sourceOf: [relatedRecord],
-        })
-        expect(results).toEqual([relatedRecord])
+        expect(results).toEqual([
+          { record: relatedRecord, relation: 'sibling' },
+        ])
       })
     })
 

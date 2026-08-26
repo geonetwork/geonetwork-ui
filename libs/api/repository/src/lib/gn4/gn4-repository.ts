@@ -14,10 +14,13 @@ import {
 } from '@geonetwork-ui/api/metadata-converter'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import {
+  AssociatedRecord,
   CatalogRecord,
   DatasetFeatureCatalog,
   DatasetFeatureType,
   LanguageCode,
+  LinkedRecord,
+  RecordRelation,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
   Aggregations,
@@ -145,7 +148,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'bucket',
-        ['fcats', 'hassources'],
+        ['fcats', 'hassources', 'siblings', 'associated'],
         JSON.stringify(
           this.gn4SearchHelper.getMetadataByIdsPayload([uniqueIdentifier])
         )
@@ -249,22 +252,43 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
-  getSources(record: CatalogRecord): Observable<CatalogRecord[]> {
-    const sourcesIdentifiers = record.extras?.['sourcesIdentifiers'] as string[]
-    if (sourcesIdentifiers && sourcesIdentifiers.length > 0) {
-      return this.getMultipleRecords(sourcesIdentifiers)
+  getLinkedRecords(record: CatalogRecord): Observable<LinkedRecord[]> {
+    const siblings = (record.extras?.['siblings'] ?? []) as AssociatedRecord[]
+    const relations: Array<[RecordRelation, string[]]> = [
+      ['source', (record.extras?.['sourcesIdentifiers'] ?? []) as string[]],
+      ['sourceOf', (record.extras?.['sourceOfIdentifiers'] ?? []) as string[]],
+      ['sibling', siblings.map(({ uniqueIdentifier }) => uniqueIdentifier)],
+      [
+        'associated',
+        (record.extras?.['associatedIdentifiers'] ?? []) as string[],
+      ],
+    ]
+    const requested = relations.filter(
+      ([, identifiers]) => identifiers.length > 0
+    )
+    if (requested.length === 0) {
+      return of([])
     }
-    return of(null)
-  }
-
-  getSourceOf(record: CatalogRecord): Observable<CatalogRecord[]> {
-    const sourceOfIdentifiers = record.extras?.[
-      'sourceOfIdentifiers'
-    ] as string[]
-    if (sourceOfIdentifiers && sourceOfIdentifiers.length > 0) {
-      return this.getMultipleRecords(sourceOfIdentifiers)
-    }
-    return of(null)
+    return forkJoin(
+      requested.map(([relation, identifiers]) =>
+        this.getMultipleRecords(identifiers).pipe(
+          map((records) =>
+            (records ?? []).map((record) => ({
+              record,
+              relation,
+              associationType:
+                relation === 'sibling'
+                  ? siblings.find(
+                      ({ uniqueIdentifier }) =>
+                        uniqueIdentifier === record.uniqueIdentifier
+                    )?.associationType
+                  : undefined,
+            }))
+          ),
+          catchError(() => of([]))
+        )
+      )
+    ).pipe(map((groups) => groups.flat()))
   }
 
   aggregate(params: AggregationsParams): Observable<Aggregations> {

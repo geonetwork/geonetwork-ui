@@ -4,6 +4,11 @@ import { map } from 'rxjs'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+import {
+  AssociationType,
+  CatalogRecord,
+  RecordRelation,
+} from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'datahub-record-linked-records',
@@ -21,27 +26,53 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 export class RecordLinkedRecordsComponent {
   protected metadataViewFacade = inject(MdViewFacade)
 
-  sourceDatasets$ = this.metadataViewFacade.sources$
-  linkedDatasets$ = this.metadataViewFacade.sourceOf$.pipe(
-    map((records) => records?.filter((record) => record?.kind === 'dataset'))
-  )
-  linkedReuses$ = this.metadataViewFacade.sourceOf$.pipe(
-    map((records) => records?.filter((record) => record?.kind === 'reuse'))
-  )
-  linkedServices$ = this.metadataViewFacade.sourceOf$.pipe(
-    map((records) => records?.filter((record) => record?.kind === 'service'))
+  private linkedRecords$ = this.metadataViewFacade.linkedRecords$.pipe(
+    map((linkedRecords) => linkedRecords ?? [])
   )
 
-  get hasSourceDatasets$() {
-    return this.sourceDatasets$.pipe(map((records) => records?.length > 0))
-  }
-  get hasLinkedDatasets$() {
-    return this.linkedDatasets$.pipe(map((records) => records?.length > 0))
-  }
-  get hasLinkedReuses$() {
-    return this.linkedReuses$.pipe(map((records) => records?.length > 0))
-  }
-  get hasLinkedServices$() {
-    return this.linkedServices$.pipe(map((records) => records?.length > 0))
+  sourceDatasets$ = this.recordsOf('source')
+  linkedDatasets$ = this.recordsOf('sourceOf', 'dataset')
+  linkedReuses$ = this.recordsOf('sourceOf', 'reuse')
+  linkedServices$ = this.recordsOf('sourceOf', 'service')
+  associated$ = this.recordsOf('associated')
+
+  siblings$ = this.linkedRecords$.pipe(
+    map((linkedRecords) =>
+      linkedRecords
+        .filter(({ relation }) => relation === 'sibling')
+        .reduce(
+          (groups, { record, associationType }) => {
+            groups[associationType] ??= []
+            groups[associationType].push(record)
+            return groups
+          },
+          {} as Partial<Record<AssociationType, CatalogRecord[]>>
+        )
+    )
+  )
+
+  hasSourceDatasets$ = this.sourceDatasets$.pipe(
+    map((records) => records.length > 0)
+  )
+  hasLinkedDatasets$ = this.linkedDatasets$.pipe(
+    map((records) => records.length > 0)
+  )
+  hasLinkedReuses$ = this.linkedReuses$.pipe(
+    map((records) => records.length > 0)
+  )
+  hasLinkedServices$ = this.linkedServices$.pipe(
+    map((records) => records.length > 0)
+  )
+  hasAssociated$ = this.associated$.pipe(map((records) => records.length > 0))
+
+  private recordsOf(relation: RecordRelation, kind?: CatalogRecord['kind']) {
+    return this.linkedRecords$.pipe(
+      map((linkedRecords) =>
+        linkedRecords
+          .filter((associated) => associated.relation === relation)
+          .map(({ record }) => record)
+          .filter((record) => !kind || record.kind === kind)
+      )
+    )
   }
 }

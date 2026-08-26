@@ -4,6 +4,7 @@ import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/data
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
+  LinkedRecord,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 
@@ -14,8 +15,7 @@ export interface MetadataViewState {
   error: { notFound?: boolean; otherError?: string } | null
   metadata?: Partial<CatalogRecord>
   related?: CatalogRecord[]
-  sources?: CatalogRecord[]
-  sourceOf?: CatalogRecord[]
+  linkedRecords?: LinkedRecord[]
   userFeedbacks?: UserFeedback[]
   allUserFeedbacksLoading: boolean
   addUserFeedbackLoading: boolean
@@ -77,14 +77,9 @@ const metadataViewReducer = createReducer(
     related,
   })),
 
-  on(MetadataViewActions.setSources, (state, { sources }) => ({
+  on(MetadataViewActions.setLinkedRecords, (state, { linkedRecords }) => ({
     ...state,
-    sources,
-  })),
-
-  on(MetadataViewActions.setSourceOf, (state, { sourceOf }) => ({
-    ...state,
-    sourceOf,
+    linkedRecords,
   })),
 
   /*

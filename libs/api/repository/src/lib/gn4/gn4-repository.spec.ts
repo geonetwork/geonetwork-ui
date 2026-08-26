@@ -37,6 +37,7 @@ import {
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
+  LinkedRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { map } from 'rxjs/operators'
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http'
@@ -418,7 +419,7 @@ describe('Gn4Repository', () => {
       it('calls the API with correct parameters', () => {
         expect(spySearch).toHaveBeenCalledWith(
           'bucket',
-          ['fcats', 'hassources'],
+          ['fcats', 'hassources', 'siblings', 'associated'],
           '{"uuids":["feature-catalog-identifier"]}'
         )
       })
@@ -534,73 +535,120 @@ describe('Gn4Repository', () => {
       expect(results).toStrictEqual(datasetRecordsFixture())
     })
   })
-  describe('getSources', () => {
-    let sources: CatalogRecord[]
+  describe('getLinkedRecords', () => {
+    let linkedRecords: LinkedRecord[]
     const mockRecord = {
       ...SAMPLE_RECORD_WITH_EXTRAS,
       extras: {
-        sourcesIdentifiers: ['source-1', 'source-2'],
+        sourcesIdentifiers: ['source-1'],
+        sourceOfIdentifiers: ['source-1', 'hassource-1'],
+        siblings: [
+          { uniqueIdentifier: 'sibling-1', associationType: 'crossReference' },
+          {
+            uniqueIdentifier: 'sibling-2',
+            associationType: 'largerWorkCitation',
+          },
+          {
+            uniqueIdentifier: 'not-in-catalog',
+            associationType: 'crossReference',
+          },
+        ],
+        associatedIdentifiers: ['associated-1'],
       },
     }
-
     beforeEach(async () => {
       repository.getMultipleRecords = jest
         .fn()
-        .mockImplementation((ids) => of(ids.map((id) => ({ uuid: id }))))
-      sources = await lastValueFrom(repository.getSources(mockRecord))
+        .mockImplementation((ids) =>
+          of(
+            ids
+              .filter((id) => id !== 'not-in-catalog')
+              .map((id) => ({ uniqueIdentifier: id }))
+          )
+        )
+      linkedRecords = await lastValueFrom(
+        repository.getLinkedRecords(mockRecord)
+      )
     })
-
-    it('calls getMultipleRecords for source identifiers', () => {
+    it('calls getMultipleRecords once per relation holding identifiers', () => {
+      expect(repository.getMultipleRecords).toHaveBeenCalledTimes(4)
+      expect(repository.getMultipleRecords).toHaveBeenCalledWith(['source-1'])
       expect(repository.getMultipleRecords).toHaveBeenCalledWith([
         'source-1',
-        'source-2',
+        'hassource-1',
+      ])
+      expect(repository.getMultipleRecords).toHaveBeenCalledWith([
+        'sibling-1',
+        'sibling-2',
+        'not-in-catalog',
+      ])
+      expect(repository.getMultipleRecords).toHaveBeenCalledWith([
+        'associated-1',
       ])
     })
-
-    it('returns the sources as an array of CatalogRecord', () => {
-      expect(sources).toEqual([{ uuid: 'source-1' }, { uuid: 'source-2' }])
+    it('tags each record with its relation, keeping a record related twice under both relations', () => {
+      expect(linkedRecords).toEqual([
+        {
+          record: { uniqueIdentifier: 'source-1' },
+          relation: 'source',
+          associationType: undefined,
+        },
+        {
+          record: { uniqueIdentifier: 'source-1' },
+          relation: 'sourceOf',
+          associationType: undefined,
+        },
+        {
+          record: { uniqueIdentifier: 'hassource-1' },
+          relation: 'sourceOf',
+          associationType: undefined,
+        },
+        {
+          record: { uniqueIdentifier: 'sibling-1' },
+          relation: 'sibling',
+          associationType: 'crossReference',
+        },
+        {
+          record: { uniqueIdentifier: 'sibling-2' },
+          relation: 'sibling',
+          associationType: 'largerWorkCitation',
+        },
+        {
+          record: { uniqueIdentifier: 'associated-1' },
+          relation: 'associated',
+          associationType: undefined,
+        },
+      ])
     })
-
-    it('returns null if no sourcesIdentifiers are defined', async () => {
-      const recordWithoutSources = { ...mockRecord, extras: {} }
-      const result = await lastValueFrom(
-        repository.getSources(recordWithoutSources)
-      )
-      expect(result).toBeNull()
-    })
-  })
-  describe('getSourceOf', () => {
-    let sourceOf: CatalogRecord[]
-    const mockRecord = {
-      ...SAMPLE_RECORD_WITH_EXTRAS,
-      extras: {
-        sourceOfIdentifiers: ['hasSource-1', 'hasSource-2'],
-      },
-    }
-    beforeEach(async () => {
+    it('keeps the other relations when one request fails', async () => {
       repository.getMultipleRecords = jest
         .fn()
-        .mockImplementation((ids) => of(ids.map((id) => ({ uuid: id }))))
-      sourceOf = await lastValueFrom(repository.getSourceOf(mockRecord))
-    })
-    it('calls getMultipleRecords for hasSource identifiers', () => {
-      expect(repository.getMultipleRecords).toHaveBeenCalledWith([
-        'hasSource-1',
-        'hasSource-2',
-      ])
-    })
-    it('returns the sourceOf as an array of CatalogRecord', () => {
-      expect(sourceOf).toEqual([
-        { uuid: 'hasSource-1' },
-        { uuid: 'hasSource-2' },
-      ])
-    })
-    it('returns null if no sourceOfIdentifiers are defined', async () => {
-      const recordWithoutSourceOf = { ...mockRecord, extras: {} }
+        .mockImplementation((ids) =>
+          ids.includes('associated-1')
+            ? throwError(() => 'api')
+            : of(
+                ids
+                  .filter((id) => id !== 'not-in-catalog')
+                  .map((id) => ({ uniqueIdentifier: id }))
+              )
+        )
       const result = await lastValueFrom(
-        repository.getSourceOf(recordWithoutSourceOf)
+        repository.getLinkedRecords(mockRecord)
       )
-      expect(result).toBeNull()
+      expect(result.map(({ relation }) => relation)).toEqual([
+        'source',
+        'sourceOf',
+        'sourceOf',
+        'sibling',
+        'sibling',
+      ])
+    })
+    it('returns an empty array if the record has no relation at all', async () => {
+      const recordWithoutRelations = { ...mockRecord, extras: {} }
+      const result = await lastValueFrom(
+        repository.getLinkedRecords(recordWithoutRelations)
+      )
+      expect(result).toEqual([])
     })
   })
   describe('aggregate', () => {

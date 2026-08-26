@@ -3,6 +3,7 @@ import { createAction, props } from '@ngrx/store'
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
+  LinkedRecord,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 
@@ -54,14 +55,9 @@ export const setRelated = createAction(
   props<{ related: CatalogRecord[] }>()
 )
 
-export const setSources = createAction(
-  '[Metadata view] Set sources',
-  props<{ sources: CatalogRecord[] }>()
-)
-
-export const setSourceOf = createAction(
-  '[Metadata view] Set has sources',
-  props<{ sourceOf: CatalogRecord[] }>()
+export const setLinkedRecords = createAction(
+  '[Metadata view] Set associated records',
+  props<{ linkedRecords: LinkedRecord[] }>()
 )
 
 /*

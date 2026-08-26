@@ -268,35 +268,22 @@ describe('MdViewFacade', () => {
     })
   })
 
-  describe('sources$', () => {
-    it('emits sources', () => {
+  describe('linkedRecords$', () => {
+    it('emits associated records', () => {
+      const linkedRecords = [
+        { record: datasetRecordsFixture()[1], relation: 'sourceOf' as const },
+      ]
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
           metadata: datasetRecordsFixture()[0],
-          sources: [datasetRecordsFixture()[1]],
+          linkedRecords,
         },
       })
       const expected = hot('a', {
-        a: [datasetRecordsFixture()[1]],
+        a: linkedRecords,
       })
-      expect(facade.sources$).toBeObservable(expected)
-    })
-  })
-
-  describe('sourceOf$', () => {
-    it('emits sourceOf', () => {
-      store.setState({
-        [METADATA_VIEW_FEATURE_STATE_KEY]: {
-          ...initialMetadataViewState,
-          metadata: datasetRecordsFixture()[0],
-          sourceOf: [datasetRecordsFixture()[1]],
-        },
-      })
-      const expected = hot('a', {
-        a: [datasetRecordsFixture()[1]],
-      })
-      expect(facade.sourceOf$).toBeObservable(expected)
+      expect(facade.linkedRecords$).toBeObservable(expected)
     })
   })
 

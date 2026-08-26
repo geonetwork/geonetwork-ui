@@ -28,3 +28,15 @@
     [records]="linkedServices$ | async"
   ></datahub-record-internal-links>
 }
+@for (group of siblings$ | async | keyvalue; track group.key) {
+  <datahub-record-internal-links
+    [title]="'domain.record.associationType.' + group.key | translate"
+    [records]="group.value"
+  ></datahub-record-internal-links>
+}
+@if (hasAssociated$ | async) {
+  <datahub-record-internal-links
+    [title]="'record.metadata.linked.associatedRecords' | translate"
+    [records]="associated$ | async"
+  ></datahub-record-internal-links>
+}

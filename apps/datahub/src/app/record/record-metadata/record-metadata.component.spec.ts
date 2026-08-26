@@ -48,8 +48,7 @@ class MdViewFacadeMock {
   otherLinks$ = new BehaviorSubject([])
   stacLinks$ = new BehaviorSubject([])
   related$ = new BehaviorSubject(null)
-  sources$ = new BehaviorSubject([])
-  sourceOf$ = new BehaviorSubject([])
+  linkedRecords$ = new BehaviorSubject([])
   featureCatalog$ = new BehaviorSubject(null)
   error$ = new BehaviorSubject(null)
   isMetadataLoading$ = new BehaviorSubject(false)
@@ -404,6 +403,23 @@ describe('RecordMetadataComponent', () => {
       it('Related component renders', () => {
         expect(relatedComponent).toBeTruthy()
       })
+    })
+  })
+
+  describe('linked records section', () => {
+    const linkedSection = () =>
+      fixture.debugElement.query(By.css('#linked-records'))
+
+    it('does not render without any linked record', () => {
+      fixture.detectChanges()
+      expect(linkedSection()).toBeFalsy()
+    })
+    it('renders for a record having any linked record', () => {
+      facade.linkedRecords$.next([
+        { record: { title: 'a sibling' }, relation: 'sibling' },
+      ])
+      fixture.detectChanges()
+      expect(linkedSection()).toBeTruthy()
     })
   })
 

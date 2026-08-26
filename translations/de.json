@@ -550,6 +550,7 @@
   "record.metadata.languages": "Sprachen",
   "record.metadata.link.postgis.table": "Tabelle:",
   "record.metadata.link.postgis.tooltip": "PostGIS-Ressourcen haben keinen Zugriffslink.",
+  "record.metadata.linked.associatedRecords": "",
   "record.metadata.linked.datasets": "Verknüpfte Datensätze",
   "record.metadata.linked.records": "Verknüpfte Inhalte",
   "record.metadata.linked.reuses": "Verknüpfte Wiederverwendungen",

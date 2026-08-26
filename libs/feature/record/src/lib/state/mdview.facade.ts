@@ -74,9 +74,7 @@ export class MdViewFacade {
 
   related$ = this.store.pipe(select(MdViewSelectors.getRelated))
 
-  sources$ = this.store.pipe(select(MdViewSelectors.getSources))
-
-  sourceOf$ = this.store.pipe(select(MdViewSelectors.getSourceOf))
+  linkedRecords$ = this.store.pipe(select(MdViewSelectors.getLinkedRecords))
 
   chartConfig$ = this.store.pipe(select(MdViewSelectors.getChartConfig))
 

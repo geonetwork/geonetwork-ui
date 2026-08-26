@@ -16,7 +16,10 @@ import { Observable, of, throwError } from 'rxjs'
 import * as MdViewActions from './mdview.actions'
 import { MdViewEffects } from './mdview.effects'
 import { hot } from 'jasmine-marbles'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  LinkedRecord,
+} from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { Router } from '@angular/router'
@@ -32,8 +35,15 @@ class RecordsRepositoryMock {
   search = jest.fn(() => of(searchResultsFixture()))
   getRecord = jest.fn(() => of(datasetRecordsFixture()[0]))
   getSimilarRecords = jest.fn(() => of(datasetRecordsFixture()))
-  getSources = jest.fn(() => of(datasetRecordsFixture()))
-  getSourceOf = jest.fn(() => of(datasetRecordsFixture()))
+  getLinkedRecords = jest.fn(() =>
+    of(
+      datasetRecordsFixture().map((record) => ({
+        record,
+        relation: 'sibling',
+        associationType: 'crossReference',
+      }))
+    )
+  )
 }
 
 class PlatformServiceInterfaceMock {
@@ -154,66 +164,39 @@ describe('MdViewEffects', () => {
     })
   })
 
-  describe('loadSources$', () => {
+  describe('loadLinkedRecords$', () => {
     describe('when load full success', () => {
-      it('dispatch setSources', () => {
+      it('dispatch setLinkedRecords', () => {
         actions = hot('-a-|', {
           a: MdViewActions.loadFullMetadataSuccess({ full }),
         })
         const expected = hot('-a-|', {
-          a: MdViewActions.setSources({
-            sources: datasetRecordsFixture() as CatalogRecord[],
+          a: MdViewActions.setLinkedRecords({
+            linkedRecords: datasetRecordsFixture().map((record) => ({
+              record,
+              relation: 'sibling',
+              associationType: 'crossReference',
+            })) as LinkedRecord[],
           }),
         })
-        expect(effects.loadSources$).toBeObservable(expected)
+        expect(effects.loadLinkedRecords$).toBeObservable(expected)
       })
     })
     describe('when api fails', () => {
       beforeEach(() => {
-        repository.getSources = jest.fn(() => throwError(() => 'api'))
+        repository.getLinkedRecords = jest.fn(() => throwError(() => 'api'))
       })
-      it('dispatch loadFullFailure', () => {
+      it('dispatch setLinkedRecords with null', () => {
         actions = hot('-a-|', {
           a: MdViewActions.loadFullMetadataSuccess({ full }),
         })
         const expected = hot('-(a|)', {
-          a: MdViewActions.setSources({ sources: null }),
+          a: MdViewActions.setLinkedRecords({ linkedRecords: null }),
         })
-        expect(effects.loadSources$).toBeObservable(expected)
+        expect(effects.loadLinkedRecords$).toBeObservable(expected)
       })
     })
   })
-
-  describe('loadSourceOf$', () => {
-    describe('when load full success', () => {
-      it('dispatch setSourceOf', () => {
-        actions = hot('-a-|', {
-          a: MdViewActions.loadFullMetadataSuccess({ full }),
-        })
-        const expected = hot('-a-|', {
-          a: MdViewActions.setSourceOf({
-            sourceOf: datasetRecordsFixture() as CatalogRecord[],
-          }),
-        })
-        expect(effects.loadSourceOf$).toBeObservable(expected)
-      })
-      describe('when api fails', () => {
-        beforeEach(() => {
-          repository.getSourceOf = jest.fn(() => throwError(() => 'api'))
-        })
-        it('dispatch loadFullFailure', () => {
-          actions = hot('-a-|', {
-            a: MdViewActions.loadFullMetadataSuccess({ full }),
-          })
-          const expected = hot('-(a|)', {
-            a: MdViewActions.setSourceOf({ sourceOf: null }),
-          })
-          expect(effects.loadSourceOf$).toBeObservable(expected)
-        })
-      })
-    })
-  })
-
   describe('loadUserFeedbacks$', () => {
     describe('when loadUserFeedbacks success', () => {
       it('should dispatch loadUserFeedbacksSuccess when API call is successful', () => {
