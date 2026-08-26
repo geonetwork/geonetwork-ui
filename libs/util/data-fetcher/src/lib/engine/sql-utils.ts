@@ -4,7 +4,13 @@ import {
   FieldGroupBy,
   FieldName,
   FieldSort,
-} from './model'
+} from '../model'
+
+export const GEOMETRY_COLUMN_ALIAS = '__geometry__'
+
+function fieldToSql(name: string): string {
+  return `"${name.replace(/"/g, '""')}"` // escape double quotes in field names
+}
 
 function filterToSql(filter: FieldFilter): string {
   const operator = filter[0]
@@ -20,12 +26,12 @@ function filterToSql(filter: FieldFilter): string {
     case '=':
     case '!=':
     case 'like':
-      return `[${args[0]}] ${operator.toUpperCase()} ${valueToSql(
+      return `${fieldToSql(args[0] as string)} ${operator.toUpperCase()} ${valueToSql(
         args[1] as string | number
       )}`
     case 'in': {
       const values = args.slice(1) as string[] | number[]
-      return `[${args[0]}] IN (${values.map(valueToSql).join(', ')})`
+      return `${fieldToSql(args[0] as string)} IN (${values.map(valueToSql).join(', ')})`
     }
     case 'and':
     case 'or': {
@@ -48,18 +54,19 @@ function aggregationToSql(aggregation: FieldAggregation): string {
 
   switch (operation) {
     case 'average':
-      return `AVG([${field}]) as [average(${field})]`
+      return `CAST(AVG(${fieldToSql(field)}) AS DOUBLE) as ${fieldToSql(`average(${field})`)}`
     case 'sum':
     case 'max':
     case 'min':
-      return `${operation.toUpperCase()}([${field}]) as [${operation}(${field})]`
+      return `CAST(${operation.toUpperCase()}(${fieldToSql(field)}) AS DOUBLE) as ${fieldToSql(`${operation}(${field})`)}`
     case 'count':
-      return 'COUNT(*) as [count()]'
+      return 'CAST(COUNT(*) AS INTEGER) as "count()"' // we don't need Bigint precision here
   }
 }
 
 /**
  * Leave arguments at null if not used
+ * @param tableName
  * @param selected
  * @param filter
  * @param sort
@@ -69,29 +76,34 @@ function aggregationToSql(aggregation: FieldAggregation): string {
  * @param aggregations
  */
 export function generateSqlQuery(
+  tableName: string,
   selected: FieldName[] = null,
   filter: FieldFilter = null,
   sort: FieldSort[] = null,
   startIndex: number = null,
   count: number = null,
   groupBy: FieldGroupBy[] = null,
-  aggregations: FieldAggregation[] = null
+  aggregations: FieldAggregation[] = null,
+  geometryColumn: string = null
 ): string {
   let sqlSelect = 'SELECT *'
-  const sqlFrom = ' FROM ?'
+  const sqlFrom = ` FROM ${tableName}`
   let sqlOrderBy = ''
   let sqlWhere = ''
   let sqlLimit = ''
   let sqlGroupBy = ''
   if (selected !== null) {
-    sqlSelect = `SELECT ${selected.map((name) => `[${name}]`).join(', ')}`
+    sqlSelect = `SELECT ${selected.map(fieldToSql).join(', ')}`
+  }
+  if (geometryColumn !== null) {
+    sqlSelect += `, ST_AsGeoJSON(${fieldToSql(geometryColumn)}) as ${GEOMETRY_COLUMN_ALIAS}`
   }
   if (filter !== null) {
     sqlWhere = ` WHERE ${filterToSql(filter)}`
   }
   if (sort?.length) {
     sqlOrderBy = ` ORDER BY ${sort
-      .map((sort) => `[${sort[1]}] ${sort[0].toUpperCase()}`)
+      .map((sort) => `${fieldToSql(sort[1])} ${sort[0].toUpperCase()}`)
       .join(', ')}`
   }
   if (startIndex !== null && count !== null) {
@@ -101,15 +113,18 @@ export function generateSqlQuery(
     sqlSelect = `SELECT ${aggregations.map(aggregationToSql).join(', ')}`
     const groupedByDistinct = groupBy.filter((group) => group[0] === 'distinct')
     const sqlGroupByFields = groupedByDistinct
-      .map((group) => `[${group[1]}]`)
+      .map((group) => fieldToSql(group[1]))
       .join(', ')
     const sqlGroupBySelect = groupedByDistinct
-      .map((group) => `[${group[1]}] as [distinct(${group[1]})]`)
+      .map(
+        (group) =>
+          `${fieldToSql(group[1])} as ${fieldToSql(`distinct(${group[1]})`)}`
+      )
       .join(', ')
     if (sqlGroupByFields && sqlGroupBySelect) {
       sqlGroupBy = ` GROUP BY ${sqlGroupByFields}`
       sqlSelect += `, ${sqlGroupBySelect}`
     }
   }
-  return sqlSelect + sqlFrom + sqlGroupBy + sqlOrderBy + sqlWhere + sqlLimit
+  return sqlSelect + sqlFrom + sqlGroupBy + sqlWhere + sqlOrderBy + sqlLimit
 }

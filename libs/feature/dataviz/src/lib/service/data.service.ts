@@ -1,15 +1,15 @@
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
+  GetCollectionItemsOptions,
   OgcApiCollectionInfo,
   OgcApiEndpoint,
   OgcApiRecord,
+  StacEndpoint,
+  StacItemsDocument,
+  TmsEndpoint,
   WfsEndpoint,
   WfsVersion,
-  TmsEndpoint,
-  StacEndpoint,
-  GetCollectionItemsOptions,
-  StacItemsDocument,
 } from '@camptocamp/ogc-client'
 import {
   BaseReader,
@@ -26,7 +26,7 @@ import {
 } from '@geonetwork-ui/util/shared'
 import type { FeatureCollection } from 'geojson'
 import { from, Observable, throwError } from 'rxjs'
-import { catchError, map, switchMap, tap } from 'rxjs/operators'
+import { catchError, map, switchMap } from 'rxjs/operators'
 import {
   DatasetOnlineResource,
   DatasetServiceDistribution,
@@ -347,14 +347,11 @@ export class DataService {
     if (link.type === 'service' && link.accessServiceProtocol === 'wfs') {
       const wfsUrlEndpoint = this.proxy.getProxiedUrl(link.url.toString())
       return from(
-        openDataset(
-          wfsUrlEndpoint,
-          'wfs',
-          {
-            wfsFeatureType: link.name,
-          },
-          cacheActive
-        )
+        openDataset(wfsUrlEndpoint, {
+          typeHint: 'wfs',
+          wfsFeatureType: link.name,
+          enableCache: cacheActive,
+        })
       )
     } else if (link.type === 'download') {
       const linkProxifiedUrl = this.proxy.getProxiedUrl(link.url.toString())
@@ -364,7 +361,10 @@ export class DataService {
           ? (format as SupportedType)
           : undefined
       return from(
-        openDataset(linkProxifiedUrl, supportedType, undefined, cacheActive)
+        openDataset(linkProxifiedUrl, {
+          typeHint: supportedType,
+          enableCache: cacheActive,
+        })
       ).pipe()
     } else if (
       link.type === 'service' &&
@@ -374,7 +374,9 @@ export class DataService {
         link.url.toString(),
         'geojson'
       )
-      return from(openDataset(url, 'geojson', undefined, cacheActive)).pipe()
+      return from(
+        openDataset(url, { typeHint: 'geojson', enableCache: cacheActive })
+      ).pipe()
     } else if (
       link.type === 'service' &&
       link.accessServiceProtocol === 'ogcFeatures'
@@ -395,12 +397,10 @@ export class DataService {
           }
           const urlWithoutLimit = new URL(geojsonUrl)
           urlWithoutLimit.searchParams.delete('limit')
-          return openDataset(
-            urlWithoutLimit.toString(),
-            'geojson',
-            undefined,
-            cacheActive
-          )
+          return openDataset(urlWithoutLimit.toString(), {
+            typeHint: 'geojson',
+            enableCache: cacheActive,
+          })
         })
       )
     }

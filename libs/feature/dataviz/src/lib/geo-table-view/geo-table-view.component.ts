@@ -2,11 +2,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  inject,
   Input,
   OnDestroy,
   OnInit,
   ViewChild,
-  inject,
 } from '@angular/core'
 import {
   DataTableComponent,
@@ -75,6 +75,7 @@ export class GeoTableViewComponent implements OnInit, OnDestroy {
   }
 
   private async initMapContext(): Promise<MapContext> {
+    this.dataset.load()
     this.dataset.selectAll()
     return {
       layers: [

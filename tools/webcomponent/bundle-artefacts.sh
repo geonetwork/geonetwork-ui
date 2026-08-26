@@ -8,14 +8,14 @@ bundle_webcomponents() {
   echo '-- Copy Web Components bundle file'
   cat ${BUILD_PATH_WEBCOMPONENTS}/*.js > "${DIST_PATH}gn-wc.js"
   # remove all source map references from the final bundle
-  sed -i 's/\/\/# sourceMappingURL=.*\.map//g' "${DIST_PATH}gn-wc.js"
+  sed -i 's/\/\/# sourceMappingURL=[a-zA-Z0-9\. \-]*\.map//g' "${DIST_PATH}gn-wc.js"
 }
 
 bundle_standalone_search() {
   echo '-- Copy Standalone Search bundle file'
   cat ${BUILD_PATH_STANDALONE_SEARCH}/*.js > "${DIST_PATH}gn-standalone-search.js"
   # remove all source map references from the final bundle
-  sed -i 's/\/\/# sourceMappingURL=.*\.map//g' "${DIST_PATH}gn-standalone-search.js"
+  sed -i 's/\/\/# sourceMappingURL=[a-zA-Z0-9\. \-]*\.map//g' "${DIST_PATH}gn-standalone-search.js"
 }
 
 if [ "$1" == "--watch" ]; then

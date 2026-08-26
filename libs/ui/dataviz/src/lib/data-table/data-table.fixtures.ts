@@ -25,8 +25,8 @@ export const tableItemsFixture = {
       geometry: null,
       properties: {
         id: '0003',
-        firstName: 'Claude',
-        lastName: 'François',
+        firstName: 'Lady',
+        lastName: 'Gaga',
       },
     },
   ] as DataItem[],
