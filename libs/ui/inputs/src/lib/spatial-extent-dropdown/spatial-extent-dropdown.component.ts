@@ -86,7 +86,6 @@ export class SpatialExtentDropdownComponent {
   @Input() title: string
   @Input()
   set maxFileSizeMb(value: number) {
-    console.log(value)
     this._maxFileSizeMb = value ?? MAX_FILE_SIZE_MB
   }
   get maxFileSizeMb(): number {

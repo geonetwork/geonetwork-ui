@@ -105,7 +105,7 @@ describe('FieldsService', () => {
           'user',
           'changeDate',
           'availableServices',
-          "spatialExtent"
+          'spatialExtent',
         ])
       })
     })
