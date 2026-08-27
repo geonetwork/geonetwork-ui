@@ -54,7 +54,12 @@
       {{ 'search.filters.spatialExtent.helpText' | translate }}
     </div>
 
-    <div class="border-b-[1px] border-gray-400 pb-[20px] text-black">
+    <div
+      [class]="
+        (hasSelection ? 'border-b-[1px] border-gray-400' : '') +
+        ' pb-[20px] text-black'
+      "
+    >
       <input
         #fileInput
         type="file"
@@ -76,22 +81,21 @@
     @if (hasSelection) {
       <gn-ui-popover
         [content]="displayFileName"
-        theme="light"
+        theme="gray-950"
         data-test="spatial-extent-selected-item"
       >
         <button
           (click)="removeSelection($event)"
           type="button"
-          class="flex group items-center justify-between w-full bg-primary-lighter hover:bg-primary text-white rounded px-[8px] py-[4px] mb-[12px] cursor-pointer h-[28px]">
+          class="flex group items-center justify-between gap-x-2 w-full bg-primary-lighter hover:bg-primary text-white rounded px-[8px] py-[4px] mb-[12px] cursor-pointer h-[28px]"
+        >
           <ng-icon
             name="iconoirSquareDashed"
             class="shrink-0"
             size="15px"
           ></ng-icon>
-          <span class="truncate text-sm max-w-[198px]">
-            {{
-              'search.filters.spatialExtent.bboxPrefix' | translate
-            }}
+          <span class="truncate text-sm">
+            {{ 'search.filters.spatialExtent.bboxPrefix' | translate }}
             {{ displayFileName }}
           </span>
           <ng-icon
