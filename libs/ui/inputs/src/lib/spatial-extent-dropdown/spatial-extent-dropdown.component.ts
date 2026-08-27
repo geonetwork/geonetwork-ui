@@ -37,8 +37,10 @@ import {
   BoundingBox,
   getGeometryBoundingBox,
   getGeometryFromGeoJSON,
+  isFileExtensionValid,
   megabytesToBytes,
   propagateToDocumentOnly,
+  readFileAsText,
 } from '@geonetwork-ui/util/shared'
 
 const ACCEPTED_FILE_EXTENSIONS = ['.json', '.geojson']
@@ -83,7 +85,7 @@ export class SpatialExtentDropdownComponent {
 
   @Input() title: string
   @Output() bboxChange = new EventEmitter<BoundingBox | null>()
-  @Output() error = new EventEmitter<string>()
+  @Output() errorChange = new EventEmitter<string>()
 
   bbox: BoundingBox | null = null
   fileName: string | null = null
@@ -164,12 +166,12 @@ export class SpatialExtentDropdownComponent {
 
   private setError(errorKey: string) {
     this.errorKey = errorKey
-    this.error.emit(errorKey)
+    this.errorChange.emit(errorKey)
   }
 
-  private handleFile(file: File) {
+  private async handleFile(file: File) {
     this.errorKey = null
-    if (!this.isFileExtensionValid(file)) {
+    if (!isFileExtensionValid(file.name, ACCEPTED_FILE_EXTENSIONS)) {
       this.setError('search.filters.spatialExtent.error.invalidFormat')
       return
     }
@@ -177,16 +179,13 @@ export class SpatialExtentDropdownComponent {
       this.setError('search.filters.spatialExtent.error.fileTooLarge')
       return
     }
-    const reader = new FileReader()
-    reader.onload = () => {
-      this.handleFileContent(reader.result as string, file.name)
-      this.cd.markForCheck()
-    }
-    reader.onerror = () => {
+    try {
+      const content = await readFileAsText(file)
+      this.handleFileContent(content, file.name)
+    } catch {
       this.setError('search.filters.spatialExtent.error.invalidFormat')
-      this.cd.markForCheck()
     }
-    reader.readAsText(file)
+    this.cd.markForCheck()
   }
 
   private handleFileContent(content: string, fileName: string) {
@@ -206,10 +205,5 @@ export class SpatialExtentDropdownComponent {
     this.bbox = bbox
     this.fileName = fileName
     this.bboxChange.emit(bbox)
-  }
-
-  private isFileExtensionValid(file: File): boolean {
-    const name = file.name.toLowerCase()
-    return ACCEPTED_FILE_EXTENSIONS.some((ext) => name.endsWith(ext))
   }
 }
