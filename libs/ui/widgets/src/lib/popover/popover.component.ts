@@ -11,6 +11,7 @@ import {
   Renderer2,
   ViewContainerRef,
   EmbeddedViewRef,
+  ViewEncapsulation,
   inject,
 } from '@angular/core'
 import tippy, { Instance } from 'tippy.js'
@@ -21,6 +22,8 @@ import tippy, { Instance } from 'tippy.js'
   styleUrls: ['./popover.component.css'],
   standalone: true,
   imports: [],
+  // tippy renders its popup outside this component, so styles must not be scoped
+  encapsulation: ViewEncapsulation.None,
 })
 export class PopoverComponent implements AfterViewInit, OnChanges, OnDestroy {
   private viewContainerRef = inject(ViewContainerRef)
@@ -34,6 +37,7 @@ export class PopoverComponent implements AfterViewInit, OnChanges, OnDestroy {
     | 'translucent'
     | 'material'
     | 'dark'
+    | 'gray-950'
     | ''
 
   private tippyInstance: Instance
