@@ -105,6 +105,7 @@ describe('FieldsService', () => {
           'user',
           'changeDate',
           'availableServices',
+          "spatialExtent"
         ])
       })
     })
@@ -184,6 +185,7 @@ describe('FieldsService', () => {
           q: [],
           representationType: [],
           resourceType: [],
+          spatialExtent: [],
           topic: [],
           owner: [],
           producerOrg: [],
