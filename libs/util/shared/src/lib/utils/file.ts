@@ -2,7 +2,7 @@ export function isFileExtensionValid(
   fileName: string,
   acceptedExtensions: string[]
 ): boolean {
-  return acceptedExtensions.some((ext) => fileName.endsWith(ext))
+  return acceptedExtensions.some((ext) => fileName.toLowerCase().endsWith(ext))
 }
 
 export function readFileAsText(file: File): Promise<string> {
