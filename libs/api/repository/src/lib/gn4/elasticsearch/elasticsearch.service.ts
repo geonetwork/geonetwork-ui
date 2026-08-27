@@ -36,6 +36,7 @@ import {
 import { TranslateService } from '@ngx-translate/core'
 import {
   bboxToPolygon,
+  BoundingBox,
   getGeometryBoundingBox,
   isBoundingBox,
 } from '@geonetwork-ui/util/shared'
@@ -267,8 +268,18 @@ export class ElasticsearchService {
     return this.metadataLang === 'current'
   }
 
-  private filtersToQuery(
+  private findSpatialFilterExtent(
     filters: FieldFilters | FiltersAggregationParams | string
+  ): BoundingBox | undefined {
+    if (typeof filters === 'string') {
+      return undefined
+    }
+    return Object.values(filters).find(isBoundingBox)
+  }
+
+  private filtersToQuery(
+    filters: FieldFilters | FiltersAggregationParams | string,
+    spatialFilterExtent = this.findSpatialFilterExtent(filters)
   ): FilterQuery {
     const addQuote = (key: string) => (/^\/.+\/$/.test(key) ? key : `"${key}"`)
     const makeQuery = (filter: FieldFilter): string => {
@@ -314,9 +325,6 @@ export class ElasticsearchService {
           dateRange: DateRange
         }
       })[0]
-    const spatialFilterExtent = Object.entries(filters)
-      .filter(([, value]) => isBoundingBox(value))
-      .map(([, extent]) => extent)[0]
     const queryParts = [
       queryString && {
         query_string: {
@@ -390,7 +398,12 @@ export class ElasticsearchService {
         },
       })
     }
-    const queryFilters = this.filtersToQuery(fieldSearchFilters)
+    // a spatial extent filter takes precedence over the preference geometry for boosting
+    const spatialFilterExtent = this.findSpatialFilterExtent(fieldSearchFilters)
+    const queryFilters = this.filtersToQuery(
+      fieldSearchFilters,
+      spatialFilterExtent
+    )
     if (queryFilters) {
       filter.push(...queryFilters)
     }
@@ -401,9 +414,6 @@ export class ElasticsearchService {
         },
       })
     }
-    // a spatial extent filter takes precedence over the preference geometry for boosting
-    const spatialFilterExtent =
-      Object.values(fieldSearchFilters).find(isBoundingBox)
     const boostGeometry = spatialFilterExtent
       ? bboxToPolygon(spatialFilterExtent)
       : geometry
