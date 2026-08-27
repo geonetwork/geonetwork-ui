@@ -26,6 +26,7 @@ import { CommonModule } from '@angular/common'
 import { BoundingBox } from '@geonetwork-ui/util/shared'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
+import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 
 @Component({
   selector: 'gn-ui-filter-dropdown',
@@ -49,6 +50,9 @@ export class FilterDropdownComponent implements OnInit {
 
   @Input() fieldName: string
   @Input() title: string
+
+  spatialExtentMaxFileSize =
+    getOptionalSearchConfig()?.SPATIAL_EXTENT_MAX_FILE_SIZE
 
   fieldType: FieldType
   dateRange: DateRange

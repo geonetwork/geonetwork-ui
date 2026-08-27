@@ -84,6 +84,16 @@ export class SpatialExtentDropdownComponent {
   private scrollStrategies = inject(ScrollStrategyOptions)
 
   @Input() title: string
+  @Input()
+  set maxFileSizeMb(value: number) {
+    console.log(value)
+    this._maxFileSizeMb = value ?? MAX_FILE_SIZE_MB
+  }
+  get maxFileSizeMb(): number {
+    return this._maxFileSizeMb
+  }
+  private _maxFileSizeMb = MAX_FILE_SIZE_MB
+
   @Output() bboxChange = new EventEmitter<BoundingBox | null>()
   @Output() errorChange = new EventEmitter<string>()
 
@@ -175,7 +185,7 @@ export class SpatialExtentDropdownComponent {
       this.setError('search.filters.spatialExtent.error.invalidFormat')
       return
     }
-    if (file.size > megabytesToBytes(MAX_FILE_SIZE_MB)) {
+    if (file.size > megabytesToBytes(this.maxFileSizeMb)) {
       this.setError('search.filters.spatialExtent.error.fileTooLarge')
       return
     }

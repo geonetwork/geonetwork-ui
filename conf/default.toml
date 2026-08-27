@@ -102,6 +102,9 @@ background_color = "#fdfbff"
 # filter_geometry_url = "https://my.domain.org/assets/boundary.geojson"
 # filter_geometry_data = '{ "coordinates": [...], "type": "Polygon" }'
 
+# Optional; maximum size (in megabytes) allowed for a GeoJSON file imported through the spatial extent filter. Defaults to 2.
+# spatial_extent_max_file_size = 2
+
 # The advanced search filters available to the user can be customized with this setting.
 # The following fields can be used for filtering: 'organization', 'format', 'publicationYear', 'standard', 'inspireKeyword', 'keyword', 'topic', 'isSpatial', 'license', 'resourceType', 'representationType', 'producerOrg', 'publisherOrg'
 # If not configured, the default values are 'organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license'
