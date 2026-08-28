@@ -34,6 +34,7 @@ import {
   MapEventsByType,
   SourceLoadErrorEvent,
   SourceLoadErrorType,
+  MapContextLayerMapLibreStyle,
 } from '@geospatial-sdk/core'
 import {
   applyContextDiffToMap,
@@ -55,10 +56,9 @@ import {
 import { matSwipeOutline } from '@ng-icons/material-icons/outline'
 import { transformExtent } from 'ol/proj.js'
 
-const DEFAULT_BASEMAP_LAYER: MapContextLayerXyz = {
-  type: 'xyz',
-  url: `https://{a-c}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
-  attributions: `<span>© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, © <a href="https://carto.com/">Carto</a></span>`,
+export const DEFAULT_BASEMAP_LAYER: MapContextLayerMapLibreStyle = {
+  type: 'maplibre-style',
+  styleUrl: `https://vector.openstreetmap.org/styles/svwd/svwd03style.json`,
 }
 
 const DEFAULT_VIEW: MapContextView = {
