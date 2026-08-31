@@ -102,7 +102,7 @@ background_color = "#fdfbff"
 # filter_geometry_url = "https://my.domain.org/assets/boundary.geojson"
 # filter_geometry_data = '{ "coordinates": [...], "type": "Polygon" }'
 
-# Optional; maximum size (in megabytes) allowed for a GeoJSON file imported through the spatial extent filter. Defaults to 2.
+# Optional; maximum size (in megabytes) allowed for a GeoJSON file imported through the spatial extent filter.
 # spatial_extent_max_file_size = 2
 
 # The advanced search filters available to the user can be customized with this setting.
@@ -110,7 +110,7 @@ background_color = "#fdfbff"
 # If not configured, the default values are 'organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license'
 # Note that some links in the datahub app set an 'organization' filter. So this field is needed to allow unsetting such filters.
 # WARNING: 'resourceType' filter has been deprecated, please use 'recordKind' instead. Breaking change: 'resourceType' filter won't retrieve featureCatalog anymore.
-# advanced_filters = ['organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license']
+# advanced_filters = ['organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license', 'spatialExtent']
 
 # Optional; if true, the default pre-configured searches ("The latest" and "The most popular")
 # will not be shown under the main search bar. Defaults to false.

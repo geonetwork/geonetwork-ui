@@ -1,4 +1,5 @@
 ngx-dropzone {
   height: auto;
   border: none;
+  overflow: hidden;
 }

@@ -2,19 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { SpatialExtentDropdownComponent } from './spatial-extent-dropdown.component'
 
-function createFile(content: string, name: string, type = 'application/json') {
-  return new File([content], name, { type })
-}
-
-function triggerFileInput(
-  component: SpatialExtentDropdownComponent,
-  file: File | null
-) {
-  const input = document.createElement('input')
-  Object.defineProperty(input, 'files', { value: file ? [file] : [] })
-  component.handleFileInput({ target: input } as unknown as Event)
-}
-
 describe('SpatialExtentDropdownComponent', () => {
   let component: SpatialExtentDropdownComponent
   let fixture: ComponentFixture<SpatialExtentDropdownComponent>
@@ -86,11 +73,24 @@ describe('SpatialExtentDropdownComponent', () => {
       expect(emittedBbox).toEqual([null])
       expect(event.stopPropagation).toHaveBeenCalled()
     })
+
+    it('resets the file input when present', () => {
+      const clearSpy = jest.fn()
+      component.fileInput = { clear: clearSpy } as any
+
+      component.removeSelection(new Event('click'))
+
+      expect(clearSpy).toHaveBeenCalled()
+    })
   })
 
-  describe('file import', () => {
+  describe('handleFileSelected', () => {
     let emittedBbox: unknown[]
     let emittedErrors: string[]
+
+    function createFile(content: string, name: string) {
+      return new File([content], name, { type: 'application/json' })
+    }
 
     beforeEach(() => {
       emittedBbox = []
@@ -99,15 +99,8 @@ describe('SpatialExtentDropdownComponent', () => {
       component.errorChange.subscribe((v) => emittedErrors.push(v))
     })
 
-    it('ignores the input when no file was selected', () => {
-      triggerFileInput(component, null)
-      expect(emittedBbox).toEqual([])
-      expect(emittedErrors).toEqual([])
-    })
-
-    it('rejects a file with an unsupported extension', async () => {
-      triggerFileInput(component, createFile('not json', 'area.txt'))
-      await fixture.whenStable()
+    it('rejects a file that is not valid JSON', async () => {
+      await component.handleFileSelected(createFile('not json', 'area.geojson'))
 
       expect(component.errorKey).toBe(
         'search.filters.spatialExtent.error.invalidFormat'
@@ -115,28 +108,6 @@ describe('SpatialExtentDropdownComponent', () => {
       expect(emittedErrors).toEqual([
         'search.filters.spatialExtent.error.invalidFormat',
       ])
-      expect(component.hasSelection).toBe(false)
-    })
-
-    it('rejects a file exceeding the size limit', async () => {
-      const file = createFile('{}', 'area.geojson')
-      Object.defineProperty(file, 'size', { value: 3 * 1024 * 1024 })
-
-      triggerFileInput(component, file)
-      await fixture.whenStable()
-
-      expect(component.errorKey).toBe(
-        'search.filters.spatialExtent.error.fileTooLarge'
-      )
-    })
-
-    it('rejects a file that is not valid JSON', async () => {
-      triggerFileInput(component, createFile('not json', 'area.geojson'))
-      await fixture.whenStable()
-
-      expect(component.errorKey).toBe(
-        'search.filters.spatialExtent.error.invalidFormat'
-      )
     })
 
     it('rejects a GeoJSON file with no geometry', async () => {
@@ -144,8 +115,8 @@ describe('SpatialExtentDropdownComponent', () => {
         type: 'FeatureCollection',
         features: [],
       })
-      triggerFileInput(component, createFile(content, 'area.geojson'))
-      await fixture.whenStable()
+
+      await component.handleFileSelected(createFile(content, 'area.geojson'))
 
       expect(component.errorKey).toBe(
         'search.filters.spatialExtent.error.noGeometry'
@@ -167,14 +138,44 @@ describe('SpatialExtentDropdownComponent', () => {
         ],
       })
 
-      triggerFileInput(component, createFile(content, 'area.geojson'))
-      await fixture.whenStable()
+      await component.handleFileSelected(createFile(content, 'area.geojson'))
 
       expect(component.errorKey).toBeNull()
       expect(component.bbox).toEqual([0, 0, 1, 1])
       expect(component.fileName).toBe('area.geojson')
       expect(component.hasSelection).toBe(true)
       expect(emittedBbox).toEqual([[0, 0, 1, 1]])
+    })
+  })
+
+  describe('handleFileError', () => {
+    let emittedErrors: string[]
+
+    beforeEach(() => {
+      emittedErrors = []
+      component.errorChange.subscribe((v) => emittedErrors.push(v))
+    })
+
+    it('maps an invalid-extension error', () => {
+      component.handleFileError('invalid-extension')
+
+      expect(component.errorKey).toBe(
+        'search.filters.spatialExtent.error.invalidFormat'
+      )
+      expect(emittedErrors).toEqual([
+        'search.filters.spatialExtent.error.invalidFormat',
+      ])
+    })
+
+    it('maps a file-too-large error', () => {
+      component.handleFileError('file-too-large')
+
+      expect(component.errorKey).toBe(
+        'search.filters.spatialExtent.error.fileTooLarge'
+      )
+      expect(emittedErrors).toEqual([
+        'search.filters.spatialExtent.error.fileTooLarge',
+      ])
     })
   })
 })

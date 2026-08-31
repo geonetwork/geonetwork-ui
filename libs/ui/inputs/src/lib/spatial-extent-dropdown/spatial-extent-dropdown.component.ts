@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   Output,
@@ -37,22 +36,18 @@ import {
   BoundingBox,
   getGeometryBoundingBox,
   getGeometryFromGeoJSON,
-  isFileExtensionValid,
-  megabytesToBytes,
   propagateToDocumentOnly,
   readFileAsText,
 } from '@geonetwork-ui/util/shared'
-
-const ACCEPTED_FILE_EXTENSIONS = ['.json', '.geojson']
-const MAX_FILE_SIZE_MB = 2
+import {
+  DragAndDropFileInputComponent,
+  DragAndDropFileInputError,
+} from '../drag-and-drop-file-input/drag-and-drop-file-input.component'
 
 marker('search.filters.spatialExtent.import')
 marker('search.filters.spatialExtent.helpText')
 marker('search.filters.spatialExtent.bboxPrefix')
 marker('search.filters.spatialExtent.error.title')
-marker('search.filters.spatialExtent.error.invalidFormat')
-marker('search.filters.spatialExtent.error.fileTooLarge')
-marker('search.filters.spatialExtent.error.noGeometry')
 
 @Component({
   selector: 'gn-ui-spatial-extent-dropdown',
@@ -63,6 +58,7 @@ marker('search.filters.spatialExtent.error.noGeometry')
     OverlayModule,
     PopoverComponent,
     TranslatePipe,
+    DragAndDropFileInputComponent,
   ],
   providers: [
     provideIcons({
@@ -84,14 +80,7 @@ export class SpatialExtentDropdownComponent {
   private scrollStrategies = inject(ScrollStrategyOptions)
 
   @Input() title: string
-  @Input()
-  set maxFileSizeMb(value: number) {
-    this._maxFileSizeMb = value ?? MAX_FILE_SIZE_MB
-  }
-  get maxFileSizeMb(): number {
-    return this._maxFileSizeMb
-  }
-  private _maxFileSizeMb = MAX_FILE_SIZE_MB
+  @Input() maxFileSizeMb: number | null = null
 
   @Output() bboxChange = new EventEmitter<BoundingBox | null>()
   @Output() errorChange = new EventEmitter<string>()
@@ -101,7 +90,8 @@ export class SpatialExtentDropdownComponent {
 
   @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
   @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay
-  @ViewChild('fileInput') fileInputRef: ElementRef<HTMLInputElement>
+  @ViewChild(DragAndDropFileInputComponent)
+  fileInput: DragAndDropFileInputComponent
 
   overlayPositions: ConnectedPosition[] = [
     {
@@ -152,67 +142,48 @@ export class SpatialExtentDropdownComponent {
     }
   }
 
-  triggerFileSelection() {
-    this.fileInputRef.nativeElement.click()
+  async handleFileSelected(file: File) {
+    this.errorKey = null
+    let content: string
+    try {
+      content = await readFileAsText(file)
+      const parsed = JSON.parse(content)
+      const geometry = getGeometryFromGeoJSON(parsed)
+      if (!geometry) {
+        this.setError(marker('search.filters.spatialExtent.error.noGeometry'))
+        return
+      }
+      const bbox = getGeometryBoundingBox(geometry)
+      this.bbox = bbox
+      this.fileName = file.name
+      this.bboxChange.emit(bbox)
+      this.cd.markForCheck()
+    } catch {
+      this.setError(marker('search.filters.spatialExtent.error.invalidFormat'))
+      return
+    }
   }
 
-  handleFileInput(event: Event) {
-    const input = event.target as HTMLInputElement
-    const file = input.files?.[0]
-    input.value = ''
-    if (file) {
-      this.handleFile(file)
-    }
+  handleFileError(error: DragAndDropFileInputError) {
+    this.setError(
+      error === 'file-too-large'
+        ? marker('search.filters.spatialExtent.error.fileTooLarge')
+        : marker('search.filters.spatialExtent.error.invalidFormat')
+    )
+  }
+
+  private setError(errorKey: string) {
+    this.errorKey = errorKey
+    this.errorChange.emit(errorKey)
+    this.cd.markForCheck()
   }
 
   removeSelection(event: Event) {
     this.bbox = null
     this.fileName = null
     this.errorKey = null
+    this.fileInput?.clear()
     this.bboxChange.emit(null)
     propagateToDocumentOnly(event)
-  }
-
-  private setError(errorKey: string) {
-    this.errorKey = errorKey
-    this.errorChange.emit(errorKey)
-  }
-
-  private async handleFile(file: File) {
-    this.errorKey = null
-    if (!isFileExtensionValid(file.name, ACCEPTED_FILE_EXTENSIONS)) {
-      this.setError('search.filters.spatialExtent.error.invalidFormat')
-      return
-    }
-    if (file.size > megabytesToBytes(this.maxFileSizeMb)) {
-      this.setError('search.filters.spatialExtent.error.fileTooLarge')
-      return
-    }
-    try {
-      const content = await readFileAsText(file)
-      this.handleFileContent(content, file.name)
-    } catch {
-      this.setError('search.filters.spatialExtent.error.invalidFormat')
-    }
-    this.cd.markForCheck()
-  }
-
-  private handleFileContent(content: string, fileName: string) {
-    let parsed = null
-    try {
-      parsed = JSON.parse(content)
-    } catch {
-      this.setError('search.filters.spatialExtent.error.invalidFormat')
-      return
-    }
-    const geometry = getGeometryFromGeoJSON(parsed)
-    if (!geometry) {
-      this.setError('search.filters.spatialExtent.error.noGeometry')
-      return
-    }
-    const bbox = getGeometryBoundingBox(geometry)
-    this.bbox = bbox
-    this.fileName = fileName
-    this.bboxChange.emit(bbox)
   }
 }

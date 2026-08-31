@@ -56,26 +56,23 @@
 
     <div
       [class]="
-        (hasSelection ? 'border-b-[1px] border-gray-400' : '') +
-        ' pb-[20px] text-black'
+        (hasSelection
+          ? 'border-b-[1px] border-gray-400 pb-[20px]'
+          : 'pb-[8px]') + ' text-black'
       "
     >
-      <input
-        #fileInput
-        type="file"
+      <gn-ui-drag-and-drop-file-input
         accept=".json,.geojson"
-        class="hidden"
-        (change)="handleFileInput($event)"
-      />
-      <gn-ui-button
-        type="outline"
-        extraClass="w-full h-[32px] justify-between items-center text-black hover:text-black hover:border-[#D7D7DB] hover:bg-[#0000001A]"
-        (buttonClick)="triggerFileSelection()"
+        [placeholder]="'search.filters.spatialExtent.import' | translate"
+        [maxFileSizeMb]="maxFileSizeMb"
+        textClass="text-black truncate"
+        dropzoneBackgroundColor="transparent"
+        icon="iconoirImport"
+        extraClass="gn-ui-gray-outline-input w-full !h-[32px] px-[8px] py-[4px] justify-between"
+        (fileChange)="handleFileSelected($event)"
+        (errorChange)="handleFileError($event)"
         data-cy="importGeojson"
-      >
-        <span>{{ 'search.filters.spatialExtent.import' | translate }}</span>
-        <ng-icon name="iconoirImport" class="text-gray-950"></ng-icon>
-      </gn-ui-button>
+      ></gn-ui-drag-and-drop-file-input>
     </div>
 
     @if (hasSelection) {
@@ -84,17 +81,17 @@
         theme="gray-950"
         data-test="spatial-extent-selected-item"
       >
-        <button
-          (click)="removeSelection($event)"
-          type="button"
-          class="flex group items-center justify-between gap-x-2 w-full bg-primary-lighter hover:bg-primary text-white rounded px-[8px] py-[4px] mb-[12px] cursor-pointer h-[28px]"
+        <gn-ui-button
+          [type]="'primary-light'"
+          (buttonClick)="removeSelection($event)"
+          extraClass="group gap-x-2 w-full h-[28px] px-[8px] py-[4px] mb-[12px] bg-primary-lighter text-white"
         >
           <ng-icon
             name="iconoirSquareDashed"
             class="shrink-0"
             size="15px"
           ></ng-icon>
-          <span class="truncate text-sm">
+          <span class="truncate text-sm m-auto">
             {{ 'search.filters.spatialExtent.bboxPrefix' | translate }}
             {{ displayFileName }}
           </span>
@@ -108,7 +105,7 @@
             class="!hidden group-hover:!block shrink-0"
             size="15px"
           ></ng-icon>
-        </button>
+        </gn-ui-button>
       </gn-ui-popover>
     }
   </div>
