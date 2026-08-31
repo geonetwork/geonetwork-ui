@@ -30,9 +30,9 @@
     "@ngrx/store": "19.x || 20.x || 21.x",
     "@ngrx/store-devtools": "19.x || 20.x || 21.x",
     "@ngrx/operators": "19.x || 20.x || 21.x",
-    "@ngx-translate/core": "16.x",
-    "@ngx-translate/http-loader": "16.x",
-    "flag-icons": "^7.3.2",
+    "@ngx-translate/core": "17.x",
+    "@ngx-translate/http-loader": "17.x",
+    "flag-icons": "~7.5.0",
     "rxjs": "7.x",
     "zone.js": "*",
     "tailwindcss": "3.x"
