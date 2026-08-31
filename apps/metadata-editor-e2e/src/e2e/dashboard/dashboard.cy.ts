@@ -421,7 +421,7 @@ describe('dashboard (landing page)', () => {
       cy.get('gn-ui-search-filters-summary')
         .find('gn-ui-badge')
         .invoke('text')
-        .should('eq', '01.08.2024 - …')
+        .should('eq', '08/01/2024 - …')
       // and a single set bound still counts as one active filter
       cy.get('md-editor-search-filters')
         .find('gn-ui-date-range-dropdown .selected-count')
@@ -501,7 +501,7 @@ describe('dashboard (landing page)', () => {
       cy.get('gn-ui-search-filters-summary')
         .find('gn-ui-badge')
         .invoke('text')
-        .should('eq', '01.08.2024 - 30.08.2024')
+        .should('eq', '08/01/2024 - 08/30/2024')
 
       // it should remove the badge when the badge cross is clicked
       cy.clickOnBody()
@@ -552,7 +552,7 @@ describe('dashboard (landing page)', () => {
       cy.get('gn-ui-search-filters-summary')
         .find('gn-ui-badge')
         .invoke('text')
-        .should('eq', '01.08.2024 - 30.08.2024')
+        .should('eq', '08/01/2024 - 08/30/2024')
 
       // it should remove the badge when the badge cross is clicked
       cy.clickOnBody()

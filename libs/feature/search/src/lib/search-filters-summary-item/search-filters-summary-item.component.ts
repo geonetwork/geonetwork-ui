@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, inject } from '@angular/core'
-import { CommonModule, DatePipe } from '@angular/common'
+import { CommonModule } from '@angular/common'
 import {
   catchError,
   firstValueFrom,
@@ -15,7 +15,7 @@ import { FieldType, FieldValue } from '../utils/service/fields'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
-import { formatUserInfo } from '@geonetwork-ui/util/shared'
+import { DateService, formatUserInfo } from '@geonetwork-ui/util/shared'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 marker('search.filters.summaryLabel.user')
@@ -34,13 +34,12 @@ interface DisplayedValue {
   imports: [CommonModule, BadgeComponent],
   templateUrl: './search-filters-summary-item.component.html',
   styleUrls: ['./search-filters-summary-item.component.css'],
-  providers: [DatePipe],
 })
 export class SearchFiltersSummaryItemComponent implements OnInit {
   private searchFacade = inject(SearchFacade)
   private searchService = inject(SearchService)
   private fieldsService = inject(FieldsService)
-  private datePipe = inject(DatePipe)
+  private dateService = inject(DateService)
   private translate = inject(TranslateService)
 
   @Input() fieldName: string
@@ -98,7 +97,13 @@ export class SearchFiltersSummaryItemComponent implements OnInit {
   }
 
   private formatBound(date: Date | undefined): string {
-    return date ? this.datePipe.transform(date, 'dd.MM.yyyy') : OPEN_BOUND
+    return date
+      ? this.dateService.formatDate(date, {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })
+      : OPEN_BOUND
   }
 
   async removeFilterValue(fieldValue: FieldValue | DateRange) {
