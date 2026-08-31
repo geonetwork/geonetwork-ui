@@ -42,12 +42,14 @@ describe('DateRangeDropdownComponent', () => {
       expect(component.selectedDatesCount).toBe(0)
     })
     it('is one for an open interval', () => {
-      component.startDate = new Date('2024-01-15')
+      component.dateRange = { start: new Date('2024-01-15') }
       expect(component.selectedDatesCount).toBe(1)
     })
     it('is two for a closed interval', () => {
-      component.startDate = new Date('2024-01-15')
-      component.endDate = new Date('2024-03-28')
+      component.dateRange = {
+        start: new Date('2024-01-15'),
+        end: new Date('2024-03-28'),
+      }
       expect(component.selectedDatesCount).toBe(2)
     })
   })
@@ -71,29 +73,39 @@ describe('DateRangeDropdownComponent', () => {
   })
 
   describe('selecting dates independently', () => {
-    it('emits the start date and moves on to the end bound', () => {
-      const startDateChange = jest.fn()
-      component.startDateChange.subscribe(startDateChange)
+    let dateRangeChange: jest.Mock
+
+    beforeEach(() => {
+      dateRangeChange = jest.fn()
+      component.dateRangeChange.subscribe(dateRangeChange)
+    })
+
+    it('emits a range with only the start date, then moves on to the end bound', () => {
       const start = new Date('2024-01-15')
 
       component.selectStartDate(start)
 
-      expect(startDateChange).toHaveBeenCalledWith(start)
-      expect(component.startDate).toBe(start)
-      expect(component.endDate).toBeUndefined()
+      expect(dateRangeChange).toHaveBeenCalledWith({ start })
+      expect(component.dateRange).toEqual({ start })
       expect(component.expandedBound).toBe('end')
     })
-    it('emits the end date without requiring a start date', () => {
-      const endDateChange = jest.fn()
-      component.endDateChange.subscribe(endDateChange)
+    it('emits a range with only the end date, no start date required', () => {
       const end = new Date('2024-03-28')
 
       component.selectEndDate(end)
 
-      expect(endDateChange).toHaveBeenCalledWith(end)
-      expect(component.endDate).toBe(end)
-      expect(component.startDate).toBeUndefined()
+      expect(dateRangeChange).toHaveBeenCalledWith({ end })
+      expect(component.dateRange).toEqual({ end })
       expect(component.expandedBound).toBe(null)
+    })
+    it('keeps the other bound when a range is completed', () => {
+      const start = new Date('2024-01-15')
+      const end = new Date('2024-03-28')
+
+      component.selectStartDate(start)
+      component.selectEndDate(end)
+
+      expect(dateRangeChange).toHaveBeenLastCalledWith({ start, end })
     })
   })
 
@@ -123,7 +135,7 @@ describe('DateRangeDropdownComponent', () => {
 
     beforeEach(() => {
       // local, not UTC: the input value is the local calendar day
-      component.startDate = new Date(2024, 0, 15)
+      component.dateRange = { start: new Date(2024, 0, 15) }
       component.openOverlay()
       fixture.detectChanges()
       panel = document.querySelector('[data-test="date-range-panel"]')
@@ -141,12 +153,15 @@ describe('DateRangeDropdownComponent', () => {
       expect(endInput().value).toBe('')
     })
     it('applies a date typed into an input', () => {
-      const endDateChange = jest.fn()
-      component.endDateChange.subscribe(endDateChange)
+      const dateRangeChange = jest.fn()
+      component.dateRangeChange.subscribe(dateRangeChange)
 
       type(endInput(), asTyped(new Date(2024, 2, 28)))
 
-      expect(endDateChange).toHaveBeenCalledWith(new Date(2024, 2, 28))
+      expect(dateRangeChange).toHaveBeenCalledWith({
+        start: new Date(2024, 0, 15),
+        end: new Date(2024, 2, 28),
+      })
       expect(component.invalidBounds.end).toBe(false)
       // typing must not fold the accordion away while the field is being edited
       expect(component.expandedBound).toBe('start')
@@ -171,28 +186,31 @@ describe('DateRangeDropdownComponent', () => {
       expect(component.invalidBounds.start).toBe(true)
     })
     it('drops the bound when an input is emptied', () => {
-      const startDateChange = jest.fn()
-      component.startDateChange.subscribe(startDateChange)
+      const dateRangeChange = jest.fn()
+      component.dateRangeChange.subscribe(dateRangeChange)
 
       type(startInput(), '')
 
-      expect(startDateChange).toHaveBeenCalledWith(null)
+      expect(dateRangeChange).toHaveBeenCalledWith({})
       expect(component.selectedDatesCount).toBe(0)
     })
     it('flags unreadable text without touching the applied range', () => {
-      const startDateChange = jest.fn()
-      component.startDateChange.subscribe(startDateChange)
+      const dateRangeChange = jest.fn()
+      component.dateRangeChange.subscribe(dateRangeChange)
 
       type(startInput(), 'not a date')
 
-      expect(startDateChange).not.toHaveBeenCalled()
-      expect(component.startDate).toEqual(new Date(2024, 0, 15))
+      expect(dateRangeChange).not.toHaveBeenCalled()
+      expect(component.dateRange).toEqual({ start: new Date(2024, 0, 15) })
       expect(component.invalidBounds.start).toBe(true)
       fixture.detectChanges()
       expect(startInput().getAttribute('aria-invalid')).toBe('true')
     })
     it('rejects a typed bound that would cross the other one', () => {
-      component.endDate = new Date(2024, 2, 28)
+      component.dateRange = {
+        ...component.dateRange,
+        end: new Date(2024, 2, 28),
+      }
       fixture.detectChanges()
 
       type(startInput(), asTyped(new Date(2024, 5, 1)))
@@ -247,18 +265,33 @@ describe('DateRangeDropdownComponent', () => {
 
   describe('clearing the range', () => {
     it('resets both bounds and notifies the parent', () => {
-      const dateRangeClear = jest.fn()
-      component.dateRangeClear.subscribe(dateRangeClear)
-      component.startDate = new Date('2024-01-15')
-      component.endDate = new Date('2024-03-28')
+      const dateRangeChange = jest.fn()
+      component.dateRangeChange.subscribe(dateRangeChange)
+      component.dateRange = {
+        start: new Date('2024-01-15'),
+        end: new Date('2024-03-28'),
+      }
 
       component.clearDates(new MouseEvent('click'))
 
-      expect(component.startDate).toBe(null)
-      expect(component.endDate).toBe(null)
+      expect(component.dateRange).toEqual({})
       expect(component.selectedDatesCount).toBe(0)
       expect(component.expandedBound).toBe('start')
-      expect(dateRangeClear).toHaveBeenCalled()
+      expect(dateRangeChange).toHaveBeenCalledWith({})
+    })
+    it('does not open the dropdown when the clear icon is clicked', () => {
+      component.dateRange = { start: new Date('2024-01-15') }
+      fixture.detectChanges()
+      const clearIcon = (
+        fixture.nativeElement as HTMLElement
+      ).querySelector<HTMLElement>('[data-test="clear-date-range"] ng-icon')
+
+      clearIcon.click()
+      fixture.detectChanges()
+
+      expect(component.dateRange).toEqual({})
+      // the click must not reach the enclosing gn-ui-button
+      expect(component.overlayOpen).toBe(false)
     })
   })
 

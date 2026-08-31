@@ -22,9 +22,7 @@ export default {
     ),
   ],
   argTypes: {
-    startDateChange: { action: 'startDateChange' },
-    endDateChange: { action: 'endDateChange' },
-    dateRangeClear: { action: 'dateRangeClear' },
+    dateRangeChange: { action: 'dateRangeChange' },
   },
 } as Meta<DateRangeDropdownComponent>
 
@@ -37,8 +35,10 @@ export const NoDate: StoryObj<DateRangeDropdownComponent> = {
 export const WithRange: StoryObj<DateRangeDropdownComponent> = {
   args: {
     title: 'Publication date',
-    startDate: new Date('2024-01-15'),
-    endDate: new Date('2024-03-28'),
+    dateRange: {
+      start: new Date('2024-01-15'),
+      end: new Date('2024-03-28'),
+    },
   },
 }
 
@@ -46,7 +46,7 @@ export const WithRange: StoryObj<DateRangeDropdownComponent> = {
 export const WithStartDateOnly: StoryObj<DateRangeDropdownComponent> = {
   args: {
     title: 'Publication date',
-    startDate: new Date('2024-01-15'),
+    dateRange: { start: new Date('2024-01-15') },
   },
 }
 
@@ -54,14 +54,16 @@ export const WithStartDateOnly: StoryObj<DateRangeDropdownComponent> = {
 export const WithEndDateOnly: StoryObj<DateRangeDropdownComponent> = {
   args: {
     title: 'Publication date',
-    endDate: new Date('2024-03-28'),
+    dateRange: { end: new Date('2024-03-28') },
   },
 }
 
 export const LongTitle: StoryObj<DateRangeDropdownComponent> = {
   args: {
     title: 'A very very very long title that should be truncated',
-    startDate: new Date('2024-01-15'),
-    endDate: new Date('2024-03-28'),
+    dateRange: {
+      start: new Date('2024-01-15'),
+      end: new Date('2024-03-28'),
+    },
   },
 }
