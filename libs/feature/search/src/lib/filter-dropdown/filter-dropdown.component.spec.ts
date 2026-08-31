@@ -256,24 +256,21 @@ describe('FilterDropdownComponent', () => {
         By.directive(DateRangeDropdownComponent)
       ).componentInstance
     })
-    it('updates the start date', () => {
-      dateRangeDropdown.startDateChange.emit(start)
-      expect(component.dateRange).toEqual({ start })
+    it('hands the range read from the filters to the dropdown', () => {
+      fieldsService.readFieldValuesFromFilters = () =>
+        of({ someDateField: { start, end } }) as any
+      facade.searchFilters$.next({ someDateField: 'anything' })
+      fixture.detectChanges()
+      expect(dateRangeDropdown.dateRange).toEqual({ start, end })
     })
-    it('updates the end date', () => {
-      dateRangeDropdown.endDateChange.emit(end)
-      expect(component.dateRange).toEqual({ end })
-    })
-    it('calls buildFiltersFromFieldValues with dates', () => {
-      dateRangeDropdown.startDateChange.emit(start)
-      dateRangeDropdown.endDateChange.emit(end)
+    it('calls buildFiltersFromFieldValues with the emitted range', () => {
+      dateRangeDropdown.dateRangeChange.emit({ start, end })
       expect(fieldsService.buildFiltersFromFieldValues).toHaveBeenCalledWith({
         someDateField: { start, end },
       })
     })
     it('calls updateSearch on the search service', () => {
-      dateRangeDropdown.startDateChange.emit(start)
-      dateRangeDropdown.endDateChange.emit(end)
+      dateRangeDropdown.dateRangeChange.emit({ start, end })
       expect(searchService.updateFilters).toHaveBeenCalledWith({
         'converted from values': {
           someDateField: { start, end },
@@ -281,7 +278,7 @@ describe('FilterDropdownComponent', () => {
       })
     })
     it('applies an open interval with only a start date', () => {
-      dateRangeDropdown.startDateChange.emit(start)
+      dateRangeDropdown.dateRangeChange.emit({ start })
       expect(fieldsService.buildFiltersFromFieldValues).toHaveBeenCalledWith({
         someDateField: { start },
       })
@@ -292,7 +289,7 @@ describe('FilterDropdownComponent', () => {
       })
     })
     it('applies an open interval with only an end date', () => {
-      dateRangeDropdown.endDateChange.emit(end)
+      dateRangeDropdown.dateRangeChange.emit({ end })
       expect(fieldsService.buildFiltersFromFieldValues).toHaveBeenCalledWith({
         someDateField: { end },
       })
@@ -302,16 +299,8 @@ describe('FilterDropdownComponent', () => {
         },
       })
     })
-    it('drops a bound that is unset again', () => {
-      dateRangeDropdown.startDateChange.emit(start)
-      dateRangeDropdown.endDateChange.emit(end)
-      dateRangeDropdown.endDateChange.emit(null)
-      expect(component.dateRange).toEqual({ start })
-    })
     it('removes the filter when the range is cleared', () => {
-      dateRangeDropdown.startDateChange.emit(start)
-      dateRangeDropdown.dateRangeClear.emit()
-      expect(component.dateRange).toEqual({})
+      dateRangeDropdown.dateRangeChange.emit({})
       expect(searchService.updateFilters).toHaveBeenCalledWith({
         'converted from values': {
           someDateField: {},

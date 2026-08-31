@@ -31,6 +31,7 @@ import {
 import { iconoirCalendar } from '@ng-icons/iconoir'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+import { FieldFilterByRange } from '@geonetwork-ui/common/domain/model/search'
 import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
 import { ButtonComponent } from '../button/button.component'
 import { provideLocalizedDateAdapter } from '../date-adapter.providers'
@@ -72,11 +73,8 @@ export class DateRangeDropdownComponent {
   private cdr = inject(ChangeDetectorRef)
 
   @Input() title: string
-  @Input() startDate: Date
-  @Input() endDate: Date
-  @Output() startDateChange = new EventEmitter<Date>()
-  @Output() endDateChange = new EventEmitter<Date>()
-  @Output() dateRangeClear = new EventEmitter<void>()
+  @Input() dateRange: FieldFilterByRange = {}
+  @Output() dateRangeChange = new EventEmitter<FieldFilterByRange>()
 
   @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
 
@@ -106,6 +104,14 @@ export class DateRangeDropdownComponent {
     this.dateAdapter.localeChanges
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.cdr.markForCheck())
+  }
+
+  get startDate() {
+    return this.dateRange.start
+  }
+
+  get endDate() {
+    return this.dateRange.end
   }
 
   get selectedDatesCount() {
@@ -164,15 +170,13 @@ export class DateRangeDropdownComponent {
 
   // setting dates from input
   setStartDate(date: Date) {
-    this.startDate = date
     this.invalidBounds = { ...this.invalidBounds, start: false }
-    this.startDateChange.emit(date)
+    this.applyDateRange({ ...this.dateRange, start: date })
   }
 
   setEndDate(date: Date) {
-    this.endDate = date
     this.invalidBounds = { ...this.invalidBounds, end: false }
-    this.endDateChange.emit(date)
+    this.applyDateRange({ ...this.dateRange, end: date })
   }
 
   // selecting dates from the date picker
@@ -187,11 +191,17 @@ export class DateRangeDropdownComponent {
   }
 
   clearDates(event: Event) {
-    this.startDate = null
-    this.endDate = null
     this.invalidBounds = { start: false, end: false }
     this.expandedBound = 'start'
-    this.dateRangeClear.emit()
+    this.applyDateRange({})
     propagateToDocumentOnly(event)
+  }
+
+  private applyDateRange(dateRange: FieldFilterByRange) {
+    this.dateRange = {
+      ...(dateRange.start && { start: dateRange.start }),
+      ...(dateRange.end && { end: dateRange.end }),
+    }
+    this.dateRangeChange.emit(this.dateRange)
   }
 }

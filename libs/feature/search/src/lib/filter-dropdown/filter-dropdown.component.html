@@ -1,11 +1,8 @@
 @if (fieldType === 'dateRange') {
   <gn-ui-date-range-dropdown
     [title]="title"
-    [startDate]="(selectedDateRange$ | async)?.start"
-    [endDate]="(selectedDateRange$ | async)?.end"
-    (startDateChange)="onStartDateChange($event)"
-    (endDateChange)="onEndDateChange($event)"
-    (dateRangeClear)="onDateRangeClear()"
+    [dateRange]="(selectedDateRange$ | async) ?? {}"
+    (dateRangeChange)="onDateRangeChange($event)"
   ></gn-ui-date-range-dropdown>
 } @else {
   <gn-ui-dropdown-multiselect

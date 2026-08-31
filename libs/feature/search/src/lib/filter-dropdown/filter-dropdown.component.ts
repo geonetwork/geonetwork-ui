@@ -11,7 +11,7 @@ import {
   DropdownMultiselectComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { Observable, of, switchMap } from 'rxjs'
-import { catchError, filter, map, startWith, tap } from 'rxjs/operators'
+import { catchError, filter, map, startWith } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
@@ -44,7 +44,6 @@ export class FilterDropdownComponent implements OnInit {
   @Input() title: string
 
   fieldType: FieldType
-  dateRange: DateRange = {}
   choices$: Observable<Choice[]>
   selected$ = this.searchFacade.searchFilters$.pipe(
     switchMap((filters) =>
@@ -57,8 +56,7 @@ export class FilterDropdownComponent implements OnInit {
   ) as Observable<FieldValue[]>
 
   selectedDateRange$ = this.selected$.pipe(
-    map((selected) => (Array.isArray(selected) ? {} : (selected as DateRange))),
-    tap((dateRange) => (this.dateRange = dateRange))
+    map((selected) => (Array.isArray(selected) ? {} : (selected as DateRange)))
   ) as Observable<DateRange>
 
   onSelectedValues(values: unknown[]) {
@@ -81,26 +79,10 @@ export class FilterDropdownComponent implements OnInit {
     )
   }
 
-  onStartDateChange(start: Date) {
-    this.applyDateRange({ ...this.dateRange, start })
-  }
-
-  onEndDateChange(end: Date) {
-    this.applyDateRange({ ...this.dateRange, end })
-  }
-
-  onDateRangeClear() {
-    this.applyDateRange({})
-  }
-
-  private applyDateRange(dateRange: DateRange) {
-    this.dateRange = {
-      ...(dateRange.start && { start: dateRange.start }),
-      ...(dateRange.end && { end: dateRange.end }),
-    }
+  onDateRangeChange(dateRange: DateRange) {
     this.fieldsService
       .buildFiltersFromFieldValues({
-        [this.fieldName]: this.dateRange,
+        [this.fieldName]: dateRange,
       })
       .subscribe((filters) => this.searchService.updateFilters(filters))
   }
