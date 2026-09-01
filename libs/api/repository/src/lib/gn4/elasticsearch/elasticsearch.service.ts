@@ -302,6 +302,7 @@ export class ElasticsearchService {
             .filter((fieldname) => fieldname !== 'gn-ui-crossFieldFilter')
             .filter((fieldname) => !isBoundingBox(filters[fieldname]))
             .filter((fieldname) => !isDateRange(filters[fieldname]))
+            .filter((fieldname) => !Array.isArray(filters[fieldname]))
             .filter(
               (fieldname) =>
                 filters[fieldname] &&
