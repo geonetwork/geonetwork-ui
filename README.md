@@ -113,8 +113,8 @@ Then select the file(s) you want to test in the interface.
 
 Start docker from 'support-services', and then in the project root folder :
 
---> ALl tests :
+--> All tests :
 
 ```shell script
-npx nx e2e  (app_name)
+npx nx e2e (app_name)
 ```
