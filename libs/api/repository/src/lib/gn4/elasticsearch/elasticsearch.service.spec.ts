@@ -618,6 +618,35 @@ describe('ElasticsearchService', () => {
         },
       })
     })
+    it('ignores an unset spatial filter (empty array) alongside other filters', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          producerOrg: { 'Some Org': true },
+          spatialExtent: [],
+        },
+        {},
+        []
+      )
+      expect(query).toMatchObject({
+        bool: {
+          filter: [
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
+            {
+              query_string: {
+                query: 'producerOrg:("Some Org")',
+              },
+            },
+            {
+              ids: { values: [] },
+            },
+          ],
+        },
+      })
+    })
     it('handles spatial filter special case', () => {
       const query = service['buildPayloadQuery'](
         {
