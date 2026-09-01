@@ -31,7 +31,6 @@ import {
 } from '@ng-icons/material-icons/baseline'
 import { TranslatePipe } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
 import {
   BoundingBox,
   getGeometryBoundingBox,
@@ -46,8 +45,9 @@ import {
 
 marker('search.filters.spatialExtent.import')
 marker('search.filters.spatialExtent.helpText')
-marker('search.filters.spatialExtent.bboxPrefix')
 marker('search.filters.spatialExtent.error.title')
+marker('search.filters.spatialExtent.bboxPrefix')
+marker('search.filters.spatialExtent.bboxDelete')
 
 @Component({
   selector: 'gn-ui-spatial-extent-dropdown',
@@ -56,7 +56,6 @@ marker('search.filters.spatialExtent.error.title')
     ButtonComponent,
     NgIcon,
     OverlayModule,
-    PopoverComponent,
     TranslatePipe,
     DragAndDropFileInputComponent,
   ],
@@ -86,7 +85,7 @@ export class SpatialExtentDropdownComponent {
   @Output() errorChange = new EventEmitter<string>()
 
   bbox: BoundingBox | null = null
-  fileName: string | null = null
+  fileName = ''
 
   @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
   @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay
@@ -117,10 +116,6 @@ export class SpatialExtentDropdownComponent {
 
   get hasSelection() {
     return !!this.bbox
-  }
-
-  get displayFileName() {
-    return this.fileName ?? this.bbox?.join(', ') ?? ''
   }
 
   openOverlay() {
@@ -180,7 +175,7 @@ export class SpatialExtentDropdownComponent {
 
   removeSelection(event: Event) {
     this.bbox = null
-    this.fileName = null
+    this.fileName = ''
     this.errorKey = null
     this.fileInput?.clear()
     this.bboxChange.emit(null)

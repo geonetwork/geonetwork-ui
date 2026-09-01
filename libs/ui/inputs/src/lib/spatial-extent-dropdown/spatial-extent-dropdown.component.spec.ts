@@ -26,7 +26,7 @@ describe('SpatialExtentDropdownComponent', () => {
   describe('initial state', () => {
     it('has no selection', () => {
       expect(component.hasSelection).toBe(false)
-      expect(component.displayFileName).toBe('')
+      expect(component.fileName).toBe('')
     })
   })
 
@@ -68,7 +68,7 @@ describe('SpatialExtentDropdownComponent', () => {
       component.removeSelection(event)
 
       expect(component.bbox).toBeNull()
-      expect(component.fileName).toBeNull()
+      expect(component.fileName).toBe('')
       expect(component.errorKey).toBeNull()
       expect(emittedBbox).toEqual([null])
       expect(event.stopPropagation).toHaveBeenCalled()

@@ -691,6 +691,7 @@
   "search.filters.representationType": "Tipo di rappresentazione",
   "search.filters.resourceType": "Tipo di risorsa",
   "search.filters.spatialExtent": "",
+  "search.filters.spatialExtent.bboxDelete": "",
   "search.filters.spatialExtent.bboxPrefix": "",
   "search.filters.spatialExtent.error.fileTooLarge": "",
   "search.filters.spatialExtent.error.invalidFormat": "",

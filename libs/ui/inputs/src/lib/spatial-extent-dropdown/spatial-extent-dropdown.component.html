@@ -76,37 +76,41 @@
     </div>
 
     @if (hasSelection) {
-      <gn-ui-popover
-        [content]="displayFileName"
-        theme="gray-950"
+      <gn-ui-button
+        [type]="'primary-light'"
+        [title]="
+          ('search.filters.spatialExtent.bboxDelete' | translate) +
+          ' ' +
+          fileName
+        "
+        (buttonClick)="removeSelection($event)"
+        extraClass="group gap-x-2 w-full h-[28px] px-[8px] py-[4px] mb-[12px] bg-primary-lighter text-white"
         data-test="spatial-extent-selected-item"
       >
-        <gn-ui-button
-          [type]="'primary-light'"
-          (buttonClick)="removeSelection($event)"
-          extraClass="group gap-x-2 w-full h-[28px] px-[8px] py-[4px] mb-[12px] bg-primary-lighter text-white"
-        >
-          <ng-icon
-            name="iconoirSquareDashed"
-            class="shrink-0"
-            size="15px"
-          ></ng-icon>
-          <span class="truncate text-sm m-auto">
-            {{ 'search.filters.spatialExtent.bboxPrefix' | translate }}
-            {{ displayFileName }}
-          </span>
-          <ng-icon
-            name="iconoirCheckCircle"
-            class="group-hover:hidden shrink-0"
-            size="14px"
-          ></ng-icon>
-          <ng-icon
-            name="iconoirTrash"
-            class="!hidden group-hover:!block shrink-0"
-            size="15px"
-          ></ng-icon>
-        </gn-ui-button>
-      </gn-ui-popover>
+        <ng-icon
+          name="iconoirSquareDashed"
+          class="shrink-0"
+          size="15px"
+        ></ng-icon>
+        <span class="group-hover:hidden truncate text-sm m-auto">
+          {{ 'search.filters.spatialExtent.bboxPrefix' | translate }}
+          {{ fileName }}
+        </span>
+        <span class="hidden group-hover:block truncate text-sm m-auto">
+          {{ 'search.filters.spatialExtent.bboxDelete' | translate }}
+          {{ fileName }}
+        </span>
+        <ng-icon
+          name="iconoirCheckCircle"
+          class="group-hover:hidden shrink-0"
+          size="14px"
+        ></ng-icon>
+        <ng-icon
+          name="iconoirTrash"
+          class="!hidden group-hover:!block shrink-0"
+          size="15px"
+        ></ng-icon>
+      </gn-ui-button>
     }
   </div>
 </ng-template>

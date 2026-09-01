@@ -691,6 +691,7 @@
   "search.filters.representationType": "",
   "search.filters.resourceType": "",
   "search.filters.spatialExtent": "",
+  "search.filters.spatialExtent.bboxDelete": "",
   "search.filters.spatialExtent.bboxPrefix": "",
   "search.filters.spatialExtent.error.fileTooLarge": "",
   "search.filters.spatialExtent.error.invalidFormat": "",

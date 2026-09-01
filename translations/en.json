@@ -691,6 +691,7 @@
   "search.filters.representationType": "Representation type",
   "search.filters.resourceType": "Resource type",
   "search.filters.spatialExtent": "Spatial extent",
+  "search.filters.spatialExtent.bboxDelete": "Delete",
   "search.filters.spatialExtent.bboxPrefix": "bbox from",
   "search.filters.spatialExtent.error.fileTooLarge": "The file exceeds the maximum allowed size",
   "search.filters.spatialExtent.error.invalidFormat": "The file could not be read as a valid GeoJSON",
