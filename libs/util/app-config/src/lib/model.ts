@@ -63,6 +63,7 @@ export interface SearchConfig {
   SEARCH_PRESET?: SearchPreset[]
   ADVANCED_FILTERS?: []
   LIMIT?: number
+  SPATIAL_EXTENT_MAX_FILE_SIZE?: number
 }
 
 export interface MetadataQualityConfig {

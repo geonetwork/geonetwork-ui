@@ -1,18 +1,31 @@
-<div class="flex h-full">
+<div
+  class="flex h-full items-center"
+  [class]="extraClass"
+  (click)="openFileSelector()"
+>
   <ngx-dropzone
-    class="flex-1"
+    class="flex-1 overflow-hidden"
     [multiple]="false"
-    (change)="selectFile($event)"
+    [disableClick]="true"
     [accept]="accept"
+    [maxFileSize]="maxFileSizeBytes"
+    [style.background-color]="dropzoneBackgroundColor"
+    (change)="selectFile($event)"
   >
-    @if (!fileName) {
-      <div class="text-gray-900 pl-2 py-2" translate="">
+    @if (!fileName || !showFileName) {
+      <div [class]="textClass">
         {{ placeholder }}
       </div>
     }
 
-    @if (fileName) {
-      <div class="text-gray-900 pl-2 py-2">{{ fileName }}</div>
+    @if (fileName && showFileName) {
+      <div [class]="textClass">
+        {{ fileName }}
+      </div>
     }
   </ngx-dropzone>
+
+  @if (icon) {
+    <ng-icon [name]="icon" class="shrink-0 text-gray-950"></ng-icon>
+  }
 </div>
