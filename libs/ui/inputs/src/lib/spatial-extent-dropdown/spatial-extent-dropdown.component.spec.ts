@@ -86,7 +86,7 @@ describe('SpatialExtentDropdownComponent', () => {
 
   describe('handleFileSelected', () => {
     let emittedBbox: unknown[]
-    let emittedErrors: string[]
+    let emittedErrors: unknown[]
 
     function createFile(content: string, name: string) {
       return new File([content], name, { type: 'application/json' })
@@ -106,7 +106,7 @@ describe('SpatialExtentDropdownComponent', () => {
         'search.filters.spatialExtent.error.invalidFormat'
       )
       expect(emittedErrors).toEqual([
-        'search.filters.spatialExtent.error.invalidFormat',
+        { key: 'search.filters.spatialExtent.error.invalidFormat' },
       ])
     })
 
@@ -149,7 +149,7 @@ describe('SpatialExtentDropdownComponent', () => {
   })
 
   describe('handleFileError', () => {
-    let emittedErrors: string[]
+    let emittedErrors: unknown[]
 
     beforeEach(() => {
       emittedErrors = []
@@ -163,18 +163,22 @@ describe('SpatialExtentDropdownComponent', () => {
         'search.filters.spatialExtent.error.invalidFormat'
       )
       expect(emittedErrors).toEqual([
-        'search.filters.spatialExtent.error.invalidFormat',
+        { key: 'search.filters.spatialExtent.error.invalidFormat' },
       ])
     })
 
-    it('maps a file-too-large error', () => {
+    it('maps a file-too-large error with the max file size', () => {
+      component.maxFileSizeMb = 10
       component.handleFileError('file-too-large')
 
       expect(component.errorKey).toBe(
         'search.filters.spatialExtent.error.fileTooLarge'
       )
       expect(emittedErrors).toEqual([
-        'search.filters.spatialExtent.error.fileTooLarge',
+        {
+          key: 'search.filters.spatialExtent.error.fileTooLarge',
+          params: { maxSize: 10 },
+        },
       ])
     })
   })

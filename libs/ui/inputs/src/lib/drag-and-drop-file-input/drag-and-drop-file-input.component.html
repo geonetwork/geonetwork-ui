@@ -12,13 +12,13 @@
     [style.background-color]="dropzoneBackgroundColor"
     (change)="selectFile($event)"
   >
-    @if (!fileName) {
+    @if (!fileName || !showFileName) {
       <div [class]="textClass">
         {{ placeholder }}
       </div>
     }
 
-    @if (fileName) {
+    @if (fileName && showFileName) {
       <div [class]="textClass">
         {{ fileName }}
       </div>

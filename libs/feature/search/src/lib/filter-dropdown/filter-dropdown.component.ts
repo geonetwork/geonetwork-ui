@@ -10,6 +10,7 @@ import {
   DateRangeDropdownComponent,
   DropdownMultiselectComponent,
   SpatialExtentDropdownComponent,
+  SpatialExtentDropdownError,
 } from '@geonetwork-ui/ui/inputs'
 import { Observable, of, switchMap } from 'rxjs'
 import { catchError, filter, map, startWith } from 'rxjs/operators'
@@ -77,18 +78,31 @@ export class FilterDropdownComponent implements OnInit {
       .subscribe((filters) => this.searchService.updateFilters(filters))
   }
 
+  private spatialExtentErrorNotificationId: number | null = null
+
   onBboxChange(bbox: BoundingBox | null) {
     console.log(bbox)
+    this.clearSpatialExtentErrorNotification()
   }
 
-  onSpatialExtentError(errorKey: string) {
-    this.notificationsService.showNotification({
-      type: 'error',
-      title: this.translateService.instant(
-        'search.filters.spatialExtent.error.title'
-      ),
-      text: this.translateService.instant(errorKey),
-    })
+  onSpatialExtentError(error: SpatialExtentDropdownError) {
+    this.clearSpatialExtentErrorNotification()
+    this.spatialExtentErrorNotificationId =
+      this.notificationsService.showNotification({
+        type: 'error',
+        title: this.translateService.instant(
+          'search.filters.spatialExtent.error.title'
+        ),
+        text: this.translateService.instant(error.key, error.params),
+      })
+  }
+
+  private clearSpatialExtentErrorNotification() {
+    if (this.spatialExtentErrorNotificationId === null) return
+    this.notificationsService.removeNotificationById(
+      this.spatialExtentErrorNotificationId
+    )
+    this.spatialExtentErrorNotificationId = null
   }
 
   ngOnInit() {

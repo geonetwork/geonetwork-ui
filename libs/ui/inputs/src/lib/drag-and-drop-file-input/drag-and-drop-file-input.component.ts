@@ -30,6 +30,7 @@ export class DragAndDropFileInputComponent {
   @Input() dropzoneBackgroundColor: string | null = null
   @Input() textClass = ''
   @Input() extraClass = ''
+  @Input() showFileName = true
 
   @Output() fileChange = new EventEmitter<File>()
   @Output() errorChange = new EventEmitter<DragAndDropFileInputError>()

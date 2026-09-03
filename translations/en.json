@@ -693,7 +693,7 @@
   "search.filters.spatialExtent": "Spatial extent",
   "search.filters.spatialExtent.bboxDelete": "Delete",
   "search.filters.spatialExtent.bboxPrefix": "bbox from",
-  "search.filters.spatialExtent.error.fileTooLarge": "The file exceeds the maximum allowed size",
+  "search.filters.spatialExtent.error.fileTooLarge": "The file exceeds the maximum allowed size ({maxSize} MB)",
   "search.filters.spatialExtent.error.invalidFormat": "The file could not be read as a valid GeoJSON",
   "search.filters.spatialExtent.error.noGeometry": "No geometry could be found in the file",
   "search.filters.spatialExtent.error.title": "GeoJSON import error",

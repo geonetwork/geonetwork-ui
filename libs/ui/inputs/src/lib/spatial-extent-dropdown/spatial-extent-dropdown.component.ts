@@ -47,6 +47,11 @@ marker('search.filters.spatialExtent.import')
 marker('search.filters.spatialExtent.helpText')
 marker('search.filters.spatialExtent.error.title')
 marker('search.filters.spatialExtent.bboxPrefix')
+
+export interface SpatialExtentDropdownError {
+  key: string
+  params?: Record<string, string | number>
+}
 marker('search.filters.spatialExtent.bboxDelete')
 
 @Component({
@@ -82,7 +87,7 @@ export class SpatialExtentDropdownComponent {
   @Input() maxFileSizeMb: number | null = null
 
   @Output() bboxChange = new EventEmitter<BoundingBox | null>()
-  @Output() errorChange = new EventEmitter<string>()
+  @Output() errorChange = new EventEmitter<SpatialExtentDropdownError>()
 
   bbox: BoundingBox | null = null
   fileName = ''
@@ -160,16 +165,18 @@ export class SpatialExtentDropdownComponent {
   }
 
   handleFileError(error: DragAndDropFileInputError) {
-    this.setError(
-      error === 'file-too-large'
-        ? marker('search.filters.spatialExtent.error.fileTooLarge')
-        : marker('search.filters.spatialExtent.error.invalidFormat')
-    )
+    if (error === 'file-too-large') {
+      this.setError(marker('search.filters.spatialExtent.error.fileTooLarge'), {
+        maxSize: this.maxFileSizeMb,
+      })
+    } else {
+      this.setError(marker('search.filters.spatialExtent.error.invalidFormat'))
+    }
   }
 
-  private setError(errorKey: string) {
+  private setError(errorKey: string, params?: Record<string, string | number>) {
     this.errorKey = errorKey
-    this.errorChange.emit(errorKey)
+    this.errorChange.emit({ key: errorKey, params })
     this.cd.markForCheck()
   }
 
