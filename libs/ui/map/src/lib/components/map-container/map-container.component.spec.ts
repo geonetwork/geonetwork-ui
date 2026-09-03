@@ -12,7 +12,10 @@ import {
   mapCtxLayerXyzFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { applyContextDiffToMap } from '@geospatial-sdk/openlayers'
-import { MapContainerComponent } from './map-container.component'
+import {
+  DEFAULT_BASEMAP_LAYER,
+  MapContainerComponent,
+} from './map-container.component'
 import { computeMapContextDiff } from '@geospatial-sdk/core'
 
 jest.mock('@geospatial-sdk/core', () => ({
@@ -65,13 +68,6 @@ class OpenLayersMapMock {
   }
 }
 
-const defaultBaseMap = {
-  attributions:
-    '<span>© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, © <a href="https://carto.com/">Carto</a></span>',
-  type: 'xyz',
-  url: 'https://{a-c}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-}
-
 describe('MapContainerComponent', () => {
   let component: MapContainerComponent
   let fixture: ComponentFixture<MapContainerComponent>
@@ -101,7 +97,7 @@ describe('MapContainerComponent', () => {
   describe('#processContext', () => {
     it('returns a default context if null provided', () => {
       expect(component.processContext(null)).toEqual({
-        layers: [defaultBaseMap],
+        layers: [DEFAULT_BASEMAP_LAYER],
         view: {
           center: [0, 15],
           zoom: 2,
@@ -114,7 +110,7 @@ describe('MapContainerComponent', () => {
         view: null,
       }
       expect(component.processContext(context)).toEqual({
-        layers: [defaultBaseMap, mapCtxLayerWmsFixture()],
+        layers: [DEFAULT_BASEMAP_LAYER, mapCtxLayerWmsFixture()],
         view: {
           center: [0, 15],
           zoom: 2,
@@ -125,7 +121,7 @@ describe('MapContainerComponent', () => {
       component['basemapLayers'] = [mapCtxLayerXyzFixture()]
       const context = { layers: [], view: null }
       expect(component.processContext(context)).toEqual({
-        layers: [defaultBaseMap, mapCtxLayerXyzFixture()],
+        layers: [DEFAULT_BASEMAP_LAYER, mapCtxLayerXyzFixture()],
         view: {
           center: [0, 15],
           zoom: 2,
@@ -150,7 +146,7 @@ describe('MapContainerComponent', () => {
       }
       const context = { layers: [mapCtxLayerXyzFixture()], view: null }
       expect(component.processContext(context)).toEqual({
-        layers: [defaultBaseMap, mapCtxLayerXyzFixture()],
+        layers: [DEFAULT_BASEMAP_LAYER, mapCtxLayerXyzFixture()],
         view: {
           center: [0, 15],
           zoom: 2,
@@ -249,11 +245,11 @@ describe('MapContainerComponent', () => {
       })
       expect(computeMapContextDiff).toHaveBeenCalledWith(
         {
-          layers: [defaultBaseMap, ...mapCtxFixture().layers],
+          layers: [DEFAULT_BASEMAP_LAYER, ...mapCtxFixture().layers],
           view: mapCtxFixture().view,
         },
         {
-          layers: [defaultBaseMap, mapCtxLayerWmsFixture()],
+          layers: [DEFAULT_BASEMAP_LAYER, mapCtxLayerWmsFixture()],
           view: mapCtxFixture().view,
         }
       )
