@@ -20,10 +20,14 @@ import {
   isDateRange,
   METADATA_LANGUAGE,
 } from '@geonetwork-ui/api/repository'
-import { formatUserInfo } from '@geonetwork-ui/util/shared'
+import {
+  BoundingBox,
+  formatUserInfo,
+  isBoundingBox,
+} from '@geonetwork-ui/util/shared'
 import { PossibleResourceTypes } from '@geonetwork-ui/api/metadata-converter'
 
-export type FieldType = 'values' | 'dateRange'
+export type FieldType = 'values' | 'dateRange' | 'boundingBox'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -428,6 +432,27 @@ export class DateRangeSearchField extends SimpleSearchField {
 
   getType(): FieldType {
     return 'dateRange'
+  }
+}
+
+export class BoundingBoxSearchField extends SimpleSearchField {
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
+    return of([])
+  }
+
+  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
+    return of({
+      [this.esFieldName]: values.map(Number) as BoundingBox,
+    })
+  }
+
+  getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
+    const filter = filters[this.esFieldName]
+    return of(isBoundingBox(filter) ? filter : [])
+  }
+
+  getType(): FieldType {
+    return 'boundingBox'
   }
 }
 

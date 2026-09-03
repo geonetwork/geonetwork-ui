@@ -38,6 +38,14 @@ export function getGeometryFromGeoJSON(
 // FIXME: this type should be more generic across the project
 export type BoundingBox = [number, number, number, number]
 
+export function isBoundingBox(value: unknown): value is BoundingBox {
+  return (
+    Array.isArray(value) &&
+    value.length === 4 &&
+    value.every((item) => typeof item === 'number')
+  )
+}
+
 export function getGeometryBoundingBox(geometry: Geometry): BoundingBox {
   // use the bounding box if specified in the GeoJSON object
   if (geometry.bbox) {
