@@ -184,6 +184,7 @@ describe('app config utils', () => {
             'topic',
             'license',
           ],
+          GEOCODING_PROVIDER: 'base-adresse-nationale-fr',
         })
       })
     })

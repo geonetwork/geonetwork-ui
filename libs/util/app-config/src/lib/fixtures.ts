@@ -41,6 +41,7 @@ fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans"
 record_kind_quick_filter = false
 filter_geometry_url = 'https://my.domain.org/geom.json'
 do_not_use_default_search_preset = false
+geocoding_provider = "base-adresse-nationale-fr"
 advanced_filters = ['publicationYear', 'documentStandard', 'inspireKeyword', 'topic', 'license']
 
 [[search_preset]]
