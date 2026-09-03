@@ -55,6 +55,8 @@ export interface SearchPreset {
   filters: Record<string, string[] | string>
 }
 
+export type GeocodingProviderName = 'geoadmin' | 'geonames' | 'geoplateforme'
+
 export interface SearchConfig {
   RECORD_KIND_QUICK_FILTER?: boolean
   FILTER_GEOMETRY_URL?: string
@@ -64,6 +66,8 @@ export interface SearchConfig {
   ADVANCED_FILTERS?: []
   LIMIT?: number
   SPATIAL_EXTENT_MAX_FILE_SIZE?: number
+  GEOCODING_PROVIDER?: GeocodingProviderName
+  GEOCODING_PROVIDER_OPTIONS?: Record<string, string | number>
 }
 
 export interface MetadataQualityConfig {
