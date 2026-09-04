@@ -11,6 +11,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  TemplateRef,
   ViewChild,
   inject,
 } from '@angular/core'
@@ -97,6 +98,13 @@ export class AutocompleteComponent
   @ViewChild(MatAutocompleteTrigger) triggerRef: MatAutocompleteTrigger
   @ViewChild(MatAutocomplete) autocomplete: MatAutocomplete
   @ViewChild('searchInput') inputRef: ElementRef<HTMLInputElement>
+  /**
+   * Custom template to render each suggestion. Takes precedence over
+   * `displayWithFn` when set.
+   */
+  @Input() displayWithTemplate?: TemplateRef<{
+    $implicit: AutocompleteItem
+  }>
 
   searching: boolean
   control = new UntypedFormControl()

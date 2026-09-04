@@ -83,7 +83,16 @@
 >
   @for (suggestion of suggestions$ | async; track suggestion) {
     <mat-option [value]="suggestion" class="p-2 suggestion text-start">
-      {{ displayWithFnInternal(suggestion) }}
+      @if (displayWithTemplate) {
+        <ng-container
+          *ngTemplateOutlet="
+            displayWithTemplate;
+            context: { $implicit: suggestion }
+          "
+        ></ng-container>
+      } @else {
+        {{ displayWithFnInternal(suggestion) }}
+      }
     </mat-option>
   }
 </mat-autocomplete>
