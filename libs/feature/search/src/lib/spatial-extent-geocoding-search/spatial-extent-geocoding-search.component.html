@@ -1,0 +1,13 @@
+<gn-ui-location-search
+  [displayWithTemplate]="itemTpl"
+  (resultSelected)="handleResultSelected($event)"
+></gn-ui-location-search>
+
+<ng-template #itemTpl let-result>
+  <div class="py-2">
+    @if (getSecondaryLabel(result)) {
+      <div class="gn-ui-card-detail">{{ getSecondaryLabel(result) }}</div>
+    }
+    <div class="gn-ui-card-title">{{ getMainLabel(result) }}</div>
+  </div>
+</ng-template>
