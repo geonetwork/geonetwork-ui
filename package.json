@@ -81,6 +81,7 @@
     "embla-carousel": "~8.6.0",
     "flag-icons": "~7.5.0",
     "geojson-validation": "~1.0.2",
+    "jsonpath-plus": "^10.4.0",
     "marked": "~17.0.4",
     "ngx-dropzone": "~3.1.0",
     "ngx-translate-messageformat-compiler": "~7.2.0",
