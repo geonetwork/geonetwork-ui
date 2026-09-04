@@ -69,7 +69,7 @@
             [selected]="startDate"
             [startAt]="startDate ?? endDate"
             [maxDate]="endDate"
-            (selectedChange)="selectStartDate($event)"
+            (selectedChange)="setStartDate($event)"
           ></mat-calendar>
         </div>
       }
@@ -90,7 +90,7 @@
             [selected]="endDate"
             [startAt]="endDate ?? startDate"
             [minDate]="startDate"
-            (selectedChange)="selectEndDate($event)"
+            (selectedChange)="setEndDate($event)"
           ></mat-calendar>
         </div>
       }

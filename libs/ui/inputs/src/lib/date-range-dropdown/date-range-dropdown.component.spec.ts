@@ -72,7 +72,7 @@ describe('DateRangeDropdownComponent', () => {
     })
   })
 
-  describe('selecting dates independently', () => {
+  describe('setting dates independently', () => {
     let dateRangeChange: jest.Mock
 
     beforeEach(() => {
@@ -83,7 +83,7 @@ describe('DateRangeDropdownComponent', () => {
     it('emits a range with only the start date, then moves on to the end bound', () => {
       const start = new Date('2024-01-15')
 
-      component.selectStartDate(start)
+      component.setStartDate(start)
 
       expect(dateRangeChange).toHaveBeenCalledWith({ start })
       expect(component.dateRange).toEqual({ start })
@@ -92,7 +92,7 @@ describe('DateRangeDropdownComponent', () => {
     it('emits a range with only the end date, no start date required', () => {
       const end = new Date('2024-03-28')
 
-      component.selectEndDate(end)
+      component.setEndDate(end)
 
       expect(dateRangeChange).toHaveBeenCalledWith({ end })
       expect(component.dateRange).toEqual({ end })
@@ -102,8 +102,8 @@ describe('DateRangeDropdownComponent', () => {
       const start = new Date('2024-01-15')
       const end = new Date('2024-03-28')
 
-      component.selectStartDate(start)
-      component.selectEndDate(end)
+      component.setStartDate(start)
+      component.setEndDate(end)
 
       expect(dateRangeChange).toHaveBeenLastCalledWith({ start, end })
     })

@@ -172,25 +172,15 @@ export class DateRangeDropdownComponent {
       : !this.startDate || date >= this.startDate
   }
 
-  // setting dates from input
   setStartDate(date: Date) {
     this.invalidBounds = { ...this.invalidBounds, start: false }
     this.applyDateRange({ ...this.dateRange, start: date })
+    this.expandedBound = 'end'
   }
 
   setEndDate(date: Date) {
     this.invalidBounds = { ...this.invalidBounds, end: false }
     this.applyDateRange({ ...this.dateRange, end: date })
-  }
-
-  // selecting dates from the date picker
-  selectStartDate(date: Date) {
-    this.setStartDate(date)
-    this.expandedBound = 'end'
-  }
-
-  selectEndDate(date: Date) {
-    this.setEndDate(date)
     this.expandedBound = null
   }
 
