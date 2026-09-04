@@ -268,7 +268,7 @@ describe('datasets', () => {
               cy.get('body').click() // close dropdown
               cy.get('@filters')
                 .eq(0)
-                .find('[data-cy="clearSelection"]')
+                .find('[data-test="dropdown-clear"]')
                 .click()
             })
             it('shows all results again', () => {

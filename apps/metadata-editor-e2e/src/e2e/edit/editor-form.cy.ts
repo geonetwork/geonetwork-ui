@@ -432,7 +432,7 @@ describe('editor form', () => {
       cy.get('@resourceCreatedField')
         .find('input')
         .invoke('val')
-        .should('eq', '1/1/2005')
+        .should('eq', '01/01/2005')
 
       // it edits and saves the resource creation date
       cy.editor_wrapPreviousDraft(recordUuid)
@@ -444,7 +444,7 @@ describe('editor form', () => {
       cy.get('@resourceCreatedField')
         .find('input')
         .invoke('val')
-        .should('eq', '1/1/2019')
+        .should('eq', '01/01/2019')
 
       // resource updated
       cy.get('@aboutSection')
@@ -456,7 +456,7 @@ describe('editor form', () => {
       cy.get('@resourceUpdatedField')
         .find('input')
         .invoke('val')
-        .should('eq', '11/1/2019')
+        .should('eq', '11/01/2019')
 
       // it edits and saves the resource update date
       cy.editor_wrapPreviousDraft(recordUuid)
@@ -468,7 +468,7 @@ describe('editor form', () => {
       cy.get('@resourceUpdatedField')
         .find('input')
         .invoke('val')
-        .should('eq', '1/1/2019')
+        .should('eq', '01/01/2019')
 
       // update frequency
       // when the regularity switch is on

@@ -1,6 +1,7 @@
 import { importProvidersFrom } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Meta, StoryObj, applicationConfig } from '@storybook/angular'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { DatePickerComponent } from './date-picker.component'
 
 export default {
@@ -8,7 +9,7 @@ export default {
   component: DatePickerComponent,
   decorators: [
     applicationConfig({
-      providers: [importProvidersFrom(BrowserAnimationsModule)],
+      providers: [importProvidersFrom(BrowserAnimationsModule), provideI18n()],
     }),
   ],
 } as Meta<DatePickerComponent>

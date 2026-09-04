@@ -65,6 +65,7 @@
   "dataset.error.restrictedAccess": "",
   "dataset.error.unknown": "",
   "dataset.error.unsupportedType": "",
+  "daterange.filter.datePlaceholder": "dd/mm/aaaa",
   "daterange.filter.from": "",
   "daterange.filter.period": "",
   "daterange.filter.to": "",

@@ -235,7 +235,9 @@ describe('DropdownMultiselectComponent', () => {
     })
     describe('when no item selected', () => {
       it('is not displayed', () => {
-        const clearBtn = fixture.debugElement.query(By.css('.clear-btn'))
+        const clearBtn = fixture.debugElement.query(
+          By.css('[data-test="dropdown-clear"] ng-icon')
+        )
         expect(clearBtn).toBeFalsy()
       })
     })
@@ -245,7 +247,9 @@ describe('DropdownMultiselectComponent', () => {
         fixture.detectChanges()
       })
       it('is displayed', () => {
-        const clearBtn = fixture.debugElement.query(By.css('.clear-btn'))
+        const clearBtn = fixture.debugElement.query(
+          By.css('[data-test="dropdown-clear"] ng-icon')
+        )
         expect(clearBtn).toBeTruthy()
       })
     })
@@ -254,7 +258,9 @@ describe('DropdownMultiselectComponent', () => {
         component.selected = ['choice2']
         jest.spyOn(component.selectValues, 'emit')
         fixture.detectChanges()
-        const clearBtn = fixture.debugElement.query(By.css('.clear-btn'))
+        const clearBtn = fixture.debugElement.query(
+          By.css('[data-test="dropdown-clear"] ng-icon')
+        )
         clearBtn.nativeElement.click()
       })
       it('is displayed', () => {
