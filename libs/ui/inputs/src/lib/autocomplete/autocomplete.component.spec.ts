@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ElementRef } from '@angular/core'
+import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { of, Subscription, throwError } from 'rxjs'
@@ -8,7 +8,23 @@ import {
 } from './autocomplete.component'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
+import { OverlayContainer } from '@angular/cdk/overlay'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
+
+@Component({
+  imports: [AutocompleteComponent],
+  standalone: true,
+  template: `
+    <ng-template #itemTpl let-item>
+      <span class="custom-item">custom: {{ item }}</span>
+    </ng-template>
+    <gn-ui-autocomplete [action]="action" [displayWithTemplate]="itemTpl">
+    </gn-ui-autocomplete>
+  `,
+})
+class AutocompleteItemTemplateHostComponent {
+  action = () => of(['aa', 'bb'])
+}
 
 describe('AutocompleteComponent', () => {
   let component: AutocompleteComponent
@@ -423,6 +439,28 @@ describe('AutocompleteComponent', () => {
 
       expect(window.requestAnimationFrame).not.toHaveBeenCalledWith()
       expect(component.triggerRef.updatePosition).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('with a custom item template', () => {
+    it('renders the projected template for each suggestion', () => {
+      jest.useFakeTimers()
+      const hostFixture = TestBed.createComponent(
+        AutocompleteItemTemplateHostComponent
+      )
+      hostFixture.detectChanges()
+      const autocomplete = hostFixture.debugElement.query(
+        By.directive(AutocompleteComponent)
+      ).componentInstance as AutocompleteComponent
+      autocomplete.inputRef.nativeElement.value = 'bla'
+      autocomplete.inputRef.nativeElement.dispatchEvent(new InputEvent('input'))
+      jest.runOnlyPendingTimers()
+      hostFixture.detectChanges()
+
+      const overlayContainer =
+        TestBed.inject(OverlayContainer).getContainerElement()
+      expect(overlayContainer.textContent).toContain('custom: aa')
+      expect(overlayContainer.textContent).toContain('custom: bb')
     })
   })
 
