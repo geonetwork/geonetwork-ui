@@ -55,6 +55,11 @@ export interface SearchPreset {
   filters: Record<string, string[] | string>
 }
 
+export type GeocodingProviderName =
+  | 'geoadmin'
+  | 'geonames'
+  | 'base-adresse-nationale-fr'
+
 export interface SearchConfig {
   RECORD_KIND_QUICK_FILTER?: boolean
   FILTER_GEOMETRY_URL?: string
@@ -63,6 +68,8 @@ export interface SearchConfig {
   SEARCH_PRESET?: SearchPreset[]
   ADVANCED_FILTERS?: []
   LIMIT?: number
+  GEOCODING_PROVIDER?: GeocodingProviderName
+  GEOCODING_PROVIDER_OPTIONS?: Record<string, string | number>
 }
 
 export interface MetadataQualityConfig {

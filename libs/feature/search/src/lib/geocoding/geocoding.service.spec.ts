@@ -3,14 +3,19 @@ import { firstValueFrom } from 'rxjs'
 import {
   queryGeoadmin,
   queryGeonames,
-  queryDataGouvFr,
+  queryBaseAdresseNationale,
 } from '@geospatial-sdk/geocoding'
+import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 import { GEOCODING_PROVIDER, GeocodingService } from './geocoding.service'
 
 jest.mock('@geospatial-sdk/geocoding', () => ({
   queryGeoadmin: jest.fn(),
   queryGeonames: jest.fn(),
-  queryDataGouvFr: jest.fn(),
+  queryBaseAdresseNationale: jest.fn(),
+}))
+
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getOptionalSearchConfig: jest.fn(),
 }))
 
 function setup(provider: unknown) {
@@ -47,13 +52,15 @@ describe('GeocodingService', () => {
     expect(response).toEqual(results)
   })
 
-  it('queries the data-gouv-fr provider with the given options', async () => {
-    ;(queryDataGouvFr as jest.Mock).mockResolvedValue(results)
-    const service = setup(['data-gouv-fr', { limit: 5 }])
+  it('queries the base-adresse-nationale-fr provider with the given options', async () => {
+    ;(queryBaseAdresseNationale as jest.Mock).mockResolvedValue(results)
+    const service = setup(['base-adresse-nationale-fr', { limit: 5 }])
 
     const response = await firstValueFrom(service.query('beaufort'))
 
-    expect(queryDataGouvFr).toHaveBeenCalledWith('beaufort', { limit: 5 })
+    expect(queryBaseAdresseNationale).toHaveBeenCalledWith('beaufort', {
+      limit: 5,
+    })
     expect(response).toEqual(results)
   })
 
@@ -63,5 +70,28 @@ describe('GeocodingService', () => {
     await expect(firstValueFrom(service.query('beaufort'))).rejects.toThrow(
       'Unsupported geocoding provider: unknown'
     )
+  })
+})
+
+describe('GEOCODING_PROVIDER default factory', () => {
+  function getProvider() {
+    TestBed.configureTestingModule({})
+    return TestBed.inject(GEOCODING_PROVIDER)
+  }
+
+  it('defaults to geonames when no geocoding config is set', () => {
+    ;(getOptionalSearchConfig as jest.Mock).mockReturnValue(null)
+    expect(getProvider()).toEqual(['geonames', { maxRows: 5 }])
+  })
+
+  it('uses the configured provider and options', () => {
+    ;(getOptionalSearchConfig as jest.Mock).mockReturnValue({
+      GEOCODING_PROVIDER: 'base-adresse-nationale-fr',
+      GEOCODING_PROVIDER_OPTIONS: { category: 'hydrographie' },
+    })
+    expect(getProvider()).toEqual([
+      'base-adresse-nationale-fr',
+      { category: 'hydrographie' },
+    ])
   })
 })

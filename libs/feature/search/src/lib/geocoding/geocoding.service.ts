@@ -5,25 +5,43 @@ import {
   GeocodingResult,
   queryGeonames,
   GeonamesOptions,
-  DataGouvFrOptions,
-  queryDataGouvFr,
+  BaseAdresseNationaleOptions,
+  queryBaseAdresseNationale,
 } from '@geospatial-sdk/geocoding'
 import { from, Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
+import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 
 type GeoadminGeocodingProvider = ['geoadmin', GeoadminOptions]
 type GeonamesGeocodingProvider = ['geonames', GeonamesOptions]
-type DataGouvFrGeocodingProvider = ['data-gouv-fr', DataGouvFrOptions]
+type BaseAdresseNationaleFrGeocodingProvider = [
+  'base-adresse-nationale-fr',
+  BaseAdresseNationaleOptions,
+]
 export type GeocodingProvider =
   | GeoadminGeocodingProvider
   | GeonamesGeocodingProvider
-  | DataGouvFrGeocodingProvider
+  | BaseAdresseNationaleFrGeocodingProvider
+
+const DEFAULT_GEOCODING_PROVIDER = [
+  'geonames',
+  { maxRows: 5 },
+] as GeocodingProvider
 
 export const GEOCODING_PROVIDER = new InjectionToken<GeocodingProvider>(
   'geocoding-provider',
   {
     providedIn: 'root',
-    factory: () => ['geonames', { maxRows: 5 }] as GeocodingProvider,
+    factory: (): GeocodingProvider => {
+      const config = getOptionalSearchConfig()
+      if (!config?.GEOCODING_PROVIDER) {
+        return DEFAULT_GEOCODING_PROVIDER
+      }
+      return [
+        config.GEOCODING_PROVIDER,
+        config.GEOCODING_PROVIDER_OPTIONS ?? {},
+      ] as GeocodingProvider
+    },
   }
 )
 
@@ -46,9 +64,12 @@ export class GeocodingService {
           queryGeonames(text, this.provider[1] as GeonamesOptions)
         )
         break
-      case 'data-gouv-fr':
+      case 'base-adresse-nationale-fr':
         queryObservable = from(
-          queryDataGouvFr(text, this.provider[1] as DataGouvFrOptions)
+          queryBaseAdresseNationale(
+            text,
+            this.provider[1] as BaseAdresseNationaleOptions
+          )
         )
         break
       default:

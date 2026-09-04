@@ -252,6 +252,8 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
           'search_preset',
           'advanced_filters',
           'limit',
+          'geocoding_provider',
+          'geocoding_provider_options',
         ],
         warnings,
         errors
@@ -281,6 +283,9 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
               })),
               ADVANCED_FILTERS: parsedSearchSection.advanced_filters,
               LIMIT: parsedSearchSection.limit,
+              GEOCODING_PROVIDER: parsedSearchSection.geocoding_provider,
+              GEOCODING_PROVIDER_OPTIONS:
+                parsedSearchSection.geocoding_provider_options,
             } as SearchConfig)
 
       const parsedMetadataQualitySection = parseConfigSection(
