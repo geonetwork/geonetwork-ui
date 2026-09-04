@@ -284,7 +284,7 @@ describe('DateRangeDropdownComponent', () => {
       fixture.detectChanges()
       const clearIcon = (
         fixture.nativeElement as HTMLElement
-      ).querySelector<HTMLElement>('[data-test="clear-date-range"] ng-icon')
+      ).querySelector<HTMLElement>('[data-test="dropdown-clear"] ng-icon')
 
       clearIcon.click()
       fixture.detectChanges()

@@ -1,3 +1,39 @@
 mat-calendar {
   width: 100%;
 }
+
+.calendar {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.calendar > mat-calendar {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.calendar.expand {
+  animation: open 200ms ease-out;
+}
+
+.calendar.collapse {
+  animation: open 200ms ease-in reverse;
+}
+
+@keyframes open {
+  from {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+  to {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .calendar.expand,
+  .calendar.collapse {
+    animation-duration: 1ms;
+  }
+}

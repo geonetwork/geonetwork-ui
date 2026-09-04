@@ -344,12 +344,12 @@ describe('dashboard (landing page)', () => {
     /** the bounds are typeable; e2e runs in English, so MM/DD/YYYY */
     function typeDateRange(start: string, end: string) {
       if (start !== null) {
-        cy.get('[data-cy="startDateInput"]').clear()
-        cy.get('[data-cy="startDateInput"]').type(`${start}{enter}`)
+        cy.get('[data-test="start-date-input"]').clear()
+        cy.get('[data-test="start-date-input"]').type(`${start}{enter}`)
       }
       if (end !== null) {
-        cy.get('[data-cy="endDateInput"]').clear()
-        cy.get('[data-cy="endDateInput"]').type(`${end}{enter}`)
+        cy.get('[data-test="end-date-input"]').clear()
+        cy.get('[data-test="end-date-input"]').type(`${end}{enter}`)
       }
       cy.clickOnBody()
     }
@@ -391,17 +391,17 @@ describe('dashboard (landing page)', () => {
 
       // it should display the expand icon for the date range dropdown correctly
       cy.get('md-editor-search-filters')
-        .find('gn-ui-date-range-dropdown [data-cy="dateRangeToggle"]')
+        .find('gn-ui-date-range-dropdown [data-test="dropdown-toggle"]')
         .should('have.attr', 'ng-reflect-name', 'matExpandMore')
       cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
       cy.get('md-editor-search-filters')
-        .find('gn-ui-date-range-dropdown [data-cy="dateRangeToggle"]')
+        .find('gn-ui-date-range-dropdown [data-test="dropdown-toggle"]')
         .should('have.attr', 'ng-reflect-name', 'matExpandLess')
 
       // it should clear both bounds at once
       cy.clickOnBody()
       cy.get('md-editor-search-filters')
-        .find('gn-ui-date-range-dropdown [data-cy="clearDateRange"]')
+        .find('gn-ui-date-range-dropdown [data-test="dropdown-clear"]')
         .click()
       cy.get('gn-ui-interactive-table')
         .find('[data-cy="table-row"]')
@@ -414,8 +414,8 @@ describe('dashboard (landing page)', () => {
 
       // it should filter on an open interval with only a start date
       cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
-      cy.get('[data-cy="endDateInput"]').clear()
-      cy.get('[data-cy="endDateInput"]').type('{enter}')
+      cy.get('[data-test="end-date-input"]').clear()
+      cy.get('[data-test="end-date-input"]').type('{enter}')
       cy.clickOnBody()
       // the badge shows the missing bound as an ellipsis
       cy.get('gn-ui-search-filters-summary')
