@@ -163,8 +163,7 @@ describe('DateRangeDropdownComponent', () => {
         end: new Date(2024, 2, 28),
       })
       expect(component.invalidBounds.end).toBe(false)
-      // typing must not fold the accordion away while the field is being edited
-      expect(component.expandedBound).toBe('start')
+      expect(component.expandedBound).toBe(null)
     })
     it('rewrites an accepted date in canonical form when the field is left', () => {
       // a padless day/month is accepted, then normalised on blur
@@ -259,6 +258,24 @@ describe('DateRangeDropdownComponent', () => {
       ).toBeFalsy()
       expect(
         panel.querySelector('[data-test="end-date-calendar"]')
+      ).toBeTruthy()
+    })
+    it('unfolds the calendar of an input that is clicked', () => {
+      endInput().click()
+      fixture.detectChanges()
+
+      expect(component.expandedBound).toBe('end')
+      expect(
+        panel.querySelector('[data-test="end-date-calendar"]')
+      ).toBeTruthy()
+    })
+    it('keeps the calendar of the clicked input unfolded', () => {
+      startInput().click()
+      fixture.detectChanges()
+
+      expect(component.expandedBound).toBe('start')
+      expect(
+        panel.querySelector('[data-test="start-date-calendar"]')
       ).toBeTruthy()
     })
   })
