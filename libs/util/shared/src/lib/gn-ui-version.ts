@@ -5,5 +5,5 @@ export const GEONETWORK_UI_VERSION = packageJson.version
 export const GEONETWORK_UI_TAG_NAME = GEONETWORK_UI_VERSION.split(
   '-'
 )[1]?.startsWith('dev')
-  ? 'main'
+  ? '2.10.x'
   : `v${packageJson.version}`
