@@ -20,7 +20,11 @@ export type GeocodingProvider =
   | DataGouvFrGeocodingProvider
 
 export const GEOCODING_PROVIDER = new InjectionToken<GeocodingProvider>(
-  'geocoding-provider'
+  'geocoding-provider',
+  {
+    providedIn: 'root',
+    factory: () => ['geonames', { maxRows: 5 }] as GeocodingProvider,
+  }
 )
 
 @Injectable({
