@@ -118,6 +118,7 @@
         type="text"
         inputmode="numeric"
         autocomplete="off"
+        [gnUiAutofocus]="bound === expandedBound"
         class="min-w-0 grow bg-transparent focus:outline-none"
         [value]="date ? formatDate(date) : ''"
         [placeholder]="'daterange.filter.datePlaceholder' | translate"

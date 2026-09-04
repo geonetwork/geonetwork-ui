@@ -32,7 +32,10 @@ import { iconoirCalendar } from '@ng-icons/iconoir'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { FieldFilterByRange } from '@geonetwork-ui/common/domain/model/search'
-import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
+import {
+  AutofocusDirective,
+  propagateToDocumentOnly,
+} from '@geonetwork-ui/util/shared'
 import { ButtonComponent } from '../button/button.component'
 import { provideLocalizedDateAdapter } from '../date-adapter.providers'
 
@@ -42,6 +45,7 @@ export type DateRangeBound = 'start' | 'end'
   selector: 'gn-ui-date-range-dropdown',
   standalone: true,
   imports: [
+    AutofocusDirective,
     ButtonComponent,
     MatDatepickerModule,
     NgIcon,
