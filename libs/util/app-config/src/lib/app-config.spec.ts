@@ -189,6 +189,12 @@ describe('app config utils', () => {
             category: 'administratif',
             limit: 5,
           },
+          SPATIAL_EXTENT_SERVICE: {
+            MAIN_LABEL_JSONPATH: '$.properties.name[0]',
+            SECONDARY_LABEL_JSONPATH: '$.properties.citycode[0]',
+            TERTIARY_LABEL_JSONPATH: '$.properties.category[1]',
+            GEOMETRY_STRING_JSONPATH: '$.properties.truegeometry',
+          },
         })
       })
     })

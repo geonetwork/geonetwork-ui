@@ -46,6 +46,12 @@ geocoding_provider_options.category = "administratif"
 geocoding_provider_options.limit = 5
 advanced_filters = ['publicationYear', 'documentStandard', 'inspireKeyword', 'topic', 'license']
 
+[search.spatial_extent_service]
+main_label_jsonpath = '$.properties.name[0]'
+secondary_label_jsonpath = '$.properties.citycode[0]'
+tertiary_label_jsonpath = '$.properties.category[1]'
+geometry_string_jsonpath = '$.properties.truegeometry'
+
 [[search_preset]]
 sort = "-createDate"
 name = 'filterByOrgs'
