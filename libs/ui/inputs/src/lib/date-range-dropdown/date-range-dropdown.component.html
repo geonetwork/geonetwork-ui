@@ -20,8 +20,7 @@
   </div>
   <button
     class="h-6 w-6 flex items-center justify-center"
-    data-cy="clearDateRange"
-    data-test="clear-date-range"
+    data-test="dropdown-clear"
   >
     @if (selectedDatesCount && !overlayOpen) {
       <ng-icon
@@ -32,8 +31,7 @@
     }
   </button>
   <ng-icon
-    data-cy="dateRangeToggle"
-    data-test="date-range-toggle"
+    data-test="dropdown-toggle"
     [name]="overlayOpen ? 'matExpandLess' : 'matExpandMore'"
     class="shrink-0 opacity-40"
   >
@@ -65,13 +63,15 @@
         }"
       ></ng-container>
       @if (expandedBound === 'start') {
-        <mat-calendar
-          data-test="start-date-calendar"
-          [selected]="startDate"
-          [startAt]="startDate ?? endDate"
-          [maxDate]="endDate"
-          (selectedChange)="selectStartDate($event)"
-        ></mat-calendar>
+        <div class="calendar" animate.enter="expand" animate.leave="collapse">
+          <mat-calendar
+            data-test="start-date-calendar"
+            [selected]="startDate"
+            [startAt]="startDate ?? endDate"
+            [maxDate]="endDate"
+            (selectedChange)="selectStartDate($event)"
+          ></mat-calendar>
+        </div>
       }
     </div>
     <div class="flex flex-col justify-center">
@@ -84,13 +84,15 @@
         }"
       ></ng-container>
       @if (expandedBound === 'end') {
-        <mat-calendar
-          data-test="end-date-calendar"
-          [selected]="endDate"
-          [startAt]="endDate ?? startDate"
-          [minDate]="startDate"
-          (selectedChange)="selectEndDate($event)"
-        ></mat-calendar>
+        <div class="calendar" animate.enter="expand" animate.leave="collapse">
+          <mat-calendar
+            data-test="end-date-calendar"
+            [selected]="endDate"
+            [startAt]="endDate ?? startDate"
+            [minDate]="startDate"
+            (selectedChange)="selectEndDate($event)"
+          ></mat-calendar>
+        </div>
       }
     </div>
   </div>
@@ -121,26 +123,25 @@
         [placeholder]="'daterange.filter.datePlaceholder' | translate"
         [attr.aria-label]="label | translate"
         [attr.aria-invalid]="invalidBounds[bound] || null"
-        [attr.data-cy]="bound + 'DateInput'"
         [attr.data-test]="bound + '-date-input'"
         (change)="onDateInput(bound, $event)"
         (blur)="normalizeDateInput(bound, $event)"
       />
     </div>
     <div class="shrink-0 flex items-center justify-end">
-      <button
-        type="button"
-        class="flex items-center justify-center"
-        [attr.aria-label]="'daterange.filter.toggleCalendar' | translate"
+      <gn-ui-button
+        type="light"
+        [style.--gn-ui-button-padding]="0"
+        [style.--gn-ui-button-width]="'24px'"
+        [style.--gn-ui-button-height]="'24px'"
         [attr.aria-expanded]="expandedBound === bound"
-        [attr.data-cy]="bound + 'DateToggle'"
         [attr.data-test]="bound + '-date-toggle'"
-        (click)="toggleBound(bound)"
+        (buttonClick)="toggleBound(bound)"
       >
         <ng-icon
           [name]="expandedBound === bound ? 'matExpandLess' : 'matExpandMore'"
         ></ng-icon>
-      </button>
+      </gn-ui-button>
     </div>
   </div>
 </ng-template>
