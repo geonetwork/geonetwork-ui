@@ -43,6 +43,12 @@ filter_geometry_url = 'https://my.domain.org/geom.json'
 do_not_use_default_search_preset = false
 advanced_filters = ['publicationYear', 'documentStandard', 'inspireKeyword', 'topic', 'license']
 
+[search.spatial_extent_service]
+main_label_jsonpath = '$.properties.name[0]'
+secondary_label_jsonpath = '$.properties.citycode[0]'
+tertiary_label_jsonpath = '$.properties.category[1]'
+geometry_string_jsonpath = '$.properties.truegeometry'
+
 [[search_preset]]
 sort = "-createDate"
 name = 'filterByOrgs'
