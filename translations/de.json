@@ -424,7 +424,6 @@
   "map.add.layer.wms": "Aus WMS",
   "map.addFromFile.placeholder": "Klicke hier oder ziehe eine Datei herein",
   "map.dropdown.placeholder": "Kein Vorschaulayer verfügbar",
-  "map.geocoding.placeholder": "Nach einem Ort suchen",
   "map.help.addFromFile": "Klicke oder ziehe eine Datei herein um eine Karte hinzuzufügen (momentan wird nur das GeoJSON-Format unterstützt).",
   "map.layer.add": "Hinzufügen",
   "map.layers.available": "Verfügbare Layer",
