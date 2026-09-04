@@ -127,6 +127,7 @@
         [attr.data-test]="bound + '-date-input'"
         (change)="onDateInput(bound, $event)"
         (blur)="normalizeDateInput(bound, $event)"
+        (click)="expandedBound !== bound && toggleBound(bound)"
       />
     </div>
     <div class="shrink-0 flex items-center justify-end">
