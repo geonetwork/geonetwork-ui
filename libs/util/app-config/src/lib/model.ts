@@ -55,6 +55,13 @@ export interface SearchPreset {
   filters: Record<string, string[] | string>
 }
 
+export interface SpatialExtentServiceConfig {
+  MAIN_LABEL_JSONPATH?: string
+  SECONDARY_LABEL_JSONPATH?: string
+  TERTIARY_LABEL_JSONPATH?: string
+  GEOMETRY_STRING_JSONPATH?: string
+}
+
 export interface SearchConfig {
   RECORD_KIND_QUICK_FILTER?: boolean
   FILTER_GEOMETRY_URL?: string
@@ -64,6 +71,7 @@ export interface SearchConfig {
   ADVANCED_FILTERS?: []
   LIMIT?: number
   SPATIAL_EXTENT_MAX_FILE_SIZE?: number
+  SPATIAL_EXTENT_SERVICE?: SpatialExtentServiceConfig
 }
 
 export interface MetadataQualityConfig {

@@ -253,6 +253,7 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
           'advanced_filters',
           'limit',
           'spatial_extent_max_file_size',
+          'spatial_extent_service',
         ],
         warnings,
         errors
@@ -265,6 +266,10 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
         warnings,
         errors
       )
+      const parsedSpatialExtentService =
+        parsedSearchSection?.spatial_extent_service as
+          | Record<string, string>
+          | undefined
       searchConfig =
         parsedSearchSection === null
           ? null
@@ -284,6 +289,18 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
               LIMIT: parsedSearchSection.limit,
               SPATIAL_EXTENT_MAX_FILE_SIZE:
                 parsedSearchSection.spatial_extent_max_file_size,
+              SPATIAL_EXTENT_SERVICE: parsedSpatialExtentService
+                ? {
+                    MAIN_LABEL_JSONPATH:
+                      parsedSpatialExtentService.main_label_jsonpath,
+                    SECONDARY_LABEL_JSONPATH:
+                      parsedSpatialExtentService.secondary_label_jsonpath,
+                    TERTIARY_LABEL_JSONPATH:
+                      parsedSpatialExtentService.tertiary_label_jsonpath,
+                    GEOMETRY_STRING_JSONPATH:
+                      parsedSpatialExtentService.geometry_string_jsonpath,
+                  }
+                : undefined,
             } as SearchConfig)
 
       const parsedMetadataQualitySection = parseConfigSection(
