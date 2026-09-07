@@ -30,6 +30,7 @@ import { EffectsModule } from '@ngrx/effects'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { StoreModule } from '@ngrx/store'
 import { provideGn4 } from '@geonetwork-ui/api/repository'
+import { provideAnimations } from '@angular/platform-browser/animations'
 
 if (environment.production) {
   enableProdMode()
@@ -74,6 +75,7 @@ loadAppConfig().then(() => {
       DATAHUB_CONFIG_PROVIDERS,
       provideI18n(TRANSLATE_WITH_OVERRIDES_CONFIG),
       provideGn4(),
+      provideAnimations(),
     ],
   }).catch((err) => console.error(err))
 })

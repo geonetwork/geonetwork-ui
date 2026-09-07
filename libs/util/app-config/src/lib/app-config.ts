@@ -252,6 +252,7 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
           'search_preset',
           'advanced_filters',
           'limit',
+          'spatial_extent_max_file_size',
         ],
         warnings,
         errors
@@ -281,6 +282,8 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
               })),
               ADVANCED_FILTERS: parsedSearchSection.advanced_filters,
               LIMIT: parsedSearchSection.limit,
+              SPATIAL_EXTENT_MAX_FILE_SIZE:
+                parsedSearchSection.spatial_extent_max_file_size,
             } as SearchConfig)
 
       const parsedMetadataQualitySection = parseConfigSection(

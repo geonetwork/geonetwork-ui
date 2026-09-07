@@ -9,6 +9,8 @@ import {
   Choice,
   DateRangeDropdownComponent,
   DropdownMultiselectComponent,
+  SpatialExtentDropdownComponent,
+  SpatialExtentDropdownError,
 } from '@geonetwork-ui/ui/inputs'
 import { Observable, of, switchMap } from 'rxjs'
 import { catchError, filter, map, startWith } from 'rxjs/operators'
@@ -22,6 +24,10 @@ import {
 } from '../utils/service/fields'
 import { DateRange } from '@geonetwork-ui/api/repository'
 import { CommonModule } from '@angular/common'
+import { BoundingBox } from '@geonetwork-ui/util/shared'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
+import { TranslateService } from '@ngx-translate/core'
+import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 
 @Component({
   selector: 'gn-ui-filter-dropdown',
@@ -33,15 +39,21 @@ import { CommonModule } from '@angular/common'
     CommonModule,
     DateRangeDropdownComponent,
     DropdownMultiselectComponent,
+    SpatialExtentDropdownComponent,
   ],
 })
 export class FilterDropdownComponent implements OnInit {
   private searchFacade = inject(SearchFacade)
   private searchService = inject(SearchService)
   private fieldsService = inject(FieldsService)
+  private notificationsService = inject(NotificationsService)
+  private translateService = inject(TranslateService)
 
   @Input() fieldName: string
   @Input() title: string
+
+  spatialExtentMaxFileSize =
+    getOptionalSearchConfig()?.SPATIAL_EXTENT_MAX_FILE_SIZE
 
   fieldType: FieldType
   dateRange: DateRange
@@ -64,6 +76,33 @@ export class FilterDropdownComponent implements OnInit {
     this.fieldsService
       .buildFiltersFromFieldValues({ [this.fieldName]: values as FieldValue[] })
       .subscribe((filters) => this.searchService.updateFilters(filters))
+  }
+
+  private spatialExtentErrorNotificationId: number | null = null
+
+  onBboxChange(bbox: BoundingBox | null) {
+    console.log(bbox)
+    this.clearSpatialExtentErrorNotification()
+  }
+
+  onSpatialExtentError(error: SpatialExtentDropdownError) {
+    this.clearSpatialExtentErrorNotification()
+    this.spatialExtentErrorNotificationId =
+      this.notificationsService.showNotification({
+        type: 'error',
+        title: this.translateService.instant(
+          'search.filters.spatialExtent.error.title'
+        ),
+        text: this.translateService.instant(error.key, error.params),
+      })
+  }
+
+  private clearSpatialExtentErrorNotification() {
+    if (this.spatialExtentErrorNotificationId === null) return
+    this.notificationsService.removeNotificationById(
+      this.spatialExtentErrorNotificationId
+    )
+    this.spatialExtentErrorNotificationId = null
   }
 
   ngOnInit() {

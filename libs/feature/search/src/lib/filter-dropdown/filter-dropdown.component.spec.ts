@@ -15,6 +15,9 @@ import {
   DateRangeDropdownComponent,
   DropdownMultiselectComponent,
 } from '@geonetwork-ui/ui/inputs'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { MockProvider } from 'ng-mocks'
 
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject<any>({})
@@ -62,6 +65,7 @@ describe('FilterDropdownComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        provideI18n(),
         {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
@@ -74,6 +78,7 @@ describe('FilterDropdownComponent', () => {
           provide: FieldsService,
           useClass: FieldsServiceMock,
         },
+        MockProvider(NotificationsService),
       ],
     })
       .overrideComponent(FilterDropdownComponent, {

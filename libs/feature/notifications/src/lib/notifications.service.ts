@@ -18,10 +18,12 @@ export class NotificationsService {
     error && console.error(error)
     const id = Math.floor(Math.random() * 1000000)
     this.notifications$.next([...this.notifications$.value, { ...content, id }])
-    if (typeof timeoutMs === 'undefined') return
-    setTimeout(() => {
-      this.removeNotificationById(id)
-    }, timeoutMs)
+    if (typeof timeoutMs !== 'undefined') {
+      setTimeout(() => {
+        this.removeNotificationById(id)
+      }, timeoutMs)
+    }
+    return id
   }
 
   removeNotificationById(id: number) {

@@ -6,6 +6,13 @@
     (startDateChange)="onStartDateChange($event)"
     (endDateChange)="onEndDateChange($event)"
   ></gn-ui-date-range-dropdown>
+} @else if (fieldType === 'spatialExtent') {
+  <gn-ui-spatial-extent-dropdown
+    [title]="title"
+    [maxFileSizeMb]="spatialExtentMaxFileSize"
+    (bboxChange)="onBboxChange($event)"
+    (errorChange)="onSpatialExtentError($event)"
+  ></gn-ui-spatial-extent-dropdown>
 } @else {
   <gn-ui-dropdown-multiselect
     class="w-full"
