@@ -16,10 +16,6 @@ gn-ui-button {
   --gn-ui-button-padding: 0;
   font-size: 1em;
 }
-ng-icon.search {
-  margin-top: 0.6rem;
-  margin-left: 0.6rem;
-}
 gn-ui-button:last-of-type {
   --gn-ui-button-rounded: 0 var(--gn-ui-text-input-rounded, 0.25em)
     var(--gn-ui-text-input-rounded, 0.25em) 0;
