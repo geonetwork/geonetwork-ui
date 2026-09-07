@@ -58,6 +58,8 @@ import { transformExtent } from 'ol/proj.js'
 export const DEFAULT_BASEMAP_LAYER: MapContextLayerMapLibreStyle = {
   type: 'maplibre-style',
   styleUrl: `https://basemaps.cartocdn.com/gl/positron-gl-style/style.json`,
+  clickable: false,
+  hoverable: false,
 }
 
 const DEFAULT_VIEW: MapContextView = {
