@@ -38,3 +38,10 @@ export const WithSelection: StoryObj<SpatialExtentDropdownComponent> = {
     fileName: 'area-of-interest.geojson',
   },
 }
+
+export const WithInitialBbox: StoryObj<SpatialExtentDropdownComponent> = {
+  args: {
+    title: 'Spatial extent',
+    initialBbox: [7.658986, 47.145569, 7.887572, 47.259458],
+  },
+}

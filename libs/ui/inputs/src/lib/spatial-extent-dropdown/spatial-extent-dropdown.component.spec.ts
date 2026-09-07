@@ -30,6 +30,36 @@ describe('SpatialExtentDropdownComponent', () => {
     })
   })
 
+  describe('selection labels', () => {
+    it('uses the imported-file labels when a GeoJSON file was imported', () => {
+      component.bbox = [1, 2, 3, 4]
+      component.fileName = 'area.geojson'
+
+      expect(component.selectionLabelKey).toBe(
+        'search.filters.spatialExtent.bboxFromFile'
+      )
+      expect(component.selectionDeleteLabelKey).toBe(
+        'search.filters.spatialExtent.bboxFromFileDelete'
+      )
+      expect(component.selectionLabelParams).toEqual({
+        fileName: 'area.geojson',
+      })
+    })
+
+    it('uses the initial-bbox labels when the bbox comes from the filters', () => {
+      component.initialBbox = [1, 2, 3, 4]
+
+      expect(component.hasSelection).toBe(true)
+      expect(component.fileName).toBe('')
+      expect(component.selectionLabelKey).toBe(
+        'search.filters.spatialExtent.bboxInitial'
+      )
+      expect(component.selectionDeleteLabelKey).toBe(
+        'search.filters.spatialExtent.bboxInitialDelete'
+      )
+    })
+  })
+
   describe('overlay toggling', () => {
     beforeEach(() => {
       const originEl: HTMLElement =
