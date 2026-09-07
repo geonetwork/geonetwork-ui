@@ -2,6 +2,7 @@ import { Injectable, Injector, inject } from '@angular/core'
 import {
   AbstractSearchField,
   AvailableServicesField,
+  BoundingBoxSearchField,
   DateRangeSearchField,
   FieldValue,
   FullTextSearchField,
@@ -15,7 +16,6 @@ import {
   TranslatedSearchField,
   RecordKindField,
   UserSearchField,
-  SpatialExtentSearchField,
 } from './fields'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -96,7 +96,7 @@ export class FieldsService {
     user: new UserSearchField(this.injector),
     changeDate: new DateRangeSearchField('changeDate', this.injector, 'desc'),
     availableServices: new AvailableServicesField(this.injector),
-    spatialExtent: new SpatialExtentSearchField(this.injector),
+    spatialExtent: new BoundingBoxSearchField('spatialExtent', this.injector),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {

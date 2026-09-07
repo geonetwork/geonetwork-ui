@@ -7,6 +7,7 @@ import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
 import { TestBed } from '@angular/core/testing'
 import { METADATA_LANGUAGE } from '../../metadata-language.token'
 import { TranslateService } from '@ngx-translate/core'
+import { bboxToPolygon } from '@geonetwork-ui/util/shared'
 
 class TranslateServiceMock {
   getCurrentLang = () => 'en'
@@ -616,6 +617,92 @@ describe('ElasticsearchService', () => {
           ],
         },
       })
+    })
+    it('handles spatial filter special case', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          spatialExtent: [1, 2, 3, 4],
+        },
+        {},
+        []
+      )
+      expect(query).toMatchObject({
+        bool: {
+          filter: [
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
+            {
+              geo_shape: {
+                geom: {
+                  shape: {
+                    type: 'envelope',
+                    coordinates: [
+                      [1, 4],
+                      [3, 2],
+                    ],
+                  },
+                  relation: 'intersects',
+                },
+              },
+            },
+            {
+              ids: { values: [] },
+            },
+          ],
+        },
+      })
+    })
+    it('boosts using the spatial filter geometry instead of the preference geometry when both are set', () => {
+      const geojsonPolygon = {
+        coordinates: [
+          [
+            [3.017921158755172, 50.65759907920972],
+            [3.017921158755172, 50.613483610573155],
+            [3.1098886148436122, 50.613483610573155],
+            [3.017921158755172, 50.65759907920972],
+          ],
+        ],
+        type: 'Polygon' as const,
+      }
+      const query = service['buildPayloadQuery'](
+        {
+          spatialExtent: [1, 2, 3, 4],
+        },
+        {},
+        undefined,
+        geojsonPolygon
+      )
+      expect(query.bool.should).toEqual([
+        {
+          geo_shape: {
+            geom: {
+              shape: bboxToPolygon([1, 2, 3, 4]),
+              relation: 'within',
+            },
+            boost: 5.0,
+          },
+        },
+        {
+          geo_shape: {
+            geom: {
+              shape: bboxToPolygon([1, 2, 3, 4]),
+              relation: 'intersects',
+            },
+            boost: 2.0,
+          },
+        },
+        {
+          distance_feature: {
+            boost: 5,
+            field: 'location',
+            origin: [2, 3],
+            pivot: expect.any(String),
+          },
+        },
+      ])
     })
     describe('any has special characters', () => {
       let query
