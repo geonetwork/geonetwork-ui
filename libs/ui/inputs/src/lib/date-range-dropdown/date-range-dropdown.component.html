@@ -1,30 +1,149 @@
 <gn-ui-button
   type="outline"
   extraClass="bg-background w-full !p-[8px] !pl-[16px]"
-  (buttonClick)="picker.open()"
+  [title]="title"
+  (buttonClick)="openOverlay()"
+  cdkOverlayOrigin
+  #overlayOrigin="cdkOverlayOrigin"
 >
   <div class="grow flex items-center mr-2 gap-2 overflow-hidden">
     <div class="text-left font-medium truncate py-1">
       {{ title }}
     </div>
+    @if (selectedDatesCount) {
+      <div
+        class="gn-ui-multiselect-counter shrink-0 rounded-full font-bold text-[12px] w-5 h-5 flex items-center justify-center mr-1 selected-count"
+      >
+        {{ selectedDatesCount }}
+      </div>
+    }
   </div>
+  <button
+    class="h-6 w-6 flex items-center justify-center"
+    data-test="dropdown-clear"
+  >
+    @if (selectedDatesCount && !overlayOpen) {
+      <ng-icon
+        class="shrink-0 opacity-40 hover:opacity-80 transition-colors clear-btn"
+        (click)="clearDates($event)"
+        name="matClose"
+      ></ng-icon>
+    }
+  </button>
   <ng-icon
-    [name]="isPickerDisplayed ? 'matExpandLess' : 'matExpandMore'"
+    data-test="dropdown-toggle"
+    [name]="overlayOpen ? 'matExpandLess' : 'matExpandMore'"
     class="shrink-0 opacity-40"
   >
   </ng-icon>
 </gn-ui-button>
-<!--date range input is just present for output events and hidden from the DOM-->
-<mat-date-range-input [rangePicker]="picker">
-  <input
-    matStartDate
-    [value]="startDate"
-    (dateInput)="startDateChange.emit($event.value)"
-  />
-  <input
-    matEndDate
-    [value]="endDate"
-    (dateInput)="endDateChange.emit($event.value)"
-  />
-</mat-date-range-input>
-<mat-date-range-picker #picker></mat-date-range-picker>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOrigin]="overlayOrigin"
+  [cdkConnectedOverlayOpen]="overlayOpen"
+  [cdkConnectedOverlayPositions]="overlayPositions"
+  [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+  (overlayOutsideClick)="closeOverlay()"
+  (detach)="closeOverlay()"
+>
+  <div
+    class="w-[296px] flex flex-col gap-2 bg-white border border-gray-400 rounded px-4 py-3 shadow-lg text-main text-[16px] leading-[24px]"
+    data-test="date-range-panel"
+  >
+    <div class="flex flex-col justify-center border-b border-gray-300 pb-1">
+      <ng-container
+        [ngTemplateOutlet]="boundRow"
+        [ngTemplateOutletContext]="{
+          bound: 'start',
+          label: 'daterange.filter.from',
+          date: startDate,
+        }"
+      ></ng-container>
+      @if (expandedBound === 'start') {
+        <div class="calendar" animate.enter="expand" animate.leave="collapse">
+          <mat-calendar
+            data-test="start-date-calendar"
+            [selected]="startDate"
+            [startAt]="startDate ?? endDate"
+            [maxDate]="endDate"
+            (selectedChange)="setStartDate($event)"
+          ></mat-calendar>
+        </div>
+      }
+    </div>
+    <div class="flex flex-col justify-center">
+      <ng-container
+        [ngTemplateOutlet]="boundRow"
+        [ngTemplateOutletContext]="{
+          bound: 'end',
+          label: 'daterange.filter.to',
+          date: endDate,
+        }"
+      ></ng-container>
+      @if (expandedBound === 'end') {
+        <div class="calendar" animate.enter="expand" animate.leave="collapse">
+          <mat-calendar
+            data-test="end-date-calendar"
+            [selected]="endDate"
+            [startAt]="endDate ?? startDate"
+            [minDate]="startDate"
+            (selectedChange)="setEndDate($event)"
+          ></mat-calendar>
+        </div>
+      }
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #boundRow let-bound="bound" let-label="label" let-date="date">
+  <div class="flex items-center gap-1 w-full">
+    <span class="w-[80px] shrink-0" [translate]="label"></span>
+    <div
+      class="flex-1 min-w-0 flex items-center gap-1 border rounded-lg px-2 py-1 transition-colors"
+      [class]="
+        invalidBounds[bound]
+          ? 'border-red-400 text-red-800 focus-within:border-red-800 hover:border-red-800'
+          : 'border-gray-400 focus-within:border-main hover:border-main'
+      "
+    >
+      <ng-icon
+        name="iconoirCalendar"
+        class="shrink-0"
+        aria-hidden="true"
+      ></ng-icon>
+      <input
+        type="text"
+        inputmode="numeric"
+        autocomplete="off"
+        [gnUiAutofocus]="bound === expandedBound"
+        class="min-w-0 grow bg-transparent focus:outline-none"
+        [value]="date ? formatDate(date) : ''"
+        [placeholder]="'daterange.filter.datePlaceholder' | translate"
+        [attr.aria-label]="label | translate"
+        [attr.aria-invalid]="invalidBounds[bound] || null"
+        [attr.data-test]="bound + '-date-input'"
+        (change)="onDateInput(bound, $event)"
+        (blur)="normalizeDateInput(bound, $event)"
+        (click)="expandedBound !== bound && toggleBound(bound)"
+      />
+    </div>
+    <div class="shrink-0 flex items-center justify-end">
+      <gn-ui-button
+        type="light"
+        [style.--gn-ui-button-padding]="0"
+        [style.--gn-ui-button-width]="'24px'"
+        [style.--gn-ui-button-height]="'24px'"
+        [attr.aria-expanded]="expandedBound === bound"
+        [attr.data-test]="bound + '-date-toggle'"
+        (buttonClick)="toggleBound(bound)"
+      >
+        <ng-icon
+          [name]="expandedBound === bound ? 'matExpandLess' : 'matExpandMore'"
+        ></ng-icon>
+      </gn-ui-button>
+    </div>
+  </div>
+</ng-template>

@@ -65,6 +65,7 @@
   "dataset.error.restrictedAccess": "",
   "dataset.error.unknown": "Dáta nie je možné zobraziť: \"{ info }\"",
   "dataset.error.unsupportedType": "Nepodporovaný typ obsahu: \"{ info }\"",
+  "daterange.filter.datePlaceholder": "d. m. rrrr",
   "daterange.filter.from": "",
   "daterange.filter.period": "",
   "daterange.filter.to": "",

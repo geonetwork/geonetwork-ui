@@ -331,11 +331,27 @@ describe('dashboard (landing page)', () => {
         .each(($checkbox) => cy.wrap($checkbox).uncheck())
     }
     function selectDateRange() {
+      // the dropdown opens on the "from" calendar
       cy.get('mat-calendar-header').find('button').first().click()
       cy.get('mat-multi-year-view').contains('button', '2024').click()
       cy.get('mat-year-view').contains('button', 'AUG').click()
       cy.get('mat-month-view').contains('button', '1').click()
+      // picking the start date unfolds the "to" calendar, which starts at the start date
       cy.get('mat-month-view').contains('button', '30').click()
+      // the panel stays open so that either bound can still be changed
+      cy.clickOnBody()
+    }
+    /** the bounds are typeable; e2e runs in English, so MM/DD/YYYY */
+    function typeDateRange(start: string, end: string) {
+      if (start !== null) {
+        cy.get('[data-test="start-date-input"]').clear()
+        cy.get('[data-test="start-date-input"]').type(`${start}{enter}`)
+      }
+      if (end !== null) {
+        cy.get('[data-test="end-date-input"]').clear()
+        cy.get('[data-test="end-date-input"]').type(`${end}{enter}`)
+      }
+      cy.clickOnBody()
     }
     function checkFilterByChangeDate() {
       cy.get('gn-ui-interactive-table')
@@ -375,14 +391,42 @@ describe('dashboard (landing page)', () => {
 
       // it should display the expand icon for the date range dropdown correctly
       cy.get('md-editor-search-filters')
-        .find('gn-ui-date-range-dropdown')
-        .find('ng-icon')
+        .find('gn-ui-date-range-dropdown [data-test="dropdown-toggle"]')
         .should('have.attr', 'ng-reflect-name', 'matExpandMore')
       cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
       cy.get('md-editor-search-filters')
-        .find('gn-ui-date-range-dropdown')
-        .find('ng-icon')
+        .find('gn-ui-date-range-dropdown [data-test="dropdown-toggle"]')
         .should('have.attr', 'ng-reflect-name', 'matExpandLess')
+
+      // it should clear both bounds at once
+      cy.clickOnBody()
+      cy.get('md-editor-search-filters')
+        .find('gn-ui-date-range-dropdown [data-test="dropdown-clear"]')
+        .click()
+      cy.get('gn-ui-interactive-table')
+        .find('[data-cy="table-row"]')
+        .should('have.length.greaterThan', 1)
+
+      // it should filter from a date range typed with the keyboard
+      cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
+      typeDateRange('08/01/2024', '08/30/2024')
+      checkFilterByChangeDate()
+
+      // it should filter on an open interval with only a start date
+      cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
+      cy.get('[data-test="end-date-input"]').clear()
+      cy.get('[data-test="end-date-input"]').type('{enter}')
+      cy.clickOnBody()
+      // the badge shows the missing bound as an ellipsis
+      cy.get('gn-ui-search-filters-summary')
+        .find('gn-ui-badge')
+        .invoke('text')
+        .should('eq', '08/01/2024 - …')
+      // and a single set bound still counts as one active filter
+      cy.get('md-editor-search-filters')
+        .find('gn-ui-date-range-dropdown .selected-count')
+        .invoke('text')
+        .should('eq', ' 1 ')
     })
     it('myRecords search filters', () => {
       cy.visit('/my-space/my-records')
@@ -457,7 +501,7 @@ describe('dashboard (landing page)', () => {
       cy.get('gn-ui-search-filters-summary')
         .find('gn-ui-badge')
         .invoke('text')
-        .should('eq', '01.08.2024 - 30.08.2024')
+        .should('eq', '08/01/2024 - 08/30/2024')
 
       // it should remove the badge when the badge cross is clicked
       cy.clickOnBody()
@@ -508,7 +552,7 @@ describe('dashboard (landing page)', () => {
       cy.get('gn-ui-search-filters-summary')
         .find('gn-ui-badge')
         .invoke('text')
-        .should('eq', '01.08.2024 - 30.08.2024')
+        .should('eq', '08/01/2024 - 08/30/2024')
 
       // it should remove the badge when the badge cross is clicked
       cy.clickOnBody()

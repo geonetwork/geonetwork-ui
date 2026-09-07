@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, inject } from '@angular/core'
-import { CommonModule, DatePipe } from '@angular/common'
+import { CommonModule } from '@angular/common'
 import {
   catchError,
   firstValueFrom,
@@ -15,11 +15,13 @@ import { FieldType, FieldValue } from '../utils/service/fields'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
-import { formatUserInfo } from '@geonetwork-ui/util/shared'
+import { DateService, formatUserInfo } from '@geonetwork-ui/util/shared'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 marker('search.filters.summaryLabel.user')
 marker('search.filters.summaryLabel.changeDate')
+
+const OPEN_BOUND = '…'
 
 interface DisplayedValue {
   label: string
@@ -32,13 +34,12 @@ interface DisplayedValue {
   imports: [CommonModule, BadgeComponent],
   templateUrl: './search-filters-summary-item.component.html',
   styleUrls: ['./search-filters-summary-item.component.css'],
-  providers: [DatePipe],
 })
 export class SearchFiltersSummaryItemComponent implements OnInit {
   private searchFacade = inject(SearchFacade)
   private searchService = inject(SearchService)
   private fieldsService = inject(FieldsService)
-  private datePipe = inject(DatePipe)
+  private dateService = inject(DateService)
   private translate = inject(TranslateService)
 
   @Input() fieldName: string
@@ -82,12 +83,10 @@ export class SearchFiltersSummaryItemComponent implements OnInit {
   getReadableValues(fieldValues: FieldValue[] | DateRange[]): DisplayedValue[] {
     return fieldValues.map((value) => {
       if (this.fieldType === 'dateRange') {
+        const { start, end } = value as DateRange
         return {
           value,
-          label: `${this.datePipe.transform(
-            value.start,
-            'dd.MM.yyyy'
-          )} - ${this.datePipe.transform(value.end, 'dd.MM.yyyy')}`,
+          label: `${this.formatBound(start)} - ${this.formatBound(end)}`,
         }
       } else if (this.fieldName === 'user') {
         return { value, label: formatUserInfo(value) }
@@ -95,6 +94,16 @@ export class SearchFiltersSummaryItemComponent implements OnInit {
         return { value, label: value }
       }
     })
+  }
+
+  private formatBound(date: Date | undefined): string {
+    return date
+      ? this.dateService.formatDate(date, {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })
+      : OPEN_BOUND
   }
 
   async removeFilterValue(fieldValue: FieldValue | DateRange) {

@@ -98,6 +98,26 @@ describe('DateService', () => {
     })
   })
 
+  describe('getDateFnsLocale', () => {
+    it('falls back to the default language when the code carries a region', async () => {
+      // the stub reports 'en-US', which is not a key of the locale map
+      const locale = await service.getDateFnsLocale()
+      expect(locale.code).toBe('en-US')
+    })
+
+    it('resolves the locale of the current language', async () => {
+      jest.spyOn(translateService, 'getCurrentLang').mockReturnValue('fr')
+      const locale = await service.getDateFnsLocale()
+      expect(locale.code).toBe('fr')
+    })
+
+    it('falls back to the default language for an unknown one', async () => {
+      jest.spyOn(translateService, 'getCurrentLang').mockReturnValue('xx')
+      const locale = await service.getDateFnsLocale()
+      expect(locale.code).toBe('en-US')
+    })
+  })
+
   describe('formatRelativeDateTime', () => {
     it('should format a date 10 days in the future', async () => {
       const now = new Date()

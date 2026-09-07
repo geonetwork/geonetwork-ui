@@ -65,6 +65,7 @@
   "dataset.error.restrictedAccess": "L'accesso a questa risorsa è limitato",
   "dataset.error.unknown": "Impossibile visualizzare i dati: \"{info}\"",
   "dataset.error.unsupportedType": "Il seguente tipo di contenuto non è supportato: \"{info}\"",
+  "daterange.filter.datePlaceholder": "gg/mm/aaaa",
   "daterange.filter.from": "",
   "daterange.filter.period": "",
   "daterange.filter.to": "",

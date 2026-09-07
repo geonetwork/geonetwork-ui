@@ -56,7 +56,6 @@ export class FilterDropdownComponent implements OnInit {
     getOptionalSearchConfig()?.SPATIAL_EXTENT_MAX_FILE_SIZE
 
   fieldType: FieldType
-  dateRange: DateRange
   choices$: Observable<Choice[]>
   selected$ = this.searchFacade.searchFilters$.pipe(
     switchMap((filters) =>
@@ -69,7 +68,7 @@ export class FilterDropdownComponent implements OnInit {
   ) as Observable<FieldValue[]>
 
   selectedDateRange$ = this.selected$.pipe(
-    map((selectedDateRange) => selectedDateRange as DateRange)
+    map((selected) => (Array.isArray(selected) ? {} : (selected as DateRange)))
   ) as Observable<DateRange>
 
   onSelectedValues(values: unknown[]) {
@@ -119,22 +118,11 @@ export class FilterDropdownComponent implements OnInit {
     )
   }
 
-  onStartDateChange(start: Date) {
-    if (!start) return
-    this.dateRange = { ...this.dateRange, start }
-  }
-
-  onEndDateChange(end: Date) {
-    if (!end) return
-    this.dateRange = { ...this.dateRange, end }
-    if (this.dateRange.start && this.dateRange.end) {
-      this.fieldsService
-        .buildFiltersFromFieldValues({
-          [this.fieldName]: this.dateRange,
-        })
-        .subscribe((filters) => {
-          return this.searchService.updateFilters(filters)
-        })
-    }
+  onDateRangeChange(dateRange: DateRange) {
+    this.fieldsService
+      .buildFiltersFromFieldValues({
+        [this.fieldName]: dateRange,
+      })
+      .subscribe((filters) => this.searchService.updateFilters(filters))
   }
 }
