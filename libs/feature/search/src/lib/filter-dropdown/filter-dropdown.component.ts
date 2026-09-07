@@ -71,6 +71,14 @@ export class FilterDropdownComponent implements OnInit {
     map((selected) => (Array.isArray(selected) ? {} : (selected as DateRange)))
   ) as Observable<DateRange>
 
+  selectedBoundingBox$ = this.selected$.pipe(
+    map((selected) =>
+      Array.isArray(selected) && selected.length > 0
+        ? (selected as BoundingBox)
+        : null
+    )
+  ) as Observable<BoundingBox | null>
+
   onSelectedValues(values: unknown[]) {
     this.fieldsService
       .buildFiltersFromFieldValues({ [this.fieldName]: values as FieldValue[] })
@@ -80,7 +88,11 @@ export class FilterDropdownComponent implements OnInit {
   private spatialExtentErrorNotificationId: number | null = null
 
   onBboxChange(bbox: BoundingBox | null) {
-    console.log(bbox)
+    this.fieldsService
+      .buildFiltersFromFieldValues({
+        [this.fieldName]: bbox,
+      })
+      .subscribe((filters) => this.searchService.updateFilters(filters))
     this.clearSpatialExtentErrorNotification()
   }
 

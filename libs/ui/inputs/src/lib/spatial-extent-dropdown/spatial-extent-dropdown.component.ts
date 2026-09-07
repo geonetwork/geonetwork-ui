@@ -85,6 +85,13 @@ export class SpatialExtentDropdownComponent {
 
   @Input() title: string
   @Input() maxFileSizeMb: number | null = null
+  @Input() set initialBbox(value: BoundingBox | null) {
+    console.log('initialBbox', value)
+    if (!this.bbox && value) {
+      this.bbox = value
+      this.fileName = 'Initial bounding box'
+    }
+  }
 
   @Output() bboxChange = new EventEmitter<BoundingBox | null>()
   @Output() errorChange = new EventEmitter<SpatialExtentDropdownError>()

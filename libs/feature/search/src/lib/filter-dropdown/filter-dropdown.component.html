@@ -7,6 +7,7 @@
 } @else if (fieldType === 'spatialExtent') {
   <gn-ui-spatial-extent-dropdown
     [title]="title"
+    [initialBbox]="(selectedBoundingBox$ | async) ?? null"
     [maxFileSizeMb]="spatialExtentMaxFileSize"
     (bboxChange)="onBboxChange($event)"
     (errorChange)="onSpatialExtentError($event)"
