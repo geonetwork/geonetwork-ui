@@ -20,7 +20,11 @@ import {
   isDateRange,
   METADATA_LANGUAGE,
 } from '@geonetwork-ui/api/repository'
-import { formatUserInfo } from '@geonetwork-ui/util/shared'
+import {
+  BoundingBox,
+  formatUserInfo,
+  isBoundingBox,
+} from '@geonetwork-ui/util/shared'
 import { PossibleResourceTypes } from '@geonetwork-ui/api/metadata-converter'
 
 export type FieldType = 'values' | 'dateRange' | 'spatialExtent'
@@ -431,14 +435,20 @@ export class DateRangeSearchField extends SimpleSearchField {
   }
 }
 
-export class SpatialExtentSearchField extends SimpleSearchField {
-  constructor(injector: Injector) {
-    super('spatialExtent', injector, 'asc')
+export class BoundingBoxSearchField extends SimpleSearchField {
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
+    return of([])
   }
 
-  getAvailableValues(): Observable<FieldAvailableValue[]> {
-    // TODO: return an array of spatial extents to show which ones are available in the dropdown
-    return of([])
+  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
+    return of({
+      [this.esFieldName]: values.map(Number) as BoundingBox,
+    })
+  }
+
+  getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
+    const filter = filters[this.esFieldName]
+    return of(isBoundingBox(filter) ? filter : [])
   }
 
   getType(): FieldType {

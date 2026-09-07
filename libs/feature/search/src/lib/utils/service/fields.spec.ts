@@ -2,6 +2,7 @@ import { lastValueFrom, of } from 'rxjs'
 import {
   AbstractSearchField,
   AvailableServicesField,
+  BoundingBoxSearchField,
   DateRangeSearchField,
   FullTextSearchField,
   IsSpatialSearchField,
@@ -432,6 +433,60 @@ describe('search fields implementations', () => {
         it('returns the only value', () => {
           expect(values).toEqual({ start: new Date('2020-01-01') })
         })
+      })
+    })
+  })
+
+  describe('BoundingBoxSearchField (SimpleSearchField with a bounding box)', () => {
+    beforeEach(() => {
+      searchField = new BoundingBoxSearchField('spatialExtent', injector)
+    })
+    describe('#getAvailableValues', () => {
+      let values
+      beforeEach(async () => {
+        values = await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('returns an empty list of values', () => {
+        expect(values).toEqual([])
+      })
+    })
+    describe('#getFiltersForValues', () => {
+      let filter
+      beforeEach(async () => {
+        filter = await lastValueFrom(
+          searchField.getFiltersForValues([1, 2, 3, 4])
+        )
+      })
+      it('returns the bounding box as the filter value', () => {
+        expect(filter).toEqual({
+          spatialExtent: [1, 2, 3, 4],
+        })
+      })
+    })
+    describe('#getValuesForFilter', () => {
+      let values
+      beforeEach(async () => {
+        values = await lastValueFrom(
+          searchField.getValuesForFilter({
+            spatialExtent: [1, 2, 3, 4],
+          })
+        )
+      })
+      it('returns the bounding box values', () => {
+        expect(values).toEqual([1, 2, 3, 4])
+      })
+    })
+    describe('#getValuesForFilter with no filter present', () => {
+      let values
+      beforeEach(async () => {
+        values = await lastValueFrom(
+          searchField.getValuesForFilter({
+            somethingElse: { entirely: true },
+          })
+        )
+      })
+      it('returns an empty array', () => {
+        expect(values).toEqual([])
       })
     })
   })
