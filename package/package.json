@@ -21,6 +21,7 @@
     "@angular/core": "19.x || 20.x || 21.x",
     "@angular/forms": "19.x || 20.x || 21.x",
     "@angular/material": "19.x || 20.x || 21.x",
+    "@angular/material-date-fns-adapter": "19.x || 20.x",
     "@angular/platform-browser": "19.x || 20.x || 21.x",
     "@angular/platform-browser-dynamic": "19.x || 20.x || 21.x",
     "@angular/router": "19.x || 20.x || 21.x",
