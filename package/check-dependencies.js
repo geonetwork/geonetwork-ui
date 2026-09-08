@@ -3,6 +3,7 @@ import { existsSync } from 'fs'
 import path from 'path'
 import { builtinModules } from 'module'
 import { fileURLToPath } from 'url'
+import semver from 'semver'
 import ts from 'typescript'
 import { listDirectoryFiles } from '../tools/file-utils.js'
 
@@ -92,25 +93,47 @@ const declared = {
 const imported = await collectImportedPackages()
 
 const missing = [...imported]
-  .filter(([packageName]) => {
-    console.log(`Checking ${packageName} is declared in package/package.json`)
-    return !(packageName in declared)
-  })
+  .filter(([packageName]) => !(packageName in declared))
   .sort(([a], [b]) => a.localeCompare(b))
 
-// a range bumped in the root package.json but left untouched here would let
-// consumers install a version the code is not tested against
-const drifted = Object.entries(packagePackageJson.dependencies ?? {})
-  .filter(([packageName, range]) => {
-    console.log(
-      `Checking ${packageName} range: root is "${rootPackageJson.dependencies?.[packageName]}", package is "${range}"`
-    )
-    return (
-      packageName in (rootPackageJson.dependencies ?? {}) &&
-      rootPackageJson.dependencies[packageName] !== range
-    )
+/** The version the repository itself develops against, whether dev or not. */
+const rootRanges = {
+  ...rootPackageJson.devDependencies,
+  ...rootPackageJson.dependencies,
+}
+
+const byPackageName = (a, b) => a.packageName.localeCompare(b.packageName)
+
+const driftedDependencies = Object.entries(
+  packagePackageJson.dependencies ?? {}
+)
+  .filter(
+    ([packageName, range]) =>
+      packageName in rootRanges && rootRanges[packageName] !== range
+  )
+  .map(([packageName, range]) => ({
+    packageName,
+    range,
+    rootRange: rootRanges[packageName],
+  }))
+  .sort(byPackageName)
+
+const uncoveredPeerDependencies = Object.entries(
+  packagePackageJson.peerDependencies ?? {}
+)
+  .flatMap(([packageName, range]) => {
+    const rootRange = rootRanges[packageName]
+    // not installed here at all: nothing to compare it against
+    if (!rootRange) return []
+    const entry = { packageName, range, rootRange }
+    try {
+      return semver.subset(rootRange, range, { loose: true }) ? [] : [entry]
+    } catch {
+      // a range neither side can parse (a tarball URL, a git ref...)
+      return [{ ...entry, unparseable: true }]
+    }
   })
-  .sort(([a], [b]) => a.localeCompare(b))
+  .sort(byPackageName)
 
 const unused = Object.keys(declared)
   .filter(
@@ -142,16 +165,41 @@ if (missing.length) {
   )
 }
 
-if (drifted.length) {
+if (driftedDependencies.length) {
   console.error(
-    `\n❌ ${drifted.length} version range(s) differ between package.json and package/package.json:\n`
+    `\n❌ ${driftedDependencies.length} dependency range(s) differ between package.json and package/package.json:\n`
   )
-  for (const [packageName, range] of drifted) {
+  for (const { packageName, range, rootRange } of driftedDependencies) {
     console.error(
-      `  ${packageName}: root is "${rootPackageJson.dependencies[packageName]}", package is "${range}"`
+      `  ${packageName}: root is "${rootRange}", package is "${range}"`
     )
   }
-  console.error('')
+  console.error(
+    `\nRanges in "dependencies" are shipped as-is, so they must match the root package.json.\n`
+  )
+}
+
+if (uncoveredPeerDependencies.length) {
+  console.error(
+    `\n❌ ${uncoveredPeerDependencies.length} peerDependency range(s) no longer cover the version used in this repository:\n`
+  )
+  for (const {
+    packageName,
+    range,
+    rootRange,
+    unparseable,
+  } of uncoveredPeerDependencies) {
+    console.error(
+      `  ${packageName}: root installs "${rootRange}", which is ${
+        unparseable ? 'not a comparable semver range' : 'not covered by'
+      } "${range}"`
+    )
+  }
+  console.error(
+    `\nWiden the range in "peerDependencies" so it accepts the version this repository builds\n` +
+      `against — otherwise the package is developed against a version it tells consumers it\n` +
+      `does not support.\n`
+  )
 }
 
 if (unused.length) {
@@ -164,7 +212,11 @@ if (unused.length) {
   )
 }
 
-if (missing.length || drifted.length) {
+if (
+  missing.length ||
+  driftedDependencies.length ||
+  uncoveredPeerDependencies.length
+) {
   process.exit(1)
 }
 

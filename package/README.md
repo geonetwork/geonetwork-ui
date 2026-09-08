@@ -53,10 +53,19 @@ direction, that everything listed in `dependencies` is whitelisted in `allowedNo
 The `check-dependencies.js` script closes that gap. It parses every source file that
 `generate-package.js` ships (all of `libs`, minus specs, stories and test setup), collects the
 third-party packages they import, and fails if any of them is missing from the `dependencies` or
-`peerDependencies` of `package/package.json`. It also fails when a version range in `dependencies`
-drifted apart from the root `package.json`, and warns about declared packages that nothing imports
-anymore (packages needed implicitly, such as polyfills, are listed in `IMPLICIT_DEPENDENCIES` in the
-script).
+`peerDependencies` of `package/package.json`.
+
+It also checks the declared version ranges against the root `package.json`, differently for each kind:
+
+- `dependencies` are shipped verbatim, so their ranges must be **exactly** the ones the repository is
+  built against;
+- `peerDependencies` are deliberately broader than the pinned version used here (`19.x || 20.x || 21.x`
+  vs `20.3.19`), so they are checked by **semver satisfaction** instead: the range offered to consumers
+  has to cover every version this repository may install. A range such as `*` therefore never fails,
+  since it covers everything.
+
+Finally, it warns about declared packages that nothing imports anymore (packages needed implicitly,
+such as polyfills, are listed in `IMPLICIT_DEPENDENCIES` in the script).
 
 ```shell
 npm run package:check-deps
