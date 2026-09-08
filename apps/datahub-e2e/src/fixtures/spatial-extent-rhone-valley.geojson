@@ -1,0 +1,21 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Rhône valley area of interest" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [7.5, 46.2],
+            [7.65, 46.3],
+            [7.8, 46.2],
+            [7.65, 46.1],
+            [7.5, 46.2]
+          ]
+        ]
+      }
+    }
+  ]
+}

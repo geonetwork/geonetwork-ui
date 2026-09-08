@@ -174,7 +174,7 @@ describe('datasets', () => {
         .click()
     })
     it('should display all filters', () => {
-      cy.get('@filters').filter(':visible').should('have.length', 12)
+      cy.get('@filters').filter(':visible').should('have.length', 13)
       cy.get('@filters')
         .children()
         .then(($dropdowns) =>
@@ -195,6 +195,7 @@ describe('datasets', () => {
           'representationType',
           'producerOrg',
           'publisherOrg',
+          'spatialExtent',
         ])
       cy.screenshot({ capture: 'viewport' })
     })
@@ -498,6 +499,145 @@ describe('datasets', () => {
             'Cartographie des sols agricoles de la plaine du Rhône'
           )
         cy.screenshot({ capture: 'viewport' })
+      })
+    })
+
+    describe('spatial extent filter', () => {
+      const geojsonFile = 'src/fixtures/spatial-extent-rhone-valley.geojson'
+      // bbox of the polygon held by the fixture above
+      const bboxSearchParam = 'spatialExtent=7.5,46.1,7.8,46.3'
+      // record whose spatial extent intersects the bbox of the fixture
+      const rhoneRecordUuid = 'a8b5e6c0-c21d-4c32-b8f9-10830215890a'
+
+      const openSpatialExtentDropdown = () =>
+        cy.get('@spatialExtentFilter').find('button').first().click('left')
+
+      const importFile = (file: Cypress.FileReference) =>
+        cy.get('[data-cy="importGeojson"]').uploadFile(file)
+
+      const expectNoSpatialExtentInUrl = () =>
+        cy
+          .location('search')
+          .should((search) => expect(search).not.to.contain('spatialExtent'))
+
+      beforeEach(() => {
+        cy.intercept('GET', '/assets/configuration/default.toml', {
+          fixture: 'config-with-spatial-extent-filter.toml',
+        })
+        cy.visit('/search')
+
+        cy.get('gn-ui-filter-dropdown gn-ui-spatial-extent-dropdown').as(
+          'spatialExtentFilter'
+        )
+        cy.get('[data-cy="resultsHitsFound"]').as('hits')
+      })
+
+      it('filters the search on the bbox of an imported GeoJSON file, then clears it', () => {
+        cy.get('@hits').should('contain.text', '33 ')
+
+        openSpatialExtentDropdown()
+        importFile(geojsonFile)
+
+        // the bbox computed from the file geometry is applied to the search
+        cy.location('search').should((search) =>
+          expect(decodeURIComponent(search)).to.contain(bboxSearchParam)
+        )
+        cy.get('@hits').should('contain.text', '7 ')
+        cy.get(`[data-cy="${rhoneRecordUuid}"]`).should('exist')
+
+        // the selection is labelled after the imported file
+        cy.get('[data-test="spatial-extent-selected-item"]').should(
+          'contain.text',
+          'bbox from spatial-extent-rhone-valley.geojson'
+        )
+        cy.get('@spatialExtentFilter').should('contain.text', '1')
+        cy.screenshot({ capture: 'viewport' })
+
+        // removing the selection clears the filter and restores all results
+        cy.get('[data-test="spatial-extent-selected-item"]').click()
+        cy.get('[data-test="spatial-extent-selected-item"]').should('not.exist')
+        expectNoSpatialExtentInUrl()
+        cy.get('@hits').should('contain.text', '33 ')
+      })
+
+      it('restores the filter from the URL and labels it as pre-selected', () => {
+        cy.visit(`/search?${bboxSearchParam}`)
+
+        cy.get('@hits').should('contain.text', '7 ')
+        cy.get(`[data-cy="${rhoneRecordUuid}"]`).should('exist')
+        cy.get('@spatialExtentFilter').should('contain.text', '1')
+
+        // the bbox did not come from a file, so it is not labelled after one
+        openSpatialExtentDropdown()
+        cy.get('[data-test="spatial-extent-selected-item"]').should(
+          'contain.text',
+          'Pre-selected bbox'
+        )
+        cy.screenshot({ capture: 'viewport' })
+
+        // it can be removed like a bbox imported from a file
+        cy.get('[data-test="spatial-extent-selected-item"]').click()
+        expectNoSpatialExtentInUrl()
+        cy.get('@hits').should('contain.text', '33 ')
+      })
+
+      it('notifies the user when a file cannot be used, and recovers on a valid import', () => {
+        openSpatialExtentDropdown()
+
+        // a file with an unsupported extension
+        importFile({
+          contents: Cypress.Buffer.from('{}'),
+          fileName: 'area-of-interest.txt',
+          mimeType: 'text/plain',
+        })
+        cy.get('gn-ui-notification')
+          .should('contain.text', 'GeoJSON import error')
+          .and('contain.text', 'could not be read as a valid GeoJSON')
+
+        // a file which is not valid JSON
+        importFile({
+          contents: Cypress.Buffer.from('not json at all'),
+          fileName: 'broken.geojson',
+          mimeType: 'application/geo+json',
+        })
+        cy.get('gn-ui-notification')
+          .should('have.length', 1) // the previous notification was replaced
+          .and('contain.text', 'could not be read as a valid GeoJSON')
+
+        // a valid GeoJSON file holding no geometry
+        importFile({
+          contents: Cypress.Buffer.from(
+            '{"type":"FeatureCollection","features":[]}'
+          ),
+          fileName: 'no-geometry.geojson',
+          mimeType: 'application/geo+json',
+        })
+        cy.get('gn-ui-notification').should(
+          'contain.text',
+          'No geometry could be found in the file'
+        )
+
+        // a file above the maximum size given in the configuration
+        importFile({
+          contents: Cypress.Buffer.alloc(2 * 1048576, '0'),
+          fileName: 'too-large.geojson',
+          mimeType: 'application/geo+json',
+        })
+        cy.get('gn-ui-notification').should(
+          'contain.text',
+          'The file exceeds the maximum allowed size (1 MB)'
+        )
+        cy.screenshot({ capture: 'viewport' })
+
+        // none of them applied a filter
+        cy.get('[data-test="spatial-extent-selected-item"]').should('not.exist')
+        expectNoSpatialExtentInUrl()
+        cy.get('@hits').should('contain.text', '33 ')
+
+        // importing a valid file dismisses the error notification
+        importFile(geojsonFile)
+        cy.get('gn-ui-notification').should('not.exist')
+        cy.get('@hits').should('contain.text', '7 ')
       })
     })
   })

@@ -11,6 +11,7 @@
     [maxFileSizeMb]="spatialExtentMaxFileSize"
     (bboxChange)="onBboxChange($event)"
     (errorChange)="onSpatialExtentError($event)"
+    [attr.data-cy-field]="fieldName"
   ></gn-ui-spatial-extent-dropdown>
 } @else {
   <gn-ui-dropdown-multiselect
