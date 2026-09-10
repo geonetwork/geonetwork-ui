@@ -162,7 +162,7 @@ export class MdViewFacade {
               link.accessServiceProtocol === 'ogcFeatures'
             ) {
               return from(
-                this.dataService.getItemsFromOgcApi(link.url.href, 1)
+                this.dataService.getItemsFromOgcApi(link.url.href, link.name, 1)
               ).pipe(
                 map((collectionRecords: OgcApiRecord[]) => {
                   return collectionRecords &&

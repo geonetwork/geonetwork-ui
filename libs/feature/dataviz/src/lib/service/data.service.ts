@@ -209,7 +209,8 @@ export class DataService {
     ogcApiLink: DatasetServiceDistribution
   ): Promise<DatasetOnlineResource[]> {
     const collectionInfo = await this.getDownloadUrlsFromOgcApi(
-      ogcApiLink.url.href
+      ogcApiLink.url.href,
+      ogcApiLink.name
     )
 
     return Object.keys(collectionInfo.bulkDownloadLinks).map((mimeType) => {
@@ -229,31 +230,25 @@ export class DataService {
     })
   }
 
-  async getDownloadUrlsFromOgcApi(url: string): Promise<OgcApiCollectionInfo> {
+  async getDownloadUrlsFromOgcApi(
+    url: string,
+    collectionId: string
+  ): Promise<OgcApiCollectionInfo> {
     const endpoint = new OgcApiEndpoint(url)
-    return await endpoint.featureCollections
-      .then((collections) => {
-        return endpoint.getCollectionInfo(collections[0])
-      })
-      .catch((error) => {
-        throw new Error(`ogc.unreachable.unknown`)
-      })
+    return await endpoint.getCollectionInfo(collectionId).catch(() => {
+      throw new Error(`ogc.unreachable.unknown`)
+    })
   }
 
   async getItemsFromOgcApi(
     url: string,
+    collectionId: string,
     limit?: number
   ): Promise<OgcApiRecord[]> {
     const endpoint = new OgcApiEndpoint(url)
-    return await endpoint.featureCollections
-      .then((collections) => {
-        return collections.length
-          ? endpoint.getCollectionItems(collections[0], limit)
-          : null
-      })
-      .catch(() => {
-        throw new Error(`ogc.unreachable.unknown`)
-      })
+    return await endpoint.getCollectionItems(collectionId, limit).catch(() => {
+      throw new Error(`ogc.unreachable.unknown`)
+    })
   }
 
   async getItemsFromStacApi(
@@ -381,7 +376,9 @@ export class DataService {
       link.type === 'service' &&
       link.accessServiceProtocol === 'ogcFeatures'
     ) {
-      return from(this.getDownloadUrlsFromOgcApi(link.url.href)).pipe(
+      return from(
+        this.getDownloadUrlsFromOgcApi(link.url.href, link.name)
+      ).pipe(
         switchMap((collectionInfo) => {
           const isMimeTypeJson = (mimeType: string): boolean => {
             return mimeType.toLowerCase().indexOf('json') > -1
