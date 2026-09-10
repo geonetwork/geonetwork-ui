@@ -119,3 +119,15 @@ Representation type of a record, such as "vector" or "raster".
 > Field id: `documentStandard`
 
 This field targets the name of the metadata standard used to describe a record. This can for instance be "ISO 19115-3" or "ISO 19139".
+
+### Resource creation / revision date
+
+> Field id: `resourceCreationRevisionDate`
+
+This field targets the resource's creation and revision dates. A record is retained if either of these dates falls within the selected date range. Both the start and end of the range are inclusive, and either bound can be left unset.
+
+### Change date
+
+> Field id: `changeDate`
+
+This field targets the date at which a record was last updated. Both the start and end of the range are inclusive, and either bound can be left unset.

@@ -54,7 +54,10 @@ export class ElasticsearchService {
 
   // runtime fields are computed using a Painless script
   // see: https://www.elastic.co/guide/en/elasticsearch/reference/current/runtime-mapping-fields.html
-  private runtimeFields: Record<string, string> = {}
+  private runtimeFields: Record<
+    string,
+    { script: string; type: 'keyword' | 'date' }
+  > = {}
 
   // we're using getters in case the defined languages change over time
   private get metadataLang(): LanguageCode {
@@ -96,8 +99,8 @@ export class ElasticsearchService {
     const addMapping = (fieldName: string) => {
       if (!payload.runtime_mappings) payload.runtime_mappings = {}
       payload.runtime_mappings[fieldName] = {
-        type: 'keyword',
-        script: this.runtimeFields[fieldName],
+        type: this.runtimeFields[fieldName].type,
+        script: this.runtimeFields[fieldName].script,
       }
     }
     const lookForField = (node: unknown) => {
@@ -119,6 +122,14 @@ export class ElasticsearchService {
           addMapping(runtimeField)
         }
         if (
+          runtimeField in node &&
+          typeof node[runtimeField] === 'object' &&
+          node[runtimeField] !== null &&
+          ('gte' in node[runtimeField] || 'lte' in node[runtimeField])
+        ) {
+          addMapping(runtimeField)
+        }
+        if (
           'query' in node &&
           typeof node.query === 'string' &&
           node.query.indexOf(runtimeField + ':') > -1
@@ -136,8 +147,12 @@ export class ElasticsearchService {
     return payload
   }
 
-  registerRuntimeField(fieldName: string, expression: string) {
-    this.runtimeFields[fieldName] = expression
+  registerRuntimeField(
+    fieldName: string,
+    expression: string,
+    type: 'keyword' | 'date' = 'keyword'
+  ) {
+    this.runtimeFields[fieldName] = { script: expression, type }
   }
 
   getMetadataByIdsPayload(uuids: string[]): EsSearchParams {
@@ -316,37 +331,24 @@ export class ElasticsearchService {
     if (filters['gn-ui-crossFieldFilter']) {
       queryString = `${queryString} AND (${filters['gn-ui-crossFieldFilter']})`
     }
-    const queryRange = Object.entries(filters)
-      .filter(([, value]) => isDateRange(value))
-      .map(([searchField, dateRange]) => {
-        return {
-          searchField,
-          dateRange,
-        } as {
-          searchField: string
-          dateRange: DateRange
-        }
-      })[0]
+    const queryRanges = Object.entries(filters).filter(([, value]) =>
+      isDateRange(value)
+    ) as [string, DateRange][]
     const queryParts = [
       queryString && {
         query_string: {
           query: queryString,
         },
       },
-      queryRange &&
-        queryRange.dateRange && {
-          range: {
-            [queryRange.searchField]: {
-              ...(queryRange.dateRange.start && {
-                gte: formatDate(queryRange.dateRange.start),
-              }),
-              ...(queryRange.dateRange.end && {
-                lte: formatDate(queryRange.dateRange.end),
-              }),
-              format: 'yyyy-MM-dd',
-            },
+      ...queryRanges.map(([searchField, dateRange]) => ({
+        range: {
+          [searchField]: {
+            ...(dateRange.start && { gte: formatDate(dateRange.start) }),
+            ...(dateRange.end && { lte: formatDate(dateRange.end) }),
+            format: 'yyyy-MM-dd',
           },
         },
+      })),
       spatialFilterExtent && {
         geo_shape: {
           geom: {

@@ -141,3 +141,35 @@ describe('filters and sorts', () => {
     })
   })
 })
+
+describe('Filter on resource creation/revision date', () => {
+  beforeEach(() => {
+    cy.intercept('GET', '/assets/configuration/default.toml', {
+      fixture: 'config-with-resource-date-filter.toml',
+    })
+    cy.visit('/search')
+    cy.get('[data-cy=filters-expand]').click({ force: true })
+    cy.get(
+      'gn-ui-date-range-dropdown[data-cy-field="resourceCreationRevisionDate"] gn-ui-button'
+    ).click()
+  })
+
+  /** the bounds are typeable; e2e runs in English, so MM/DD/YYYY */
+  it('filters the results when typing a start date, then an end date', () => {
+    cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '33 ')
+
+    cy.get('[data-test="start-date-input"]').clear()
+    cy.get('[data-test="start-date-input"]').type('01/01/1900{enter}')
+    cy.url().should('contain', 'resourceCreationRevisionDate=1900-01-01..')
+    cy.get('[data-cy="resultsHitsFound"]')
+      .invoke('text')
+      .should('not.contain', '33 ')
+
+    cy.get('[data-test="end-date-input"]').clear()
+    cy.get('[data-test="end-date-input"]').type('01/02/1900{enter}')
+    cy.url().should(
+      'contain',
+      'resourceCreationRevisionDate=1900-01-01..1900-01-02'
+    )
+  })
+})
