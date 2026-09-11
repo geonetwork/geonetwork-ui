@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
-import { Component, DebugElement } from '@angular/core'
+import { Component, DebugElement, ChangeDetectionStrategy } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { GnUiLinkifyDirective } from './linkify.directive'
 
@@ -82,6 +82,7 @@ const testWithHTML = {
       </div>
     }`,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [GnUiLinkifyDirective],
 })
 class TestComponent {

@@ -64,6 +64,7 @@ const mockRecord = {
   template: `<ng-template #favoriteTemplate let-record>
     <button data-test="favorite-button">Favorite</button>
   </ng-template>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 class TestHostComponent {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core'
 import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import {
@@ -43,6 +43,7 @@ marker('editor.record.form.field.organisation')
     }),
   ],
   templateUrl: './metadata-quality-panel.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './metadata-quality-panel.component.css',
 })
 export class MetadataQualityPanelComponent {

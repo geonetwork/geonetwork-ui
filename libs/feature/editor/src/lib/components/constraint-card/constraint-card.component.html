@@ -22,7 +22,7 @@
   @if (showUrl) {
     <gn-ui-url-input
       class="mt-3.5"
-      [value]="constraint_.url?.toString()"
+      [value]="$safeNavigationMigration(constraint_.url?.toString())"
       (valueChange)="handleURLChange($event)"
       [showValidateButton]="false"
     >

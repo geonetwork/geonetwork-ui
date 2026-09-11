@@ -90,7 +90,7 @@
       "cache": true
     },
     "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "inputs": ["default", "{workspaceRoot}/eslint.config.mjs"],
       "cache": true
     },
     "build-storybook": {
@@ -119,7 +119,7 @@
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.[jt]s",
-      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/eslint.config.mjs",
       "!{projectRoot}/.storybook/**/*",
       "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)"
     ]

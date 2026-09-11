@@ -4,6 +4,7 @@ import {
   Input,
   OnInit,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 
 import {
@@ -63,6 +64,7 @@ marker(`service.metadata.capabilities.attribution`)
     }),
   ],
   templateUrl: './service-capabilities.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './service-capabilities.component.css',
 })
 export class ServiceCapabilitiesComponent implements OnInit {

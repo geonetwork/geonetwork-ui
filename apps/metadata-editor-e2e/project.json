@@ -8,6 +8,11 @@
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
+      "env": {
+        "browserPermissions": {
+          "write": "allow"
+        }
+      },
       "options": {
         "cypressConfig": "apps/metadata-editor-e2e/cypress.config.js",
         "devServerTarget": "metadata-editor:serve:development",
@@ -18,11 +23,6 @@
       "configurations": {
         "production": {
           "devServerTarget": "metadata-editor:serve:production"
-        }
-      },
-      "env": {
-        "browserPermissions": {
-          "write": "allow"
         }
       }
     },

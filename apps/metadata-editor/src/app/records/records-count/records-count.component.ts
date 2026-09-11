@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Output,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateDirective } from '@ngx-translate/core'
 import { SelectionService } from '@geonetwork-ui/api/repository'
@@ -10,6 +16,7 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
   templateUrl: './records-count.component.html',
   styleUrls: ['./records-count.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, TranslateDirective],
 })
 export class RecordsCountComponent {

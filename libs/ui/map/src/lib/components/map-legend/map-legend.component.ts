@@ -6,6 +6,7 @@ import {
   Output,
   SimpleChanges,
   ViewEncapsulation,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { MapContext } from '@geospatial-sdk/core'
 import { createLegendFromLayer } from '@geospatial-sdk/legend'
@@ -16,6 +17,7 @@ import { createLegendFromLayer } from '@geospatial-sdk/legend'
   standalone: true,
   styleUrls: ['./map-legend.component.css'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [],
 })
 export class MapLegendComponent implements OnChanges {

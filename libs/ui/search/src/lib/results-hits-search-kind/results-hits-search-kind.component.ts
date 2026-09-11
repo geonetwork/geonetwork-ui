@@ -6,6 +6,7 @@ import {
   OnChanges,
   SimpleChanges,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { KindBadgeComponent } from '@geonetwork-ui/ui/elements'
 import { Choice, InlineFilterComponent } from '@geonetwork-ui/ui/inputs'
@@ -15,6 +16,7 @@ import { TranslatePipe } from '@ngx-translate/core'
   selector: 'gn-ui-results-hits-search-kind',
   templateUrl: './results-hits-search-kind.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     InlineFilterComponent,

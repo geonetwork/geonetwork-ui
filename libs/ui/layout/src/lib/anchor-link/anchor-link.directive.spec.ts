@@ -1,6 +1,6 @@
 import { AnchorLinkDirective } from './anchor-link.directive'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { By } from '@angular/platform-browser'
 
 Object.defineProperty(window, 'IntersectionObserver', {
@@ -27,6 +27,7 @@ Object.defineProperty(window, 'IntersectionObserver', {
     </a>
   </div>`,
   imports: [AnchorLinkDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 class HostComponent {}

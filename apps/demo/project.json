@@ -10,6 +10,7 @@
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/demo",
         "index": "apps/demo/src/index.html",
@@ -67,11 +68,12 @@
           "sourceMap": true,
           "namedChunks": true
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "defaultConfiguration": "development",
+      "continuous": true,
       "configurations": {
         "production": {
           "buildTarget": "demo:build:production"
@@ -79,9 +81,7 @@
         "development": {
           "buildTarget": "demo:build:development"
         }
-      },
-      "defaultConfiguration": "development",
-      "continuous": true
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -91,10 +91,10 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/demo/src/**/*.ts", "apps/demo/src/**/*.html"]
-      },
-      "outputs": ["{options.outputFile}"]
+      }
     },
     "test": {
       "executor": "@nx/jest:jest",

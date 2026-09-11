@@ -1,4 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core'
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import {
   FacetListComponent,
   FacetSelectEvent,
@@ -31,6 +36,7 @@ marker('facets.block.title.th_regions_tree.default')
   templateUrl: './facets-container.component.html',
   styleUrls: ['./facets-container.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FacetListComponent,
     CommonModule,

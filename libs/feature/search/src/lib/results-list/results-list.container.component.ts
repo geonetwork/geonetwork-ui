@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { combineLatest, Observable, tap } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
@@ -39,6 +40,7 @@ export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
   templateUrl: './results-list.container.component.html',
   styleUrls: ['./results-list.container.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     ResultsListComponent,

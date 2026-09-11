@@ -7,6 +7,7 @@ import {
   Output,
   TemplateRef,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { NgClass, NgTemplateOutlet } from '@angular/common'
 import { fromEvent, Subscription } from 'rxjs'
@@ -52,6 +53,7 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
     }),
   ],
   templateUrl: './internal-link-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./internal-link-card.component.scss'],
 })
 export class InternalLinkCardComponent implements OnInit {

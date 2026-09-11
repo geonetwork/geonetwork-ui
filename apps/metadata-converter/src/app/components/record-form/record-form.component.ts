@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import {
   CatalogRecord,
@@ -18,6 +19,7 @@ import {
   selector: 'gn-ui-record-form',
   templateUrl: './record-form.component.html',
   styleUrls: ['./record-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class RecordFormComponent implements AfterViewInit {

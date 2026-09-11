@@ -9,6 +9,7 @@ import {
   ViewChildren,
   ViewContainerRef,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
@@ -78,6 +79,7 @@ const extraFlagMap: { [key: string]: string } = {
     }),
   ],
   templateUrl: './multilingual-panel.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './multilingual-panel.component.css',
 })
 export class MultilingualPanelComponent implements OnDestroy {

@@ -6,6 +6,7 @@ import {
   Output,
   ViewContainerRef,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { filter, map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
@@ -14,6 +15,7 @@ import { Observable } from 'rxjs'
   selector: 'gn-ui-viewport-intersector',
   templateUrl: './viewport-intersector.component.html',
   styleUrls: ['./viewport-intersector.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class ViewportIntersectorComponent implements OnInit, OnDestroy {

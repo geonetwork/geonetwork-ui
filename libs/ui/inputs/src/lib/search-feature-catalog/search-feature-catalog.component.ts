@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
@@ -21,6 +27,7 @@ import { iconoirSearch } from '@ng-icons/iconoir'
     TranslatePipe,
     FormsModule,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   viewProviders: [
     provideIcons({ iconoirSearch }),
     provideNgIconsConfig({

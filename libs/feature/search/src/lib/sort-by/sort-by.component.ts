@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, inject } from '@angular/core'
+import {
+  Component,
+  Input,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   SortByEnum,
@@ -20,6 +26,7 @@ interface SortChoice {
   selector: 'gn-ui-sort-by',
   templateUrl: './sort-by.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, DropdownSelectorComponent, TranslatePipe],
 })
 export class SortByComponent implements OnInit {

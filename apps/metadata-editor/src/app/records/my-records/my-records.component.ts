@@ -7,6 +7,7 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
@@ -55,6 +56,7 @@ const FILTER_OWNER = 'owner'
     NgIconComponent,
     OverlayModule,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     provideIcons({
       iconoirNavArrowDown,

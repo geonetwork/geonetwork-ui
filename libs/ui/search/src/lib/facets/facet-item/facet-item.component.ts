@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core'
 
@@ -7,6 +13,7 @@ import { TranslateModule, TranslatePipe } from '@ngx-translate/core'
   templateUrl: './facet-item.component.html',
   styleUrls: ['./facet-item.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormsModule, TranslateModule, TranslatePipe],
 })
 export class FacetItemComponent {

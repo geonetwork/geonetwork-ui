@@ -6,7 +6,7 @@ import {
 } from '@angular/core/testing'
 
 import { StickyHeaderComponent } from './sticky-header.component'
-import { Component, DebugElement } from '@angular/core'
+import { Component, DebugElement, ChangeDetectionStrategy } from '@angular/core'
 import { By } from '@angular/platform-browser'
 
 @Component({
@@ -20,6 +20,7 @@ import { By } from '@angular/platform-browser'
     </gn-ui-sticky-header>
   </div>`,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [StickyHeaderComponent],
 })
 class ContainerComponent {}

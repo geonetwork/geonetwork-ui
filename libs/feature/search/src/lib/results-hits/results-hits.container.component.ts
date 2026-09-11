@@ -7,7 +7,13 @@ import {
   startWith,
   switchMap,
 } from 'rxjs'
-import { Component, Input, OnInit, inject } from '@angular/core'
+import {
+  Component,
+  Input,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { SearchFacade } from '../state/search.facade'
 import { FieldAvailableValue, FieldValue } from '../utils/service/fields'
@@ -29,6 +35,7 @@ marker('search.filters.recordKind.reuse')
   templateUrl: './results-hits.container.component.html',
   styleUrls: ['./results-hits.container.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     ResultsHitsNumberComponent,

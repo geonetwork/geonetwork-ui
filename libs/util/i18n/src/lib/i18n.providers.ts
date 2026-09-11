@@ -20,6 +20,7 @@ import {
   HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi,
+  withXhr,
 } from '@angular/common/http'
 import { I18nInterceptor } from './i18n.interceptor'
 
@@ -51,7 +52,7 @@ export function provideI18n(
   }
 
   const providers: (EnvironmentProviders | Provider)[] = [
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
     provideTranslateService(usedConfig),
   ]

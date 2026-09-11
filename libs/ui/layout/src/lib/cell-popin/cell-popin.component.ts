@@ -9,6 +9,7 @@ import {
   Injector,
   ChangeDetectorRef,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 
 import { provideIcons, NgIconComponent } from '@ng-icons/core'
@@ -29,6 +30,7 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
   imports: [MatButtonModule, OverlayModule, ButtonComponent, NgIconComponent],
   providers: [provideIcons({ iconoirReduce })],
   templateUrl: './cell-popin.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: [],
 })
 export class CellPopinComponent implements AfterViewInit, OnDestroy {

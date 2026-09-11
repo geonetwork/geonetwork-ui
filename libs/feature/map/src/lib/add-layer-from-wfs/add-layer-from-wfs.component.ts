@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core'
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { WfsEndpoint, WfsFeatureTypeBrief } from '@camptocamp/ogc-client'
 import { firstValueFrom, Subject } from 'rxjs'
 import { MapFacade } from '../+state/map.facade'
@@ -12,6 +18,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
   templateUrl: './add-layer-from-wfs.component.html',
   styleUrls: ['./add-layer-from-wfs.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TextInputComponent,
     ButtonComponent,

@@ -16,13 +16,13 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
           "libs/feature/catalog/src/**/*.ts",
           "libs/feature/catalog/src/**/*.html"
         ]
-      },
-      "outputs": ["{options.outputFile}"]
+      }
     }
   }
 }

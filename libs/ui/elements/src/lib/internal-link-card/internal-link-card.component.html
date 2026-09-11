@@ -70,7 +70,7 @@
         <gn-ui-kind-badge
           [extraClass]="'text-[1.2em]'"
           [styling]="'gray'"
-          [kind]="record?.kind"
+          [kind]="$safeNavigationMigration(record?.kind)"
           [contentTemplate]="customTemplate"
           class="pt-1"
         >

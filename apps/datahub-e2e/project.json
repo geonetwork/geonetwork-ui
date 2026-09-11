@@ -8,6 +8,11 @@
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
+      "env": {
+        "browserPermissions": {
+          "write": "allow"
+        }
+      },
       "options": {
         "cypressConfig": "apps/datahub-e2e/cypress.config.js",
         "devServerTarget": "datahub:serve:development",
@@ -18,11 +23,6 @@
       "configurations": {
         "production": {
           "devServerTarget": "datahub:serve:production"
-        }
-      },
-      "env": {
-        "browserPermissions": {
-          "write": "allow"
         }
       }
     },

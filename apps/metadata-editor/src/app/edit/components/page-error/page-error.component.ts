@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 
 import {
   NgIconComponent,
@@ -20,6 +20,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
     }),
   ],
   templateUrl: './page-error.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './page-error.component.css',
 })
 export class PageErrorComponent {}

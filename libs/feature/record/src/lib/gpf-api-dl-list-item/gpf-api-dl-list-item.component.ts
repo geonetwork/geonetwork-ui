@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
-import { Component, Input, OnInit, inject } from '@angular/core'
+import {
+  Component,
+  Input,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { map, mergeMap, Observable } from 'rxjs'
@@ -12,6 +18,7 @@ import { matCloudDownloadOutline } from '@ng-icons/material-icons/outline'
   styleUrls: ['./gpf-api-dl-list-item.component.css'],
   standalone: true,
   imports: [CommonModule, TranslateDirective, TranslatePipe, NgIcon],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     provideIcons({
       matCloudDownloadOutline,

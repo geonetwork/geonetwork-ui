@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 
 interface ColorScheme {
   outerBar: string
@@ -11,6 +11,7 @@ interface ColorScheme {
   templateUrl: './progress-bar.component.html',
   styleUrls: ['./progress-bar.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [],
 })
 export class ProgressBarComponent {

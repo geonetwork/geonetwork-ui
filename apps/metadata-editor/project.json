@@ -9,6 +9,7 @@
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/metadata-editor",
         "index": "apps/metadata-editor/src/index.html",
@@ -93,11 +94,12 @@
           "namedChunks": true,
           "outputHashing": "media"
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "defaultConfiguration": "development",
+      "continuous": true,
       "configurations": {
         "production": {
           "buildTarget": "metadata-editor:build:production"
@@ -106,9 +108,7 @@
           "proxyConfig": "proxy-config.js",
           "buildTarget": "metadata-editor:build:development"
         }
-      },
-      "defaultConfiguration": "development",
-      "continuous": true
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",

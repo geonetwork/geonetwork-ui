@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { GnUiHumanizeDateDirective } from './humanize-date.directive'
@@ -10,6 +10,7 @@ import { DateService } from './services/date.service'
     <p [gnUiHumanizeDate]="nullDate"></p>
   `,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [GnUiHumanizeDateDirective],
 })
 class TestComponent {

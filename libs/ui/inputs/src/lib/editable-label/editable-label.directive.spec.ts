@@ -1,5 +1,5 @@
 import { EditableLabelDirective } from './editable-label.directive'
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 @Component({
@@ -7,6 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
     [gnUiEditableLabel]="label"
     (editableLabelChanged)="handleEditableLabelChanged($event)"
   ></span>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 class TestWithEditableLabelComponent {

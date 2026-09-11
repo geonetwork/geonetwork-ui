@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, inject } from '@angular/core'
+import {
+  Component,
+  Input,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
@@ -15,6 +21,7 @@ import { ConnectedPosition, OverlayModule } from '@angular/cdk/overlay'
   selector: 'datahub-record-feature-catalog',
   templateUrl: './record-feature-catalog.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     TranslateDirective,

@@ -1,4 +1,9 @@
-import { Component, inject, InjectionToken } from '@angular/core'
+import {
+  Component,
+  inject,
+  InjectionToken,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { LANGUAGE_STORAGE_KEY } from '@geonetwork-ui/util/i18n'
 import { TranslateService } from '@ngx-translate/core'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
@@ -12,6 +17,7 @@ const DEFAULT_LANGUAGES = ['en', 'fr']
   templateUrl: './language-switcher.component.html',
   styleUrls: ['./language-switcher.component.css'],
   imports: [DropdownSelectorComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class LanguageSwitcherComponent {

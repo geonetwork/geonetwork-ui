@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TopToolbarComponent } from './top-toolbar.component'
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { PublishButtonComponent } from '../publish-button/publish-button.component'
 import { BehaviorSubject } from 'rxjs'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
@@ -17,6 +17,7 @@ class EditorFacadeMock {
 @Component({
   selector: 'md-editor-publish-button',
   template: '',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 class MockPublishButtonComponent {}

@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core'
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { WmsEndpoint, WmsLayerSummary } from '@camptocamp/ogc-client'
 import { MapFacade } from '../+state/map.facade'
 import { firstValueFrom, Subject } from 'rxjs'
@@ -13,6 +19,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
   templateUrl: './add-layer-from-wms.component.html',
   styleUrls: ['./add-layer-from-wms.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TextInputComponent,
     CommonModule,

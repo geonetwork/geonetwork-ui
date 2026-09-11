@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, inject, Input } from '@angular/core'
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { createViewFromLayer, MapContext } from '@geospatial-sdk/core'
 import { MapContainerComponent } from '../map-container/map-container.component'
@@ -12,6 +18,7 @@ import { createSpatialExtentLayer } from '../../map-utils'
   standalone: true,
   imports: [CommonModule, MapContainerComponent],
   templateUrl: './spatial-extent.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './spatial-extent.component.css',
 })
 export class SpatialExtentComponent {

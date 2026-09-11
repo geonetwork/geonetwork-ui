@@ -9,5 +9,6 @@
   },
   "files": ["src/main.ts", "src/polyfills.ts", "src/standalone-search.ts"],
   "include": ["src/**/*.d.ts"],
-  "exclude": ["**/*.stories.ts", "**/*.stories.js", "jest.config.ts"]
+  "exclude": ["**/*.stories.ts", "**/*.stories.js", "jest.config.ts"],
+  "angularCompilerOptions": {}
 }

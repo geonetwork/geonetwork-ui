@@ -28,7 +28,7 @@
         [ngClass]="isCurrentPage ? 'text-black font-bold' : 'text-gray-600'"
         translate
         [translateParams]="{
-          recordKind: (facade.record$ | async)?.kind,
+          recordKind: $safeNavigationMigration((facade.record$ | async)?.kind),
         }"
       >
         {{ page.labelKey }}

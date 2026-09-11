@@ -6,6 +6,7 @@ import {
   TemplateRef,
   viewChild,
   ViewContainerRef,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
@@ -21,6 +22,7 @@ import { TemplatePortal } from '@angular/cdk/portal'
   styleUrls: ['./image-overlay-preview.component.css'],
   standalone: true,
   imports: [ContentGhostComponent, ThumbnailComponent, ButtonComponent, NgIcon],
+  changeDetection: ChangeDetectionStrategy.Eager,
   viewProviders: [
     provideIcons({ matZoomOutMap }),
     provideNgIconsConfig({

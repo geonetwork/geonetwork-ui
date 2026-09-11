@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 import {
   NgIconComponent,
   provideIcons,
@@ -19,6 +19,7 @@ import { TranslateDirective } from '@ngx-translate/core'
   styleUrls: ['./previous-next-buttons.component.css'],
   standalone: true,
   imports: [ButtonComponent, NgIconComponent, TranslateDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     provideIcons({ matArrowBackIos, matArrowForwardIos }),
     provideNgIconsConfig({

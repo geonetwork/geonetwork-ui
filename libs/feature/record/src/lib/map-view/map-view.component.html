@@ -19,7 +19,9 @@
       [title]="'map.select.style' | translate"
       [choices]="styleDropdownChoices$ | async"
       [selected]="selectedStyleId$ | async"
-      [disabled]="(styleDropdownChoices$ | async)?.length <= 1"
+      [disabled]="
+        $safeNavigationMigration((styleDropdownChoices$ | async)?.length) <= 1
+      "
       (selectValue)="selectStyleToDisplay($event)"
     ></gn-ui-dropdown-selector>
 

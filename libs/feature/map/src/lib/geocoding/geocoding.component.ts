@@ -1,4 +1,9 @@
-import { Component, OnDestroy, inject } from '@angular/core'
+import {
+  Component,
+  OnDestroy,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { catchError, firstValueFrom, from, Subject, takeUntil } from 'rxjs'
 import { debounceTime, switchMap } from 'rxjs/operators'
 import { GeocodingService } from '../geocoding.service'
@@ -13,6 +18,7 @@ import { MapContextView } from '@geospatial-sdk/core'
   templateUrl: './geocoding.component.html',
   styleUrls: ['./geocoding.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [SearchInputComponent, TranslatePipe],
 })
 export class GeocodingComponent implements OnDestroy {

@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   BaseConverter,
@@ -11,6 +17,7 @@ import { FORMATS, getFormatName } from '../../md-formats'
   selector: 'gn-ui-status',
   templateUrl: './status.component.html',
   styleUrls: ['./status.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class StatusComponent {

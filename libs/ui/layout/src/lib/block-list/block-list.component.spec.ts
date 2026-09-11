@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BlockListComponent } from './block-list.component'
-import { Component, Input } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 import { By } from '@angular/platform-browser'
 
 @Component({
@@ -9,6 +9,7 @@ import { By } from '@angular/platform-browser'
       <div class="block" #block style="width: 50px; height: 20px"></div>
     }
   </gn-ui-block-list>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 class BlockListWrapperComponent {

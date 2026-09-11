@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core'
+import {
+  Component,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import {
   handleScrollOnNavigation,
@@ -13,6 +18,7 @@ import { ViewportScroller } from '@angular/common'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterOutlet, SearchRouterContainerDirective],
 })
 export class AppComponent implements OnInit {

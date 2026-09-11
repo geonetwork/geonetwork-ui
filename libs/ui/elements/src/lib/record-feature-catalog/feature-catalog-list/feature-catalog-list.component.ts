@@ -1,4 +1,10 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core'
+import {
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslatePipe } from '@ngx-translate/core'
 import {
@@ -43,6 +49,7 @@ interface ColumnDefinition {
     NgIconComponent,
     ScrollingModule,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [provideIcons({ iconoirList })],
 })
 export class FeatureCatalogListComponent {

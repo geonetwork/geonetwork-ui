@@ -4,6 +4,7 @@ import {
   Input,
   Output,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { Subject } from 'rxjs'
 import { distinctUntilChanged } from 'rxjs/operators'
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common'
   templateUrl: './text-area.component.html',
   styleUrls: ['./text-area.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule],
 })
 export class TextAreaComponent implements AfterViewInit {

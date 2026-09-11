@@ -18,7 +18,7 @@ import { FetchError } from '@geonetwork-ui/data-fetcher'
 import { MockBuilder, MockProvider, ngMocks } from 'ng-mocks'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
 import { Extent } from '@geospatial-sdk/core/dist/model'
-import { Component, Input } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 import { MapContext } from '@geospatial-sdk/core'
 import { MapContainerComponent } from '@geonetwork-ui/ui/map'
 import { Collection } from 'ol'
@@ -49,6 +49,7 @@ class InteractionsMock extends Collection<Interaction> {}
 @Component({
   selector: 'gn-ui-map-container',
   template: '<div></div>',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class MockMapContainerComponent {

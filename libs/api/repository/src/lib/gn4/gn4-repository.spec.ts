@@ -40,7 +40,11 @@ import {
   LinkedRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { map } from 'rxjs/operators'
-import { HttpErrorResponse, provideHttpClient } from '@angular/common/http'
+import {
+  HttpErrorResponse,
+  provideHttpClient,
+  withXhr,
+} from '@angular/common/http'
 import {
   HttpTestingController,
   provideHttpClientTesting,
@@ -161,7 +165,7 @@ const translateServiceMock = {
 }
 
 const baseProviders = [
-  provideHttpClient(),
+  provideHttpClient(withXhr()),
   provideHttpClientTesting(),
   Gn4Repository,
   { provide: ElasticsearchService, useClass: ElasticsearchServiceMock },

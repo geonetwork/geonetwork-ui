@@ -1,4 +1,4 @@
-import { provideHttpClient } from '@angular/common/http'
+import { provideHttpClient, withXhr } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
@@ -14,6 +14,6 @@ import * as fromEditor from './+state/editor.reducer'
     ),
     EffectsModule.forFeature([EditorEffects]),
   ],
-  providers: [EditorFacade, provideHttpClient()],
+  providers: [EditorFacade, provideHttpClient(withXhr())],
 })
 export class FeatureEditorModule {}

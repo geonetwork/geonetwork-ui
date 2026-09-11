@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core'
 import {
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigModel,
@@ -12,6 +12,7 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
   selector: 'gn-ui-results-layout',
   templateUrl: './results-layout.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, TranslatePipe, DropdownSelectorComponent],
 })
 export class ResultsLayoutComponent {

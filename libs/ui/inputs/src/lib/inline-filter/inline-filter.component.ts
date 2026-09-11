@@ -5,6 +5,7 @@ import {
   Input,
   Output,
   TemplateRef,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { Choice } from './inline-filter.model'
 import { CommonModule } from '@angular/common'
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common'
   selector: 'gn-ui-inline-filter',
   templateUrl: './inline-filter.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule],
 })
 export class InlineFilterComponent {

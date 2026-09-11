@@ -6,6 +6,7 @@ import {
   Input,
   Output,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu'
@@ -20,6 +21,7 @@ type ActionMenuPage = 'mainMenu' | 'deleteMenu' | 'rollbackMenu'
   templateUrl: './action-menu.component.html',
   styleUrls: ['./action-menu.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     ButtonComponent,
     MatMenuModule,

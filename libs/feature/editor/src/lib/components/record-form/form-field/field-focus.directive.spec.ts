@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { FieldFocusDirective } from './field-focus.directive'
@@ -6,6 +6,7 @@ import { FieldFocusDirective } from './field-focus.directive'
 @Component({
   standalone: true,
   imports: [FieldFocusDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div gnUiFieldFocus [gnUiFieldFocusGlowClass]="glowClass">
       <button type="button">a button</button>
@@ -20,6 +21,7 @@ class HostComponent {
 @Component({
   standalone: true,
   imports: [FieldFocusDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div gnUiFieldFocus>
       <button type="button">trigger</button>

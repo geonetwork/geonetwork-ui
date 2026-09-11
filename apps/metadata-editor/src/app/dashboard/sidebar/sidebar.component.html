@@ -56,7 +56,7 @@
             [routerLink]="['/organizations', organisations[0].id]"
           >
             <img
-              [src]="organisations[0].logoUrl?.href"
+              [src]="$safeNavigationMigration(organisations[0].logoUrl?.href)"
               alt="Organization logo"
               class="w-12 h-12"
             />

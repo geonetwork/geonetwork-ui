@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core'
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { StatusComponent } from './components/status/status.component'
 import { RecordOutputXmlComponent } from './components/record-output-xml/record-output-xml.component'
@@ -9,6 +9,7 @@ import { FORMATS, getFormatName } from './md-formats'
   selector: 'gn-ui-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AppComponent {

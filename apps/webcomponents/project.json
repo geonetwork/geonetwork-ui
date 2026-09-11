@@ -9,6 +9,7 @@
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/webcomponents",
         "index": "apps/webcomponents/src/index.html",
@@ -74,11 +75,12 @@
           "deleteOutputPath": true,
           "sourceMap": false
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "defaultConfiguration": "development",
+      "continuous": true,
       "configurations": {
         "production": {
           "buildTarget": "webcomponents:build:production"
@@ -86,9 +88,7 @@
         "development": {
           "buildTarget": "webcomponents:build:development"
         }
-      },
-      "defaultConfiguration": "development",
-      "continuous": true
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -98,13 +98,13 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
           "apps/webcomponents/src/**/*.ts",
           "apps/webcomponents/src/**/*.html"
         ]
-      },
-      "outputs": ["{options.outputFile}"]
+      }
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -138,16 +138,16 @@
     },
     "e2e": {
       "executor": "@nx/cypress:cypress",
+      "env": {
+        "browserPermissions": {
+          "write": "allow"
+        }
+      },
       "options": {
         "cypressConfig": "apps/webcomponents/cypress.config.ts",
         "baseUrl": "http://localhost:5173/",
         "testingType": "e2e",
         "browser": "chrome"
-      },
-      "env": {
-        "browserPermissions": {
-          "write": "allow"
-        }
       }
     }
   }

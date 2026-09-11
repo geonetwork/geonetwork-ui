@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { MaxLinesComponent } from './max-lines.component'
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 // Mock implementation of ResizeObserver
@@ -20,6 +20,7 @@ class ResizeObserverMock {
     </gn-ui-max-lines>
   `,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MaxLinesComponent],
 })
 class TestHostComponent {

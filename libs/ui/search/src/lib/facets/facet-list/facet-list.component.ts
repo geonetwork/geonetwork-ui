@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { FacetSelectEvent, ModelBlock } from '../facets.model'
 // Revisit facets: these should not use the ES formats!
 // eslint-disable-next-line @nx/enforce-module-boundaries
@@ -13,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core'
   templateUrl: './facet-list.component.html',
   styleUrls: ['./facet-list.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FacetBlockComponent, FormsModule, TranslateModule],
 })
 export class FacetListComponent {

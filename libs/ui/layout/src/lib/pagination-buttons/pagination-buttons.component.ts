@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 
@@ -11,6 +11,7 @@ import { Paginable } from '../paginable.interface'
   styleUrls: ['./pagination-buttons.component.css'],
   standalone: true,
   imports: [ButtonComponent, NgIcon],
+  changeDetection: ChangeDetectionStrategy.Eager,
   viewProviders: [
     provideIcons({
       iconoirNavArrowRight,

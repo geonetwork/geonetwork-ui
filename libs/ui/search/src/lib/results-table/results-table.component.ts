@@ -10,6 +10,7 @@ import {
   ViewChildren,
   ViewContainerRef,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -64,6 +65,7 @@ import { Observable, of, take } from 'rxjs'
     CheckboxComponent,
     ButtonComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     provideIcons({ iconoirUser, iconoirLock, iconoirTranslate, matMoreVert }),
   ],

@@ -156,6 +156,7 @@ class InteractionsMock extends Collection<Interaction> {}
 @Component({
   selector: 'gn-ui-map-container',
   template: '<div></div>',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class MockMapContainerComponent {

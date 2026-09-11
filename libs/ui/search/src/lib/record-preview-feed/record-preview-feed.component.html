@@ -25,7 +25,11 @@
         }
         @if (hasLogo) {
           <gn-ui-thumbnail
-            [thumbnailUrl]="record.ownerOrganization?.logoUrl?.toString()"
+            [thumbnailUrl]="
+              $safeNavigationMigration(
+                record.ownerOrganization?.logoUrl?.toString()
+              )
+            "
             [fit]="'contain'"
           ></gn-ui-thumbnail>
         }

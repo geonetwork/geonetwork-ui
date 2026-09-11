@@ -7,10 +7,10 @@
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/util/app-config/**/*.ts"]
-      },
-      "outputs": ["{options.outputFile}"]
+      }
     },
     "test": {
       "executor": "@nx/jest:jest",

@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TemplatesComponent } from './templates.component'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { RecordsListComponent } from '../records-list.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 @Component({
   selector: 'md-editor-records-list',
   template: '',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class MockRecordsListComponent {}

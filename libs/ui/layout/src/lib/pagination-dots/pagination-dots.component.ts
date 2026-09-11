@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 import { provideIcons } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
 import { iconoirNavArrowLeft, iconoirNavArrowRight } from '@ng-icons/iconoir'
@@ -10,6 +10,7 @@ import { Paginable } from '../paginable.interface'
   styleUrls: ['./pagination-dots.component.css'],
   standalone: true,
   imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   viewProviders: [
     provideIcons({
       iconoirNavArrowRight,

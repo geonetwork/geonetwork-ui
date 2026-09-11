@@ -27,7 +27,9 @@
             >
               <gn-ui-thumbnail
                 class="relative"
-                [thumbnailUrl]="organization.logoUrl?.href"
+                [thumbnailUrl]="
+                  $safeNavigationMigration(organization.logoUrl?.href)
+                "
                 [fit]="'contain'"
               >
               </gn-ui-thumbnail>

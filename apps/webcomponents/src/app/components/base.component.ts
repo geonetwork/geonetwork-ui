@@ -6,6 +6,7 @@ import {
   Input,
   OnChanges,
   OnInit,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import {
   LinkClassifierService,
@@ -38,6 +39,7 @@ export const DefaultProviders = [
 @Component({
   selector: 'wc-base',
   template: `<div></div>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class BaseComponent implements OnChanges, OnInit {

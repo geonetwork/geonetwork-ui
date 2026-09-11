@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-results-hits-number',
   templateUrl: './results-hits-number.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslatePipe, TranslateDirective],
 })
 export class ResultsHitsNumberComponent {

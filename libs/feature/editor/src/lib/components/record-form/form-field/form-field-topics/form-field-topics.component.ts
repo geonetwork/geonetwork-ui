@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 
 import {
   BadgeComponent,
@@ -12,6 +19,7 @@ import { ISO_TOPICS } from '../../../../fields.config'
   standalone: true,
   imports: [BadgeComponent, TranslatePipe, DropdownMultiselectComponent],
   templateUrl: './form-field-topics.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './form-field-topics.component.css',
 })
 export class FormFieldTopicsComponent {

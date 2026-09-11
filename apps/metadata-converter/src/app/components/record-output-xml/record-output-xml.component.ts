@@ -1,9 +1,16 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core'
+import {
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 
 @Component({
   selector: 'gn-ui-record-output-xml',
   templateUrl: './record-output-xml.component.html',
   styleUrls: ['./record-output-xml.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class RecordOutputXmlComponent {

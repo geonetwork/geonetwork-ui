@@ -9,6 +9,7 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { TranslateDirective } from '@ngx-translate/core'
@@ -49,6 +50,7 @@ import {
     NgIconComponent,
     ButtonComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     provideIcons({
       iconoirNavArrowDown,

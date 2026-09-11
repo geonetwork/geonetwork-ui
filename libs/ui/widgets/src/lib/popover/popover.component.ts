@@ -12,6 +12,7 @@ import {
   ViewContainerRef,
   EmbeddedViewRef,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import tippy, { Instance } from 'tippy.js'
 
@@ -20,6 +21,7 @@ import tippy, { Instance } from 'tippy.js'
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [],
 })
 export class PopoverComponent implements AfterViewInit, OnChanges, OnDestroy {
@@ -29,12 +31,7 @@ export class PopoverComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('popoverContent', { static: false }) popoverContent: ElementRef
   @Input() content: string | TemplateRef<any>
   @Input() theme:
-    | 'light'
-    | 'light-border'
-    | 'translucent'
-    | 'material'
-    | 'dark'
-    | ''
+    'light' | 'light-border' | 'translucent' | 'material' | 'dark' | ''
 
   private tippyInstance: Instance
   private view: EmbeddedViewRef<any>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core'
 import { TranslateDirective } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { MyOrgService } from '@geonetwork-ui/feature/catalog'
@@ -10,6 +10,7 @@ import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
   templateUrl: './my-org-users.component.html',
   styleUrls: ['./my-org-users.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslateDirective,
     CommonModule,

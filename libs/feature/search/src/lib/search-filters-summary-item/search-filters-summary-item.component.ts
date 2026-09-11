@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, inject } from '@angular/core'
+import {
+  Component,
+  Input,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
   catchError,
@@ -33,6 +39,7 @@ interface DisplayedValue {
   standalone: true,
   imports: [CommonModule, BadgeComponent],
   templateUrl: './search-filters-summary-item.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./search-filters-summary-item.component.css'],
 })
 export class SearchFiltersSummaryItemComponent implements OnInit {

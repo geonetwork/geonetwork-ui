@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core'
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 
 import { TranslatePipe } from '@ngx-translate/core'
 import {
@@ -32,6 +37,7 @@ import {
     }),
   ],
   templateUrl: './search-filters.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./search-filters.component.css'],
 })
 export class SearchFiltersComponent implements OnInit {

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 
 @Component({
   selector: 'gn-ui-spinning-loader',
   templateUrl: './spinning-loader.component.html',
   styleUrls: ['./spinning-loader.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class SpinningLoaderComponent {}

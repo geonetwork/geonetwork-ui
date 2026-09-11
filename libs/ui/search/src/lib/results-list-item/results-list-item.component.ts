@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ComponentFactoryResolver,
   EventEmitter,
   Input,
   OnChanges,
@@ -10,7 +9,6 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
-  inject,
 } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordPreviewComponent } from '../record-preview/record-preview.component'
@@ -24,8 +22,6 @@ import { ResultsLayoutConfigItem } from '../results-list/results-layout.config'
   standalone: true,
 })
 export class ResultsListItemComponent implements OnChanges, AfterViewInit {
-  private componentFactoryResolver = inject(ComponentFactoryResolver)
-
   @Input() layoutConfig: ResultsLayoutConfigItem
   @Input() record: CatalogRecord
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
@@ -46,21 +42,17 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
   }
 
   loadComponent() {
-    const resolver =
-      this.componentFactoryResolver.resolveComponentFactory<RecordPreviewComponent>(
-        this.layoutConfig.component
-      )
     this.cardRef.clear()
-    const componentFactory =
-      this.cardRef.createComponent<RecordPreviewComponent>(resolver)
-    componentFactory.instance.metadataQualityDisplay =
-      this.metadataQualityDisplay
-    componentFactory.instance.record = this.record
-    componentFactory.instance.favoriteTemplate = this.favoriteTemplate
-    componentFactory.instance.mdSelect.subscribe((record) =>
+    const componentRef = this.cardRef.createComponent<RecordPreviewComponent>(
+      this.layoutConfig.component
+    )
+    componentRef.instance.metadataQualityDisplay = this.metadataQualityDisplay
+    componentRef.instance.record = this.record
+    componentRef.instance.favoriteTemplate = this.favoriteTemplate
+    componentRef.instance.mdSelect.subscribe((record) =>
       this.mdSelect.emit(record)
     )
-    componentFactory.instance.linkHref = this.linkHref
-    componentFactory.changeDetectorRef.detectChanges()
+    componentRef.instance.linkHref = this.linkHref
+    componentRef.changeDetectorRef.detectChanges()
   }
 }

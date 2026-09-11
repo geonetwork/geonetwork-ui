@@ -4,6 +4,7 @@ import {
   Input,
   Output,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { NgxDropzoneComponent, NgxDropzoneModule } from 'ngx-dropzone'
@@ -20,6 +21,7 @@ export type DragAndDropFileInputError = 'invalid-extension' | 'file-too-large'
   templateUrl: './drag-and-drop-file-input.component.html',
   styleUrls: ['./drag-and-drop-file-input.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgxDropzoneModule, NgIcon],
 })
 export class DragAndDropFileInputComponent {

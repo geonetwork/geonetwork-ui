@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -46,6 +47,7 @@ marker('editor.record.form.bottomButtons.next')
   templateUrl: './edit-page.component.html',
   styleUrls: ['./edit-page.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     RecordFormComponent,
     CommonModule,

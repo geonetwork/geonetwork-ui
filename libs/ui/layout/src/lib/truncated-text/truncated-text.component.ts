@@ -8,6 +8,7 @@ import {
   OnDestroy,
   ViewChild,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
@@ -29,6 +30,7 @@ import { CellPopinComponent } from '../cell-popin/cell-popin.component'
   ],
   providers: [provideIcons({ iconoirExpand })],
   templateUrl: './truncated-text.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [],
 })
 export class TruncatedTextComponent implements AfterViewInit, OnDestroy {

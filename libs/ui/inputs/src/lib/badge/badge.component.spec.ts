@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 
@@ -7,6 +7,7 @@ import { BadgeComponent } from './badge.component'
 @Component({
   imports: [BadgeComponent],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<gn-ui-badge [clickable]="clickable">Keyword label</gn-ui-badge>`,
 })
 class BadgeTestHostComponent {

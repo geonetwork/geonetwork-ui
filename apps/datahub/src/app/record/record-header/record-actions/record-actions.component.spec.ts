@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
@@ -30,6 +30,7 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'gn-ui-favorite-star',
   template: '<div class="mock-favorite"></div>',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 class MockFavoriteStarComponent {

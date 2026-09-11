@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
@@ -12,6 +12,7 @@ import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
   imports: [MatTooltipModule, NgIcon, TranslatePipe, CopyTextButtonComponent],
   templateUrl: './metadata-doi.component.html',
   styleUrl: './metadata-doi.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   viewProviders: [
     provideIcons({
       matOpenInNew,

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, inject } from '@angular/core'
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
@@ -13,6 +13,7 @@ import { EditorService } from '@geonetwork-ui/feature/editor'
   templateUrl: './my-draft.component.html',
   styleUrls: ['./my-draft.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, TranslateDirective, ResultsTableComponent],
 })
 export class MyDraftComponent {

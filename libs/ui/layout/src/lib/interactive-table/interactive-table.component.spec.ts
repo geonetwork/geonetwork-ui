@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { InteractiveTableComponent } from './interactive-table.component'
-import { Component, DebugElement, EventEmitter, Output } from '@angular/core'
+import {
+  Component,
+  DebugElement,
+  EventEmitter,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
@@ -30,6 +36,7 @@ import { provideI18n } from '@geonetwork-ui/util/i18n'
     </gn-ui-interactive-table>
   `,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [InteractiveTableComponent, InteractiveTableColumnComponent],
 })
 class TestHostComponent {

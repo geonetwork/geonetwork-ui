@@ -19,7 +19,7 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { GEONETWORK_UI_VERSION } from '@geonetwork-ui/util/shared'
 import { BrowserModule } from '@angular/platform-browser'
-import { provideHttpClient } from '@angular/common/http'
+import { provideHttpClient, withXhr } from '@angular/common/http'
 import {
   StandaloneConfiguration,
   standaloneConfigurationObject,
@@ -31,7 +31,7 @@ import {
       provide: METADATA_LANGUAGE,
       useValue: standaloneConfigurationObject.metadataLanguageFactory,
     },
-    provideHttpClient(),
+    provideHttpClient(withXhr()),
     {
       provide: Configuration,
       useValue: standaloneConfigurationObject.apiConfiguration,

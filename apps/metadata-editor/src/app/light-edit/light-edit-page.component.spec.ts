@@ -11,7 +11,7 @@ import {
   REUSE_LIGHT_CONFIGURATION,
 } from '@geonetwork-ui/feature/editor'
 import { MockBuilder } from 'ng-mocks'
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
@@ -51,6 +51,7 @@ class NotificationsServiceMock {
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'gn-ui-record-form',
   template: '',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 class MockRecordFormComponent {}

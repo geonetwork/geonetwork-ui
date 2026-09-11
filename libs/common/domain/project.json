@@ -3,6 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/common/domain/src",
   "projectType": "library",
+  "tags": ["type:util", "scope:shared"],
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -11,6 +12,5 @@
         "lintFilePatterns": ["libs/common/domain/**/*.ts"]
       }
     }
-  },
-  "tags": ["type:util", "scope:shared"]
+  }
 }

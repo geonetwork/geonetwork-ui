@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { CarouselComponent } from './carousel.component'
-import { Component, Input } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 import { By } from '@angular/platform-browser'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -39,6 +39,7 @@ jest.mock('embla-carousel', () => {
       <div style="width: 50px"></div>
     }
   </gn-ui-carousel>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 class CarouselWrapperComponent {

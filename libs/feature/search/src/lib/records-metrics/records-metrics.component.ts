@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map, share } from 'rxjs/operators'
@@ -24,6 +25,7 @@ import { TranslatePipe } from '@ngx-translate/core'
   templateUrl: './records-metrics.component.html',
   styleUrls: ['./records-metrics.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, RecordMetricComponent, TranslatePipe],
 })
 export class RecordsMetricsComponent implements OnInit {

@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common'
-import { Component, OnDestroy, OnInit, inject } from '@angular/core'
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { Individual } from '@geonetwork-ui/common/domain/model/record'
@@ -31,6 +37,7 @@ marker('editor.record.light.saveError.body')
   templateUrl: './light-edit-page.component.html',
   styleUrls: ['./light-edit-page.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     RecordFormComponent,
     CommonModule,

@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { OgcApiEndpoint } from '@camptocamp/ogc-client'
 import { debounceTime, Subject } from 'rxjs'
@@ -24,6 +25,7 @@ import { MapContextLayer, MapContextLayerOgcApi } from '@geospatial-sdk/core'
   templateUrl: './add-layer-from-ogc-api.component.html',
   styleUrls: ['./add-layer-from-ogc-api.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TextInputComponent,
     DropdownSelectorComponent,

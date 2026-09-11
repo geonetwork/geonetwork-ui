@@ -1,10 +1,11 @@
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AutofocusDirective } from './autofocus.directive'
 
 @Component({
   template: `<input type="text" [gnUiAutofocus]="focused" />`,
   imports: [AutofocusDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 class TestComponent {

@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core'
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { MapFacade } from '../+state/map.facade'
 import { MapContextLayerGeojson } from '@geospatial-sdk/core'
 import { firstValueFrom } from 'rxjs'
@@ -12,6 +17,7 @@ const INVALID_FILE_FORMAT_ERROR_MESSAGE = 'Invalid file format'
   templateUrl: './add-layer-from-file.component.html',
   styleUrls: ['./add-layer-from-file.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, TranslatePipe, DragAndDropFileInputComponent],
 })
 export class AddLayerFromFileComponent {

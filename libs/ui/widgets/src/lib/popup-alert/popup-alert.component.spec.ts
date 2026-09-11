@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { PopupAlertComponent } from './popup-alert.component'
-import { Component, Input } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 import { By } from '@angular/platform-browser'
 
 @Component({
   template: '<gn-ui-popup-alert>{{message}}</gn-ui-popup-alert>',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 class PopupAlertWrapperComponent {

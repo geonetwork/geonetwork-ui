@@ -1,4 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core'
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -29,6 +34,7 @@ export const allSearchFields = [
   templateUrl: './records-list.component.html',
   styleUrls: ['./records-list.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ResultsTableContainerComponent, PaginationButtonsComponent],
 })
 export class RecordsListComponent implements OnInit, Paginable {

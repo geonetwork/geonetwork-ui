@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { ThemeService } from '@geonetwork-ui/util/shared'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 
@@ -6,6 +6,7 @@ import { getThemeConfig } from '@geonetwork-ui/util/app-config'
   selector: 'md-editor-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AppComponent implements OnInit {

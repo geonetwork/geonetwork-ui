@@ -1,4 +1,11 @@
-import { Component, InjectionToken, Input, OnInit, inject } from '@angular/core'
+import {
+  Component,
+  InjectionToken,
+  Input,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { first, map, Observable } from 'rxjs'
 import { SearchFiltersSummaryItemComponent } from '../search-filters-summary-item/search-filters-summary-item.component'
@@ -15,6 +22,7 @@ export const FILTER_SUMMARY_IGNORE_LIST = new InjectionToken<string[]>(
   imports: [CommonModule, SearchFiltersSummaryItemComponent, TranslatePipe],
   templateUrl: './search-filters-summary.component.html',
   styleUrls: ['./search-filters-summary.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class SearchFiltersSummaryComponent implements OnInit {

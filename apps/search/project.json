@@ -9,6 +9,7 @@
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/search",
         "index": "apps/search/src/index.html",
@@ -49,11 +50,12 @@
           "sourceMap": true,
           "namedChunks": true
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "defaultConfiguration": "development",
+      "continuous": true,
       "configurations": {
         "production": {
           "buildTarget": "search:build:production"
@@ -62,9 +64,7 @@
           "proxyConfig": "proxy-config.js",
           "buildTarget": "search:build:development"
         }
-      },
-      "defaultConfiguration": "development",
-      "continuous": true
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -74,13 +74,13 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
           "apps/search/src/**/*.ts",
           "apps/search/src/**/*.html"
         ]
-      },
-      "outputs": ["{options.outputFile}"]
+      }
     },
     "test": {
       "executor": "@nx/jest:jest",

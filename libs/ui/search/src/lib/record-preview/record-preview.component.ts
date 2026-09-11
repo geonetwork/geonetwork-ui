@@ -8,6 +8,7 @@ import {
   Output,
   TemplateRef,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import {
   propagateToDocumentOnly,
@@ -26,6 +27,7 @@ import {
   selector: 'gn-ui-record-preview',
   template: '',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [],
 })
 export class RecordPreviewComponent implements OnInit, OnDestroy {

@@ -5,6 +5,7 @@ import {
   Input,
   OnDestroy,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SearchFacade } from '../state/search.facade'
@@ -22,6 +23,7 @@ import { TranslateService } from '@ngx-translate/core'
   templateUrl: './results-table-container.component.html',
   styleUrls: ['./results-table-container.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ResultsTableComponent],
 })
 export class ResultsTableContainerComponent implements OnDestroy {

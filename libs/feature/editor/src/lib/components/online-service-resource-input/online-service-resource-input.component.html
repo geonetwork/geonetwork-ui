@@ -34,7 +34,7 @@
     (uploadClick)="handleUploadClick($event)"
     (valueChange)="handleUrlValueChange($event)"
     [disabled]="disabled"
-    [value]="_service.url?.toString()"
+    [value]="$safeNavigationMigration(_service.url?.toString())"
     [showValidateButton]="activeLayerSuggestion"
     [resetUrlOnChange]="resetUrlOnChange"
   >

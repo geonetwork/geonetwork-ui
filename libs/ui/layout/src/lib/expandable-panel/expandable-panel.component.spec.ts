@@ -15,6 +15,7 @@ import { ExpandablePanelComponent } from './expandable-panel.component'
       </ng-template>
     </gn-ui-expandable-panel>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 class TestHostComponent {}

@@ -1,10 +1,17 @@
 import { ResultsHitsSearchKindComponent } from './results-hits-search-kind.component'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { Component, Input, Output, EventEmitter } from '@angular/core'
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+} from '@angular/core'
 
 @Component({
   selector: 'gn-ui-inline-filter',
   template: '',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 class MockInlineFilterComponent {
