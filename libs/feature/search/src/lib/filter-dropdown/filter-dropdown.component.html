@@ -3,6 +3,7 @@
     [title]="title"
     [dateRange]="(selectedDateRange$ | async) ?? {}"
     (dateRangeChange)="onDateRangeChange($event)"
+    [attr.data-cy-field]="fieldName"
   ></gn-ui-date-range-dropdown>
 } @else if (fieldType === 'spatialExtent') {
   <gn-ui-spatial-extent-dropdown
