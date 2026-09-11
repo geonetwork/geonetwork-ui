@@ -136,6 +136,7 @@ Here we are inheriting from the GeoNetwork-UI base Tailwind config, which provid
 ```shell
 npm install --save \
   @angular/material \
+  @angular/material-date-fns-adapter \
   @angular/cdk \
   @ngrx/component \
   @ngrx/effects \
