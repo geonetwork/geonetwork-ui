@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'util-shared',
   preset: '../../../jest.preset.js',
   coverageDirectory: '../../../coverage/libs/util/shared',

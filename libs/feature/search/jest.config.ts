@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'feature-search',
   preset: '../../../jest.preset.js',
   testEnvironment: 'jest-fixed-jsdom',

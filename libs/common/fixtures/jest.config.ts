@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'common-fixtures',
   preset: '../../../jest.preset.js',
   coverageDirectory: '../../../coverage/libs/common/fixtures',

@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'api-metadata-converter',
   preset: '../../../jest.preset.js',
   transform: {

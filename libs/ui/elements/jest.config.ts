@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'ui-elements',
   preset: '../../../jest.preset.js',
   coverageDirectory: '../../../coverage/libs/ui/elements',

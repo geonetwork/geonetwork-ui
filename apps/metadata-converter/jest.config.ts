@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'metadata-converter',
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/apps/metadata-converter',

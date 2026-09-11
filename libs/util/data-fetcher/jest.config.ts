@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'util-data-fetcher',
   preset: '../../../jest.preset.js',
   testEnvironment: 'node',

@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'feature-record',
   preset: '../../../jest.preset.js',
   coverageDirectory: '../../../coverage/libs/feature/record',

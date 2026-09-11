@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'datahub',
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/apps/datahub',

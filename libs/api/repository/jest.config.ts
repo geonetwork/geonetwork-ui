@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'api-repository',
   preset: '../../../jest.preset.js',
   coverageDirectory: '../../../coverage/libs/api/repository',

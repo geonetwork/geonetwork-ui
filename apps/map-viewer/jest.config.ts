@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'map-viewer',
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/apps/map-viewer',

@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'feature-notify-reuse',
   preset: '../../../jest.preset.js',
   coverageDirectory: '../../../coverage/libs/feature/notify-reuse',
