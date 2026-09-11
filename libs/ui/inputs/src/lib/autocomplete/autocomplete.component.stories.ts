@@ -136,6 +136,28 @@ export const NoMinimumCharacterCount: StoryObj<AutocompleteComponentWithActionRe
     }),
   }
 
+export const WithCustomTemplate: StoryObj<AutocompleteComponentWithActionResult> =
+  {
+    ...NoSubmit,
+    render: (args) => ({
+      props: {
+        ...args,
+        action: (value: string) => of(filterResults(value)),
+      },
+      template: `
+        <ng-template #itemTpl let-item>
+          <strong>{{ item }}</strong> (custom rendering)
+        </ng-template>
+        <gn-ui-autocomplete
+          [placeholder]="placeholder"
+          [minCharacterCount]="minCharacterCount"
+          [displayWithTemplate]="itemTpl"
+          [action]="action"
+        ></gn-ui-autocomplete>
+      `,
+    }),
+  }
+
 export const WithEnterButtonAndSubmit: StoryObj<AutocompleteComponentWithActionResult> =
   {
     args: {
