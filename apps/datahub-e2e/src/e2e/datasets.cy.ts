@@ -426,7 +426,7 @@ describe('datasets', () => {
     // it labels the selection after the imported file
     cy.get('[data-test="spatial-extent-selected-item"]').should(
       'contain.text',
-      'bbox from spatial-extent-rhone-valley.geojson'
+      'extent from spatial-extent-rhone-valley.geojson'
     )
     cy.get('@spatialExtentFilter').should('contain.text', '1')
     cy.screenshot({ capture: 'viewport' })
@@ -445,7 +445,7 @@ describe('datasets', () => {
     openSpatialExtentDropdown()
     cy.get('[data-test="spatial-extent-selected-item"]').should(
       'contain.text',
-      'Pre-selected bbox'
+      'Pre-selected extent'
     )
     cy.screenshot({ capture: 'viewport' })
 
