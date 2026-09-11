@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Web Component Demo</title>
+    <base href="./" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@200;300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      html,
+      body {
+        font-family: var(--font-family-main);
+      }
+      .container {
+        max-width: 1024px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 3rem;
+      }
+      gn-dataset-view-map {
+        height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <div style="margin: 60px 16px">
+        <p>
+          Visualize Map dataset from a Metadata Record with
+          <b><i>gn-dataset-view-map</i></b> web component
+        </p>
+      </div>
+
+      <script src="gn-wc.js"></script>
+      <gn-dataset-view-map
+        api-url="https://www.geo2france.fr/geonetwork/srv/api"
+        dataset-id="9da51f58-15c6-4325-82b1-2cf6c8e75d0f"
+        primary-color="#0f4395"
+        secondary-color="#8bc832"
+        main-color="#555"
+        background-color="#fdfbff"
+        main-font="'Inter', sans-serif"
+        title-font="'DM Serif Display', serif"
+      ></gn-dataset-view-map>
+    </main>
+  </body>
+</html>
