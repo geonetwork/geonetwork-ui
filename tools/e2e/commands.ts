@@ -44,6 +44,10 @@ declare namespace Cypress {
     openDropdown(): Chainable<JQuery<HTMLElement>>
     selectDropdownOption(value: string): void
     getActiveDropdownOption(): Chainable<JQuery<HTMLButtonElement>>
+    uploadFile(
+      file: Cypress.FileReference,
+      options?: Partial<Cypress.SelectFileOptions>
+    ): Chainable<JQuery<HTMLElement>>
 
     clickOnBody(): void
   }
@@ -212,6 +216,17 @@ Cypress.Commands.add(
 Cypress.Commands.add('clickOnBody', () => {
   cy.get('body').click(0, 0)
 })
+
+Cypress.Commands.add(
+  'uploadFile',
+  { prevSubject: true },
+  (element, file, options) => {
+    return cy
+      .wrap(element)
+      .find('input[type=file]')
+      .selectFile(file, { force: true, ...options })
+  }
+)
 
 Cypress.Commands.add('clearRecordDrafts', () => {
   cy.window().then((window) => {

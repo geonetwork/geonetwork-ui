@@ -46,13 +46,20 @@ import {
 marker('search.filters.spatialExtent.import')
 marker('search.filters.spatialExtent.helpText')
 marker('search.filters.spatialExtent.error.title')
-marker('search.filters.spatialExtent.bboxPrefix')
+
+const LABEL_FROM_FILE = marker('search.filters.spatialExtent.bboxFromFile')
+const LABEL_FROM_FILE_DELETE = marker(
+  'search.filters.spatialExtent.bboxFromFileDelete'
+)
+const LABEL_INITIAL = marker('search.filters.spatialExtent.bboxInitial')
+const LABEL_INITIAL_DELETE = marker(
+  'search.filters.spatialExtent.bboxInitialDelete'
+)
 
 export interface SpatialExtentDropdownError {
   key: string
   params?: Record<string, string | number>
 }
-marker('search.filters.spatialExtent.bboxDelete')
 
 @Component({
   selector: 'gn-ui-spatial-extent-dropdown',
@@ -85,6 +92,11 @@ export class SpatialExtentDropdownComponent {
 
   @Input() title: string
   @Input() maxFileSizeMb: number | null = null
+  @Input() set initialBbox(value: BoundingBox | null) {
+    if (!this.bbox && value) {
+      this.bbox = value
+    }
+  }
 
   @Output() bboxChange = new EventEmitter<BoundingBox | null>()
   @Output() errorChange = new EventEmitter<SpatialExtentDropdownError>()
@@ -121,6 +133,18 @@ export class SpatialExtentDropdownComponent {
 
   get hasSelection() {
     return !!this.bbox
+  }
+
+  get selectionLabelKey() {
+    return this.fileName ? LABEL_FROM_FILE : LABEL_INITIAL
+  }
+
+  get selectionDeleteLabelKey() {
+    return this.fileName ? LABEL_FROM_FILE_DELETE : LABEL_INITIAL_DELETE
+  }
+
+  get selectionLabelParams() {
+    return { fileName: this.fileName }
   }
 
   openOverlay() {

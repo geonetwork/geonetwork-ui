@@ -79,11 +79,7 @@
     @if (hasSelection) {
       <gn-ui-button
         [type]="'primary-light'"
-        [title]="
-          ('search.filters.spatialExtent.bboxDelete' | translate) +
-          ' ' +
-          fileName
-        "
+        [title]="selectionDeleteLabelKey | translate: selectionLabelParams"
         (buttonClick)="removeSelection($event)"
         extraClass="group gap-x-2 w-full h-[28px] px-[8px] py-[4px] mb-[12px] bg-primary-lighter text-white"
         data-test="spatial-extent-selected-item"
@@ -94,12 +90,10 @@
           size="15px"
         ></ng-icon>
         <span class="group-hover:hidden truncate text-sm m-auto">
-          {{ 'search.filters.spatialExtent.bboxPrefix' | translate }}
-          {{ fileName }}
+          {{ selectionLabelKey | translate: selectionLabelParams }}
         </span>
         <span class="hidden group-hover:block truncate text-sm m-auto">
-          {{ 'search.filters.spatialExtent.bboxDelete' | translate }}
-          {{ fileName }}
+          {{ selectionDeleteLabelKey | translate: selectionLabelParams }}
         </span>
         <ng-icon
           name="iconoirCheckCircle"
