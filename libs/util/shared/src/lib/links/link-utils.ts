@@ -344,7 +344,11 @@ export function getLinkLabel(
   return format ? `${label} (${format})` : label
 }
 
-export async function getLayers(url: string, serviceProtocol: ServiceProtocol) {
+export async function getLayers(
+  url: string,
+  serviceProtocol: ServiceProtocol,
+  deep = false
+) {
   switch (serviceProtocol) {
     case 'ogcFeatures': {
       const layers = await new OgcApiEndpoint(url).allCollections
@@ -352,7 +356,10 @@ export async function getLayers(url: string, serviceProtocol: ServiceProtocol) {
     }
     case 'wfs': {
       const endpointWfs = await new WfsEndpoint(url).isReady()
-      const featureTypes = await endpointWfs.getFeatureTypes()
+      const featureTypes = endpointWfs.getFeatureTypes()
+      if (!deep) {
+        return featureTypes
+      }
       const layers = (
         await Promise.allSettled(
           featureTypes.map((collection) => {
@@ -366,14 +373,16 @@ export async function getLayers(url: string, serviceProtocol: ServiceProtocol) {
     }
     case 'wms': {
       const endpointWms = await new WmsEndpoint(url).isReady()
-      const layers = (
-        await endpointWms
-          .getLayers()
-          .flatMap(wmsLayerFlatten)
-          .filter((l) => l.name)
-      ).map((collection) => {
-        return endpointWms.getLayerByName(collection.name)
-      })
+      const layersSummary = endpointWms
+        .getLayers()
+        .flatMap(wmsLayerFlatten)
+        .filter((l) => l.name)
+      if (!deep) {
+        return layersSummary
+      }
+      const layers = layersSummary.map((collection) =>
+        endpointWms.getLayerByName(collection.name)
+      )
       return layers
     }
     case 'wmts': {
