@@ -22,6 +22,13 @@ describe('DashboardMenuComponent', () => {
         MockProviders(ActivatedRoute, RecordsRepositoryInterface),
       ],
     }).compileComponents()
+    // This test only cares about draftsCount$ (an RxJS pipeline), not the
+    // rendered DOM. The real template's routerLink/routerLinkActive
+    // directives need Angular 22's internal (unexported) router providers,
+    // which MockBuilder can't selectively keep real, so skip rendering it.
+    TestBed.overrideComponent(DashboardMenuComponent, {
+      set: { template: '' },
+    })
     recordsRepository = TestBed.inject(RecordsRepositoryInterface)
     fixture = TestBed.createComponent(DashboardMenuComponent)
     component = fixture.componentInstance

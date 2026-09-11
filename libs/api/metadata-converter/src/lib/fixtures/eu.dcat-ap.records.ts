@@ -321,7 +321,7 @@ export const EU_SURVEY_DATASET_RECORD: DatasetRecord = {
       },
       type: 'link',
       url: new URL(
-        'https://fra.europa.eu/en/publication/2018/eumidis-ii-being-black'
+        'https://fra.europa.eu/en/publication/2019/being-black-eu-summary'
       ),
     },
     {

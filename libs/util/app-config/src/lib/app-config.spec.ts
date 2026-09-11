@@ -30,15 +30,13 @@ describe('app config utils', () => {
     })
     describe('loadAppConfig', () => {
       it('throws an error', async () => {
-        await expect(loadAppConfig()).rejects.toThrowError(
-          'could not be loaded'
-        )
+        await expect(loadAppConfig()).rejects.toThrow('could not be loaded')
       })
     })
     describe('getGlobalConfig', () => {
       it('throws an error', async () => {
         await loadAppConfig().catch(() => {}) // eslint-disable-line
-        expect(() => getGlobalConfig()).toThrowError('not initialized')
+        expect(() => getGlobalConfig()).toThrow('not initialized')
       })
     })
   })
@@ -48,7 +46,7 @@ describe('app config utils', () => {
     })
     describe('loadAppConfig', () => {
       it('throws an error', async () => {
-        await expect(loadAppConfig()).rejects.toThrowError(
+        await expect(loadAppConfig()).rejects.toThrow(
           'error occurred when parsing'
         )
       })
@@ -56,7 +54,7 @@ describe('app config utils', () => {
     describe('getGlobalConfig', () => {
       it('throws an error', async () => {
         await loadAppConfig().catch(() => {}) // eslint-disable-line
-        expect(() => getGlobalConfig()).toThrowError('not initialized')
+        expect(() => getGlobalConfig()).toThrow('not initialized')
       })
     })
   })
@@ -74,7 +72,7 @@ describe('app config utils', () => {
     describe('getGlobalConfig', () => {
       it('throws an error', async () => {
         await loadAppConfig().catch(() => {}) // eslint-disable-line
-        expect(() => getGlobalConfig()).toThrowError('not initialized')
+        expect(() => getGlobalConfig()).toThrow('not initialized')
       })
     })
   })

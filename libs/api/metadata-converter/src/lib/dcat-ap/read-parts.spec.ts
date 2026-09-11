@@ -97,9 +97,7 @@ describe('read parts', () => {
           name: 'CSV distribution of imaginary dataset 001',
           description: 'A more complete description',
           type: 'download',
-          url: new URL(
-            'https://noise.discomap.eea.europa.eu/arcgis/services/noiseStoryMap/NoiseContours_air_lnight/ImageServer/WMSServer?request=GetCapabilities&service=WMS'
-          ),
+          url: new URL('http://dcat.example.org/files/001.csv'),
           translations: {
             name: {
               es: 'distribución en CSV del conjunto de datos imaginario 001',

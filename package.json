@@ -170,7 +170,7 @@
     "typescript": "6.0.3",
     "typescript-eslint": "^8.58.0",
     "vitepress": "~1.6.4",
-    "web-worker": "~1.5.0"
+    "web-worker": "~1.4.1"
   },
   "overrides": {
     "jasmine-marbles": {

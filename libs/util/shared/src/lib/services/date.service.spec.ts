@@ -54,7 +54,7 @@ describe('DateService', () => {
 
     it('should throw an error for an invalid date string', () => {
       const invalidDate = 'invalid-date'
-      expect(() => service.formatDate(invalidDate)).toThrowError(
+      expect(() => service.formatDate(invalidDate)).toThrow(
         'Invalid date string'
       )
     })
@@ -92,7 +92,7 @@ describe('DateService', () => {
 
     it('should throw an error for an invalid date string', () => {
       const invalidDate = 'invalid-date'
-      expect(() => service.formatDateTime(invalidDate)).toThrowError(
+      expect(() => service.formatDateTime(invalidDate)).toThrow(
         'Invalid date string'
       )
     })
@@ -143,9 +143,9 @@ describe('DateService', () => {
 
     it('should throw an error for an invalid date string', async () => {
       const invalidDate = 'invalid-date'
-      await expect(
-        service.formatRelativeDateTime(invalidDate)
-      ).rejects.toThrowError('Invalid date string')
+      await expect(service.formatRelativeDateTime(invalidDate)).rejects.toThrow(
+        'Invalid date string'
+      )
     })
 
     it('should use the correct locale from TranslateService', async () => {

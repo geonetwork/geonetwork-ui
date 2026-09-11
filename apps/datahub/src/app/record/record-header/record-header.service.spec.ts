@@ -28,7 +28,7 @@ describe('RecordHeaderService', () => {
   beforeEach(() => {
     routerMock = {
       navigateByUrl: jest.fn(),
-      lastSuccessfulNavigation: null,
+      lastSuccessfulNavigation: jest.fn(() => null),
     } as any
 
     locationMock = {
@@ -58,13 +58,19 @@ describe('RecordHeaderService', () => {
 
   describe('back', () => {
     it('should call location.back() if previous navigation exists', () => {
-      ;(routerMock as any).lastSuccessfulNavigation = { previousNavigation: {} }
+      ;(
+        routerMock.lastSuccessfulNavigation as unknown as jest.Mock
+      ).mockReturnValue({
+        previousNavigation: {},
+      })
       service.back()
       expect(locationMock.back).toHaveBeenCalled()
     })
 
     it('should navigate to /search if no previous navigation exists', () => {
-      ;(routerMock as any).lastSuccessfulNavigation = null
+      ;(
+        routerMock.lastSuccessfulNavigation as unknown as jest.Mock
+      ).mockReturnValue(null)
       service.back()
       expect(routerMock.navigateByUrl).toHaveBeenCalledWith('/search')
     })

@@ -17,10 +17,11 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
   },
 }))
 
+const lastSuccessfulNavigationValue = {
+  previousNavigation: null,
+}
 const routerMock: Partial<Router> = {
-  lastSuccessfulNavigation: {
-    previousNavigation: null,
-  } as any,
+  lastSuccessfulNavigation: (() => lastSuccessfulNavigationValue) as any,
   navigateByUrl: jest.fn(),
 }
 const locationMock: Partial<Location> = {

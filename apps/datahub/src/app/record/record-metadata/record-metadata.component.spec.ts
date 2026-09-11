@@ -197,7 +197,7 @@ describe('RecordMetadataComponent', () => {
         expect(metadataContact.metadata).toHaveProperty('contacts')
       })
       it('shows the metadata catalog', () => {
-        expect(sourcesService.getSourceLabel).toBeCalledWith(
+        expect(sourcesService.getSourceLabel).toHaveBeenCalledWith(
           SAMPLE_RECORD.extras.catalogUuid
         )
         expect(catalogComponent.sourceLabel).toEqual('catalog label')

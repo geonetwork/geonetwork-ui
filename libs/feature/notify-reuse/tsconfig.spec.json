@@ -5,7 +5,7 @@
     "module": "commonjs",
     "target": "es2016",
     "types": ["jest", "node"],
-    "moduleResolution": "node10"
+    "moduleResolution": "bundler"
   },
   "files": ["src/test-setup.ts"],
   "include": [

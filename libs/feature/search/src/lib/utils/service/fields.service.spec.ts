@@ -118,7 +118,7 @@ describe('FieldsService', () => {
         expect(values).toEqual([{ label: 'orgA (10)', value: 'orgA' }])
       })
       it('throws for an unsupported field', () => {
-        expect(() => service.getAvailableValues('blarg')).toThrowError(
+        expect(() => service.getAvailableValues('blarg')).toThrow(
           'Unsupported search field: blarg'
         )
       })

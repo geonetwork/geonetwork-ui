@@ -41,7 +41,7 @@ describe('data-fetcher utils', () => {
     it('prevents modifying the underlying array', () => {
       expect(() => {
         proxy[2] = { abc: '1234' }
-      }).toThrowError('read-only')
+      }).toThrow('read-only')
     })
   })
 })
