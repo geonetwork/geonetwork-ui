@@ -46,26 +46,24 @@ Note: To use the generated package locally, be sure to follow [these hints](http
 ## Checking the dependencies
 
 `package.json` in this folder is maintained by hand and is entirely separate from the one at the root of
-the repository: adding a third-party import to a lib without declaring it here produces a package that
-fails to resolve for consumers. `ng-packagr` does not catch this — it only validates the opposite
-direction, that everything listed in `dependencies` is whitelisted in `allowedNonPeerDependencies`.
+the repository, so a dependency added to (or bumped in) the root is easily forgotten here. The
+`check-dependencies.js` script compares the two and fails when they no longer fit:
 
-The `check-dependencies.js` script closes that gap. It parses every source file that
-`generate-package.js` ships (all of `libs`, minus specs, stories and test setup), collects the
-third-party packages they import, and fails if any of them is missing from the `dependencies` or
-`peerDependencies` of `package/package.json`.
-
-It also checks the declared version ranges against the root `package.json`, differently for each kind:
-
-- `dependencies` are shipped verbatim, so their ranges must be **exactly** the ones the repository is
+- every root **`dependencies`** entry has to be declared in `package/package.json`, either as a
+  dependency or as a peer dependency. Packages only applications use are listed in `NOT_PUBLISHED` in
+  the script — that list is itself checked, so it cannot go stale;
+- every entry of `package/package.json` has to exist in the root `package.json`, as a dependency or a
+  dev dependency (a package peer dependency is often a dev dependency of the repository, as is the case
+  for `@ngrx/*` and `tailwindcss`);
+- `dependencies` ranges are published as-is, so they must be **exactly** the ones the repository is
   built against;
-- `peerDependencies` are deliberately broader than the pinned version used here (`19.x || 20.x || 21.x`
-  vs `20.3.19`), so they are checked by **semver satisfaction** instead: the range offered to consumers
-  has to cover every version this repository may install. A range such as `*` therefore never fails,
-  since it covers everything.
+- `peerDependencies` ranges are deliberately broader than the pinned version used here
+  (`19.x || 20.x || 21.x` vs `20.3.19`), so comparing them for equality would be meaningless. They are
+  checked by **semver satisfaction** instead: the range offered to consumers has to cover every version
+  the root may install. A range such as `*` therefore never fails, since it covers everything.
 
-Finally, it warns about declared packages that nothing imports anymore (packages needed implicitly,
-such as polyfills, are listed in `IMPLICIT_DEPENDENCIES` in the script).
+Whether a declared dependency is actually imported is deliberately _not_ checked — the app and package
+builds already fail on an unresolved import.
 
 ```shell
 npm run package:check-deps
