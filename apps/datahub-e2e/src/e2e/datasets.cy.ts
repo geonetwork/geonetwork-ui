@@ -510,6 +510,36 @@ describe('datasets', () => {
     cy.get('@hits').should('contain.text', '7 ')
   })
 
+  it('should filter the results on the resource creation/revision date', () => {
+    // this will enable the resourceCreationRevisionDate filter
+    cy.intercept('GET', '/assets/configuration/default.toml', {
+      fixture: 'config-with-resource-date-filter.toml',
+    })
+    cy.visit('/search')
+    cy.get('[data-cy=filters-expand]').click({ force: true })
+    cy.get(
+      'gn-ui-date-range-dropdown[data-cy-field="resourceCreationRevisionDate"] gn-ui-button'
+    ).click()
+
+    cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '33 ')
+
+    // it filters when only a start date is typed (bounds are typeable; e2e runs in English, so MM/DD/YYYY)
+    cy.get('[data-test="start-date-input"]').clear()
+    cy.get('[data-test="start-date-input"]').type('01/01/1900{enter}')
+    cy.url().should('contain', 'resourceCreationRevisionDate=1900-01-01..')
+    cy.get('[data-cy="resultsHitsFound"]')
+      .invoke('text')
+      .should('not.contain', '33 ')
+
+    // it filters further when an end date is added too
+    cy.get('[data-test="end-date-input"]').clear()
+    cy.get('[data-test="end-date-input"]').type('01/02/1900{enter}')
+    cy.url().should(
+      'contain',
+      'resourceCreationRevisionDate=1900-01-01..1900-01-02'
+    )
+  })
+
   it('should display the metadata quality widget when enabled', () => {
     // this will enable metadata quality widget
     cy.intercept('GET', '/assets/configuration/default.toml', {
