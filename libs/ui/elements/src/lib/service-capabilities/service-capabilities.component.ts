@@ -128,7 +128,8 @@ export class ServiceCapabilitiesComponent implements OnInit {
       this.loading = true
       this.availableLayers = await getLayers(
         this.apiLinks[0].url.href,
-        this.apiLinks[0].accessServiceProtocol
+        this.apiLinks[0].accessServiceProtocol,
+        true
       )
       this.loading = false
       this.cdr.detectChanges()
