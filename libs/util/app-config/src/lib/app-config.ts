@@ -253,6 +253,8 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
           'advanced_filters',
           'limit',
           'spatial_extent_max_file_size',
+          'geocoding_provider',
+          'geocoding_provider_options',
         ],
         warnings,
         errors
@@ -284,6 +286,9 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
               LIMIT: parsedSearchSection.limit,
               SPATIAL_EXTENT_MAX_FILE_SIZE:
                 parsedSearchSection.spatial_extent_max_file_size,
+              GEOCODING_PROVIDER: parsedSearchSection.geocoding_provider,
+              GEOCODING_PROVIDER_OPTIONS:
+                parsedSearchSection.geocoding_provider_options,
             } as SearchConfig)
 
       const parsedMetadataQualitySection = parseConfigSection(

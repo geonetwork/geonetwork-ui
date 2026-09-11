@@ -184,6 +184,11 @@ describe('app config utils', () => {
             'topic',
             'license',
           ],
+          GEOCODING_PROVIDER: 'geoplateforme',
+          GEOCODING_PROVIDER_OPTIONS: {
+            category: 'administratif',
+            limit: 5,
+          },
         })
       })
     })
@@ -245,6 +250,33 @@ describe('app config utils', () => {
     describe('getOptionalSearchConfig', () => {
       it('returns null', () => {
         expect(getOptionalSearchConfig()).toEqual(null)
+      })
+    })
+  })
+
+  describe('when the configuration file contains geocoding_provider', () => {
+    describe('when set without geocoding_provider_options', () => {
+      beforeEach(async () => {
+        fetchMock.get(
+          'end:default.toml',
+          () =>
+            minimalAppConfigFixture() +
+            `
+[search]
+geocoding_provider = "geoadmin"
+`
+        )
+        await loadAppConfig()
+      })
+
+      it('stores the provider in searchConfig', () => {
+        expect(getOptionalSearchConfig().GEOCODING_PROVIDER).toBe('geoadmin')
+      })
+
+      it('leaves the provider options undefined', () => {
+        expect(
+          getOptionalSearchConfig().GEOCODING_PROVIDER_OPTIONS
+        ).toBeUndefined()
       })
     })
   })
