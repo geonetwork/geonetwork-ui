@@ -55,7 +55,7 @@ export class OrganizationHeaderComponent {
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
 
   back() {
-    this.router.lastSuccessfulNavigation.previousNavigation
+    this.router.lastSuccessfulNavigation().previousNavigation
       ? this.location.back()
       : this.router.navigateByUrl('/organisations')
   }

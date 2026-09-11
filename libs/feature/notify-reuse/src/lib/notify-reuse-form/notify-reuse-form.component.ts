@@ -5,7 +5,7 @@ import {
   ScrollStrategyOptions,
 } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
-import { CommonModule, LocationStrategy } from '@angular/common'
+import { LocationStrategy } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -53,7 +53,6 @@ export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
   selector: 'gn-ui-notify-reuse-form',
   standalone: true,
   imports: [
-    CommonModule,
     OverlayModule,
     TextInputComponent,
     ButtonComponent,

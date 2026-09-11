@@ -1,32 +1,40 @@
-<ng-container [ngSwitch]="status$ | async">
-  <gn-ui-button
-    cdkOverlayOrigin
-    #actionMenuButton
-    *ngSwitchCase="'hasChanges'"
-    type="primary"
-    (buttonClick)="verifyPublishConditions()"
-    [matTooltip]="
-      'editor.record.publish' | translate: { recordKind: recordKind$ | async }
-    "
-  >
-    <ng-icon name="iconoirCloudUpload"></ng-icon>
-  </gn-ui-button>
-  <gn-ui-button *ngSwitchCase="'saving'" type="primary" [disabled]="true">
-    <mat-spinner [diameter]="16"></mat-spinner>
-  </gn-ui-button>
-  <gn-ui-button
-    cdkOverlayOrigin
-    #actionMenuButton
-    *ngSwitchCase="'upToDate'"
-    type="secondary"
-    [disabled]="true"
-    (buttonClick)="verifyPublishConditions()"
-    [matTooltip]="
-      'editor.record.upToDate' | translate: { recordKind: recordKind$ | async }
-    "
-  >
-    <ng-icon name="matCheckCircleOutline"></ng-icon>
-  </gn-ui-button>
+<ng-container>
+  @switch (status$ | async) {
+    @case ('hasChanges') {
+      <gn-ui-button
+        cdkOverlayOrigin
+        #actionMenuButton
+        type="primary"
+        (buttonClick)="verifyPublishConditions()"
+        [matTooltip]="
+          'editor.record.publish'
+            | translate: { recordKind: recordKind$ | async }
+        "
+      >
+        <ng-icon name="iconoirCloudUpload"></ng-icon>
+      </gn-ui-button>
+    }
+    @case ('saving') {
+      <gn-ui-button type="primary" [disabled]="true">
+        <mat-spinner [diameter]="16"></mat-spinner>
+      </gn-ui-button>
+    }
+    @case ('upToDate') {
+      <gn-ui-button
+        cdkOverlayOrigin
+        #actionMenuButton
+        type="secondary"
+        [disabled]="true"
+        (buttonClick)="verifyPublishConditions()"
+        [matTooltip]="
+          'editor.record.upToDate'
+            | translate: { recordKind: recordKind$ | async }
+        "
+      >
+        <ng-icon name="matCheckCircleOutline"></ng-icon>
+      </gn-ui-button>
+    }
+  }
   <ng-template #template>
     <div
       data-test="publish-warning"

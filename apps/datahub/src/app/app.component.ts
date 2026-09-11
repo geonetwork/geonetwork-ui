@@ -6,14 +6,14 @@ import {
 } from '@geonetwork-ui/util/shared'
 import { SearchRouterContainerDirective } from '@geonetwork-ui/feature/router'
 import { Router, RouterOutlet } from '@angular/router'
-import { CommonModule, ViewportScroller } from '@angular/common'
+import { ViewportScroller } from '@angular/common'
 
 @Component({
   selector: 'datahub-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterOutlet, SearchRouterContainerDirective],
+  imports: [RouterOutlet, SearchRouterContainerDirective],
 })
 export class AppComponent implements OnInit {
   private router = inject(Router)

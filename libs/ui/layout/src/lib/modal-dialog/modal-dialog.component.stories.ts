@@ -9,9 +9,15 @@ import { ModalDialogComponent } from './modal-dialog.component'
   selector: 'gn-ui-launcher',
   template: `
     <gn-ui-button (buttonClick)="launch()">Open</gn-ui-button>
-    <span *ngIf="confirmed === undefined">Waiting for a result</span>
-    <span *ngIf="confirmed">Confirmed</span>
-    <span *ngIf="confirmed === false">Canceled</span>
+    @if (confirmed === undefined) {
+      <span>Waiting for a result</span>
+    }
+    @if (confirmed) {
+      <span>Confirmed</span>
+    }
+    @if (confirmed === false) {
+      <span>Canceled</span>
+    }
   `,
   imports: [CommonModule, ButtonComponent],
 })

@@ -15,7 +15,7 @@ export class RecordHeaderService {
   metadata$ = new BehaviorSubject<CatalogRecord>(null)
 
   back(): void {
-    this.router.lastSuccessfulNavigation?.previousNavigation
+    this.router.lastSuccessfulNavigation()?.previousNavigation
       ? this.location.back()
       : this.router.navigateByUrl('/search')
   }

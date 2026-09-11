@@ -2,6 +2,7 @@ import {
   enableProdMode,
   importProvidersFrom,
   provideNgReflectAttributes,
+  provideZoneChangeDetection,
 } from '@angular/core'
 import { environment } from './environments/environment'
 import {
@@ -44,6 +45,7 @@ loadAppConfig().then(() => {
 
   bootstrapApplication(AppComponent, {
     providers: [
+      provideZoneChangeDetection(),
       importProvidersFrom([
         StoreModule.forRoot(
           {},

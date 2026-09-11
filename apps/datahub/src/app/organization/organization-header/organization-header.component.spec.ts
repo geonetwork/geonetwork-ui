@@ -62,13 +62,13 @@ describe('OrganizationHeaderComponent', () => {
 
   describe('#back', () => {
     it('should call the back function of Location if previous navigation', () => {
-      router.lastSuccessfulNavigation.previousNavigation = {} as any
+      router.lastSuccessfulNavigation().previousNavigation = {} as any
       component.back()
       expect(locationMock.back).toHaveBeenCalled()
     })
 
     it('should call the navigateByUrl function of Router to /organisations if no previous navigation', () => {
-      router.lastSuccessfulNavigation.previousNavigation = null
+      router.lastSuccessfulNavigation().previousNavigation = null
       component.back()
       expect(router.navigateByUrl).toHaveBeenCalledWith('/organisations')
     })
