@@ -11,6 +11,7 @@ import {
   MultilingualSearchField,
   OrganizationSearchField,
   OwnerSearchField,
+  ResourceCreationRevisionDateSearchField,
   ResourceTypeLegacyField,
   SimpleSearchField,
   TranslatedSearchField,
@@ -43,6 +44,7 @@ marker('search.filters.producerOrg')
 marker('search.filters.publisherOrg')
 marker('search.filters.user')
 marker('search.filters.changeDate')
+marker('search.filters.resourceCreationRevisionDate')
 marker('search.filters.spatialExtent')
 @Injectable({
   providedIn: 'root',
@@ -95,6 +97,10 @@ export class FieldsService {
     ),
     user: new UserSearchField(this.injector),
     changeDate: new DateRangeSearchField('changeDate', this.injector, 'desc'),
+    resourceCreationRevisionDate: new ResourceCreationRevisionDateSearchField(
+      this.injector,
+      'desc'
+    ),
     availableServices: new AvailableServicesField(this.injector),
     spatialExtent: new BoundingBoxSearchField('spatialExtent', this.injector),
   } as Record<string, AbstractSearchField>

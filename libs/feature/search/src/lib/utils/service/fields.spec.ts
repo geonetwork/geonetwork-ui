@@ -10,6 +10,7 @@ import {
   MultilingualSearchField,
   OrganizationSearchField,
   RecordKindField,
+  ResourceCreationRevisionDateSearchField,
   SimpleSearchField,
   TranslatedSearchField,
   UserSearchField,
@@ -432,6 +433,43 @@ describe('search fields implementations', () => {
         })
         it('returns the only value', () => {
           expect(values).toEqual({ start: new Date('2020-01-01') })
+        })
+      })
+    })
+  })
+
+  describe('ResourceCreationRevisionDateSearchField', () => {
+    beforeEach(() => {
+      searchField = new ResourceCreationRevisionDateSearchField(
+        injector,
+        'desc'
+      )
+    })
+    it('registers a date runtime field aggregating creation and revision dates', () => {
+      expect(esService.registerRuntimeField).toHaveBeenCalledWith(
+        'resourceCreationRevisionDate',
+        expect.any(String),
+        'date'
+      )
+    })
+    it('is of type dateRange', () => {
+      expect(searchField.getType()).toEqual('dateRange')
+    })
+    describe('#getFiltersForValues', () => {
+      let filter
+      beforeEach(async () => {
+        filter = await lastValueFrom(
+          searchField.getFiltersForValues([
+            { start: new Date('2020-01-01'), end: new Date('2020-12-31') },
+          ])
+        )
+      })
+      it('returns appropriate filters', () => {
+        expect(filter).toEqual({
+          resourceCreationRevisionDate: {
+            start: new Date('2020-01-01'),
+            end: new Date('2020-12-31'),
+          },
         })
       })
     })

@@ -381,6 +381,35 @@ describe('ElasticsearchService', () => {
         },
       })
     })
+    it('handles several simultaneous date range filters', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          changeDate: {
+            start: new Date('2019-01-01'),
+          },
+          otherDate: {
+            end: new Date('2020-12-31'),
+          },
+        },
+        {}
+      )
+      expect(query.bool.filter).toContainEqual({
+        range: {
+          changeDate: {
+            gte: '2019-01-01',
+            format: 'yyyy-MM-dd',
+          },
+        },
+      })
+      expect(query.bool.filter).toContainEqual({
+        range: {
+          otherDate: {
+            lte: '2020-12-31',
+            format: 'yyyy-MM-dd',
+          },
+        },
+      })
+    })
     it('add any and other fields query_strings and limit search payload by ids (also if id array is empty)', () => {
       const query = service['buildPayloadQuery'](
         {
@@ -1194,6 +1223,30 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
       })
       it('does not include the field in the query', () => {
         expect(query.runtime_mappings).toBeUndefined()
+      })
+    })
+    describe('when a date-typed runtime field is used in a range filter', () => {
+      beforeEach(() => {
+        service.registerRuntimeField('myDateField', 'emit(123)', 'date')
+        query = service.getSearchRequestBody(
+          undefined,
+          10,
+          0,
+          null,
+          undefined,
+          {
+            myDateField: {
+              start: new Date('2020-01-01'),
+              end: new Date('2020-12-31'),
+            },
+          }
+        )
+      })
+      it('includes the field as a date runtime mapping', () => {
+        expect(query.runtime_mappings.myDateField).toEqual({
+          script: 'emit(123)',
+          type: 'date',
+        })
       })
     })
   })

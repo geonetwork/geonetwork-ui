@@ -106,7 +106,7 @@ background_color = "#fdfbff"
 # spatial_extent_max_file_size = 2
 
 # The advanced search filters available to the user can be customized with this setting.
-# The following fields can be used for filtering: 'organization', 'format', 'publicationYear', 'standard', 'inspireKeyword', 'keyword', 'topic', 'isSpatial', 'license', 'resourceType', 'representationType', 'producerOrg', 'publisherOrg'
+# The following fields can be used for filtering: 'organization', 'format', 'publicationYear', 'standard', 'inspireKeyword', 'keyword', 'topic', 'isSpatial', 'license', 'resourceType', 'representationType', 'producerOrg', 'publisherOrg', 'changeDate', 'resourceCreationRevisionDate'
 # If not configured, the default values are 'organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license'
 # Note that some links in the datahub app set an 'organization' filter. So this field is needed to allow unsetting such filters.
 # WARNING: 'resourceType' filter has been deprecated, please use 'recordKind' instead. Breaking change: 'resourceType' filter won't retrieve featureCatalog anymore.

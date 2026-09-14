@@ -104,6 +104,7 @@ describe('FieldsService', () => {
           'publisherOrg',
           'user',
           'changeDate',
+          'resourceCreationRevisionDate',
           'availableServices',
           'spatialExtent',
         ])
@@ -192,9 +193,9 @@ describe('FieldsService', () => {
           publisherOrg: [],
           user: [],
           changeDate: [],
+          resourceCreationRevisionDate: [],
           availableServices: [],
           recordKind: [],
-          spatialExtent: [],
         })
       })
     })
@@ -204,6 +205,9 @@ describe('FieldsService', () => {
         expect(service.getFieldType('publicationYear')).toEqual('values')
         expect(service.getFieldType('format')).toEqual('values')
         expect(service.getFieldType('changeDate')).toEqual('dateRange')
+        expect(service.getFieldType('resourceCreationRevisionDate')).toEqual(
+          'dateRange'
+        )
         expect(service.getFieldType('spatialExtent')).toEqual('spatialExtent')
       })
     })

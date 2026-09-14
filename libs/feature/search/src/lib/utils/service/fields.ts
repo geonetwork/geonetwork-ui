@@ -435,6 +435,22 @@ export class DateRangeSearchField extends SimpleSearchField {
   }
 }
 
+export class ResourceCreationRevisionDateSearchField extends DateRangeSearchField {
+  constructor(injector: Injector, order: 'asc' | 'desc' = 'desc') {
+    super('resourceCreationRevisionDate', injector, order)
+    this.esService.registerRuntimeField(
+      'resourceCreationRevisionDate',
+      `if (doc.containsKey('creationDateForResource') && doc['creationDateForResource'].size() > 0) {
+  for (def date : doc['creationDateForResource']) { emit(date.millis); }
+}
+if (doc.containsKey('revisionDateForResource') && doc['revisionDateForResource'].size() > 0) {
+  for (def date : doc['revisionDateForResource']) { emit(date.millis); }
+}`,
+      'date'
+    )
+  }
+}
+
 export class BoundingBoxSearchField extends SimpleSearchField {
   getAvailableValues(): Observable<FieldAvailableValue[]> {
     return of([])
