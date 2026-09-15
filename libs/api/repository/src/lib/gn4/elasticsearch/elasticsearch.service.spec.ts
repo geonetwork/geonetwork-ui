@@ -410,6 +410,35 @@ describe('ElasticsearchService', () => {
         },
       })
     })
+    it('builds an interval-intersection query for a field with registered Min/Max runtime fields', () => {
+      service.registerRuntimeField('intervalDateMin', 'emit(1)', 'date')
+      service.registerRuntimeField('intervalDateMax', 'emit(2)', 'date')
+      const query = service['buildPayloadQuery'](
+        {
+          intervalDate: {
+            start: new Date('2026-03-15'),
+            end: new Date('2026-04-15'),
+          },
+        },
+        {}
+      )
+      expect(query.bool.filter).toContainEqual({
+        bool: {
+          filter: [
+            {
+              range: {
+                intervalDateMax: { gte: '2026-03-15', format: 'yyyy-MM-dd' },
+              },
+            },
+            {
+              range: {
+                intervalDateMin: { lte: '2026-04-15', format: 'yyyy-MM-dd' },
+              },
+            },
+          ],
+        },
+      })
+    })
     it('add any and other fields query_strings and limit search payload by ids (also if id array is empty)', () => {
       const query = service['buildPayloadQuery'](
         {
