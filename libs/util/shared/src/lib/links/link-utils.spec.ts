@@ -37,18 +37,22 @@ const mockWfsFeatureType = [
   {
     name: 'ft1',
     title: 'Feature Type 1',
+    abstract: 'Feature Type 1',
   },
   {
     name: 'ft2',
     title: 'Feature Type 2',
+    abstract: 'Feature Type 2',
   },
   {
     name: 'ft3',
     title: 'Feature Type 3',
+    abstract: 'Feature Type 3',
   },
   {
     name: 'fte',
     title: 'Feature Type Error',
+    abstract: 'Feature Type Error',
   },
 ]
 
@@ -69,7 +73,8 @@ jest.mock('@camptocamp/ogc-client', () => ({
           name,
           title: mockWfsFeatureType.find((layer) => layer.name === name)?.title,
           abstract: mockWfsFeatureType.find((layer) => layer.name === name)
-            ?.title,
+            ?.abstract,
+          defaultCrs: 'EPSG:4326',
         })
       }
     }
@@ -106,6 +111,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
         title: flattenWmsLayer.find((layer) => layer.name === name)?.title,
         abstract: flattenWmsLayer.find((layer) => layer.name === name)
           ?.abstract,
+        queryable: true,
       }
     }
   },
@@ -565,7 +571,7 @@ describe('link utils', () => {
       ])
     })
 
-    it('should return fulfilled WFS feature types', async () => {
+    it('should return WFS feature types brief descriptions without further querying', async () => {
       const layers = await getLayers('https://example.com', 'wfs')
       expect(layers).toEqual([
         {
@@ -583,10 +589,39 @@ describe('link utils', () => {
           title: 'Feature Type 3',
           abstract: 'Feature Type 3',
         },
+        {
+          name: 'fte',
+          title: 'Feature Type Error',
+          abstract: 'Feature Type Error',
+        },
       ])
     })
 
-    it('should return flattened WMS layers (filtered)', async () => {
+    it('should return fulfilled WFS feature types summary descriptions', async () => {
+      const layers = await getLayers('https://example.com', 'wfs', true)
+      expect(layers).toEqual([
+        {
+          name: 'ft1',
+          title: 'Feature Type 1',
+          abstract: 'Feature Type 1',
+          defaultCrs: 'EPSG:4326',
+        },
+        {
+          name: 'ft2',
+          title: 'Feature Type 2',
+          abstract: 'Feature Type 2',
+          defaultCrs: 'EPSG:4326',
+        },
+        {
+          name: 'ft3',
+          title: 'Feature Type 3',
+          abstract: 'Feature Type 3',
+          defaultCrs: 'EPSG:4326',
+        },
+      ])
+    })
+
+    it('should return flattened WMS layers (filtered) summary descriptions', async () => {
       const layers = await getLayers('https://example.com', 'wms')
       expect(layers).toEqual([
         {
@@ -603,6 +638,30 @@ describe('link utils', () => {
           name: 'wms-layer-2',
           title: 'WMS layer 2',
           abstract: 'WMS layer 2',
+        },
+      ])
+    })
+
+    it('should return flattened WMS layers (filtered) full descriptions', async () => {
+      const layers = await getLayers('https://example.com', 'wms', true)
+      expect(layers).toEqual([
+        {
+          name: 'wms-layer-1',
+          title: 'WMS layer 1',
+          abstract: 'WMS layer 1',
+          queryable: true,
+        },
+        {
+          name: 'wms-layer-1-1',
+          title: 'WMS layer 1 - 1',
+          abstract: 'WMS layer 1 - 1',
+          queryable: true,
+        },
+        {
+          name: 'wms-layer-2',
+          title: 'WMS layer 2',
+          abstract: 'WMS layer 2',
+          queryable: true,
         },
       ])
     })
