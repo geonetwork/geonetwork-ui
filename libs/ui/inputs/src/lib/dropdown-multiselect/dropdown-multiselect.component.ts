@@ -115,7 +115,7 @@ export class DropdownMultiselectComponent {
 
   private setFocus() {
     setTimeout(() => {
-      this.searchFieldInput.nativeElement.focus()
+      this.searchFieldInput?.nativeElement.focus()
     }, 0)
   }
 
