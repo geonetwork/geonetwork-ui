@@ -20,10 +20,13 @@
       </div>
     }
   </div>
-  <button class="h-6 w-6" data-test="dropdown-clear">
+  <button
+    class="h-6 w-6 flex items-center justify-center"
+    data-test="dropdown-clear"
+  >
     @if (hasSelectedChoices && !overlayOpen) {
       <ng-icon
-        class="shrink-0 opacity-40 mr-1.5 hover:opacity-80 transition-colors clear-btn"
+        class="shrink-0 opacity-40 hover:opacity-80 transition-colors clear-btn"
         (click)="clearSelection($event)"
         name="matClose"
       ></ng-icon>
@@ -61,13 +64,13 @@
     #overlayContainer
   >
     <div
-      class="border border-gray-300 rounded mb-2 mx-2 min-h-[44px] flex flex-row gap-[2px] flex-wrap p-2 focus-within:rounded focus-within:border-2 focus-within:border-primary"
+      class="border border-gray-300 rounded mb-2 mx-2 min-h-[44px] flex flex-row gap-1 flex-wrap p-2 focus-within:rounded focus-within:border-2 focus-within:border-primary"
     >
       @for (selected of selectedChoices; track selected) {
         <button
           type="button"
           [title]="selected.label"
-          class="max-w-full bg-main text-white rounded pr-[7px] flex gap-1 items-center opacity-70 hover:opacity-100 focus:opacity-100 transition-opacity mb-1"
+          class="max-w-full bg-main text-white rounded pr-[7px] flex gap-1 items-center opacity-70 hover:opacity-100 focus:opacity-100 transition-opacity"
           (click)="select(selected, false)"
         >
           <div class="text-sm truncate leading-[26px] px-2">

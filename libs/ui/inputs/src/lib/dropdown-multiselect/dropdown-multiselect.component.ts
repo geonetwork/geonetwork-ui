@@ -24,7 +24,7 @@ import {
   propagateToDocumentOnly,
 } from '@geonetwork-ui/util/shared'
 import { ButtonComponent } from '../button/button.component'
-import { NgIcon, provideIcons } from '@ng-icons/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { FormsModule } from '@angular/forms'
 import { TranslatePipe } from '@ngx-translate/core'
 
@@ -45,6 +45,9 @@ import {
       matClose,
       matExpandMore,
       matExpandLess,
+    }),
+    provideNgIconsConfig({
+      size: '1.5rem',
     }),
   ],
   standalone: true,
