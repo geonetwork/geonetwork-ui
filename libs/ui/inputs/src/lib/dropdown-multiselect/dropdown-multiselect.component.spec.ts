@@ -117,6 +117,24 @@ describe('DropdownMultiselectComponent', () => {
     })
   })
 
+  describe('when search is disabled', () => {
+    beforeEach(() => {
+      jest.useFakeTimers()
+      component.choices = [{ label: 'First Choice', value: 'choice1' }]
+      component.allowSearch = false
+      fixture.detectChanges()
+    })
+    afterEach(() => {
+      jest.useRealTimers()
+    })
+    it('opens the overlay without throwing', () => {
+      component.openOverlay()
+      fixture.detectChanges()
+      expect(() => jest.runAllTimers()).not.toThrow()
+      expect(component.overlayOpen).toBe(true)
+    })
+  })
+
   describe('keyboard events', () => {
     let triggerBtn: HTMLElement
 

@@ -24,7 +24,7 @@ import {
   propagateToDocumentOnly,
 } from '@geonetwork-ui/util/shared'
 import { ButtonComponent } from '../button/button.component'
-import { NgIcon, provideIcons } from '@ng-icons/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { FormsModule } from '@angular/forms'
 import { TranslatePipe } from '@ngx-translate/core'
 
@@ -46,19 +46,22 @@ import {
       matExpandMore,
       matExpandLess,
     }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
   ],
   standalone: true,
 })
-export class DropdownMultiselectComponent {
+export class DropdownMultiselectComponent<T = unknown> {
   private scrollStrategies = inject(ScrollStrategyOptions)
 
   @Input() title: string
-  @Input() choices: Choice[]
-  @Input() selected: unknown[] = []
+  @Input() choices: Choice<T>[]
+  @Input() selected: T[] = []
   @Input() allowSearch = true
   @Input() maxRows: number
   @Input() searchInputValue = ''
-  @Output() selectValues = new EventEmitter<unknown[]>()
+  @Output() selectValues = new EventEmitter<T[]>()
   @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
   @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay
   @ViewChild('overlayContainer', { read: ElementRef })
@@ -115,7 +118,7 @@ export class DropdownMultiselectComponent {
 
   private setFocus() {
     setTimeout(() => {
-      this.searchFieldInput.nativeElement.focus()
+      this.searchFieldInput?.nativeElement.focus()
     }, 0)
   }
 
@@ -194,18 +197,18 @@ export class DropdownMultiselectComponent {
     this.checkboxes.get(newIndex).nativeElement.focus()
   }
 
-  isSelected(choice: Choice) {
+  isSelected(choice: Choice<T>) {
     return this.selected.indexOf(choice.value) > -1
   }
 
-  select(choice: Choice, selected: boolean) {
+  select(choice: Choice<T>, selected: boolean) {
     this.selected = selected
       ? [...this.selected.filter((v) => v !== choice.value), choice.value]
       : this.selected.filter((v) => v !== choice.value)
     this.selectValues.emit(this.selected)
   }
 
-  toggle(choice: Choice) {
+  toggle(choice: Choice<T>) {
     this.select(choice, !this.isSelected(choice))
   }
 

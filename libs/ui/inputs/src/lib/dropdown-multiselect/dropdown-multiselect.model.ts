@@ -1,4 +1,4 @@
-export interface Choice {
-  value: unknown
+export interface Choice<T = unknown> {
+  value: T
   label: string
 }
