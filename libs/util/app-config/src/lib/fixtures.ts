@@ -62,7 +62,6 @@ label_key = 'myOrg.secondCustomFilter'
 main_label_json_pointer = '/properties/name/0'
 secondary_label_json_pointer = '/properties/citycode/0'
 tertiary_label_json_pointer = '/properties/category/1'
-geometry_string_json_pointer = '/properties/truegeometry'
 
 [[search_preset]]
 sort = "-createDate"
