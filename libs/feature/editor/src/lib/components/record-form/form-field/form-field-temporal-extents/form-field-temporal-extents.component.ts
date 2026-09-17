@@ -63,8 +63,8 @@ export class FormFieldTemporalExtentsComponent {
       .pipe(map((buttonLabel) => ({ buttonLabel, eventName: 'range' }))),
   ])
 
-  onItemsOrderChange(extents: unknown[]) {
-    this.extents = extents as DatasetTemporalExtent[]
+  onItemsOrderChange(extents: DatasetTemporalExtent[]) {
+    this.extents = extents
     this.emitValue()
   }
 

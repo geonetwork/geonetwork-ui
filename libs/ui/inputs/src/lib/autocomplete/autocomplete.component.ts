@@ -46,7 +46,7 @@ import {
 import { iconoirLongArrowDownLeft, iconoirSearch } from '@ng-icons/iconoir'
 import { matClose } from '@ng-icons/material-icons/baseline'
 
-export type AutocompleteItem = unknown
+export type AutocompleteItem<T = unknown> = T
 
 @Component({
   selector: 'gn-ui-autocomplete',
@@ -74,15 +74,15 @@ export type AutocompleteItem = unknown
     }),
   ],
 })
-export class AutocompleteComponent
+export class AutocompleteComponent<T = unknown>
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
   private cdRef = inject(ChangeDetectorRef)
 
   @Input() placeholder: string
   @Input() enterButton = false
-  @Input() action: (value: string) => Observable<AutocompleteItem[]>
-  @Input() value?: AutocompleteItem
+  @Input() action: (value: string) => Observable<T[]>
+  @Input() value?: T
   @Input() clearOnSelection = false
   @Input() preventCompleteOnSelection = false
   @Input() autoFocus = false
@@ -90,7 +90,7 @@ export class AutocompleteComponent
   // this will show a submit button next to the input; if false, a search icon will appear on the left
   @Input() allowSubmit = false
   @Input() forceTrackPosition = false
-  @Output() itemSelected = new EventEmitter<AutocompleteItem>()
+  @Output() itemSelected = new EventEmitter<T>()
   @Output() inputSubmitted = new EventEmitter<string>()
   @Output() inputCleared = new EventEmitter<void>()
   @Output() isSearchActive = new EventEmitter<boolean>()
@@ -104,21 +104,20 @@ export class AutocompleteComponent
   selectionSubject = new ReplaySubject<MatAutocompleteSelectedEvent>(1)
   lastInputValue$ = new ReplaySubject<string>(1)
   error: string | null = null
-  suggestions$: Observable<AutocompleteItem[]>
+  suggestions$: Observable<T[]>
   subscription = new Subscription()
   private lastPosition: DOMRect | null = null
   private intervalIdPosition: number | undefined
   enterBtnPosition = 0
   searchActive = false
 
-  @Input() displayWithFn: (item: AutocompleteItem) => string = (item) =>
-    item.toString()
+  @Input() displayWithFn: (item: T) => string = (item) => item.toString()
 
   get displayEnterBtn() {
     return this.enterButton && this.allowSubmit && !this.searchActive
   }
 
-  displayWithFnInternal = (item?: AutocompleteItem) => {
+  displayWithFnInternal = (item?: T) => {
     if (item === null || item === undefined) return null
     return this.displayWithFn(item)
   }
@@ -278,7 +277,7 @@ export class AutocompleteComponent
     }
   }
 
-  updateInputValue(value: AutocompleteItem) {
+  updateInputValue(value: T) {
     if (value) {
       this.control.setValue(value)
     }
