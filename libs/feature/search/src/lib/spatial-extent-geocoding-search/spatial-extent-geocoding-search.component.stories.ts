@@ -8,7 +8,7 @@ import { loadAppConfig } from '@geonetwork-ui/util/app-config'
 import { SpatialExtentGeocodingSearchComponent } from './spatial-extent-geocoding-search.component'
 import { GeocodingService } from '../geocoding/geocoding.service'
 
-// SpatialExtentGeocodingSearchComponent reads its JSONPath config from
+// SpatialExtentGeocodingSearchComponent reads its JSON Pointer config from
 // getOptionalSearchConfig(), which is only populated by loadAppConfig(); mock
 // fetch just for that call so the story actually exercises the secondary/
 // tertiary label rendering, instead of always falling back to the plain label.
@@ -29,9 +29,9 @@ secondary_color = "#c2e9dc"
 main_color = "#212029"
 background_color = "#fdfbff"
 
-[search.spatial_extent_service]
-secondary_label_jsonpath = '$.properties.category[1]'
-tertiary_label_jsonpath = '$.properties.citycode[0]'
+[search.geocoding_result_labels]
+secondary_label_json_pointer = '/properties/category/1'
+tertiary_label_json_pointer = '/properties/citycode/0'
 `),
     })) as unknown as typeof fetch
   await loadAppConfig().finally(() => {

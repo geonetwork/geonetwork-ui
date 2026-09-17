@@ -10,7 +10,7 @@ import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 import { LocationSearchComponent } from '../location-search/location-search.component'
 import {
   parseSpatialExtentResult,
-  SpatialExtentJsonPaths,
+  SpatialExtentJsonPointers,
 } from '../geocoding/spatial-extent-result.parser'
 
 @Component({
@@ -23,30 +23,30 @@ import {
 export class SpatialExtentGeocodingSearchComponent {
   @Output() bboxSelected = new EventEmitter<BoundingBox>()
 
-  private get jsonPaths(): SpatialExtentJsonPaths {
-    const config = getOptionalSearchConfig()?.SPATIAL_EXTENT_SERVICE
+  private get jsonPointers(): SpatialExtentJsonPointers {
+    const config = getOptionalSearchConfig()?.GEOCODING_RESULT_LABELS
     return {
-      mainLabel: config?.MAIN_LABEL_JSONPATH,
-      secondaryLabel: config?.SECONDARY_LABEL_JSONPATH,
-      tertiaryLabel: config?.TERTIARY_LABEL_JSONPATH,
-      geometry: config?.GEOMETRY_STRING_JSONPATH,
+      mainLabel: config?.MAIN_LABEL_JSON_POINTER,
+      secondaryLabel: config?.SECONDARY_LABEL_JSON_POINTER,
+      tertiaryLabel: config?.TERTIARY_LABEL_JSON_POINTER,
+      geometry: config?.GEOMETRY_STRING_JSON_POINTER,
     }
   }
 
   getSecondaryLabel(result: GeocodingResult): string | undefined {
-    return parseSpatialExtentResult(result, this.jsonPaths).secondaryLabel
+    return parseSpatialExtentResult(result, this.jsonPointers).secondaryLabel
   }
 
   getMainLabel(result: GeocodingResult): string {
     const { label, tertiaryLabel } = parseSpatialExtentResult(
       result,
-      this.jsonPaths
+      this.jsonPointers
     )
     return tertiaryLabel ? `${label}, ${tertiaryLabel}` : label
   }
 
   handleResultSelected(result: GeocodingResult) {
-    const { geom } = parseSpatialExtentResult(result, this.jsonPaths)
+    const { geom } = parseSpatialExtentResult(result, this.jsonPointers)
     if (!geom) return
     this.bboxSelected.emit(getGeometryBoundingBox(geom))
   }
