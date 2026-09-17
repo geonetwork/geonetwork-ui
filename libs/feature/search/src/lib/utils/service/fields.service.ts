@@ -45,7 +45,7 @@ marker('search.filters.publisherOrg')
 marker('search.filters.user')
 marker('search.filters.changeDate')
 marker('search.filters.resourceCreationRevisionDate')
-marker('search.filters.spatialExtent')
+marker('search.filters.spatialExtent.file')
 @Injectable({
   providedIn: 'root',
 })
@@ -102,7 +102,10 @@ export class FieldsService {
       'desc'
     ),
     availableServices: new AvailableServicesField(this.injector),
-    spatialExtent: new BoundingBoxSearchField('spatialExtent', this.injector),
+    'spatialExtent.file': new BoundingBoxSearchField(
+      'spatialExtent.file',
+      this.injector
+    ),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {

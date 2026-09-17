@@ -20,9 +20,9 @@ import { ButtonComponent } from '../button/button.component'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import {
   iconoirCheckCircle,
-  iconoirImport,
   iconoirSquareDashed,
   iconoirTrash,
+  iconoirUpload,
 } from '@ng-icons/iconoir'
 import {
   matClose,
@@ -35,6 +35,7 @@ import {
   BoundingBox,
   getGeometryBoundingBox,
   getGeometryFromGeoJSON,
+  isBoundingBoxWithinWorldExtent,
   propagateToDocumentOnly,
   readFileAsText,
 } from '@geonetwork-ui/util/shared'
@@ -46,6 +47,7 @@ import {
 marker('search.filters.spatialExtent.import')
 marker('search.filters.spatialExtent.helpText')
 marker('search.filters.spatialExtent.error.title')
+marker('search.filters.spatialExtent.error.outOfBounds')
 
 const LABEL_FROM_FILE = marker('search.filters.spatialExtent.bboxFromFile')
 const LABEL_FROM_FILE_DELETE = marker(
@@ -74,9 +76,9 @@ export interface SpatialExtentDropdownError {
   providers: [
     provideIcons({
       iconoirCheckCircle,
-      iconoirImport,
       iconoirSquareDashed,
       iconoirTrash,
+      iconoirUpload,
       matClose,
       matExpandLess,
       matExpandMore,
@@ -178,6 +180,10 @@ export class SpatialExtentDropdownComponent {
         return
       }
       const bbox = getGeometryBoundingBox(geometry)
+      if (!isBoundingBoxWithinWorldExtent(bbox)) {
+        this.setError(marker('search.filters.spatialExtent.error.outOfBounds'))
+        return
+      }
       this.bbox = bbox
       this.fileName = file.name
       this.bboxChange.emit(bbox)

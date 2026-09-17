@@ -106,7 +106,7 @@ describe('FieldsService', () => {
           'changeDate',
           'resourceCreationRevisionDate',
           'availableServices',
-          'spatialExtent',
+          'spatialExtent.file',
         ])
       })
     })
@@ -186,7 +186,7 @@ describe('FieldsService', () => {
           q: [],
           representationType: [],
           resourceType: [],
-          spatialExtent: [],
+          'spatialExtent.file': [],
           topic: [],
           owner: [],
           producerOrg: [],
@@ -208,7 +208,9 @@ describe('FieldsService', () => {
         expect(service.getFieldType('resourceCreationRevisionDate')).toEqual(
           'dateRange'
         )
-        expect(service.getFieldType('spatialExtent')).toEqual('spatialExtent')
+        expect(service.getFieldType('spatialExtent.file')).toEqual(
+          'spatialExtent'
+        )
       })
     })
   })
