@@ -128,13 +128,11 @@ background_color = "#fdfbff"
 # geocoding_provider_options.limit = 5
 
 # Optional; JSON Pointers (resolved against the geocoding result) used to derive the label
-# and geometry shown when searching by spatial extent. main_label_json_pointer and
-# geometry_string_json_pointer default to '/label' and '/geom'.
+# shown when searching by spatial extent. main_label_json_pointer defaults to '/label'.
 # [search.geocoding_result_labels]
 # main_label_json_pointer = "/label"
 # secondary_label_json_pointer = "/properties/citycode/0"
 # tertiary_label_json_pointer = "/properties/category/1"
-# geometry_string_json_pointer = "/geom"
 
 # One or several search presets visible in form of badges can be defined here; every search preset is composed of:
 # - a name (which can be a translation key)

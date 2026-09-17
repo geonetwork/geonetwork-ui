@@ -4,7 +4,6 @@ import { parseSpatialExtentResult } from './spatial-extent-result.parser'
 describe('parseSpatialExtentResult', () => {
   const pointers = {
     mainLabel: '/properties/name/0',
-    geometry: '/geom',
   }
 
   function buildResult(properties: Record<string, unknown>): GeocodingResult {
@@ -15,7 +14,7 @@ describe('parseSpatialExtentResult', () => {
     }
   }
 
-  it('overrides the label and geom using the configured JSON Pointers, resolved against properties', () => {
+  it('overrides the label using the configured JSON Pointer, resolved against properties, and leaves geom untouched', () => {
     const result = buildResult({
       name: ['Beaufort-sur-Doron'],
     })
