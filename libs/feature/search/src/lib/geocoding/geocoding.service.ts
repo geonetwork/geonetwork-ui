@@ -10,7 +10,6 @@ import {
 } from '@geospatial-sdk/geocoding'
 import { from, Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
-import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 
 type GeoadminGeocodingProvider = ['geoadmin', GeoadminOptions]
 type GeonamesGeocodingProvider = ['geonames', GeonamesOptions]
@@ -20,7 +19,7 @@ export type GeocodingProvider =
   | GeonamesGeocodingProvider
   | GeoplateformeGeocodingProvider
 
-const DEFAULT_GEOCODING_PROVIDER = [
+export const DEFAULT_GEOCODING_PROVIDER = [
   'geonames',
   { maxRows: 5 },
 ] as GeocodingProvider
@@ -29,16 +28,7 @@ export const GEOCODING_PROVIDER = new InjectionToken<GeocodingProvider>(
   'geocoding-provider',
   {
     providedIn: 'root',
-    factory: (): GeocodingProvider => {
-      const config = getOptionalSearchConfig()
-      if (!config?.GEOCODING_PROVIDER) {
-        return DEFAULT_GEOCODING_PROVIDER
-      }
-      return [
-        config.GEOCODING_PROVIDER,
-        config.GEOCODING_PROVIDER_OPTIONS ?? {},
-      ] as GeocodingProvider
-    },
+    factory: (): GeocodingProvider => DEFAULT_GEOCODING_PROVIDER,
   }
 )
 

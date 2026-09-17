@@ -5,17 +5,16 @@ import {
   queryGeonames,
   queryGeoplateforme,
 } from '@geospatial-sdk/geocoding'
-import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
-import { GEOCODING_PROVIDER, GeocodingService } from './geocoding.service'
+import {
+  DEFAULT_GEOCODING_PROVIDER,
+  GEOCODING_PROVIDER,
+  GeocodingService,
+} from './geocoding.service'
 
 jest.mock('@geospatial-sdk/geocoding', () => ({
   queryGeoadmin: jest.fn(),
   queryGeonames: jest.fn(),
   queryGeoplateforme: jest.fn(),
-}))
-
-jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getOptionalSearchConfig: jest.fn(),
 }))
 
 function setup(provider: unknown) {
@@ -74,24 +73,10 @@ describe('GeocodingService', () => {
 })
 
 describe('GEOCODING_PROVIDER default factory', () => {
-  function getProvider() {
+  it('defaults to geonames', () => {
     TestBed.configureTestingModule({})
-    return TestBed.inject(GEOCODING_PROVIDER)
-  }
-
-  it('defaults to geonames when no geocoding config is set', () => {
-    ;(getOptionalSearchConfig as jest.Mock).mockReturnValue(null)
-    expect(getProvider()).toEqual(['geonames', { maxRows: 5 }])
-  })
-
-  it('uses the configured provider and options', () => {
-    ;(getOptionalSearchConfig as jest.Mock).mockReturnValue({
-      GEOCODING_PROVIDER: 'geoplateforme',
-      GEOCODING_PROVIDER_OPTIONS: { category: 'hydrographie' },
-    })
-    expect(getProvider()).toEqual([
-      'geoplateforme',
-      { category: 'hydrographie' },
-    ])
+    expect(TestBed.inject(GEOCODING_PROVIDER)).toEqual(
+      DEFAULT_GEOCODING_PROVIDER
+    )
   })
 })
