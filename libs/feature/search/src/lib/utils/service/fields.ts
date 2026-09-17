@@ -435,17 +435,35 @@ export class DateRangeSearchField extends SimpleSearchField {
   }
 }
 
+// treats a resource's creation/revision dates as an interval (its min and max), so a record matches
+// when that interval intersects the filter range, not just when a single date falls inside it
 export class ResourceCreationRevisionDateSearchField extends DateRangeSearchField {
   constructor(injector: Injector, order: 'asc' | 'desc' = 'desc') {
     super('resourceCreationRevisionDate', injector, order)
+    const dateSourceFields = [
+      'creationDateForResource',
+      'revisionDateForResource',
+    ]
+    const collectSortedDates = dateSourceFields
+      .map(
+        (field) => `if (doc.containsKey('${field}')) {
+  for (def date : doc['${field}']) { dates.add(date.millis); }
+}`
+      )
+      .join('\n')
+
     this.esService.registerRuntimeField(
-      'resourceCreationRevisionDate',
-      `if (doc.containsKey('creationDateForResource') && doc['creationDateForResource'].size() > 0) {
-  for (def date : doc['creationDateForResource']) { emit(date.millis); }
-}
-if (doc.containsKey('revisionDateForResource') && doc['revisionDateForResource'].size() > 0) {
-  for (def date : doc['revisionDateForResource']) { emit(date.millis); }
-}`,
+      'resourceCreationRevisionDateMin',
+      `def dates = [];
+${collectSortedDates}
+if (dates.length > 0) { dates.sort(null); emit(dates[0]); }`,
+      'date'
+    )
+    this.esService.registerRuntimeField(
+      'resourceCreationRevisionDateMax',
+      `def dates = [];
+${collectSortedDates}
+if (dates.length > 0) { dates.sort(null); emit(dates[dates.length - 1]); }`,
       'date'
     )
   }

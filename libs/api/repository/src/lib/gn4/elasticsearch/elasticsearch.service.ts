@@ -293,6 +293,43 @@ export class ElasticsearchService {
     return Object.values(filters).find(isBoundingBox)
   }
 
+  // if a field registered min/max runtime fields, its dates form an interval
+  // the record matches if that interval intersects the filter range
+  private buildDateRangeQuery(searchField: string, dateRange: DateRange) {
+    const minField = `${searchField}Min`
+    const maxField = `${searchField}Max`
+    if (minField in this.runtimeFields && maxField in this.runtimeFields) {
+      const filter = [
+        dateRange.start && {
+          range: {
+            [maxField]: {
+              gte: formatDate(dateRange.start),
+              format: 'yyyy-MM-dd',
+            },
+          },
+        },
+        dateRange.end && {
+          range: {
+            [minField]: {
+              lte: formatDate(dateRange.end),
+              format: 'yyyy-MM-dd',
+            },
+          },
+        },
+      ].filter(Boolean)
+      return { bool: { filter } }
+    }
+    return {
+      range: {
+        [searchField]: {
+          ...(dateRange.start && { gte: formatDate(dateRange.start) }),
+          ...(dateRange.end && { lte: formatDate(dateRange.end) }),
+          format: 'yyyy-MM-dd',
+        },
+      },
+    }
+  }
+
   private filtersToQuery(
     filters: FieldFilters | FiltersAggregationParams | string,
     spatialFilterExtent = this.findSpatialFilterExtent(filters)
@@ -340,15 +377,9 @@ export class ElasticsearchService {
           query: queryString,
         },
       },
-      ...queryRanges.map(([searchField, dateRange]) => ({
-        range: {
-          [searchField]: {
-            ...(dateRange.start && { gte: formatDate(dateRange.start) }),
-            ...(dateRange.end && { lte: formatDate(dateRange.end) }),
-            format: 'yyyy-MM-dd',
-          },
-        },
-      })),
+      ...queryRanges.map(([searchField, dateRange]) =>
+        this.buildDateRangeQuery(searchField, dateRange)
+      ),
       spatialFilterExtent && {
         geo_shape: {
           geom: {

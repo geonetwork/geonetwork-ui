@@ -31,4 +31,11 @@ export type QueryGeoShape = {
     }
   }
 }
-export type FilterQuery = Array<QueryString | QueryRange | QueryGeoShape>
+export type QueryBool = {
+  bool: {
+    filter: QueryRange[]
+  }
+}
+export type FilterQuery = Array<
+  QueryString | QueryRange | QueryGeoShape | QueryBool
+>

@@ -445,9 +445,14 @@ describe('search fields implementations', () => {
         'desc'
       )
     })
-    it('registers a date runtime field aggregating creation and revision dates', () => {
+    it('registers date runtime fields for the min and max of creation/revision dates', () => {
       expect(esService.registerRuntimeField).toHaveBeenCalledWith(
-        'resourceCreationRevisionDate',
+        'resourceCreationRevisionDateMin',
+        expect.any(String),
+        'date'
+      )
+      expect(esService.registerRuntimeField).toHaveBeenCalledWith(
+        'resourceCreationRevisionDateMax',
         expect.any(String),
         'date'
       )
