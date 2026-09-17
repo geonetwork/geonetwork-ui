@@ -46,9 +46,9 @@ describe('SpatialExtentGeocodingSearchComponent', () => {
 
   beforeEach(async () => {
     ;(getOptionalSearchConfig as jest.Mock).mockReturnValue({
-      SPATIAL_EXTENT_SERVICE: {
-        SECONDARY_LABEL_JSONPATH: '$.properties.category[1]',
-        TERTIARY_LABEL_JSONPATH: '$.properties.citycode[0]',
+      GEOCODING_RESULT_LABELS: {
+        SECONDARY_LABEL_JSON_POINTER: '/properties/category/1',
+        TERTIARY_LABEL_JSON_POINTER: '/properties/citycode/0',
       },
     })
 
@@ -94,7 +94,7 @@ describe('SpatialExtentGeocodingSearchComponent', () => {
     expect(emitted).toHaveBeenCalledWith([6.771, 45.72, 6.771, 45.72])
   })
 
-  it('resolves the secondary and main labels using the configured JSONPaths', () => {
+  it('resolves the secondary and main labels using the configured JSON Pointers', () => {
     expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toEqual('commune')
     expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort, 73270')
   })

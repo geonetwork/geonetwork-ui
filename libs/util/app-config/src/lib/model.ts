@@ -65,11 +65,11 @@ export interface CustomSearchFilterField {
   labelKey?: string
 }
 
-export interface SpatialExtentServiceConfig {
-  MAIN_LABEL_JSONPATH?: string
-  SECONDARY_LABEL_JSONPATH?: string
-  TERTIARY_LABEL_JSONPATH?: string
-  GEOMETRY_STRING_JSONPATH?: string
+export interface GeocodingResultLabelsConfig {
+  MAIN_LABEL_JSON_POINTER?: string
+  SECONDARY_LABEL_JSON_POINTER?: string
+  TERTIARY_LABEL_JSON_POINTER?: string
+  GEOMETRY_STRING_JSON_POINTER?: string
 }
 
 export interface SearchConfig {
@@ -84,7 +84,7 @@ export interface SearchConfig {
   SPATIAL_EXTENT_MAX_FILE_SIZE?: number
   GEOCODING_PROVIDER?: GeocodingProviderName
   GEOCODING_PROVIDER_OPTIONS?: Record<string, string | number>
-  SPATIAL_EXTENT_SERVICE?: SpatialExtentServiceConfig
+  GEOCODING_RESULT_LABELS?: GeocodingResultLabelsConfig
 }
 
 export interface MetadataQualityConfig {
