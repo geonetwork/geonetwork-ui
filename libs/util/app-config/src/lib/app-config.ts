@@ -317,8 +317,6 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
                       parsedGeocodingResultLabels.secondary_label_json_pointer,
                     TERTIARY_LABEL_JSON_POINTER:
                       parsedGeocodingResultLabels.tertiary_label_json_pointer,
-                    GEOMETRY_STRING_JSON_POINTER:
-                      parsedGeocodingResultLabels.geometry_string_json_pointer,
                   }
                 : undefined,
             } as SearchConfig)

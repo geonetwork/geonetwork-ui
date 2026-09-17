@@ -29,7 +29,6 @@ export class SpatialExtentGeocodingSearchComponent {
       mainLabel: config?.MAIN_LABEL_JSON_POINTER,
       secondaryLabel: config?.SECONDARY_LABEL_JSON_POINTER,
       tertiaryLabel: config?.TERTIARY_LABEL_JSON_POINTER,
-      geometry: config?.GEOMETRY_STRING_JSON_POINTER,
     }
   }
 
@@ -46,8 +45,7 @@ export class SpatialExtentGeocodingSearchComponent {
   }
 
   handleResultSelected(result: GeocodingResult) {
-    const { geom } = parseSpatialExtentResult(result, this.jsonPointers)
-    if (!geom) return
-    this.bboxSelected.emit(getGeometryBoundingBox(geom))
+    if (!result.geom) return
+    this.bboxSelected.emit(getGeometryBoundingBox(result.geom))
   }
 }

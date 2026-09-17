@@ -211,7 +211,6 @@ describe('app config utils', () => {
             MAIN_LABEL_JSON_POINTER: '/properties/name/0',
             SECONDARY_LABEL_JSON_POINTER: '/properties/citycode/0',
             TERTIARY_LABEL_JSON_POINTER: '/properties/category/1',
-            GEOMETRY_STRING_JSON_POINTER: '/properties/truegeometry',
           },
         })
       })

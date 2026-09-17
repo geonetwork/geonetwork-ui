@@ -1,12 +1,10 @@
 import pointer from 'jsonpointer'
 import { GeocodingResult } from '@geospatial-sdk/geocoding'
-import { Geometry } from 'geojson'
 
 export interface SpatialExtentJsonPointers {
   mainLabel?: string
   secondaryLabel?: string
   tertiaryLabel?: string
-  geometry?: string
 }
 
 export interface SpatialExtentResult extends GeocodingResult {
@@ -15,7 +13,6 @@ export interface SpatialExtentResult extends GeocodingResult {
 }
 
 const DEFAULT_MAIN_LABEL_POINTER = '/label'
-const DEFAULT_GEOMETRY_POINTER = '/geom'
 
 function resolveJsonPointerAsString(
   json: object,
@@ -34,14 +31,9 @@ export function parseSpatialExtentResult(
     result,
     pointers.mainLabel ?? DEFAULT_MAIN_LABEL_POINTER
   )
-  const geom = pointer.get(
-    result,
-    pointers.geometry ?? DEFAULT_GEOMETRY_POINTER
-  )
   return {
     ...result,
     label: typeof label === 'string' && label ? label : result.label,
-    geom: (geom as Geometry) ?? result.geom,
     secondaryLabel: resolveJsonPointerAsString(result, pointers.secondaryLabel),
     tertiaryLabel: resolveJsonPointerAsString(result, pointers.tertiaryLabel),
   }

@@ -69,7 +69,6 @@ export interface GeocodingResultLabelsConfig {
   MAIN_LABEL_JSON_POINTER?: string
   SECONDARY_LABEL_JSON_POINTER?: string
   TERTIARY_LABEL_JSON_POINTER?: string
-  GEOMETRY_STRING_JSON_POINTER?: string
 }
 
 export interface SearchConfig {
