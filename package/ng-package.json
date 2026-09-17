@@ -28,6 +28,7 @@
     "embla-carousel",
     "flag-icons",
     "geojson-validation",
+    "jsonpointer",
     "marked",
     "ngx-dropzone",
     "ngx-translate-messageformat-compiler",

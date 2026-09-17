@@ -58,11 +58,11 @@ base_filter = 'keyword'
 include_values = ['my keyword 3', 'my keyword 4']
 label_key = 'myOrg.secondCustomFilter'
 
-[search.spatial_extent_service]
-main_label_jsonpath = '$.properties.name[0]'
-secondary_label_jsonpath = '$.properties.citycode[0]'
-tertiary_label_jsonpath = '$.properties.category[1]'
-geometry_string_jsonpath = '$.properties.truegeometry'
+[search.geocoding_result_labels]
+main_label_json_pointer = '/properties/name/0'
+secondary_label_json_pointer = '/properties/citycode/0'
+tertiary_label_json_pointer = '/properties/category/1'
+geometry_string_json_pointer = '/properties/truegeometry'
 
 [[search_preset]]
 sort = "-createDate"

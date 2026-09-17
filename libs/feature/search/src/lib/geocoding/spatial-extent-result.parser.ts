@@ -1,8 +1,8 @@
-import { JSONPath } from 'jsonpath-plus'
+import pointer from 'jsonpointer'
 import { GeocodingResult } from '@geospatial-sdk/geocoding'
 import { Geometry } from 'geojson'
 
-export interface SpatialExtentJsonPaths {
+export interface SpatialExtentJsonPointers {
   mainLabel?: string
   secondaryLabel?: string
   tertiaryLabel?: string
@@ -14,36 +14,35 @@ export interface SpatialExtentResult extends GeocodingResult {
   tertiaryLabel?: string
 }
 
-const DEFAULT_MAIN_LABEL_PATH = '$.label'
-const DEFAULT_GEOMETRY_PATH = '$.geom'
+const DEFAULT_MAIN_LABEL_POINTER = '/label'
+const DEFAULT_GEOMETRY_POINTER = '/geom'
 
-function resolveJsonPath(json: object, path: string): unknown {
-  return JSONPath({ path, json, wrap: false, eval: false })
-}
-
-function resolveJsonPathAsString(
+function resolveJsonPointerAsString(
   json: object,
   path?: string
 ): string | undefined {
   if (!path) return undefined
-  const value = resolveJsonPath(json, path)
+  const value = pointer.get(json, path)
   return typeof value === 'string' && value ? value : undefined
 }
 
 export function parseSpatialExtentResult(
   result: GeocodingResult,
-  paths: SpatialExtentJsonPaths
+  pointers: SpatialExtentJsonPointers
 ): SpatialExtentResult {
-  const label = resolveJsonPath(
+  const label = pointer.get(
     result,
-    paths.mainLabel ?? DEFAULT_MAIN_LABEL_PATH
+    pointers.mainLabel ?? DEFAULT_MAIN_LABEL_POINTER
   )
-  const geom = resolveJsonPath(result, paths.geometry ?? DEFAULT_GEOMETRY_PATH)
+  const geom = pointer.get(
+    result,
+    pointers.geometry ?? DEFAULT_GEOMETRY_POINTER
+  )
   return {
     ...result,
     label: typeof label === 'string' && label ? label : result.label,
     geom: (geom as Geometry) ?? result.geom,
-    secondaryLabel: resolveJsonPathAsString(result, paths.secondaryLabel),
-    tertiaryLabel: resolveJsonPathAsString(result, paths.tertiaryLabel),
+    secondaryLabel: resolveJsonPointerAsString(result, pointers.secondaryLabel),
+    tertiaryLabel: resolveJsonPointerAsString(result, pointers.tertiaryLabel),
   }
 }
