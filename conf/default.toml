@@ -120,8 +120,10 @@ background_color = "#fdfbff"
 # One of: 'geoadmin', 'geonames', 'geoplateforme'
 # geocoding_provider = "geoplateforme"
 
-# Optional; options passed to the selected geocoding provider (see @geospatial-sdk/geocoding
-# for the options supported by each provider).
+# Optional; options passed to the selected geocoding provider. See the GeoadminOptions,
+# GeonamesOptions and GeoplateformeOptions interfaces in the @geospatial-sdk/geocoding API
+# reference (https://camptocamp.github.io/geospatial-sdk/docs/api/) for the options supported
+# by each provider.
 # geocoding_provider_options.category = "administratif"
 # geocoding_provider_options.limit = 5
 

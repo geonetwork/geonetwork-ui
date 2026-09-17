@@ -213,6 +213,30 @@ For a detailed explanation on the classification system, see [this documentation
 
   If set to `true`, the two default pre-configured search badges ("The latest" and "The most popular") will not be shown under the main search bar. Defaults to `false`. Note that the "My favorites" badge cannot be disabled by configuration.
 
+- `geocoding_provider` (optional)
+
+  Selects the geocoding service used for location search (searching for a place name to move the map to). Defaults to `'geonames'`. One of:
+
+  - `'geoadmin'`: the [Swiss Federal Geoportal search service](https://api3.geo.admin.ch/services/sdiservices.html#search)
+  - `'geonames'`: the [GeoNames search webservice](http://www.geonames.org/export/geonames-search.html)
+  - `'geoplateforme'`: the [French IGN Géoplateforme geocoding service](https://cartes.gouv.fr/aide/fr/guides-utilisateur/utiliser-les-services-de-la-geoplateforme/geocodage/)
+
+- `geocoding_provider_options` (optional)
+
+  Options passed to the selected `geocoding_provider`; supported options depend on the provider, see the `@geospatial-sdk/geocoding` API reference:
+
+  - [`GeoadminOptions`](https://camptocamp.github.io/geospatial-sdk/docs/api/📦-geocoding/interfaces/GeoadminOptions.html)
+  - [`GeonamesOptions`](https://camptocamp.github.io/geospatial-sdk/docs/api/📦-geocoding/interfaces/GeonamesOptions.html)
+  - [`GeoplateformeOptions`](https://camptocamp.github.io/geospatial-sdk/docs/api/📦-geocoding/interfaces/GeoplateformeOptions.html)
+
+  For example:
+
+  ```toml
+  geocoding_provider = "geoplateforme"
+  geocoding_provider_options.category = "administratif"
+  geocoding_provider_options.limit = 5
+  ```
+
 - `[[search_preset]]` (multiple, optional)
 
   Search presets are shown in a prominent way in badges to the user and can be used to showcase certain records in the catalog or offer shortcuts to frequent search criteria.
