@@ -189,6 +189,11 @@ describe('app config utils', () => {
             category: 'administratif',
             limit: 5,
           },
+          GEOCODING_RESULT_LABELS: {
+            MAIN_LABEL_JSON_POINTER: '/properties/name/0',
+            SECONDARY_LABEL_JSON_POINTER: '/properties/citycode/0',
+            TERTIARY_LABEL_JSON_POINTER: '/properties/category/1',
+          },
         })
       })
     })

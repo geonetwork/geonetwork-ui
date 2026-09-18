@@ -255,6 +255,7 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
           'spatial_extent_max_file_size',
           'geocoding_provider',
           'geocoding_provider_options',
+          'geocoding_result_labels',
         ],
         warnings,
         errors
@@ -267,6 +268,10 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
         warnings,
         errors
       )
+      const parsedGeocodingResultLabels =
+        parsedSearchSection?.geocoding_result_labels as
+          | Record<string, string>
+          | undefined
       searchConfig =
         parsedSearchSection === null
           ? null
@@ -289,6 +294,16 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
               GEOCODING_PROVIDER: parsedSearchSection.geocoding_provider,
               GEOCODING_PROVIDER_OPTIONS:
                 parsedSearchSection.geocoding_provider_options,
+              GEOCODING_RESULT_LABELS: parsedGeocodingResultLabels
+                ? {
+                    MAIN_LABEL_JSON_POINTER:
+                      parsedGeocodingResultLabels.main_label_json_pointer,
+                    SECONDARY_LABEL_JSON_POINTER:
+                      parsedGeocodingResultLabels.secondary_label_json_pointer,
+                    TERTIARY_LABEL_JSON_POINTER:
+                      parsedGeocodingResultLabels.tertiary_label_json_pointer,
+                  }
+                : undefined,
             } as SearchConfig)
 
       const parsedMetadataQualitySection = parseConfigSection(

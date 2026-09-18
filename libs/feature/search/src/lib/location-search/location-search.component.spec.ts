@@ -6,10 +6,28 @@ import { firstValueFrom, of, throwError } from 'rxjs'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
+import { GeocodingResult } from '@geospatial-sdk/geocoding'
+import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 import { LocationSearchComponent } from './location-search.component'
 import { GeocodingService } from '../geocoding/geocoding.service'
 
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getOptionalSearchConfig: jest.fn(),
+}))
+
 const RESULTS = [{ label: 'Beaufort', geom: null }]
+
+const RESULT_WITH_ALL: GeocodingResult = {
+  label: 'Beaufort',
+  geom: { type: 'Point', coordinates: [6.771, 45.72] },
+  properties: { category: ['poi', 'commune'], citycode: ['73270'] },
+}
+
+const RESULT_WITHOUT_GEOM: GeocodingResult = {
+  label: 'Eurométropole de Strasbourg',
+  geom: null,
+  properties: { category: ['poi', 'epci'] },
+}
 
 @Component({
   imports: [LocationSearchComponent],
@@ -25,12 +43,27 @@ const RESULTS = [{ label: 'Beaufort', geom: null }]
 })
 class LocationSearchTemplateHostComponent {}
 
+@Component({
+  imports: [LocationSearchComponent],
+  standalone: true,
+  template: `
+    <gn-ui-location-search
+      (bboxSelected)="bboxSelected($event)"
+    ></gn-ui-location-search>
+  `,
+})
+class LocationSearchDefaultHostComponent {
+  bboxSelected = jest.fn()
+}
+
 describe('LocationSearchComponent', () => {
   let component: LocationSearchComponent
   let fixture: ComponentFixture<LocationSearchComponent>
   let geocodingService: GeocodingService
 
   beforeEach(async () => {
+    ;(getOptionalSearchConfig as jest.Mock).mockReturnValue(null)
+
     await TestBed.configureTestingModule({
       imports: [LocationSearchComponent, NoopAnimationsModule],
       providers: [
@@ -83,6 +116,41 @@ describe('LocationSearchComponent', () => {
     expect(selected).toHaveBeenCalledWith(RESULTS[0])
   })
 
+  it('does not emit bboxSelected when the selected result has no geometry', () => {
+    const emitted = jest.fn()
+    component.bboxSelected.subscribe(emitted)
+
+    component.handleItemSelected(RESULT_WITHOUT_GEOM)
+
+    expect(emitted).not.toHaveBeenCalled()
+  })
+
+  it('emits bboxSelected with the bounding box computed from the selected geometry', () => {
+    const emitted = jest.fn()
+    component.bboxSelected.subscribe(emitted)
+
+    component.handleItemSelected(RESULT_WITH_ALL)
+
+    expect(emitted).toHaveBeenCalledWith([6.771, 45.72, 6.771, 45.72])
+  })
+
+  it('resolves an undefined secondary label and the plain main label when no JSON Pointers are configured', () => {
+    expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toBeUndefined()
+    expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort')
+  })
+
+  it('resolves the secondary and main labels using the configured JSON Pointers', () => {
+    ;(getOptionalSearchConfig as jest.Mock).mockReturnValue({
+      GEOCODING_RESULT_LABELS: {
+        SECONDARY_LABEL_JSON_POINTER: '/properties/category/1',
+        TERTIARY_LABEL_JSON_POINTER: '/properties/citycode/0',
+      },
+    })
+
+    expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toEqual('commune')
+    expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort, 73270')
+  })
+
   it('forwards displayWithTemplate to the underlying autocomplete', () => {
     jest.useFakeTimers()
     const hostFixture = TestBed.createComponent(
@@ -100,5 +168,42 @@ describe('LocationSearchComponent', () => {
     const overlayContainer =
       TestBed.inject(OverlayContainer).getContainerElement()
     expect(overlayContainer.textContent).toContain('custom: Beaufort')
+  })
+
+  it('renders the default item template with secondary/main labels and emits the bbox on selection', () => {
+    ;(getOptionalSearchConfig as jest.Mock).mockReturnValue({
+      GEOCODING_RESULT_LABELS: {
+        SECONDARY_LABEL_JSON_POINTER: '/properties/category/1',
+        TERTIARY_LABEL_JSON_POINTER: '/properties/citycode/0',
+      },
+    })
+    ;(geocodingService.query as jest.Mock).mockReturnValue(
+      of([RESULT_WITH_ALL])
+    )
+    jest.useFakeTimers()
+    const hostFixture = TestBed.createComponent(
+      LocationSearchDefaultHostComponent
+    )
+    hostFixture.detectChanges()
+    const autocomplete = hostFixture.debugElement.query(
+      By.directive(AutocompleteComponent)
+    ).componentInstance as AutocompleteComponent
+    autocomplete.inputRef.nativeElement.value = 'bea'
+    autocomplete.inputRef.nativeElement.dispatchEvent(new InputEvent('input'))
+    jest.runOnlyPendingTimers()
+    hostFixture.detectChanges()
+
+    const overlayContainer =
+      TestBed.inject(OverlayContainer).getContainerElement()
+    expect(overlayContainer.textContent).toContain('commune')
+    expect(overlayContainer.textContent).toContain('Beaufort, 73270')
+
+    autocomplete.handleSelection({
+      option: { value: RESULT_WITH_ALL },
+    } as never)
+
+    expect(hostFixture.componentInstance.bboxSelected).toHaveBeenCalledWith([
+      6.771, 45.72, 6.771, 45.72,
+    ])
   })
 })

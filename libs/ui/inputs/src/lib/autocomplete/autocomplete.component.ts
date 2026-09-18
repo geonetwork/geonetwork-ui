@@ -134,13 +134,13 @@ export class AutocompleteComponent
   getExtraClass(): string {
     if (this.allowSubmit) {
       if (this.enterButton) {
-        return 'border rounded-lg absolute w-8 h-8 right-[calc(var(--icon-width)+var(--icon-padding))] inset-y-[--icon-padding]'
+        return 'border rounded-lg absolute w-8 h-8 right-[calc(var(--icon-width)+var(--icon-padding))] top-1/2 -translate-y-1/2'
       } else {
-        return 'border rounded-lg absolute w-8 h-8 right-[calc(var(--icon-width)+0.25*var(--icon-width))] inset-y-[calc(0.25*var(--icon-width))]'
+        return 'border rounded-lg absolute w-8 h-8 right-[calc(var(--icon-width)+0.25*var(--icon-width))] top-1/2 -translate-y-1/2'
       }
     } else {
       if (!this.enterButton) {
-        return 'border rounded-lg absolute w-8 h-8 right-2 inset-y-2'
+        return 'border rounded-lg absolute w-8 h-8 right-2 top-1/2 -translate-y-1/2'
       }
     }
     return 'border rounded-lg absolute w-8 h-8'

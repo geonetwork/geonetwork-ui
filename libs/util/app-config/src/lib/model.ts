@@ -57,6 +57,12 @@ export interface SearchPreset {
 
 export type GeocodingProviderName = 'geoadmin' | 'geonames' | 'geoplateforme'
 
+export interface GeocodingResultLabelsConfig {
+  MAIN_LABEL_JSON_POINTER?: string
+  SECONDARY_LABEL_JSON_POINTER?: string
+  TERTIARY_LABEL_JSON_POINTER?: string
+}
+
 export interface SearchConfig {
   RECORD_KIND_QUICK_FILTER?: boolean
   FILTER_GEOMETRY_URL?: string
@@ -68,6 +74,7 @@ export interface SearchConfig {
   SPATIAL_EXTENT_MAX_FILE_SIZE?: number
   GEOCODING_PROVIDER?: GeocodingProviderName
   GEOCODING_PROVIDER_OPTIONS?: Record<string, string | number>
+  GEOCODING_RESULT_LABELS?: GeocodingResultLabelsConfig
 }
 
 export interface MetadataQualityConfig {
