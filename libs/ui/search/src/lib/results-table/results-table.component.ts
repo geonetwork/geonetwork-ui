@@ -184,27 +184,27 @@ export class ResultsTableComponent {
     return getBadgeColor(format)
   }
 
-  handleRecordClick(item: unknown) {
-    this.canEdit(item as CatalogRecord)
+  handleRecordClick(item: CatalogRecord) {
+    this.canEdit(item)
       .pipe(take(1))
       .subscribe((canEdit) => {
         if (canEdit) {
-          this.recordClick.emit(item as CatalogRecord)
+          this.recordClick.emit(item)
         }
       })
   }
 
-  handleDuplicate(item: unknown) {
-    this.duplicateRecord.emit(item as CatalogRecord)
+  handleDuplicate(item: CatalogRecord) {
+    this.duplicateRecord.emit(item)
   }
 
-  handleDelete(item: unknown) {
-    this.deleteRecord.emit(item as CatalogRecord)
+  handleDelete(item: CatalogRecord) {
+    this.deleteRecord.emit(item)
     this.closeActionMenu()
   }
 
-  handleRollback(item: unknown) {
-    this.rollbackDraft.emit(item as CatalogRecord)
+  handleRollback(item: CatalogRecord) {
+    this.rollbackDraft.emit(item)
     this.closeActionMenu()
   }
 

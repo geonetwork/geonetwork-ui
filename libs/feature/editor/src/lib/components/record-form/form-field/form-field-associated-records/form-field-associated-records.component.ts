@@ -56,7 +56,7 @@ export class FormFieldAssociatedRecordsComponent {
   get selectedType() {
     return this.first?.associationType
   }
-  get choices(): DropdownChoice[] {
+  get choices(): DropdownChoice<AssociationType>[] {
     return associationTypeValues.map((value) => ({
       value,
       label: `domain.record.associationType.${value}`,
@@ -85,10 +85,7 @@ export class FormFieldAssociatedRecordsComponent {
     )
   }
 
-  onTypeChange(associationType: DropdownChoice['value']) {
-    this.valueChange.emit([
-      { ...this.first, associationType: associationType as AssociationType },
-      ...this.rest,
-    ])
+  onTypeChange(associationType: AssociationType) {
+    this.valueChange.emit([{ ...this.first, associationType }, ...this.rest])
   }
 }
