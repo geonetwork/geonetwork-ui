@@ -65,7 +65,7 @@
     "@geospatial-sdk/openlayers": "0.0.5-dev.78",
     "@ltd/j-toml": "~1.38.0",
     "@messageformat/core": "~3.4.0",
-    "@ng-icons/core": "~32.5.0",
+    "@ng-icons/core": "~36.0.0",
     "@ng-icons/iconoir": "~32.5.0",
     "@ng-icons/material-icons": "~32.5.0",
     "@ng-icons/tabler-icons": "~32.4.0",
