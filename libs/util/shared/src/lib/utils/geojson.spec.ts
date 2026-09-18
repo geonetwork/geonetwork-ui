@@ -3,6 +3,7 @@ import {
   getGeometryBoundingBox,
   getGeometryFromGeoJSON,
   isBoundingBox,
+  isBoundingBoxWithinWorldExtent,
   spatialExtentsToFeatureCollection,
   spatialExtentToGeometry,
 } from './geojson'
@@ -178,6 +179,18 @@ describe('geojson utils', () => {
     })
     it('returns false for a non-array value', () => {
       expect(isBoundingBox({ start: 0, end: 1 })).toBe(false)
+    })
+  })
+
+  describe('isBoundingBoxWithinWorldExtent', () => {
+    it('returns true for a bounding box within world bounds', () => {
+      expect(isBoundingBoxWithinWorldExtent([-180, -90, 180, 90])).toBe(true)
+    })
+    it('returns false when the longitude exceeds -180/180', () => {
+      expect(isBoundingBoxWithinWorldExtent([-181, -10, 10, 10])).toBe(false)
+    })
+    it('returns false when the latitude exceeds -90/90', () => {
+      expect(isBoundingBoxWithinWorldExtent([-10, -10, 10, 91])).toBe(false)
     })
   })
 

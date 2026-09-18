@@ -58,7 +58,7 @@
       [class]="
         (hasSelection
           ? 'border-b-[1px] border-gray-400 pb-[20px]'
-          : 'pb-[8px]') + ' text-black'
+          : 'pb-[12px]') + ' text-black'
       "
     >
       <gn-ui-drag-and-drop-file-input
@@ -68,7 +68,7 @@
         [showFileName]="false"
         textClass="text-black truncate"
         dropzoneBackgroundColor="transparent"
-        icon="iconoirImport"
+        icon="iconoirUpload"
         extraClass="gn-ui-gray-outline-input w-full !h-[32px] px-[8px] py-[4px] justify-between"
         (fileChange)="handleFileSelected($event)"
         (errorChange)="handleFileError($event)"

@@ -154,6 +154,28 @@ describe('SpatialExtentDropdownComponent', () => {
       expect(component.hasSelection).toBe(false)
     })
 
+    it('rejects a GeoJSON file whose geometry exceeds world bounds', async () => {
+      const content = JSON.stringify({
+        type: 'Polygon',
+        coordinates: [
+          [
+            [0, 0],
+            [0, 91],
+            [1, 91],
+            [1, 0],
+            [0, 0],
+          ],
+        ],
+      })
+
+      await component.handleFileSelected(createFile(content, 'area.geojson'))
+
+      expect(component.errorKey).toBe(
+        'search.filters.spatialExtent.error.outOfBounds'
+      )
+      expect(component.hasSelection).toBe(false)
+    })
+
     it('accepts a valid GeoJSON file and emits its bounding box', async () => {
       const content = JSON.stringify({
         type: 'Polygon',

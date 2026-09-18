@@ -46,6 +46,22 @@ export function isBoundingBox(value: unknown): value is BoundingBox {
   )
 }
 
+/**
+ * Checks that a bounding box's coordinates stay within the valid
+ * longitude (-180/180) and latitude (-90/90) ranges.
+ */
+export function isBoundingBoxWithinWorldExtent(bbox: BoundingBox): boolean {
+  const [minX, minY, maxX, maxY] = bbox
+  return (
+    minX >= -180 &&
+    maxX <= 180 &&
+    minY >= -90 &&
+    maxY <= 90 &&
+    minX <= maxX &&
+    minY <= maxY
+  )
+}
+
 export function getGeometryBoundingBox(geometry: Geometry): BoundingBox {
   // use the bounding box if specified in the GeoJSON object
   if (geometry.bbox) {
