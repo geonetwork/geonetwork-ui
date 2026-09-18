@@ -445,7 +445,7 @@ describe('datasets', () => {
     openSpatialExtentDropdown()
     cy.get('[data-test="spatial-extent-selected-item"]').should(
       'contain.text',
-      'Pre-selected Extent'
+      'Pre-selected extent'
     )
     cy.screenshot({ capture: 'viewport' })
 
