@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    ignore:
+      # Angular and Nx packages must be upgraded together via `nx migrate`,
+      # not as individual dependabot bumps. List derived from `npx nx report`
+      # (installed @nx/* plugins and community plugins @ngrx/*, @storybook/angular).
+      - dependency-name: '@angular/*'
+      - dependency-name: '@angular-devkit/*'
+      - dependency-name: '@schematics/angular'
+      - dependency-name: '@ngrx/*'
+      - dependency-name: '@nx/*'
+      - dependency-name: 'nx'
+      - dependency-name: 'storybook'
+      - dependency-name: '@storybook/*'
