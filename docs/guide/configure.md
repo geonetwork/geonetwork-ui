@@ -277,6 +277,17 @@ label_key = 'myOrg.secondCustomFilter'
   geocoding_provider_options.limit = 5
   ```
 
+- `[search.geocoding_result_labels]` (optional)
+
+  JSON Pointers (resolved against a geocoding result) used to derive the label shown when searching by spatial extent. `main_label_json_pointer` defaults to `/label`.
+
+  ```toml
+  [search.geocoding_result_labels]
+  main_label_json_pointer = "/label"
+  secondary_label_json_pointer = "/properties/citycode/0"
+  tertiary_label_json_pointer = "/properties/category/1"
+  ```
+
 - `[[search_preset]]` (multiple, optional)
 
   Search presets are shown in a prominent way in badges to the user and can be used to showcase certain records in the catalog or offer shortcuts to frequent search criteria.
