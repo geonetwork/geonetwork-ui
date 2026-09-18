@@ -192,7 +192,7 @@ describe('datasets', () => {
         'representationType',
         'producerOrg',
         'publisherOrg',
-        'spatialExtent.file',
+        'spatialExtent',
       ])
     cy.screenshot({ capture: 'viewport' })
 
@@ -372,7 +372,7 @@ describe('datasets', () => {
   it('should filter the results on a geometry and on a spatial extent', () => {
     const geojsonFile = 'src/fixtures/spatial-extent-rhone-valley.geojson'
     // bbox of the polygon held by the fixture above
-    const bboxSearchParam = 'spatialExtent.file=7.5,46.1,7.8,46.3'
+    const bboxSearchParam = 'spatialExtent=7.5,46.1,7.8,46.3'
     // record whose spatial extent intersects the bbox of the fixture
     const rhoneRecordUuid = 'a8b5e6c0-c21d-4c32-b8f9-10830215890a'
 
@@ -385,7 +385,7 @@ describe('datasets', () => {
     const expectNoSpatialExtentInUrl = () =>
       cy
         .location('search')
-        .should((search) => expect(search).not.to.contain('spatialExtent.file'))
+        .should((search) => expect(search).not.to.contain('spatialExtent'))
 
     // Filter by geometry
     // this will enable spatial filtering

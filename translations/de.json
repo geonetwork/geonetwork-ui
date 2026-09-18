@@ -700,7 +700,7 @@
   "search.filters.spatialExtent.error.noGeometry": "",
   "search.filters.spatialExtent.error.outOfBounds": "",
   "search.filters.spatialExtent.error.title": "",
-  "search.filters.spatialExtent.file": "",
+  "search.filters.spatialExtent": "",
   "search.filters.spatialExtent.helpText": "",
   "search.filters.spatialExtent.import": "",
   "search.filters.standard": "Standard",

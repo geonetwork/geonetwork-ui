@@ -700,7 +700,7 @@
   "search.filters.spatialExtent.error.noGeometry": "Aucune géométrie n'a pu être trouvée dans le fichier",
   "search.filters.spatialExtent.error.outOfBounds": "La géométrie du fichier GeoJSON n'est pas conforme ; soit certaines coordonnées sont hors limites ([-180, 180] pour la longitude et [-90, 90] pour la latitude), soit le fichier utilise des coordonnées projetées au lieu de la longitude et de la latitude.",
   "search.filters.spatialExtent.error.title": "Erreur d'importation GeoJSON",
-  "search.filters.spatialExtent.file": "Étendue spatiale",
+  "search.filters.spatialExtent": "Étendue spatiale",
   "search.filters.spatialExtent.helpText": "L'étendue de la géométrie sélectionnée sera utilisée",
   "search.filters.spatialExtent.import": "Importer un GeoJSON",
   "search.filters.standard": "Standard",
