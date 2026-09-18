@@ -3,14 +3,18 @@ import { firstValueFrom } from 'rxjs'
 import {
   queryGeoadmin,
   queryGeonames,
-  queryDataGouvFr,
+  queryGeoplateforme,
 } from '@geospatial-sdk/geocoding'
-import { GEOCODING_PROVIDER, GeocodingService } from './geocoding.service'
+import {
+  DEFAULT_GEOCODING_PROVIDER,
+  GEOCODING_PROVIDER,
+  GeocodingService,
+} from './geocoding.service'
 
 jest.mock('@geospatial-sdk/geocoding', () => ({
   queryGeoadmin: jest.fn(),
   queryGeonames: jest.fn(),
-  queryDataGouvFr: jest.fn(),
+  queryGeoplateforme: jest.fn(),
 }))
 
 function setup(provider: unknown) {
@@ -47,13 +51,15 @@ describe('GeocodingService', () => {
     expect(response).toEqual(results)
   })
 
-  it('queries the data-gouv-fr provider with the given options', async () => {
-    ;(queryDataGouvFr as jest.Mock).mockResolvedValue(results)
-    const service = setup(['data-gouv-fr', { limit: 5 }])
+  it('queries the geoplateforme provider with the given options', async () => {
+    ;(queryGeoplateforme as jest.Mock).mockResolvedValue(results)
+    const service = setup(['geoplateforme', { limit: 5 }])
 
     const response = await firstValueFrom(service.query('beaufort'))
 
-    expect(queryDataGouvFr).toHaveBeenCalledWith('beaufort', { limit: 5 })
+    expect(queryGeoplateforme).toHaveBeenCalledWith('beaufort', {
+      limit: 5,
+    })
     expect(response).toEqual(results)
   })
 
@@ -62,6 +68,15 @@ describe('GeocodingService', () => {
 
     await expect(firstValueFrom(service.query('beaufort'))).rejects.toThrow(
       'Unsupported geocoding provider: unknown'
+    )
+  })
+})
+
+describe('GEOCODING_PROVIDER default factory', () => {
+  it('defaults to geonames', () => {
+    TestBed.configureTestingModule({})
+    expect(TestBed.inject(GEOCODING_PROVIDER)).toEqual(
+      DEFAULT_GEOCODING_PROVIDER
     )
   })
 })

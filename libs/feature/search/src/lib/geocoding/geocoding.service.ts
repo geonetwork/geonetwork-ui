@@ -5,25 +5,30 @@ import {
   GeocodingResult,
   queryGeonames,
   GeonamesOptions,
-  DataGouvFrOptions,
-  queryDataGouvFr,
+  GeoplateformeOptions,
+  queryGeoplateforme,
 } from '@geospatial-sdk/geocoding'
 import { from, Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 
 type GeoadminGeocodingProvider = ['geoadmin', GeoadminOptions]
 type GeonamesGeocodingProvider = ['geonames', GeonamesOptions]
-type DataGouvFrGeocodingProvider = ['data-gouv-fr', DataGouvFrOptions]
+type GeoplateformeGeocodingProvider = ['geoplateforme', GeoplateformeOptions]
 export type GeocodingProvider =
   | GeoadminGeocodingProvider
   | GeonamesGeocodingProvider
-  | DataGouvFrGeocodingProvider
+  | GeoplateformeGeocodingProvider
+
+export const DEFAULT_GEOCODING_PROVIDER = [
+  'geonames',
+  { maxRows: 5 },
+] as GeocodingProvider
 
 export const GEOCODING_PROVIDER = new InjectionToken<GeocodingProvider>(
   'geocoding-provider',
   {
     providedIn: 'root',
-    factory: () => ['geonames', { maxRows: 5 }] as GeocodingProvider,
+    factory: (): GeocodingProvider => DEFAULT_GEOCODING_PROVIDER,
   }
 )
 
@@ -46,9 +51,9 @@ export class GeocodingService {
           queryGeonames(text, this.provider[1] as GeonamesOptions)
         )
         break
-      case 'data-gouv-fr':
+      case 'geoplateforme':
         queryObservable = from(
-          queryDataGouvFr(text, this.provider[1] as DataGouvFrOptions)
+          queryGeoplateforme(text, this.provider[1] as GeoplateformeOptions)
         )
         break
       default:
