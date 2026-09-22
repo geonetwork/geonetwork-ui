@@ -204,10 +204,46 @@ The filters should be provided as an array, for instance:
 advanced_filters = ['organization', 'inspireKeyword', 'keyword', 'topic']
 ```
 
+An entry holding a prefix (e.g. `'ign:myFilter'`) does not refer to a search field but to a custom filter,
+which has to be declared in a `[[custom_filter]]` section (see below); entries without a matching
+`[[custom_filter]]` section are ignored.
+
 ⚠️ **WARNING**: `'resourceType'` filter has been deprecated, please use `'recordKind'` instead. Using both filters is not recommended as it may imply some inconsistencies in the page results. `'resourceType'` filter will fetch records of all type (instead of `featureCatalog`), whereas `'recordKind'` filter will fetch `datasets` (wich are `datasets`, `featureCatalog` that are `datasets`, and `series`), `services` and `reuse` (`application` and all kind of `map`).
 For a detailed explanation on the classification system, see [this documentation page](../guide/record-kind.md).
 
 ⚠️ **Breaking change**: Record of type featureCatalog are not retrieved anymore.
+
+- `[[custom_filter]]` (multiple, optional)
+
+  Custom filters allow customizing default search filters by changing some parameters to them.
+  They can be referenced by their name in the `advanced_filters` setting of the `[search]` section.
+
+  Every custom filter is composed of:
+
+  - `name` (mandatory): name of the filter as it should appear in the `advanced_filters` setting; custom filters must have a prefix separated by a colon in their name, e.g.: "myOrg:myOrgKeywords"; case sensitive
+  - `base_filter` (mandatory): the search field the filter is based on; only `'keyword'` is supported for now
+  - `label_key` (optional): a translation key used as the label of the filter; it can be defined in the
+    `[translations]` sections. Defaults to the label of the base filter.
+
+  For instance:
+
+```toml
+advanced_filters = ['organization', 'ign:firstCustomFilter', 'ign:secondCustomFilter']
+
+[[custom_filter]]
+name = 'ign:firstCustomFilter'
+base_filter = 'keyword'
+label_key = 'ign.firstCustomFilter'
+
+[[custom_filter]]
+name = 'ign:secondCustomFilter'
+base_filter = 'keyword'
+label_key = 'ign.secondCustomFilter'
+
+[translations.en]
+'ign.firstCustomFilter' = 'My first filter'
+'ign.secondCustomFilter' = 'My second filter'
+```
 
 - `do_not_use_default_search_preset` (optional)
 

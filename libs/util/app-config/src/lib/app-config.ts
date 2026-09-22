@@ -267,6 +267,14 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
         warnings,
         errors
       )
+      const parsedCustomFilters = parseMultiConfigSection(
+        parsed,
+        'custom_filter',
+        ['name', 'base_filter'],
+        ['label_key'],
+        warnings,
+        errors
+      )
       searchConfig =
         parsedSearchSection === null
           ? null
@@ -283,6 +291,11 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
                 filters: param.filters,
               })),
               ADVANCED_FILTERS: parsedSearchSection.advanced_filters,
+              CUSTOM_FILTERS: parsedCustomFilters.map((customFilter) => ({
+                name: customFilter.name,
+                baseFilter: customFilter.base_filter,
+                labelKey: customFilter.label_key,
+              })),
               LIMIT: parsedSearchSection.limit,
               SPATIAL_EXTENT_MAX_FILE_SIZE:
                 parsedSearchSection.spatial_extent_max_file_size,

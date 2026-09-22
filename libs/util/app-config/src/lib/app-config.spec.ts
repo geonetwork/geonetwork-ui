@@ -183,6 +183,20 @@ describe('app config utils', () => {
             'inspireKeyword',
             'topic',
             'license',
+            'ign:firstCustomFilter',
+            'ign:secondCustomFilter',
+          ],
+          CUSTOM_FILTERS: [
+            {
+              name: 'ign:firstCustomFilter',
+              baseFilter: 'keyword',
+              labelKey: 'ign.firstCustomFilter',
+            },
+            {
+              name: 'ign:secondCustomFilter',
+              baseFilter: 'keyword',
+              labelKey: 'ign.secondCustomFilter',
+            },
           ],
           GEOCODING_PROVIDER: 'geoplateforme',
           GEOCODING_PROVIDER_OPTIONS: {
