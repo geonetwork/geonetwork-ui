@@ -49,11 +49,13 @@ advanced_filters = ['publicationYear', 'documentStandard', 'inspireKeyword', 'to
 [[custom_filter]]
 name = 'ign:firstCustomFilter'
 base_filter = 'keyword'
+exclude_values = ['my keyword 1', 'my keyword 2']
 label_key = 'ign.firstCustomFilter'
 
 [[custom_filter]]
 name = 'ign:secondCustomFilter'
 base_filter = 'keyword'
+include_values = ['my keyword 3', 'my keyword 4']
 label_key = 'ign.secondCustomFilter'
 
 [[search_preset]]

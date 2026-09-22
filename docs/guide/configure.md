@@ -222,6 +222,9 @@ For a detailed explanation on the classification system, see [this documentation
 
   - `name` (mandatory): name of the filter as it should appear in the `advanced_filters` setting; custom filters must have a prefix separated by a colon in their name, e.g.: "myOrg:myOrgKeywords"; case sensitive
   - `base_filter` (mandatory): the search field the filter is based on; only `'keyword'` is supported for now
+  - `exclude_values` (optional): an array of values of the base filter which should not be offered to the user
+  - `include_values` (optional): an array of values of the base filter which should be the only ones offered to
+    the user
   - `label_key` (optional): a translation key used as the label of the filter; it can be defined in the
     `[translations]` sections. Defaults to the label of the base filter.
 
@@ -233,11 +236,13 @@ advanced_filters = ['organization', 'ign:firstCustomFilter', 'ign:secondCustomFi
 [[custom_filter]]
 name = 'ign:firstCustomFilter'
 base_filter = 'keyword'
+exclude_values = ['my keyword 1', 'my keyword 2']
 label_key = 'ign.firstCustomFilter'
 
 [[custom_filter]]
 name = 'ign:secondCustomFilter'
 base_filter = 'keyword'
+include_values = ['my keyword 3', 'my keyword 4']
 label_key = 'ign.secondCustomFilter'
 
 [translations.en]

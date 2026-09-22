@@ -190,11 +190,15 @@ describe('app config utils', () => {
             {
               name: 'ign:firstCustomFilter',
               baseFilter: 'keyword',
+              excludeValues: ['my keyword 1', 'my keyword 2'],
+              includeValues: undefined,
               labelKey: 'ign.firstCustomFilter',
             },
             {
               name: 'ign:secondCustomFilter',
               baseFilter: 'keyword',
+              excludeValues: undefined,
+              includeValues: ['my keyword 3', 'my keyword 4'],
               labelKey: 'ign.secondCustomFilter',
             },
           ],

@@ -119,15 +119,18 @@ background_color = "#fdfbff"
 # Every custom filter is composed of:
 # - a name, which must hold a prefix separated by a colon (mandatory)
 # - the name of the built-in filter it is based on (mandatory); only 'keyword' is supported for now
+# - a list of values of the base filter to leave out, or the only ones to keep (both optional)
 # - a label key, which is a translation key that can be defined in the [translations] sections (optional;
 #   defaults to the label of the base filter)
 # [[custom_filter]]
 #     name = 'ign:firstCustomFilter'
 #     base_filter = 'keyword'
+#     exclude_values = ['my keyword 1', 'my keyword 2']
 #     label_key = 'ign.firstCustomFilter'
 # [[custom_filter]]
 #     name = 'ign:secondCustomFilter'
 #     base_filter = 'keyword'
+#     include_values = ['my keyword 1', 'my keyword 2']
 #     label_key = 'ign.secondCustomFilter'
 
 # Optional; if true, the default pre-configured searches ("The latest" and "The most popular")

@@ -60,6 +60,8 @@ export type GeocodingProviderName = 'geoadmin' | 'geonames' | 'geoplateforme'
 export interface CustomSearchFilterField {
   name: string
   baseFilter: string
+  excludeValues?: string[]
+  includeValues?: string[]
   labelKey?: string
 }
 

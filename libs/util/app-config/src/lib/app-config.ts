@@ -271,7 +271,7 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
         parsed,
         'custom_filter',
         ['name', 'base_filter'],
-        ['label_key'],
+        ['exclude_values', 'include_values', 'label_key'],
         warnings,
         errors
       )
@@ -294,6 +294,8 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
               CUSTOM_FILTERS: parsedCustomFilters.map((customFilter) => ({
                 name: customFilter.name,
                 baseFilter: customFilter.base_filter,
+                excludeValues: customFilter.exclude_values,
+                includeValues: customFilter.include_values,
                 labelKey: customFilter.label_key,
               })),
               LIMIT: parsedSearchSection.limit,
