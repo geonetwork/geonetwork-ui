@@ -24,7 +24,10 @@ import {
 import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/elements'
 import { LANGUAGES_LIST } from '@geonetwork-ui/ui/catalog'
 import {
+  DEFAULT_GEOCODING_PROVIDER,
   FILTER_GEOMETRY,
+  GEOCODING_PROVIDER,
+  GeocodingProvider,
   RECORD_DATASET_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
@@ -175,5 +178,18 @@ export const DATAHUB_CONFIG_PROVIDERS: Array<Provider> = [
   {
     provide: REUSE_FORM_URL,
     useFactory: () => getGlobalConfig().REUSE_FORM_URL,
+  },
+  {
+    provide: GEOCODING_PROVIDER,
+    useFactory: (): GeocodingProvider => {
+      const config = getOptionalSearchConfig()
+      if (!config?.GEOCODING_PROVIDER) {
+        return DEFAULT_GEOCODING_PROVIDER
+      }
+      return [
+        config.GEOCODING_PROVIDER,
+        config.GEOCODING_PROVIDER_OPTIONS ?? {},
+      ] as GeocodingProvider
+    },
   },
 ]
