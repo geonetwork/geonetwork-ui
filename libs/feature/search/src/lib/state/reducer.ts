@@ -8,7 +8,6 @@ import {
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
 import { DEFAULT_PAGE_SIZE, FIELDS_SUMMARY } from '../constants'
-import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
@@ -56,9 +55,7 @@ export const initSearch = (): SearchStateSearch => {
     },
     params: {
       filters: {},
-      pageSize: getOptionalSearchConfig()?.LIMIT
-        ? getOptionalSearchConfig().LIMIT
-        : DEFAULT_PAGE_SIZE,
+      pageSize: DEFAULT_PAGE_SIZE,
       currentPage: 0,
       favoritesOnly: false,
       useSpatialFilter: true,
