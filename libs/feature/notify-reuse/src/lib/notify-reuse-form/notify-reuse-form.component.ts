@@ -33,7 +33,6 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 import { NOT_KNOWN_CONSTRAINT } from '@geonetwork-ui/feature/editor'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { ButtonComponent, TextInputComponent } from '@geonetwork-ui/ui/inputs'
-import { getOptionalEditorConfig } from '@geonetwork-ui/util/app-config'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { iconoirAppWindow, iconoirPlusCircle } from '@ng-icons/iconoir'
 import { matCloseOutline } from '@ng-icons/material-icons/outline'
@@ -48,6 +47,10 @@ marker('notify.reuse.form.error.title')
 marker('notify.reuse.form.error.body')
 
 export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
+// language assigned to the created reuse record; falls back to the current UI language
+export const NEW_RECORD_DEFAULT_LANGUAGE = new InjectionToken<string>(
+  'newRecordDefaultLanguage'
+)
 
 @Component({
   selector: 'gn-ui-notify-reuse-form',
@@ -86,6 +89,9 @@ export class NotifyReuseFormComponent implements OnDestroy {
   private readonly notificationsService = inject(NotificationsService)
   private readonly platformServiceInterface = inject(PlatformServiceInterface)
   reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
+  private newRecordDefaultLanguage = inject(NEW_RECORD_DEFAULT_LANGUAGE, {
+    optional: true,
+  })
   private locationStrategy = inject(LocationStrategy)
 
   me = toSignal(this.platformServiceInterface.getMe())
@@ -158,8 +164,7 @@ export class NotifyReuseFormComponent implements OnDestroy {
   submit() {
     if (!this.isFormValid()) return
     const defaultLang =
-      getOptionalEditorConfig()?.NEW_RECORD_DEFAULT_LANGUAGE ??
-      this.translate.currentLang
+      this.newRecordDefaultLanguage ?? this.translate.currentLang
     const onlineResource: OnlineLinkResource = {
       type: 'link',
       url: new URL(this.url()),
