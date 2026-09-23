@@ -7,13 +7,12 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import { GeocodingResult } from '@geospatial-sdk/geocoding'
-import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
-import { LocationSearchComponent } from './location-search.component'
+import {
+  GEOCODING_RESULT_LABELS,
+  LocationSearchComponent,
+} from './location-search.component'
 import { GeocodingService } from '../geocoding/geocoding.service'
-
-jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getOptionalSearchConfig: jest.fn(),
-}))
+import { SpatialExtentJsonPointers } from '../geocoding/spatial-extent-result.parser'
 
 const RESULTS = [{ label: 'Beaufort', geom: null }]
 
@@ -21,6 +20,11 @@ const RESULT_WITH_ALL: GeocodingResult = {
   label: 'Beaufort',
   geom: { type: 'Point', coordinates: [6.771, 45.72] },
   properties: { category: ['poi', 'commune'], citycode: ['73270'] },
+}
+
+const JSON_POINTERS: SpatialExtentJsonPointers = {
+  secondaryLabel: '/properties/category/1',
+  tertiaryLabel: '/properties/citycode/0',
 }
 
 const RESULT_WITHOUT_GEOM: GeocodingResult = {
@@ -47,9 +51,7 @@ describe('LocationSearchComponent', () => {
   let fixture: ComponentFixture<LocationSearchComponent>
   let geocodingService: GeocodingService
 
-  beforeEach(async () => {
-    ;(getOptionalSearchConfig as jest.Mock).mockReturnValue(null)
-
+  async function setup(jsonPointers?: SpatialExtentJsonPointers) {
     await TestBed.configureTestingModule({
       imports: [LocationSearchComponent, NoopAnimationsModule],
       providers: [
@@ -58,6 +60,9 @@ describe('LocationSearchComponent', () => {
           provide: GeocodingService,
           useValue: { query: jest.fn(() => of(RESULTS)) },
         },
+        jsonPointers
+          ? { provide: GEOCODING_RESULT_LABELS, useValue: jsonPointers }
+          : [],
       ],
     }).compileComponents()
 
@@ -65,6 +70,10 @@ describe('LocationSearchComponent', () => {
     fixture = TestBed.createComponent(LocationSearchComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
+  }
+
+  beforeEach(async () => {
+    await setup()
   })
 
   afterEach(() => {
@@ -125,52 +134,46 @@ describe('LocationSearchComponent', () => {
     expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort')
   })
 
-  it('resolves the secondary and main labels using the configured JSON Pointers', () => {
-    ;(getOptionalSearchConfig as jest.Mock).mockReturnValue({
-      GEOCODING_RESULT_LABELS: {
-        SECONDARY_LABEL_JSON_POINTER: '/properties/category/1',
-        TERTIARY_LABEL_JSON_POINTER: '/properties/citycode/0',
-      },
+  describe('with configured JSON Pointers', () => {
+    beforeEach(async () => {
+      TestBed.resetTestingModule()
+      await setup(JSON_POINTERS)
     })
 
-    expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toEqual('commune')
-    expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort, 73270')
-  })
-
-  it('renders the default item template with secondary/main labels and emits the bbox on selection', () => {
-    ;(getOptionalSearchConfig as jest.Mock).mockReturnValue({
-      GEOCODING_RESULT_LABELS: {
-        SECONDARY_LABEL_JSON_POINTER: '/properties/category/1',
-        TERTIARY_LABEL_JSON_POINTER: '/properties/citycode/0',
-      },
+    it('resolves the secondary and main labels using the configured JSON Pointers', () => {
+      expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toEqual('commune')
+      expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort, 73270')
     })
-    ;(geocodingService.query as jest.Mock).mockReturnValue(
-      of([RESULT_WITH_ALL])
-    )
-    jest.useFakeTimers()
-    const hostFixture = TestBed.createComponent(
-      LocationSearchDefaultHostComponent
-    )
-    hostFixture.detectChanges()
-    const autocomplete = hostFixture.debugElement.query(
-      By.directive(AutocompleteComponent)
-    ).componentInstance as AutocompleteComponent
-    autocomplete.inputRef.nativeElement.value = 'bea'
-    autocomplete.inputRef.nativeElement.dispatchEvent(new InputEvent('input'))
-    jest.runOnlyPendingTimers()
-    hostFixture.detectChanges()
 
-    const overlayContainer =
-      TestBed.inject(OverlayContainer).getContainerElement()
-    expect(overlayContainer.textContent).toContain('commune')
-    expect(overlayContainer.textContent).toContain('Beaufort, 73270')
+    it('renders the default item template with secondary/main labels and emits the bbox on selection', () => {
+      ;(geocodingService.query as jest.Mock).mockReturnValue(
+        of([RESULT_WITH_ALL])
+      )
+      jest.useFakeTimers()
+      const hostFixture = TestBed.createComponent(
+        LocationSearchDefaultHostComponent
+      )
+      hostFixture.detectChanges()
+      const autocomplete = hostFixture.debugElement.query(
+        By.directive(AutocompleteComponent)
+      ).componentInstance as AutocompleteComponent
+      autocomplete.inputRef.nativeElement.value = 'bea'
+      autocomplete.inputRef.nativeElement.dispatchEvent(new InputEvent('input'))
+      jest.runOnlyPendingTimers()
+      hostFixture.detectChanges()
 
-    autocomplete.handleSelection({
-      option: { value: RESULT_WITH_ALL },
-    } as never)
+      const overlayContainer =
+        TestBed.inject(OverlayContainer).getContainerElement()
+      expect(overlayContainer.textContent).toContain('commune')
+      expect(overlayContainer.textContent).toContain('Beaufort, 73270')
 
-    expect(hostFixture.componentInstance.bboxSelected).toHaveBeenCalledWith([
-      6.771, 45.72, 6.771, 45.72,
-    ])
+      autocomplete.handleSelection({
+        option: { value: RESULT_WITH_ALL },
+      } as never)
+
+      expect(hostFixture.componentInstance.bboxSelected).toHaveBeenCalledWith([
+        6.771, 45.72, 6.771, 45.72,
+      ])
+    })
   })
 })

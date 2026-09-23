@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   inject,
+  InjectionToken,
   Input,
   Output,
 } from '@angular/core'
@@ -13,12 +14,17 @@ import {
   AutocompleteItem,
 } from '@geonetwork-ui/ui/inputs'
 import { BoundingBox, getGeometryBoundingBox } from '@geonetwork-ui/util/shared'
-import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 import { GeocodingService } from '../geocoding/geocoding.service'
 import {
   parseSpatialExtentResult,
   SpatialExtentJsonPointers,
 } from '../geocoding/spatial-extent-result.parser'
+
+// JSON Pointers resolved against a geocoding result to build the labels shown in the dropdown
+export const GEOCODING_RESULT_LABELS =
+  new InjectionToken<SpatialExtentJsonPointers>('geocodingResultLabels', {
+    factory: () => ({}),
+  })
 
 @Component({
   selector: 'gn-ui-location-search',
@@ -29,6 +35,7 @@ import {
 })
 export class LocationSearchComponent {
   private geocodingService = inject(GeocodingService)
+  private jsonPointers = inject(GEOCODING_RESULT_LABELS)
 
   @Input() placeholder = ''
   @Output() resultSelected = new EventEmitter<GeocodingResult>()
@@ -38,15 +45,6 @@ export class LocationSearchComponent {
 
   searchAction = (text: string): Observable<AutocompleteItem[]> =>
     this.geocodingService.query(text)
-
-  private get jsonPointers(): SpatialExtentJsonPointers {
-    const config = getOptionalSearchConfig()?.GEOCODING_RESULT_LABELS
-    return {
-      mainLabel: config?.MAIN_LABEL_JSON_POINTER,
-      secondaryLabel: config?.SECONDARY_LABEL_JSON_POINTER,
-      tertiaryLabel: config?.TERTIARY_LABEL_JSON_POINTER,
-    }
-  }
 
   getSecondaryLabel(result: GeocodingResult): string | undefined {
     return parseSpatialExtentResult(result, this.jsonPointers).secondaryLabel
