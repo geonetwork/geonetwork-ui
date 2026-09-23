@@ -26,7 +26,7 @@
                   "type:util",
                   "type:api"
                 ],
-                "bannedExternalImports": ["*app-config"]
+                "notDependOnLibsWithTags": ["scope:app-config"]
               },
               {
                 "sourceTag": "type:data-access",
@@ -42,7 +42,8 @@
               },
               {
                 "sourceTag": "type:util",
-                "onlyDependOnLibsWithTags": ["type:util"]
+                "onlyDependOnLibsWithTags": ["type:util"],
+                "notDependOnLibsWithTags": ["scope:app-config"]
               },
               {
                 "sourceTag": "type:app",
@@ -57,7 +58,7 @@
               {
                 "sourceTag": "type:api",
                 "onlyDependOnLibsWithTags": ["type:api", "scope:shared"],
-                "bannedExternalImports": ["*app-config"]
+                "notDependOnLibsWithTags": ["scope:app-config"]
               },
               {
                 "sourceTag": "scope:webcomponents",
