@@ -110,7 +110,7 @@ background_color = "#fdfbff"
 # If not configured, the default values are 'organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license'
 # Note that some links in the datahub app set an 'organization' filter. So this field is needed to allow unsetting such filters.
 # WARNING: 'resourceType' filter has been deprecated, please use 'recordKind' instead. Breaking change: 'resourceType' filter won't retrieve featureCatalog anymore.
-# An entry holding a prefix (e.g. 'ign:myFilter') refers to a custom filter declared in a [[custom_filter]] section (see below).
+# An entry holding a prefix (e.g. 'myOrg:myFilter') refers to a custom filter declared in a [[custom_filter]] section (see below).
 # advanced_filters = ['organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license', 'spatialExtent']
 
 # One or several custom filters can be defined here; a custom filter behaves like one of the
@@ -123,15 +123,15 @@ background_color = "#fdfbff"
 # - a label key, which is a translation key that can be defined in the [translations] sections (optional;
 #   defaults to the label of the base filter)
 # [[custom_filter]]
-#     name = 'ign:firstCustomFilter'
+#     name = 'myOrg:firstCustomFilter'
 #     base_filter = 'keyword'
 #     exclude_values = ['my keyword 1', 'my keyword 2']
-#     label_key = 'ign.firstCustomFilter'
+#     label_key = 'myOrg.firstCustomFilter'
 # [[custom_filter]]
-#     name = 'ign:secondCustomFilter'
+#     name = 'myOrg:secondCustomFilter'
 #     base_filter = 'keyword'
 #     include_values = ['my keyword 1', 'my keyword 2']
-#     label_key = 'ign.secondCustomFilter'
+#     label_key = 'myOrg.secondCustomFilter'
 
 # Optional; if true, the default pre-configured searches ("The latest" and "The most popular")
 # will not be shown under the main search bar. Defaults to false.

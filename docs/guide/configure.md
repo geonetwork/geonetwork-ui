@@ -204,7 +204,7 @@ The filters should be provided as an array, for instance:
 advanced_filters = ['organization', 'inspireKeyword', 'keyword', 'topic']
 ```
 
-An entry holding a prefix (e.g. `'ign:myFilter'`) does not refer to a search field but to a custom filter,
+An entry holding a prefix (e.g. `'myOrg:myFilter'`) does not refer to a search field but to a custom filter,
 which has to be declared in a `[[custom_filter]]` section (see below); entries without a matching
 `[[custom_filter]]` section are ignored.
 
@@ -222,32 +222,31 @@ For a detailed explanation on the classification system, see [this documentation
 
   - `name` (mandatory): name of the filter as it should appear in the `advanced_filters` setting; custom filters must have a prefix separated by a colon in their name, e.g.: "myOrg:myOrgKeywords"; case sensitive
   - `base_filter` (mandatory): the search field the filter is based on; only `'keyword'` is supported for now
-  - `exclude_values` (optional): an array of values of the base filter which should not be offered to the user
-  - `include_values` (optional): an array of values of the base filter which should be the only ones offered to
-    the user
+  - `exclude_values` (optional): an array of values of the base filter which should not be offered to the user in the UI (e.g. dropdowns); it does not have any effect when cutom filter fields are used in the URL
+  - `include_values` (optional): an array of values of the base filter which should be the only ones offered to the user in the UI (e.g. dropdowns); it does not have any effect when cutom filter fields are used in the URL
   - `label_key` (optional): a translation key used as the label of the filter; it can be defined in the
     `[translations]` sections. Defaults to the label of the base filter.
 
   For instance:
 
 ```toml
-advanced_filters = ['organization', 'ign:firstCustomFilter', 'ign:secondCustomFilter']
+advanced_filters = ['organization', 'myOrg:firstCustomFilter', 'myOrg:secondCustomFilter']
 
 [[custom_filter]]
-name = 'ign:firstCustomFilter'
+name = 'myOrg:firstCustomFilter'
 base_filter = 'keyword'
 exclude_values = ['my keyword 1', 'my keyword 2']
-label_key = 'ign.firstCustomFilter'
+label_key = 'myOrg.firstCustomFilter'
 
 [[custom_filter]]
-name = 'ign:secondCustomFilter'
+name = 'myOrg:secondCustomFilter'
 base_filter = 'keyword'
 include_values = ['my keyword 3', 'my keyword 4']
-label_key = 'ign.secondCustomFilter'
+label_key = 'myOrg.secondCustomFilter'
 
 [translations.en]
-'ign.firstCustomFilter' = 'My first filter'
-'ign.secondCustomFilter' = 'My second filter'
+'myOrg.firstCustomFilter' = 'My first filter'
+'myOrg.secondCustomFilter' = 'My second filter'
 ```
 
 - `do_not_use_default_search_preset` (optional)

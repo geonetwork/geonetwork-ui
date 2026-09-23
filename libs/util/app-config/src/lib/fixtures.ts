@@ -44,19 +44,19 @@ do_not_use_default_search_preset = false
 geocoding_provider = "geoplateforme"
 geocoding_provider_options.category = "administratif"
 geocoding_provider_options.limit = 5
-advanced_filters = ['publicationYear', 'documentStandard', 'inspireKeyword', 'topic', 'license', 'ign:firstCustomFilter', 'ign:secondCustomFilter']
+advanced_filters = ['publicationYear', 'documentStandard', 'inspireKeyword', 'topic', 'license', 'myOrg:firstCustomFilter', 'myOrg:secondCustomFilter']
 
 [[custom_filter]]
-name = 'ign:firstCustomFilter'
+name = 'myOrg:firstCustomFilter'
 base_filter = 'keyword'
 exclude_values = ['my keyword 1', 'my keyword 2']
-label_key = 'ign.firstCustomFilter'
+label_key = 'myOrg.firstCustomFilter'
 
 [[custom_filter]]
-name = 'ign:secondCustomFilter'
+name = 'myOrg:secondCustomFilter'
 base_filter = 'keyword'
 include_values = ['my keyword 3', 'my keyword 4']
-label_key = 'ign.secondCustomFilter'
+label_key = 'myOrg.secondCustomFilter'
 
 [[search_preset]]
 sort = "-createDate"
