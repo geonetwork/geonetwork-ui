@@ -183,6 +183,24 @@ describe('app config utils', () => {
             'inspireKeyword',
             'topic',
             'license',
+            'myOrg:firstCustomFilter',
+            'myOrg:secondCustomFilter',
+          ],
+          CUSTOM_FILTERS: [
+            {
+              name: 'myOrg:firstCustomFilter',
+              baseFilter: 'keyword',
+              excludeValues: ['my keyword 1', 'my keyword 2'],
+              includeValues: undefined,
+              labelKey: 'myOrg.firstCustomFilter',
+            },
+            {
+              name: 'myOrg:secondCustomFilter',
+              baseFilter: 'keyword',
+              excludeValues: undefined,
+              includeValues: ['my keyword 3', 'my keyword 4'],
+              labelKey: 'myOrg.secondCustomFilter',
+            },
           ],
           GEOCODING_PROVIDER: 'geoplateforme',
           GEOCODING_PROVIDER_OPTIONS: {
