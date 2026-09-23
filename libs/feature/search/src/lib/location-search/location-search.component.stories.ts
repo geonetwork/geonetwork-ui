@@ -4,40 +4,11 @@ import { importProvidersFrom } from '@angular/core'
 import { of } from 'rxjs'
 import { GeocodingResult } from '@geospatial-sdk/geocoding'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { loadAppConfig } from '@geonetwork-ui/util/app-config'
-import { LocationSearchComponent } from './location-search.component'
+import {
+  GEOCODING_RESULT_LABELS,
+  LocationSearchComponent,
+} from './location-search.component'
 import { GeocodingService } from '../geocoding/geocoding.service'
-
-// LocationSearchComponent reads its JSON Pointer config from
-// getOptionalSearchConfig(), which is only populated by loadAppConfig(); mock
-// fetch just for that call so the story actually exercises the secondary/
-// tertiary label rendering, instead of always falling back to the plain label.
-async function loadStorySearchConfig() {
-  const originalFetch = window.fetch
-  window.fetch = (() =>
-    Promise.resolve({
-      ok: true,
-      text: () =>
-        Promise.resolve(`
-[global]
-geonetwork4_api_url = "/geonetwork/srv/api"
-proxy_path = "/proxy/?url="
-
-[theme]
-primary_color = "#093564"
-secondary_color = "#c2e9dc"
-main_color = "#212029"
-background_color = "#fdfbff"
-
-[search.geocoding_result_labels]
-secondary_label_json_pointer = '/properties/category/1'
-tertiary_label_json_pointer = '/properties/citycode/0'
-`),
-    })) as unknown as typeof fetch
-  await loadAppConfig().finally(() => {
-    window.fetch = originalFetch
-  })
-}
 
 const results: GeocodingResult[] = [
   {
@@ -95,10 +66,17 @@ export const WithSpatialExtentLabels: StoryObj<LocationSearchComponent> = {
   args: {
     placeholder: 'Search for a place',
   },
-  loaders: [
-    async () => {
-      await loadStorySearchConfig()
-      return {}
-    },
+  decorators: [
+    applicationConfig({
+      providers: [
+        {
+          provide: GEOCODING_RESULT_LABELS,
+          useValue: {
+            secondaryLabel: '/properties/category/1',
+            tertiaryLabel: '/properties/citycode/0',
+          },
+        },
+      ],
+    }),
   ],
 }
