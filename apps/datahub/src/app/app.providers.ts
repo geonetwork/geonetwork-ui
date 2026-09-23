@@ -31,6 +31,7 @@ import {
   RECORD_DATASET_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
+  SPATIAL_EXTENT_MAX_FILE_SIZE,
 } from '@geonetwork-ui/feature/search'
 import {
   DefaultRouterModule,
@@ -178,6 +179,11 @@ export const DATAHUB_CONFIG_PROVIDERS: Array<Provider> = [
   {
     provide: REUSE_FORM_URL,
     useFactory: () => getGlobalConfig().REUSE_FORM_URL,
+  },
+  {
+    provide: SPATIAL_EXTENT_MAX_FILE_SIZE,
+    useFactory: () =>
+      getOptionalSearchConfig()?.SPATIAL_EXTENT_MAX_FILE_SIZE ?? null,
   },
   {
     provide: GEOCODING_PROVIDER,

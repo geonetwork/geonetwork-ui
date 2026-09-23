@@ -23,11 +23,15 @@ import {
   RouterService,
   SearchRouterContainerDirective,
 } from '@geonetwork-ui/feature/router'
-import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import {
+  FeatureSearchModule,
+  SPATIAL_EXTENT_MAX_FILE_SIZE,
+} from '@geonetwork-ui/feature/search'
 import {
   getGlobalConfig,
   getThemeConfig,
   getOptionalEditorConfig,
+  getOptionalSearchConfig,
 } from '@geonetwork-ui/util/app-config'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
@@ -103,6 +107,11 @@ import {
     {
       provide: SETTINGS_URL,
       useFactory: () => getGlobalConfig().SETTINGS_URL,
+    },
+    {
+      provide: SPATIAL_EXTENT_MAX_FILE_SIZE,
+      useFactory: () =>
+        getOptionalSearchConfig()?.SPATIAL_EXTENT_MAX_FILE_SIZE ?? null,
     },
   ],
   bootstrap: [AppComponent],

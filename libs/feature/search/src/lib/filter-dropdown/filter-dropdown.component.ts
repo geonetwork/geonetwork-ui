@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  InjectionToken,
   Input,
   OnInit,
   inject,
@@ -27,7 +28,12 @@ import { CommonModule } from '@angular/common'
 import { BoundingBox } from '@geonetwork-ui/util/shared'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
-import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
+
+// in MB, null means no limit
+export const SPATIAL_EXTENT_MAX_FILE_SIZE = new InjectionToken<number | null>(
+  'spatialExtentMaxFileSize',
+  { factory: () => null }
+)
 
 @Component({
   selector: 'gn-ui-filter-dropdown',
@@ -52,8 +58,7 @@ export class FilterDropdownComponent implements OnInit {
   @Input() fieldName: string
   @Input() title: string
 
-  spatialExtentMaxFileSize =
-    getOptionalSearchConfig()?.SPATIAL_EXTENT_MAX_FILE_SIZE
+  spatialExtentMaxFileSize = inject(SPATIAL_EXTENT_MAX_FILE_SIZE)
 
   fieldType: FieldType
   choices$: Observable<Choice[]>
