@@ -33,20 +33,6 @@ const RESULT_WITHOUT_GEOM: GeocodingResult = {
   imports: [LocationSearchComponent],
   standalone: true,
   template: `
-    <ng-template #itemTpl let-result>
-      <span class="custom-item">custom: {{ result.label }}</span>
-    </ng-template>
-    <gn-ui-location-search
-      [displayWithTemplate]="itemTpl"
-    ></gn-ui-location-search>
-  `,
-})
-class LocationSearchTemplateHostComponent {}
-
-@Component({
-  imports: [LocationSearchComponent],
-  standalone: true,
-  template: `
     <gn-ui-location-search
       (bboxSelected)="bboxSelected($event)"
     ></gn-ui-location-search>
@@ -149,25 +135,6 @@ describe('LocationSearchComponent', () => {
 
     expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toEqual('commune')
     expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort, 73270')
-  })
-
-  it('forwards displayWithTemplate to the underlying autocomplete', () => {
-    jest.useFakeTimers()
-    const hostFixture = TestBed.createComponent(
-      LocationSearchTemplateHostComponent
-    )
-    hostFixture.detectChanges()
-    const autocomplete = hostFixture.debugElement.query(
-      By.directive(AutocompleteComponent)
-    ).componentInstance as AutocompleteComponent
-    autocomplete.inputRef.nativeElement.value = 'bla'
-    autocomplete.inputRef.nativeElement.dispatchEvent(new InputEvent('input'))
-    jest.runOnlyPendingTimers()
-    hostFixture.detectChanges()
-
-    const overlayContainer =
-      TestBed.inject(OverlayContainer).getContainerElement()
-    expect(overlayContainer.textContent).toContain('custom: Beaufort')
   })
 
   it('renders the default item template with secondary/main labels and emits the bbox on selection', () => {

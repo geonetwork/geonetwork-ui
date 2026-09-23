@@ -5,7 +5,6 @@ import {
   inject,
   Input,
   Output,
-  TemplateRef,
 } from '@angular/core'
 import { Observable } from 'rxjs'
 import { GeocodingResult } from '@geospatial-sdk/geocoding'
@@ -32,7 +31,6 @@ export class LocationSearchComponent {
   private geocodingService = inject(GeocodingService)
 
   @Input() placeholder = ''
-  @Input() displayWithTemplate?: TemplateRef<{ $implicit: GeocodingResult }>
   @Output() resultSelected = new EventEmitter<GeocodingResult>()
   @Output() bboxSelected = new EventEmitter<BoundingBox>()
 
