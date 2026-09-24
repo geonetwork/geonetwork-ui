@@ -1,4 +1,4 @@
-import * as ngPackage from 'ng-packagr'
+import { ngPackagr } from 'ng-packagr'
 import baseTsConfig from '../tsconfig.base.json' with { type: 'json' }
 import fs from 'fs/promises'
 import { createReadStream, createWriteStream, existsSync, mkdirSync } from 'fs'
@@ -6,6 +6,8 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { Transform } from 'stream'
 import { listDirectoryFiles, rewriteFiles } from '../tools/file-utils.js'
+import { InjectionToken } from '@angular/core'
+import { PACKAGE_TRANSFORM } from 'ng-packagr/src/lib/ng-package/package.di.js'
 
 const PATH_ALIASES = baseTsConfig.compilerOptions.paths
 
@@ -45,6 +47,75 @@ function createPathAliasTransformStream(depth) {
   })
 }
 
+/**
+ * This will add file extensions to all the import and export paths to make sure
+ * that they can be resolved with a plain "node-style" resolution strategy (no guessing, looking for index file etc.)
+ * @param {string} currentFilePath
+ * @return {Transform}
+ */
+function createFileExtensionAddTransformStream(currentFilePath) {
+  const currentDir = path.dirname(currentFilePath)
+
+  return new Transform({
+    async transform(chunk, encoding, callback) {
+      let chunkStr = chunk.toString()
+
+      // collect paths
+      // note: we exclude type imports (because these have no impact on the final JS code)
+      const regex =
+        /(?:import|export)(?!\Wtype)\s+(?:[^'"]+from\s+)?['"]([^'"]+)['"]/dg
+
+      // for each path, check if 1/ the underlying file exists and 2/ if it is a directory
+      let matches
+      while ((matches = regex.exec(chunkStr))) {
+        if (!matches[0]) break
+        const p = matches[1]
+        const extension = path.extname(p)
+        const indices = matches.indices[1]
+        const fullPath = path.join(currentDir, p)
+        let fixedPath = p
+        const stats = await fs.stat(fullPath).catch(() => null)
+
+        // the path already has an extension: leave
+        if (extension === '.js' || extension === '.json') {
+          continue
+        }
+
+        // point at a node_modules: let's try and resolve the import path; if it works, it doesn't need an extension
+        if (!p.startsWith('.') && !p.startsWith('/')) {
+          try {
+            import.meta.resolve(p)
+          } catch (e) {
+            // first make sure the import path is not pointing to a @types definition
+            const isATypePackage = await fs
+              .stat(path.join(PROJECT_ROOT_PATH, 'node_modules/@types', p))
+              .catch(() => false)
+            if (!isATypePackage) {
+              fixedPath = `${p}.js`
+            }
+          }
+        }
+        // the path points to a directory: we assume there's an index.js in there
+        else if (stats?.isDirectory()) {
+          const pathWithoutTrailingSlash = p.replace(/\/$/, '')
+          fixedPath = `${pathWithoutTrailingSlash}/index.js`
+        }
+        // last case: the path must point to a JS file
+        else {
+          fixedPath = `${p}.js`
+        }
+
+        // replace fixedPath in chunk by using the indices
+        chunkStr =
+          chunkStr.slice(0, indices[0]) + fixedPath + chunkStr.slice(indices[1])
+      }
+
+      this.push(chunkStr)
+      callback()
+    },
+  })
+}
+
 function copyFile(inputPath, outputDirPath, basePath) {
   if (!existsSync(outputDirPath)) {
     mkdirSync(outputDirPath, { recursive: true })
@@ -55,8 +126,11 @@ function copyFile(inputPath, outputDirPath, basePath) {
     const write = createWriteStream(outputPath)
     if (path.extname(inputPath) === '.ts') {
       const depth = inputPath.replace(basePath + '/', '').split('/').length
-      const transform = createPathAliasTransformStream(depth)
-      read.pipe(transform).pipe(write).on('error', reject)
+      read
+        .pipe(createPathAliasTransformStream(depth))
+        .pipe(createFileExtensionAddTransformStream(inputPath))
+        .pipe(write)
+        .on('error', reject)
     } else {
       read.pipe(write).on('error', reject)
     }
@@ -117,12 +191,23 @@ async function copySourceDirectories() {
   await copyDirectory(TRANSLATIONS_SOURCE_PATH, TRANSLATIONS_DEST_PATH)
 }
 
+const TRANSFORM = new InjectionToken('transform')
+
 copySourceDirectories()
   .then(() =>
-    ngPackage
-      .ngPackagr()
+    ngPackagr()
       .forProject(path.join(CURRENT_DIR_PATH, 'ng-package.json'))
       .withTsConfig(path.join(CURRENT_DIR_PATH, 'tsconfig.json'))
+      // .withBuildTransform(TRANSFORM)
+      .withProviders([
+        // {
+        //   provide: TRANSFORM,
+        //   useValue: (buildGraph) => {
+        //     return buildGraph
+        //   },
+        // },
+        PACKAGE_TRANSFORM,
+      ])
       .build()
   )
   .then(async () => {
