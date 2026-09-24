@@ -59,6 +59,8 @@ export class ElasticsearchService {
     { script: string; type: 'keyword' | 'date' }
   > = {}
 
+  private fieldAliases: Record<string, string> = {}
+
   // we're using getters in case the defined languages change over time
   private get metadataLang(): LanguageCode {
     const mdLangValue = this.injector.get(METADATA_LANGUAGE, null)
@@ -153,6 +155,10 @@ export class ElasticsearchService {
     type: 'keyword' | 'date' = 'keyword'
   ) {
     this.runtimeFields[fieldName] = { script: expression, type }
+  }
+
+  registerFieldAlias(fieldIdentifier: string, esFieldName: string) {
+    this.fieldAliases[fieldIdentifier] = esFieldName
   }
 
   getMetadataByIdsPayload(uuids: string[]): EsSearchParams {
@@ -363,7 +369,7 @@ export class ElasticsearchService {
             )
             .map(
               (fieldname) =>
-                `${getEsFieldName(fieldname)}:(${makeQuery(filters[fieldname])})`
+                `${this.fieldAliases[fieldname] ?? fieldname}:(${makeQuery(filters[fieldname])})`
             )
             .join(' AND ')
     if (filters['gn-ui-crossFieldFilter']) {
