@@ -1,4 +1,4 @@
-import { Injectable, Injector, inject } from '@angular/core'
+import { Injectable, InjectionToken, Injector, inject } from '@angular/core'
 import {
   AbstractSearchField,
   AvailableServicesField,
@@ -27,6 +27,31 @@ import { DateRange } from '@geonetwork-ui/api/repository'
 // key is the field name
 export type FieldValues = Record<string, FieldValue[] | FieldValue | DateRange>
 
+/**
+ * Fields left out on purpose are:
+ * `organization` and `q` (not built on a single ES field),
+ * `recordKind` and `availableServices` (they write to other filter keys),
+ * `spatialExtent` (only one bounding box is ever applied to a search),
+ * `owner` (offers no value to pick from),
+ * `changeDate` and `resourceCreationRevisionDate` (date ranges: they offer no
+ * list of values, so include/exclude values would have no visible effect),
+ * `isSpatial` (a single choice between two mutually exclusive values),
+ * and `resourceType` (deprecated).
+ */
+export const SUPPORTED_CUSTOM_FILTER_BASE_FILTERS = [
+  'format',
+  'representationType',
+  'publicationYear',
+  'topic',
+  'inspireKeyword',
+  'keyword',
+  'documentStandard',
+  'license',
+  'producerOrg',
+  'publisherOrg',
+  'user',
+]
+
 marker('search.filters.format')
 marker('search.filters.inspireKeyword')
 marker('search.filters.keyword')
@@ -46,13 +71,27 @@ marker('search.filters.user')
 marker('search.filters.changeDate')
 marker('search.filters.resourceCreationRevisionDate')
 marker('search.filters.spatialExtent')
+
+export interface CustomSearchFieldFilter {
+  name: string
+  baseFilter: string
+  excludeValues?: string[]
+  includeValues?: string[]
+  labelKey?: string
+}
+
+export const CUSTOM_FILTERS = new InjectionToken<CustomSearchFieldFilter[]>(
+  'custom-filters'
+)
 @Injectable({
   providedIn: 'root',
 })
 export class FieldsService {
   protected injector = inject(Injector)
+  private customFilters =
+    inject<CustomSearchFieldFilter[]>(CUSTOM_FILTERS, { optional: true }) ?? []
 
-  protected fields = {
+  private baseFields: Record<string, AbstractSearchField> = {
     organization: new OrganizationSearchField(this.injector),
     format: new SimpleSearchField('format', this.injector, 'asc'),
     resourceType: new ResourceTypeLegacyField(this.injector), // Deprecated, use `recordKind` instead
@@ -103,7 +142,34 @@ export class FieldsService {
     ),
     availableServices: new AvailableServicesField(this.injector),
     spatialExtent: new BoundingBoxSearchField('spatialExtent', this.injector),
-  } as Record<string, AbstractSearchField>
+  }
+
+  protected fields: Record<string, AbstractSearchField>
+
+  constructor() {
+    this.fields = { ...this.baseFields }
+    for (const filter of this.customFilters) {
+      const baseField = this.baseFields[filter.baseFilter]
+      if (
+        !SUPPORTED_CUSTOM_FILTER_BASE_FILTERS.includes(filter.baseFilter) ||
+        !(baseField instanceof SimpleSearchField)
+      ) {
+        console.warn(
+          `WARNING: the custom filter '${filter.name}' uses an unsupported base_filter '${
+            filter.baseFilter
+          }' (supported values: ${SUPPORTED_CUSTOM_FILTER_BASE_FILTERS.join(
+            ', '
+          )}). This filter will be ignored.`
+        )
+        continue
+      }
+      this.fields[filter.name] = baseField.extend({
+        filterKey: filter.name,
+        includeValues: filter.includeValues,
+        excludeValues: filter.excludeValues,
+      })
+    }
+  }
 
   get supportedFields() {
     return Object.keys(this.fields)
@@ -127,6 +193,14 @@ export class FieldsService {
 
   getFieldType(fieldName: string) {
     return this.fields[fieldName].getType()
+  }
+
+  getLabelKey(fieldName: string): string {
+    const customFilter = this.customFilters.find(
+      (filter) => filter.name === fieldName
+    )
+    if (!customFilter) return `search.filters.${fieldName}`
+    return customFilter.labelKey ?? `search.filters.${customFilter.baseFilter}`
   }
 
   buildFiltersFromFieldValues(
