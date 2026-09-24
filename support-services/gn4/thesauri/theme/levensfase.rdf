@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+  <skos:ConceptScheme rdf:about="https://data.vlaanderen.be/id/conceptscheme/levensfase">
+    <dc:title>Conceptscheme levensfase</dc:title>
+    <skos:prefLabel xml:lang="nl">Conceptscheme levensfase</skos:prefLabel>
+    <skos:definition xml:lang="nl">Codelijst voor de levensfase waarin de dataservice zich bevindt.</skos:definition>
+  </skos:ConceptScheme>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/levensfase/design">
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/levensfase"/>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/levensfase"/>
+    <skos:definition xml:lang="nl">De service is in ontwerp/in ontwikkeling. Veranderingen kunnen dus snel en onverwacht gebeuren.</skos:definition>
+    <skos:prefLabel xml:lang="nl">in ontwikkeling</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">in development</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">in development</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">in development</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/levensfase/live">
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/levensfase"/>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/levensfase"/>
+    <skos:definition xml:lang="nl">De service is actief. Stabiliteit wordt nagestreefd. </skos:definition>
+    <skos:prefLabel xml:lang="nl">live</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">live</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">live</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">live</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/levensfase/sunset">
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/levensfase"/>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/levensfase"/>
+    <skos:definition xml:lang="nl">De service is in zijn laatste levensfase. Geen veranderingen meer verwacht, uitgezonderd van belangrijke (security) patches.</skos:definition>
+    <skos:prefLabel xml:lang="nl">in uitfasering</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">in phase out</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">in phase out</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">in phase out</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/levensfase/deprecated">
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/levensfase"/>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/levensfase"/>
+    <skos:definition xml:lang="nl">De service is nog beschikbaar maar is nog slechts beschikbaar om de overstap te vergemakkelijken naar een levensfase. Geen nieuwe aansluitingen zijn mogelijk.</skos:definition>
+    <skos:prefLabel xml:lang="nl">offline</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">offline</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">offline</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">offline</skos:prefLabel>
+  </skos:Concept>
+</rdf:RDF>
