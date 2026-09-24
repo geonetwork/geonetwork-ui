@@ -12,6 +12,7 @@ import {
 import {
   malformedConfigFixture,
   minimalAppConfigFixture,
+  customFilterMissingMandatoryConfigFixture,
   missingMandatoryConfigFixture,
   okAppConfigFixture,
   unrecognizedKeysConfigFixture,
@@ -75,6 +76,20 @@ describe('app config utils', () => {
       it('throws an error', async () => {
         await loadAppConfig().catch(() => {}) // eslint-disable-line
         expect(() => getGlobalConfig()).toThrowError('not initialized')
+      })
+    })
+  })
+  describe('when a custom filter misses a mandatory key', () => {
+    beforeEach(() => {
+      fetchMock.get('end:default.toml', () =>
+        customFilterMissingMandatoryConfigFixture()
+      )
+    })
+    describe('loadAppConfig', () => {
+      it('throws an error naming the missing key', async () => {
+        await expect(loadAppConfig()).rejects.toThrow(
+          /(?=.*\[custom_filter])(?=.*base_filter)/s
+        )
       })
     })
   })
