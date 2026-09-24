@@ -12,6 +12,9 @@
     @if (getSecondaryLabel(result)) {
       <div class="gn-ui-card-detail">{{ getSecondaryLabel(result) }}</div>
     }
-    <div class="gn-ui-card-title">{{ getMainLabel(result) }}</div>
+    @let tertiaryLabel = getTertiaryLabel(result);
+    <div class="gn-ui-card-title">
+      {{ getMainLabel(result) }}{{ tertiaryLabel ? ', ' + tertiaryLabel : '' }}
+    </div>
   </div>
 </ng-template>

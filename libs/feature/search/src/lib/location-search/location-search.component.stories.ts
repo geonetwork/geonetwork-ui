@@ -5,7 +5,7 @@ import { of } from 'rxjs'
 import { GeocodingResult } from '@geospatial-sdk/geocoding'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
-  GEOCODING_RESULT_LABELS,
+  GEOCODING_PROVIDER_LABELS,
   LocationSearchComponent,
 } from './location-search.component'
 import { GeocodingService } from '../geocoding/geocoding.service'
@@ -62,7 +62,7 @@ export const Default: StoryObj<LocationSearchComponent> = {
   },
 }
 
-export const WithSpatialExtentLabels: StoryObj<LocationSearchComponent> = {
+export const WithLabels: StoryObj<LocationSearchComponent> = {
   args: {
     placeholder: 'Search for a place',
   },
@@ -70,10 +70,10 @@ export const WithSpatialExtentLabels: StoryObj<LocationSearchComponent> = {
     applicationConfig({
       providers: [
         {
-          provide: GEOCODING_RESULT_LABELS,
+          provide: GEOCODING_PROVIDER_LABELS,
           useValue: {
-            secondaryLabel: '/properties/category/1',
-            tertiaryLabel: '/properties/citycode/0',
+            secondary: '/properties/category/1',
+            tertiary: '/properties/citycode/0',
           },
         },
       ],
