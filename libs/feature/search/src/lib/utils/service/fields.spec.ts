@@ -29,7 +29,6 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 
 class ElasticsearchServiceMock {
   registerRuntimeField = jest.fn()
-  registerFieldAlias = jest.fn()
 }
 
 class RecordsRepositoryMock {
@@ -685,19 +684,13 @@ describe('search fields implementations', () => {
     let baseField: SimpleSearchField
     beforeEach(() => {
       baseField = new MultilingualSearchField('tag', injector, 'desc', 'count')
-      searchField = baseField.extend({ filterKey: 'myOrg:myFilter' })
-    })
-    it('registers its filter key as an alias of the base field, so both stay independent', () => {
-      expect(esService.registerFieldAlias).toHaveBeenCalledWith(
-        'myOrg:myFilter',
-        'tag.default'
-      )
+      searchField = baseField.extend({ name: 'myOrg:myFilter' })
     })
     describe('#getFiltersForValues', () => {
       it('uses its own filter key', async () => {
         expect(
           await lastValueFrom(searchField.getFiltersForValues(['value1']))
-        ).toEqual({ 'myOrg:myFilter': { value1: true } })
+        ).toEqual({ 'tag.default#myOrg:myFilter': { value1: true } })
       })
     })
     describe('#getValuesForFilter', () => {
@@ -706,7 +699,7 @@ describe('search fields implementations', () => {
           await lastValueFrom(
             searchField.getValuesForFilter({
               'tag.default': { value1: true },
-              'myOrg:myFilter': { value2: true },
+              'tag.default#myOrg:myFilter': { value2: true },
             })
           )
         ).toEqual(['value2'])
@@ -734,7 +727,7 @@ describe('search fields implementations', () => {
       describe('with include and exclude values', () => {
         beforeEach(async () => {
           searchField = baseField.extend({
-            filterKey: 'myOrg:myFilter',
+            name: 'myOrg:myFilter',
             includeValues: ['value1', 'value2'],
             excludeValues: ['value3'],
           })
@@ -756,7 +749,7 @@ describe('search fields implementations', () => {
       describe('with empty include and exclude values', () => {
         beforeEach(async () => {
           searchField = baseField.extend({
-            filterKey: 'myOrg:myFilter',
+            name: 'myOrg:myFilter',
             includeValues: [],
             excludeValues: [],
           })
@@ -780,13 +773,13 @@ describe('search fields implementations', () => {
           'myField',
           injector,
           'asc'
-        ).extend({ filterKey: 'myOrg:myFilter' })
+        ).extend({ name: 'myOrg:myFilter' })
       })
       it('keeps the type of the base field', () => {
         expect(
           new DateRangeSearchField('myDate', injector)
             .extend({
-              filterKey: 'myOrg:myDate',
+              name: 'myOrg:myDate',
             })
             .getType()
         ).toEqual('dateRange')
@@ -812,15 +805,17 @@ describe('search fields implementations', () => {
   describe('#extend with a metadata language', () => {
     beforeEach(() => {
       currentMetadataLanguage = 'swe'
-      new MultilingualSearchField('tag', injector, 'desc', 'count').extend({
-        filterKey: 'myOrg:myFilter',
-      })
+      searchField = new MultilingualSearchField(
+        'tag',
+        injector,
+        'desc',
+        'count'
+      ).extend({ name: 'myOrg:myFilter' })
     })
-    it('registers the alias on the localized field', () => {
-      expect(esService.registerFieldAlias).toHaveBeenCalledWith(
-        'myOrg:myFilter',
-        'tag.langswe'
-      )
+    it('holds the localized field in its filter key', async () => {
+      expect(
+        await lastValueFrom(searchField.getFiltersForValues(['value1']))
+      ).toEqual({ 'tag.langswe#myOrg:myFilter': { value1: true } })
     })
   })
 

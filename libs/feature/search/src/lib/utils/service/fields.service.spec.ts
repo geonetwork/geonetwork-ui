@@ -18,7 +18,6 @@ class RecordsRepositoryMock {
 class ElasticsearchServiceMock {
   getSearchRequestBody = jest.fn()
   registerRuntimeField = jest.fn()
-  registerFieldAlias = jest.fn()
 }
 class ToolsApiServiceMock {
   getTranslationsPackage1 = jest.fn(() => EMPTY)
@@ -249,7 +248,9 @@ describe('FieldsService', () => {
         const filters = await lastValueFrom(
           service.buildFiltersFromFieldValues({ [name]: ['aValue'] })
         )
-        expect(Object.keys(filters)).toEqual([name])
+        expect(Object.keys(filters)).toEqual([
+          expect.stringMatching(new RegExp(`#${name}$`)),
+        ])
         const fieldValues = await lastValueFrom(
           service.readFieldValuesFromFilters(filters)
         )
@@ -335,8 +336,8 @@ describe('FieldsService', () => {
           })
         )
         expect(filters).toEqual({
-          'myOrg:myFilter': { firstValue: true },
-          'myOrg:labelled': { secondValue: true },
+          'tag.default#myOrg:myFilter': { firstValue: true },
+          'tag.default#myOrg:labelled': { secondValue: true },
         })
         const fieldValues = await lastValueFrom(
           service.readFieldValuesFromFilters(filters)
@@ -358,7 +359,7 @@ describe('FieldsService', () => {
       it('keeps them in two distinct filters', () => {
         expect(filters).toEqual({
           'tag.default': { firstValue: true },
-          'myOrg:myFilter': { secondValue: true },
+          'tag.default#myOrg:myFilter': { secondValue: true },
         })
       })
       it('reads back only its own value for each field', async () => {

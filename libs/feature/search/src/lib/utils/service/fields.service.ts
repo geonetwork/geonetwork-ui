@@ -164,7 +164,7 @@ export class FieldsService {
         continue
       }
       this.fields[filter.name] = baseField.extend({
-        filterKey: filter.name,
+        name: filter.name,
         includeValues: filter.includeValues,
         excludeValues: filter.excludeValues,
       })

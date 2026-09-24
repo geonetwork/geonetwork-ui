@@ -19,6 +19,7 @@ import {
   ElasticsearchService,
   isDateRange,
   METADATA_LANGUAGE,
+  toCustomFilterKey,
 } from '@geonetwork-ui/api/repository'
 import {
   BoundingBox,
@@ -130,8 +131,8 @@ export class SimpleSearchField implements AbstractSearchField {
   }
 
   extend(options: ExtendedFieldOptions): AbstractSearchField {
-    const { filterKey, includeValues, excludeValues } = options
-    this.esService.registerFieldAlias(filterKey, this.esFieldName)
+    const { name, includeValues, excludeValues } = options
+    const filterKey = toCustomFilterKey(this.esFieldName, name)
 
     const extended: SimpleSearchField = Object.create(this)
     return Object.assign(extended, {
@@ -229,7 +230,7 @@ export class MultilingualSearchField extends SimpleSearchField {
 }
 
 export interface ExtendedFieldOptions {
-  filterKey: string
+  name: string
   includeValues?: string[]
   excludeValues?: string[]
 }

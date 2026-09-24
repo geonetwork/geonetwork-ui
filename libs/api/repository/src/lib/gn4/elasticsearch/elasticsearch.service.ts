@@ -17,6 +17,7 @@ import {
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
 import { METADATA_LANGUAGE } from '../../metadata-language.token'
+import { getEsFieldName } from './filter-key.utils'
 import {
   AggregationResult,
   EsSearchParams,
@@ -58,8 +59,6 @@ export class ElasticsearchService {
     string,
     { script: string; type: 'keyword' | 'date' }
   > = {}
-
-  private fieldAliases: Record<string, string> = {}
 
   // we're using getters in case the defined languages change over time
   private get metadataLang(): LanguageCode {
@@ -155,14 +154,6 @@ export class ElasticsearchService {
     type: 'keyword' | 'date' = 'keyword'
   ) {
     this.runtimeFields[fieldName] = { script: expression, type }
-  }
-
-  registerFieldAlias(filterKey: string, esFieldName: string) {
-    this.fieldAliases[filterKey] = esFieldName
-  }
-
-  private resolveFieldAlias(filterKey: string): string {
-    return this.fieldAliases[filterKey] ?? filterKey
   }
 
   getMetadataByIdsPayload(uuids: string[]): EsSearchParams {
@@ -373,9 +364,7 @@ export class ElasticsearchService {
             )
             .map(
               (fieldname) =>
-                `${this.resolveFieldAlias(fieldname)}:(${makeQuery(
-                  filters[fieldname]
-                )})`
+                `${getEsFieldName(fieldname)}:(${makeQuery(filters[fieldname])})`
             )
             .join(' AND ')
     if (filters['gn-ui-crossFieldFilter']) {
@@ -391,7 +380,7 @@ export class ElasticsearchService {
         },
       },
       ...queryRanges.map(([searchField, dateRange]) =>
-        this.buildDateRangeQuery(searchField, dateRange)
+        this.buildDateRangeQuery(getEsFieldName(searchField), dateRange)
       ),
       spatialFilterExtent && {
         geo_shape: {
