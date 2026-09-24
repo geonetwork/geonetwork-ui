@@ -17,7 +17,6 @@ import {
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
 import { METADATA_LANGUAGE } from '../../metadata-language.token'
-import { getEsFieldName } from './filter-key.utils'
 import {
   AggregationResult,
   EsSearchParams,
@@ -380,7 +379,7 @@ export class ElasticsearchService {
         },
       },
       ...queryRanges.map(([searchField, dateRange]) =>
-        this.buildDateRangeQuery(getEsFieldName(searchField), dateRange)
+        this.buildDateRangeQuery(searchField, dateRange)
       ),
       spatialFilterExtent && {
         geo_shape: {

@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken, Injector, inject } from '@angular/core'
+import { inject, Injectable, InjectionToken, Injector } from '@angular/core'
 import {
   AbstractSearchField,
   AvailableServicesField,
@@ -11,11 +11,11 @@ import {
   MultilingualSearchField,
   OrganizationSearchField,
   OwnerSearchField,
+  RecordKindField,
   ResourceCreationRevisionDateSearchField,
   ResourceTypeLegacyField,
   SimpleSearchField,
   TranslatedSearchField,
-  RecordKindField,
   UserSearchField,
 } from './fields'
 import { forkJoin, Observable, of } from 'rxjs'
@@ -72,24 +72,23 @@ marker('search.filters.changeDate')
 marker('search.filters.resourceCreationRevisionDate')
 marker('search.filters.spatialExtent')
 
-export interface CustomSearchFieldFilter {
+export interface CustomSearchField {
   name: string
   baseFilter: string
   excludeValues?: string[]
   includeValues?: string[]
-  labelKey?: string
 }
 
-export const CUSTOM_FILTERS = new InjectionToken<CustomSearchFieldFilter[]>(
-  'custom-filters'
+export const CUSTOM_FIELDS = new InjectionToken<CustomSearchField[]>(
+  'custom-fields'
 )
 @Injectable({
   providedIn: 'root',
 })
 export class FieldsService {
   protected injector = inject(Injector)
-  private customFilters =
-    inject<CustomSearchFieldFilter[]>(CUSTOM_FILTERS, { optional: true }) ?? []
+  private customFields =
+    inject<CustomSearchField[]>(CUSTOM_FIELDS, { optional: true }) ?? []
 
   private baseFields: Record<string, AbstractSearchField> = {
     organization: new OrganizationSearchField(this.injector),
@@ -148,26 +147,25 @@ export class FieldsService {
 
   constructor() {
     this.fields = { ...this.baseFields }
-    for (const filter of this.customFilters) {
-      const baseField = this.baseFields[filter.baseFilter]
-      if (
-        !SUPPORTED_CUSTOM_FILTER_BASE_FILTERS.includes(filter.baseFilter) ||
-        !(baseField instanceof SimpleSearchField)
-      ) {
+    for (const customField of this.customFields) {
+      const baseField = this.baseFields[customField.baseFilter]
+      if (!(baseField instanceof SimpleSearchField)) {
         console.warn(
-          `WARNING: the custom filter '${filter.name}' uses an unsupported base_filter '${
-            filter.baseFilter
-          }' (supported values: ${SUPPORTED_CUSTOM_FILTER_BASE_FILTERS.join(
-            ', '
-          )}). This filter will be ignored.`
+          `The custom field '${customField.name}' relies on a base field '${
+            customField.baseFilter
+          }' that is not supported. This field will be ignored.`
         )
         continue
       }
-      this.fields[filter.name] = baseField.extend({
-        name: filter.name,
-        includeValues: filter.includeValues,
-        excludeValues: filter.excludeValues,
-      })
+      const newField = baseField.clone()
+      newField.fieldIdentifier = customField.name
+      if (customField.includeValues) {
+        newField.includeValues = customField.includeValues
+      }
+      if (customField.excludeValues) {
+        newField.excludeValues = customField.excludeValues
+      }
+      this.fields[customField.name] = newField
     }
   }
 
@@ -193,14 +191,6 @@ export class FieldsService {
 
   getFieldType(fieldName: string) {
     return this.fields[fieldName].getType()
-  }
-
-  getLabelKey(fieldName: string): string {
-    const customFilter = this.customFilters.find(
-      (filter) => filter.name === fieldName
-    )
-    if (!customFilter) return `search.filters.${fieldName}`
-    return customFilter.labelKey ?? `search.filters.${customFilter.baseFilter}`
   }
 
   buildFiltersFromFieldValues(

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 import {
-  CUSTOM_FILTERS,
+  CUSTOM_FIELDS,
   FieldsService,
   SUPPORTED_CUSTOM_FILTER_BASE_FILTERS,
 } from './fields.service'
@@ -223,7 +223,7 @@ describe('FieldsService', () => {
       TestBed.configureTestingModule({
         providers: [
           {
-            provide: CUSTOM_FILTERS,
+            provide: CUSTOM_FIELDS,
             useValue: SUPPORTED_CUSTOM_FILTER_BASE_FILTERS.map(
               (baseFilter) => ({ name: `myOrg:${baseFilter}`, baseFilter })
             ),
@@ -265,7 +265,7 @@ describe('FieldsService', () => {
       TestBed.configureTestingModule({
         providers: [
           {
-            provide: CUSTOM_FILTERS,
+            provide: CUSTOM_FIELDS,
             useValue: [
               { name: 'myOrg:myFilter', baseFilter: 'keyword' },
               {
