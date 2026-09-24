@@ -1280,7 +1280,61 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
     })
   })
 
+  describe('#registerFieldAlias', () => {
+    const getFilterQuery = (filters) =>
+      service['buildPayloadQuery'](filters, {}).bool.filter.find(
+        (part) => 'query_string' in part
+      )?.query_string.query
+
+    beforeEach(() => {
+      service.registerFieldAlias('myOrg:myFilter', 'tag.default')
+    })
+
+    it('resolves the alias to the physical field', () => {
+      expect(getFilterQuery({ 'myOrg:myFilter': { B: true } })).toEqual(
+        'tag.default:("B")'
+      )
+    })
+    it('keeps an aliased filter independent from its base field', () => {
+      expect(
+        getFilterQuery({
+          'tag.default': { A: true },
+          'myOrg:myFilter': { B: true },
+        })
+      ).toEqual('tag.default:("A") AND tag.default:("B")')
+    })
+    it('leaves an unregistered filter key untouched', () => {
+      expect(getFilterQuery({ 'tag.default': { A: true } })).toEqual(
+        'tag.default:("A")'
+      )
+    })
+  })
+
   describe('#buildAggregationsPayload', () => {
+    it('passes the include/exclude values of a terms aggregation', () => {
+      expect(
+        service.buildAggregationsPayload({
+          myTerm: {
+            type: 'terms',
+            sort: ['asc', 'key'],
+            field: 'tag.default',
+            limit: 30,
+            includeValues: ['value1', 'value2'],
+            excludeValues: ['value3'],
+          },
+        })
+      ).toStrictEqual({
+        myTerm: {
+          terms: {
+            field: 'tag.default',
+            order: { _key: 'asc' },
+            size: 30,
+            include: ['value1', 'value2'],
+            exclude: ['value3'],
+          },
+        },
+      })
+    })
     it('transforms to ES syntax', () => {
       expect(
         service.buildAggregationsPayload({
