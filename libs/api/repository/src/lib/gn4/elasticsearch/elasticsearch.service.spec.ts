@@ -439,11 +439,10 @@ describe('ElasticsearchService', () => {
         },
       })
     })
-    it('builds an intersection query for a registered native range field', () => {
-      service.registerRangeField('temporalExtentRange')
+    it('builds an intersection query for a field ending with DateRange', () => {
       const query = service['buildPayloadQuery'](
         {
-          temporalExtentRange: {
+          myDateRange: {
             start: new Date('2026-03-15'),
             end: new Date('2026-04-15'),
           },
@@ -452,7 +451,7 @@ describe('ElasticsearchService', () => {
       )
       expect(query.bool.filter).toContainEqual({
         range: {
-          temporalExtentRange: {
+          myDateRange: {
             gte: '2026-03-15',
             lte: '2026-04-15',
             format: 'yyyy-MM-dd',
@@ -461,11 +460,10 @@ describe('ElasticsearchService', () => {
         },
       })
     })
-    it('builds an open-ended intersection query for a registered native range field', () => {
-      service.registerRangeField('temporalExtentRange')
+    it('builds an open-ended intersection query for a field ending with DateRange', () => {
       const query = service['buildPayloadQuery'](
         {
-          temporalExtentRange: {
+          myDateRange: {
             start: new Date('2026-03-15'),
           },
         },
@@ -473,7 +471,7 @@ describe('ElasticsearchService', () => {
       )
       expect(query.bool.filter).toContainEqual({
         range: {
-          temporalExtentRange: {
+          myDateRange: {
             gte: '2026-03-15',
             format: 'yyyy-MM-dd',
             relation: 'intersects',

@@ -14,7 +14,6 @@ import {
   ResourceCreationRevisionDateSearchField,
   ResourceTypeLegacyField,
   SimpleSearchField,
-  TemporalExtentSearchField,
   TranslatedSearchField,
   RecordKindField,
   UserSearchField,
@@ -103,7 +102,11 @@ export class FieldsService {
       this.injector,
       'desc'
     ),
-    temporalExtent: new TemporalExtentSearchField(this.injector, 'desc'),
+    temporalExtent: new DateRangeSearchField(
+      'resourceTemporalExtentDateRange',
+      this.injector,
+      'desc'
+    ),
     availableServices: new AvailableServicesField(this.injector),
     spatialExtent: new BoundingBoxSearchField('spatialExtent', this.injector),
   } as Record<string, AbstractSearchField>

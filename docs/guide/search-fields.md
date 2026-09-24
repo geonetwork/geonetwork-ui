@@ -126,7 +126,7 @@ This field targets the name of the metadata standard used to describe a record. 
 
 This field targets the resource's creation and revision dates. A record is retained if either of these dates falls within the selected date range. Both the start and end of the range are inclusive, and either bound can be left unset.
 
-### Resource time span
+### Resource temporal extent
 
 > Field id: `temporalExtent`
 
@@ -137,3 +137,9 @@ This field targets the temporal extent(s) of the resource described by a record 
 > Field id: `changeDate`
 
 This field targets the date at which a record was last updated. Both the start and end of the range are inclusive, and either bound can be left unset.
+
+### Spatial extent
+
+> Field id: `spatialExtent`
+
+This field targets the spatial extent of a record, restricting results to those whose extent intersects a given bounding box. The value is a bounding box expressed as `minX,minY,maxX,maxY` (e.g. `?spatialExtent=-5.0,42.0,8.0,51.0`).

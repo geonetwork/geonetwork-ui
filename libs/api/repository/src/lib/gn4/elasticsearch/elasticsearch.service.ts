@@ -59,9 +59,6 @@ export class ElasticsearchService {
     { script: string; type: 'keyword' | 'date' }
   > = {}
 
-  // fields natively mapped as an ES range type
-  private rangeFields = new Set<string>()
-
   // we're using getters in case the defined languages change over time
   private get metadataLang(): LanguageCode {
     const mdLangValue = this.injector.get(METADATA_LANGUAGE, null)
@@ -156,10 +153,6 @@ export class ElasticsearchService {
     type: 'keyword' | 'date' = 'keyword'
   ) {
     this.runtimeFields[fieldName] = { script: expression, type }
-  }
-
-  registerRangeField(fieldName: string) {
-    this.rangeFields.add(fieldName)
   }
 
   getMetadataByIdsPayload(uuids: string[]): EsSearchParams {
@@ -302,8 +295,8 @@ export class ElasticsearchService {
 
   // builds a query matching records whose dates intersect the filter range
   private buildDateRangeQuery(searchField: string, dateRange: DateRange) {
-    if (this.rangeFields.has(searchField)) {
-      // native ES range field: query it directly with relation intersects
+    // fields ending with 'DateRange' maps as ES range type
+    if (searchField.endsWith('DateRange')) {
       return {
         range: {
           [searchField]: {

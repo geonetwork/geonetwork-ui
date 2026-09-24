@@ -12,7 +12,6 @@ import {
   RecordKindField,
   ResourceCreationRevisionDateSearchField,
   SimpleSearchField,
-  TemporalExtentSearchField,
   TranslatedSearchField,
   UserSearchField,
 } from './fields'
@@ -30,7 +29,6 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 
 class ElasticsearchServiceMock {
   registerRuntimeField = jest.fn()
-  registerRangeField = jest.fn()
 }
 
 class RecordsRepositoryMock {
@@ -474,38 +472,6 @@ describe('search fields implementations', () => {
       it('returns appropriate filters', () => {
         expect(filter).toEqual({
           resourceCreationRevisionDate: {
-            start: new Date('2020-01-01'),
-            end: new Date('2020-12-31'),
-          },
-        })
-      })
-    })
-  })
-
-  describe('TemporalExtentSearchField', () => {
-    beforeEach(() => {
-      searchField = new TemporalExtentSearchField(injector, 'desc')
-    })
-    it('registers resourceTemporalExtentDateRange as a native ES range field', () => {
-      expect(esService.registerRangeField).toHaveBeenCalledWith(
-        'resourceTemporalExtentDateRange'
-      )
-    })
-    it('is of type dateRange', () => {
-      expect(searchField.getType()).toEqual('dateRange')
-    })
-    describe('#getFiltersForValues', () => {
-      let filter
-      beforeEach(async () => {
-        filter = await lastValueFrom(
-          searchField.getFiltersForValues([
-            { start: new Date('2020-01-01'), end: new Date('2020-12-31') },
-          ])
-        )
-      })
-      it('returns appropriate filters', () => {
-        expect(filter).toEqual({
-          resourceTemporalExtentDateRange: {
             start: new Date('2020-01-01'),
             end: new Date('2020-12-31'),
           },

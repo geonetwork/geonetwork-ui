@@ -14,7 +14,6 @@ class RecordsRepositoryMock {
 class ElasticsearchServiceMock {
   getSearchRequestBody = jest.fn()
   registerRuntimeField = jest.fn()
-  registerRangeField = jest.fn()
 }
 class ToolsApiServiceMock {
   getTranslationsPackage1 = jest.fn(() => EMPTY)
