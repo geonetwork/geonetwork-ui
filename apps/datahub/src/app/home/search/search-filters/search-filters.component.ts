@@ -1,11 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   Input,
   OnInit,
   QueryList,
   ViewChildren,
-  inject,
 } from '@angular/core'
 import {
   FeatureSearchModule,
@@ -109,6 +109,7 @@ export class SearchFiltersComponent implements OnInit {
     if (this.platformService.supportsAuthentication()) {
       this.platformService.getMe().subscribe((user) => (this.userId = user?.id))
     }
+    const customFilters = getOptionalSearchConfig().CUSTOM_FILTERS
     this.searchConfig = (
       getOptionalSearchConfig().ADVANCED_FILTERS || [
         'organization',
@@ -137,10 +138,15 @@ export class SearchFiltersComponent implements OnInit {
           return false
         }
       })
-      .map((filter) => ({
-        fieldName: filter,
-        title: this.fieldsService.getLabelKey(filter),
-      }))
+      .map((filter) => {
+        const customFilter = customFilters?.find((f) => f.name === filter)
+        return {
+          fieldName: filter,
+          title: customFilter
+            ? customFilter.labelKey
+            : `search.filters.${filter}`,
+        }
+      })
   }
 
   open() {

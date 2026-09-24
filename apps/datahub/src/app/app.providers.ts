@@ -25,7 +25,7 @@ import {
 import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/elements'
 import { LANGUAGES_LIST } from '@geonetwork-ui/ui/catalog'
 import {
-  CUSTOM_FILTERS,
+  CUSTOM_FIELDS,
   DEFAULT_GEOCODING_PROVIDER,
   FILTER_GEOMETRY,
   GEOCODING_PROVIDER,
@@ -133,7 +133,7 @@ export const DATAHUB_CONFIG_PROVIDERS: Array<Provider> = [
     },
   },
   {
-    provide: CUSTOM_FILTERS,
+    provide: CUSTOM_FIELDS,
     useFactory: () => getOptionalSearchConfig()?.CUSTOM_FILTERS ?? [],
   },
   {
