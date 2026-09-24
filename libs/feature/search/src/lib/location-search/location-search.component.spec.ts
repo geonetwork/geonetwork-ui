@@ -8,11 +8,11 @@ import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import { GeocodingResult } from '@geospatial-sdk/geocoding'
 import {
-  GEOCODING_RESULT_LABELS,
+  GEOCODING_PROVIDER_LABELS,
+  GeocodingProviderLabels,
   LocationSearchComponent,
 } from './location-search.component'
 import { GeocodingService } from '../geocoding/geocoding.service'
-import { SpatialExtentJsonPointers } from '../geocoding/spatial-extent-result.parser'
 
 const RESULTS = [{ label: 'Beaufort', geom: null }]
 
@@ -22,9 +22,9 @@ const RESULT_WITH_ALL: GeocodingResult = {
   properties: { category: ['poi', 'commune'], citycode: ['73270'] },
 }
 
-const JSON_POINTERS: SpatialExtentJsonPointers = {
-  secondaryLabel: '/properties/category/1',
-  tertiaryLabel: '/properties/citycode/0',
+const LABELS: GeocodingProviderLabels = {
+  secondary: '/properties/category/1',
+  tertiary: '/properties/citycode/0',
 }
 
 const RESULT_WITHOUT_GEOM: GeocodingResult = {
@@ -51,7 +51,7 @@ describe('LocationSearchComponent', () => {
   let fixture: ComponentFixture<LocationSearchComponent>
   let geocodingService: GeocodingService
 
-  async function setup(jsonPointers?: SpatialExtentJsonPointers) {
+  async function setup(labels?: GeocodingProviderLabels) {
     await TestBed.configureTestingModule({
       imports: [LocationSearchComponent, NoopAnimationsModule],
       providers: [
@@ -60,9 +60,7 @@ describe('LocationSearchComponent', () => {
           provide: GeocodingService,
           useValue: { query: jest.fn(() => of(RESULTS)) },
         },
-        jsonPointers
-          ? { provide: GEOCODING_RESULT_LABELS, useValue: jsonPointers }
-          : [],
+        labels ? { provide: GEOCODING_PROVIDER_LABELS, useValue: labels } : [],
       ],
     }).compileComponents()
 
@@ -129,20 +127,49 @@ describe('LocationSearchComponent', () => {
     expect(emitted).toHaveBeenCalledWith([6.771, 45.72, 6.771, 45.72])
   })
 
-  it('resolves an undefined secondary label and the plain main label when no JSON Pointers are configured', () => {
+  describe('with a configured main label JSON Pointer', () => {
+    beforeEach(async () => {
+      TestBed.resetTestingModule()
+      await setup({ main: '/properties/name/0' })
+    })
+
+    it('resolves the main label using the JSON Pointer', () => {
+      expect(
+        component.getMainLabel({
+          ...RESULT_WITH_ALL,
+          properties: { name: ['Beaufort-sur-Doron'] },
+        })
+      ).toEqual('Beaufort-sur-Doron')
+    })
+
+    it('falls back to the result label when the JSON Pointer does not match', () => {
+      expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort')
+    })
+  })
+
+  it('resolves undefined secondary and tertiary labels and the plain main label when no JSON Pointers are configured', () => {
     expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toBeUndefined()
+    expect(component.getTertiaryLabel(RESULT_WITH_ALL)).toBeUndefined()
     expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort')
   })
 
   describe('with configured JSON Pointers', () => {
     beforeEach(async () => {
       TestBed.resetTestingModule()
-      await setup(JSON_POINTERS)
+      await setup(LABELS)
     })
 
-    it('resolves the secondary and main labels using the configured JSON Pointers', () => {
+    it('resolves the secondary and tertiary labels using the configured JSON Pointers', () => {
       expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toEqual('commune')
-      expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort, 73270')
+      expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort')
+      expect(component.getTertiaryLabel(RESULT_WITH_ALL)).toEqual('73270')
+    })
+
+    it('leaves out the tertiary label when its JSON Pointer does not match', () => {
+      expect(component.getSecondaryLabel(RESULT_WITHOUT_GEOM)).toEqual('epci')
+      expect(component.getMainLabel(RESULT_WITHOUT_GEOM)).toEqual(
+        'Eurométropole de Strasbourg'
+      )
     })
 
     it('renders the default item template with secondary/main labels and emits the bbox on selection', () => {
