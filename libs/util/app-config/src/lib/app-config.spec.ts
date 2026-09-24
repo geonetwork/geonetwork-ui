@@ -204,13 +204,13 @@ describe('app config utils', () => {
           ],
           GEOCODING_PROVIDER: 'geoplateforme',
           GEOCODING_PROVIDER_OPTIONS: {
-            category: 'administratif',
+            category: ['administratif'],
             limit: 5,
           },
-          GEOCODING_RESULT_LABELS: {
-            MAIN_LABEL_JSON_POINTER: '/properties/name/0',
-            SECONDARY_LABEL_JSON_POINTER: '/properties/citycode/0',
-            TERTIARY_LABEL_JSON_POINTER: '/properties/category/1',
+          GEOCODING_PROVIDER_LABELS: {
+            MAIN: '/properties/name/0',
+            SECONDARY: '/properties/citycode/0',
+            TERTIARY: '/properties/category/1',
           },
         })
       })

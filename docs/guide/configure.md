@@ -269,23 +269,46 @@ label_key = 'myOrg.secondCustomFilter'
   - [`GeonamesOptions`](https://camptocamp.github.io/geospatial-sdk/docs/api/📦-geocoding/interfaces/GeonamesOptions.html)
   - [`GeoplateformeOptions`](https://camptocamp.github.io/geospatial-sdk/docs/api/📦-geocoding/interfaces/GeoplateformeOptions.html)
 
-  For example:
+  Options holding a list of values (e.g. `index` or `category` for `'geoplateforme'`) must be given as arrays, even for a single value. For example:
 
   ```toml
   geocoding_provider = "geoplateforme"
-  geocoding_provider_options.category = "administratif"
+  geocoding_provider_options.index = ["poi"]
+  geocoding_provider_options.category = ["administratif"]
   geocoding_provider_options.limit = 5
   ```
 
-- `[search.geocoding_result_labels]` (optional)
+- `geocoding_provider_labels` (optional)
 
-  JSON Pointers (resolved against a geocoding result) used to derive the label shown when searching by spatial extent. `main_label_json_pointer` defaults to `/label`.
+  Each result of the location search dropdown is displayed on one or two lines, built from up to three labels:
+
+  ```text
+  ┌──────────────────────────────┐
+  │ commune                      │  <- secondary
+  │ Beaufort, 73034              │  <- main, tertiary
+  ├──────────────────────────────┤
+  │ commune                      │
+  │ Beaufort, 34026              │
+  └──────────────────────────────┘
+  ```
+
+  - `main`: the name of the place, shown as the title of the result; defaults to `/label`, the label computed by the geocoding provider
+  - `secondary`: shown in a smaller, grey font above the main label; not shown by default
+  - `tertiary`: appended to the main label, separated by a comma; not shown by default
+
+  `secondary` and `tertiary` are useful to tell apart results sharing the same name, like the two "Beaufort" communes above.
+
+  Each label is a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) resolved against the geocoding result, which holds a `label`, a `geom` and `properties`; `properties` holds the fields returned by the provider, so they differ from one provider to another (e.g. `/properties/citycode/0` for a Géoplateforme POI). `secondary` and `tertiary` are left out when their pointer does not match a text value, while `main` falls back to the label computed by the provider.
+
+  The dropdown above is obtained with the following configuration, which shows the type of administrative entity (commune, département…) and the INSEE code of each result:
 
   ```toml
-  [search.geocoding_result_labels]
-  main_label_json_pointer = "/label"
-  secondary_label_json_pointer = "/properties/citycode/0"
-  tertiary_label_json_pointer = "/properties/category/1"
+  geocoding_provider = "geoplateforme"
+  geocoding_provider_options.index = ["poi"]
+  geocoding_provider_options.category = ["administratif"]
+  geocoding_provider_labels.main = "/properties/name/0"
+  geocoding_provider_labels.secondary = "/properties/category/1"
+  geocoding_provider_labels.tertiary = "/properties/citycode/0"
   ```
 
 - `[[search_preset]]` (multiple, optional)

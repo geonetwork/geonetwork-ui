@@ -8,6 +8,7 @@ import {
   Output,
 } from '@angular/core'
 import { Observable } from 'rxjs'
+import pointer from 'jsonpointer'
 import { GeocodingResult } from '@geospatial-sdk/geocoding'
 import {
   AutocompleteComponent,
@@ -15,14 +16,16 @@ import {
 } from '@geonetwork-ui/ui/inputs'
 import { BoundingBox, getGeometryBoundingBox } from '@geonetwork-ui/util/shared'
 import { GeocodingService } from '../geocoding/geocoding.service'
-import {
-  parseSpatialExtentResult,
-  SpatialExtentJsonPointers,
-} from '../geocoding/spatial-extent-result.parser'
 
 // JSON Pointers resolved against a geocoding result to build the labels shown in the dropdown
-export const GEOCODING_RESULT_LABELS =
-  new InjectionToken<SpatialExtentJsonPointers>('geocodingResultLabels', {
+export interface GeocodingProviderLabels {
+  main?: string
+  secondary?: string
+  tertiary?: string
+}
+
+export const GEOCODING_PROVIDER_LABELS =
+  new InjectionToken<GeocodingProviderLabels>('geocodingProviderLabels', {
     factory: () => ({}),
   })
 
@@ -35,7 +38,7 @@ export const GEOCODING_RESULT_LABELS =
 })
 export class LocationSearchComponent {
   private geocodingService = inject(GeocodingService)
-  private jsonPointers = inject(GEOCODING_RESULT_LABELS)
+  private labels = inject(GEOCODING_PROVIDER_LABELS)
 
   @Input() placeholder = ''
   @Output() resultSelected = new EventEmitter<GeocodingResult>()
@@ -47,15 +50,24 @@ export class LocationSearchComponent {
     this.geocodingService.query(text)
 
   getSecondaryLabel(result: GeocodingResult): string | undefined {
-    return parseSpatialExtentResult(result, this.jsonPointers).secondaryLabel
+    return this.resolveLabel(result, this.labels.secondary)
   }
 
   getMainLabel(result: GeocodingResult): string {
-    const { label, tertiaryLabel } = parseSpatialExtentResult(
-      result,
-      this.jsonPointers
-    )
-    return tertiaryLabel ? `${label}, ${tertiaryLabel}` : label
+    return this.resolveLabel(result, this.labels.main) ?? result.label
+  }
+
+  getTertiaryLabel(result: GeocodingResult): string | undefined {
+    return this.resolveLabel(result, this.labels.tertiary)
+  }
+
+  private resolveLabel(
+    result: GeocodingResult,
+    path?: string
+  ): string | undefined {
+    if (!path) return undefined
+    const value = pointer.get(result, path)
+    return typeof value === 'string' && value ? value : undefined
   }
 
   handleItemSelected(item: AutocompleteItem) {
