@@ -129,6 +129,39 @@ export class SimpleSearchField implements AbstractSearchField {
     return of(values)
   }
 
+  extend(options: ExtendedFieldOptions): AbstractSearchField {
+    const { filterKey, includeValues, excludeValues } = options
+    this.esService.registerFieldAlias(filterKey, this.esFieldName)
+
+    const extended: SimpleSearchField = Object.create(this)
+    return Object.assign(extended, {
+      getAggregations: (): AggregationsParams => {
+        const aggregations = this.getAggregations()
+        return Object.keys(aggregations).reduce(
+          (acc, name) => ({
+            ...acc,
+            [name]: {
+              ...aggregations[name],
+              ...(includeValues?.length && { includeValues }),
+              ...(excludeValues?.length && { excludeValues }),
+            },
+          }),
+          {} as AggregationsParams
+        )
+      },
+      getFiltersForValues: (
+        values: FieldValue[] | DateRange[]
+      ): Observable<FieldFilters> =>
+        (this.getFiltersForValues(values) as Observable<FieldFilters>).pipe(
+          map((filters) => ({ [filterKey]: filters[this.esFieldName] }))
+        ),
+      getValuesForFilter: (
+        filters: FieldFilters
+      ): Observable<FieldValue[] | FieldValue | DateRange> =>
+        this.getValuesForFilter({ [this.esFieldName]: filters[filterKey] }),
+    })
+  }
+
   getType(): FieldType {
     return 'values'
   }
@@ -193,6 +226,12 @@ export class MultilingualSearchField extends SimpleSearchField {
       this.esFieldName += '.default'
     }
   }
+}
+
+export interface ExtendedFieldOptions {
+  filterKey: string
+  includeValues?: string[]
+  excludeValues?: string[]
 }
 
 export class FullTextSearchField implements AbstractSearchField {
