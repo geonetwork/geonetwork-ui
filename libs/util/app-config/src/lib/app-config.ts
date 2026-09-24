@@ -291,13 +291,15 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
                 filters: param.filters,
               })),
               ADVANCED_FILTERS: parsedSearchSection.advanced_filters,
-              CUSTOM_FILTERS: parsedCustomFilters.map((customFilter) => ({
-                name: customFilter.name,
-                baseFilter: customFilter.base_filter,
-                excludeValues: customFilter.exclude_values,
-                includeValues: customFilter.include_values,
-                labelKey: customFilter.label_key,
-              })),
+              CUSTOM_FILTERS: (parsedCustomFilters ?? []).map(
+                (customFilter) => ({
+                  name: customFilter.name,
+                  baseFilter: customFilter.base_filter,
+                  excludeValues: customFilter.exclude_values,
+                  includeValues: customFilter.include_values,
+                  labelKey: customFilter.label_key,
+                })
+              ),
               LIMIT: parsedSearchSection.limit,
               SPATIAL_EXTENT_MAX_FILE_SIZE:
                 parsedSearchSection.spatial_extent_max_file_size,

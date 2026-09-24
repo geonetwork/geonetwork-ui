@@ -96,6 +96,23 @@ main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
 `
 
+export const customFilterMissingMandatoryConfigFixture = () => `
+[global]
+geonetwork4_api_url = "/geonetwork/srv/api"
+
+[theme]
+primary_color = "#093564"
+secondary_color = "#c2e9dc"
+main_color = "#212029" # All-purpose text color
+background_color = "#fdfbff"
+
+[search]
+advanced_filters = ['myOrg:firstCustomFilter']
+
+[[custom_filter]]
+name = 'myOrg:firstCustomFilter'
+`
+
 export const mapConfigFixture = (): MapConfig => ({
   MAX_ZOOM: 10,
   MAX_EXTENT: [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855],
