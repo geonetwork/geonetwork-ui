@@ -363,8 +363,7 @@ export class ElasticsearchService {
                 JSON.stringify(filters[fieldname]) !== '{}'
             )
             .map(
-              (fieldname) =>
-                `${getEsFieldName(fieldname)}:(${makeQuery(filters[fieldname])})`
+              (fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`
             )
             .join(' AND ')
     if (filters['gn-ui-crossFieldFilter']) {
@@ -380,7 +379,7 @@ export class ElasticsearchService {
         },
       },
       ...queryRanges.map(([searchField, dateRange]) =>
-        this.buildDateRangeQuery(getEsFieldName(searchField), dateRange)
+        this.buildDateRangeQuery(searchField, dateRange)
       ),
       spatialFilterExtent && {
         geo_shape: {

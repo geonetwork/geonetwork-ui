@@ -132,7 +132,7 @@ export class SimpleSearchField implements AbstractSearchField {
 
   extend(options: ExtendedFieldOptions): AbstractSearchField {
     const { name, includeValues, excludeValues } = options
-    const filterKey = toCustomFilterKey(this.esFieldName, name)
+    const filterKey = this.esFieldName
 
     const extended: SimpleSearchField = Object.create(this)
     return Object.assign(extended, {
