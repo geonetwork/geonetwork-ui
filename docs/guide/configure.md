@@ -208,10 +208,10 @@ An entry holding a prefix (e.g. `'myOrg:myFilter'`) does not refer to a search f
 which has to be declared in a `[[custom_filter]]` section (see below); entries without a matching
 `[[custom_filter]]` section are ignored.
 
-⚠️ **WARNING**: `'resourceType'` filter has been deprecated, please use `'recordKind'` instead. Using both filters is not recommended as it may imply some inconsistencies in the page results. `'resourceType'` filter will fetch records of all type (instead of `featureCatalog`), whereas `'recordKind'` filter will fetch `datasets` (wich are `datasets`, `featureCatalog` that are `datasets`, and `series`), `services` and `reuse` (`application` and all kind of `map`).
+⚠️ **WARNING**: `'resourceType'` filter has been deprecated, please use `'recordKind'` instead. Using both filters is not recommended as it may imply some inconsistencies in the page results. `'resourceType'` filter will fetch records of all type (instead of `featureCatalog`), whereas `'recordKind'` filter will fetch `datasets` (which are `datasets`, `featureCatalog` that are `datasets`, and `series`), `services` and `reuse` (`application` and all kind of `map`).
 For a detailed explanation on the classification system, see [this documentation page](../guide/record-kind.md).
 
-⚠️ **Breaking change**: Record of type featureCatalog are not retrieved anymore.
+⚠️ **Breaking change**: Records of type featureCatalog are not retrieved anymore.
 
 - `[[custom_filter]]` (multiple, optional)
 
@@ -222,8 +222,8 @@ For a detailed explanation on the classification system, see [this documentation
 
   - `name` (mandatory): name of the filter as it should appear in the `advanced_filters` setting; custom filters must have a prefix separated by a colon in their name, e.g.: "myOrg:myOrgKeywords"; case sensitive
   - `base_filter` (mandatory): the search field the filter is based on; only `'keyword'` is supported for now
-  - `exclude_values` (optional): an array of values of the base filter which should not be offered to the user in the UI (e.g. dropdowns); it does not have any effect when cutom filter fields are used in the URL
-  - `include_values` (optional): an array of values of the base filter which should be the only ones offered to the user in the UI (e.g. dropdowns); it does not have any effect when cutom filter fields are used in the URL
+  - `exclude_values` (optional): an array of values of the base filter which should not be offered to the user in the UI (e.g. dropdowns); it does not have any effect when custom filter fields are used in the URL
+  - `include_values` (optional): an array of values of the base filter which should be the only ones offered to the user in the UI (e.g. dropdowns); it does not have any effect when custom filter fields are used in the URL
   - `label_key` (optional): a translation key used as the label of the filter; it can be defined in the
     `[translations]` sections. Defaults to the label of the base filter.
 
@@ -541,6 +541,6 @@ If the translation key `application-banner` is available (not empty), the Geonet
 
 #### Page titles
 
-By default the datahub creates a page title for each page following the pattern `{pageTitle} | Datahub`. This pattern can be overridden by adding a translation key `datahub-page-title-pattern` in geonetwork with a new pattern as value, eg. `MyDatahubApp - {pageTitle}`. Be sure to provide values for all languages you need.
+By default the datahub creates a page title for each page following the pattern `{pageTitle} | Datahub`. This pattern can be overridden by adding a translation key `datahub-page-title-pattern` in geonetwork with a new pattern as value, e.g. `MyDatahubApp - {pageTitle}`. Be sure to provide values for all languages you need.
 
 The `pageTitle` within this pattern may be a metadata record title, an organisation title or a gn-ui translation key for one of the datahub pages (`datahub.pageTitle.home`, `datahub.pageTitle.organizations`, `datahub.pageTitle.recordSearch`). These can thus be overridden within the `default.toml` configuration like any other translation key.
