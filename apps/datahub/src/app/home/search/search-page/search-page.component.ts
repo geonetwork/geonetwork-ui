@@ -57,6 +57,7 @@ export class SearchPageComponent implements OnInit {
     this.metadataQualityDisplay = metadataQualityConfig.ENABLED
 
     const searchConfig: SearchConfig = getOptionalSearchConfig()
+    if (searchConfig?.LIMIT) this.searchFacade.setPageSize(searchConfig.LIMIT)
     this.displayRecordKindFilter =
       searchConfig?.RECORD_KIND_QUICK_FILTER !== false
   }

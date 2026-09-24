@@ -7,6 +7,7 @@ import { getGeometryFromGeoJSON, PROXY_PATH } from '@geonetwork-ui/util/shared'
 import {
   getGlobalConfig,
   getMapContextLayerFromConfig,
+  getOptionalEditorConfig,
   getOptionalMapConfig,
   getOptionalSearchConfig,
   getThemeConfig,
@@ -31,6 +32,7 @@ import {
   RECORD_DATASET_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
+  SPATIAL_EXTENT_MAX_FILE_SIZE,
 } from '@geonetwork-ui/feature/search'
 import {
   DefaultRouterModule,
@@ -52,7 +54,10 @@ import {
   MAP_VIEW_CONSTRAINTS,
 } from '@geonetwork-ui/ui/map'
 import { MAX_FEATURE_COUNT } from './record/record-data-preview/record-data-preview.component'
-import { REUSE_FORM_URL } from '@geonetwork-ui/feature/notify-reuse'
+import {
+  NEW_RECORD_DEFAULT_LANGUAGE,
+  REUSE_FORM_URL,
+} from '@geonetwork-ui/feature/notify-reuse'
 import { DatahubRouterService } from './router/datahub-router.service'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
@@ -178,6 +183,15 @@ export const DATAHUB_CONFIG_PROVIDERS: Array<Provider> = [
   {
     provide: REUSE_FORM_URL,
     useFactory: () => getGlobalConfig().REUSE_FORM_URL,
+  },
+  {
+    provide: NEW_RECORD_DEFAULT_LANGUAGE,
+    useFactory: () => getOptionalEditorConfig()?.NEW_RECORD_DEFAULT_LANGUAGE,
+  },
+  {
+    provide: SPATIAL_EXTENT_MAX_FILE_SIZE,
+    useFactory: () =>
+      getOptionalSearchConfig()?.SPATIAL_EXTENT_MAX_FILE_SIZE ?? null,
   },
   {
     provide: GEOCODING_PROVIDER,

@@ -12,6 +12,7 @@ const RouterFacadeMock = {
 const SearchFacadeMock = {
   setFilters: jest.fn(() => this),
   setResultsLayout: jest.fn(() => this),
+  setPageSize: jest.fn(() => this),
 }
 
 describe('SearchPageComponent', () => {
