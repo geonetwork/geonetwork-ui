@@ -126,6 +126,12 @@ This field targets the name of the metadata standard used to describe a record. 
 
 This field targets the resource's creation and revision dates. A record is retained if either of these dates falls within the selected date range. Both the start and end of the range are inclusive, and either bound can be left unset.
 
+### Resource time span
+
+> Field id: `temporalExtent`
+
+This field targets the temporal extent(s) of the resource described by a record (i.e. the period(s) of time the resource's data covers). A record is retained if any of its resource time spans intersects the selected date range. Both the start and end of the range are inclusive, and either bound can be left unset.
+
 ### Change date
 
 > Field id: `changeDate`

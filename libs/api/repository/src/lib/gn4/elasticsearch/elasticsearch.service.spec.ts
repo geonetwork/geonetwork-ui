@@ -439,6 +439,48 @@ describe('ElasticsearchService', () => {
         },
       })
     })
+    it('builds an intersection query for a registered native range field', () => {
+      service.registerRangeField('temporalExtentRange')
+      const query = service['buildPayloadQuery'](
+        {
+          temporalExtentRange: {
+            start: new Date('2026-03-15'),
+            end: new Date('2026-04-15'),
+          },
+        },
+        {}
+      )
+      expect(query.bool.filter).toContainEqual({
+        range: {
+          temporalExtentRange: {
+            gte: '2026-03-15',
+            lte: '2026-04-15',
+            format: 'yyyy-MM-dd',
+            relation: 'intersects',
+          },
+        },
+      })
+    })
+    it('builds an open-ended intersection query for a registered native range field', () => {
+      service.registerRangeField('temporalExtentRange')
+      const query = service['buildPayloadQuery'](
+        {
+          temporalExtentRange: {
+            start: new Date('2026-03-15'),
+          },
+        },
+        {}
+      )
+      expect(query.bool.filter).toContainEqual({
+        range: {
+          temporalExtentRange: {
+            gte: '2026-03-15',
+            format: 'yyyy-MM-dd',
+            relation: 'intersects',
+          },
+        },
+      })
+    })
     it('add any and other fields query_strings and limit search payload by ids (also if id array is empty)', () => {
       const query = service['buildPayloadQuery'](
         {

@@ -59,6 +59,9 @@ export class ElasticsearchService {
     { script: string; type: 'keyword' | 'date' }
   > = {}
 
+  // fields natively mapped as an ES range type
+  private rangeFields = new Set<string>()
+
   // we're using getters in case the defined languages change over time
   private get metadataLang(): LanguageCode {
     const mdLangValue = this.injector.get(METADATA_LANGUAGE, null)
@@ -153,6 +156,10 @@ export class ElasticsearchService {
     type: 'keyword' | 'date' = 'keyword'
   ) {
     this.runtimeFields[fieldName] = { script: expression, type }
+  }
+
+  registerRangeField(fieldName: string) {
+    this.rangeFields.add(fieldName)
   }
 
   getMetadataByIdsPayload(uuids: string[]): EsSearchParams {
@@ -293,12 +300,25 @@ export class ElasticsearchService {
     return Object.values(filters).find(isBoundingBox)
   }
 
-  // if a field registered min/max runtime fields, its dates form an interval
-  // the record matches if that interval intersects the filter range
+  // builds a query matching records whose dates intersect the filter range
   private buildDateRangeQuery(searchField: string, dateRange: DateRange) {
+    if (this.rangeFields.has(searchField)) {
+      // native ES range field: query it directly with relation intersects
+      return {
+        range: {
+          [searchField]: {
+            ...(dateRange.start && { gte: formatDate(dateRange.start) }),
+            ...(dateRange.end && { lte: formatDate(dateRange.end) }),
+            format: 'yyyy-MM-dd',
+            relation: 'intersects',
+          },
+        },
+      }
+    }
     const minField = `${searchField}Min`
     const maxField = `${searchField}Max`
     if (minField in this.runtimeFields && maxField in this.runtimeFields) {
+      // min/max runtime fields form an interval per record; match if it intersects the filter range
       const filter = [
         dateRange.start && {
           range: {

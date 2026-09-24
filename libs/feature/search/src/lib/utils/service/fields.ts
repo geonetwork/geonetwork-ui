@@ -469,6 +469,13 @@ if (dates.length > 0) { dates.sort(null); emit(dates[dates.length - 1]); }`,
   }
 }
 
+export class TemporalExtentSearchField extends DateRangeSearchField {
+  constructor(injector: Injector, order: 'asc' | 'desc' = 'desc') {
+    super('resourceTemporalExtentDateRange', injector, order)
+    this.esService.registerRangeField(this.esFieldName)
+  }
+}
+
 export class BoundingBoxSearchField extends SimpleSearchField {
   getAvailableValues(): Observable<FieldAvailableValue[]> {
     return of([])

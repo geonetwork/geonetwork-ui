@@ -14,6 +14,7 @@ import {
   ResourceCreationRevisionDateSearchField,
   ResourceTypeLegacyField,
   SimpleSearchField,
+  TemporalExtentSearchField,
   TranslatedSearchField,
   RecordKindField,
   UserSearchField,
@@ -45,6 +46,7 @@ marker('search.filters.publisherOrg')
 marker('search.filters.user')
 marker('search.filters.changeDate')
 marker('search.filters.resourceCreationRevisionDate')
+marker('search.filters.temporalExtent')
 marker('search.filters.spatialExtent')
 @Injectable({
   providedIn: 'root',
@@ -101,6 +103,7 @@ export class FieldsService {
       this.injector,
       'desc'
     ),
+    temporalExtent: new TemporalExtentSearchField(this.injector, 'desc'),
     availableServices: new AvailableServicesField(this.injector),
     spatialExtent: new BoundingBoxSearchField('spatialExtent', this.injector),
   } as Record<string, AbstractSearchField>
