@@ -31,7 +31,7 @@ describe('datasets', () => {
   const closeDropdown = () =>
     cy.get('body').then(($body) => {
       if ($body.find('.cdk-overlay-backdrop').length) {
-        cy.get('.cdk-overlay-backdrop').click()
+        cy.get('body').click(0, 0)
       }
     })
 
@@ -538,6 +538,99 @@ describe('datasets', () => {
       'contain',
       'resourceCreationRevisionDate=1900-01-01..1900-01-02'
     )
+  })
+
+  it('should filter the results with custom filters based on the keyword filter', () => {
+    cy.intercept('GET', '/assets/configuration/default.toml', {
+      fixture: 'config-with-custom-filters.toml',
+    })
+    cy.visit('/search')
+    cy.get('[data-cy="resultsHitsFound"]').as('hits')
+    cy.get('@hits').should('contain.text', '33 ')
+    cy.get('[data-cy=filters-expand]').filter(':visible').click()
+    cy.get('[data-cy=filters-collapse]').should('be.visible')
+
+    cy.get('gn-ui-dropdown-multiselect[data-cy-field="keyword"]').as('keyword')
+    cy.get(
+      'gn-ui-dropdown-multiselect[data-cy-field="myOrg:withoutSomeKeywords"]'
+    ).as('withoutSomeKeywords')
+    cy.get(
+      'gn-ui-dropdown-multiselect[data-cy-field="myOrg:onlySomeKeywords"]'
+    ).as('onlySomeKeywords')
+
+    const selectedCountOf = (filter: string) =>
+      cy.get(filter).find('.gn-ui-multiselect-counter')
+
+    // it labels every custom filter with the translation of its label_key
+    cy.get('@withoutSomeKeywords').should(
+      'contain.text',
+      'Keywords without the most common ones'
+    )
+    cy.get('@onlySomeKeywords').should(
+      'contain.text',
+      'Only pollution and agriculture'
+    )
+    cy.screenshot({ capture: 'viewport' })
+
+    // it only offers the values listed in include_values
+    cy.get('@onlySomeKeywords').click()
+    getFilterOptions()
+    cy.get('@optionsLabel').should('eql', ['pollution (4)', 'Agriculture (3)'])
+    closeDropdown()
+
+    // it leaves out the values listed in exclude_values, and keeps all others
+    cy.get('@withoutSomeKeywords').click()
+    getFilterOptions()
+    cy.get('@optionsLabel').should('not.contain', 'Région wallonne (12)')
+    cy.get('@optionsLabel').should('not.contain', 'Reporting INSPIRENO (8)')
+    cy.get('@optionsLabel')
+      .invoke('slice', 0, 2)
+      .should('eql', ['Nature et environnement (7)', 'Sol et sous-sol (6)'])
+    closeDropdown()
+
+    // it leaves the values offered by the filter it is based on untouched
+    cy.get('@keyword').click()
+    getFilterOptions()
+    cy.get('@optionsLabel')
+      .invoke('slice', 0, 2)
+      .should('eql', ['Région wallonne (12)', 'Reporting INSPIRENO (8)'])
+    closeDropdown()
+
+    // it filters the results under its own URL parameter
+    cy.get('@onlySomeKeywords').click()
+    getFilterOptions()
+    cy.get('@options').contains('pollution').click()
+    cy.location('search').should((search) =>
+      expect(decodeURIComponent(search)).to.contain(
+        'myOrg:onlySomeKeywords=pollution'
+      )
+    )
+    cy.get('@hits').should('contain.text', '4 ')
+    closeDropdown()
+
+    // it holds its own selection, leaving the filter it is based on unselected
+    selectedCountOf('@onlySomeKeywords').should('contain.text', '1')
+    selectedCountOf('@keyword').should('not.exist')
+    cy.location('search').should((search) =>
+      expect(decodeURIComponent(search)).not.to.contain('keyword=')
+    )
+    cy.screenshot({ capture: 'viewport' })
+
+    // it narrows down the results further when the base filter is used too
+    cy.get('@keyword').click()
+    getFilterOptions()
+    cy.get('@options').contains('Sol et sous-sol').click()
+    cy.get('@hits').should('contain.text', '3 ')
+    closeDropdown()
+    selectedCountOf('@onlySomeKeywords').should('contain.text', '1')
+    selectedCountOf('@keyword').should('contain.text', '1')
+
+    // it restores both selections from the URL
+    cy.visit('/search?keyword=Sol et sous-sol&myOrg:onlySomeKeywords=pollution')
+    cy.get('[data-cy=filters-expand]').click({ force: true })
+    cy.get('@hits').should('contain.text', '3 ')
+    selectedCountOf('@onlySomeKeywords').should('contain.text', '1')
+    selectedCountOf('@keyword').should('contain.text', '1')
   })
 
   it('should display the metadata quality widget when enabled', () => {

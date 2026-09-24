@@ -53,20 +53,32 @@ export class SimpleSearchField implements AbstractSearchField {
   // FIXME: this is required to register runtime fields; abstract this as well
   protected esService = this.injector.get(ElasticsearchService)
 
+  public fieldIdentifier = this.esFieldName
+  public includeValues: string[] = []
+  public excludeValues: string[] = []
+
   constructor(
     protected esFieldName: string,
     protected injector: Injector,
     protected order: 'asc' | 'desc' = 'asc',
     protected orderType: 'key' | 'count' = 'key'
-  ) {}
+  ) {
+    this.esService.registerFieldAlias(this.fieldIdentifier, this.esFieldName)
+  }
 
   protected getAggregations(): AggregationsParams {
     return {
-      [this.esFieldName]: {
+      [this.fieldIdentifier]: {
         type: 'terms',
         field: this.esFieldName,
         limit: 1000,
         sort: [this.order, this.orderType],
+        ...(this.includeValues?.length && {
+          includeValues: this.includeValues,
+        }),
+        ...(this.excludeValues?.length && {
+          excludeValues: this.excludeValues,
+        }),
       },
     }
   }
@@ -79,7 +91,7 @@ export class SimpleSearchField implements AbstractSearchField {
     return this.repository.aggregate(this.getAggregations()).pipe(
       map(
         (response) =>
-          (response[this.esFieldName] as AggregationBuckets).buckets || []
+          (response[this.fieldIdentifier] as AggregationBuckets).buckets || []
       ),
       switchMap((buckets: TermBucket[]) => {
         const bucketPromises = buckets.map(async (bucket) => ({
@@ -97,7 +109,7 @@ export class SimpleSearchField implements AbstractSearchField {
     // FieldValue[]
     if (this.getType() === 'values') {
       return of({
-        [this.esFieldName]: (values as FieldValue[]).reduce((acc, val) => {
+        [this.fieldIdentifier]: (values as FieldValue[]).reduce((acc, val) => {
           const value = val.toString()
           if (value !== '') {
             return { ...acc, [value]: true }
@@ -108,13 +120,13 @@ export class SimpleSearchField implements AbstractSearchField {
     }
     // DateRange
     return of({
-      [this.esFieldName]: values[0] !== '' ? values[0] : {},
+      [this.fieldIdentifier]: values[0] !== '' ? values[0] : {},
     })
   }
   getValuesForFilter(
     filters: FieldFilters
   ): Observable<FieldValue[] | FieldValue | DateRange> {
-    const filter = filters[this.esFieldName]
+    const filter = filters[this.fieldIdentifier]
     if (!filter) return of([])
     // filter by expression
     if (typeof filter === 'string') {
@@ -131,6 +143,10 @@ export class SimpleSearchField implements AbstractSearchField {
 
   getType(): FieldType {
     return 'values'
+  }
+
+  clone(): typeof this {
+    return Object.create(this)
   }
 }
 
@@ -192,6 +208,7 @@ export class MultilingualSearchField extends SimpleSearchField {
     } else {
       this.esFieldName += '.default'
     }
+    this.esService.registerFieldAlias(this.fieldIdentifier, this.esFieldName)
   }
 }
 
@@ -476,12 +493,12 @@ export class BoundingBoxSearchField extends SimpleSearchField {
 
   getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
     return of({
-      [this.esFieldName]: values.map(Number) as BoundingBox,
+      [this.fieldIdentifier]: values.map(Number) as BoundingBox,
     })
   }
 
   getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
-    const filter = filters[this.esFieldName]
+    const filter = filters[this.fieldIdentifier]
     return of(isBoundingBox(filter) ? filter : [])
   }
 
@@ -599,7 +616,7 @@ export class RecordKindField extends SimpleSearchField {
 
   getFiltersForValues(values: FieldValue[]): Observable<FieldFilters | string> {
     const filters: FieldFilters = {
-      [this.esFieldName]: values.reduce((acc, value) => {
+      [this.fieldIdentifier]: values.reduce((acc, value) => {
         if (value === '') return { ...acc, [value]: true }
 
         const keysToAdd = this.TYPE_MAPPING[value] || [value]
@@ -626,7 +643,7 @@ export class RecordKindField extends SimpleSearchField {
   }
 
   getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
-    const filter = filters[this.esFieldName]
+    const filter = filters[this.fieldIdentifier]
     if (!filter) return of([])
 
     const activeValues = Object.keys(filter).filter((v) => filter[v])

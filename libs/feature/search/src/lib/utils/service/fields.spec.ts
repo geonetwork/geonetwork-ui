@@ -680,6 +680,145 @@ describe('search fields implementations', () => {
     })
   })
 
+  describe('#extend', () => {
+    let baseField: SimpleSearchField
+    beforeEach(() => {
+      baseField = new MultilingualSearchField('tag', injector, 'desc', 'count')
+      searchField = baseField.extend({ name: 'myOrg:myFilter' })
+    })
+    describe('#getFiltersForValues', () => {
+      it('uses its own filter key', async () => {
+        expect(
+          await lastValueFrom(searchField.getFiltersForValues(['value1']))
+        ).toEqual({ 'tag.default#myOrg:myFilter': { value1: true } })
+      })
+    })
+    describe('#getValuesForFilter', () => {
+      it('only reads its own filter key', async () => {
+        expect(
+          await lastValueFrom(
+            searchField.getValuesForFilter({
+              'tag.default': { value1: true },
+              'tag.default#myOrg:myFilter': { value2: true },
+            })
+          )
+        ).toEqual(['value2'])
+      })
+      it('returns no value when its filter key is absent', async () => {
+        expect(
+          await lastValueFrom(
+            searchField.getValuesForFilter({ 'tag.default': { value1: true } })
+          )
+        ).toEqual([])
+      })
+    })
+    describe('#getAvailableValues', () => {
+      it('aggregates on the base field', async () => {
+        await lastValueFrom(searchField.getAvailableValues())
+        expect(repository.aggregate).toHaveBeenCalledWith({
+          'tag.default': {
+            type: 'terms',
+            limit: 1000,
+            field: 'tag.default',
+            sort: ['desc', 'count'],
+          },
+        })
+      })
+      describe('with include and exclude values', () => {
+        beforeEach(async () => {
+          searchField = baseField.extend({
+            name: 'myOrg:myFilter',
+            includeValues: ['value1', 'value2'],
+            excludeValues: ['value3'],
+          })
+          await lastValueFrom(searchField.getAvailableValues())
+        })
+        it('restricts the aggregated values', () => {
+          expect(repository.aggregate).toHaveBeenCalledWith({
+            'tag.default': {
+              type: 'terms',
+              limit: 1000,
+              field: 'tag.default',
+              sort: ['desc', 'count'],
+              includeValues: ['value1', 'value2'],
+              excludeValues: ['value3'],
+            },
+          })
+        })
+      })
+      describe('with empty include and exclude values', () => {
+        beforeEach(async () => {
+          searchField = baseField.extend({
+            name: 'myOrg:myFilter',
+            includeValues: [],
+            excludeValues: [],
+          })
+          await lastValueFrom(searchField.getAvailableValues())
+        })
+        it('does not restrict the aggregated values', () => {
+          expect(repository.aggregate).toHaveBeenCalledWith({
+            'tag.default': {
+              type: 'terms',
+              limit: 1000,
+              field: 'tag.default',
+              sort: ['desc', 'count'],
+            },
+          })
+        })
+      })
+    })
+    describe('when extending a field that has its own behaviour', () => {
+      beforeEach(() => {
+        searchField = new TranslatedSearchField(
+          'myField',
+          injector,
+          'asc'
+        ).extend({ name: 'myOrg:myFilter' })
+      })
+      it('keeps the type of the base field', () => {
+        expect(
+          new DateRangeSearchField('myDate', injector)
+            .extend({
+              name: 'myOrg:myDate',
+            })
+            .getType()
+        ).toEqual('dateRange')
+      })
+      it('keeps the translated labels and sorting of the base field', async () => {
+        // translated by the base field, then sorted alphabetically by label
+        expect(await lastValueFrom(searchField.getAvailableValues())).toEqual([
+          { count: 12, label: 'Bla (12)', value: 'Third value' },
+          { count: 1, label: 'Fourth value (1)', value: 'Fourth value' },
+          { count: 3, label: 'Hello (3)', value: 'Second value' },
+          {
+            count: 5,
+            label: 'Translated first value (5)',
+            value: 'First value',
+          },
+        ])
+      })
+    })
+  })
+
+  // in its own block because the METADATA_LANGUAGE token is only read once,
+  // when the first field is created
+  describe('#extend with a metadata language', () => {
+    beforeEach(() => {
+      currentMetadataLanguage = 'swe'
+      searchField = new MultilingualSearchField(
+        'tag',
+        injector,
+        'desc',
+        'count'
+      ).extend({ name: 'myOrg:myFilter' })
+    })
+    it('holds the localized field in its filter key', async () => {
+      expect(
+        await lastValueFrom(searchField.getFiltersForValues(['value1']))
+      ).toEqual({ 'tag.langswe#myOrg:myFilter': { value1: true } })
+    })
+  })
+
   describe('FullTextSearchField', () => {
     beforeEach(() => {
       searchField = new FullTextSearchField()

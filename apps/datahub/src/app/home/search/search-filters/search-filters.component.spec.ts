@@ -57,6 +57,7 @@ class FieldsServiceMock {
       )
     )
   )
+  getLabelKey = jest.fn((fieldName: string) => `label.for.${fieldName}`)
   public get supportedFields() {
     return [
       'publisherOrg',
@@ -128,6 +129,18 @@ describe('SearchFiltersComponent', () => {
   it('should create', () => {
     fixture.detectChanges()
     expect(component).toBeTruthy()
+  })
+
+  describe('filter labels', () => {
+    beforeEach(() => {
+      fixture.detectChanges()
+    })
+    it('takes the title of every filter from the fields service', () => {
+      expect(
+        component.searchConfig.find((config) => config.fieldName === 'format')
+          ?.title
+      ).toEqual('label.for.format')
+    })
   })
 
   describe('spatial filter button', () => {
