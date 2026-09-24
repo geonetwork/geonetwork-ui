@@ -139,7 +139,7 @@ export class SearchFiltersComponent implements OnInit {
       })
       .map((filter) => ({
         fieldName: filter,
-        title: `search.filters.${filter}`,
+        title: this.fieldsService.getLabelKey(filter),
       }))
   }
 

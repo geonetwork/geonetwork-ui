@@ -24,6 +24,7 @@ import {
 import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/elements'
 import { LANGUAGES_LIST } from '@geonetwork-ui/ui/catalog'
 import {
+  CUSTOM_FILTERS,
   DEFAULT_GEOCODING_PROVIDER,
   FILTER_GEOMETRY,
   GEOCODING_PROVIDER,
@@ -125,6 +126,10 @@ export const DATAHUB_CONFIG_PROVIDERS: Array<Provider> = [
       }
       return null
     },
+  },
+  {
+    provide: CUSTOM_FILTERS,
+    useFactory: () => getOptionalSearchConfig()?.CUSTOM_FILTERS ?? [],
   },
   {
     provide: RECORD_DATASET_URL_TOKEN,
