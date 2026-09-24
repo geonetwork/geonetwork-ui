@@ -7,6 +7,8 @@ export interface TermsAggregationParams {
   limit: number
   sort: AggregationSort
   filter?: string
+  includeValues?: string[]
+  excludeValues?: string[]
 }
 export interface HistogramAggregationParams {
   type: 'histogram'
