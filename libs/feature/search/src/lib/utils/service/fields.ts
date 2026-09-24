@@ -62,7 +62,9 @@ export class SimpleSearchField implements AbstractSearchField {
     protected injector: Injector,
     protected order: 'asc' | 'desc' = 'asc',
     protected orderType: 'key' | 'count' = 'key'
-  ) {}
+  ) {
+    this.esService.registerFieldAlias(this.fieldIdentifier, this.esFieldName)
+  }
 
   protected getAggregations(): AggregationsParams {
     return {
@@ -206,6 +208,7 @@ export class MultilingualSearchField extends SimpleSearchField {
     } else {
       this.esFieldName += '.default'
     }
+    this.esService.registerFieldAlias(this.fieldIdentifier, this.esFieldName)
   }
 }
 
