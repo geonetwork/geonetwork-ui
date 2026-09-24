@@ -2,7 +2,19 @@
   [action]="searchAction"
   [displayWithFn]="displayWithFn"
   [placeholder]="placeholder"
-  [displayWithTemplate]="displayWithTemplate"
+  [displayWithTemplate]="defaultItemTpl"
   (itemSelected)="handleItemSelected($event)"
 >
 </gn-ui-autocomplete>
+
+<ng-template #defaultItemTpl let-result>
+  <div class="py-2">
+    @if (getSecondaryLabel(result)) {
+      <div class="gn-ui-card-detail">{{ getSecondaryLabel(result) }}</div>
+    }
+    @let tertiaryLabel = getTertiaryLabel(result);
+    <div class="gn-ui-card-title">
+      {{ getMainLabel(result) }}{{ tertiaryLabel ? ', ' + tertiaryLabel : '' }}
+    </div>
+  </div>
+</ng-template>

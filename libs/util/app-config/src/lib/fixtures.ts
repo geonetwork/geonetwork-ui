@@ -42,8 +42,11 @@ record_kind_quick_filter = false
 filter_geometry_url = 'https://my.domain.org/geom.json'
 do_not_use_default_search_preset = false
 geocoding_provider = "geoplateforme"
-geocoding_provider_options.category = "administratif"
+geocoding_provider_options.category = ["administratif"]
 geocoding_provider_options.limit = 5
+geocoding_provider_labels.main = '/properties/name/0'
+geocoding_provider_labels.secondary = '/properties/citycode/0'
+geocoding_provider_labels.tertiary = '/properties/category/1'
 advanced_filters = ['publicationYear', 'documentStandard', 'inspireKeyword', 'topic', 'license', 'myOrg:firstCustomFilter', 'myOrg:secondCustomFilter']
 
 [[custom_filter]]

@@ -65,6 +65,12 @@ export interface CustomSearchFilterField {
   labelKey?: string
 }
 
+export interface GeocodingProviderLabelsConfig {
+  MAIN?: string
+  SECONDARY?: string
+  TERTIARY?: string
+}
+
 export interface SearchConfig {
   RECORD_KIND_QUICK_FILTER?: boolean
   FILTER_GEOMETRY_URL?: string
@@ -76,7 +82,11 @@ export interface SearchConfig {
   LIMIT?: number
   SPATIAL_EXTENT_MAX_FILE_SIZE?: number
   GEOCODING_PROVIDER?: GeocodingProviderName
-  GEOCODING_PROVIDER_OPTIONS?: Record<string, string | number>
+  GEOCODING_PROVIDER_OPTIONS?: Record<
+    string,
+    string | number | boolean | string[]
+  >
+  GEOCODING_PROVIDER_LABELS?: GeocodingProviderLabelsConfig
 }
 
 export interface MetadataQualityConfig {

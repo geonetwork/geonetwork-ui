@@ -28,6 +28,7 @@ import {
   DEFAULT_GEOCODING_PROVIDER,
   FILTER_GEOMETRY,
   GEOCODING_PROVIDER,
+  GEOCODING_PROVIDER_LABELS,
   GeocodingProvider,
   RECORD_DATASET_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
@@ -192,6 +193,17 @@ export const DATAHUB_CONFIG_PROVIDERS: Array<Provider> = [
     provide: SPATIAL_EXTENT_MAX_FILE_SIZE,
     useFactory: () =>
       getOptionalSearchConfig()?.SPATIAL_EXTENT_MAX_FILE_SIZE ?? null,
+  },
+  {
+    provide: GEOCODING_PROVIDER_LABELS,
+    useFactory: () => {
+      const labels = getOptionalSearchConfig()?.GEOCODING_PROVIDER_LABELS
+      return {
+        main: labels?.MAIN,
+        secondary: labels?.SECONDARY,
+        tertiary: labels?.TERTIARY,
+      }
+    },
   },
   {
     provide: GEOCODING_PROVIDER,

@@ -144,9 +144,18 @@ background_color = "#fdfbff"
 # Optional; options passed to the selected geocoding provider. See the GeoadminOptions,
 # GeonamesOptions and GeoplateformeOptions interfaces in the @geospatial-sdk/geocoding API
 # reference (https://camptocamp.github.io/geospatial-sdk/docs/api/) for the options supported
-# by each provider.
-# geocoding_provider_options.category = "administratif"
+# by each provider. Options holding a list of values must be given as arrays, even for a single value.
+# geocoding_provider_options.index = ["poi"]
+# geocoding_provider_options.category = ["administratif"]
 # geocoding_provider_options.limit = 5
+
+# Optional; JSON Pointers (resolved against a geocoding result) used to build the labels of each
+# result in the location search dropdown: the main label is shown as the title, followed by the tertiary
+# label if any; the secondary label is shown in a smaller font above them.
+# main defaults to '/label'; secondary and tertiary are not shown by default.
+# geocoding_provider_labels.main = "/label"
+# geocoding_provider_labels.secondary = "/properties/category/1"
+# geocoding_provider_labels.tertiary = "/properties/citycode/0"
 
 # One or several search presets visible in form of badges can be defined here; every search preset is composed of:
 # - a name (which can be a translation key)
