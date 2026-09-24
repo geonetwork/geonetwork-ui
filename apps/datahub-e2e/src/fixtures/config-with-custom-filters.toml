@@ -1,0 +1,28 @@
+[global]
+geonetwork4_api_url = "/geonetwork/srv/api"
+proxy_path = ""
+
+[theme]
+primary_color = "#c82850"
+secondary_color = "#001638"
+main_color = "#212029" # All-purpose text color
+background_color = "#fdfbff"
+
+[search]
+advanced_filters = ['keyword', 'myOrg:withoutSomeKeywords', 'myOrg:onlySomeKeywords']
+
+[[custom_filter]]
+name = 'myOrg:withoutSomeKeywords'
+base_filter = 'keyword'
+exclude_values = ['Région wallonne', 'Reporting INSPIRENO']
+label_key = 'myOrg.withoutSomeKeywords'
+
+[[custom_filter]]
+name = 'myOrg:onlySomeKeywords'
+base_filter = 'keyword'
+include_values = ['pollution', 'Agriculture']
+label_key = 'myOrg.onlySomeKeywords'
+
+[translations.en]
+'myOrg.withoutSomeKeywords' = 'Keywords without the most common ones'
+'myOrg.onlySomeKeywords' = 'Only pollution and agriculture'
