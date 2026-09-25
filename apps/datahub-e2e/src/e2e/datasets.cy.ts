@@ -540,6 +540,32 @@ describe('datasets', () => {
     )
   })
 
+  it('should filter the results on the resource temporal extent', () => {
+    cy.intercept('GET', '/assets/configuration/default.toml', {
+      fixture: 'config-with-temporal-extent-filter.toml',
+    })
+    cy.visit('/search')
+    cy.get('[data-cy=filters-expand]').click({ force: true })
+    cy.get(
+      'gn-ui-date-range-dropdown[data-cy-field="temporalExtent"] gn-ui-button'
+    ).click()
+
+    cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '33 ')
+
+    // it filters when only a start date is typed (bounds are typeable; e2e runs in English, so MM/DD/YYYY)
+    cy.get('[data-test="start-date-input"]').clear()
+    cy.get('[data-test="start-date-input"]').type('01/01/2100{enter}')
+    cy.url().should('contain', 'temporalExtent=2100-01-01..')
+    cy.get('[data-cy="resultsHitsFound"]')
+      .invoke('text')
+      .should('not.contain', '33 ')
+
+    // it filters further when an end date is added too, and the end date is inclusive
+    cy.get('[data-test="end-date-input"]').clear()
+    cy.get('[data-test="end-date-input"]').type('01/02/2100{enter}')
+    cy.url().should('contain', 'temporalExtent=2100-01-01..2100-01-02')
+  })
+
   it('should display the metadata quality widget when enabled', () => {
     // this will enable metadata quality widget
     cy.intercept('GET', '/assets/configuration/default.toml', {

@@ -293,12 +293,25 @@ export class ElasticsearchService {
     return Object.values(filters).find(isBoundingBox)
   }
 
-  // if a field registered min/max runtime fields, its dates form an interval
-  // the record matches if that interval intersects the filter range
+  // builds a query matching records whose dates intersect the filter range
   private buildDateRangeQuery(searchField: string, dateRange: DateRange) {
+    // fields ending with 'DateRange' maps as ES range type
+    if (searchField.endsWith('DateRange')) {
+      return {
+        range: {
+          [searchField]: {
+            ...(dateRange.start && { gte: formatDate(dateRange.start) }),
+            ...(dateRange.end && { lte: formatDate(dateRange.end) }),
+            format: 'yyyy-MM-dd',
+            relation: 'intersects',
+          },
+        },
+      }
+    }
     const minField = `${searchField}Min`
     const maxField = `${searchField}Max`
     if (minField in this.runtimeFields && maxField in this.runtimeFields) {
+      // min/max runtime fields form an interval per record; match if it intersects the filter range
       const filter = [
         dateRange.start && {
           range: {

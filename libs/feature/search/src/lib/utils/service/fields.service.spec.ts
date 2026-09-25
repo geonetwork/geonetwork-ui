@@ -105,6 +105,7 @@ describe('FieldsService', () => {
           'user',
           'changeDate',
           'resourceCreationRevisionDate',
+          'temporalExtent',
           'availableServices',
           'spatialExtent',
         ])
@@ -194,6 +195,7 @@ describe('FieldsService', () => {
           user: [],
           changeDate: [],
           resourceCreationRevisionDate: [],
+          temporalExtent: [],
           availableServices: [],
           recordKind: [],
         })
@@ -208,6 +210,7 @@ describe('FieldsService', () => {
         expect(service.getFieldType('resourceCreationRevisionDate')).toEqual(
           'dateRange'
         )
+        expect(service.getFieldType('temporalExtent')).toEqual('dateRange')
         expect(service.getFieldType('spatialExtent')).toEqual('spatialExtent')
       })
     })

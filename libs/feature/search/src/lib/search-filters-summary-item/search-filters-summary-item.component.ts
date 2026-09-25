@@ -21,6 +21,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 marker('search.filters.summaryLabel.user')
 marker('search.filters.summaryLabel.changeDate')
 marker('search.filters.summaryLabel.resourceCreationRevisionDate')
+marker('search.filters.summaryLabel.temporalExtent')
 
 const OPEN_BOUND = '…'
 

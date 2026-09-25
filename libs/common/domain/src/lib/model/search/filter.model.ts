@@ -21,7 +21,10 @@ export type QueryString = {
   query_string: string
 }
 export type QueryRange = {
-  range: Record<string, { format: string; gte: string; lte: string }>
+  range: Record<
+    string,
+    { format: string; gte?: string; lte?: string; relation?: string }
+  >
 }
 export type QueryGeoShape = {
   geo_shape: {
