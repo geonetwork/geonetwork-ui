@@ -53,7 +53,8 @@ export class SimpleSearchField implements AbstractSearchField {
   // FIXME: this is required to register runtime fields; abstract this as well
   protected esService = this.injector.get(ElasticsearchService)
 
-  public fieldIdentifier = this.esFieldName
+  protected fieldIdentifier: string
+
   public includeValues: string[] = []
   public excludeValues: string[] = []
 
@@ -63,6 +64,11 @@ export class SimpleSearchField implements AbstractSearchField {
     protected order: 'asc' | 'desc' = 'asc',
     protected orderType: 'key' | 'count' = 'key'
   ) {
+    this.setFieldIdentifier(esFieldName)
+  }
+
+  public setFieldIdentifier(fieldIdentifier: string) {
+    this.fieldIdentifier = fieldIdentifier
     this.esService.registerFieldAlias(this.fieldIdentifier, this.esFieldName)
   }
 
