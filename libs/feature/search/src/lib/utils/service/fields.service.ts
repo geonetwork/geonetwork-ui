@@ -158,7 +158,7 @@ export class FieldsService {
         continue
       }
       const newField = baseField.clone()
-      newField.fieldIdentifier = customField.name
+      newField.setFieldIdentifier(customField.name)
       if (customField.includeValues) {
         newField.includeValues = customField.includeValues
       }
