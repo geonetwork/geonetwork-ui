@@ -1320,29 +1320,31 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
     })
   })
 
-  describe('custom filter keys', () => {
+  describe('#registerFieldAlias', () => {
     const getFilterQuery = (filters) =>
       service['buildPayloadQuery'](filters, {}).bool.filter.find(
         (part) => 'query_string' in part
       )?.query_string.query
 
-    it('queries the ES field held by the key', () => {
-      expect(
-        getFilterQuery({ 'tag.default#myOrg:myFilter': { B: true } })
-      ).toEqual('tag.default:("B")')
+    beforeEach(() => {
+      service.registerFieldAlias('myOrg:myFilter', 'tag.default')
     })
-    it('keeps a custom filter independent from its base field', () => {
+
+    it('queries the ES field registered for the filter key', () => {
+      expect(getFilterQuery({ 'myOrg:myFilter': { B: true } })).toEqual(
+        'tag.default:("B")'
+      )
+    })
+    it('keeps an aliased filter independent from its ES field', () => {
       expect(
         getFilterQuery({
           'tag.default': { A: true },
-          'tag.default#myOrg:myFilter': { B: true },
+          'myOrg:myFilter': { B: true },
         })
       ).toEqual('tag.default:("A") AND tag.default:("B")')
     })
-    it('leaves a plain filter key untouched', () => {
-      expect(getFilterQuery({ 'tag.default': { A: true } })).toEqual(
-        'tag.default:("A")'
-      )
+    it('leaves a filter key without alias untouched', () => {
+      expect(getFilterQuery({ format: { A: true } })).toEqual('format:("A")')
     })
   })
 

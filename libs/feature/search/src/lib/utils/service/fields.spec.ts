@@ -29,6 +29,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 
 class ElasticsearchServiceMock {
   registerRuntimeField = jest.fn()
+  registerFieldAlias = jest.fn()
 }
 
 class RecordsRepositoryMock {
@@ -625,7 +626,7 @@ describe('search fields implementations', () => {
       })
       it('appends the field name with the default field', () => {
         expect(repository.aggregate).toHaveBeenCalledWith({
-          'myField.default': {
+          myField: {
             type: 'terms',
             limit: 1000,
             field: 'myField.default',
@@ -647,13 +648,19 @@ describe('search fields implementations', () => {
       })
       it('appends the field name with the given language', () => {
         expect(repository.aggregate).toHaveBeenCalledWith({
-          'myField.langswe': {
+          myField: {
             type: 'terms',
             limit: 1000,
             field: 'myField.langswe',
             sort: ['desc', 'count'],
           },
         })
+      })
+      it('registers its identifier as an alias of the localized field', () => {
+        expect(esService.registerFieldAlias).toHaveBeenCalledWith(
+          'myField',
+          'myField.langswe'
+        )
       })
     })
     describe('METADATA_LANGUAGE unset', () => {
@@ -669,7 +676,7 @@ describe('search fields implementations', () => {
       })
       it('appends the field name with the default field', () => {
         expect(repository.aggregate).toHaveBeenCalledWith({
-          'myField.default': {
+          myField: {
             type: 'terms',
             limit: 1000,
             field: 'myField.default',
@@ -680,17 +687,34 @@ describe('search fields implementations', () => {
     })
   })
 
-  describe('#extend', () => {
+  describe('#clone', () => {
     let baseField: SimpleSearchField
     beforeEach(() => {
-      baseField = new MultilingualSearchField('tag', injector, 'desc', 'count')
-      searchField = baseField.extend({ name: 'myOrg:myFilter' })
+      baseField = new SimpleSearchField('format', injector, 'asc')
+      searchField = baseField.clone()
+      ;(searchField as SimpleSearchField).setFieldIdentifier('myOrg:myFilter')
+    })
+    it('registers its identifier as an alias of the base ES field', () => {
+      expect(esService.registerFieldAlias).toHaveBeenCalledWith(
+        'myOrg:myFilter',
+        'format'
+      )
+    })
+    it('keeps the type of the base field', () => {
+      expect(
+        new DateRangeSearchField('myDate', injector).clone().getType()
+      ).toEqual('dateRange')
     })
     describe('#getFiltersForValues', () => {
-      it('uses its own filter key', async () => {
+      it('uses its own identifier as filter key', async () => {
         expect(
           await lastValueFrom(searchField.getFiltersForValues(['value1']))
-        ).toEqual({ 'tag.default#myOrg:myFilter': { value1: true } })
+        ).toEqual({ 'myOrg:myFilter': { value1: true } })
+      })
+      it('leaves the filter key of the base field unchanged', async () => {
+        expect(
+          await lastValueFrom(baseField.getFiltersForValues(['value1']))
+        ).toEqual({ format: { value1: true } })
       })
     })
     describe('#getValuesForFilter', () => {
@@ -698,8 +722,8 @@ describe('search fields implementations', () => {
         expect(
           await lastValueFrom(
             searchField.getValuesForFilter({
-              'tag.default': { value1: true },
-              'tag.default#myOrg:myFilter': { value2: true },
+              format: { value1: true },
+              'myOrg:myFilter': { value2: true },
             })
           )
         ).toEqual(['value2'])
@@ -707,82 +731,63 @@ describe('search fields implementations', () => {
       it('returns no value when its filter key is absent', async () => {
         expect(
           await lastValueFrom(
-            searchField.getValuesForFilter({ 'tag.default': { value1: true } })
+            searchField.getValuesForFilter({ format: { value1: true } })
           )
         ).toEqual([])
       })
     })
     describe('#getAvailableValues', () => {
-      it('aggregates on the base field', async () => {
+      it('aggregates on the base ES field under its own identifier', async () => {
         await lastValueFrom(searchField.getAvailableValues())
         expect(repository.aggregate).toHaveBeenCalledWith({
-          'tag.default': {
+          'myOrg:myFilter': {
             type: 'terms',
             limit: 1000,
-            field: 'tag.default',
-            sort: ['desc', 'count'],
+            field: 'format',
+            sort: ['asc', 'key'],
           },
         })
       })
       describe('with include and exclude values', () => {
         beforeEach(async () => {
-          searchField = baseField.extend({
-            name: 'myOrg:myFilter',
-            includeValues: ['value1', 'value2'],
-            excludeValues: ['value3'],
-          })
+          const clone = searchField as SimpleSearchField
+          clone.includeValues = ['value1', 'value2']
+          clone.excludeValues = ['value3']
           await lastValueFrom(searchField.getAvailableValues())
         })
         it('restricts the aggregated values', () => {
           expect(repository.aggregate).toHaveBeenCalledWith({
-            'tag.default': {
+            'myOrg:myFilter': {
               type: 'terms',
               limit: 1000,
-              field: 'tag.default',
-              sort: ['desc', 'count'],
+              field: 'format',
+              sort: ['asc', 'key'],
               includeValues: ['value1', 'value2'],
               excludeValues: ['value3'],
             },
           })
         })
-      })
-      describe('with empty include and exclude values', () => {
-        beforeEach(async () => {
-          searchField = baseField.extend({
-            name: 'myOrg:myFilter',
-            includeValues: [],
-            excludeValues: [],
-          })
-          await lastValueFrom(searchField.getAvailableValues())
-        })
-        it('does not restrict the aggregated values', () => {
-          expect(repository.aggregate).toHaveBeenCalledWith({
-            'tag.default': {
+        it('does not restrict the values of the base field', async () => {
+          await lastValueFrom(baseField.getAvailableValues())
+          expect(repository.aggregate).toHaveBeenLastCalledWith({
+            format: {
               type: 'terms',
               limit: 1000,
-              field: 'tag.default',
-              sort: ['desc', 'count'],
+              field: 'format',
+              sort: ['asc', 'key'],
             },
           })
         })
       })
     })
-    describe('when extending a field that has its own behaviour', () => {
+    describe('when cloning a field that has its own behaviour', () => {
       beforeEach(() => {
         searchField = new TranslatedSearchField(
           'myField',
           injector,
           'asc'
-        ).extend({ name: 'myOrg:myFilter' })
-      })
-      it('keeps the type of the base field', () => {
-        expect(
-          new DateRangeSearchField('myDate', injector)
-            .extend({
-              name: 'myOrg:myDate',
-            })
-            .getType()
-        ).toEqual('dateRange')
+        ).clone()
+        ;(searchField as SimpleSearchField).setFieldIdentifier('myOrg:myFilter')
       })
       it('keeps the translated labels and sorting of the base field', async () => {
         // translated by the base field, then sorted alphabetically by label
@@ -802,20 +807,22 @@ describe('search fields implementations', () => {
 
   // in its own block because the METADATA_LANGUAGE token is only read once,
   // when the first field is created
-  describe('#extend with a metadata language', () => {
+  describe('#clone with a metadata language', () => {
     beforeEach(() => {
       currentMetadataLanguage = 'swe'
-      searchField = new MultilingualSearchField(
+      const clone = new MultilingualSearchField(
         'tag',
         injector,
         'desc',
         'count'
-      ).extend({ name: 'myOrg:myFilter' })
+      ).clone()
+      clone.setFieldIdentifier('myOrg:myFilter')
     })
-    it('holds the localized field in its filter key', async () => {
-      expect(
-        await lastValueFrom(searchField.getFiltersForValues(['value1']))
-      ).toEqual({ 'tag.langswe#myOrg:myFilter': { value1: true } })
+    it('registers the alias on the localized field', () => {
+      expect(esService.registerFieldAlias).toHaveBeenCalledWith(
+        'myOrg:myFilter',
+        'tag.langswe'
+      )
     })
   })
 
