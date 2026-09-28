@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { FieldsService } from './fields.service'
+import { CUSTOM_FIELDS, FieldsService } from './fields.service'
 import { EMPTY, lastValueFrom, of } from 'rxjs'
 import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
@@ -14,6 +14,7 @@ class RecordsRepositoryMock {
 class ElasticsearchServiceMock {
   getSearchRequestBody = jest.fn()
   registerRuntimeField = jest.fn()
+  registerFieldAlias = jest.fn()
 }
 class ToolsApiServiceMock {
   getTranslationsPackage1 = jest.fn(() => EMPTY)
@@ -212,6 +213,135 @@ describe('FieldsService', () => {
         )
         expect(service.getFieldType('temporalExtent')).toEqual('dateRange')
         expect(service.getFieldType('spatialExtent')).toEqual('spatialExtent')
+      })
+    })
+  })
+
+  describe('custom filters', () => {
+    let esService: ElasticsearchService
+    let repository: RecordsRepositoryInterface
+    beforeEach(() => {
+      jest.spyOn(console, 'warn').mockImplementation(() => undefined)
+      TestBed.configureTestingModule({
+        providers: [
+          {
+            provide: CUSTOM_FIELDS,
+            useValue: [
+              { name: 'myOrg:myFilter', baseFilter: 'keyword' },
+              {
+                name: 'myOrg:restricted',
+                baseFilter: 'keyword',
+                includeValues: ['value1', 'value2'],
+                excludeValues: ['value3'],
+              },
+              // not a SimpleSearchField
+              { name: 'myOrg:unsupported', baseFilter: 'organization' },
+              // no such field at all
+              { name: 'myOrg:unknownBase', baseFilter: 'notAField' },
+            ],
+          },
+        ],
+      })
+      service = TestBed.inject(FieldsService)
+      esService = TestBed.inject(ElasticsearchService)
+      repository = TestBed.inject(RecordsRepositoryInterface)
+    })
+    afterEach(() => {
+      jest.mocked(console.warn).mockRestore()
+    })
+
+    it('adds a field for the custom filter', () => {
+      expect(service.supportedFields).toContain('myOrg:myFilter')
+    })
+    it('registers the custom filter as an alias of the base ES field', () => {
+      expect(esService.registerFieldAlias).toHaveBeenCalledWith(
+        'myOrg:myFilter',
+        'tag.default'
+      )
+    })
+    it('restricts the values offered by the custom filter', () => {
+      service.getAvailableValues('myOrg:restricted').subscribe()
+      expect(repository.aggregate).toHaveBeenCalledWith({
+        'myOrg:restricted': {
+          type: 'terms',
+          limit: 1000,
+          field: 'tag.default',
+          sort: ['desc', 'count'],
+          includeValues: ['value1', 'value2'],
+          excludeValues: ['value3'],
+        },
+      })
+    })
+    it('does not restrict the values offered by the base filter', () => {
+      service.getAvailableValues('keyword').subscribe()
+      expect(repository.aggregate).toHaveBeenCalledWith({
+        'tag.default': {
+          type: 'terms',
+          limit: 1000,
+          field: 'tag.default',
+          sort: ['desc', 'count'],
+        },
+      })
+    })
+    it('ignores a custom filter based on an unknown field', () => {
+      expect(service.supportedFields).not.toContain('myOrg:unknownBase')
+      expect(console.warn).toHaveBeenCalledWith(
+        expect.stringContaining("base field 'notAField' that is not supported")
+      )
+    })
+    it('keeps the other fields when a custom filter is ignored', () => {
+      expect(service.supportedFields).toContain('keyword')
+      expect(service.supportedFields).toContain('myOrg:myFilter')
+    })
+    it('ignores a custom filter based on an unsupported filter', () => {
+      expect(service.supportedFields).not.toContain('myOrg:unsupported')
+      expect(console.warn).toHaveBeenCalledWith(
+        expect.stringContaining(
+          "base field 'organization' that is not supported"
+        )
+      )
+    })
+    describe('when two custom filters on the same base filter have a value', () => {
+      it('keeps them in two distinct filters', async () => {
+        const filters = await lastValueFrom(
+          service.buildFiltersFromFieldValues({
+            'myOrg:myFilter': ['firstValue'],
+            'myOrg:restricted': ['secondValue'],
+          })
+        )
+        expect(filters).toEqual({
+          'myOrg:myFilter': { firstValue: true },
+          'myOrg:restricted': { secondValue: true },
+        })
+        const fieldValues = await lastValueFrom(
+          service.readFieldValuesFromFilters(filters)
+        )
+        expect(fieldValues['myOrg:myFilter']).toEqual(['firstValue'])
+        expect(fieldValues['myOrg:restricted']).toEqual(['secondValue'])
+      })
+    })
+    describe('when both the custom filter and its base filter have a value', () => {
+      let filters
+      beforeEach(async () => {
+        filters = await lastValueFrom(
+          service.buildFiltersFromFieldValues({
+            keyword: ['firstValue'],
+            'myOrg:myFilter': ['secondValue'],
+          })
+        )
+      })
+      it('keeps them in two distinct filters', () => {
+        expect(filters).toEqual({
+          'tag.default': { firstValue: true },
+          'myOrg:myFilter': { secondValue: true },
+        })
+      })
+      it('reads back only its own value for each field', async () => {
+        const fieldValues = await lastValueFrom(
+          service.readFieldValuesFromFilters(filters)
+        )
+        expect(fieldValues['keyword']).toEqual(['firstValue'])
+        expect(fieldValues['myOrg:myFilter']).toEqual(['secondValue'])
       })
     })
   })

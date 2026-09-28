@@ -27,6 +27,16 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
       'license',
       'topic',
       'publicationYear',
+      'myOrg:labelled',
+      'myOrg:unlabelled',
+    ],
+    CUSTOM_FILTERS: [
+      {
+        name: 'myOrg:labelled',
+        baseFilter: 'keyword',
+        labelKey: 'myOrg.labelled',
+      },
+      { name: 'myOrg:unlabelled', baseFilter: 'keyword' },
     ],
   }),
 }))
@@ -67,6 +77,8 @@ class FieldsServiceMock {
       'license',
       'topic',
       'publicationYear',
+      'myOrg:labelled',
+      'myOrg:unlabelled',
     ]
   }
 }
@@ -128,6 +140,24 @@ describe('SearchFiltersComponent', () => {
   it('should create', () => {
     fixture.detectChanges()
     expect(component).toBeTruthy()
+  })
+
+  describe('filter labels', () => {
+    beforeEach(() => {
+      fixture.detectChanges()
+    })
+    const getTitle = (fieldName: string) =>
+      component.searchConfig.find((config) => config.fieldName === fieldName)
+        ?.title
+    it('labels a built-in filter with its own key', () => {
+      expect(getTitle('format')).toEqual('search.filters.format')
+    })
+    it('labels a custom filter with its configured key', () => {
+      expect(getTitle('myOrg:labelled')).toEqual('myOrg.labelled')
+    })
+    it('labels a custom filter without label key like its base filter', () => {
+      expect(getTitle('myOrg:unlabelled')).toEqual('search.filters.keyword')
+    })
   })
 
   describe('spatial filter button', () => {
@@ -265,6 +295,8 @@ describe('SearchFiltersComponent', () => {
           filter_license: {},
           filter_documentStandard: {},
           filter_inspireKeyword: {},
+          'filter_myOrg:labelled': {},
+          'filter_myOrg:unlabelled': {},
         })
       })
     })

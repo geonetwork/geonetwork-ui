@@ -221,7 +221,7 @@ For a detailed explanation on the classification system, see [this documentation
   Every custom filter is composed of:
 
   - `name` (mandatory): name of the filter as it should appear in the `advanced_filters` setting; custom filters must have a prefix separated by a colon in their name, e.g.: "myOrg:myOrgKeywords"; case sensitive
-  - `base_filter` (mandatory): the search field the filter is based on; only `'keyword'` is supported for now
+  - `base_filter` (mandatory): the search field the filter is based on; supported values are `'format'`, `'representationType'`, `'publicationYear'`, `'topic'`, `'inspireKeyword'`, `'keyword'`, `'documentStandard'`, `'producerOrg'`, `'publisherOrg'` and `'user'`
   - `exclude_values` (optional): an array of values of the base filter which should not be offered to the user in the UI (e.g. dropdowns); it does not have any effect when cutom filter fields are used in the URL
   - `include_values` (optional): an array of values of the base filter which should be the only ones offered to the user in the UI (e.g. dropdowns); it does not have any effect when cutom filter fields are used in the URL
   - `label_key` (optional): a translation key used as the label of the filter; it can be defined in the

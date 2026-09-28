@@ -57,7 +57,7 @@ export interface SearchPreset {
 
 export type GeocodingProviderName = 'geoadmin' | 'geonames' | 'geoplateforme'
 
-export interface CustomSearchFilterField {
+export interface CustomSearchFieldConfig {
   name: string
   baseFilter: string
   excludeValues?: string[]
@@ -72,7 +72,7 @@ export interface SearchConfig {
   DO_NOT_USE_DEFAULT_SEARCH_PRESET?: boolean
   SEARCH_PRESET?: SearchPreset[]
   ADVANCED_FILTERS?: string[]
-  CUSTOM_FILTERS?: CustomSearchFilterField[]
+  CUSTOM_FILTERS?: CustomSearchFieldConfig[]
   LIMIT?: number
   SPATIAL_EXTENT_MAX_FILE_SIZE?: number
   GEOCODING_PROVIDER?: GeocodingProviderName
