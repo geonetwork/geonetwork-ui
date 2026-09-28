@@ -47,6 +47,7 @@ marker('search.filters.changeDate')
 marker('search.filters.resourceCreationRevisionDate')
 marker('search.filters.temporalExtent')
 marker('search.filters.spatialExtent')
+marker('search.filters.documentStandard')
 
 export interface CustomSearchField {
   name: string
