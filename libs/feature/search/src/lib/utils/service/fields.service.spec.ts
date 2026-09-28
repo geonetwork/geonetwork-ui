@@ -275,7 +275,7 @@ describe('FieldsService', () => {
     it('does not restrict the values offered by the base filter', () => {
       service.getAvailableValues('keyword').subscribe()
       expect(repository.aggregate).toHaveBeenCalledWith({
-        tag: {
+        'tag.default': {
           type: 'terms',
           limit: 1000,
           field: 'tag.default',
@@ -332,7 +332,7 @@ describe('FieldsService', () => {
       })
       it('keeps them in two distinct filters', () => {
         expect(filters).toEqual({
-          tag: { firstValue: true },
+          'tag.default': { firstValue: true },
           'myOrg:myFilter': { secondValue: true },
         })
       })

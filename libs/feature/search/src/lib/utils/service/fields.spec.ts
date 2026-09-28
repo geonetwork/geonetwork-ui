@@ -626,7 +626,7 @@ describe('search fields implementations', () => {
       })
       it('appends the field name with the default field', () => {
         expect(repository.aggregate).toHaveBeenCalledWith({
-          myField: {
+          'myField.default': {
             type: 'terms',
             limit: 1000,
             field: 'myField.default',
@@ -648,19 +648,13 @@ describe('search fields implementations', () => {
       })
       it('appends the field name with the given language', () => {
         expect(repository.aggregate).toHaveBeenCalledWith({
-          myField: {
+          'myField.langswe': {
             type: 'terms',
             limit: 1000,
             field: 'myField.langswe',
             sort: ['desc', 'count'],
           },
         })
-      })
-      it('registers its identifier as an alias of the localized field', () => {
-        expect(esService.registerFieldAlias).toHaveBeenCalledWith(
-          'myField',
-          'myField.langswe'
-        )
       })
     })
     describe('METADATA_LANGUAGE unset', () => {
@@ -676,7 +670,7 @@ describe('search fields implementations', () => {
       })
       it('appends the field name with the default field', () => {
         expect(repository.aggregate).toHaveBeenCalledWith({
-          myField: {
+          'myField.default': {
             type: 'terms',
             limit: 1000,
             field: 'myField.default',
@@ -693,6 +687,9 @@ describe('search fields implementations', () => {
       baseField = new SimpleSearchField('format', injector, 'asc')
       searchField = baseField.clone()
       ;(searchField as SimpleSearchField).setFieldIdentifier('myOrg:myFilter')
+    })
+    it('does not register an alias for a field that is not cloned', () => {
+      expect(esService.registerFieldAlias).toHaveBeenCalledTimes(1)
     })
     it('registers its identifier as an alias of the base ES field', () => {
       expect(esService.registerFieldAlias).toHaveBeenCalledWith(
