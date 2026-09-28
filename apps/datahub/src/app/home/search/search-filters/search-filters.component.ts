@@ -142,9 +142,9 @@ export class SearchFiltersComponent implements OnInit {
         const customFilter = customFilters?.find((f) => f.name === filter)
         return {
           fieldName: filter,
-          title: customFilter
-            ? customFilter.labelKey
-            : `search.filters.${filter}`,
+          title:
+            customFilter?.labelKey ??
+            `search.filters.${customFilter?.baseFilter ?? filter}`,
         }
       })
   }
