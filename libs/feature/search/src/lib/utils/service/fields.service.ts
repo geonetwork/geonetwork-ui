@@ -27,31 +27,6 @@ import { DateRange } from '@geonetwork-ui/api/repository'
 // key is the field name
 export type FieldValues = Record<string, FieldValue[] | FieldValue | DateRange>
 
-/**
- * Fields left out on purpose are:
- * `organization` and `q` (not built on a single ES field),
- * `recordKind` and `availableServices` (they write to other filter keys),
- * `spatialExtent` (only one bounding box is ever applied to a search),
- * `owner` (offers no value to pick from),
- * `changeDate` and `resourceCreationRevisionDate` (date ranges: they offer no
- * list of values, so include/exclude values would have no visible effect),
- * `isSpatial` (a single choice between two mutually exclusive values),
- * and `resourceType` (deprecated).
- */
-export const SUPPORTED_CUSTOM_FILTER_BASE_FILTERS = [
-  'format',
-  'representationType',
-  'publicationYear',
-  'topic',
-  'inspireKeyword',
-  'keyword',
-  'documentStandard',
-  'license',
-  'producerOrg',
-  'publisherOrg',
-  'user',
-]
-
 marker('search.filters.format')
 marker('search.filters.inspireKeyword')
 marker('search.filters.keyword')
