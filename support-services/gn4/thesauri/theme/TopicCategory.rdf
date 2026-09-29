@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory">
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="en">Topic categories in accordance with EN ISO 19115</dc:title>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="de">Themenkategorien nach EN ISO 19115</dc:title>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="fr">Catégories thématiques conformément à la norme EN ISO 19115</dc:title>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="nl">Onderwerpcategoriecn overeenkomstig EN ISO 19115</dc:title>
+    <dcterms:issued xmlns:dcterms="http://purl.org/dc/terms/">2022-11-22T19:29:09</dcterms:issued>
+    <dcterms:modified xmlns:dcterms="http://purl.org/dc/terms/">2022-11-22T19:29:09</dcterms:modified>
+  </skos:ConceptScheme>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/farming">
+    <skos:prefLabel xml:lang="en">Farming</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Rearing of animals and/or cultivation of plants.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Landwirtschaft</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Tierzucht und/oder Pflanzenanbau.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Agriculture</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Élevage et/ou culture de plantes.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Landbouw en veeteelt</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Kweken van dieren en/of gewassen.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/biota">
+    <skos:prefLabel xml:lang="en">Biota</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Flora and/or fauna in natural environment.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Biologie</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Flora und/oder Fauna in der natürlichen Umgebung.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Biote</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Flore et/ou faune dans le milieu naturel.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Biota</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Flora en/of fauna in een natuurlijke omgeving.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/boundaries">
+    <skos:prefLabel xml:lang="en">Boundaries</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Legal land descriptions.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Grenzen</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Gesetzlich festgelegte Grenzen.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Limites</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Description du territoire selon la législation.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Grenzen</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Wettelijke gebiedsbeschrijvingen.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/climatologyMeteorologyAtmosphere">
+    <skos:prefLabel xml:lang="en">Climatology / Meteorology / Atmosphere</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Processes and phenomena of the atmosphere.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Klimatologie/Meteorologie/Atmosphäre</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Prozesse und Phänomene der Atmosphäre inklusive Klimatologie und Meteorologie</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Climatologie/Météorologie/Atmosphère</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Processus et phénomènes atmosphériques.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Klimatologie/meteorologie/atmosfeer</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Atmosferische processen en fenomenen.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/economy">
+    <skos:prefLabel xml:lang="en">Economy</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Economic activities, conditions and employment.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Wirtschaft</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Wirtschaftliche Aktivitäten, Verhältnisse und Beschäftigung.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Économie</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Activités et conditions économiques et emploi.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Economie</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Economische activiteiten, situatie en werkgelegenheid.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/elevation">
+    <skos:prefLabel xml:lang="en">Elevation</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Height above or below sea level.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Höhenangaben</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Höhenangabe bezogen auf ein Höhenreferenzsystem.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Altitude</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Altitude au-dessus ou au-dessous du niveau de la mer.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Hoogte</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Hoogte boven of onder zeeniveau.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/environment">
+    <skos:prefLabel xml:lang="en">Environment</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Environmental resources, protection and conservation.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Umwelt</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Umweltressourcen, Umweltschutz und Umwelterhaltung.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Environnement</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Ressources environnementales, protection et conservation.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Milieu</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Milieuhulpbronnen, -bescherming en -behoud.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/geoscientificInformation">
+    <skos:prefLabel xml:lang="en">Geoscientific Information</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Information pertaining to earth sciences.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Geowissenschaften</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Geowissenschaftliche Informationen.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Informations géoscientifiques</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Informations relatives aux sciences de la terre.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Geowetenschappelijke informatie</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Informatie met betrekking tot aardwetenschappen.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/health">
+    <skos:prefLabel xml:lang="en">Health</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Health, health services, human ecology, and safety.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Gesundheitswesen</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Gesundheit, Gesundheitsdienste, Humanökologie und Sicherheit.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Santé</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Santé, services de santé, écologie humaine et sécurité.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Gezondheid</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Gezondheid, gezondheidszorg, menselijke ecologie en veiligheid.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/imageryBaseMapsEarthCover">
+    <skos:prefLabel xml:lang="en">Imagery / Base Maps / Earth Cover</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Base maps.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Bilddaten/Basiskarten/Landbedeckung</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Basisdaten und -karten.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Imagerie/Cartes de base/Occupation des terres</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Cartes de base.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Beelden/Basiskaarten/grondgebruik</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Basiskaarten.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/intelligenceMilitary">
+    <skos:prefLabel xml:lang="en">Intelligence / Military</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Military bases, structures, activities.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Aufklärung/Militär</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Militärbasen, militärische Einrichtungen und Aktivitäten.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Renseignement/Secteur militaire</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Bases, structures et activités militaires.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Inlichtingen/militaire gegevens</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Militaire basissen, structuren, activiteiten.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/inlandWaters">
+    <skos:prefLabel xml:lang="en">Inland Waters</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Inland water features, drainage systems and their characteristics.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Binnengewässer</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Binnengewässermerkmale, Gewässernetze und deren Eigenschaften.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Eaux intérieures</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Eaux intérieures, systèmes de drainage et leurs caractéristiques.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Binnenwateren</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Kenmerken van binnenwateren en afwateringssystemen.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/location">
+    <skos:prefLabel xml:lang="en">Location</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Positional information and services.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Ortsangaben</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Positionierungsangaben und -dienste.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Localisation</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Informations et services de positionnement.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Locatie</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Informatie en diensten met betrekking tot locaties.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/oceans">
+    <skos:prefLabel xml:lang="en">Oceans</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Features and characteristics of salt water bodies (excluding inland waters).</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Meere</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Merkmale und Eigenschaften von Salzwasserkörpern (außer Binnengewässern).</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Océans</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Spécificités et caractéristiques des masses d’eau salée (à l’exclusion des eaux intérieures).</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Oceanen</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Eigenschappen en kenmerken van zoutwatergebieden (uitgezonderd binnenwateren).</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/planningCadastre">
+    <skos:prefLabel xml:lang="en">Planning / Cadastre</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Information used for appropriate actions for future use of the land.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Planungsunterlagen/Kataster</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Informationen für die Flächennutzungsplanung.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Planification/Cadastre</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Informations utilisées pour des actions appropriées concernant l’usage futur des sols.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Planning/kadaster</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Informatie die wordt gebruikt voor gerichte acties voor toekomstig grondgebruik.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/society">
+    <skos:prefLabel xml:lang="en">Society</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Characteristics of society and cultures.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Gesellschaft</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Kulturelle und gesellschaftliche Merkmale.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Société</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Caractéristiques de la société et des cultures.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Maatschappij</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Kenmerken van de maatschappij en van culturen.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/structure">
+    <skos:prefLabel xml:lang="en">Structure</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Man-made construction.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Bauwerke</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Anthropogene Bauten.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Structure</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Constructions humaines.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Structuur</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Door de mens gemaakte bouwwerken.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/transportation">
+    <skos:prefLabel xml:lang="en">Transportation</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Means and aids for conveying persons and/or goods.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Verkehrswesen</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Mittel und Wege zur Beförderung von Personen und/oder Gütern.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Transport</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Moyens et aides pour le transport de personnes et/ou de marchandises.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Vervoer</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Middelen voor het vervoer van personen en/of goederen.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/utilitiesCommunication">
+    <skos:prefLabel xml:lang="en">Utilities / Communication</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Energy, water and waste systems and communications infrastructure and services.</skos:scopeNote>
+    <skos:prefLabel xml:lang="de">Ver- und Entsorgung/Nachrichtenwesen</skos:prefLabel>
+    <skos:scopeNote xml:lang="de">Energie-, Wasser- und Abfallsysteme, Kommunikationsinfrastruktur und -dienste.</skos:scopeNote>
+    <skos:prefLabel xml:lang="fr">Services d’utilité publique/Communication</skos:prefLabel>
+    <skos:scopeNote xml:lang="fr">Systèmes de distribution d’énergie, systèmes de distribution d’eau ou systèmes de collecte des déchets et infrastructures et services de communication.</skos:scopeNote>
+    <skos:prefLabel xml:lang="nl">Nutsdiensten/communicatie</skos:prefLabel>
+    <skos:scopeNote xml:lang="nl">Energie-, water- en afvalsystemen en communicatie-infrastructuur en -diensten.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" />
+  </skos:Concept>
+</rdf:RDF>
+

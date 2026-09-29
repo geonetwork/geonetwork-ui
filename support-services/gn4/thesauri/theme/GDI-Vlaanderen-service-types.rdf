@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:fn="http://www.w3.org/2005/02/xpath-functions" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:gml="http://www.opengis.net/gml#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xdt="http://www.w3.org/2005/02/xpath-datatypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- Scheme -->
+  <skos:ConceptScheme rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Service-Types">
+    <dc:title>GDI-Vlaanderen Service Types</dc:title>
+    <dc:description>GDI-Vlaanderen Service Types</dc:description>
+    <dc:creator>
+      <foaf:Organization>
+        <foaf:name>agentschap Digitaal Vlaanderen</foaf:name>
+      </foaf:Organization>
+    </dc:creator>
+    <dc:rights>Vrij gebruik</dc:rights>
+    <dcterms:issued>2016-03-11</dcterms:issued>
+    <dcterms:modified>2016-05-25</dcterms:modified>
+  </skos:ConceptScheme>
+  <!-- Concept list -->
+  <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Service-Types/OGCWMS">
+    <skos:prefLabel xml:lang="nl">OGC:WMS</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Service-Types/OGCWFS">
+    <skos:prefLabel xml:lang="nl">OGC:WFS</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Service-Types/OGCWMTS">
+    <skos:prefLabel xml:lang="nl">OGC:WMTS</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Service-Types/OSGEOTMS">
+    <skos:prefLabel xml:lang="nl">OSGEO:TMS</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Service-Types/OGCWCS">
+    <skos:prefLabel xml:lang="nl">OGC:WCS</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Service-Types/OGCCSW">
+    <skos:prefLabel xml:lang="nl">OGC:CSW</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Service-Types/OGCSOS">
+    <skos:prefLabel xml:lang="nl">OGC:SOS</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Service-Types/INSPIREATOMOPENSEARCH">
+    <skos:prefLabel xml:lang="nl">INSPIRE:ATOM - Opensearch</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Service-Types/INSPIRESDS">
+    <skos:prefLabel xml:lang="nl">INSPIRE:Spatial Data Service</skos:prefLabel>
+  </skos:Concept>
+</rdf:RDF>
