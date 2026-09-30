@@ -390,6 +390,8 @@ jobs:
       - run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
 
+      - name: Check NPM package dependencies
+        run: npm run package:check-deps
+
       - name: Build NPM package
-        working-directory: package
-        run: node generate-package.js
+        run: npm run package:build

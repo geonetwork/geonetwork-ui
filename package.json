@@ -31,6 +31,8 @@
     "webcomponents:e2e": "nx e2e webcomponents --browser chrome",
     "webcomponents:e2e:ci": "npm run build:webcomponents && concurrently -k --success first \"npm run docs:dev\" \"nx e2e webcomponents\"",
     "generate-api": "tools/generate-api.sh",
+    "package:check-deps": "node package/check-dependencies.js",
+    "package:build": "node package/generate-package.js",
     "dev:ssr": "ng run formatter:serve-ssr",
     "serve:ssr": "node dist/formatter/server/main.js",
     "build:ssr": "nx build --configuration production && ng run formatter:server:production",
