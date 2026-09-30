@@ -102,6 +102,7 @@ State is a flat tree of feature branches (`search`, `map`, `router`, …). Conve
 - **Dates**: always format via `DateService` from `@geonetwork-ui/util/shared` (or the `gnUiHumanizeDate` directive) — never use raw `Date`/third-party formatting.
 - **Click propagation**: use `propagateToDocumentOnly` from `@geonetwork-ui/util/shared` instead of `event.stopPropagation()` so outside-click handlers (dropdowns, etc.) still fire.
 - **i18n**: wrap UI strings with the `translate` pipe/directive; mark dynamic keys with `marker()` from `@biesbjerg/ngx-translate-extract-marker`. Translations live in `translations/*.json` (extracted via `npm run i18n:extract`).
+- **Keep `package.json` and `package/package.json` aligned**: `package/package.json` is the manifest of the published npm package. When bumping a runtime dependency shared by both (e.g. `@geospatial-sdk/*`, `@camptocamp/ogc-client`), update the version in both files in the same commit, otherwise consumers of the npm package get a mismatched version and crash at runtime. `npm run package:check-deps` verifies the two files are consistent (it also runs in CI).
 - **Don't comment out code** — delete it (version control keeps history).
 
 ### Testing
