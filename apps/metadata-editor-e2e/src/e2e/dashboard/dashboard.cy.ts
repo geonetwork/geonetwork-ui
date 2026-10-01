@@ -574,14 +574,12 @@ describe('editing restrictions as non admin', () => {
   })
 
   it('editing access restrictions', () => {
-    // sort by owner, inverted
-    cy.get('gn-ui-results-table').find('.table-header-cell').eq(3).click()
-    cy.get('gn-ui-results-table').find('.table-header-cell').eq(3).click()
-
     // it should not have edit rights on other organization records
     cy.get('gn-ui-results-table')
-      .find('[data-cy="table-row"]')
-      .eq(2)
+      .find(
+        '[data-cy="table-row"][title="You are not an editor of the allowed groups"]'
+      )
+      .first()
       .as('secondDatasetRecord')
     cy.get('@secondDatasetRecord')
       .children('div')
@@ -589,11 +587,6 @@ describe('editing restrictions as non admin', () => {
       .find('span')
       .invoke('text')
       .should('eq', 'admin admin')
-    cy.get('@secondDatasetRecord').should(
-      'have.attr',
-      'title',
-      'You are not an editor of the allowed groups'
-    )
     cy.get('@secondDatasetRecord').children('div').eq(2).click()
     cy.url().should('include', '/catalog/')
     cy.get('@secondDatasetRecord')
@@ -602,22 +595,14 @@ describe('editing restrictions as non admin', () => {
     cy.get('[data-test="record-menu-delete-button"]')
       .find('button')
       .should('be.disabled')
-    cy.get('body').click()
-
-    // sort by owner
-    cy.get('gn-ui-results-table').find('.table-header-cell').eq(3).click()
+    cy.clickOnBody()
 
     // it should have edit rights on their organization records
     cy.get('gn-ui-results-table')
       .find('[data-cy="table-row"]')
-      .first()
+      .contains('span', 'Barbara Roberts')
+      .closest('[data-cy="table-row"]')
       .as('firstRecord')
-    cy.get('@firstRecord')
-      .children('div')
-      .eq(4)
-      .find('span')
-      .invoke('text')
-      .should('eq', 'Barbara Roberts')
     cy.get('@firstRecord').children('div').eq(2).click()
     cy.url().should('include', '/edit/')
 
