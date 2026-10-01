@@ -86,13 +86,13 @@ export class GeocodingService {
         break
       case 'geoplateforme':
         queryObservable = from(
-          queryGeoplateforme(
-            text,
-            wrapArrayOptions(
+          queryGeoplateforme(text, {
+            ...wrapArrayOptions(
               this.provider[1] as GeoplateformeOptions,
               GEOCODING_PROVIDER_ARRAY_OPTIONS.geoplateforme
-            )
-          )
+            ),
+            returnTrueGeometry: true,
+          })
         )
         break
       default:

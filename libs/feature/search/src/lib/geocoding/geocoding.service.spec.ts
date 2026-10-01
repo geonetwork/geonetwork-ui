@@ -59,6 +59,7 @@ describe('GeocodingService', () => {
 
     expect(queryGeoplateforme).toHaveBeenCalledWith('beaufort', {
       limit: 5,
+      returnTrueGeometry: true,
     })
     expect(response).toEqual(results)
   })
@@ -88,6 +89,7 @@ describe('GeocodingService', () => {
       index: ['poi'],
       category: ['administratif', 'commune'],
       limit: 5,
+      returnTrueGeometry: true,
     })
   })
 

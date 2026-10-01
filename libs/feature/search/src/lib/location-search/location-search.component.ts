@@ -10,6 +10,7 @@ import {
 import { Observable } from 'rxjs'
 import pointer from 'jsonpointer'
 import { GeocodingResult } from '@geospatial-sdk/geocoding'
+import { Geometry } from 'geojson'
 import {
   AutocompleteComponent,
   AutocompleteItem,
@@ -22,6 +23,11 @@ export interface GeocodingProviderLabels {
   main?: string
   secondary?: string
   tertiary?: string
+}
+
+export interface LocationBbox {
+  bbox: BoundingBox
+  label: string
 }
 
 export const GEOCODING_PROVIDER_LABELS =
@@ -42,7 +48,7 @@ export class LocationSearchComponent {
 
   @Input() placeholder = ''
   @Output() resultSelected = new EventEmitter<GeocodingResult>()
-  @Output() bboxSelected = new EventEmitter<BoundingBox>()
+  @Output() bboxSelected = new EventEmitter<LocationBbox>()
 
   displayWithFn = (item: AutocompleteItem) => (item as GeocodingResult).label
 
@@ -59,6 +65,11 @@ export class LocationSearchComponent {
 
   getTertiaryLabel(result: GeocodingResult): string | undefined {
     return this.resolveLabel(result, this.labels.tertiary)
+  }
+
+  getDisplayLabel(result: GeocodingResult): string {
+    const tertiary = this.getTertiaryLabel(result)
+    return this.getMainLabel(result) + (tertiary ? ', ' + tertiary : '')
   }
 
   private resolveLabel(
@@ -79,11 +90,25 @@ export class LocationSearchComponent {
     return label || undefined
   }
 
+  // geoplateforme keeps a simplified geometry in geom and puts the real one,
+  // as a JSON string, in properties.truegeometry when returnTrueGeometry is set
+  private getGeometry(result: GeocodingResult): Geometry | null {
+    const trueGeometry = result.properties?.['truegeometry']
+    if (typeof trueGeometry === 'string') {
+      return JSON.parse(trueGeometry)
+    }
+    return (trueGeometry as Geometry) ?? result.geom
+  }
+
   handleItemSelected(item: AutocompleteItem) {
     const result = item as GeocodingResult
     this.resultSelected.emit(result)
-    if (result.geom) {
-      this.bboxSelected.emit(getGeometryBoundingBox(result.geom))
+    const geometry = this.getGeometry(result)
+    if (geometry) {
+      this.bboxSelected.emit({
+        bbox: getGeometryBoundingBox(geometry),
+        label: this.getDisplayLabel(result),
+      })
     }
   }
 }

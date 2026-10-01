@@ -43,6 +43,23 @@ describe('SpatialExtentDropdownComponent', () => {
       )
       expect(component.selectionLabelParams).toEqual({
         fileName: 'area.geojson',
+        locationName: '',
+      })
+    })
+
+    it('uses the location labels when the bbox comes from a location search', () => {
+      component.setLocationBbox([1, 2, 3, 4], 'Paris, 75')
+
+      expect(component.hasSelection).toBe(true)
+      expect(component.selectionLabelKey).toBe(
+        'search.filters.spatialExtent.bboxFromLocation'
+      )
+      expect(component.selectionDeleteLabelKey).toBe(
+        'search.filters.spatialExtent.bboxFromLocationDelete'
+      )
+      expect(component.selectionLabelParams).toEqual({
+        fileName: '',
+        locationName: 'Paris, 75',
       })
     })
 
@@ -86,6 +103,7 @@ describe('SpatialExtentDropdownComponent', () => {
     beforeEach(() => {
       component.bbox = [1, 2, 3, 4]
       component.fileName = 'test.geojson'
+      component.locationName = 'Paris'
       component.errorKey = 'search.filters.spatialExtent.error.noGeometry'
       emittedBbox = []
       component.bboxChange.subscribe((v) => emittedBbox.push(v))
@@ -99,6 +117,7 @@ describe('SpatialExtentDropdownComponent', () => {
 
       expect(component.bbox).toBeNull()
       expect(component.fileName).toBe('')
+      expect(component.locationName).toBe('')
       expect(component.errorKey).toBeNull()
       expect(emittedBbox).toEqual([null])
       expect(event.stopPropagation).toHaveBeenCalled()
@@ -197,6 +216,26 @@ describe('SpatialExtentDropdownComponent', () => {
       expect(component.fileName).toBe('area.geojson')
       expect(component.hasSelection).toBe(true)
       expect(emittedBbox).toEqual([[0, 0, 1, 1]])
+    })
+  })
+
+  describe('setLocationBbox', () => {
+    it('stores the bbox and location name, clears the file state and emits the bbox', () => {
+      const emitted: unknown[] = []
+      component.bboxChange.subscribe((v) => emitted.push(v))
+      const clearSpy = jest.fn()
+      component.fileInput = { clear: clearSpy } as any
+      component.fileName = 'area.geojson'
+      component.errorKey = 'search.filters.spatialExtent.error.noGeometry'
+
+      component.setLocationBbox([1, 2, 3, 4], 'Paris, 75')
+
+      expect(component.bbox).toEqual([1, 2, 3, 4])
+      expect(component.locationName).toBe('Paris, 75')
+      expect(component.fileName).toBe('')
+      expect(component.errorKey).toBeNull()
+      expect(clearSpy).toHaveBeenCalled()
+      expect(emitted).toEqual([[1, 2, 3, 4]])
     })
   })
 

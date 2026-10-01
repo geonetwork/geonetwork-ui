@@ -10,10 +10,22 @@
     [title]="title"
     [initialBbox]="(selectedBoundingBox$ | async) ?? null"
     [maxFileSizeMb]="spatialExtentMaxFileSize"
+    [showFileUpload]="spatialExtentSources.includes('file')"
+    [showLocationSearch]="spatialExtentSources.includes('service')"
     (bboxChange)="onBboxChange($event)"
     (errorChange)="onSpatialExtentError($event)"
     [attr.data-cy-field]="fieldName"
-  ></gn-ui-spatial-extent-dropdown>
+  >
+    @if (spatialExtentSources.includes('service')) {
+      <gn-ui-location-search
+        [placeholder]="
+          'search.filters.spatialExtent.searchLocation' | translate
+        "
+        (bboxSelected)="onLocationSelected($event)"
+        data-cy="locationSearch"
+      ></gn-ui-location-search>
+    }
+  </gn-ui-spatial-extent-dropdown>
 } @else {
   <gn-ui-dropdown-multiselect
     class="w-full"

@@ -3,6 +3,7 @@
   [displayWithFn]="displayWithFn"
   [placeholder]="placeholder"
   [displayWithTemplate]="defaultItemTpl"
+  [clearOnSelection]="true"
   (itemSelected)="handleItemSelected($event)"
 >
 </gn-ui-autocomplete>
@@ -12,9 +13,6 @@
     @if (getSecondaryLabel(result)) {
       <div class="gn-ui-card-detail">{{ getSecondaryLabel(result) }}</div>
     }
-    @let tertiaryLabel = getTertiaryLabel(result);
-    <div class="gn-ui-card-title">
-      {{ getMainLabel(result) }}{{ tertiaryLabel ? ', ' + tertiaryLabel : '' }}
-    </div>
+    <div class="gn-ui-card-title">{{ getDisplayLabel(result) }}</div>
   </div>
 </ng-template>
