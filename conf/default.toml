@@ -137,7 +137,8 @@ background_color = "#fdfbff"
 # Optional; JSON Pointers (resolved against a geocoding result) used to build the labels of each
 # result in the location search dropdown: the main label is shown as the title, followed by the tertiary
 # label if any; the secondary label is shown in a smaller font above them.
-# main defaults to '/label'; secondary and tertiary are not shown by default.
+# main defaults to '/label'; secondary and tertiary are not shown by default, except for 'geonames' which shows
+# the administrative area ('/properties/adminName1') as secondary label.
 # geocoding_provider_labels.main = "/label"
 # geocoding_provider_labels.secondary = "/properties/category/1"
 # geocoding_provider_labels.tertiary = "/properties/citycode/0"

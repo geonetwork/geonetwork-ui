@@ -153,6 +153,15 @@ describe('LocationSearchComponent', () => {
     })
   })
 
+  it('uses the admin name as default secondary label with the geonames provider', () => {
+    expect(
+      component.getSecondaryLabel({
+        ...RESULT_WITH_ALL,
+        properties: { adminName1: 'Luxembourg' },
+      })
+    ).toEqual('Luxembourg')
+  })
+
   it('resolves undefined secondary and tertiary labels and the plain main label when no JSON Pointers are configured', () => {
     expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toBeUndefined()
     expect(component.getTertiaryLabel(RESULT_WITH_ALL)).toBeUndefined()

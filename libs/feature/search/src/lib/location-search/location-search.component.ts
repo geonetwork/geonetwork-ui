@@ -16,7 +16,10 @@ import {
   AutocompleteItem,
 } from '@geonetwork-ui/ui/inputs'
 import { BoundingBox, getGeometryBoundingBox } from '@geonetwork-ui/util/shared'
-import { GeocodingService } from '../geocoding/geocoding.service'
+import {
+  GEOCODING_PROVIDER,
+  GeocodingService,
+} from '../geocoding/geocoding.service'
 
 // JSON Pointers resolved against a geocoding result to build the labels shown in the dropdown
 export interface GeocodingProviderLabels {
@@ -35,6 +38,10 @@ export const GEOCODING_PROVIDER_LABELS =
     factory: () => ({}),
   })
 
+const DEFAULT_LABELS: Record<string, GeocodingProviderLabels> = {
+  geonames: { secondary: '/properties/adminName1' },
+}
+
 @Component({
   selector: 'gn-ui-location-search',
   templateUrl: './location-search.component.html',
@@ -44,7 +51,12 @@ export const GEOCODING_PROVIDER_LABELS =
 })
 export class LocationSearchComponent {
   private geocodingService = inject(GeocodingService)
-  private labels = inject(GEOCODING_PROVIDER_LABELS)
+  private labels: GeocodingProviderLabels = {
+    ...DEFAULT_LABELS[inject(GEOCODING_PROVIDER)[0]],
+    ...Object.fromEntries(
+      Object.entries(inject(GEOCODING_PROVIDER_LABELS)).filter(([, v]) => v)
+    ),
+  }
 
   @Input() placeholder = ''
   @Output() resultSelected = new EventEmitter<GeocodingResult>()

@@ -287,7 +287,7 @@ label_key = 'myOrg.secondCustomFilter'
 
 - `geocoding_provider_labels` (optional)
 
-  The labels used when rendering a geolocation result (e.g. in the location search dropdown) can be customized. Note that each provider comes with sensible defaults.
+  The labels used when rendering a geolocation result (e.g. in the location search dropdown) can be customized. Note that each provider comes with sensible defaults: the main label is the one computed by the provider, and `'geonames'` shows the administrative area (`/properties/adminName1`) as secondary label.
 
   ![location-search-labels.png](../assets/location-search-labels.png)
 
