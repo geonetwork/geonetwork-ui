@@ -144,16 +144,13 @@ describe('FilterDropdownComponent', () => {
   })
 
   describe('#spatial-extent-dropdown', () => {
-    it('passes the sources to the dropdown and applies a selected location', () => {
+    it('applies a selected location', () => {
       component.fieldName = 'spatialExtent'
       component.fieldType = 'spatialExtent'
-      component.spatialExtentSources = ['service']
       fixture.detectChanges()
       spatialExtentDropdown = fixture.debugElement.query(
         By.directive(SpatialExtentDropdownComponent)
       ).componentInstance
-      expect(spatialExtentDropdown.showFileUpload).toBe(false)
-      expect(spatialExtentDropdown.showLocationSearch).toBe(true)
 
       component.onLocationSelected({ bbox: [1, 2, 3, 4], label: 'Paris, 75' })
 

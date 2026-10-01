@@ -111,9 +111,8 @@ background_color = "#fdfbff"
 # Note that some links in the datahub app set an 'organization' filter. So this field is needed to allow unsetting such filters.
 # WARNING: 'resourceType' filter has been deprecated, please use 'recordKind' instead. Breaking change: 'resourceType' filter won't retrieve featureCatalog anymore.
 # An entry holding a prefix (e.g. 'myOrg:myFilter') refers to a custom filter declared in a [[custom_filter]] section (see below).
-# The spatial extent filter is enabled with 'spatialExtent.file' (GeoJSON import), 'spatialExtent.service' (location search
-# through the geocoding provider, see below) or both. 'spatialExtent' is deprecated and behaves like 'spatialExtent.file'.
-# advanced_filters = ['organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license', 'spatialExtent.file', 'spatialExtent.service']
+# The 'spatialExtent' filter offers both a GeoJSON file import and a location search through the geocoding provider (see below).
+# advanced_filters = ['organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license', 'spatialExtent']
 
 # Optional; if true, the default pre-configured searches ("The latest" and "The most popular")
 # will not be shown under the main search bar. Defaults to false.

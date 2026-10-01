@@ -37,8 +37,6 @@ import {
 
 marker('search.filters.spatialExtent.searchLocation')
 
-export type SpatialExtentSource = 'file' | 'service'
-
 // in MB, null means no limit
 export const SPATIAL_EXTENT_MAX_FILE_SIZE = new InjectionToken<number | null>(
   'spatialExtentMaxFileSize',
@@ -69,7 +67,6 @@ export class FilterDropdownComponent implements OnInit {
 
   @Input() fieldName: string
   @Input() title: string
-  @Input() spatialExtentSources: SpatialExtentSource[] = ['file']
 
   @ViewChild(SpatialExtentDropdownComponent)
   spatialExtentDropdown: SpatialExtentDropdownComponent
