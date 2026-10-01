@@ -234,7 +234,10 @@ export class DataService {
     endpoint: OgcApiEndpoint,
     collectionId?: string
   ): Promise<string | undefined> {
-    return collectionId ?? (await endpoint.featureCollections)[0]
+    const collections = await endpoint.featureCollections
+    return collections.length === 1 && !collectionId
+      ? collections[0]
+      : collectionId
   }
 
   async getDownloadUrlsFromOgcApi(

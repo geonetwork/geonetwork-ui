@@ -128,7 +128,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
           httpStatus: 403,
         })
       }
-      if (this.url === 'https://my.ogc.api/features') {
+      if (this.url.startsWith('https://my.ogc.api/')) {
         return Promise.resolve({
           name: collectionName,
           id: collectionName === 'collection2' ? 'collection2' : 'collection1',
@@ -153,7 +153,9 @@ jest.mock('@camptocamp/ogc-client', () => ({
     featureCollections =
       this.url.indexOf('error.http') > -1
         ? Promise.reject(new Error())
-        : Promise.resolve(['collection1', 'collection2'])
+        : this.url.indexOf('collection2') > -1
+          ? Promise.resolve(['collection2'])
+          : Promise.resolve(['collection1', 'collection2'])
     getCollectionItems(_collection: string) {
       if (_collection === 'collection2') {
         return Promise.resolve(['item2_a', 'item2_b'])
@@ -680,7 +682,7 @@ describe('DataService', () => {
     describe('#getDownloadLinksFromOgcApiFeatures', () => {
       describe('calling getDownloadLinksFromOgcApiFeatures() with a valid URL', () => {
         it('returns links with formats for link', async () => {
-          const url = new URL('https://my.ogc.api/features')
+          const url = new URL('https://my.ogc.api/collection2/features')
           const links = await service.getDownloadLinksFromOgcApiFeatures({
             name: undefined,
             url,
@@ -691,14 +693,14 @@ describe('DataService', () => {
             JSON.parse(
               JSON.stringify([
                 {
-                  name: 'collection1',
+                  name: 'collection2',
                   mimeType: 'application/json',
                   url: new URL('http://json'),
                   type: 'download',
                   accessServiceProtocol: 'ogcFeatures',
                 },
                 {
-                  name: 'collection1',
+                  name: 'collection2',
                   mimeType: 'text/csv',
                   url: new URL('http://csv'),
                   type: 'download',
