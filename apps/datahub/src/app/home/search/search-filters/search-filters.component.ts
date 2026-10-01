@@ -14,7 +14,6 @@ import {
   SearchFacade,
   SearchService,
   SortByComponent,
-  SpatialExtentSource,
 } from '@geonetwork-ui/feature/search'
 import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 import { Observable, switchMap } from 'rxjs'
@@ -73,11 +72,7 @@ export class SearchFiltersComponent implements OnInit {
 
   @ViewChildren(FilterDropdownComponent)
   filters: QueryList<FilterDropdownComponent>
-  searchConfig: {
-    fieldName: string
-    title: string
-    spatialExtentSources?: SpatialExtentSource[]
-  }[]
+  searchConfig: { fieldName: string; title: string }[]
   isOpen = false
   @Input() isQualitySortable = false
   userId: string
@@ -133,16 +128,7 @@ export class SearchFiltersComponent implements OnInit {
           `WARNING: The resourceType filter does not return featureCatalog records anymore.`
         )
         return true
-      } else if (adv_filter === 'spatialExtent') {
-        console.warn(
-          `WARNING: The spatialExtent filter is now deprecated, please use spatialExtent.file and/or spatialExtent.service instead.`
-        )
-        return true
-      } else if (
-        this.fieldsService.supportedFields?.includes(
-          this.getBaseFilterName(adv_filter)
-        )
-      ) {
+      } else if (this.fieldsService.supportedFields?.includes(adv_filter)) {
         return true
       } else {
         console.warn(
@@ -151,29 +137,15 @@ export class SearchFiltersComponent implements OnInit {
         return false
       }
     })
-    const spatialExtentSources = advancedFilters
-      .filter((filter) => this.getBaseFilterName(filter) === 'spatialExtent')
-      .map(
-        (filter): SpatialExtentSource =>
-          filter === 'spatialExtent.service' ? 'service' : 'file'
-      )
-    const fieldNames = [
-      ...new Set(advancedFilters.map((f) => this.getBaseFilterName(f))),
-    ]
-    this.searchConfig = fieldNames.map((fieldName) => {
-      const customFilter = customFilters?.find((f) => f.name === fieldName)
+    this.searchConfig = advancedFilters.map((filter) => {
+      const customFilter = customFilters?.find((f) => f.name === filter)
       return {
-        fieldName,
+        fieldName: filter,
         title:
           customFilter?.labelKey ??
-          `search.filters.${customFilter?.baseFilter ?? fieldName}`,
-        ...(fieldName === 'spatialExtent' && { spatialExtentSources }),
+          `search.filters.${customFilter?.baseFilter ?? filter}`,
       }
     })
-  }
-
-  private getBaseFilterName(filter: string) {
-    return filter.startsWith('spatialExtent.') ? 'spatialExtent' : filter
   }
 
   open() {

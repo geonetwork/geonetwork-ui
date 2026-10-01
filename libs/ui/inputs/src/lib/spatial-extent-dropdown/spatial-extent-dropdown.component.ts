@@ -100,8 +100,6 @@ export class SpatialExtentDropdownComponent {
 
   @Input() title: string
   @Input() maxFileSizeMb: number | null = null
-  @Input() showFileUpload = true
-  @Input() showLocationSearch = false
   @Input() set initialBbox(value: BoundingBox | null) {
     if (!this.bbox && value) {
       this.bbox = value

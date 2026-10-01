@@ -29,8 +29,7 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
       'publicationYear',
       'myOrg:labelled',
       'myOrg:unlabelled',
-      'spatialExtent.file',
-      'spatialExtent.service',
+      'spatialExtent',
     ],
     CUSTOM_FILTERS: [
       {
@@ -160,24 +159,6 @@ describe('SearchFiltersComponent', () => {
     })
     it('labels a custom filter without label key like its base filter', () => {
       expect(getTitle('myOrg:unlabelled')).toEqual('search.filters.keyword')
-    })
-  })
-
-  describe('spatial extent filter', () => {
-    beforeEach(() => {
-      fixture.detectChanges()
-    })
-    it('merges the file and service entries into one filter with both sources', () => {
-      const spatialExtent = component.searchConfig.filter(
-        (config) => config.fieldName === 'spatialExtent'
-      )
-      expect(spatialExtent).toEqual([
-        {
-          fieldName: 'spatialExtent',
-          title: 'search.filters.spatialExtent',
-          spatialExtentSources: ['file', 'service'],
-        },
-      ])
     })
   })
 

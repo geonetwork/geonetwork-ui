@@ -49,11 +49,10 @@ export const WithInitialBbox: StoryObj<SpatialExtentDropdownComponent> = {
 export const WithLocationSearch: StoryObj<SpatialExtentDropdownComponent> = {
   args: {
     title: 'Spatial extent',
-    showLocationSearch: true,
   },
   render: (args) => ({
     props: args,
-    template: `<gn-ui-spatial-extent-dropdown [title]="title" [showLocationSearch]="showLocationSearch" [showFileUpload]="showFileUpload ?? true" (bboxChange)="bboxChange($event)" (errorChange)="errorChange($event)">
+    template: `<gn-ui-spatial-extent-dropdown [title]="title" (bboxChange)="bboxChange($event)" (errorChange)="errorChange($event)">
       <input class="gn-ui-gray-outline-input w-full h-[32px] px-[8px]" placeholder="Search in the list" />
     </gn-ui-spatial-extent-dropdown>`,
   }),

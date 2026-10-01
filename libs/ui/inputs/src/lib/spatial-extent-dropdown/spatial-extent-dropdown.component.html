@@ -58,33 +58,28 @@
       [class]="
         (hasSelection
           ? 'border-b-[1px] border-gray-400 pb-[20px]'
-          : 'pb-[12px]') + ' text-black flex flex-col'
+          : 'pb-[12px]') + ' text-black flex flex-col gap-[8px]'
       "
-      [class.gap-[8px]]="showFileUpload && showLocationSearch"
       style="
         --gn-ui-text-input-rounded: 8px;
         --gn-ui-text-input-border-size: 1px;
         --gn-ui-text-input-padding: 6px;
       "
     >
-      @if (showFileUpload) {
-        <gn-ui-drag-and-drop-file-input
-          accept=".json,.geojson"
-          [placeholder]="'search.filters.spatialExtent.import' | translate"
-          [maxFileSizeMb]="maxFileSizeMb"
-          [showFileName]="false"
-          textClass="text-black truncate"
-          dropzoneBackgroundColor="transparent"
-          icon="iconoirUpload"
-          extraClass="gn-ui-gray-outline-input w-full !h-[32px] px-[8px] py-[4px] justify-between"
-          (fileChange)="handleFileSelected($event)"
-          (errorChange)="handleFileError($event)"
-          data-cy="importGeojson"
-        ></gn-ui-drag-and-drop-file-input>
-      }
-      @if (showLocationSearch) {
-        <ng-content></ng-content>
-      }
+      <gn-ui-drag-and-drop-file-input
+        accept=".json,.geojson"
+        [placeholder]="'search.filters.spatialExtent.import' | translate"
+        [maxFileSizeMb]="maxFileSizeMb"
+        [showFileName]="false"
+        textClass="text-black truncate"
+        dropzoneBackgroundColor="transparent"
+        icon="iconoirUpload"
+        extraClass="gn-ui-gray-outline-input w-full !h-[32px] px-[8px] py-[4px] justify-between"
+        (fileChange)="handleFileSelected($event)"
+        (errorChange)="handleFileError($event)"
+        data-cy="importGeojson"
+      ></gn-ui-drag-and-drop-file-input>
+      <ng-content></ng-content>
     </div>
 
     @if (hasSelection) {
