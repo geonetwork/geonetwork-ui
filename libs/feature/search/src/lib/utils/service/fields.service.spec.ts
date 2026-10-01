@@ -238,6 +238,8 @@ describe('FieldsService', () => {
               { name: 'myOrg:unsupported', baseFilter: 'organization' },
               // no such field at all
               { name: 'myOrg:unknownBase', baseFilter: 'notAField' },
+              // missing prefix
+              { name: 'noPrefix', baseFilter: 'keyword' },
             ],
           },
         ],
@@ -298,6 +300,18 @@ describe('FieldsService', () => {
       expect(console.warn).toHaveBeenCalledWith(
         expect.stringContaining(
           "base field 'organization' that is not supported"
+        )
+      )
+    })
+    it('ignores a custom filter without a prefix', () => {
+      expect(service.supportedFields).not.toContain('noPrefix')
+      expect(esService.registerFieldAlias).not.toHaveBeenCalledWith(
+        'noPrefix',
+        expect.anything()
+      )
+      expect(console.warn).toHaveBeenCalledWith(
+        expect.stringContaining(
+          "custom field 'noPrefix' does not have the required prefix"
         )
       )
     })

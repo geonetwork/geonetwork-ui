@@ -139,6 +139,12 @@ export class FieldsService {
         )
         continue
       }
+      if (!customField.name.includes(':')) {
+        console.warn(
+          `The custom field '${customField.name}' does not have the required prefix. This field will be ignored.`
+        )
+        continue
+      }
       const newField = baseField.clone()
       newField.setFieldIdentifier(customField.name)
       if (customField.includeValues) {
