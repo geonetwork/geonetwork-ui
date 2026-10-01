@@ -179,7 +179,8 @@ background_color = "#fdfbff"
 #     include_values = ['my keyword 1', 'my keyword 2']
 #     label_key = 'myOrg.secondCustomFilter'
 
-# Note: Array of tables like [[search_preset]] and [[custom_filter]] entries must be defined at the end of the [search] section.
+# Note: Arrays of tables like [[search_preset]] and [[custom_filter]] entries must be defined at the end of the [search] section.
+#       Parameters defined after them will not be part of the [search] section anymore.
 
 ### METADATA QUALITY SETTINGS
 

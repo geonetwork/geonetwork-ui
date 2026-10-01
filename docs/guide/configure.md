@@ -213,42 +213,6 @@ For a detailed explanation on the classification system, see [this documentation
 
 ⚠️ **Breaking change**: Record of type featureCatalog are not retrieved anymore.
 
-- `[[custom_filter]]` (multiple, optional)
-
-  Custom filters allow customizing default search filters by changing some parameters to them.
-  They can be referenced by their name in the `advanced_filters` setting of the `[search]` section.
-
-  Every custom filter is composed of:
-
-  - `name` (mandatory): name of the filter as it should appear in the `advanced_filters` setting; custom filters must have a prefix separated by a colon in their name, e.g.: "myOrg:myOrgKeywords"; case sensitive
-  - `base_filter` (mandatory): the search field the filter is based on; supported values are `'format'`, `'representationType'`, `'publicationYear'`, `'topic'`, `'inspireKeyword'`, `'keyword'`, `'documentStandard'`, `'producerOrg'`, `'publisherOrg'` and `'user'`
-  - `exclude_values` (optional): an array of values of the base filter which should not be offered to the user in the UI (e.g. dropdowns); it does not have any effect when cutom filter fields are used in the URL
-  - `include_values` (optional): an array of values of the base filter which should be the only ones offered to the user in the UI (e.g. dropdowns); it does not have any effect when cutom filter fields are used in the URL
-  - `label_key` (optional): a translation key used as the label of the filter; it can be defined in the
-    `[translations]` sections. Defaults to the label of the base filter.
-
-  For instance:
-
-```toml
-advanced_filters = ['organization', 'myOrg:firstCustomFilter', 'myOrg:secondCustomFilter']
-
-[[custom_filter]]
-name = 'myOrg:firstCustomFilter'
-base_filter = 'keyword'
-exclude_values = ['my keyword 1', 'my keyword 2']
-label_key = 'myOrg.firstCustomFilter'
-
-[[custom_filter]]
-name = 'myOrg:secondCustomFilter'
-base_filter = 'keyword'
-include_values = ['my keyword 3', 'my keyword 4']
-label_key = 'myOrg.secondCustomFilter'
-
-[translations.en]
-'myOrg.firstCustomFilter' = 'My first filter'
-'myOrg.secondCustomFilter' = 'My second filter'
-```
-
 - `do_not_use_default_search_preset` (optional)
 
   If set to `true`, the two default pre-configured search badges ("The latest" and "The most popular") will not be shown under the main search bar. Defaults to `false`. Note that the "My favorites" badge cannot be disabled by configuration.
@@ -319,6 +283,44 @@ label_key = 'myOrg.secondCustomFilter'
   ```
 
       Note: Values for the same filter are treated with an OR logic, value for different filters are treated with an AND logic
+
+- `[[custom_filter]]` (multiple, optional)
+
+  Custom filters allow customizing default search filters by changing some parameters to them.
+  They can be referenced by their name in the `advanced_filters` setting of the `[search]` section.
+
+  Every custom filter is composed of:
+
+  - `name` (mandatory): name of the filter as it should appear in the `advanced_filters` setting; custom filters must have a prefix separated by a colon in their name, e.g.: "myOrg:myOrgKeywords"; case sensitive
+  - `base_filter` (mandatory): the search field the filter is based on; supported values are `'format'`, `'representationType'`, `'publicationYear'`, `'topic'`, `'inspireKeyword'`, `'keyword'`, `'documentStandard'`, `'producerOrg'`, `'publisherOrg'` and `'user'`
+  - `exclude_values` (optional): an array of values of the base filter which should not be offered to the user in the UI (e.g. dropdowns); the values are case-sensitive and support wildcards; it does not have any effect when cutom filter fields are used in the URL
+  - `include_values` (optional): an array of values of the base filter which should be the only ones offered to the user in the UI (e.g. dropdowns); the values are case-sensitive and support wildcards; it does not have any effect when cutom filter fields are used in the URL
+  - `label_key` (optional): a translation key used as the label of the filter; it can be defined in the
+    `[translations]` sections. Defaults to the label of the base filter.
+
+  For instance:
+
+```toml
+advanced_filters = ['organization', 'myOrg:firstCustomFilter', 'myOrg:secondCustomFilter']
+
+[[custom_filter]]
+name = 'myOrg:firstCustomFilter'
+base_filter = 'keyword'
+exclude_values = ['my keyword 1', 'my keyword 2']
+label_key = 'myOrg.firstCustomFilter'
+
+[[custom_filter]]
+name = 'myOrg:secondCustomFilter'
+base_filter = 'keyword'
+include_values = ['my keyword 3', 'my keyword 4']
+label_key = 'myOrg.secondCustomFilter'
+
+[translations.en]
+'myOrg.firstCustomFilter' = 'My first filter'
+'myOrg.secondCustomFilter' = 'My second filter'
+```
+
+Note: Arrays of tables like `[[search_preset]]` and `[[custom_filter]]` entries must be defined at the end of the [search] section. Parameters defined after them will not be part of the `[search]` section anymore.
 
 #### `[metadata-quality]`
 
