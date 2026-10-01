@@ -114,6 +114,24 @@ describe('LocationSearchComponent', () => {
     expect(selected).toHaveBeenCalledWith(RESULTS[0])
   })
 
+  it('prefers the true geometry returned as a string in the properties over the simplified one', () => {
+    const emitted = jest.fn()
+    component.bboxSelected.subscribe(emitted)
+
+    component.handleItemSelected({
+      ...RESULT_WITH_ALL,
+      properties: {
+        truegeometry:
+          '{"type":"Polygon","coordinates":[[[6.5,45.6],[6.7,45.6],[6.7,45.8],[6.5,45.6]]]}',
+      },
+    })
+
+    expect(emitted).toHaveBeenCalledWith({
+      bbox: [6.5, 45.6, 6.7, 45.8],
+      label: 'Beaufort',
+    })
+  })
+
   it('does not emit bboxSelected when the selected result has no geometry', () => {
     const emitted = jest.fn()
     component.bboxSelected.subscribe(emitted)
@@ -129,7 +147,10 @@ describe('LocationSearchComponent', () => {
 
     component.handleItemSelected(RESULT_WITH_ALL)
 
-    expect(emitted).toHaveBeenCalledWith([6.771, 45.72, 6.771, 45.72])
+    expect(emitted).toHaveBeenCalledWith({
+      bbox: [6.771, 45.72, 6.771, 45.72],
+      label: 'Beaufort',
+    })
   })
 
   it('resolves undefined secondary and tertiary labels and the plain main label when no JSON Pointers are configured', () => {
@@ -192,9 +213,10 @@ describe('LocationSearchComponent', () => {
         option: { value: RESULT_WITH_ALL },
       } as never)
 
-      expect(hostFixture.componentInstance.bboxSelected).toHaveBeenCalledWith([
-        6.771, 45.72, 6.771, 45.72,
-      ])
+      expect(hostFixture.componentInstance.bboxSelected).toHaveBeenCalledWith({
+        bbox: [6.771, 45.72, 6.771, 45.72],
+        label: 'Beaufort-sur-Doron, 73270',
+      })
     })
   })
 

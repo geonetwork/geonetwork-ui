@@ -4,6 +4,7 @@ import {
   InjectionToken,
   Input,
   OnInit,
+  ViewChild,
   inject,
 } from '@angular/core'
 import {
@@ -27,7 +28,16 @@ import { DateRange } from '@geonetwork-ui/api/repository'
 import { CommonModule } from '@angular/common'
 import { BoundingBox } from '@geonetwork-ui/util/shared'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import {
+  LocationBbox,
+  LocationSearchComponent,
+} from '../location-search/location-search.component'
+
+marker('search.filters.spatialExtent.searchLocation')
+
+export type SpatialExtentSource = 'file' | 'service'
 
 // in MB, null means no limit
 export const SPATIAL_EXTENT_MAX_FILE_SIZE = new InjectionToken<number | null>(
@@ -46,6 +56,8 @@ export const SPATIAL_EXTENT_MAX_FILE_SIZE = new InjectionToken<number | null>(
     DateRangeDropdownComponent,
     DropdownMultiselectComponent,
     SpatialExtentDropdownComponent,
+    LocationSearchComponent,
+    TranslatePipe,
   ],
 })
 export class FilterDropdownComponent implements OnInit {
@@ -57,6 +69,10 @@ export class FilterDropdownComponent implements OnInit {
 
   @Input() fieldName: string
   @Input() title: string
+  @Input() spatialExtentSources: SpatialExtentSource[] = ['file']
+
+  @ViewChild(SpatialExtentDropdownComponent)
+  spatialExtentDropdown: SpatialExtentDropdownComponent
 
   spatialExtentMaxFileSize = inject(SPATIAL_EXTENT_MAX_FILE_SIZE)
 
@@ -99,6 +115,10 @@ export class FilterDropdownComponent implements OnInit {
       })
       .subscribe((filters) => this.searchService.updateFilters(filters))
     this.clearSpatialExtentErrorNotification()
+  }
+
+  onLocationSelected({ bbox, label }: LocationBbox) {
+    this.spatialExtentDropdown.setLocationBbox(bbox, label)
   }
 
   onSpatialExtentError(error: SpatialExtentDropdownError) {

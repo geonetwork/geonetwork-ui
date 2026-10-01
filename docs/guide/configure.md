@@ -208,6 +208,10 @@ An entry holding a prefix (e.g. `'myOrg:myFilter'`) does not refer to a search f
 which has to be declared in a `[[custom_filter]]` section (see below); entries without a matching
 `[[custom_filter]]` section are ignored.
 
+The spatial extent filter is enabled with `'spatialExtent.file'` (import of a GeoJSON file), `'spatialExtent.service'`
+(search of a place through the geocoding provider, see `geocoding_provider` below) or both; the two entries share a single dropdown.
+The `'spatialExtent'` entry is deprecated and behaves like `'spatialExtent.file'`.
+
 ⚠️ **WARNING**: `'resourceType'` filter has been deprecated, please use `'recordKind'` instead. Using both filters is not recommended as it may imply some inconsistencies in the page results. `'resourceType'` filter will fetch records of all type (instead of `featureCatalog`), whereas `'recordKind'` filter will fetch `datasets` (which are `datasets`, `featureCatalog` that are `datasets`, and `series`), `services` and `reuse` (`application` and all kind of `map`).
 For a detailed explanation on the classification system, see [this documentation page](../guide/record-kind.md).
 
@@ -276,7 +280,10 @@ label_key = 'myOrg.secondCustomFilter'
   geocoding_provider_options.index = "poi"
   geocoding_provider_options.category = "administratif"
   geocoding_provider_options.limit = 5
+  geocoding_provider_options.returnTrueGeometry = true
   ```
+
+  For `'geoplateforme'`, `returnTrueGeometry` makes the spatial extent filter use the real geometry of the selected place instead of its simplified one.
 
 - `geocoding_provider_labels` (optional)
 

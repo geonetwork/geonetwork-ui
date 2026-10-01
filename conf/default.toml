@@ -111,7 +111,9 @@ background_color = "#fdfbff"
 # Note that some links in the datahub app set an 'organization' filter. So this field is needed to allow unsetting such filters.
 # WARNING: 'resourceType' filter has been deprecated, please use 'recordKind' instead. Breaking change: 'resourceType' filter won't retrieve featureCatalog anymore.
 # An entry holding a prefix (e.g. 'myOrg:myFilter') refers to a custom filter declared in a [[custom_filter]] section (see below).
-# advanced_filters = ['organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license', 'spatialExtent']
+# The spatial extent filter is enabled with 'spatialExtent.file' (GeoJSON import), 'spatialExtent.service' (location search
+# through the geocoding provider, see below) or both. 'spatialExtent' is deprecated and behaves like 'spatialExtent.file'.
+# advanced_filters = ['organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license', 'spatialExtent.file', 'spatialExtent.service']
 
 # Optional; if true, the default pre-configured searches ("The latest" and "The most popular")
 # will not be shown under the main search bar. Defaults to false.
@@ -128,6 +130,9 @@ background_color = "#fdfbff"
 # geocoding_provider_options.index = "poi"
 # geocoding_provider_options.category = "administratif"
 # geocoding_provider_options.limit = 5
+# For 'geoplateforme', returnTrueGeometry makes the spatial extent filter use the real geometry of the
+# selected place instead of its simplified one.
+# geocoding_provider_options.returnTrueGeometry = true
 
 # Optional; JSON Pointers (resolved against a geocoding result) used to build the labels of each
 # result in the location search dropdown: the main label is shown as the title, followed by the tertiary

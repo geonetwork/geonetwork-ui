@@ -9,5 +9,5 @@ main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
 
 [search]
-advanced_filters = ['spatialExtent']
+advanced_filters = ['spatialExtent.file']
 spatial_extent_max_file_size = 1
