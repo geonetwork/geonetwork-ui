@@ -15,7 +15,7 @@ import { getIsMobile } from '@geonetwork-ui/util/shared'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matEditNote } from '@ng-icons/material-icons/baseline'
 import { TranslateModule } from '@ngx-translate/core'
-import { RecordHeaderService } from '../record-header.service'
+import { RecordService } from '../../record.service'
 
 @Component({
   selector: 'datahub-record-actions',
@@ -38,7 +38,7 @@ import { RecordHeaderService } from '../record-header.service'
 })
 export class RecordActionsComponent {
   private platformServiceInterface = inject(PlatformServiceInterface)
-  private headerService = inject(RecordHeaderService)
+  private recordService = inject(RecordService)
 
   @Input() metadata: CatalogRecord
   @Input() color = 'currentColor'
@@ -52,9 +52,9 @@ export class RecordActionsComponent {
     return !this.platformServiceInterface.supportsAuthentication()
   }
 
-  canEdit$ = this.headerService.canEditFromUrl$
+  canEdit$ = this.recordService.canEditFromUrl$
 
   openEdit(): void {
-    this.headerService.openEditUrl()
+    this.recordService.openEditUrl()
   }
 }

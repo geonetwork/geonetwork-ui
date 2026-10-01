@@ -18,7 +18,7 @@ import { iconoirMenu } from '@ng-icons/iconoir'
 import { matArrowBack } from '@ng-icons/material-icons/baseline'
 import { TranslateDirective } from '@ngx-translate/core'
 import { RecordActionsComponent } from '../record-actions/record-actions.component'
-import { RecordHeaderService } from '../record-header.service'
+import { RecordService } from '../../record.service'
 
 marker('record.metadata.about')
 marker('record.metadata.capabilities')
@@ -49,7 +49,7 @@ marker('record.metadata.userFeedbacks')
   ],
 })
 export class NavigationBarComponent {
-  private headerService = inject(RecordHeaderService)
+  private recordService = inject(RecordService)
 
   @Input() metadata: DatasetRecord
   @ViewChild('navBar', { static: false }) mobileMenuRef: ElementRef
@@ -106,6 +106,6 @@ export class NavigationBarComponent {
   }
 
   back() {
-    this.headerService.back()
+    this.recordService.back()
   }
 }

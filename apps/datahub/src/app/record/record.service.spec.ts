@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { Location } from '@angular/common'
 import { of } from 'rxjs'
-import { RecordHeaderService } from './record-header.service'
+import { RecordService } from './record.service'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
@@ -19,8 +19,8 @@ jest.mock('@geonetwork-ui/util/app-config', () => {
   }
 })
 
-describe('RecordHeaderService', () => {
-  let service: RecordHeaderService
+describe('RecordService', () => {
+  let service: RecordService
   let routerMock: jest.Mocked<Router>
   let locationMock: jest.Mocked<Location>
   let recordsRepoMock: jest.Mocked<RecordsRepositoryInterface>
@@ -41,14 +41,14 @@ describe('RecordHeaderService', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        RecordHeaderService,
+        RecordService,
         { provide: Router, useValue: routerMock },
         { provide: Location, useValue: locationMock },
         { provide: RecordsRepositoryInterface, useValue: recordsRepoMock },
       ],
     })
 
-    service = TestBed.inject(RecordHeaderService)
+    service = TestBed.inject(RecordService)
   })
 
   afterEach(() => {

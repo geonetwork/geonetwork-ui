@@ -7,7 +7,7 @@ import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import { BehaviorSubject, of, switchMap, take, tap } from 'rxjs'
 
 @Injectable({ providedIn: 'root' })
-export class RecordHeaderService {
+export class RecordService {
   private router = inject(Router)
   private location = inject(Location)
   private recordsRepository = inject(RecordsRepositoryInterface)
