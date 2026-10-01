@@ -273,7 +273,7 @@ label_key = 'myOrg.secondCustomFilter'
   - [`GeonamesOptions`](https://camptocamp.github.io/geospatial-sdk/docs/api/📦-geocoding/interfaces/GeonamesOptions.html)
   - [`GeoplateformeOptions`](https://camptocamp.github.io/geospatial-sdk/docs/api/📦-geocoding/interfaces/GeoplateformeOptions.html)
 
-  For example:
+  Options holding a list of values (`index` and `category` for `'geoplateforme'`, `origins` and `features` for `'geoadmin'`) take a single value. For example:
 
   ```toml
   geocoding_provider = "geoplateforme"

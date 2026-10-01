@@ -318,6 +318,28 @@ geocoding_provider = "geoadmin"
         ).toBeUndefined()
       })
     })
+
+    describe('when a geoadmin list option is given as a single value', () => {
+      beforeEach(async () => {
+        fetchMock.get(
+          'end:default.toml',
+          () =>
+            minimalAppConfigFixture() +
+            `
+[search]
+geocoding_provider = "geoadmin"
+geocoding_provider_options.origins = "gg25"
+`
+        )
+        await loadAppConfig()
+      })
+
+      it('wraps it into an array', () => {
+        expect(getOptionalSearchConfig().GEOCODING_PROVIDER_OPTIONS).toEqual({
+          origins: ['gg25'],
+        })
+      })
+    })
   })
 
   describe('when the configuration file contains new_record_default_language', () => {

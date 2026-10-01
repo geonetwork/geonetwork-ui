@@ -84,6 +84,11 @@ export function getCustomTranslations(langCode: string): CustomTranslations {
 
 let appConfigLoaded = false
 
+const GEOCODING_PROVIDER_ARRAY_OPTIONS: Record<string, string[]> = {
+  geoplateforme: ['index', 'category'],
+  geoadmin: ['origins', 'features'],
+}
+
 export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
   console.log(
     `[geonetwork-ui] Loading application configuration from ${configUrl}`
@@ -280,13 +285,14 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
         parsedSearchSection?.geocoding_provider_options as
           | Record<string, string | number | boolean | string[]>
           | undefined
-      if (
-        parsedSearchSection?.geocoding_provider === 'geoplateforme' &&
-        parsedGeocodingProviderOptions
-      ) {
-        // the geoplateforme provider expects arrays for these options, but
-        // the configuration only accepts a single value for simplicity
-        for (const key of ['index', 'category']) {
+      if (parsedGeocodingProviderOptions) {
+        // these provider options are arrays, but the configuration only
+        // accepts a single value for simplicity
+        const arrayOptions =
+          GEOCODING_PROVIDER_ARRAY_OPTIONS[
+            parsedSearchSection.geocoding_provider as string
+          ] ?? []
+        for (const key of arrayOptions) {
           const value = parsedGeocodingProviderOptions[key]
           if (typeof value === 'string') {
             parsedGeocodingProviderOptions[key] = [value]
