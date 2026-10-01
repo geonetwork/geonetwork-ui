@@ -110,7 +110,7 @@ export class SearchFiltersComponent implements OnInit {
       this.platformService.getMe().subscribe((user) => (this.userId = user?.id))
     }
     const customFilters = getOptionalSearchConfig().CUSTOM_FILTERS
-    this.searchConfig = (
+    const advancedFilters = (
       getOptionalSearchConfig().ADVANCED_FILTERS || [
         'organization',
         'format',
@@ -119,34 +119,33 @@ export class SearchFiltersComponent implements OnInit {
         'isSpatial',
         'license',
       ]
-    )
-      .filter((adv_filter) => {
-        if (adv_filter === 'resourceType') {
-          console.warn(
-            `WARNING: The resourceType filter is now deprecated, please use recordKind instead.`
-          )
-          console.warn(
-            `WARNING: The resourceType filter does not return featureCatalog records anymore.`
-          )
-          return true
-        } else if (this.fieldsService.supportedFields?.includes(adv_filter)) {
-          return true
-        } else {
-          console.warn(
-            `WARNING: the configuration file contains an unsupported filter field: '${adv_filter}'. This field will be ignored.`
-          )
-          return false
-        }
-      })
-      .map((filter) => {
-        const customFilter = customFilters?.find((f) => f.name === filter)
-        return {
-          fieldName: filter,
-          title:
-            customFilter?.labelKey ??
-            `search.filters.${customFilter?.baseFilter ?? filter}`,
-        }
-      })
+    ).filter((adv_filter) => {
+      if (adv_filter === 'resourceType') {
+        console.warn(
+          `WARNING: The resourceType filter is now deprecated, please use recordKind instead.`
+        )
+        console.warn(
+          `WARNING: The resourceType filter does not return featureCatalog records anymore.`
+        )
+        return true
+      } else if (this.fieldsService.supportedFields?.includes(adv_filter)) {
+        return true
+      } else {
+        console.warn(
+          `WARNING: the configuration file contains an unsupported filter field: '${adv_filter}'. This field will be ignored.`
+        )
+        return false
+      }
+    })
+    this.searchConfig = advancedFilters.map((filter) => {
+      const customFilter = customFilters?.find((f) => f.name === filter)
+      return {
+        fieldName: filter,
+        title:
+          customFilter?.labelKey ??
+          `search.filters.${customFilter?.baseFilter ?? filter}`,
+      }
+    })
   }
 
   open() {

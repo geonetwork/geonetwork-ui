@@ -6,31 +6,57 @@ import { firstValueFrom, of, throwError } from 'rxjs'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
-import { LocationSearchComponent } from './location-search.component'
+import { GeocodingResult } from '@geospatial-sdk/geocoding'
+import {
+  GEOCODING_PROVIDER_LABELS,
+  GeocodingProviderLabels,
+  LocationSearchComponent,
+} from './location-search.component'
 import { GeocodingService } from '../geocoding/geocoding.service'
 
 const RESULTS = [{ label: 'Beaufort', geom: null }]
+
+const RESULT_WITH_ALL: GeocodingResult = {
+  label: 'Beaufort',
+  geom: { type: 'Point', coordinates: [6.771, 45.72] },
+  properties: {
+    name: ['Beaufort-sur-Doron'],
+    category: ['poi', 'commune'],
+    citycode: [73270],
+  },
+}
+
+const LABELS: GeocodingProviderLabels = {
+  main: '/properties/name/0',
+  secondary: '/properties/category',
+  tertiary: '/properties/citycode/0',
+}
+
+const RESULT_WITHOUT_GEOM: GeocodingResult = {
+  label: 'Eurométropole de Strasbourg',
+  geom: null,
+  properties: { category: ['poi', 'epci'] },
+}
 
 @Component({
   imports: [LocationSearchComponent],
   standalone: true,
   template: `
-    <ng-template #itemTpl let-result>
-      <span class="custom-item">custom: {{ result.label }}</span>
-    </ng-template>
     <gn-ui-location-search
-      [displayWithTemplate]="itemTpl"
+      (bboxSelected)="bboxSelected($event)"
     ></gn-ui-location-search>
   `,
 })
-class LocationSearchTemplateHostComponent {}
+class LocationSearchDefaultHostComponent {
+  bboxSelected = jest.fn()
+}
 
 describe('LocationSearchComponent', () => {
   let component: LocationSearchComponent
   let fixture: ComponentFixture<LocationSearchComponent>
   let geocodingService: GeocodingService
 
-  beforeEach(async () => {
+  async function setup(labels?: GeocodingProviderLabels) {
     await TestBed.configureTestingModule({
       imports: [LocationSearchComponent, NoopAnimationsModule],
       providers: [
@@ -39,6 +65,7 @@ describe('LocationSearchComponent', () => {
           provide: GeocodingService,
           useValue: { query: jest.fn(() => of(RESULTS)) },
         },
+        labels ? { provide: GEOCODING_PROVIDER_LABELS, useValue: labels } : [],
       ],
     }).compileComponents()
 
@@ -46,6 +73,10 @@ describe('LocationSearchComponent', () => {
     fixture = TestBed.createComponent(LocationSearchComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
+  }
+
+  beforeEach(async () => {
+    await setup()
   })
 
   afterEach(() => {
@@ -83,22 +114,130 @@ describe('LocationSearchComponent', () => {
     expect(selected).toHaveBeenCalledWith(RESULTS[0])
   })
 
-  it('forwards displayWithTemplate to the underlying autocomplete', () => {
-    jest.useFakeTimers()
-    const hostFixture = TestBed.createComponent(
-      LocationSearchTemplateHostComponent
-    )
-    hostFixture.detectChanges()
-    const autocomplete = hostFixture.debugElement.query(
-      By.directive(AutocompleteComponent)
-    ).componentInstance as AutocompleteComponent
-    autocomplete.inputRef.nativeElement.value = 'bla'
-    autocomplete.inputRef.nativeElement.dispatchEvent(new InputEvent('input'))
-    jest.runOnlyPendingTimers()
-    hostFixture.detectChanges()
+  it('prefers the true geometry returned as a string in the properties over the simplified one', () => {
+    const emitted = jest.fn()
+    component.bboxSelected.subscribe(emitted)
 
-    const overlayContainer =
-      TestBed.inject(OverlayContainer).getContainerElement()
-    expect(overlayContainer.textContent).toContain('custom: Beaufort')
+    component.handleItemSelected({
+      ...RESULT_WITH_ALL,
+      properties: {
+        truegeometry:
+          '{"type":"Polygon","coordinates":[[[6.5,45.6],[6.7,45.6],[6.7,45.8],[6.5,45.6]]]}',
+      },
+    })
+
+    expect(emitted).toHaveBeenCalledWith({
+      bbox: [6.5, 45.6, 6.7, 45.8],
+      label: 'Beaufort',
+    })
+  })
+
+  it('does not emit bboxSelected when the selected result has no geometry', () => {
+    const emitted = jest.fn()
+    component.bboxSelected.subscribe(emitted)
+
+    component.handleItemSelected(RESULT_WITHOUT_GEOM)
+
+    expect(emitted).not.toHaveBeenCalled()
+  })
+
+  it('emits bboxSelected with the bounding box computed from the selected geometry', () => {
+    const emitted = jest.fn()
+    component.bboxSelected.subscribe(emitted)
+
+    component.handleItemSelected(RESULT_WITH_ALL)
+
+    expect(emitted).toHaveBeenCalledWith({
+      bbox: [6.771, 45.72, 6.771, 45.72],
+      label: 'Beaufort',
+    })
+  })
+
+  it('uses the admin name as default secondary label with the geonames provider', () => {
+    expect(
+      component.getSecondaryLabel({
+        ...RESULT_WITH_ALL,
+        properties: { adminName1: 'Luxembourg' },
+      })
+    ).toEqual('Luxembourg')
+  })
+
+  it('resolves undefined secondary and tertiary labels and the plain main label when no JSON Pointers are configured', () => {
+    expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toBeUndefined()
+    expect(component.getTertiaryLabel(RESULT_WITH_ALL)).toBeUndefined()
+    expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort')
+  })
+
+  describe('with configured JSON Pointers', () => {
+    beforeEach(async () => {
+      TestBed.resetTestingModule()
+      await setup(LABELS)
+    })
+
+    it('resolves the labels, converting numbers to strings and joining arrays with commas', () => {
+      expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual(
+        'Beaufort-sur-Doron'
+      )
+      expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toEqual(
+        'poi, commune'
+      )
+      expect(component.getTertiaryLabel(RESULT_WITH_ALL)).toEqual('73270')
+    })
+
+    it('falls back to the result label and leaves out the labels whose JSON Pointer does not match', () => {
+      expect(component.getMainLabel(RESULT_WITHOUT_GEOM)).toEqual(
+        'Eurométropole de Strasbourg'
+      )
+      expect(component.getSecondaryLabel(RESULT_WITHOUT_GEOM)).toEqual(
+        'poi, epci'
+      )
+      expect(component.getTertiaryLabel(RESULT_WITHOUT_GEOM)).toBeUndefined()
+    })
+
+    it('renders the default item template with secondary/main labels and emits the bbox on selection', () => {
+      ;(geocodingService.query as jest.Mock).mockReturnValue(
+        of([RESULT_WITH_ALL])
+      )
+      jest.useFakeTimers()
+      const hostFixture = TestBed.createComponent(
+        LocationSearchDefaultHostComponent
+      )
+      hostFixture.detectChanges()
+      const autocomplete = hostFixture.debugElement.query(
+        By.directive(AutocompleteComponent)
+      ).componentInstance as AutocompleteComponent
+      autocomplete.inputRef.nativeElement.value = 'bea'
+      autocomplete.inputRef.nativeElement.dispatchEvent(new InputEvent('input'))
+      jest.runOnlyPendingTimers()
+      hostFixture.detectChanges()
+
+      const overlayContainer =
+        TestBed.inject(OverlayContainer).getContainerElement()
+      expect(overlayContainer.textContent).toContain('poi, commune')
+      expect(overlayContainer.textContent).toContain(
+        'Beaufort-sur-Doron, 73270'
+      )
+
+      autocomplete.handleSelection({
+        option: { value: RESULT_WITH_ALL },
+      } as never)
+
+      expect(hostFixture.componentInstance.bboxSelected).toHaveBeenCalledWith({
+        bbox: [6.771, 45.72, 6.771, 45.72],
+        label: 'Beaufort-sur-Doron, 73270',
+      })
+    })
+  })
+
+  describe('with invalid JSON Pointers', () => {
+    beforeEach(async () => {
+      TestBed.resetTestingModule()
+      await setup({ main: 'label', secondary: 'properties.category' })
+    })
+
+    it('ignores them', () => {
+      expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort')
+      expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toBeUndefined()
+    })
   })
 })

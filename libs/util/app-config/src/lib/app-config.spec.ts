@@ -219,8 +219,14 @@ describe('app config utils', () => {
           ],
           GEOCODING_PROVIDER: 'geoplateforme',
           GEOCODING_PROVIDER_OPTIONS: {
-            category: 'administratif',
+            index: ['poi'],
+            category: ['administratif'],
             limit: 5,
+          },
+          GEOCODING_PROVIDER_LABELS: {
+            MAIN: '/properties/name/0',
+            SECONDARY: '/properties/citycode/0',
+            TERTIARY: '/properties/category/1',
           },
         })
       })
@@ -310,6 +316,28 @@ geocoding_provider = "geoadmin"
         expect(
           getOptionalSearchConfig().GEOCODING_PROVIDER_OPTIONS
         ).toBeUndefined()
+      })
+    })
+
+    describe('when a geoadmin list option is given as a single value', () => {
+      beforeEach(async () => {
+        fetchMock.get(
+          'end:default.toml',
+          () =>
+            minimalAppConfigFixture() +
+            `
+[search]
+geocoding_provider = "geoadmin"
+geocoding_provider_options.origins = "gg25"
+`
+        )
+        await loadAppConfig()
+      })
+
+      it('wraps it into an array', () => {
+        expect(getOptionalSearchConfig().GEOCODING_PROVIDER_OPTIONS).toEqual({
+          origins: ['gg25'],
+        })
       })
     })
   })

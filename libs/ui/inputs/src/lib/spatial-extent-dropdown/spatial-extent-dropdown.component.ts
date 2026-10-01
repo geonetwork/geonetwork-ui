@@ -53,6 +53,12 @@ const LABEL_FROM_FILE = marker('search.filters.spatialExtent.bboxFromFile')
 const LABEL_FROM_FILE_DELETE = marker(
   'search.filters.spatialExtent.bboxFromFileDelete'
 )
+const LABEL_FROM_LOCATION = marker(
+  'search.filters.spatialExtent.bboxFromLocation'
+)
+const LABEL_FROM_LOCATION_DELETE = marker(
+  'search.filters.spatialExtent.bboxFromLocationDelete'
+)
 const LABEL_INITIAL = marker('search.filters.spatialExtent.bboxInitial')
 const LABEL_INITIAL_DELETE = marker(
   'search.filters.spatialExtent.bboxInitialDelete'
@@ -105,6 +111,7 @@ export class SpatialExtentDropdownComponent {
 
   bbox: BoundingBox | null = null
   fileName = ''
+  locationName = ''
 
   @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
   @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay
@@ -138,15 +145,19 @@ export class SpatialExtentDropdownComponent {
   }
 
   get selectionLabelKey() {
-    return this.fileName ? LABEL_FROM_FILE : LABEL_INITIAL
+    if (this.fileName) return LABEL_FROM_FILE
+    if (this.locationName) return LABEL_FROM_LOCATION
+    return LABEL_INITIAL
   }
 
   get selectionDeleteLabelKey() {
-    return this.fileName ? LABEL_FROM_FILE_DELETE : LABEL_INITIAL_DELETE
+    if (this.fileName) return LABEL_FROM_FILE_DELETE
+    if (this.locationName) return LABEL_FROM_LOCATION_DELETE
+    return LABEL_INITIAL_DELETE
   }
 
   get selectionLabelParams() {
-    return { fileName: this.fileName }
+    return { fileName: this.fileName, locationName: this.locationName }
   }
 
   openOverlay() {
@@ -186,12 +197,23 @@ export class SpatialExtentDropdownComponent {
       }
       this.bbox = bbox
       this.fileName = file.name
+      this.locationName = ''
       this.bboxChange.emit(bbox)
       this.cd.markForCheck()
     } catch {
       this.setError(marker('search.filters.spatialExtent.error.invalidFormat'))
       return
     }
+  }
+
+  setLocationBbox(bbox: BoundingBox, name: string) {
+    this.errorKey = null
+    this.bbox = bbox
+    this.locationName = name
+    this.fileName = ''
+    this.fileInput?.clear()
+    this.bboxChange.emit(bbox)
+    this.cd.markForCheck()
   }
 
   handleFileError(error: DragAndDropFileInputError) {
@@ -213,6 +235,7 @@ export class SpatialExtentDropdownComponent {
   removeSelection(event: Event) {
     this.bbox = null
     this.fileName = ''
+    this.locationName = ''
     this.errorKey = null
     this.fileInput?.clear()
     this.bboxChange.emit(null)
