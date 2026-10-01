@@ -29,14 +29,14 @@ export class LanguageSwitcherComponent {
     return this.translate.getCurrentLang()
   }
 
-  changeLanguage(value: unknown) {
+  changeLanguage(value: string) {
     try {
-      localStorage.setItem(LANGUAGE_STORAGE_KEY, value as string)
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, value)
       location.reload()
     } catch (error) {
       console.warn(`Language choice could not be persisted`, error)
     }
 
-    this.translate.use(value as string)
+    this.translate.use(value)
   }
 }

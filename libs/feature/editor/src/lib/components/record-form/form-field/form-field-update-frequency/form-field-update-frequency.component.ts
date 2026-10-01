@@ -41,7 +41,7 @@ export class FormFieldUpdateFrequencyComponent implements OnInit {
   @Input() recordKind: RecordKind
   @Output() valueChange: EventEmitter<UpdateFrequency> = new EventEmitter()
 
-  protected choices: DropdownChoice[] = []
+  protected choices: DropdownChoice<string>[] = []
 
   get planned() {
     return this.value && this.value !== 'notPlanned' && this.value !== 'unknown'

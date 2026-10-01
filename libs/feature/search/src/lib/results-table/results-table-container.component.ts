@@ -57,17 +57,17 @@ export class ResultsTableContainerComponent implements OnDestroy {
     return this.recordsRepository.canEditIndexedRecord(record)
   }
 
-  handleRecordClick(item: unknown) {
-    this.recordClick.emit(item as CatalogRecord)
+  handleRecordClick(item: CatalogRecord) {
+    this.recordClick.emit(item)
   }
 
-  handleDuplicateRecord(item: unknown) {
-    this.duplicateRecord.emit(item as CatalogRecord)
+  handleDuplicateRecord(item: CatalogRecord) {
+    this.duplicateRecord.emit(item)
   }
 
-  async handleDeleteRecord(item: unknown) {
-    const uniqueIdentifier = (item as CatalogRecord).uniqueIdentifier
-    const recordKind = (item as CatalogRecord).kind
+  async handleDeleteRecord(item: CatalogRecord) {
+    const uniqueIdentifier = item.uniqueIdentifier
+    const recordKind = item.kind
     this.subscription.add(
       this.recordsRepository.deleteRecord(uniqueIdentifier).subscribe({
         next: () => {

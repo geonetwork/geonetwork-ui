@@ -8,10 +8,7 @@ import {
   ViewChild,
   inject,
 } from '@angular/core'
-import {
-  AutocompleteComponent,
-  AutocompleteItem,
-} from '@geonetwork-ui/ui/inputs'
+import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import { firstValueFrom, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
@@ -66,8 +63,7 @@ export class FuzzySearchComponent implements OnInit {
    * event, then apply the default behavior
    * @param item
    */
-  handleItemSelection(item: AutocompleteItem) {
-    const record = item as CatalogRecord
+  handleItemSelection(record: CatalogRecord) {
     if (this.itemSelected.observers.length > 0) {
       this.itemSelected.emit(record)
     } else {

@@ -61,7 +61,7 @@ export class FilterDropdownComponent implements OnInit {
   spatialExtentMaxFileSize = inject(SPATIAL_EXTENT_MAX_FILE_SIZE)
 
   fieldType: FieldType
-  choices$: Observable<Choice[]>
+  choices$: Observable<Choice<FieldValue>[]>
   selected$ = this.searchFacade.searchFilters$.pipe(
     switchMap((filters) =>
       this.fieldsService.readFieldValuesFromFilters(filters)
@@ -84,9 +84,9 @@ export class FilterDropdownComponent implements OnInit {
     )
   ) as Observable<BoundingBox | null>
 
-  onSelectedValues(values: unknown[]) {
+  onSelectedValues(values: FieldValue[]) {
     this.fieldsService
-      .buildFiltersFromFieldValues({ [this.fieldName]: values as FieldValue[] })
+      .buildFiltersFromFieldValues({ [this.fieldName]: values })
       .subscribe((filters) => this.searchService.updateFilters(filters))
   }
 
