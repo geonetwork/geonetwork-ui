@@ -269,43 +269,33 @@ label_key = 'myOrg.secondCustomFilter'
   - [`GeonamesOptions`](https://camptocamp.github.io/geospatial-sdk/docs/api/📦-geocoding/interfaces/GeonamesOptions.html)
   - [`GeoplateformeOptions`](https://camptocamp.github.io/geospatial-sdk/docs/api/📦-geocoding/interfaces/GeoplateformeOptions.html)
 
-  Options holding a list of values (e.g. `index` or `category` for `'geoplateforme'`) must be given as arrays, even for a single value. For example:
+  For example:
 
   ```toml
   geocoding_provider = "geoplateforme"
-  geocoding_provider_options.index = ["poi"]
-  geocoding_provider_options.category = ["administratif"]
+  geocoding_provider_options.index = "poi"
+  geocoding_provider_options.category = "administratif"
   geocoding_provider_options.limit = 5
   ```
 
 - `geocoding_provider_labels` (optional)
 
-  Each result of the location search dropdown is displayed on one or two lines, built from up to three labels:
+  The labels used when rendering a geolocation result (e.g. in the location search dropdown) can be customized. Note that each provider comes with sensible defaults.
 
-  ```text
-  ┌──────────────────────────────┐
-  │ commune                      │  <- secondary
-  │ Beaufort, 73034              │  <- main, tertiary
-  ├──────────────────────────────┤
-  │ commune                      │
-  │ Beaufort, 34026              │
-  └──────────────────────────────┘
-  ```
+  ![location-search-labels.png](../assets/location-search-labels.png)
 
-  - `main`: the name of the place, shown as the title of the result; defaults to `/label`, the label computed by the geocoding provider
+  The labels are:
+
+  - `main`: the name of the place, shown as the title of the result
   - `secondary`: shown in a smaller, grey font above the main label; not shown by default
   - `tertiary`: appended to the main label, separated by a comma; not shown by default
 
-  `secondary` and `tertiary` are useful to tell apart results sharing the same name, like the two "Beaufort" communes above.
+  Each label is a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) resolved against the geocoding result, which holds a default `label` and `properties`; `properties` holds the fields returned by the provider, so they differ from one provider to another (e.g. `/properties/citycode/0` for a Géoplateforme POI). If one of these properties point to an array (e.g. `["administratif", "commune"]`), the label will be the concatenation of these values with commas.
 
-  Each label is a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) resolved against the geocoding result, which holds a `label`, a `geom` and `properties`; `properties` holds the fields returned by the provider, so they differ from one provider to another (e.g. `/properties/citycode/0` for a Géoplateforme POI). `secondary` and `tertiary` are left out when their pointer does not match a text value, while `main` falls back to the label computed by the provider.
-
-  The dropdown above is obtained with the following configuration, which shows the type of administrative entity (commune, département…) and the INSEE code of each result:
+  Example configuration:
 
   ```toml
   geocoding_provider = "geoplateforme"
-  geocoding_provider_options.index = ["poi"]
-  geocoding_provider_options.category = ["administratif"]
   geocoding_provider_labels.main = "/properties/name/0"
   geocoding_provider_labels.secondary = "/properties/category/1"
   geocoding_provider_labels.tertiary = "/properties/citycode/0"

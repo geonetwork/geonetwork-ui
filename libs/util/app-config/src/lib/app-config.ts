@@ -276,6 +276,23 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
         warnings,
         errors
       )
+      const parsedGeocodingProviderOptions =
+        parsedSearchSection?.geocoding_provider_options as
+          | Record<string, string | number | boolean | string[]>
+          | undefined
+      if (
+        parsedSearchSection?.geocoding_provider === 'geoplateforme' &&
+        parsedGeocodingProviderOptions
+      ) {
+        // the geoplateforme provider expects arrays for these options, but
+        // the configuration only accepts a single value for simplicity
+        for (const key of ['index', 'category']) {
+          const value = parsedGeocodingProviderOptions[key]
+          if (typeof value === 'string') {
+            parsedGeocodingProviderOptions[key] = [value]
+          }
+        }
+      }
       const parsedGeocodingProviderLabels =
         parsedSearchSection?.geocoding_provider_labels as
           | Record<string, string>
@@ -309,8 +326,7 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
               SPATIAL_EXTENT_MAX_FILE_SIZE:
                 parsedSearchSection.spatial_extent_max_file_size,
               GEOCODING_PROVIDER: parsedSearchSection.geocoding_provider,
-              GEOCODING_PROVIDER_OPTIONS:
-                parsedSearchSection.geocoding_provider_options,
+              GEOCODING_PROVIDER_OPTIONS: parsedGeocodingProviderOptions,
               GEOCODING_PROVIDER_LABELS: parsedGeocodingProviderLabels
                 ? {
                     MAIN: parsedGeocodingProviderLabels.main,

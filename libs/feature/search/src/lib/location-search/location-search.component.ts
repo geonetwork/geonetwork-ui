@@ -66,8 +66,17 @@ export class LocationSearchComponent {
     path?: string
   ): string | undefined {
     if (!path) return undefined
-    const value = pointer.get(result, path)
-    return typeof value === 'string' && value ? value : undefined
+    let value: unknown
+    try {
+      value = pointer.get(result, path)
+    } catch {
+      return undefined
+    }
+    const values = Array.isArray(value) ? value : [value]
+    const label = values
+      .filter((v) => typeof v === 'string' || typeof v === 'number')
+      .join(', ')
+    return label || undefined
   }
 
   handleItemSelected(item: AutocompleteItem) {

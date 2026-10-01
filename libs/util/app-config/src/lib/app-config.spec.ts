@@ -219,6 +219,7 @@ describe('app config utils', () => {
           ],
           GEOCODING_PROVIDER: 'geoplateforme',
           GEOCODING_PROVIDER_OPTIONS: {
+            index: ['poi'],
             category: ['administratif'],
             limit: 5,
           },

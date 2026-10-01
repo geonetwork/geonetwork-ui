@@ -19,11 +19,16 @@ const RESULTS = [{ label: 'Beaufort', geom: null }]
 const RESULT_WITH_ALL: GeocodingResult = {
   label: 'Beaufort',
   geom: { type: 'Point', coordinates: [6.771, 45.72] },
-  properties: { category: ['poi', 'commune'], citycode: ['73270'] },
+  properties: {
+    name: ['Beaufort-sur-Doron'],
+    category: ['poi', 'commune'],
+    citycode: [73270],
+  },
 }
 
 const LABELS: GeocodingProviderLabels = {
-  secondary: '/properties/category/1',
+  main: '/properties/name/0',
+  secondary: '/properties/category',
   tertiary: '/properties/citycode/0',
 }
 
@@ -127,26 +132,6 @@ describe('LocationSearchComponent', () => {
     expect(emitted).toHaveBeenCalledWith([6.771, 45.72, 6.771, 45.72])
   })
 
-  describe('with a configured main label JSON Pointer', () => {
-    beforeEach(async () => {
-      TestBed.resetTestingModule()
-      await setup({ main: '/properties/name/0' })
-    })
-
-    it('resolves the main label using the JSON Pointer', () => {
-      expect(
-        component.getMainLabel({
-          ...RESULT_WITH_ALL,
-          properties: { name: ['Beaufort-sur-Doron'] },
-        })
-      ).toEqual('Beaufort-sur-Doron')
-    })
-
-    it('falls back to the result label when the JSON Pointer does not match', () => {
-      expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort')
-    })
-  })
-
   it('resolves undefined secondary and tertiary labels and the plain main label when no JSON Pointers are configured', () => {
     expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toBeUndefined()
     expect(component.getTertiaryLabel(RESULT_WITH_ALL)).toBeUndefined()
@@ -159,17 +144,24 @@ describe('LocationSearchComponent', () => {
       await setup(LABELS)
     })
 
-    it('resolves the secondary and tertiary labels using the configured JSON Pointers', () => {
-      expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toEqual('commune')
-      expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort')
+    it('resolves the labels, converting numbers to strings and joining arrays with commas', () => {
+      expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual(
+        'Beaufort-sur-Doron'
+      )
+      expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toEqual(
+        'poi, commune'
+      )
       expect(component.getTertiaryLabel(RESULT_WITH_ALL)).toEqual('73270')
     })
 
-    it('leaves out the tertiary label when its JSON Pointer does not match', () => {
-      expect(component.getSecondaryLabel(RESULT_WITHOUT_GEOM)).toEqual('epci')
+    it('falls back to the result label and leaves out the labels whose JSON Pointer does not match', () => {
       expect(component.getMainLabel(RESULT_WITHOUT_GEOM)).toEqual(
         'Eurométropole de Strasbourg'
       )
+      expect(component.getSecondaryLabel(RESULT_WITHOUT_GEOM)).toEqual(
+        'poi, epci'
+      )
+      expect(component.getTertiaryLabel(RESULT_WITHOUT_GEOM)).toBeUndefined()
     })
 
     it('renders the default item template with secondary/main labels and emits the bbox on selection', () => {
@@ -191,8 +183,10 @@ describe('LocationSearchComponent', () => {
 
       const overlayContainer =
         TestBed.inject(OverlayContainer).getContainerElement()
-      expect(overlayContainer.textContent).toContain('commune')
-      expect(overlayContainer.textContent).toContain('Beaufort, 73270')
+      expect(overlayContainer.textContent).toContain('poi, commune')
+      expect(overlayContainer.textContent).toContain(
+        'Beaufort-sur-Doron, 73270'
+      )
 
       autocomplete.handleSelection({
         option: { value: RESULT_WITH_ALL },
@@ -201,6 +195,18 @@ describe('LocationSearchComponent', () => {
       expect(hostFixture.componentInstance.bboxSelected).toHaveBeenCalledWith([
         6.771, 45.72, 6.771, 45.72,
       ])
+    })
+  })
+
+  describe('with invalid JSON Pointers', () => {
+    beforeEach(async () => {
+      TestBed.resetTestingModule()
+      await setup({ main: 'label', secondary: 'properties.category' })
+    })
+
+    it('ignores them', () => {
+      expect(component.getMainLabel(RESULT_WITH_ALL)).toEqual('Beaufort')
+      expect(component.getSecondaryLabel(RESULT_WITH_ALL)).toBeUndefined()
     })
   })
 })
