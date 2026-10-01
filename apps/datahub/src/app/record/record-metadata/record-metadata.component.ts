@@ -10,18 +10,15 @@ import {
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatTabsModule } from '@angular/material/tabs'
 import {
-  CatalogRecord,
   Keyword,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import {
   EditDeleteReuseButtonsComponent,
   NotifyReuseFormComponent,
-  REUSE_FORM_URL,
 } from '@geonetwork-ui/feature/notify-reuse'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { SearchService } from '@geonetwork-ui/feature/search'
@@ -44,8 +41,8 @@ import {
   matEditOutline,
 } from '@ng-icons/material-icons/outline'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { combineLatest, Observable, of } from 'rxjs'
-import { filter, map, mergeMap, startWith, switchMap } from 'rxjs/operators'
+import { combineLatest } from 'rxjs'
+import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
 import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
@@ -54,6 +51,7 @@ import { RecordInternalLinksComponent } from '../record-internal-links/record-in
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordUserFeedbacksComponent } from '../record-user-feedbacks/record-user-feedbacks.component'
+import { RecordService } from '../record.service'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -105,8 +103,7 @@ export class RecordMetadataComponent {
   private sourceService = inject(SourcesService)
   private orgsService = inject(OrganizationsServiceInterface)
   private readonly platformServiceInterface = inject(PlatformServiceInterface)
-  private recordsRepository = inject(RecordsRepositoryInterface)
-  reuseFormUrl = inject(REUSE_FORM_URL, { optional: true })
+  private recordService = inject(RecordService)
 
   errorTypes = ErrorType
 
@@ -260,32 +257,9 @@ export class RecordMetadataComponent {
     return !this.platformServiceInterface.supportsAuthentication()
   }
 
-  writableGroupId$: Observable<string | null> = this.platformServiceInterface
-    .getUserPermissionsByGroup()
-    .pipe(
-      map(
-        (permissions) =>
-          permissions.find((p) => p.canApprove)?.groupId?.toString() ??
-          permissions.find((p) => p.canEdit)?.groupId?.toString() ??
-          null
-      )
-    )
+  reuseNotificationAllowed$ = this.recordService.reuseNotificationAllowed$
 
-  reuseNotificationAllowed$: Observable<boolean> = this.reuseFormUrl
-    ? combineLatest([this.writableGroupId$, this.kind$]).pipe(
-        map(([groupId, kind]) => groupId !== null && kind === 'dataset')
-      )
-    : of(false)
-
-  showEditDeleteReuseButtons$: Observable<boolean> =
-    this.metadataViewFacade.metadata$.pipe(
-      switchMap((record) =>
-        record?.kind === 'reuse' && this.reuseFormUrl
-          ? // keeping it simple here for now, as edit and delete use the same conditions
-            this.recordsRepository.canEditIndexedRecord(record as CatalogRecord)
-          : of(false)
-      )
-    )
+  showEditDeleteReuseButtons$ = this.recordService.showEditDeleteReuseButtons$
 
   onInfoKeywordClick(keyword: Keyword) {
     this.searchService.updateFilters({ any: keyword.label })
