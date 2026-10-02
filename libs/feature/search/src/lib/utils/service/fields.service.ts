@@ -139,6 +139,12 @@ export class FieldsService {
         )
         continue
       }
+      if (!customField.name.includes(':')) {
+        console.warn(
+          `The custom field '${customField.name}' is not scoped with a prefix. Custom fields must have their names prefixed, for instance "myOrg:myKeywords". This field will be ignored.`
+        )
+        continue
+      }
       const newField = baseField.clone()
       newField.setFieldIdentifier(customField.name)
       if (customField.includeValues) {
