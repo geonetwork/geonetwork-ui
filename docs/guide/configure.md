@@ -18,6 +18,7 @@ Some additional notes:
 
 - Languages in the configuration should be specified using [two-letters ISO 639-1 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes); 3-character codes might work but using them is not recommended
 - Tokens in URL templates are specified using the `${token_name}` syntax
+- In TOML, arrays of tables like `[[search_preset]]`, `[[custom_filter]]`, `[[map_layer]]` define sections themeselves. Note that any parameter defined after them is part of this section and not the thematic section before (like`[search]`or`[map]`).
 
 ### Sections
 
@@ -241,64 +242,64 @@ For a detailed explanation on the classification system, see [this documentation
   geocoding_provider_options.limit = 5
   ```
 
-- `[[search_preset]]` (multiple, optional)
+#### `[[search_preset]]` (multiple, optional)
 
-  Search presets are shown in a prominent way in badges to the user and can be used to showcase certain records in the catalog or offer shortcuts to frequent search criteria.
+Search presets are shown in a prominent way in badges to the user and can be used to showcase certain records in the catalog or offer shortcuts to frequent search criteria.
 
-  Every search preset is composed of:
+Every search preset is composed of:
 
-  - a name for the preset, which can be a translation key (mandatory)
-  - a sort criteria (prepend the field name with - to do a descending sort):
+- a name for the preset, which can be a translation key (mandatory)
+- a sort criteria (prepend the field name with - to do a descending sort):
 
-    - `-resourceDate.date`
-    - `-userSavedcount`
-    - `-qualityScore`
-    - `-_score`
+  - `-resourceDate.date`
+  - `-userSavedcount`
+  - `-qualityScore`
+  - `-_score`
 
-      Note: Other fields of the records can be used as a sort criteria, but the sort drop-down will not display their entries.
+    Note: Other fields of the records can be used as a sort criteria, but the sort drop-down will not display their entries.
 
-  - a set of filters, each of them being a key-value pair where the key is a [known search field](../guide/search-fields.md) and the value is an array of strings (optional)
-  - additionally, `filters.q` can be used to specify a full text search query
+- a set of filters, each of them being a key-value pair where the key is a [known search field](../guide/search-fields.md) and the value is an array of strings (optional)
+- additionally, `filters.q` can be used to specify a full text search query
 
-  Multiple search presets can be defined like so:
+Multiple search presets can be defined like so:
 
-  ```toml
-  [[search_preset]]
-  name = 'filterByName'
-  filters.q = 'full text search'
-  filters.organization = ['Org 1', 'Org 2']
-  filters.format = ['format 1', 'format 2']
-  filters.documentStandard = ['iso19115-3.2018']
-  filters.keyword = ['keyword 1', 'keyword 2']
-  filters.inspireKeyword = ['http://inspire.ec.europa.eu/theme/er']
-  filters.topic = ['boundaries']
-  filters.publicationYear = ['2023', '2022']
-  filters.isSpatial = ['yes']
-  filters.license = ['unknown']
-  sort = '-resourceDate.date'
+```toml
+[[search_preset]]
+name = 'filterByName'
+filters.q = 'full text search'
+filters.organization = ['Org 1', 'Org 2']
+filters.format = ['format 1', 'format 2']
+filters.documentStandard = ['iso19115-3.2018']
+filters.keyword = ['keyword 1', 'keyword 2']
+filters.inspireKeyword = ['http://inspire.ec.europa.eu/theme/er']
+filters.topic = ['boundaries']
+filters.publicationYear = ['2023', '2022']
+filters.isSpatial = ['yes']
+filters.license = ['unknown']
+sort = '-resourceDate.date'
 
-  [[search_preset]]
-  name = 'otherFilter'
-  filters.q = 'full text search'
-  ```
+[[search_preset]]
+name = 'otherFilter'
+filters.q = 'full text search'
+```
 
       Note: Values for the same filter are treated with an OR logic, value for different filters are treated with an AND logic
 
-- `[[custom_filter]]` (multiple, optional)
+#### `[[custom_filter]]` (multiple, optional)
 
-  Custom filters allow customizing default search filters by changing some parameters to them.
-  They can be referenced by their name in the `advanced_filters` setting of the `[search]` section.
+Custom filters allow customizing default search filters by changing some parameters to them.
+They can be referenced by their name in the `advanced_filters` setting of the `[search]` section.
 
-  Every custom filter is composed of:
+Every custom filter is composed of:
 
-  - `name` (mandatory): name of the filter as it should appear in the `advanced_filters` setting; custom filters must have a prefix separated by a colon in their name, e.g.: "myOrg:myOrgKeywords"; case sensitive
-  - `base_filter` (mandatory): the search field the filter is based on; supported values are `'format'`, `'representationType'`, `'publicationYear'`, `'topic'`, `'inspireKeyword'`, `'keyword'`, `'documentStandard'`, `'producerOrg'`, `'publisherOrg'` and `'user'`
-  - `exclude_values` (optional): an array of values of the base filter which should not be offered to the user in the UI (e.g. dropdowns); the values are case-sensitive and support wildcards; it does not have any effect when cutom filter fields are used in the URL
-  - `include_values` (optional): an array of values of the base filter which should be the only ones offered to the user in the UI (e.g. dropdowns); the values are case-sensitive and support wildcards; it does not have any effect when cutom filter fields are used in the URL
-  - `label_key` (optional): a translation key used as the label of the filter; it can be defined in the
-    `[translations]` sections. Defaults to the label of the base filter.
+- `name` (mandatory): name of the filter as it should appear in the `advanced_filters` setting; custom filters must have a prefix separated by a colon in their name, e.g.: "myOrg:myOrgKeywords"; case sensitive
+- `base_filter` (mandatory): the search field the filter is based on; supported values are `'format'`, `'representationType'`, `'publicationYear'`, `'topic'`, `'inspireKeyword'`, `'keyword'`, `'documentStandard'`, `'producerOrg'`, `'publisherOrg'` and `'user'`
+- `exclude_values` (optional): an array of values of the base filter which should not be offered to the user in the UI (e.g. dropdowns); the values are case-sensitive and support wildcards; it does not have any effect when cutom filter fields are used in the URL
+- `include_values` (optional): an array of values of the base filter which should be the only ones offered to the user in the UI (e.g. dropdowns); the values are case-sensitive and support wildcards; it does not have any effect when cutom filter fields are used in the URL
+- `label_key` (optional): a translation key used as the label of the filter; it can be defined in the
+  `[translations]` sections. Defaults to the label of the base filter.
 
-  For instance:
+For instance:
 
 ```toml
 advanced_filters = ['organization', 'myOrg:firstCustomFilter', 'myOrg:secondCustomFilter']
@@ -319,8 +320,6 @@ label_key = 'myOrg.secondCustomFilter'
 'myOrg.firstCustomFilter' = 'My first filter'
 'myOrg.secondCustomFilter' = 'My second filter'
 ```
-
-Note: Arrays of tables like `[[search_preset]]` and `[[custom_filter]]` entries must be defined at the end of the [search] section. Parameters defined after them will not be part of the `[search]` section anymore.
 
 #### `[metadata-quality]`
 
@@ -392,45 +391,45 @@ The map section lets you customize how maps appear and behave across GeoNetwork-
   If set to `true`, the default basemap will not be added to the map. Defaults to `false` (base map is shown).
   Use `[[map_layer]]` sections to define your own custom layers (see below)
 
-- `[[map_layer]]` (multiple, optional)
+#### `[[map_layer]]` (multiple, optional)
 
-  One or several layers (as background or overlay) can be added to the map with the following properties:
+One or several layers (as background or overlay) can be added to the map with the following properties:
 
-  - `type` (mandatory): Indicates the layer type. Possible values are "xyz", "wms", "wfs", "geojson".
-  - `url` (mandatory for "xyz", "wms" and "wfs" types): Layer endpoint URL.
-  - `name` (mandatory for "wms" and "wfs" types): indicates the layer name or feature type.
-  - `data` (for "geojson" type only): inline GeoJSON data as string.
-  - `styleUrl` (mandatory for "maplibre-style" type only): Maplibre style URL.
-  - `accessToken` (optional for "maplibre-style" type only): credential to access the basemap styles service
+- `type` (mandatory): Indicates the layer type. Possible values are "xyz", "wms", "wfs", "geojson".
+- `url` (mandatory for "xyz", "wms" and "wfs" types): Layer endpoint URL.
+- `name` (mandatory for "wms" and "wfs" types): indicates the layer name or feature type.
+- `data` (for "geojson" type only): inline GeoJSON data as string.
+- `styleUrl` (mandatory for "maplibre-style" type only): Maplibre style URL.
+- `accessToken` (optional for "maplibre-style" type only): credential to access the basemap styles service
 
-  Layer order in the config is the same as in the map, the foreground layer being the last defined one.
+Layer order in the config is the same as in the map, the foreground layer being the last defined one.
 
-  Each layer is defined in its own `[[map_layer]]` section. For instance:
+Each layer is defined in its own `[[map_layer]]` section. For instance:
 
-  ```toml
-  [[map_layer]]
-  type = "xyz"
-  url = "https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
+```toml
+[[map_layer]]
+type = "xyz"
+url = "https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
 
-  [[map_layer]]
-  type = "wfs"
-  url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
-  name = "masque_hdf_ign_carto_latin1"
+[[map_layer]]
+type = "wfs"
+url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
+name = "masque_hdf_ign_carto_latin1"
 
-  [[map_layer]]
-  type = "geojson"
-  data = """
-  {
-  "type": "FeatureCollection",
-  "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [125.6, 10.1]}}]
-  }
-  """
+[[map_layer]]
+type = "geojson"
+data = """
+{
+"type": "FeatureCollection",
+"features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [125.6, 10.1]}}]
+}
+"""
 
-  [[map_layer]]
-  type = "maplibre-style"
-  styleUrl = "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/gris.json"
-  accessToken = "token_if_needed" # optional
-  ```
+[[map_layer]]
+type = "maplibre-style"
+styleUrl = "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/gris.json"
+accessToken = "token_if_needed" # optional
+```
 
 - `external_viewer_url_template` (optional)
 

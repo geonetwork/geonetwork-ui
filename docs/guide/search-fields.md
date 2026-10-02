@@ -60,7 +60,7 @@ This field targets the "topic" field of a record, sometimes also known as "theme
 
 This field targets the keywords present in a record. These are treated as simple strings.
 
-A maximum of 1000 values can be fetched and displayed in the filter.
+A maximum of 1000 values can be fetched and displayed in the filter. This is a known limitation on all fields, but may be the most visible on the keyword field. The upside of it, is that arbitrary keywords that are only used once or twice will not show up on long lists.
 
 ::: info Note for multilingual catalogs
 GeoNetwork 4 supports multilingual keywords.

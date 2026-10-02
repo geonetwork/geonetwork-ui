@@ -311,7 +311,7 @@ describe('FieldsService', () => {
       )
       expect(console.warn).toHaveBeenCalledWith(
         expect.stringContaining(
-          "custom field 'noPrefix' does not have the required prefix"
+          "The custom field 'noPrefix' is not scoped with a prefix"
         )
       )
     })
