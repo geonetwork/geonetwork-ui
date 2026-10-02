@@ -125,7 +125,7 @@ export class MapViewComponent implements AfterViewInit {
   linkMap: Map<string, DatasetOnlineResource> = new Map()
   // FIXME the map view component should not need a selectedView
   @Input() set selectedView(value: string) {
-    this.selectedView$.next(value)
+    //this.selectedView$.next(value)
   }
   @Input() set datavizConfig(value: {
     view?: string
@@ -133,7 +133,7 @@ export class MapViewComponent implements AfterViewInit {
     source?: DatasetOnlineResource
   }) {
     if (value && value.view === 'map') {
-      this.selectedView$.next(value.view)
+      //this.selectedView$.next(value.view)
       if (value.styleTMSIndex) {
         this._styleFromConfig = value.styleTMSIndex
       }
@@ -197,7 +197,7 @@ export class MapViewComponent implements AfterViewInit {
     })
   )
 
-  selectedView$ = new BehaviorSubject(null)
+  //selectedView$ = new BehaviorSubject(null)
   selectedLinkId$ = new BehaviorSubject(null)
   selectedStyleId$ = new BehaviorSubject(null)
 
@@ -205,32 +205,32 @@ export class MapViewComponent implements AfterViewInit {
     this.compatibleMapLinks$,
     this.linkFromConfig$,
     this.selectedLinkId$.pipe(distinctUntilChanged()),
-    this.selectedView$,
+    //this.selectedView$,
   ]).pipe(
     tap(() => {
       this.error = null
     }),
-    map(([compatibleLinks, configLink, id, view]) => {
-      if (view === 'map') {
-        if (
-          configLink &&
-          !id &&
-          compatibleLinks.some(
-            (link) => getLinkId(link) === getLinkId(configLink)
-          )
-        ) {
-          this._selectedChoice = getLinkId(configLink)
-          this.linkSelected.emit(configLink)
-          return configLink
-        } else if (id) {
-          this._selectedChoice = id
-          this.linkSelected.emit(this.linkMap.get(id))
-          return this.linkMap.get(id)
-        } else {
-          this.linkSelected.emit(compatibleLinks[0])
-          return compatibleLinks[0]
-        }
+    map(([compatibleLinks, configLink, id /**, view*/]) => {
+      //if (view === 'map') {
+      if (
+        configLink &&
+        !id &&
+        compatibleLinks.some(
+          (link) => getLinkId(link) === getLinkId(configLink)
+        )
+      ) {
+        this._selectedChoice = getLinkId(configLink)
+        this.linkSelected.emit(configLink)
+        return configLink
+      } else if (id) {
+        this._selectedChoice = id
+        this.linkSelected.emit(this.linkMap.get(id))
+        return this.linkMap.get(id)
+      } else {
+        this.linkSelected.emit(compatibleLinks[0])
+        return compatibleLinks[0]
       }
+      //}
     }),
     shareReplay(1)
   )
