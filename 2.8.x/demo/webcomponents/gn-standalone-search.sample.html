@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Web Component Demo</title>
+    <base href="./" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@200;300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: var(--font-family-main);
+      }
+      header {
+        height: 200px;
+        background-color: #5bd261;
+      }
+      .container {
+        max-width: 750px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="gn-standalone-search.js"></script>
+    <main class="container">
+      <div style="margin: 60px 16px">
+        <p>
+          You can use the GeoNetwork-UI search interface without Web Components
+          using the <b><i>Standalone Search</i></b> system.
+        </p>
+      </div>
+      <div class="container">
+        <input type="text" id="search" placeholder="Search for record..." />
+        <ul id="results"></ul>
+      </div>
+    </main>
+    <script>
+      GNUI.init({
+        apiUrl: 'https://www.geocat.ch/geonetwork/srv/api',
+        metadataLanguage: 'ger',
+        textLanguage: 'de',
+      })
+
+      const searchInput = document.getElementById('search')
+      const resultsContainer = document.getElementById('results')
+
+      searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value
+
+        if (!searchTerm) {
+          resultsContainer.innerHTML = ''
+          return
+        }
+
+        GNUI.recordsRepository
+          .search({
+            filters: {
+              any: searchTerm,
+              linkProtocol: '/OGC:WMT?S.*/',
+            },
+            offset: 0,
+            limit: 10,
+            sort: ['desc', '_score'],
+            fields: ['resourceTitleObject', 'link', 'uuid'],
+          })
+          .subscribe({
+            next: (results) => {
+              displayResults(results.records)
+            },
+            error: (err) => {
+              console.error('Error fetching search results:', err)
+            },
+          })
+      })
+
+      function displayResults(items) {
+        resultsContainer.innerHTML = items
+          .map((item) => `<li>${item.title || 'No title available'}</li>`)
+          .join('\n')
+      }
+    </script>
+  </body>
+</html>
