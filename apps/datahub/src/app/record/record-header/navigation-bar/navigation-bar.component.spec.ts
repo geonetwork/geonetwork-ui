@@ -2,7 +2,7 @@ import { ElementRef } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { BehaviorSubject } from 'rxjs'
-import { RecordHeaderService } from '../record-header.service'
+import { RecordService } from '../../record.service'
 import { NavigationBarComponent } from './navigation-bar.component'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
@@ -22,7 +22,7 @@ describe('NavigationBarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        MockProvider(RecordHeaderService, {
+        MockProvider(RecordService, {
           back: jest.fn(),
           canEditFromUrl$: new BehaviorSubject(true),
           openEditUrl: jest.fn(),

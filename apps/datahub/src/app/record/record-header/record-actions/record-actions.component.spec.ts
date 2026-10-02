@@ -9,7 +9,7 @@ import { matEdit } from '@ng-icons/material-icons/baseline'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordActionsComponent } from './record-actions.component'
 import { MockProvider } from 'ng-mocks'
-import { RecordHeaderService } from '../record-header.service'
+import { RecordService } from '../../record.service'
 import { BehaviorSubject, of } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
@@ -58,7 +58,7 @@ describe('RecordActionsComponent', () => {
         MockProvider(PlatformServiceInterface, {
           supportsAuthentication: jest.fn(() => _supportsAuthentication),
         }),
-        MockProvider(RecordHeaderService, {
+        MockProvider(RecordService, {
           back: jest.fn(),
           canEditFromUrl$: new BehaviorSubject(true),
           openEditUrl: jest.fn(),
