@@ -128,10 +128,10 @@ jest.mock('@camptocamp/ogc-client', () => ({
           httpStatus: 403,
         })
       }
-      if (this.url === 'https://my.ogc.api/features') {
+      if (this.url.startsWith('https://my.ogc.api/')) {
         return Promise.resolve({
           name: collectionName,
-          id: collectionName === 'collection1' ? 'collection1' : 'collection2',
+          id: collectionName === 'collection2' ? 'collection2' : 'collection1',
           bulkDownloadLinks: {
             json: 'http://json?limit=10000',
             csv: 'http://csv?limit=10000',
@@ -153,8 +153,13 @@ jest.mock('@camptocamp/ogc-client', () => ({
     featureCollections =
       this.url.indexOf('error.http') > -1
         ? Promise.reject(new Error())
-        : Promise.resolve(['collection1', 'collection2'])
+        : this.url.indexOf('collection2') > -1
+          ? Promise.resolve(['collection2'])
+          : Promise.resolve(['collection1', 'collection2'])
     getCollectionItems(_collection: string) {
+      if (_collection === 'collection2') {
+        return Promise.resolve(['item2_a', 'item2_b'])
+      }
       return Promise.resolve(['item1'])
     }
   },
@@ -677,7 +682,7 @@ describe('DataService', () => {
     describe('#getDownloadLinksFromOgcApiFeatures', () => {
       describe('calling getDownloadLinksFromOgcApiFeatures() with a valid URL', () => {
         it('returns links with formats for link', async () => {
-          const url = new URL('https://my.ogc.api/features')
+          const url = new URL('https://my.ogc.api/collection2/features')
           const links = await service.getDownloadLinksFromOgcApiFeatures({
             name: undefined,
             url,
@@ -688,14 +693,14 @@ describe('DataService', () => {
             JSON.parse(
               JSON.stringify([
                 {
-                  name: 'collection1',
+                  name: 'collection2',
                   mimeType: 'application/json',
                   url: new URL('http://json'),
                   type: 'download',
                   accessServiceProtocol: 'ogcFeatures',
                 },
                 {
-                  name: 'collection1',
+                  name: 'collection2',
                   mimeType: 'text/csv',
                   url: new URL('http://csv'),
                   type: 'download',
@@ -706,16 +711,16 @@ describe('DataService', () => {
           )
         })
 
-        it('should OGC override the collection title when it is wrong', async () => {
+        it('should return download links for the specified collection', async () => {
           const url = new URL('https://my.ogc.api/features')
           const links = await service.getDownloadLinksFromOgcApiFeatures({
-            name: 'myFakecollection',
+            name: 'collection2',
             url,
             type: 'service',
             accessServiceProtocol: 'ogcFeatures',
           })
-          expect(links[0].name).toBe('collection1')
-          expect(links[1].name).toBe('collection1')
+          expect(links[0].name).toBe('collection2')
+          expect(links[1].name).toBe('collection2')
         })
       })
 
@@ -1070,11 +1075,19 @@ describe('DataService', () => {
     })
     describe('#getItemsFromOgcApi', () => {
       describe('calling getItemsFromOgcApi() with a valid URL', () => {
-        it('returns the first collection items when collections array is not empty', async () => {
-          const item = await service.getItemsFromOgcApi(
+        it('returns the first collection items when collectionId is omitted', async () => {
+          const items = await service.getItemsFromOgcApi(
             'https://my.ogc.api/features'
           )
-          expect(item).toEqual(['item1'])
+          expect(items).toEqual(['item1'])
+        })
+
+        it('returns specific collection items when collectionId is provided', async () => {
+          const items = await service.getItemsFromOgcApi(
+            'https://my.ogc.api/features',
+            'collection2'
+          )
+          expect(items).toEqual(['item2_a', 'item2_b'])
         })
       })
 
