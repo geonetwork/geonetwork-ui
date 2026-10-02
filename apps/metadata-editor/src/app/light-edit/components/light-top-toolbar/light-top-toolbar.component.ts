@@ -47,7 +47,7 @@ export class LightTopToolbarComponent {
     return url && this.isHttpUrl(url) ? url : null
   }
 
-  // only allow absolute http(s) targets (e.g. no javascript: or file: urls)
+  // only allow absolute http(s) targets (e.g. no javascript: or file: URLs)
   private isHttpUrl(value: string): boolean {
     try {
       const { protocol } = new URL(value)
