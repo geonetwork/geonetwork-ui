@@ -164,69 +164,49 @@ As such, **it is not very interesting at all.**`,
     extras: {
       isPublishedToAll: true,
       edit: true,
-      featureTypes: [
-        {
-          attributeTable: [
-            {
-              code: 'OBJECTID',
-              name: 'OBJECTID',
-              link: '',
-              definition: 'Object identifier',
-              type: 'OID',
-            },
-            {
-              code: 'NOM',
-              name: 'Nom',
-              link: '',
-              definition: 'Nom de la rue',
-              type: 'String (48)',
-              values: [
-                {
-                  code: 'Pomme',
-                  label: 'Les Pommiers',
-                  description: 'Sous les pommiers',
-                },
-                {
-                  code: 'Cotton',
-                  label: 'Rue Cotton',
-                  description: 'Rue Cotton',
-                },
-                { code: "Passage de l'échiquier" },
-                { description: 'Rue du Charlieu' },
-              ],
-            },
-            {
-              code: 'RUE',
-              name: 'Rue',
-              link: '',
-              definition: '',
-              type: 'String (50)',
-            },
-          ],
-          code: '',
-          aliases: '',
-          typeName: "Catalogue d'attributs N°1",
-          definition: 'Définition du catalogue d attributs N°1',
-          isAbstract: 'false',
-        },
-        {
-          attributeTable: [
-            {
-              code: 'UniqueObject',
-              name: 'unique object ',
-              link: '',
-              definition: 'this is the only object of this catalog',
-              type: 'String (50)',
-            },
-          ],
-          code: '',
-          aliases: '',
-          typeName: "Catalogue d'attributs N°2",
-          definition: 'Définition du catalogue d attributs N°2',
-          isAbstract: 'false',
-        },
-      ],
     },
+    featureTypeDescriptions: [
+      {
+        name: "Catalogue d'attributs N°1",
+        definition: 'Définition du catalogue d attributs N°1',
+        attributes: [
+          {
+            name: 'OBJECTID',
+            definition: 'Object identifier',
+            code: 'OBJECTID',
+            type: 'OID',
+          },
+          {
+            name: 'Nom',
+            definition: 'Nom de la rue',
+            code: 'NOM',
+            type: 'String (48)',
+            values: [
+              { code: 'Pomme', label: 'Les Pommiers' },
+              { code: 'Cotton', label: 'Rue Cotton' },
+              { code: "Passage de l'échiquier" },
+            ],
+          },
+          {
+            name: 'Rue',
+            code: 'RUE',
+            type: 'String (50)',
+          },
+        ],
+      },
+      {
+        name: "Catalogue d'attributs N°2",
+        definition: 'Définition du catalogue d attributs N°2',
+        attributes: [
+          {
+            name: 'unique object ',
+            definition: 'this is the only object of this catalog',
+            code: 'UniqueObject',
+            type: 'String (50)',
+          },
+        ],
+      },
+    ],
   },
   {
     uniqueIdentifier: '7d002c4c-92ef-4b9f-a568-d732f740b99e',

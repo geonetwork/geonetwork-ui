@@ -1097,6 +1097,87 @@ describe('Gn4Converter', () => {
         })
       })
 
+      describe('embedded feature catalog (featureTypes)', () => {
+        it('maps the featureTypes to featureTypeDescriptions', async () => {
+          const record = await service.readRecord({
+            ...hit,
+            _source: {
+              ...hit._source,
+              featureTypes: [
+                {
+                  typeName: 'my feature type',
+                  definition: 'Feature type description',
+                  code: '',
+                  aliases: '',
+                  isAbstract: 'false',
+                  attributeTable: [
+                    {
+                      name: 'OBJECTID',
+                      code: 'OBJECTID',
+                      link: '',
+                      definition: 'Object identifier',
+                      type: 'OID',
+                    },
+                    {
+                      name: 'landcover',
+                      code: '',
+                      link: '',
+                      definition: '',
+                      type: 'String (48)',
+                      values: [
+                        {
+                          code: '1',
+                          label: 'Forêt dense',
+                          description: 'Forêt',
+                        },
+                        { label: 'Prairie' },
+                        { description: 'no code nor label' },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          })
+
+          expect(record).not.toHaveProperty('extras.featureTypes')
+          expect(record).toHaveProperty('featureTypeDescriptions', [
+            {
+              name: 'my feature type',
+              definition: 'Feature type description',
+              attributes: [
+                {
+                  name: 'OBJECTID',
+                  code: 'OBJECTID',
+                  definition: 'Object identifier',
+                  type: 'OID',
+                },
+                {
+                  name: 'landcover',
+                  type: 'String (48)',
+                  values: [
+                    { code: '1', label: 'Forêt dense' },
+                    { label: 'Prairie' },
+                  ],
+                },
+              ],
+            },
+          ])
+        })
+
+        it('does not set featureTypeDescriptions for an empty featureTypes array', async () => {
+          const record = await service.readRecord({
+            ...hit,
+            _source: {
+              ...hit._source,
+              featureTypes: [],
+            },
+          })
+
+          expect(record).not.toHaveProperty('featureTypeDescriptions')
+        })
+      })
+
       describe('full record', () => {
         it('builds a complete record object', async () => {
           const record = await service.readRecord(
@@ -2506,7 +2587,6 @@ describe('Gn4Converter', () => {
               isPublishedToAll: true,
               id: '53583',
               favoriteCount: 0,
-              featureTypes: [],
               catalogUuid: 'metawal.wallonie.be',
               edit: true,
             },
@@ -2795,7 +2875,6 @@ describe('Gn4Converter', () => {
             extras: {
               catalogUuid: 'metawal.wallonie.be',
               favoriteCount: 0,
-              featureTypes: [],
               id: '1215',
               isHarvested: false,
               isOpenData: false,

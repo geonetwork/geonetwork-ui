@@ -22,6 +22,8 @@ import {
   AssociatedRecord,
   CatalogRecord,
   Constraint,
+  DatasetFeatureCatalog,
+  DatasetFeatureType,
   DatasetSpatialExtent,
   OnlineResource,
   OnlineResourceType,
@@ -312,13 +314,15 @@ export class Gn4FieldMapper {
         },
         output
       ),
-    featureTypes: (output, source) =>
-      this.addExtra(
-        {
-          featureTypes: selectField(source, 'featureTypes'),
-        },
-        output
-      ),
+    featureTypes: (output, source) => {
+      const featureTypeDescriptions = this.featureTypesField(
+        getAsArray(selectField(source, 'featureTypes'))
+      )
+      return {
+        ...output,
+        ...(featureTypeDescriptions.length > 0 && { featureTypeDescriptions }),
+      }
+    },
     related: (output, source) => {
       const related = <SourceWithUnknownProps>selectField(source, 'related')
       const fcatSource = selectField(
@@ -517,6 +521,29 @@ export class Gn4FieldMapper {
   }
 
   private genericField = (output) => output
+
+  private featureTypesField = (
+    featureTypes: DatasetFeatureType[]
+  ): DatasetFeatureCatalog['featureTypes'] =>
+    featureTypes.map((featureType) => ({
+      name: featureType.typeName ?? '',
+      ...(featureType.definition && { definition: featureType.definition }),
+      attributes: getAsArray(featureType.attributeTable ?? []).map((attr) => {
+        const values = (attr.values ?? [])
+          .filter((value) => value.code || value.label)
+          .map((value) => ({
+            ...(value.code && { code: value.code }),
+            ...(value.label && { label: value.label }),
+          }))
+        return {
+          name: attr.name ?? '',
+          ...(attr.definition && { definition: attr.definition }),
+          ...(attr.code && { code: attr.code }),
+          ...(attr.type && { type: attr.type }),
+          ...(values.length > 0 && { values }),
+        }
+      }),
+    }))
 
   private constraintField = (
     type: 'license' | 'legal' | 'security' | 'other',
