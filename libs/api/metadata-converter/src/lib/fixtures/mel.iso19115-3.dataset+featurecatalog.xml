@@ -1,0 +1,948 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdb:MD_Metadata xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cat="http://standards.iso.org/iso/19115/-3/cat/1.0" xmlns:gfc="http://standards.iso.org/iso/19110/gfc/1.1" xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0" xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0" xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0" xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0" xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.1" xmlns:mas="http://standards.iso.org/iso/19115/-3/mas/1.0" xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0" xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0" xmlns:mda="http://standards.iso.org/iso/19115/-3/mda/1.0" xmlns:mds="http://standards.iso.org/iso/19115/-3/mds/2.0" xmlns:mdt="http://standards.iso.org/iso/19115/-3/mdt/2.0" xmlns:mex="http://standards.iso.org/iso/19115/-3/mex/1.0" xmlns:mmi="http://standards.iso.org/iso/19115/-3/mmi/1.0" xmlns:mpc="http://standards.iso.org/iso/19115/-3/mpc/1.0" xmlns:mrc="http://standards.iso.org/iso/19115/-3/mrc/2.0" xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0" xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0" xmlns:mrl="http://standards.iso.org/iso/19115/-3/mrl/2.0" xmlns:mrs="http://standards.iso.org/iso/19115/-3/mrs/1.0" xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/2.0" xmlns:mdq="http://standards.iso.org/iso/19157/-2/mdq/1.0" xmlns:mac="http://standards.iso.org/iso/19115/-3/mac/2.0" xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/2.0 https://schemas.isotc211.org/19115/-3/mdb/2.0/mdb.xsd">
+  <mdb:metadataIdentifier xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <mcc:MD_Identifier>
+      <mcc:code>
+        <gco:CharacterString>1f7c8d9f-3363-4512-ad3a-064fb6b851bc</gco:CharacterString>
+      </mcc:code>
+      <mcc:codeSpace>
+        <gco:CharacterString>urn:uuid</gco:CharacterString>
+      </mcc:codeSpace>
+    </mcc:MD_Identifier>
+  </mdb:metadataIdentifier>
+  <mdb:defaultLocale xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <lan:PT_Locale id="FR">
+      <lan:language>
+        <lan:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre" />
+      </lan:language>
+      <lan:characterEncoding>
+        <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+      </lan:characterEncoding>
+    </lan:PT_Locale>
+  </mdb:defaultLocale>
+  <mdb:metadataScope xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <mdb:MD_MetadataScope>
+      <mdb:resourceScope>
+        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset" />
+      </mdb:resourceScope>
+      <mdb:name gco:nilReason="missing">
+        <gco:CharacterString />
+      </mdb:name>
+    </mdb:MD_MetadataScope>
+  </mdb:metadataScope>
+  <mdb:contact xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <cit:CI_Responsibility uuid="b2dceabe-76ef-4818-94f2-c9ccc885bba1">
+      <cit:role>
+        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="pointOfContact" />
+      </cit:role>
+      <cit:party>
+        <cit:CI_Organisation>
+          <cit:name xmlns:gco="http://www.isotc211.org/2005/gco">
+            <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Métropole Européenne de Lille</gco:CharacterString>
+          </cit:name>
+          <cit:contactInfo>
+            <cit:CI_Contact>
+              <cit:address>
+                <cit:CI_Address>
+                  <cit:deliveryPoint xmlns:gco="http://www.isotc211.org/2005/gco">
+                    <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">2, boulevard des Cités Unies</gco:CharacterString>
+                  </cit:deliveryPoint>
+                  <cit:city xmlns:gco="http://www.isotc211.org/2005/gco">
+                    <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Lille</gco:CharacterString>
+                  </cit:city>
+                  <cit:postalCode xmlns:gco="http://www.isotc211.org/2005/gco">
+                    <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">59040</gco:CharacterString>
+                  </cit:postalCode>
+                  <cit:electronicMailAddress xmlns:gco="http://www.isotc211.org/2005/gco">
+                    <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">opendata@lillemetropole.fr</gco:CharacterString>
+                  </cit:electronicMailAddress>
+                </cit:CI_Address>
+              </cit:address>
+            </cit:CI_Contact>
+          </cit:contactInfo>
+        </cit:CI_Organisation>
+      </cit:party>
+    </cit:CI_Responsibility>
+  </mdb:contact>
+  <mdb:dateInfo xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <cit:CI_Date>
+      <cit:date>
+        <gco:DateTime>2025-11-04T15:47:22Z</gco:DateTime>
+      </cit:date>
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation" />
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+  <mdb:dateInfo xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <cit:CI_Date>
+      <cit:date>
+        <gco:DateTime>2024-07-17T13:54:18Z</gco:DateTime>
+      </cit:date>
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation" />
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+  <mdb:dateInfo xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <cit:CI_Date>
+      <cit:date>
+        <gco:DateTime>2024-06-10T10:00:45Z</gco:DateTime>
+      </cit:date>
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation" />
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+  <mdb:dateInfo xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <cit:CI_Date>
+      <cit:date>
+        <gco:DateTime>2024-06-10T09:50:23Z</gco:DateTime>
+      </cit:date>
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation" />
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+  <mdb:dateInfo xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <cit:CI_Date>
+      <cit:date>
+        <gco:DateTime>2024-05-16T08:36:28Z</gco:DateTime>
+      </cit:date>
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation" />
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+  <mdb:dateInfo xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <cit:CI_Date>
+      <cit:date>
+        <gco:DateTime>2024-05-13T08:36:45Z</gco:DateTime>
+      </cit:date>
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation" />
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+  <mdb:dateInfo xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <cit:CI_Date>
+      <cit:date>
+        <gco:DateTime>2024-04-02T12:50:02Z</gco:DateTime>
+      </cit:date>
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation" />
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+  <mdb:dateInfo xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <cit:CI_Date>
+      <cit:date>
+        <gco:DateTime>2005-03-31T19:13:30</gco:DateTime>
+      </cit:date>
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="codeListLocation#CI_DateTypeCode" codeListValue="creation">creation</cit:CI_DateTypeCode>
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+  <mdb:dateInfo>
+    <cit:CI_Date>
+      <cit:date>
+        <gco:DateTime>2026-10-05T08:40:46.464848Z</gco:DateTime>
+      </cit:date>
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="revision" />
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+  <mdb:metadataStandard xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <cit:CI_Citation>
+      <cit:title>
+        <gco:CharacterString>ISO 19115-3</gco:CharacterString>
+      </cit:title>
+    </cit:CI_Citation>
+  </mdb:metadataStandard>
+  <mdb:metadataLinkage xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <cit:CI_OnlineResource>
+      <cit:linkage>
+        <gco:CharacterString>https://data.lillemetropole.fr/catalogue/dataset/1f7c8d9f-3363-4512-ad3a-064fb6b851bc</gco:CharacterString>
+      </cit:linkage>
+      <cit:function>
+        <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="completeMetadata" />
+      </cit:function>
+    </cit:CI_OnlineResource>
+  </mdb:metadataLinkage>
+  <mdb:referenceSystemInfo xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <mrs:MD_ReferenceSystem>
+      <mrs:referenceSystemIdentifier>
+        <mcc:MD_Identifier>
+          <mcc:code>
+            <gco:CharacterString>RGF93 / Lambert 93</gco:CharacterString>
+          </mcc:code>
+        </mcc:MD_Identifier>
+      </mrs:referenceSystemIdentifier>
+    </mrs:MD_ReferenceSystem>
+  </mdb:referenceSystemInfo>
+  <mdb:identificationInfo xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <mri:MD_DataIdentification>
+      <mri:citation>
+        <cit:CI_Citation>
+          <cit:title>
+            <gco:CharacterString>Schéma cyclable 2035 - liaisons - Plan de mobilité</gco:CharacterString>
+          </cit:title>
+          <cit:date>
+            <cit:CI_Date>
+              <cit:date>
+                <gco:Date>2025-11-04</gco:Date>
+              </cit:date>
+              <cit:dateType>
+                <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+              </cit:dateType>
+            </cit:CI_Date>
+          </cit:date>
+          <cit:date>
+            <cit:CI_Date>
+              <cit:date>
+                <gco:DateTime>2023-10-27T00:00:00</gco:DateTime>
+              </cit:date>
+              <cit:dateType>
+                <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation" />
+              </cit:dateType>
+            </cit:CI_Date>
+          </cit:date>
+        </cit:CI_Citation>
+      </mri:citation>
+      <mri:abstract>
+        <gco:CharacterString>L'action n°35 du Plan de Mobilité de la Métropole Européenne de Lille présente le schéma cyclable métropolitain à horizon 2035. 
+
+La donnée proposée ici décrit la déclinaison en trois niveaux hiérarchiques des axes du schéma cyclable : 
+- **le réseau Vélo+** pour la desserte des grandes destinations métropolitaines, 
+- **le réseau intercommunal métropolitain** pour la desserte des pôles générateurs principaux, 
+- **le réseau cyclable de proximité** qui assure la diffusion fine et permet de faire le lien avec les générateurs de trafic et les cœurs de quartiers.  
+  
+### Détail
+Les entités disposant du code INSEE "0000" sont situées en-dehors du périmètre MEL.
+  
+### Donnée associée à consulter : 
+*Schéma cyclable 2035 - points durs - Plan de mobilité - MEL - 2023-2035*
+  
+### Contexte
+Le schéma directeur cyclable métropolitain 2035 s’ancre sur le schéma Métropole Cyclable 2020. Il en propose une vision renforcée. Il est le fruit d’une réflexion territorialisée dont l’objectif est de proposer un réseau intercommunal adapté à la géographie des territoires et aux pratiques cyclables qui ne sont pas les même en ville et à la campagne. 
+
+- En milieu rural, les liaisons proposées permettront de relier les bourgs et les villages tout en organisant le rabattement vers les stations de transport collectif majeures : gares et terminus métro. Elles permettront d’accéder aux grands ensembles scolaires et zones d’emploi. Elles porteront également les déplacements longues distances vers les zones urbaines denses. 
+- En zone urbaine, les liaisons inscrites au réseau intercommunal porteront les déplacements intercommunaux et inter-quartiers. Ce réseau s’articule avec le réseau de transport collectif urbain et s’appuie sur la hiérarchisation des voies. 
+
+     - Il permettra de desservir la totalité des communes de la Métropole Européenne de Lille. 
+     - Il assurera aussi une desserte directe de 90 % de la population, 94 % des emplois et 93 % des effectifs scolaires projetés à horizon 2035.
+
+### Le Schéma Directeur Cyclable Métropolitain
+Le schéma directeur cyclable métropolitain 2035 s’appuie en premier lieu sur un diagnostic complet ayant permis de mettre en lumière de nouveaux enjeux sur le territoire, notamment en regard des développements projetés et des évolutions comportementales à l’œuvre. 
+  
+Ce nouveau schéma directeur est aussi et surtout le fruit d’une concertation avec les communes de la Métropole Européenne de Lille et d’une collaboration technique active de l’association droit au vélo. Il a été construit en interface avec les territoires limitrophes.   
+  
+Sa compatibilité avec les nouvelles lignes de transports en site propre et le schéma cible des véloroutes et voies vertes a été considérée.</gco:CharacterString>
+      </mri:abstract>
+      <mri:purpose gco:nilReason="missing">
+        <gco:CharacterString />
+      </mri:purpose>
+      <mri:status>
+        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="completed" />
+      </mri:status>
+      <mri:pointOfContact>
+        <cit:CI_Responsibility uuid="3eeded42-5414-4518-86ed-1c122f7fa23b">
+          <cit:role>
+            <cit:CI_RoleCode xmlns:gco="http://www.isotc211.org/2005/gco" codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator" />
+          </cit:role>
+          <cit:party>
+            <cit:CI_Organisation>
+              <cit:name xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Métropole Européenne de Lille</gco:CharacterString>
+              </cit:name>
+              <cit:contactInfo>
+                <cit:CI_Contact>
+                  <cit:address>
+                    <cit:CI_Address>
+                      <cit:deliveryPoint xmlns:gco="http://www.isotc211.org/2005/gco">
+                        <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">2, boulevard des Cités Unies</gco:CharacterString>
+                      </cit:deliveryPoint>
+                      <cit:city xmlns:gco="http://www.isotc211.org/2005/gco">
+                        <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Lille</gco:CharacterString>
+                      </cit:city>
+                      <cit:postalCode xmlns:gco="http://www.isotc211.org/2005/gco">
+                        <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">59040</gco:CharacterString>
+                      </cit:postalCode>
+                      <cit:electronicMailAddress xmlns:gco="http://www.isotc211.org/2005/gco">
+                        <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">opendata@lillemetropole.fr</gco:CharacterString>
+                      </cit:electronicMailAddress>
+                    </cit:CI_Address>
+                  </cit:address>
+                </cit:CI_Contact>
+              </cit:contactInfo>
+              <cit:logo>
+                <mcc:MD_BrowseGraphic uuid="be5f2ee0-e78d-4c9f-bd1e-fb8dff1b3821">
+                  <mcc:fileName xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/1.0">
+                    <gco:CharacterString>Métropole Européenne de Lille</gco:CharacterString>
+                  </mcc:fileName>
+                  <mcc:fileDescription xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/1.0">
+                    <gco:CharacterString>Logo de la Métropole Européenne de Lille</gco:CharacterString>
+                  </mcc:fileDescription>
+                  <mcc:fileType xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/1.0">
+                    <gco:CharacterString>JPEG</gco:CharacterString>
+                  </mcc:fileType>
+                  <mcc:linkage>
+                    <cit:CI_OnlineResource xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/1.0">
+                      <cit:linkage>
+                        <gco:CharacterString>https://mel.integration.apps.gs-fr-prod.camptocamp.com/geonetwork/images/harvesting/logo-mel.jpeg</gco:CharacterString>
+                      </cit:linkage>
+                      <cit:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                      </cit:protocol>
+                    </cit:CI_OnlineResource>
+                  </mcc:linkage>
+                </mcc:MD_BrowseGraphic>
+              </cit:logo>
+            </cit:CI_Organisation>
+          </cit:party>
+        </cit:CI_Responsibility>
+      </mri:pointOfContact>
+      <mri:pointOfContact>
+        <cit:CI_Responsibility uuid="b2dceabe-76ef-4818-94f2-c9ccc885bba1">
+          <cit:role>
+            <cit:CI_RoleCode xmlns:gco="http://www.isotc211.org/2005/gco" codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="distributor" />
+          </cit:role>
+          <cit:party>
+            <cit:CI_Organisation>
+              <cit:name xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Métropole Européenne de Lille</gco:CharacterString>
+              </cit:name>
+              <cit:contactInfo>
+                <cit:CI_Contact>
+                  <cit:address>
+                    <cit:CI_Address>
+                      <cit:deliveryPoint xmlns:gco="http://www.isotc211.org/2005/gco">
+                        <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">2, boulevard des Cités Unies</gco:CharacterString>
+                      </cit:deliveryPoint>
+                      <cit:city xmlns:gco="http://www.isotc211.org/2005/gco">
+                        <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Lille</gco:CharacterString>
+                      </cit:city>
+                      <cit:postalCode xmlns:gco="http://www.isotc211.org/2005/gco">
+                        <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">59040</gco:CharacterString>
+                      </cit:postalCode>
+                      <cit:electronicMailAddress xmlns:gco="http://www.isotc211.org/2005/gco">
+                        <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">opendata@lillemetropole.fr</gco:CharacterString>
+                      </cit:electronicMailAddress>
+                    </cit:CI_Address>
+                  </cit:address>
+                </cit:CI_Contact>
+              </cit:contactInfo>
+            </cit:CI_Organisation>
+          </cit:party>
+        </cit:CI_Responsibility>
+      </mri:pointOfContact>
+      <mri:pointOfContact>
+        <cit:CI_Responsibility uuid="b2dceabe-76ef-4818-94f2-c9ccc885bba1">
+          <cit:role>
+            <cit:CI_RoleCode xmlns:gco="http://www.isotc211.org/2005/gco" codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="pointOfContact" />
+          </cit:role>
+          <cit:party>
+            <cit:CI_Organisation>
+              <cit:name xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Métropole Européenne de Lille</gco:CharacterString>
+              </cit:name>
+              <cit:contactInfo>
+                <cit:CI_Contact>
+                  <cit:address>
+                    <cit:CI_Address>
+                      <cit:deliveryPoint xmlns:gco="http://www.isotc211.org/2005/gco">
+                        <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">2, boulevard des Cités Unies</gco:CharacterString>
+                      </cit:deliveryPoint>
+                      <cit:city xmlns:gco="http://www.isotc211.org/2005/gco">
+                        <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Lille</gco:CharacterString>
+                      </cit:city>
+                      <cit:postalCode xmlns:gco="http://www.isotc211.org/2005/gco">
+                        <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">59040</gco:CharacterString>
+                      </cit:postalCode>
+                      <cit:electronicMailAddress xmlns:gco="http://www.isotc211.org/2005/gco">
+                        <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">datamobilite@lillemetropole.fr, mfontaine@lillemetropole.fr</gco:CharacterString>
+                      </cit:electronicMailAddress>
+                    </cit:CI_Address>
+                  </cit:address>
+                </cit:CI_Contact>
+              </cit:contactInfo>
+            </cit:CI_Organisation>
+          </cit:party>
+        </cit:CI_Responsibility>
+      </mri:pointOfContact>
+      <mri:spatialRepresentationType>
+        <mcc:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="" />
+      </mri:spatialRepresentationType>
+      <mri:spatialResolution>
+        <mri:MD_Resolution>
+          <mri:equivalentScale>
+            <mri:MD_RepresentativeFraction>
+              <mri:denominator>
+                <gco:Integer>25000</gco:Integer>
+              </mri:denominator>
+            </mri:MD_RepresentativeFraction>
+          </mri:equivalentScale>
+        </mri:MD_Resolution>
+      </mri:spatialResolution>
+      <mri:topicCategory>
+        <mri:MD_TopicCategoryCode>transportation</mri:MD_TopicCategoryCode>
+      </mri:topicCategory>
+      <mri:extent>
+        <gex:EX_Extent>
+          <gex:description>
+            <gco:CharacterString>Métropole Européenne de Lille</gco:CharacterString>
+          </gex:description>
+          <gex:geographicElement>
+            <gex:EX_GeographicBoundingBox>
+              <gex:westBoundLongitude>
+                <gco:Decimal>2.78913293567365</gco:Decimal>
+              </gex:westBoundLongitude>
+              <gex:eastBoundLongitude>
+                <gco:Decimal>3.272498092970729</gco:Decimal>
+              </gex:eastBoundLongitude>
+              <gex:southBoundLatitude>
+                <gco:Decimal>50.4997300394295</gco:Decimal>
+              </gex:southBoundLatitude>
+              <gex:northBoundLatitude>
+                <gco:Decimal>50.7945765614518</gco:Decimal>
+              </gex:northBoundLatitude>
+            </gex:EX_GeographicBoundingBox>
+          </gex:geographicElement>
+          <gex:temporalElement>
+            <gex:EX_TemporalExtent>
+              <gex:extent>
+                <gml:TimePeriod gml:id="d472716e433a1051934">
+                  <gml:beginPosition>2023-10-27</gml:beginPosition>
+                  <gml:endPosition>2035-12-31</gml:endPosition>
+                </gml:TimePeriod>
+              </gex:extent>
+            </gex:EX_TemporalExtent>
+          </gex:temporalElement>
+        </gex:EX_Extent>
+      </mri:extent>
+      <mri:resourceMaintenance>
+        <mmi:MD_MaintenanceInformation>
+          <mmi:maintenanceAndUpdateFrequency>
+            <mmi:MD_MaintenanceFrequencyCode codeListValue="notPlanned" codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_MaintenanceFrequencyCode" />
+          </mmi:maintenanceAndUpdateFrequency>
+        </mmi:MD_MaintenanceInformation>
+      </mri:resourceMaintenance>
+      <mri:descriptiveKeywords>
+        <mri:MD_Keywords>
+          <mri:keyword>
+            <gcx:Anchor xlink:href="https://data.lillemetropole.fr/place/melTerritories#1">Métropole Européenne de Lille</gcx:Anchor>
+          </mri:keyword>
+          <mri:type>
+            <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="place" />
+          </mri:type>
+          <mri:thesaurusName>
+            <cit:CI_Citation>
+              <cit:title>
+                <gcx:Anchor xlink:href="https://data.lillemetropole.fr/place/melTerritories">Territoires MEL</gcx:Anchor>
+              </cit:title>
+              <cit:date>
+                <cit:CI_Date>
+                  <cit:date>
+                    <gco:Date>2026-01-28</gco:Date>
+                  </cit:date>
+                  <cit:dateType>
+                    <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                  </cit:dateType>
+                </cit:CI_Date>
+              </cit:date>
+              <cit:identifier>
+                <mcc:MD_Identifier>
+                  <mcc:code>
+                    <gcx:Anchor xlink:href="https://data.lillemetropole.fr/geonetwork/srv/api/registries/vocabularies/local.place.mel">geonetwork.thesaurus.local.place.mel</gcx:Anchor>
+                  </mcc:code>
+                </mcc:MD_Identifier>
+              </cit:identifier>
+            </cit:CI_Citation>
+          </mri:thesaurusName>
+        </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
+      <mri:descriptiveKeywords>
+        <mri:MD_Keywords>
+          <mri:keyword gco:nilReason="missing">
+            <gco:CharacterString />
+          </mri:keyword>
+          <mri:type>
+            <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+          </mri:type>
+          <mri:thesaurusName>
+            <cit:CI_Citation>
+              <cit:title>
+                <gcx:Anchor xlink:href="http://inspire.ec.europa.eu/theme">GEMET - INSPIRE themes, version 1.0</gcx:Anchor>
+              </cit:title>
+              <cit:date>
+                <cit:CI_Date>
+                  <cit:date>
+                    <gco:Date>2008-01-01</gco:Date>
+                  </cit:date>
+                  <cit:dateType>
+                    <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                  </cit:dateType>
+                </cit:CI_Date>
+              </cit:date>
+              <cit:date>
+                <cit:CI_Date>
+                  <cit:date>
+                    <gco:Date>2008-06-01</gco:Date>
+                  </cit:date>
+                  <cit:dateType>
+                    <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                  </cit:dateType>
+                </cit:CI_Date>
+              </cit:date>
+              <cit:identifier>
+                <mcc:MD_Identifier>
+                  <mcc:code>
+                    <gcx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme">geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme</gcx:Anchor>
+                  </mcc:code>
+                </mcc:MD_Identifier>
+              </cit:identifier>
+            </cit:CI_Citation>
+          </mri:thesaurusName>
+        </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
+      <mri:descriptiveKeywords>
+        <mri:MD_Keywords>
+          <mri:keyword gco:nilReason="missing">
+            <gco:CharacterString />
+          </mri:keyword>
+          <mri:type>
+            <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+          </mri:type>
+          <mri:thesaurusName>
+            <cit:CI_Citation>
+              <cit:title>
+                <gcx:Anchor xlink:href="http://geonetwork-opensource.org/gemet">GEMET</gcx:Anchor>
+              </cit:title>
+              <cit:date>
+                <cit:CI_Date>
+                  <cit:date>
+                    <gco:Date>2018-08-16</gco:Date>
+                  </cit:date>
+                  <cit:dateType>
+                    <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                  </cit:dateType>
+                </cit:CI_Date>
+              </cit:date>
+              <cit:identifier>
+                <mcc:MD_Identifier>
+                  <mcc:code>
+                    <gcx:Anchor xlink:href="https://data.lillemetropole.fr/geonetwork/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gcx:Anchor>
+                  </mcc:code>
+                </mcc:MD_Identifier>
+              </cit:identifier>
+            </cit:CI_Citation>
+          </mri:thesaurusName>
+        </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
+      <mri:descriptiveKeywords>
+        <mri:MD_Keywords>
+          <mri:keyword>
+            <gcx:Anchor xlink:href="http://opendata_mel.fr/thematique/categories/mobilite_transports_deplacement">Mobilité, transports, déplacement</gcx:Anchor>
+          </mri:keyword>
+          <mri:type>
+            <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+          </mri:type>
+          <mri:thesaurusName>
+            <cit:CI_Citation>
+              <cit:title>
+                <gcx:Anchor xlink:href="http://opendata_mel.fr/thematique/categories">Catégories</gcx:Anchor>
+              </cit:title>
+              <cit:date>
+                <cit:CI_Date>
+                  <cit:date>
+                    <gco:Date>2026-01-15</gco:Date>
+                  </cit:date>
+                  <cit:dateType>
+                    <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                  </cit:dateType>
+                </cit:CI_Date>
+              </cit:date>
+              <cit:identifier>
+                <mcc:MD_Identifier>
+                  <mcc:code>
+                    <gcx:Anchor xlink:href="https://data.lillemetropole.fr/geonetwork/srv/api/registries/vocabularies/external.theme.thesaurus_mot_cle_thematique_categories">geonetwork.thesaurus.external.theme.thesaurus_mot_cle_thematique_categories</gcx:Anchor>
+                  </mcc:code>
+                </mcc:MD_Identifier>
+              </cit:identifier>
+            </cit:CI_Citation>
+          </mri:thesaurusName>
+        </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
+      <mri:descriptiveKeywords>
+        <mri:MD_Keywords>
+          <mri:keyword>
+            <gcx:Anchor xlink:href="http://opendata_mel.fr/thematique/mobilite_transport_deplacement/pistes_cyclables">Pistes cyclables</gcx:Anchor>
+          </mri:keyword>
+          <mri:keyword>
+            <gcx:Anchor xlink:href="http://opendata_mel.fr/thematique/mobilite_transport_deplacement/schema_cyclable">Schéma cyclable</gcx:Anchor>
+          </mri:keyword>
+          <mri:keyword>
+            <gcx:Anchor xlink:href="http://opendata_mel.fr/thematique/mobilite_transport_deplacement/velos">Vélos</gcx:Anchor>
+          </mri:keyword>
+          <mri:keyword>
+            <gcx:Anchor xlink:href="http://opendata_mel.fr/thematique/mobilite_transport_deplacement/plan_de_mobilite">Plan de mobilité</gcx:Anchor>
+          </mri:keyword>
+          <mri:keyword>
+            <gcx:Anchor xlink:href="http://opendata_mel.fr/thematique/mobilite_transport_deplacement/cyclisme">Cyclisme</gcx:Anchor>
+          </mri:keyword>
+          <mri:keyword>
+            <gcx:Anchor xlink:href="http://opendata_mel.fr/thematique/mobilite_transport_deplacement/cyclable">Cyclable</gcx:Anchor>
+          </mri:keyword>
+          <mri:type>
+            <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+          </mri:type>
+          <mri:thesaurusName>
+            <cit:CI_Citation>
+              <cit:title>
+                <gcx:Anchor xlink:href="http://opendata_mel.fr/thematique/mobilite_transport_deplacement">Mobilité, Transports, Déplacement</gcx:Anchor>
+              </cit:title>
+              <cit:date>
+                <cit:CI_Date>
+                  <cit:date>
+                    <gco:Date>2025-10-08</gco:Date>
+                  </cit:date>
+                  <cit:dateType>
+                    <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                  </cit:dateType>
+                </cit:CI_Date>
+              </cit:date>
+              <cit:identifier>
+                <mcc:MD_Identifier>
+                  <mcc:code>
+                    <gcx:Anchor xlink:href="https://data.lillemetropole.fr/geonetwork/srv/api/registries/vocabularies/external.theme.thesaurus_mot_cle_thematique_mobilite_transports_deplacement">geonetwork.thesaurus.external.theme.thesaurus_mot_cle_thematique_mobilite_transports_deplacement</gcx:Anchor>
+                  </mcc:code>
+                </mcc:MD_Identifier>
+              </cit:identifier>
+            </cit:CI_Citation>
+          </mri:thesaurusName>
+        </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
+      <mri:resourceConstraints>
+        <mco:MD_LegalConstraints>
+          <mco:useLimitation>
+            <gco:CharacterString>Utilisation libre sous réserve de mentionner la source (a minima le nom du producteur) et la date de sa dernière mise à jour</gco:CharacterString>
+          </mco:useLimitation>
+          <mco:accessConstraints>
+            <mco:MD_RestrictionCode codeListValue="otherRestrictions" codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_RestrictionCode" />
+          </mco:accessConstraints>
+          <mco:useConstraints>
+            <mco:MD_RestrictionCode codeListValue="otherRestrictions" codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_RestrictionCode" />
+          </mco:useConstraints>
+          <mco:otherConstraints>
+            <gco:CharacterString>Licence Ouverte v2.0 (Etalab)</gco:CharacterString>
+          </mco:otherConstraints>
+        </mco:MD_LegalConstraints>
+      </mri:resourceConstraints>
+      <mri:defaultLocale>
+        <lan:PT_Locale>
+          <lan:language>
+            <lan:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre" />
+          </lan:language>
+          <lan:characterEncoding>
+            <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+          </lan:characterEncoding>
+        </lan:PT_Locale>
+      </mri:defaultLocale>
+      <mri:supplementalInformation gco:nilReason="missing">
+        <gco:CharacterString />
+      </mri:supplementalInformation>
+    </mri:MD_DataIdentification>
+  </mdb:identificationInfo>
+  <mdb:contentInfo xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <mrc:MD_FeatureCatalogue>
+      <mrc:featureCatalogue>
+        <gfc:FC_FeatureCatalogue>
+          <cat:name gco:nilReason="missing">
+            <gco:CharacterString />
+          </cat:name>
+          <cat:scope gco:nilReason="missing">
+            <gco:CharacterString />
+          </cat:scope>
+          <cat:versionNumber gco:nilReason="missing">
+            <gco:CharacterString />
+          </cat:versionNumber>
+          <gfc:featureType>
+            <gfc:FC_FeatureType>
+              <gfc:typeName>schéma cyclable - liaisons</gfc:typeName>
+              <gfc:definition>
+                <gco:CharacterString>Liaisons du schéma directeur cyclable de la MEL</gco:CharacterString>
+              </gfc:definition>
+              <gfc:isAbstract>
+                <gco:Boolean>false</gco:Boolean>
+              </gfc:isAbstract>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>objectid</gfc:memberName>
+                  <gfc:definition>
+                    <gco:CharacterString>Identifiant de l'objet (clé primaire)</gco:CharacterString>
+                  </gfc:definition>
+                  <gfc:code>
+                    <gco:CharacterString>OBJECTID</gco:CharacterString>
+                  </gfc:code>
+                  <gfc:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString>numeric(38)</gco:CharacterString>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </gfc:valueType>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>
+                    <gco:LocalName>code_insee</gco:LocalName>
+                  </gfc:memberName>
+                  <gfc:definition>
+                    <gco:CharacterString>Code INSEE de la commune</gco:CharacterString>
+                  </gfc:definition>
+                  <gfc:code>
+                    <gco:CharacterString>CODE_INSEE</gco:CharacterString>
+                  </gfc:code>
+                  <gfc:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString>varchar(8)</gco:CharacterString>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </gfc:valueType>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>velo_plus</gfc:memberName>
+                  <gfc:definition>
+                    <gco:CharacterString>Permet de savoir si l'objet décrit un tronçon faisant parti du réseau vélo + : Oui - le tronçon fait partie intégrante du réseau vélo+ /Non - le tronçon ne fait pas partie du réseau vélo+ /Option - le tronçon pourrait éventuellement faire partie du réseau réseau vélo+ / Variante - le tronçon pourrait être utilisé en lieu et place d'un autre pour répondre à un trajet équivalent</gco:CharacterString>
+                  </gfc:definition>
+                  <gfc:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString>varchar(256)</gco:CharacterString>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </gfc:valueType>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>r_ppal</gfc:memberName>
+                  <gfc:definition>
+                    <gco:CharacterString>Permet de savoir si l'objet décrit un tronçon faisant parti du réseau Intercommunal : Oui - le tronçon fait partie intégrante du réseau intercommunal / Non - le tronçon ne fait pas partie du réseau intercommunal / Option : le tronçon pourrait éventuellement faire partie du réseau intercommunal / Variante : le tronçon pourrait être utilisé en lieu et place d'un autre pour répondre à un trajet équivalent</gco:CharacterString>
+                  </gfc:definition>
+                  <gfc:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString>varchar(256)</gco:CharacterString>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </gfc:valueType>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>r_scdr</gfc:memberName>
+                  <gfc:definition>
+                    <gco:CharacterString>Permet de savoir si l'objet décrit un tronçon faisant parti du réseau de proximité : Oui - le tronçon fait partie intégrante du réseau cyclable de proximité / Non - le tronçon ne fait pas partie du réseau cyclable de proximité</gco:CharacterString>
+                  </gfc:definition>
+                  <gfc:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString>varchar(256)</gco:CharacterString>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </gfc:valueType>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>test_niveau_difficulte</gfc:memberName>
+                  <gfc:definition>
+                    <gco:CharacterString>[Données pour tester valeurs de liste]: Donne une note de difficulté (1-5) du tronçon.</gco:CharacterString>
+                  </gfc:definition>
+                  <gfc:cardinality>
+                    <gco:CharacterString>1..1</gco:CharacterString>
+                  </gfc:cardinality>
+                  <gfc:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString>varchar(256)</gco:CharacterString>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </gfc:valueType>
+                  <gfc:listedValue>
+                    <gfc:FC_ListedValue>
+                      <gfc:label>
+                        <gco:CharacterString>Très facile</gco:CharacterString>
+                      </gfc:label>
+                      <gfc:code>
+                        <gco:CharacterString>1</gco:CharacterString>
+                      </gfc:code>
+                    </gfc:FC_ListedValue>
+                  </gfc:listedValue>
+                  <gfc:listedValue>
+                    <gfc:FC_ListedValue>
+                      <gfc:label>
+                        <gco:CharacterString>Facile</gco:CharacterString>
+                      </gfc:label>
+                      <gfc:code>
+                        <gco:CharacterString>2</gco:CharacterString>
+                      </gfc:code>
+                    </gfc:FC_ListedValue>
+                  </gfc:listedValue>
+                  <gfc:listedValue>
+                    <gfc:FC_ListedValue>
+                      <gfc:label>
+                        <gco:CharacterString>Moyen</gco:CharacterString>
+                      </gfc:label>
+                      <gfc:code>
+                        <gco:CharacterString>3</gco:CharacterString>
+                      </gfc:code>
+                    </gfc:FC_ListedValue>
+                  </gfc:listedValue>
+                  <gfc:listedValue>
+                    <gfc:FC_ListedValue>
+                      <gfc:label>
+                        <gco:CharacterString>Difficile</gco:CharacterString>
+                      </gfc:label>
+                      <gfc:code>
+                        <gco:CharacterString>4</gco:CharacterString>
+                      </gfc:code>
+                    </gfc:FC_ListedValue>
+                  </gfc:listedValue>
+                  <gfc:listedValue>
+                    <gfc:FC_ListedValue>
+                      <gfc:label>
+                        <gco:CharacterString>Très difficile</gco:CharacterString>
+                      </gfc:label>
+                      <gfc:code>
+                        <gco:CharacterString>5</gco:CharacterString>
+                      </gfc:code>
+                    </gfc:FC_ListedValue>
+                  </gfc:listedValue>
+                  <gfc:listedValue>
+                    <gfc:FC_ListedValue>
+                      <gfc:label gco:nilReason="missing">
+                        <gco:CharacterString />
+                      </gfc:label>
+                      <gfc:code gco:nilReason="missing">
+                        <gco:CharacterString />
+                      </gfc:code>
+                    </gfc:FC_ListedValue>
+                  </gfc:listedValue>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>geom</gfc:memberName>
+                  <gfc:definition>
+                    <gco:CharacterString>Géométrie de type ligne simple</gco:CharacterString>
+                  </gfc:definition>
+                  <gfc:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:LocalName codeSpace="http://w3.org">geometry</gco:LocalName>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </gfc:valueType>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>
+              <gfc:featureCatalogue />
+            </gfc:FC_FeatureType>
+          </gfc:featureType>
+        </gfc:FC_FeatureCatalogue>
+      </mrc:featureCatalogue>
+    </mrc:MD_FeatureCatalogue>
+  </mdb:contentInfo>
+  <mdb:distributionInfo xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0">
+    <mrd:MD_Distribution>
+      <mrd:transferOptions>
+        <mrd:MD_DigitalTransferOptions>
+          <mrd:onLine>
+            <cit:CI_OnlineResource>
+              <cit:linkage>
+                <gco:CharacterString>https://data.lillemetropole.fr/geoserver/ogc/features/v1/collections/mel_mobilite_et_transport:sc_schema_cyclable_pm35_2023/items</gco:CharacterString>
+              </cit:linkage>
+              <cit:protocol>
+                <gco:CharacterString>OGC API Features</gco:CharacterString>
+              </cit:protocol>
+              <cit:name>
+                <gco:CharacterString>Schéma cyclable 2035 - liaisons - Plan de mobilité</gco:CharacterString>
+              </cit:name>
+              <cit:description>
+                <gco:CharacterString>Schéma cyclable 2035 - liaisons - Plan de mobilité</gco:CharacterString>
+              </cit:description>
+              <cit:function>
+                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="download" />
+              </cit:function>
+            </cit:CI_OnlineResource>
+          </mrd:onLine>
+          <mrd:onLine>
+            <cit:CI_OnlineResource>
+              <cit:linkage>
+                <gco:CharacterString>https://data.lillemetropole.fr/geoserver/ows</gco:CharacterString>
+              </cit:linkage>
+              <cit:protocol>
+                <gco:CharacterString>OGC:WFS</gco:CharacterString>
+              </cit:protocol>
+              <cit:name>
+                <gco:CharacterString>mel_mobilite_et_transport:sc_schema_cyclable_pm35_2023</gco:CharacterString>
+              </cit:name>
+              <cit:description>
+                <gco:CharacterString>Schéma cyclable 2035 - liaisons - Plan de mobilité</gco:CharacterString>
+              </cit:description>
+              <cit:function>
+                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="download" />
+              </cit:function>
+            </cit:CI_OnlineResource>
+          </mrd:onLine>
+          <mrd:onLine>
+            <cit:CI_OnlineResource>
+              <cit:linkage>
+                <gco:CharacterString>https://data.lillemetropole.fr/geoserver/ows</gco:CharacterString>
+              </cit:linkage>
+              <cit:protocol>
+                <gco:CharacterString>OGC:WMS</gco:CharacterString>
+              </cit:protocol>
+              <cit:name>
+                <gco:CharacterString>mel_mobilite_et_transport:sc_schema_cyclable_pm35_2023</gco:CharacterString>
+              </cit:name>
+              <cit:description>
+                <gco:CharacterString>Schéma cyclable 2035 - liaisons - Plan de mobilité</gco:CharacterString>
+              </cit:description>
+              <cit:function>
+                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="browsing" />
+              </cit:function>
+            </cit:CI_OnlineResource>
+          </mrd:onLine>
+          <mrd:onLine>
+            <cit:CI_OnlineResource>
+              <cit:linkage>
+                <gco:CharacterString>https://plandemobilite2035.lillemetropole.fr/schema-cyclable/</gco:CharacterString>
+              </cit:linkage>
+              <cit:protocol>
+                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+              </cit:protocol>
+              <cit:name>
+                <gco:CharacterString>Documentation</gco:CharacterString>
+              </cit:name>
+              <cit:description>
+                <gco:CharacterString>Lien vers la carte dynamique « schéma cyclable »</gco:CharacterString>
+              </cit:description>
+              <cit:function>
+                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="information" />
+              </cit:function>
+            </cit:CI_OnlineResource>
+          </mrd:onLine>
+        </mrd:MD_DigitalTransferOptions>
+      </mrd:transferOptions>
+    </mrd:MD_Distribution>
+  </mdb:distributionInfo>
+</mdb:MD_Metadata>
+
