@@ -69,7 +69,8 @@ export function extractCharacterString(): ChainableFunction<
     fallback(
       findChildElement('gco:CharacterString', false),
       findChildElement('gmx:Anchor', false),
-      findChildElement('gmx:MimeFileType', false)
+      findChildElement('gmx:MimeFileType', false),
+      findChildElement('gco:LocalName', false)
     ),
     readText()
   )

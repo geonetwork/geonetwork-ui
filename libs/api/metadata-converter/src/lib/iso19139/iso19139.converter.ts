@@ -308,6 +308,10 @@ export class Iso19139Converter extends BaseConverter<string> {
       const sourceRecords = this.readers['sourceRecords'](rootEl, tr)
       const associatedRecords = this.readers['associatedRecords'](rootEl, tr)
       const updateFrequency = this.readers['updateFrequency'](rootEl, tr)
+      const featureTypeDescriptions = this.readers['featureTypeDescriptions'](
+        rootEl,
+        tr
+      ) as DatasetRecord['featureTypeDescriptions']
 
       return this.afterRecordRead({
         ...this.readBaseRecord(rootEl, tr),
@@ -319,6 +323,7 @@ export class Iso19139Converter extends BaseConverter<string> {
         ...(spatialRepresentation && { spatialRepresentation }),
         temporalExtents,
         updateFrequency,
+        ...(featureTypeDescriptions?.length && { featureTypeDescriptions }),
         translations: tr,
       } as DatasetRecord)
     } else if (kind === 'reuse') {
