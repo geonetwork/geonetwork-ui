@@ -19,6 +19,9 @@ import WALLONIE_SERVICE_NAPITSWALLONIA from '../fixtures/wallonie.iso19115-3.ser
 import WALLONIE_REUSE_SPW from '../fixtures/wallonie.iso19115-3.reuse+spw.xml'
 // @ts-ignore
 import { WALLONIE_REUSE_SPW_RECORD } from '../fixtures/wallonie.records.reuse'
+// @ts-ignore
+import MEL_FEATURECATALOG_DATASET from '../fixtures/mel.iso19115-3.dataset+featurecatalog.xml'
+import { MEL_FEATURECATALOG_DATASET_RECORD } from '../fixtures/mel.records.dataset+featurecatalog'
 
 import {
   METAWAL_DATASET_RECORD,
@@ -59,6 +62,10 @@ describe('ISO19115-3 converter', () => {
     it('produces the corresponding record (wallonie spw reuse)', async () => {
       const record = await converter.readRecord(WALLONIE_REUSE_SPW)
       expect(record).toStrictEqual(WALLONIE_REUSE_SPW_RECORD)
+    })
+    it('produces the corresponding record (mel dataset with feature catalog)', async () => {
+      const record = await converter.readRecord(MEL_FEATURECATALOG_DATASET)
+      expect(record).toStrictEqual(MEL_FEATURECATALOG_DATASET_RECORD)
     })
     it('produces the corresponding record (generic dataset)', async () => {
       const record = await converter.readRecord(GENERIC_DATASET)

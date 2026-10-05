@@ -12,6 +12,7 @@ import { readKeywords } from '../iso19139/read-parts'
 import {
   readAssociatedRecords,
   readDefaultLanguage,
+  readFeatureTypeDescriptions,
   readSourceRecords,
   readOtherLanguages,
 } from './read-parts'
@@ -676,6 +677,206 @@ describe('read parts', () => {
           { uniqueIdentifier: 'uuid-1', associationType: 'crossReference' },
           { uniqueIdentifier: 'uuid-2', associationType: 'largerWorkCitation' },
         ])
+      })
+    })
+  })
+  describe('readFeatureTypeDescriptions', () => {
+    function readFromFeatureType(featureTypeXml: string) {
+      return readFeatureTypeDescriptions(
+        getRootElement(
+          parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:contentInfo>
+    <mrc:MD_FeatureCatalogue>
+      <mrc:featureCatalogue>
+        <gfc:FC_FeatureCatalogue>
+          <gfc:featureType>
+            <gfc:FC_FeatureType>
+${featureTypeXml}
+            </gfc:FC_FeatureType>
+          </gfc:featureType>
+        </gfc:FC_FeatureCatalogue>
+      </mrc:featureCatalogue>
+    </mrc:MD_FeatureCatalogue>
+  </mdb:contentInfo>
+</mdb:MD_Metadata>`)
+        )
+      )
+    }
+
+    describe('no feature catalog present', () => {
+      it('returns an empty array', () => {
+        const root = getRootElement(parseXmlString(`<mdb:MD_Metadata/>`))
+        expect(readFeatureTypeDescriptions(root)).toEqual([])
+      })
+    })
+    describe('feature type with name and definition', () => {
+      it('reads typeName and definition', () => {
+        expect(
+          readFromFeatureType(`
+              <gfc:typeName>my feature type</gfc:typeName>
+              <gfc:definition>
+                <gco:CharacterString>Feature type description</gco:CharacterString>
+              </gfc:definition>`)
+        ).toEqual([
+          {
+            name: 'my feature type',
+            definition: 'Feature type description',
+            attributes: [],
+          },
+        ])
+      })
+    })
+    describe('feature type without definition', () => {
+      it('leaves the definition out', () => {
+        expect(
+          readFromFeatureType(`
+              <gfc:typeName>my feature type</gfc:typeName>`)
+        ).toEqual([{ name: 'my feature type', attributes: [] }])
+      })
+    })
+    describe('attributes with plain text memberName and CharacterString valueType', () => {
+      it('reads name, code, definition and type', () => {
+        expect(
+          readFromFeatureType(`
+              <gfc:typeName>ft</gfc:typeName>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>Some attribute name</gfc:memberName>
+                  <gfc:definition>
+                    <gco:CharacterString>Description textuelle de la donnée.</gco:CharacterString>
+                  </gfc:definition>
+                  <gfc:code>
+                    <gco:CharacterString>ID_ZONE</gco:CharacterString>
+                  </gfc:code>
+                  <gfc:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString>VARCHAR</gco:CharacterString>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </gfc:valueType>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>`)[0].attributes
+        ).toEqual([
+          {
+            name: 'Some attribute name',
+            definition: 'Description textuelle de la donnée.',
+            code: 'ID_ZONE',
+            type: 'VARCHAR',
+          },
+        ])
+      })
+    })
+    describe('attributes with LocalName memberName and valueType', () => {
+      it('reads name and type from gco:LocalName', () => {
+        expect(
+          readFromFeatureType(`
+              <gfc:typeName>ft</gfc:typeName>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>
+                    <gco:LocalName>Some attribute name</gco:LocalName>
+                  </gfc:memberName>
+                  <gfc:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:LocalName codeSpace="http://w3.org">VARCHAR</gco:LocalName>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </gfc:valueType>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>`)[0].attributes
+        ).toEqual([
+          {
+            name: 'Some attribute name',
+            type: 'VARCHAR',
+          },
+        ])
+      })
+    })
+    describe('attribute with listed values', () => {
+      it('reads code and label, skipping empty values', () => {
+        expect(
+          readFromFeatureType(`
+              <gfc:typeName>ft</gfc:typeName>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>landcover</gfc:memberName>
+                  <gfc:listedValue>
+                    <gfc:FC_ListedValue>
+                      <gfc:label>
+                        <gco:CharacterString>Forêt dense</gco:CharacterString>
+                      </gfc:label>
+                      <gfc:code>
+                        <gco:CharacterString>1</gco:CharacterString>
+                      </gfc:code>
+                    </gfc:FC_ListedValue>
+                  </gfc:listedValue>
+                  <gfc:listedValue>
+                    <gfc:FC_ListedValue>
+                      <gfc:label>
+                        <gco:CharacterString>Prairie</gco:CharacterString>
+                      </gfc:label>
+                    </gfc:FC_ListedValue>
+                  </gfc:listedValue>
+                  <gfc:listedValue>
+                    <gfc:FC_ListedValue>
+                      <gfc:label gco:nilReason="missing">
+                        <gco:CharacterString />
+                      </gfc:label>
+                      <gfc:code gco:nilReason="missing">
+                        <gco:CharacterString />
+                      </gfc:code>
+                    </gfc:FC_ListedValue>
+                  </gfc:listedValue>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>`)[0].attributes[0].values
+        ).toEqual([{ code: '1', label: 'Forêt dense' }, { label: 'Prairie' }])
+      })
+    })
+    describe('attribute without listed values', () => {
+      it('does not set values', () => {
+        const [attribute] = readFromFeatureType(`
+              <gfc:typeName>ft</gfc:typeName>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>objectid</gfc:memberName>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>`)[0].attributes
+        expect(attribute).not.toHaveProperty('values')
+      })
+    })
+    describe('multiple feature types', () => {
+      it('returns all feature types', () => {
+        const root = getRootElement(
+          parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:contentInfo>
+    <mrc:MD_FeatureCatalogue>
+      <mrc:featureCatalogue>
+        <gfc:FC_FeatureCatalogue>
+          <gfc:featureType>
+            <gfc:FC_FeatureType>
+              <gfc:typeName>first</gfc:typeName>
+            </gfc:FC_FeatureType>
+          </gfc:featureType>
+          <gfc:featureType>
+            <gfc:FC_FeatureType>
+              <gfc:typeName>second</gfc:typeName>
+            </gfc:FC_FeatureType>
+          </gfc:featureType>
+        </gfc:FC_FeatureCatalogue>
+      </mrc:featureCatalogue>
+    </mrc:MD_FeatureCatalogue>
+  </mdb:contentInfo>
+</mdb:MD_Metadata>`)
+        )
+        expect(
+          readFeatureTypeDescriptions(root).map(
+            (featureType) => featureType.name
+          )
+        ).toEqual(['first', 'second'])
       })
     })
   })
