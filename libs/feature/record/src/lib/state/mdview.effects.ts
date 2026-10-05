@@ -40,7 +40,9 @@ export class MdViewEffects {
     this.actions$.pipe(
       ofType(MdViewActions.loadFullMetadataSuccess),
       filter(({ full }) => full !== undefined),
-      switchMap(({ full }) => this.recordsRepository.getFeatureCatalog(full)),
+      switchMap(({ full }) =>
+        this.recordsRepository.queryLinkedFeatureCatalog(full)
+      ),
       map((featureCatalog) =>
         MdViewActions.loadFeatureCatalogSuccess({
           datasetCatalog: featureCatalog,

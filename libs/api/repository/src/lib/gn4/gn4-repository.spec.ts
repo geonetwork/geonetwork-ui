@@ -327,7 +327,7 @@ describe('Gn4Repository', () => {
     })
   })
 
-  describe('getFeatureCatalog', () => {
+  describe('queryLinkedFeatureCatalog', () => {
     let catalog: DatasetFeatureCatalog
     let metadata: CatalogRecord
     const spySearch = jest.spyOn(SearchApiServiceMock.prototype, 'search')
@@ -336,7 +336,9 @@ describe('Gn4Repository', () => {
       beforeEach(async () => {
         jest.clearAllMocks()
         metadata = datasetRecordsFixture()[0]
-        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+        catalog = await lastValueFrom(
+          repository.queryLinkedFeatureCatalog(metadata)
+        )
       })
 
       it('should not call the feature catalog API (the record contains the answer)', () => {
@@ -396,7 +398,9 @@ describe('Gn4Repository', () => {
         spySearch.mockReturnValue(
           of({ hits: { hits: datasetRecordsFixture(), total: { value: 0 } } })
         )
-        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+        catalog = await lastValueFrom(
+          repository.queryLinkedFeatureCatalog(metadata)
+        )
       })
 
       afterEach(() => {
@@ -475,7 +479,9 @@ describe('Gn4Repository', () => {
           })
         )
         repository.getRecord = jest.fn().mockReturnValue(of(metadata))
-        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+        catalog = await lastValueFrom(
+          repository.queryLinkedFeatureCatalog(metadata)
+        )
         expect(catalog).toEqual(null)
       })
     })
@@ -486,7 +492,9 @@ describe('Gn4Repository', () => {
           ...simpleDatasetRecordFixture(),
           extras: {},
         }
-        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+        catalog = await lastValueFrom(
+          repository.queryLinkedFeatureCatalog(metadata)
+        )
       })
       it('returns null', () => {
         expect(catalog).toEqual(null)

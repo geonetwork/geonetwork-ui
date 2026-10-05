@@ -181,7 +181,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
-  getFeatureCatalog(
+  queryLinkedFeatureCatalog(
     record: CatalogRecord,
     visited: Set<string> = new Set() // prevent looping
   ): Observable<DatasetFeatureCatalog | null> {
@@ -199,7 +199,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       visited.add(featureCatalogIdentifier)
       return this.getRecord(featureCatalogIdentifier).pipe(
         switchMap((record) =>
-          record ? this.getFeatureCatalog(record, visited) : of(null)
+          record ? this.queryLinkedFeatureCatalog(record, visited) : of(null)
         )
       )
     }
