@@ -315,12 +315,11 @@ export class Gn4FieldMapper {
         output
       ),
     featureTypes: (output, source) => {
-      const featureTypeDescriptions = this.featureTypesField(
-        getAsArray(selectField(source, 'featureTypes'))
-      )
+      const featureTypes = getAsArray(selectField(source, 'featureTypes'))
+      if (!featureTypes.length) return output
       return {
         ...output,
-        ...(featureTypeDescriptions.length > 0 && { featureTypeDescriptions }),
+        featureTypeDescriptions: this.featureTypesField(featureTypes),
       }
     },
     related: (output, source) => {
