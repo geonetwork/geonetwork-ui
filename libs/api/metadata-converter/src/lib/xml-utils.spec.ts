@@ -2,10 +2,7 @@ import { XmlElement, XmlText } from '@rgrove/parse-xml'
 import {
   assertValidXml,
   createDocument,
-  createElement,
-  createNestedElement,
   getRootElement,
-  insertChildTree,
   parseXmlString,
   readText,
   renameElements,
@@ -206,48 +203,6 @@ world</root>
       const rootEl = getRootElement(originalDoc)
       const newDoc = createDocument(rootEl)
       expect(newDoc).toBeTruthy()
-    })
-  })
-
-  describe('insertChildTree', () => {
-    let root: XmlElement
-    beforeEach(() => {
-      root = getRootElement(
-        parseXmlString(`<root><a:first/><b:second/><c:third/></root>`)
-      )
-    })
-    it('inserts the tree before the first child matching one of the names and returns its tip', () => {
-      const tip = insertChildTree(createNestedElement('x:inserted', 'x:tip'), [
-        'b:second',
-        'c:third',
-      ])(root)
-      expect(tip.name).toBe('x:tip')
-      expect(xmlToString(root).trim()).toEqual(`<root>
-    <a:first/>
-    <x:inserted>
-        <x:tip/>
-    </x:inserted>
-    <b:second/>
-    <c:third/>
-</root>`)
-    })
-    it('ignores namespace prefixes when matching names', () => {
-      insertChildTree(createElement('x:inserted'), ['other:third'])(root)
-      expect(xmlToString(root).trim()).toEqual(`<root>
-    <a:first/>
-    <b:second/>
-    <x:inserted/>
-    <c:third/>
-</root>`)
-    })
-    it('appends the tree when no child matches', () => {
-      insertChildTree(createElement('x:inserted'), ['d:fourth'])(root)
-      expect(xmlToString(root).trim()).toEqual(`<root>
-    <a:first/>
-    <b:second/>
-    <c:third/>
-    <x:inserted/>
-</root>`)
     })
   })
 

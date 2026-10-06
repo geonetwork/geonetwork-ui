@@ -381,36 +381,6 @@ export function appendChildTree(
 }
 
 /**
- * Same as appendChildTree, but the tree is inserted before the first child whose name is one of the given names
- * (namespace will be ignored); used to respect the element order of a schema. Appends the tree if no child matches.
- * @param childrenFn
- * @param beforeNames
- */
-export function insertChildTree(
-  childrenFn: ChainableFunction<void, XmlElement>,
-  beforeNames: string[]
-): ChainableFunction<XmlElement, XmlElement> {
-  return (element) => {
-    if (!element) return null
-    const treeTip = childrenFn()
-    const treeRoot = getTreeRoot(treeTip)
-    const strippedNames = beforeNames.map(stripNamespace)
-    const index = element.children.findIndex(
-      (child) =>
-        child instanceof XmlElement &&
-        strippedNames.includes(stripNamespace(getElementName(child)))
-    )
-    element.children.splice(
-      index > -1 ? index : element.children.length,
-      0,
-      treeRoot
-    )
-    treeRoot.parent = element
-    return treeTip
-  }
-}
-
-/**
  * Leaves the current element as the active one; all elements returned by the given functions will be added as
  * children to this current element.
  * Note that if a function returns the tip of a subtree that was just created (i.e. not attached to the main document),

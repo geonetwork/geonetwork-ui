@@ -21,7 +21,6 @@ import {
   findNestedChildOrCreate,
   findNestedElement,
   findNestedElements,
-  insertChildTree,
   readAttribute,
   removeChildren,
   removeChildrenByName,
@@ -621,25 +620,6 @@ export function writeAssociatedRecords(
   )(rootEl)
 }
 
-// MD_Metadata elements which come after mdb:contentInfo in the ISO19115-3 schema
-const ELEMENTS_AFTER_CONTENT_INFO = [
-  'mdb:distributionInfo',
-  'mdb:dataQualityInfo',
-  'mdb:resourceLineage',
-  'mdb:portrayalCatalogueInfo',
-  'mdb:metadataConstraints',
-  'mdb:applicationSchemaInfo',
-  'mdb:metadataMaintenance',
-  'mdb:acquisitionInformation',
-]
-
-// FC_FeatureCatalogue elements which come after gfc:featureType in the ISO19110 schema
-const ELEMENTS_AFTER_FEATURE_TYPE = [
-  'gfc:inheritanceRelation',
-  'gfc:globalProperty',
-  'gfc:definitionSource',
-]
-
 function createNilElement(name: string, nilReason: string) {
   return pipe(createElement(name), writeAttribute('gco:nilReason', nilReason))
 }
@@ -751,15 +731,6 @@ export function writeFeatureTypeDescriptions(
   if (!featureTypes.length) return
 
   const catalogue =
-    catalogues[0] ??
-    insertChildTree(
-      createFeatureCatalogue(),
-      ELEMENTS_AFTER_CONTENT_INFO
-    )(rootEl)
-  featureTypes.forEach((featureType) =>
-    insertChildTree(
-      createFeatureType(featureType),
-      ELEMENTS_AFTER_FEATURE_TYPE
-    )(catalogue)
-  )
+    catalogues[0] ?? appendChildTree(createFeatureCatalogue())(rootEl)
+  appendChildren(...featureTypes.map(createFeatureType))(catalogue)
 }

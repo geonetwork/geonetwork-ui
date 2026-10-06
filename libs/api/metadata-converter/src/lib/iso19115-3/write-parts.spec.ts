@@ -1010,7 +1010,7 @@ ${indent}        <gfc:featureCatalogue/>
 ${indent}    </gfc:FC_FeatureType>
 ${indent}</gfc:featureType>`
     }
-    const existingCatalogue = (featureTypes: string, extra = '') => `
+    const existingCatalogue = (featureTypes: string) => `
 <root>
     <mdb:identificationInfo/>
     <mdb:contentInfo>
@@ -1021,7 +1021,7 @@ ${indent}</gfc:featureType>`
                         <gco:CharacterString>My catalogue</gco:CharacterString>
                     </cat:name>
                     <gfc:producer gco:nilReason="missing"/>
-${featureTypes}${extra}
+${featureTypes}
                 </gfc:FC_FeatureCatalogue>
             </mrc:featureCatalogue>
         </mrc:MD_FeatureCatalogue>
@@ -1054,7 +1054,7 @@ ${featureTypes}${extra}
     })
 
     describe('no existing catalogue', () => {
-      it('creates the catalogue after the existing content info and before distributionInfo', () => {
+      it('appends a new catalogue', () => {
         rootEl = getRootElement(
           parseXmlString(`
 <root>
@@ -1101,6 +1101,7 @@ ${featureTypes}${extra}
     <mdb:contentInfo>
         <mrc:MD_CoverageDescription/>
     </mdb:contentInfo>
+    <mdb:distributionInfo/>
     <mdb:contentInfo>
         <mrc:MD_FeatureCatalogue>
             <mrc:featureCatalogue>
@@ -1174,7 +1175,6 @@ ${featureTypes}${extra}
             </mrc:featureCatalogue>
         </mrc:MD_FeatureCatalogue>
     </mdb:contentInfo>
-    <mdb:distributionInfo/>
 </root>`)
       })
     })
@@ -1224,26 +1224,6 @@ ${writtenFeatureType('rivers', '                    ')}`
         </mrc:MD_FeatureCatalogue>
     </mdb:contentInfo>
 </root>`)
-      })
-      it('inserts the feature types before an inheritance relation', () => {
-        const inheritance = `
-                    <gfc:inheritanceRelation/>`
-        rootEl = getRootElement(
-          parseXmlString(existingCatalogue(oldFeatureType, inheritance))
-        )
-        writeFeatureTypeDescriptions(
-          {
-            ...datasetRecord,
-            featureTypeDescriptions: [{ name: 'roads', attributes: [] }],
-          },
-          rootEl
-        )
-        expect(rootAsString()).toEqual(
-          existingCatalogue(
-            writtenFeatureType('roads', '                    '),
-            inheritance
-          ).trim()
-        )
       })
     })
 
