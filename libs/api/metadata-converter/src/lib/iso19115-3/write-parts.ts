@@ -628,7 +628,7 @@ function createCharacterStringElement(name: string, text: string) {
   return pipe(createElement(name), writeCharacterString(text))
 }
 
-function createFeatureCatalogue() {
+function createFeatureCatalogueShell() {
   return pipe(
     createNestedElement(
       'mdb:contentInfo',
@@ -731,6 +731,6 @@ export function writeFeatureTypeDescriptions(
   if (!featureTypes.length) return
 
   const catalogue =
-    catalogues[0] ?? appendChildTree(createFeatureCatalogue())(rootEl)
+    catalogues[0] ?? appendChildTree(createFeatureCatalogueShell())(rootEl)
   appendChildren(...featureTypes.map(createFeatureType))(catalogue)
 }
