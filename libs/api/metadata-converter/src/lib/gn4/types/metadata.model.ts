@@ -79,6 +79,24 @@ export interface Link {
   group?: number
 }
 
+interface FeatureTypeAttribute {
+  name: string
+  code: string
+  link: string
+  definition: string
+  type: string
+  values?: Array<{ code?: string; label?: string; description?: string }>
+}
+
+export interface FeatureType {
+  typeName: string
+  definition: string
+  code: string
+  aliases: string
+  isAbstract: string
+  attributeTable: FeatureTypeAttribute[]
+}
+
 export type MetadataObject = Partial<{
   MD_ConstraintsUseLimitationObject: MultilingualField[]
   MD_LegalConstraintsOtherConstraintsObject: MultilingualField[]
@@ -109,6 +127,7 @@ export type MetadataObject = Partial<{
   extentDescriptionObject: MultilingualField[]
   extra: string
   featureOfRecord: string
+  featureTypes: FeatureType[]
   feedbackCount: string
   geom: Geometry | Geometry[]
   groupOwner: string

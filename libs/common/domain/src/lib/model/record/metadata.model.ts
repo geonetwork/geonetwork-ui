@@ -367,16 +367,6 @@ export interface DatasetFeatureAttribute {
   code?: string
   values?: Array<DatasetFeatureAttributeValue>
 }
-export interface DatasetFeatureType {
-  aliases: string
-  code: string
-  isAbstract: string
-  typeName: string
-  definition: string
-  attributeTable: Array<
-    Omit<DatasetFeatureAttribute, 'description'> & { definition?: string }
-  >
-}
 
 export type ReuseType = 'application' | 'map' | 'other'
 

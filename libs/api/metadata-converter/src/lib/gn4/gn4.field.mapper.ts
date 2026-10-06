@@ -23,13 +23,12 @@ import {
   CatalogRecord,
   Constraint,
   DatasetFeatureCatalog,
-  DatasetFeatureType,
   DatasetSpatialExtent,
   OnlineResource,
   OnlineResourceType,
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchProtocol } from '../common/distribution.mapper'
-import { Thesaurus } from './types'
+import { FeatureType, Thesaurus } from './types'
 import {
   getResourceType,
   getReusePresentationForm,
@@ -522,7 +521,7 @@ export class Gn4FieldMapper {
   private genericField = (output) => output
 
   private featureTypesField = (
-    featureTypes: DatasetFeatureType[]
+    featureTypes: FeatureType[]
   ): DatasetFeatureCatalog['featureTypes'] =>
     featureTypes.map((featureType) => ({
       name: featureType.typeName ?? '',
