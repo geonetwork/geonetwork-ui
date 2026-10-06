@@ -350,18 +350,18 @@ describe('Gn4Repository', () => {
           featureTypes: [
             {
               name: "Catalogue d'attributs N°1",
-              definition: 'Définition du catalogue d attributs N°1',
+              description: 'Définition du catalogue d attributs N°1',
               attributes: [
                 {
                   code: 'OBJECTID',
                   name: 'OBJECTID',
-                  definition: 'Object identifier',
+                  description: 'Object identifier',
                   type: 'OID',
                 },
                 {
                   code: 'NOM',
                   name: 'Nom',
-                  definition: 'Nom de la rue',
+                  description: 'Nom de la rue',
                   type: 'String (48)',
                   values: [
                     { code: 'Pomme', label: 'Les Pommiers' },
@@ -378,12 +378,12 @@ describe('Gn4Repository', () => {
             },
             {
               name: "Catalogue d'attributs N°2",
-              definition: 'Définition du catalogue d attributs N°2',
+              description: 'Définition du catalogue d attributs N°2',
               attributes: [
                 {
                   code: 'UniqueObject',
                   name: 'unique object ',
-                  definition: 'this is the only object of this catalog',
+                  description: 'this is the only object of this catalog',
                   type: 'String (50)',
                 },
               ],
@@ -420,18 +420,18 @@ describe('Gn4Repository', () => {
           featureTypes: [
             {
               name: "Catalogue d'attributs N°1",
-              definition: 'Définition du catalogue d attributs N°1',
+              description: 'Définition du catalogue d attributs N°1',
               attributes: [
                 {
                   code: 'OBJECTID',
                   name: 'OBJECTID',
-                  definition: 'Object identifier',
+                  description: 'Object identifier',
                   type: 'OID',
                 },
                 {
                   code: 'NOM',
                   name: 'Nom',
-                  definition: 'Nom de la rue',
+                  description: 'Nom de la rue',
                   type: 'String (48)',
                   values: [
                     { code: 'Pomme', label: 'Les Pommiers' },
@@ -448,12 +448,12 @@ describe('Gn4Repository', () => {
             },
             {
               name: "Catalogue d'attributs N°2",
-              definition: 'Définition du catalogue d attributs N°2',
+              description: 'Définition du catalogue d attributs N°2',
               attributes: [
                 {
                   code: 'UniqueObject',
                   name: 'unique object ',
-                  definition: 'this is the only object of this catalog',
+                  description: 'this is the only object of this catalog',
                   type: 'String (50)',
                 },
               ],

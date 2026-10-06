@@ -1144,12 +1144,12 @@ describe('Gn4Converter', () => {
           expect(record).toHaveProperty('featureTypeDescriptions', [
             {
               name: 'my feature type',
-              definition: 'Feature type description',
+              description: 'Feature type description',
               attributes: [
                 {
                   name: 'OBJECTID',
                   code: 'OBJECTID',
-                  definition: 'Object identifier',
+                  description: 'Object identifier',
                   type: 'OID',
                 },
                 {

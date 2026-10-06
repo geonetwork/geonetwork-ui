@@ -324,11 +324,11 @@ describe('MdViewEffects', () => {
       featureTypes: [
         {
           name: 'test',
-          definition: 'Test definition',
+          description: 'Test definition',
           attributes: [
             {
               name: 'test',
-              definition: 'Test attribute',
+              description: 'Test attribute',
               type: 'string',
               code: 'test_code',
             },

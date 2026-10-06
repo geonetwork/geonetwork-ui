@@ -527,7 +527,9 @@ export class Gn4FieldMapper {
   ): DatasetFeatureCatalog['featureTypes'] =>
     featureTypes.map((featureType) => ({
       name: featureType.typeName ?? '',
-      ...(featureType.definition && { definition: featureType.definition }),
+      ...(featureType.definition && {
+        description: featureType.definition,
+      }),
       attributes: getAsArray(featureType.attributeTable ?? []).map((attr) => {
         const values = (attr.values ?? [])
           .filter((value) => value.code || value.label)
@@ -537,7 +539,7 @@ export class Gn4FieldMapper {
           }))
         return {
           name: attr.name ?? '',
-          ...(attr.definition && { definition: attr.definition }),
+          ...(attr.definition && { description: attr.definition }),
           ...(attr.code && { code: attr.code }),
           ...(attr.type && { type: attr.type }),
           ...(values.length > 0 && { values }),

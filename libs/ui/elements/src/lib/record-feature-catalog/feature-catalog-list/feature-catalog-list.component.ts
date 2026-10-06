@@ -19,7 +19,7 @@ import { iconoirList } from '@ng-icons/iconoir'
 marker('feature.catalog.attribute.type')
 marker('feature.catalog.attribute.name')
 marker('feature.catalog.attribute.code')
-marker('feature.catalog.attribute.definition')
+marker('feature.catalog.attribute.description')
 marker('feature.catalog.attribute.values')
 
 interface ColumnDefinition {
@@ -56,7 +56,7 @@ export class FeatureCatalogListComponent {
   readonly COLUMNS_DEFAULT: ColumnDefinition[] = [
     { key: 'type', width: '25%' },
     { key: 'name', width: '40%' },
-    { key: 'definition', width: 'minmax(0px, 1fr)' },
+    { key: 'description', width: 'minmax(0px, 1fr)' },
   ]
 
   readonly COLUMN_VALUES: ColumnDefinition = {

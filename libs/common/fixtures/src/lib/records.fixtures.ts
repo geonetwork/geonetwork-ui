@@ -168,17 +168,17 @@ As such, **it is not very interesting at all.**`,
     featureTypeDescriptions: [
       {
         name: "Catalogue d'attributs N°1",
-        definition: 'Définition du catalogue d attributs N°1',
+        description: 'Définition du catalogue d attributs N°1',
         attributes: [
           {
             name: 'OBJECTID',
-            definition: 'Object identifier',
+            description: 'Object identifier',
             code: 'OBJECTID',
             type: 'OID',
           },
           {
             name: 'Nom',
-            definition: 'Nom de la rue',
+            description: 'Nom de la rue',
             code: 'NOM',
             type: 'String (48)',
             values: [
@@ -196,11 +196,11 @@ As such, **it is not very interesting at all.**`,
       },
       {
         name: "Catalogue d'attributs N°2",
-        definition: 'Définition du catalogue d attributs N°2',
+        description: 'Définition du catalogue d attributs N°2',
         attributes: [
           {
             name: 'unique object ',
-            definition: 'this is the only object of this catalog',
+            description: 'this is the only object of this catalog',
             code: 'UniqueObject',
             type: 'String (50)',
           },

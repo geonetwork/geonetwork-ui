@@ -459,9 +459,9 @@ function extractFeatureAttribute(): ChainableFunction<
         filterArray((value) => !!(value.code || value.label))
       )
     ),
-    map(([name, definition, code, type, values]) => ({
+    map(([name, description, code, type, values]) => ({
       name: name ?? '',
-      ...(definition && { definition }),
+      ...(description && { description }),
       ...(code && { code }),
       ...(type && { type }),
       ...(values.length > 0 && { values }),
@@ -500,9 +500,9 @@ export function readFeatureTypeDescriptions(
             mapArray(extractFeatureAttribute())
           )
         ),
-        map(([name, definition, attributes]) => ({
+        map(([name, description, attributes]) => ({
           name: name ?? '',
-          ...(definition && { definition }),
+          ...(description && { description }),
           attributes,
         }))
       )

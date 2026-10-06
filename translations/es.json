@@ -372,7 +372,7 @@
   "favorite.starToggle.add": "Añadir a favoritos",
   "favorite.starToggle.remove": "Eliminar de favoritos",
   "feature.catalog.attribute.code": "Código",
-  "feature.catalog.attribute.definition": "Descripción",
+  "feature.catalog.attribute.description": "Descripción",
   "feature.catalog.attribute.name": "Nombre",
   "feature.catalog.attribute.type": "Tipo",
   "feature.catalog.attribute.values": "Valores",

@@ -17,9 +17,9 @@
           <ng-template #titleTemplate>
             <div class="px-2">
               <div class="text-lg font-bold">{{ featureType.name }}</div>
-              @if (featureType.definition) {
+              @if (featureType.description) {
                 <div class="text-sm">
-                  {{ featureType.definition }}
+                  {{ featureType.description }}
                 </div>
               }
             </div>

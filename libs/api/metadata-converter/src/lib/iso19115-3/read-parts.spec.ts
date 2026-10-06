@@ -710,8 +710,8 @@ ${featureTypeXml}
         expect(readFeatureTypeDescriptions(root)).toEqual([])
       })
     })
-    describe('feature type with name and definition', () => {
-      it('reads typeName and definition', () => {
+    describe('feature type with name and description', () => {
+      it('reads typeName and definition as description', () => {
         expect(
           readFromFeatureType(`
               <gfc:typeName>my feature type</gfc:typeName>
@@ -721,14 +721,14 @@ ${featureTypeXml}
         ).toEqual([
           {
             name: 'my feature type',
-            definition: 'Feature type description',
+            description: 'Feature type description',
             attributes: [],
           },
         ])
       })
     })
     describe('feature type without definition', () => {
-      it('leaves the definition out', () => {
+      it('leaves the description out', () => {
         expect(
           readFromFeatureType(`
               <gfc:typeName>my feature type</gfc:typeName>`)
@@ -736,7 +736,7 @@ ${featureTypeXml}
       })
     })
     describe('attributes with plain text memberName and CharacterString valueType', () => {
-      it('reads name, code, definition and type', () => {
+      it('reads name, code, description and type', () => {
         expect(
           readFromFeatureType(`
               <gfc:typeName>ft</gfc:typeName>
@@ -761,7 +761,7 @@ ${featureTypeXml}
         ).toEqual([
           {
             name: 'Some attribute name',
-            definition: 'Description textuelle de la donnée.',
+            description: 'Description textuelle de la donnée.',
             code: 'ID_ZONE',
             type: 'VARCHAR',
           },

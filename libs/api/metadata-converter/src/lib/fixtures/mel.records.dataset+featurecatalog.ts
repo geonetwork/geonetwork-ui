@@ -261,41 +261,41 @@ export const MEL_FEATURECATALOG_DATASET_RECORD: DatasetRecord = {
   featureTypeDescriptions: [
     {
       name: 'schéma cyclable - liaisons',
-      definition: 'Liaisons du schéma directeur cyclable de la MEL',
+      description: 'Liaisons du schéma directeur cyclable de la MEL',
       attributes: [
         {
           name: 'objectid',
-          definition: "Identifiant de l'objet (clé primaire)",
+          description: "Identifiant de l'objet (clé primaire)",
           type: 'numeric(38)',
           code: 'OBJECTID',
         },
         {
           name: 'code_insee',
-          definition: 'Code INSEE de la commune',
+          description: 'Code INSEE de la commune',
           type: 'varchar(8)',
           code: 'CODE_INSEE',
         },
         {
           name: 'velo_plus',
-          definition:
+          description:
             "Permet de savoir si l'objet décrit un tronçon faisant parti du réseau vélo + : Oui - le tronçon fait partie intégrante du réseau vélo+ /Non - le tronçon ne fait pas partie du réseau vélo+ /Option - le tronçon pourrait éventuellement faire partie du réseau réseau vélo+ / Variante - le tronçon pourrait être utilisé en lieu et place d'un autre pour répondre à un trajet équivalent",
           type: 'varchar(256)',
         },
         {
           name: 'r_ppal',
-          definition:
+          description:
             "Permet de savoir si l'objet décrit un tronçon faisant parti du réseau Intercommunal : Oui - le tronçon fait partie intégrante du réseau intercommunal / Non - le tronçon ne fait pas partie du réseau intercommunal / Option : le tronçon pourrait éventuellement faire partie du réseau intercommunal / Variante : le tronçon pourrait être utilisé en lieu et place d'un autre pour répondre à un trajet équivalent",
           type: 'varchar(256)',
         },
         {
           name: 'r_scdr',
-          definition:
+          description:
             "Permet de savoir si l'objet décrit un tronçon faisant parti du réseau de proximité : Oui - le tronçon fait partie intégrante du réseau cyclable de proximité / Non - le tronçon ne fait pas partie du réseau cyclable de proximité",
           type: 'varchar(256)',
         },
         {
           name: 'test_niveau_difficulte',
-          definition:
+          description:
             '[Données pour tester valeurs de liste]: Donne une note de difficulté (1-5) du tronçon.',
           type: 'varchar(256)',
           values: [
@@ -308,7 +308,7 @@ export const MEL_FEATURECATALOG_DATASET_RECORD: DatasetRecord = {
         },
         {
           name: 'geom',
-          definition: 'Géométrie de type ligne simple',
+          description: 'Géométrie de type ligne simple',
           type: 'geometry',
         },
       ],

@@ -351,18 +351,18 @@ export interface ReuseRecord extends BaseRecord {
 export type DatasetFeatureCatalog = {
   featureTypes: Array<{
     name: string
-    definition?: string
+    description?: string
     attributes: DatasetFeatureAttribute[]
   }>
 }
 export interface DatasetFeatureAttributeValue {
   code?: string
-  definition?: string
+  description?: string
   label?: string
 }
 export interface DatasetFeatureAttribute {
   name: string
-  definition?: string
+  description?: string
   type?: string
   code?: string
   values?: Array<DatasetFeatureAttributeValue>
@@ -373,7 +373,9 @@ export interface DatasetFeatureType {
   isAbstract: string
   typeName: string
   definition: string
-  attributeTable: Array<DatasetFeatureAttribute>
+  attributeTable: Array<
+    Omit<DatasetFeatureAttribute, 'description'> & { definition?: string }
+  >
 }
 
 export type ReuseType = 'application' | 'map' | 'other'
