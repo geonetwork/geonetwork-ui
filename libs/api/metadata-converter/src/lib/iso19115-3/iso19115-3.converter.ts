@@ -23,6 +23,7 @@ import {
 } from './read-parts'
 import {
   writeAssociatedRecords,
+  writeFeatureTypeDescriptions,
   writeContacts,
   writeContactsForResource,
   writeDefaultLanguage,
@@ -82,6 +83,7 @@ export class Iso191153Converter extends Iso19139Converter {
     this.writers['lineage'] = writeLineage
     this.writers['sourceRecords'] = writeSourceRecords
     this.writers['associatedRecords'] = writeAssociatedRecords
+    this.writers['featureTypeDescriptions'] = writeFeatureTypeDescriptions
     this.writers['onlineResources'] = writeOnlineResources
     this.writers['status'] = writeStatus
     this.writers['spatialRepresentation'] = writeSpatialRepresentation
@@ -194,6 +196,11 @@ export class Iso191153Converter extends Iso19139Converter {
     result = result.replace(
       '"http://www.isotc211.org/2005/gco"',
       '"http://standards.iso.org/iso/19115/-3/gco/1.0"'
+    )
+    // same for the gfc namespace (changes between iso19110 in iso19139 and iso19115-3)
+    result = result.replace(
+      '"http://www.isotc211.org/2005/gfc"',
+      '"http://standards.iso.org/iso/19110/gfc/1.1"'
     )
     return result
   }
