@@ -672,7 +672,7 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
             <gfc:FC_FeatureType>
               <gfc:typeName>schéma cyclable - liaisons</gfc:typeName>
               <gfc:definition>
-                <gco:CharacterString>Liaisons du schéma directeur cyclable de la MEL</gco:CharacterString>
+                <gco:CharacterString>Liaisons du schéma directeur cyclable 2035 de la MEL</gco:CharacterString>
               </gfc:definition>
               <gfc:isAbstract>
                 <gco:Boolean>false</gco:Boolean>
@@ -683,6 +683,7 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                   <gfc:definition>
                     <gco:CharacterString>Identifiant de l'objet (clé primaire)</gco:CharacterString>
                   </gfc:definition>
+                  <gfc:cardinality gco:nilReason="unknown"/>
                   <gfc:code>
                     <gco:CharacterString>OBJECTID</gco:CharacterString>
                   </gfc:code>
@@ -697,15 +698,11 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
               </gfc:carrierOfCharacteristics>
               <gfc:carrierOfCharacteristics>
                 <gfc:FC_FeatureAttribute>
-                  <gfc:memberName>
-                    <gco:LocalName>code_insee</gco:LocalName>
-                  </gfc:memberName>
+                  <gfc:memberName>code_insee</gfc:memberName>
                   <gfc:definition>
                     <gco:CharacterString>Code INSEE de la commune</gco:CharacterString>
                   </gfc:definition>
-                  <gfc:code>
-                    <gco:CharacterString>CODE_INSEE</gco:CharacterString>
-                  </gfc:code>
+                  <gfc:cardinality gco:nilReason="unknown"/>
                   <gfc:valueType>
                     <gco:TypeName>
                       <gco:aName>
@@ -719,8 +716,9 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                 <gfc:FC_FeatureAttribute>
                   <gfc:memberName>velo_plus</gfc:memberName>
                   <gfc:definition>
-                    <gco:CharacterString>Permet de savoir si l'objet décrit un tronçon faisant parti du réseau vélo + : Oui - le tronçon fait partie intégrante du réseau vélo+ /Non - le tronçon ne fait pas partie du réseau vélo+ /Option - le tronçon pourrait éventuellement faire partie du réseau réseau vélo+ / Variante - le tronçon pourrait être utilisé en lieu et place d'un autre pour répondre à un trajet équivalent</gco:CharacterString>
+                    <gco:CharacterString>Appartenance au réseau vélo+ : Oui / Non / Option / Variante</gco:CharacterString>
                   </gfc:definition>
+                  <gfc:cardinality gco:nilReason="unknown"/>
                   <gfc:valueType>
                     <gco:TypeName>
                       <gco:aName>
@@ -736,21 +734,7 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                   <gfc:definition>
                     <gco:CharacterString>Permet de savoir si l'objet décrit un tronçon faisant parti du réseau Intercommunal : Oui - le tronçon fait partie intégrante du réseau intercommunal / Non - le tronçon ne fait pas partie du réseau intercommunal / Option : le tronçon pourrait éventuellement faire partie du réseau intercommunal / Variante : le tronçon pourrait être utilisé en lieu et place d'un autre pour répondre à un trajet équivalent</gco:CharacterString>
                   </gfc:definition>
-                  <gfc:valueType>
-                    <gco:TypeName>
-                      <gco:aName>
-                        <gco:CharacterString>varchar(256)</gco:CharacterString>
-                      </gco:aName>
-                    </gco:TypeName>
-                  </gfc:valueType>
-                </gfc:FC_FeatureAttribute>
-              </gfc:carrierOfCharacteristics>
-              <gfc:carrierOfCharacteristics>
-                <gfc:FC_FeatureAttribute>
-                  <gfc:memberName>r_scdr</gfc:memberName>
-                  <gfc:definition>
-                    <gco:CharacterString>Permet de savoir si l'objet décrit un tronçon faisant parti du réseau de proximité : Oui - le tronçon fait partie intégrante du réseau cyclable de proximité / Non - le tronçon ne fait pas partie du réseau cyclable de proximité</gco:CharacterString>
-                  </gfc:definition>
+                  <gfc:cardinality gco:nilReason="unknown"/>
                   <gfc:valueType>
                     <gco:TypeName>
                       <gco:aName>
@@ -828,11 +812,11 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                   </gfc:listedValue>
                   <gfc:listedValue>
                     <gfc:FC_ListedValue>
-                      <gfc:label gco:nilReason="missing">
-                        <gco:CharacterString />
+                      <gfc:label>
+                        <gco:CharacterString>Extrême</gco:CharacterString>
                       </gfc:label>
-                      <gfc:code gco:nilReason="missing">
-                        <gco:CharacterString />
+                      <gfc:code>
+                        <gco:CharacterString>6</gco:CharacterString>
                       </gfc:code>
                     </gfc:FC_ListedValue>
                   </gfc:listedValue>
@@ -844,16 +828,36 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                   <gfc:definition>
                     <gco:CharacterString>Géométrie de type ligne simple</gco:CharacterString>
                   </gfc:definition>
+                  <gfc:cardinality gco:nilReason="unknown"/>
                   <gfc:valueType>
                     <gco:TypeName>
                       <gco:aName>
-                        <gco:LocalName codeSpace="http://w3.org">geometry</gco:LocalName>
+                        <gco:CharacterString>geometry</gco:CharacterString>
                       </gco:aName>
                     </gco:TypeName>
                   </gfc:valueType>
                 </gfc:FC_FeatureAttribute>
               </gfc:carrierOfCharacteristics>
-              <gfc:featureCatalogue />
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>longueur</gfc:memberName>
+                  <gfc:definition>
+                    <gco:CharacterString>Longueur du tronçon en mètres</gco:CharacterString>
+                  </gfc:definition>
+                  <gfc:cardinality gco:nilReason="unknown"/>
+                  <gfc:code>
+                    <gco:CharacterString>LONGUEUR</gco:CharacterString>
+                  </gfc:code>
+                  <gfc:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString>numeric</gco:CharacterString>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </gfc:valueType>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>
+              <gfc:featureCatalogue/>
             </gfc:FC_FeatureType>
           </gfc:featureType>
         </gfc:FC_FeatureCatalogue>
