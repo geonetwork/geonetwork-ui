@@ -1,5 +1,8 @@
 import {
   CatalogRecord,
+  DatasetFeatureAttribute,
+  DatasetFeatureAttributeValue,
+  DatasetFeatureCatalog,
   DatasetRecord,
   Individual,
   LanguageCode,
@@ -615,4 +618,119 @@ export function writeAssociatedRecords(
         )
     )
   )(rootEl)
+}
+
+function createNilElement(name: string, nilReason: string) {
+  return pipe(createElement(name), writeAttribute('gco:nilReason', nilReason))
+}
+
+function createCharacterStringElement(name: string, text: string) {
+  return pipe(createElement(name), writeCharacterString(text))
+}
+
+function createFeatureCatalogueShell() {
+  return pipe(
+    createNestedElement(
+      'mdb:contentInfo',
+      'mrc:MD_FeatureCatalogue',
+      'mrc:featureCatalogue',
+      'gfc:FC_FeatureCatalogue'
+    ),
+    appendChildren(
+      createNilElement('cat:name', 'missing'),
+      createNilElement('cat:scope', 'missing'),
+      createNilElement('cat:versionNumber', 'missing'),
+      createNilElement('cat:versionDate', 'missing'),
+      createNilElement('gfc:producer', 'missing')
+    )
+  )
+}
+
+function createListedValue(value: DatasetFeatureAttributeValue) {
+  return pipe(
+    createNestedElement('gfc:listedValue', 'gfc:FC_ListedValue'),
+    appendChildren(
+      value.label
+        ? createCharacterStringElement('gfc:label', value.label)
+        : createNilElement('gfc:label', 'missing'),
+      value.code ? createCharacterStringElement('gfc:code', value.code) : null,
+      value.description
+        ? createCharacterStringElement('gfc:definition', value.description)
+        : null
+    )
+  )
+}
+
+function createFeatureAttribute(attribute: DatasetFeatureAttribute) {
+  return pipe(
+    createNestedElement(
+      'gfc:carrierOfCharacteristics',
+      'gfc:FC_FeatureAttribute'
+    ),
+    appendChildren(
+      pipe(createElement('gfc:memberName'), setTextContent(attribute.name)),
+      attribute.description
+        ? createCharacterStringElement('gfc:definition', attribute.description)
+        : null,
+      attribute.cardinality
+        ? createCharacterStringElement('gfc:cardinality', attribute.cardinality)
+        : createNilElement('gfc:cardinality', 'unknown'),
+      attribute.code
+        ? createCharacterStringElement('gfc:code', attribute.code)
+        : null,
+      attribute.type
+        ? pipe(
+            createNestedElement('gfc:valueType', 'gco:TypeName', 'gco:aName'),
+            writeCharacterString(attribute.type)
+          )
+        : null,
+      ...(attribute.values ?? [])
+        .filter((value) => value.code || value.label)
+        .map(createListedValue)
+    )
+  )
+}
+
+function createFeatureType(
+  featureType: DatasetFeatureCatalog['featureTypes'][number]
+) {
+  return pipe(
+    createNestedElement('gfc:featureType', 'gfc:FC_FeatureType'),
+    appendChildren(
+      pipe(createElement('gfc:typeName'), setTextContent(featureType.name)),
+      featureType.description
+        ? createCharacterStringElement(
+            'gfc:definition',
+            featureType.description
+          )
+        : null,
+      pipe(
+        createNestedElement('gfc:isAbstract', 'gco:Boolean'),
+        setTextContent('false')
+      ),
+      ...featureType.attributes.map(createFeatureAttribute),
+      createElement('gfc:featureCatalogue')
+    )
+  )
+}
+
+export function writeFeatureTypeDescriptions(
+  record: DatasetRecord,
+  rootEl: XmlElement
+) {
+  const featureTypes = record.featureTypeDescriptions ?? []
+  const catalogues = findNestedElements(
+    'mdb:contentInfo',
+    'mrc:MD_FeatureCatalogue',
+    'mrc:featureCatalogue',
+    'gfc:FC_FeatureCatalogue'
+  )(rootEl)
+  catalogues.forEach((catalogue) =>
+    removeChildrenByName('gfc:featureType')(catalogue)
+  )
+  if (!featureTypes.length) return
+
+  const catalogue =
+    catalogues[0] ?? appendChildTree(createFeatureCatalogueShell())(rootEl)
+  appendChildren(...featureTypes.map(createFeatureType))(catalogue)
 }

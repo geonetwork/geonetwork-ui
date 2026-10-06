@@ -847,6 +847,66 @@ ${featureTypeXml}
         expect(attribute).not.toHaveProperty('values')
       })
     })
+    describe('attribute cardinality', () => {
+      it('reads the cardinality', () => {
+        const [attribute] = readFromFeatureType(`
+              <gfc:typeName>ft</gfc:typeName>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>objectid</gfc:memberName>
+                  <gfc:cardinality>
+                    <gco:CharacterString>1..1</gco:CharacterString>
+                  </gfc:cardinality>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>`)[0].attributes
+        expect(attribute).toStrictEqual({
+          name: 'objectid',
+          cardinality: '1..1',
+        })
+      })
+      it('leaves a nil cardinality out', () => {
+        const [attribute] = readFromFeatureType(`
+              <gfc:typeName>ft</gfc:typeName>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>objectid</gfc:memberName>
+                  <gfc:cardinality gco:nilReason="unknown"/>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>`)[0].attributes
+        expect(attribute).toStrictEqual({ name: 'objectid' })
+      })
+    })
+    describe('listed value with definition', () => {
+      it('reads the definition as description', () => {
+        const [attribute] = readFromFeatureType(`
+              <gfc:typeName>ft</gfc:typeName>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>landcover</gfc:memberName>
+                  <gfc:listedValue>
+                    <gfc:FC_ListedValue>
+                      <gfc:label>
+                        <gco:CharacterString>Forêt dense</gco:CharacterString>
+                      </gfc:label>
+                      <gfc:code>
+                        <gco:CharacterString>1</gco:CharacterString>
+                      </gfc:code>
+                      <gfc:definition>
+                        <gco:CharacterString>Couvert forestier supérieur à 80%</gco:CharacterString>
+                      </gfc:definition>
+                    </gfc:FC_ListedValue>
+                  </gfc:listedValue>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>`)[0].attributes
+        expect(attribute.values).toStrictEqual([
+          {
+            code: '1',
+            label: 'Forêt dense',
+            description: 'Couvert forestier supérieur à 80%',
+          },
+        ])
+      })
+    })
     describe('multiple feature types', () => {
       it('returns all feature types', () => {
         const root = getRootElement(
