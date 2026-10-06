@@ -298,6 +298,7 @@ export const MEL_FEATURECATALOG_DATASET_RECORD: DatasetRecord = {
           description:
             '[Données pour tester valeurs de liste]: Donne une note de difficulté (1-5) du tronçon.',
           type: 'varchar(256)',
+          cardinality: '1..1',
           values: [
             { code: '1', label: 'Très facile' },
             { code: '2', label: 'Facile' },
@@ -310,6 +311,85 @@ export const MEL_FEATURECATALOG_DATASET_RECORD: DatasetRecord = {
           name: 'geom',
           description: 'Géométrie de type ligne simple',
           type: 'geometry',
+        },
+      ],
+    },
+  ],
+}
+
+export const MEL_FEATURECATALOG_DATASET_RECORD_EDITED: DatasetRecord = {
+  ...MEL_FEATURECATALOG_DATASET_RECORD,
+  featureTypeDescriptions: [
+    {
+      name: 'schéma cyclable - liaisons',
+      description: 'Liaisons du schéma directeur cyclable 2035 de la MEL',
+      attributes: [
+        {
+          name: 'objectid',
+          description: "Identifiant de l'objet (clé primaire)",
+          type: 'numeric(38)',
+          code: 'OBJECTID',
+        },
+        {
+          name: 'code_insee',
+          description: 'Code INSEE de la commune',
+          type: 'varchar(8)',
+        },
+        {
+          name: 'velo_plus',
+          description:
+            'Appartenance au réseau vélo+ : Oui / Non / Option / Variante',
+          type: 'varchar(256)',
+        },
+        {
+          name: 'r_ppal',
+          description:
+            "Permet de savoir si l'objet décrit un tronçon faisant parti du réseau Intercommunal : Oui - le tronçon fait partie intégrante du réseau intercommunal / Non - le tronçon ne fait pas partie du réseau intercommunal / Option : le tronçon pourrait éventuellement faire partie du réseau intercommunal / Variante : le tronçon pourrait être utilisé en lieu et place d'un autre pour répondre à un trajet équivalent",
+          type: 'varchar(256)',
+        },
+        {
+          name: 'test_niveau_difficulte',
+          description:
+            '[Données pour tester valeurs de liste]: Donne une note de difficulté (1-5) du tronçon.',
+          type: 'varchar(256)',
+          cardinality: '1..1',
+          values: [
+            {
+              code: '1',
+              label: 'Très facile',
+            },
+            {
+              code: '2',
+              label: 'Facile',
+            },
+            {
+              code: '3',
+              label: 'Moyen',
+            },
+            {
+              code: '4',
+              label: 'Difficile',
+            },
+            {
+              code: '5',
+              label: 'Très difficile',
+            },
+            {
+              code: '6',
+              label: 'Extrême',
+            },
+          ],
+        },
+        {
+          name: 'geom',
+          description: 'Géométrie de type ligne simple',
+          type: 'geometry',
+        },
+        {
+          name: 'longueur',
+          description: 'Longueur du tronçon en mètres',
+          type: 'numeric',
+          code: 'LONGUEUR',
         },
       ],
     },

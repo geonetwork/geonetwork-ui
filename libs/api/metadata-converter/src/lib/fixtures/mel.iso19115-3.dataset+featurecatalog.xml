@@ -37,23 +37,23 @@
       </cit:role>
       <cit:party>
         <cit:CI_Organisation>
-          <cit:name xmlns:gco="http://www.isotc211.org/2005/gco">
+          <cit:name>
             <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Métropole Européenne de Lille</gco:CharacterString>
           </cit:name>
           <cit:contactInfo>
             <cit:CI_Contact>
               <cit:address>
                 <cit:CI_Address>
-                  <cit:deliveryPoint xmlns:gco="http://www.isotc211.org/2005/gco">
+                  <cit:deliveryPoint>
                     <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">2, boulevard des Cités Unies</gco:CharacterString>
                   </cit:deliveryPoint>
-                  <cit:city xmlns:gco="http://www.isotc211.org/2005/gco">
+                  <cit:city>
                     <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Lille</gco:CharacterString>
                   </cit:city>
-                  <cit:postalCode xmlns:gco="http://www.isotc211.org/2005/gco">
+                  <cit:postalCode>
                     <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">59040</gco:CharacterString>
                   </cit:postalCode>
-                  <cit:electronicMailAddress xmlns:gco="http://www.isotc211.org/2005/gco">
+                  <cit:electronicMailAddress>
                     <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">opendata@lillemetropole.fr</gco:CharacterString>
                   </cit:electronicMailAddress>
                 </cit:CI_Address>
@@ -250,27 +250,27 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
       <mri:pointOfContact>
         <cit:CI_Responsibility uuid="3eeded42-5414-4518-86ed-1c122f7fa23b">
           <cit:role>
-            <cit:CI_RoleCode xmlns:gco="http://www.isotc211.org/2005/gco" codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator" />
+            <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator" />
           </cit:role>
           <cit:party>
             <cit:CI_Organisation>
-              <cit:name xmlns:gco="http://www.isotc211.org/2005/gco">
+              <cit:name>
                 <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Métropole Européenne de Lille</gco:CharacterString>
               </cit:name>
               <cit:contactInfo>
                 <cit:CI_Contact>
                   <cit:address>
                     <cit:CI_Address>
-                      <cit:deliveryPoint xmlns:gco="http://www.isotc211.org/2005/gco">
+                      <cit:deliveryPoint>
                         <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">2, boulevard des Cités Unies</gco:CharacterString>
                       </cit:deliveryPoint>
-                      <cit:city xmlns:gco="http://www.isotc211.org/2005/gco">
+                      <cit:city>
                         <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Lille</gco:CharacterString>
                       </cit:city>
-                      <cit:postalCode xmlns:gco="http://www.isotc211.org/2005/gco">
+                      <cit:postalCode>
                         <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">59040</gco:CharacterString>
                       </cit:postalCode>
-                      <cit:electronicMailAddress xmlns:gco="http://www.isotc211.org/2005/gco">
+                      <cit:electronicMailAddress>
                         <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">opendata@lillemetropole.fr</gco:CharacterString>
                       </cit:electronicMailAddress>
                     </cit:CI_Address>
@@ -307,27 +307,27 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
       <mri:pointOfContact>
         <cit:CI_Responsibility uuid="b2dceabe-76ef-4818-94f2-c9ccc885bba1">
           <cit:role>
-            <cit:CI_RoleCode xmlns:gco="http://www.isotc211.org/2005/gco" codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="distributor" />
+            <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="distributor" />
           </cit:role>
           <cit:party>
             <cit:CI_Organisation>
-              <cit:name xmlns:gco="http://www.isotc211.org/2005/gco">
+              <cit:name>
                 <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Métropole Européenne de Lille</gco:CharacterString>
               </cit:name>
               <cit:contactInfo>
                 <cit:CI_Contact>
                   <cit:address>
                     <cit:CI_Address>
-                      <cit:deliveryPoint xmlns:gco="http://www.isotc211.org/2005/gco">
+                      <cit:deliveryPoint>
                         <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">2, boulevard des Cités Unies</gco:CharacterString>
                       </cit:deliveryPoint>
-                      <cit:city xmlns:gco="http://www.isotc211.org/2005/gco">
+                      <cit:city>
                         <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Lille</gco:CharacterString>
                       </cit:city>
-                      <cit:postalCode xmlns:gco="http://www.isotc211.org/2005/gco">
+                      <cit:postalCode>
                         <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">59040</gco:CharacterString>
                       </cit:postalCode>
-                      <cit:electronicMailAddress xmlns:gco="http://www.isotc211.org/2005/gco">
+                      <cit:electronicMailAddress>
                         <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">opendata@lillemetropole.fr</gco:CharacterString>
                       </cit:electronicMailAddress>
                     </cit:CI_Address>
@@ -341,27 +341,27 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
       <mri:pointOfContact>
         <cit:CI_Responsibility uuid="b2dceabe-76ef-4818-94f2-c9ccc885bba1">
           <cit:role>
-            <cit:CI_RoleCode xmlns:gco="http://www.isotc211.org/2005/gco" codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="pointOfContact" />
+            <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="pointOfContact" />
           </cit:role>
           <cit:party>
             <cit:CI_Organisation>
-              <cit:name xmlns:gco="http://www.isotc211.org/2005/gco">
+              <cit:name>
                 <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Métropole Européenne de Lille</gco:CharacterString>
               </cit:name>
               <cit:contactInfo>
                 <cit:CI_Contact>
                   <cit:address>
                     <cit:CI_Address>
-                      <cit:deliveryPoint xmlns:gco="http://www.isotc211.org/2005/gco">
+                      <cit:deliveryPoint>
                         <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">2, boulevard des Cités Unies</gco:CharacterString>
                       </cit:deliveryPoint>
-                      <cit:city xmlns:gco="http://www.isotc211.org/2005/gco">
+                      <cit:city>
                         <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">Lille</gco:CharacterString>
                       </cit:city>
-                      <cit:postalCode xmlns:gco="http://www.isotc211.org/2005/gco">
+                      <cit:postalCode>
                         <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">59040</gco:CharacterString>
                       </cit:postalCode>
-                      <cit:electronicMailAddress xmlns:gco="http://www.isotc211.org/2005/gco">
+                      <cit:electronicMailAddress>
                         <gco:CharacterString xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">datamobilite@lillemetropole.fr, mfontaine@lillemetropole.fr</gco:CharacterString>
                       </cit:electronicMailAddress>
                     </cit:CI_Address>
