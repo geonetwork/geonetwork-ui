@@ -29,7 +29,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { combineLatest, map } from 'rxjs'
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component'
 import { RecordActionsComponent } from './record-actions/record-actions.component'
-import { RecordHeaderService } from './record-header.service'
+import { RecordService } from '../record.service'
 
 export const HEADER_HEIGHT_DEFAULT = 344
 export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 640
@@ -65,7 +65,7 @@ marker('record.metadata.resourceCreated')
 })
 export class RecordHeaderComponent implements OnChanges {
   facade = inject(MdViewFacade)
-  private headerService = inject(RecordHeaderService)
+  private recordService = inject(RecordService)
 
   @Input() metadata: CatalogRecord
 
@@ -103,7 +103,7 @@ export class RecordHeaderComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['metadata'] && this.metadata) {
-      this.headerService.metadata$.next(this.metadata)
+      this.recordService.metadata$.next(this.metadata)
     }
   }
 
@@ -129,6 +129,6 @@ export class RecordHeaderComponent implements OnChanges {
   }
 
   back() {
-    this.headerService.back()
+    this.recordService.back()
   }
 }

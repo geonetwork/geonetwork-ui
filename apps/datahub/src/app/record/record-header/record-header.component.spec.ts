@@ -13,7 +13,7 @@ import {
   HEADER_HEIGHT_MOBILE_THUMBNAIL,
   RecordHeaderComponent,
 } from './record-header.component'
-import { RecordHeaderService } from './record-header.service'
+import { RecordService } from '../record.service'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -49,7 +49,7 @@ describe('RecordHeaderComponent', () => {
           error$: new BehaviorSubject(null),
           isMetadataLoading$: new BehaviorSubject(false),
         }),
-        MockProvider(RecordHeaderService, {
+        MockProvider(RecordService, {
           metadata$: new BehaviorSubject(null),
           back: jest.fn(),
         }),
