@@ -5,6 +5,7 @@ import {
   writeContacts,
   writeContactsForResource,
   writeDefaultLanguage,
+  writeFeatureTypeDescriptions,
   writeSourceRecords,
   writeOnlineResources,
   writeOtherLanguages,
@@ -991,6 +992,314 @@ describe('write parts', () => {
             </mri:associatedResource>
         </gmd:MD_DataIdentification>
     </gmd:identificationInfo>
+</root>`)
+      })
+    })
+  })
+
+  describe('writeFeatureTypeDescriptions', () => {
+    // minimal feature type as written by the converter, indented for a FC_FeatureCatalogue at the given depth
+    function writtenFeatureType(name: string, indent: string) {
+      return `${indent}<gfc:featureType>
+${indent}    <gfc:FC_FeatureType>
+${indent}        <gfc:typeName>${name}</gfc:typeName>
+${indent}        <gfc:isAbstract>
+${indent}            <gco:Boolean>false</gco:Boolean>
+${indent}        </gfc:isAbstract>
+${indent}        <gfc:featureCatalogue/>
+${indent}    </gfc:FC_FeatureType>
+${indent}</gfc:featureType>`
+    }
+    const existingCatalogue = (featureTypes: string, extra = '') => `
+<root>
+    <mdb:identificationInfo/>
+    <mdb:contentInfo>
+        <mrc:MD_FeatureCatalogue>
+            <mrc:featureCatalogue>
+                <gfc:FC_FeatureCatalogue>
+                    <cat:name>
+                        <gco:CharacterString>My catalogue</gco:CharacterString>
+                    </cat:name>
+                    <gfc:producer gco:nilReason="missing"/>
+${featureTypes}${extra}
+                </gfc:FC_FeatureCatalogue>
+            </mrc:featureCatalogue>
+        </mrc:MD_FeatureCatalogue>
+    </mdb:contentInfo>
+</root>`
+    const oldFeatureType = `                    <gfc:featureType>
+                        <gfc:FC_FeatureType>
+                            <gfc:typeName>old</gfc:typeName>
+                            <gfc:aliases>legacy</gfc:aliases>
+                        </gfc:FC_FeatureType>
+                    </gfc:featureType>`
+
+    describe('no feature types and no catalogue', () => {
+      it('leaves the document unchanged', () => {
+        rootEl = getRootElement(
+          parseXmlString(`<root><mdb:identificationInfo/></root>`)
+        )
+        writeFeatureTypeDescriptions(
+          { ...datasetRecord, featureTypeDescriptions: undefined },
+          rootEl
+        )
+        writeFeatureTypeDescriptions(
+          { ...datasetRecord, featureTypeDescriptions: [] },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <mdb:identificationInfo/>
+</root>`)
+      })
+    })
+
+    describe('no existing catalogue', () => {
+      it('creates the catalogue after the existing content info and before distributionInfo', () => {
+        rootEl = getRootElement(
+          parseXmlString(`
+<root>
+    <mdb:identificationInfo/>
+    <mdb:contentInfo>
+        <mrc:MD_CoverageDescription/>
+    </mdb:contentInfo>
+    <mdb:distributionInfo/>
+</root>`)
+        )
+        writeFeatureTypeDescriptions(
+          {
+            ...datasetRecord,
+            featureTypeDescriptions: [
+              {
+                name: 'roads',
+                description: 'Road network',
+                attributes: [
+                  {
+                    name: 'id',
+                    description: 'Identifier',
+                    cardinality: '1',
+                    code: 'ID',
+                    type: 'integer',
+                    values: [
+                      {
+                        code: '1',
+                        label: 'Highway',
+                        description: 'Fast road',
+                      },
+                      { code: '2' },
+                      { description: 'neither code nor label' },
+                    ],
+                  },
+                  { name: 'geom' },
+                ],
+              },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <mdb:identificationInfo/>
+    <mdb:contentInfo>
+        <mrc:MD_CoverageDescription/>
+    </mdb:contentInfo>
+    <mdb:contentInfo>
+        <mrc:MD_FeatureCatalogue>
+            <mrc:featureCatalogue>
+                <gfc:FC_FeatureCatalogue>
+                    <cat:name gco:nilReason="missing"/>
+                    <cat:scope gco:nilReason="missing"/>
+                    <cat:versionNumber gco:nilReason="missing"/>
+                    <cat:versionDate gco:nilReason="missing"/>
+                    <gfc:producer gco:nilReason="missing"/>
+                    <gfc:featureType>
+                        <gfc:FC_FeatureType>
+                            <gfc:typeName>roads</gfc:typeName>
+                            <gfc:definition>
+                                <gco:CharacterString>Road network</gco:CharacterString>
+                            </gfc:definition>
+                            <gfc:isAbstract>
+                                <gco:Boolean>false</gco:Boolean>
+                            </gfc:isAbstract>
+                            <gfc:carrierOfCharacteristics>
+                                <gfc:FC_FeatureAttribute>
+                                    <gfc:memberName>id</gfc:memberName>
+                                    <gfc:definition>
+                                        <gco:CharacterString>Identifier</gco:CharacterString>
+                                    </gfc:definition>
+                                    <gfc:cardinality>
+                                        <gco:CharacterString>1</gco:CharacterString>
+                                    </gfc:cardinality>
+                                    <gfc:code>
+                                        <gco:CharacterString>ID</gco:CharacterString>
+                                    </gfc:code>
+                                    <gfc:valueType>
+                                        <gco:TypeName>
+                                            <gco:aName>
+                                                <gco:CharacterString>integer</gco:CharacterString>
+                                            </gco:aName>
+                                        </gco:TypeName>
+                                    </gfc:valueType>
+                                    <gfc:listedValue>
+                                        <gfc:FC_ListedValue>
+                                            <gfc:label>
+                                                <gco:CharacterString>Highway</gco:CharacterString>
+                                            </gfc:label>
+                                            <gfc:code>
+                                                <gco:CharacterString>1</gco:CharacterString>
+                                            </gfc:code>
+                                            <gfc:definition>
+                                                <gco:CharacterString>Fast road</gco:CharacterString>
+                                            </gfc:definition>
+                                        </gfc:FC_ListedValue>
+                                    </gfc:listedValue>
+                                    <gfc:listedValue>
+                                        <gfc:FC_ListedValue>
+                                            <gfc:label gco:nilReason="missing"/>
+                                            <gfc:code>
+                                                <gco:CharacterString>2</gco:CharacterString>
+                                            </gfc:code>
+                                        </gfc:FC_ListedValue>
+                                    </gfc:listedValue>
+                                </gfc:FC_FeatureAttribute>
+                            </gfc:carrierOfCharacteristics>
+                            <gfc:carrierOfCharacteristics>
+                                <gfc:FC_FeatureAttribute>
+                                    <gfc:memberName>geom</gfc:memberName>
+                                    <gfc:cardinality gco:nilReason="unknown"/>
+                                </gfc:FC_FeatureAttribute>
+                            </gfc:carrierOfCharacteristics>
+                            <gfc:featureCatalogue/>
+                        </gfc:FC_FeatureType>
+                    </gfc:featureType>
+                </gfc:FC_FeatureCatalogue>
+            </mrc:featureCatalogue>
+        </mrc:MD_FeatureCatalogue>
+    </mdb:contentInfo>
+    <mdb:distributionInfo/>
+</root>`)
+      })
+    })
+
+    describe('existing catalogue', () => {
+      it('replaces the feature types and keeps the catalogue shell', () => {
+        rootEl = getRootElement(
+          parseXmlString(existingCatalogue(oldFeatureType))
+        )
+        writeFeatureTypeDescriptions(
+          {
+            ...datasetRecord,
+            featureTypeDescriptions: [
+              { name: 'roads', attributes: [] },
+              { name: 'rivers', attributes: [] },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(
+          existingCatalogue(
+            `${writtenFeatureType('roads', '                    ')}
+${writtenFeatureType('rivers', '                    ')}`
+          ).trim()
+        )
+      })
+      it('removes the feature types and keeps the catalogue shell when the list is empty', () => {
+        rootEl = getRootElement(
+          parseXmlString(existingCatalogue(oldFeatureType))
+        )
+        writeFeatureTypeDescriptions(
+          { ...datasetRecord, featureTypeDescriptions: [] },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <mdb:identificationInfo/>
+    <mdb:contentInfo>
+        <mrc:MD_FeatureCatalogue>
+            <mrc:featureCatalogue>
+                <gfc:FC_FeatureCatalogue>
+                    <cat:name>
+                        <gco:CharacterString>My catalogue</gco:CharacterString>
+                    </cat:name>
+                    <gfc:producer gco:nilReason="missing"/>
+                </gfc:FC_FeatureCatalogue>
+            </mrc:featureCatalogue>
+        </mrc:MD_FeatureCatalogue>
+    </mdb:contentInfo>
+</root>`)
+      })
+      it('inserts the feature types before an inheritance relation', () => {
+        const inheritance = `
+                    <gfc:inheritanceRelation/>`
+        rootEl = getRootElement(
+          parseXmlString(existingCatalogue(oldFeatureType, inheritance))
+        )
+        writeFeatureTypeDescriptions(
+          {
+            ...datasetRecord,
+            featureTypeDescriptions: [{ name: 'roads', attributes: [] }],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(
+          existingCatalogue(
+            writtenFeatureType('roads', '                    '),
+            inheritance
+          ).trim()
+        )
+      })
+    })
+
+    describe('several catalogues', () => {
+      it('writes all feature types into the first catalogue and empties the others', () => {
+        rootEl = getRootElement(
+          parseXmlString(`
+<root>
+    <mdb:contentInfo>
+        <mrc:MD_FeatureCatalogue>
+            <mrc:featureCatalogue>
+                <gfc:FC_FeatureCatalogue>
+${oldFeatureType}
+                </gfc:FC_FeatureCatalogue>
+            </mrc:featureCatalogue>
+        </mrc:MD_FeatureCatalogue>
+    </mdb:contentInfo>
+    <mdb:contentInfo>
+        <mrc:MD_FeatureCatalogue>
+            <mrc:featureCatalogue>
+                <gfc:FC_FeatureCatalogue>
+${oldFeatureType}
+                </gfc:FC_FeatureCatalogue>
+            </mrc:featureCatalogue>
+        </mrc:MD_FeatureCatalogue>
+    </mdb:contentInfo>
+</root>`)
+        )
+        writeFeatureTypeDescriptions(
+          {
+            ...datasetRecord,
+            featureTypeDescriptions: [
+              { name: 'roads', attributes: [] },
+              { name: 'rivers', attributes: [] },
+            ],
+          },
+          rootEl
+        )
+        expect(rootAsString()).toEqual(`<root>
+    <mdb:contentInfo>
+        <mrc:MD_FeatureCatalogue>
+            <mrc:featureCatalogue>
+                <gfc:FC_FeatureCatalogue>
+${writtenFeatureType('roads', '                    ')}
+${writtenFeatureType('rivers', '                    ')}
+                </gfc:FC_FeatureCatalogue>
+            </mrc:featureCatalogue>
+        </mrc:MD_FeatureCatalogue>
+    </mdb:contentInfo>
+    <mdb:contentInfo>
+        <mrc:MD_FeatureCatalogue>
+            <mrc:featureCatalogue>
+                <gfc:FC_FeatureCatalogue/>
+            </mrc:featureCatalogue>
+        </mrc:MD_FeatureCatalogue>
+    </mdb:contentInfo>
 </root>`)
       })
     })
