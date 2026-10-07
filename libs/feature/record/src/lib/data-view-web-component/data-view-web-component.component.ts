@@ -42,7 +42,7 @@ export class DataViewWebComponentComponent {
           return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${
             GEONETWORK_UI_TAG_NAME
           }/gn-wc.js"></script>
-  <gn-dataset-view-chart
+<gn-dataset-view-chart
           api-url="${new URL(
             this.config.basePath,
             window.location.origin
@@ -63,14 +63,14 @@ export class DataViewWebComponentComponent {
           background-color="#fdfbff"
           main-font="'Inter', sans-serif"
           title-font="'DM Serif Display', serif"
-  ></gn-dataset-view-chart>`
+></gn-dataset-view-chart>`
         }
         return ''
       } else if (viewType === 'table') {
         return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${
           GEONETWORK_UI_TAG_NAME
         }/gn-wc.js"></script>
-  <gn-dataset-view-table
+<gn-dataset-view-table
           api-url="${new URL(
             this.config.basePath,
             window.location.origin
@@ -87,28 +87,28 @@ export class DataViewWebComponentComponent {
           background-color="#fdfbff"
           main-font="'Inter', sans-serif"
           title-font="'DM Serif Display', serif"
-  ></gn-dataset-view-table>`
+></gn-dataset-view-table>`
       } else {
         return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${
           GEONETWORK_UI_TAG_NAME
         }/gn-wc.js"></script>
 <gn-dataset-view-map
-        api-url="${new URL(
-          this.config.basePath,
-          window.location.origin
-        ).toString()}"${
-          this.proxyPath
-            ? `
-        proxy-path="${this.proxyPath}"`
-            : ''
-        }
-        dataset-id="${metadata.uniqueIdentifier}"
-        primary-color="#0f4395"
-        secondary-color="#8bc832"
-        main-color="#555"
-        background-color="#fdfbff"
-        main-font="'Inter', sans-serif"
-        title-font="'DM Serif Display', serif"
+          api-url="${new URL(
+            this.config.basePath,
+            window.location.origin
+          ).toString()}"${
+            this.proxyPath
+              ? `
+          proxy-path="${this.proxyPath}"`
+              : ''
+          }
+          dataset-id="${metadata.uniqueIdentifier}"
+          primary-color="#0f4395"
+          secondary-color="#8bc832"
+          main-color="#555"
+          background-color="#fdfbff"
+          main-font="'Inter', sans-serif"
+          title-font="'DM Serif Display', serif"
 ></gn-dataset-view-map>`
       }
     })
