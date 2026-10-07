@@ -36,7 +36,7 @@ import {
   FormFieldTemporalExtentsComponent,
 } from '.'
 import {
-  FieldModelSpecifier,
+  FormFieldModelSpecifier,
   FormFieldComponentName,
   FormFieldConfig,
 } from '../../../models'
@@ -98,7 +98,7 @@ export class FormFieldComponent {
   @Input() uniqueIdentifier: string
   @Input() recordKind: RecordKind
   @Input() model: CatalogRecordKeys
-  @Input() modelSpecifier: FieldModelSpecifier
+  @Input() modelSpecifier: FormFieldModelSpecifier
   @Input() componentName: FormFieldComponentName
 
   @Input() config: FormFieldConfig

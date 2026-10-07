@@ -36,7 +36,7 @@ import {
 } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'
-import { FieldModelSpecifier } from '../../../../models/editor-config.model'
+import { FormFieldModelSpecifier } from '../../../../models/editor-config.model'
 
 @Component({
   selector: 'gn-ui-form-field-contacts',
@@ -59,7 +59,7 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
   private changeDetectorRef = inject(ChangeDetectorRef)
 
   @Input() value: Individual[]
-  @Input() modelSpecifier: FieldModelSpecifier
+  @Input() modelSpecifier: FormFieldModelSpecifier
   @Output() valueChange: EventEmitter<Individual[]> = new EventEmitter()
 
   contacts: Individual[] = []
