@@ -16,7 +16,7 @@ import {
   MapViewComponent,
   MdViewFacade,
 } from '@geonetwork-ui/feature/record'
-import { MockBuilder, MockProvider } from 'ng-mocks'
+import { MockComponent, MockProvider } from 'ng-mocks'
 import { MatTab, MatTabGroup } from '@angular/material/tabs'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { StacViewComponent } from '@geonetwork-ui/feature/record'
@@ -24,7 +24,6 @@ import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { SAMPLE_RECORD } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
 describe('RecordDataPreviewComponent', () => {
   let component: RecordDataPreviewComponent
@@ -33,10 +32,15 @@ describe('RecordDataPreviewComponent', () => {
   let dataService
   let platformServiceInterface
 
-  beforeEach(() => MockBuilder(RecordDataPreviewComponent))
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        RecordDataPreviewComponent,
+        MockComponent(MapViewComponent),
+        MockComponent(DataViewComponent),
+        MockComponent(DataViewShareComponent),
+        MockComponent(StacViewComponent),
+      ],
       providers: [
         provideI18n(),
         MockProvider(MdViewFacade, {
@@ -223,10 +227,10 @@ describe('RecordDataPreviewComponent', () => {
       it('renders preview, chart tab is enabled', () => {
         expect(chartTab.componentInstance.disabled).toBe(false)
       })
-      it('renders the table component only (the first tab)', () => {
+      it('renders two data view components (for table and chart tabs)', () => {
         expect(
           fixture.debugElement.queryAll(By.directive(DataViewComponent)).length
-        ).toEqual(1)
+        ).toEqual(2)
       })
       it('does render the permalink component', () => {
         expect(
@@ -265,10 +269,10 @@ describe('RecordDataPreviewComponent', () => {
       it('renders preview, chart tab is enabled', () => {
         expect(chartTab.componentInstance.disabled).toBe(false)
       })
-      it('renders the table component only (the first tab)', () => {
+      it('renders two data view components (for table and chart tabs)', () => {
         expect(
           fixture.debugElement.queryAll(By.directive(DataViewComponent)).length
-        ).toEqual(1)
+        ).toEqual(2)
       })
     })
   })
@@ -496,56 +500,72 @@ describe('RecordDataPreviewComponent', () => {
     })
   })
   describe('Config saving', () => {
-    const chartConf = {
-      xProperty: 'something',
-      yProperty: 'something else',
-      aggregation: 'sum',
-      chartType: 'bar',
-    }
-    it('should save the current map view as config', () => {
-      const firstLink = {
-        url: new URL('http://example.com'),
-        type: 'link',
-        name: 'test',
-      } as DatasetOnlineResource
+    it('should save the current map view as config', fakeAsync(() => {
+      facade.mapApiLinks$.next(['link'])
+      tick()
+      component.ngOnInit()
+      fixture.detectChanges()
+
       component.selectedView$.next('map')
-      component.selectedLink$.next(firstLink)
-      facade.chartConfig$.next(chartConf)
-      component.selectedTMSStyle$.next(3)
+      fixture.detectChanges()
+
+      const mapViewInstance = fixture.debugElement.query(
+        By.directive(MapViewComponent)
+      ).componentInstance
+
+      jest.spyOn(mapViewInstance, 'getDatavizConfig').mockReturnValue({
+        view: 'map',
+        mock: true,
+      })
+
       const mockFile = new File(['{}'], 'config.json', {
         type: 'application/json',
       })
       dataService.writeConfigAsJSON = jest.fn().mockReturnValue(mockFile)
+
       component.saveDatavizConfig()
+
       expect(dataService.writeConfigAsJSON).toHaveBeenCalledWith({
         view: 'map',
-        source: firstLink,
-        chartConfig: null,
-        styleTMSIndex: 3,
+        mock: true,
       })
       expect(platformServiceInterface.attachFileToRecord).toHaveBeenCalledWith(
         component.recordUuid,
         mockFile,
         true
       )
-    })
-    it('should save the current chart view as config', () => {
-      const secondLink = {
-        url: new URL('http://example2.com'),
-        type: 'link',
-        name: 'second test',
-      } as DatasetOnlineResource
+    }))
+
+    it('should save the current chart view as config', fakeAsync(() => {
+      facade.dataLinks$.next(['link'])
+      tick()
+      component.ngOnInit()
+      fixture.detectChanges()
+
       component.selectedView$.next('chart')
-      component.selectedLink$.next(secondLink)
-      facade.chartConfig$.next(chartConf)
+      fixture.detectChanges()
+
+      const chartViewInstance = fixture.debugElement.queryAll(
+        By.directive(DataViewComponent)
+      )[1].componentInstance
+
+      jest.spyOn(chartViewInstance, 'getDatavizConfig').mockReturnValue({
+        view: 'chart',
+        mock: true,
+      })
+
+      const mockFile = new File(['{}'], 'config.json', {
+        type: 'application/json',
+      })
+      dataService.writeConfigAsJSON = jest.fn().mockReturnValue(mockFile)
+
       component.saveDatavizConfig()
+
       expect(dataService.writeConfigAsJSON).toHaveBeenCalledWith({
         view: 'chart',
-        source: secondLink,
-        chartConfig: chartConf,
-        styleTMSIndex: null,
+        mock: true,
       })
-    })
+    }))
   })
   describe('Read and apply dataviz config', () => {
     it('should read and apply dataviz config from attachment', fakeAsync(() => {

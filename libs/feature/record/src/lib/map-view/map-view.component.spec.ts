@@ -33,6 +33,7 @@ import { MockBuilder, MockProvider } from 'ng-mocks'
 import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model'
 
 let mockWmsStyles = []
 let mockDescribeLayerResult: Record<string, unknown> | null = null
@@ -221,11 +222,35 @@ describe('MapViewComponent', () => {
     mapComponent = fixture.debugElement.query(
       By.directive(MockMapContainerComponent)
     ).componentInstance
-    component.selectedView$.next('map')
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  describe('get current dataviz config', () => {
+    it('returns the dataviz config for the map view', fakeAsync(() => {
+      const firstLink = {
+        url: new URL('http://example.com'),
+        type: 'link',
+        name: 'test',
+      } as DatasetOnlineResource
+      mdViewFacade.mapApiLinks$.next([firstLink])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+
+      tick()
+      fixture.detectChanges()
+
+      component.selectStyleToDisplay(3)
+
+      const config = component.getDatavizConfig()
+
+      expect(config).toEqual({
+        view: 'map',
+        source: firstLink,
+        styleTMSIndex: 3,
+      })
+    }))
   })
 
   describe('record spatial extent overlay', () => {
@@ -391,17 +416,6 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'wms',
           })
         })
-      })
-      describe('selectedView is NOT map', () => {
-        it('doesnt set a mapContext if selectedView is not map', fakeAsync(() => {
-          component.selectedView = 'table'
-          tick()
-          fixture.detectChanges()
-          expect(mapComponent.context).toEqual({
-            layers: [],
-            view: expect.any(Object),
-          })
-        }))
       })
     })
 

@@ -8,6 +8,7 @@ import {
   OnDestroy,
   OnInit,
   inject,
+  viewChild,
 } from '@angular/core'
 import { MatTabsModule } from '@angular/material/tabs'
 import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
@@ -70,6 +71,10 @@ export class RecordDataPreviewComponent implements OnInit, OnDestroy {
   )
   private platformServiceInterface = inject(PlatformServiceInterface)
   private cdr = inject(ChangeDetectorRef)
+
+  mapView = viewChild<MapViewComponent>('mapView')
+  tableView = viewChild<DataViewComponent>('tableView')
+  chartView = viewChild<DataViewComponent>('chartView')
 
   @Input()
   set recordUuid(value: string) {
@@ -287,30 +292,21 @@ export class RecordDataPreviewComponent implements OnInit, OnDestroy {
 
   saveDatavizConfig() {
     this.savingStatus = 'saving'
-    combineLatest([
-      this.selectedView$,
-      this.selectedLink$,
-      this.metadataViewFacade.chartConfig$,
-      this.selectedTMSStyle$,
-    ])
-      .pipe(
-        take(1),
-        map(([selectedView, selectedLink, chartConfig, selectedTMSStyle]) => {
-          return this.dataService.writeConfigAsJSON({
-            view: selectedView,
-            source: selectedLink,
-            chartConfig: selectedView === 'chart' ? chartConfig : null,
-            styleTMSIndex: selectedView === 'map' ? selectedTMSStyle : null,
-          })
-        }),
-        switchMap((config) =>
-          this.platformServiceInterface.attachFileToRecord(
-            this.recordUuid,
-            config,
-            true
-          )
-        )
-      )
+    const config = (() => {
+      switch (this.selectedView$.value) {
+        case 'map':
+          return this.mapView().getDatavizConfig()
+        case 'table':
+          return this.tableView().getDatavizConfig()
+        case 'chart':
+          return this.chartView().getDatavizConfig()
+        default:
+          return null
+      }
+    })()
+    const fileConfig = this.dataService.writeConfigAsJSON(config)
+    this.platformServiceInterface
+      .attachFileToRecord(this.recordUuid, fileConfig, true)
       .subscribe({
         next: () => {
           this.savingStatus = 'saved'
