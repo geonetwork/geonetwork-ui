@@ -176,19 +176,6 @@ export class RecordDataPreviewComponent implements OnInit, OnDestroy {
     catchError(() => of(null))
   )
 
-  displayViewShare$ = combineLatest([
-    this.displayMap$,
-    this.displayData$,
-    this.selectedView$,
-    this.exceedsMaxFeatureCount$,
-  ]).pipe(
-    map(
-      ([displayMap, displayData, selectedView, exceedsMaxFeatureCount]) =>
-        (displayData || displayMap) &&
-        !(selectedView === 'chart' && exceedsMaxFeatureCount)
-    )
-  )
-
   displayDatavizConfig$ = combineLatest([
     this.platformServiceInterface.getMe(),
     this.metadataViewFacade.metadata$,

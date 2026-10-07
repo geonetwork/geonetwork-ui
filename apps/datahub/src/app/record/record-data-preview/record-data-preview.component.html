@@ -79,7 +79,7 @@
                 <span class="tab-header-label" translate>record.tab.chart</span>
               </ng-template>
               @if ((displayData$ | async) && (isMobile$ | async) === false) {
-                <div class="block">
+                <div class="block" style="height: 573px">
                   <gn-ui-data-view
                     #chartView
                     [exceedsLimit]="exceedsMaxFeatureCount$ | async"
@@ -108,7 +108,10 @@
     </div>
   </div>
 }
-@if ((displayViewShare$ | async) && (selectedView$ | async) !== 'stac') {
+@if (
+  ((displayMap$ | async) || (displayData$ | async)) &&
+  (selectedView$ | async) !== 'stac'
+) {
   <div class="container-lg lg:mx-auto mb-10 px-4">
     <gn-ui-data-view-share
       [viewType]="selectedView$ | async"
