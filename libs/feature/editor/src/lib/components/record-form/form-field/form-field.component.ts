@@ -12,13 +12,13 @@ import {
 import { MatTooltipModule } from '@angular/material/tooltip'
 import {
   AssociatedRecord,
-  CatalogRecordKeys,
   Constraint,
   DatasetTemporalExtent,
   GraphicOverview,
   Individual,
   Keyword,
   OnlineResource,
+  RecordFlag,
   RecordKind,
   UpdateFrequency,
 } from '@geonetwork-ui/common/domain/model/record'
@@ -36,9 +36,10 @@ import {
   FormFieldTemporalExtentsComponent,
 } from '.'
 import {
-  FormFieldModelSpecifier,
   FormFieldComponentName,
   FormFieldConfig,
+  FormFieldModel,
+  FormFieldModelSpecifier,
 } from '../../../models'
 import { FormFieldAssociatedRecordsComponent } from './form-field-associated-records/form-field-associated-records.component'
 import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource/form-field-contacts-for-resource.component'
@@ -57,6 +58,7 @@ import { FormFieldConstraintsComponent } from './form-field-constraints/form-fie
 import { TextFieldModule } from '@angular/cdk/text-field'
 import { FormFieldSpatialToggleComponent } from './form-field-spatial-toggle/form-field-spatial-toggle.component'
 import { FormFieldTopicsComponent } from './form-field-topics/form-field-topics.component'
+import { FormFieldRecordFlagsComponent } from './form-field-record-flags/form-field-record-flags-component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -90,6 +92,7 @@ import { FormFieldTopicsComponent } from './form-field-topics/form-field-topics.
     FormFieldTopicsComponent,
     TextFieldModule,
     NgIconComponent,
+    FormFieldRecordFlagsComponent,
   ],
   providers: [provideIcons({ matEditOutline, matHelpOutline })],
   hostDirectives: [FieldFocusDirective],
@@ -97,7 +100,7 @@ import { FormFieldTopicsComponent } from './form-field-topics/form-field-topics.
 export class FormFieldComponent {
   @Input() uniqueIdentifier: string
   @Input() recordKind: RecordKind
-  @Input() model: CatalogRecordKeys
+  @Input() model: FormFieldModel
   @Input() modelSpecifier: FormFieldModelSpecifier
   @Input() componentName: FormFieldComponentName
 
@@ -126,6 +129,7 @@ export class FormFieldComponent {
       this.model === 'legalConstraints' ||
       this.model === 'securityConstraints' ||
       this.model === 'otherConstraints' ||
+      this.model === 'flags' ||
       this.componentName === 'form-field-constraints-shortcuts'
     )
   }
@@ -171,6 +175,9 @@ export class FormFieldComponent {
       url?: string
     }>
     return identifiers?.[0]?.code || ''
+  }
+  get recordFlag() {
+    return this.modelSpecifier?.replace(/^flags:/, '') as RecordFlag
   }
 
   handleResourceIdentifierChange(code: string) {

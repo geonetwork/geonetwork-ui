@@ -192,6 +192,13 @@
         ></gn-ui-form-field-online-single-link-resource>
       }
     }
+    @case ('flags') {
+      <gn-ui-form-field-record-flags
+        [flagName]="recordFlag"
+        [labelKey]="config.labelKey"
+        [hintKey]="config.hintKey"
+      ></gn-ui-form-field-record-flags>
+    }
   }
 
   @if (!model) {
