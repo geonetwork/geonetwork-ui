@@ -12,9 +12,12 @@ import {
   getLinkPriority,
 } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest } from 'rxjs'
-import { map, tap } from 'rxjs/operators'
+import { map, take, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
-import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import {
+  DatavizChartConfigModel,
+  DatavizConfigModel,
+} from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import {
@@ -50,23 +53,23 @@ export class DataViewComponent {
     this.excludeWfs$.next(value)
   }
   linkMap: Map<string, DatasetOnlineResource> = new Map()
-  _selectedView = ''
+  //_selectedView = ''
   _chartConfig = null
   _selectedChoice = null
-  @Input() set selectedView(value: string) {
+  /* @Input() set selectedView(value: string) {
     this._selectedView = value
     if (this.mode === value) {
       this.linkSelected.emit(this.selectedLink$.value)
     }
-  }
+  } */
   @Input() set datavizConfig(value: {
     view?: string
     source?: DatasetOnlineResource
     chartConfig?: DatavizChartConfigModel
   }) {
-    if ((value && value.view === 'table') || value.view === 'chart') {
+    /* if ((value && value.view === 'table') || value.view === 'chart') {
       this._selectedView = value.view
-    }
+    } */
     if (this.mode === value.view) {
       if (!value.source) {
         this.linkSelected.emit(this.selectedLink$.value)
@@ -77,8 +80,26 @@ export class DataViewComponent {
       }
     }
   }
+
   @Output() chartConfig$ = new BehaviorSubject<DatavizChartConfigModel>(null)
   @Output() linkSelected = new EventEmitter<DatasetOnlineResource>()
+
+  getDatavizConfig(): DatavizConfigModel {
+    let source: DatasetOnlineResource
+    let chartConfig: DatavizChartConfigModel
+    this.selectedLink$.pipe(take(1)).subscribe((link) => {
+      source = link
+    })
+    this.mdViewFacade.chartConfig$.pipe(take(1)).subscribe((config) => {
+      chartConfig = config
+    })
+    return {
+      view: this.mode,
+      source,
+      chartConfig,
+    }
+  }
+
   cacheActive$ = this.mdViewFacade.isHighUpdateFrequency$.pipe(
     map((highF) => !highF)
   )
@@ -122,9 +143,9 @@ export class DataViewComponent {
 
   selectLink(linkId: string) {
     const link = this.linkMap.get(linkId)
-    if (this._selectedView && this._selectedView === this.mode) {
-      this.linkSelected.emit(link)
-    }
+    //if (this._selectedView && this._selectedView === this.mode) {
+    this.linkSelected.emit(link)
+    //}
     this.selectedLink$.next(link)
   }
 }

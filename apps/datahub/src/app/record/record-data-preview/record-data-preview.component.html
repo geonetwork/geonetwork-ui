@@ -19,6 +19,7 @@
             mat-stretch-tabs="false"
             mat-align-tabs="start"
             disableRipple
+            preserveContent
           >
             <mat-tab [disabled]="(displayDatavizConfig$ | async) === false">
               <ng-template mat-tab-label>
@@ -41,14 +42,14 @@
               <ng-template mat-tab-label>
                 <span class="tab-header-label" translate>record.tab.map</span>
               </ng-template>
-              @if ((displayMap$ | async) && (selectedView$ | async) === 'map') {
+              @if (displayMap$ | async) {
                 <div class="block" style="height: 639px">
                   <gn-ui-map-view
+                    #mapView
                     [exceedsLimit]="exceedsMaxFeatureCount$ | async"
                     (linkSelected)="onSelectedLinkChange($event)"
                     (styleSelected)="onSelectedTMSStyleChange($event)"
                     [datavizConfig]="datavizConfig"
-                    [selectedView]="selectedView$ | async"
                   ></gn-ui-map-view>
                 </div>
               }
@@ -57,15 +58,13 @@
               <ng-template mat-tab-label>
                 <span class="tab-header-label" translate>record.tab.data</span>
               </ng-template>
-              @if (
-                (displayData$ | async) && (selectedView$ | async) === 'table'
-              ) {
+              @if (displayData$ | async) {
                 <div class="block">
                   <gn-ui-data-view
+                    #tableView
                     [exceedsLimit]="exceedsMaxFeatureCount$ | async"
                     (linkSelected)="onSelectedLinkChange($event)"
                     [datavizConfig]="datavizConfig"
-                    [selectedView]="selectedView$ | async"
                     mode="table"
                   ></gn-ui-data-view>
                 </div>
@@ -79,15 +78,13 @@
               <ng-template mat-tab-label>
                 <span class="tab-header-label" translate>record.tab.chart</span>
               </ng-template>
-              @if (
-                (displayData$ | async) && (selectedView$ | async) === 'chart'
-              ) {
+              @if ((displayData$ | async) && (isMobile$ | async) === false) {
                 <div class="block">
                   <gn-ui-data-view
+                    #chartView
                     [exceedsLimit]="exceedsMaxFeatureCount$ | async"
                     (linkSelected)="onSelectedLinkChange($event)"
                     [datavizConfig]="datavizConfig"
-                    [selectedView]="selectedView$ | async"
                     mode="chart"
                   ></gn-ui-data-view>
                 </div>

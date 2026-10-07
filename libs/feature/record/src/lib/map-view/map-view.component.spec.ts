@@ -221,7 +221,7 @@ describe('MapViewComponent', () => {
     mapComponent = fixture.debugElement.query(
       By.directive(MockMapContainerComponent)
     ).componentInstance
-    component.selectedView$.next('map')
+    //component.selectedView$.next('map')
   })
 
   it('should create', () => {
@@ -392,7 +392,7 @@ describe('MapViewComponent', () => {
           })
         })
       })
-      describe('selectedView is NOT map', () => {
+      /* describe('selectedView is NOT map', () => {
         it('doesnt set a mapContext if selectedView is not map', fakeAsync(() => {
           component.selectedView = 'table'
           tick()
@@ -402,7 +402,7 @@ describe('MapViewComponent', () => {
             view: expect.any(Object),
           })
         }))
-      })
+      }) */
     })
 
     describe('with links compatible with MAP_API and GEODATA usage', () => {

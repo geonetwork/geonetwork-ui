@@ -133,7 +133,7 @@ describe('DataViewComponent', () => {
           expect(component._chartConfig).toEqual(chartConfigMock)
         })
       })
-      describe('Selected view is map', () => {
+      /* describe('Selected view is map', () => {
         beforeEach(() => {
           component.selectedView = 'map'
           fixture.detectChanges()
@@ -153,7 +153,7 @@ describe('DataViewComponent', () => {
           const emitSpy = jest.spyOn(component.linkSelected, 'emit')
           expect(emitSpy).toHaveBeenCalledTimes(0)
         })
-      })
+      }) */
     })
 
     describe('when switching data link', () => {

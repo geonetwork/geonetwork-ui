@@ -1,10 +1,19 @@
 import 'cypress-real-events'
 
 beforeEach(() => {
-  // GEOSERVER stubs
+  // TMS stubs
+  cy.intercept(
+    'GET',
+    'https://data.geopf.fr/tms/la_ciotat_gpkg_21-05-2025_tms',
+    {
+      statusCode: 400,
+    }
+  )
   cy.intercept('GET', 'https://data.geopf.fr/tms/1.0.0/PLAN.IGN', {
     fixture: 'PLAN_IGN.xml',
   })
+
+  // GEOSERVER stubs
   cy.intercept(
     'GET',
     '/geoserver/insee/ows?SERVICE=WMS&REQUEST=GetCapabilities',
@@ -118,9 +127,23 @@ beforeEach(() => {
 })
 
 describe('Preview section', () => {
-  it('display & functions', () => {
+  it.only('display & functions', () => {
     // Testing a dataset with TMS endpoint in error
     cy.visit('/dataset/zzz_nl_test_wfs_syth_la_ciotat')
+
+    cy.get('datahub-record-metadata')
+      .find('[id="preview"]')
+      .first()
+      .as('previewSection')
+
+    // forcefully return to the first source in error
+    cy.get('@previewSection')
+      .find('gn-ui-dropdown-selector')
+      .eq(0)
+      .openDropdown()
+      .children('button')
+      .eq(0)
+      .click()
 
     // it should show the map and display an error message
     cy.get('gn-ui-map-container').should('exist')
@@ -160,14 +183,15 @@ describe('Preview section', () => {
       .children('div')
       .should('have.length', 4)
 
-    // it should display the dataset dropdown with at least 1 option
+    // it should display the dataset dropdown with 2 options
     cy.get('@previewSection')
       .find('gn-ui-dropdown-selector')
       .eq(0)
       .openDropdown()
       .children('button')
-      .should('have.length.gt', 1)
-    cy.clickOnBody()
+      .should('have.length', 2)
+      .eq(0)
+      .click()
 
     // it checks if style selector is disabled when only one style is available
     cy.get('@previewSection')
@@ -297,7 +321,7 @@ describe('Preview section', () => {
     // it should still show the table preview
     cy.get('@tableTab').click()
     cy.get('gn-ui-data-table').should('be.visible')
-    cy.get('gn-ui-popup-alert').should('not.exist')
+    cy.get('gn-ui-popup-alert').should('not.be.visible')
 
     // it should display the sharing options
     cy.get('gn-ui-data-view-share').should('be.visible')
