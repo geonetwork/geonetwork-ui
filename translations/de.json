@@ -198,6 +198,8 @@
   "editor.record.form.field.contacts.placeholder": "Kontakt auswählen",
   "editor.record.form.field.contactsForResource.noContact": "Bitte geben Sie mindestens einen Ansprechpartner an, der für die Daten verantwortlich ist.",
   "editor.record.form.field.contactsForResource.placeholder": "Kontakt auswählen",
+  "editor.record.form.field.flags.IS_REFERENCE_DATASET": "",
+  "editor.record.form.field.hint.flags.IS_REFERENCE_DATASET": "",
   "editor.record.form.field.keywords": "Schlagwörter",
   "editor.record.form.field.legalConstraints": "Rechtliche Einschränkung",
   "editor.record.form.field.license": "Lizenz",
