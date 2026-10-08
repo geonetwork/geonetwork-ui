@@ -17,10 +17,14 @@ const TOKEN_OPERATOR_LOGICAL = ['==', '!=']
 const TOKEN_STRING_LITERAL = ["'", '"']
 const TOKEN_GROUP_START = '('
 const TOKEN_GROUP_END = ')'
+const TOKEN_OPERATOR_BOOLEAN = ['&&', '||']
+const TOKEN_OPERATOR_NOT = '!'
 
 // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence
 const OPERATORS_BY_PRECEDENCE: string[][] = [
   [TOKEN_OPERATOR_TERNARY_FIRST, TOKEN_OPERATOR_TERNARY_SECOND],
+  TOKEN_OPERATOR_BOOLEAN,
+  [TOKEN_OPERATOR_NOT],
   TOKEN_OPERATOR_LOGICAL,
 ]
 const ALL_OPERATORS = OPERATORS_BY_PRECEDENCE.flat()
@@ -161,6 +165,18 @@ function evaluateInternal(
       continue
     }
 
+    // BOOLEAN LITERAL
+    const isBooleanLiteral =
+      readNext(expression, pos, 4) === 'true' ||
+      readNext(expression, pos, 5) === 'false'
+    if (isBooleanLiteral) {
+      const literal = readNext(expression, pos, 4) === 'true' ? 'true' : 'false'
+      pos += literal.length
+      const booleanLiteral = literal === 'true'
+      currentEvaluator = () => booleanLiteral
+      continue
+    }
+
     // SYMBOL (NAME)
     const isSymbol = /[a-zA-Z]/.test(readNext(expression, pos))
     if (isSymbol) {
@@ -287,6 +303,57 @@ function evaluateInternal(
           (comparedEvaluator(context) == comparedToEvaluator(context)) ===
           isEqual
         )
+      }
+      continue
+    }
+
+    // BOOLEAN OPERATORS
+    const isBooleanOperator = TOKEN_OPERATOR_BOOLEAN.some(
+      (token) => readNext(expression, pos, token.length) === token
+    )
+    if (isBooleanOperator) {
+      const matchingOperator = TOKEN_OPERATOR_BOOLEAN.find(
+        (token) => readNext(expression, pos, token.length) === token
+      )
+      const isAnd = matchingOperator === '&&'
+      pos += matchingOperator.length
+      const leftEvaluator = currentEvaluator
+      const rightExpression = readUntilNextOperator(
+        expression,
+        pos,
+        matchingOperator
+      )
+      pos += rightExpression.length
+      const rightEvaluator = evaluateInternal(
+        rightExpression,
+        currentContext
+      ).evaluator
+
+      currentEvaluator = (context) => {
+        return isAnd
+          ? Boolean(leftEvaluator(context) && rightEvaluator(context))
+          : Boolean(leftEvaluator(context) || rightEvaluator(context))
+      }
+      continue
+    }
+
+    // PREFIX OPERATORS
+    const isNotOperator = readNext(expression, pos) === TOKEN_OPERATOR_NOT
+    if (isNotOperator) {
+      pos++
+      const operandExpression = readUntilNextOperator(
+        expression,
+        pos,
+        TOKEN_OPERATOR_NOT
+      )
+      pos += operandExpression.length
+      const operandEvaluator = evaluateInternal(
+        operandExpression,
+        currentContext
+      ).evaluator
+
+      currentEvaluator = (context) => {
+        return !operandEvaluator(context)
       }
       continue
     }
