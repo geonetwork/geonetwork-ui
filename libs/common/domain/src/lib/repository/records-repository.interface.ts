@@ -17,7 +17,7 @@ export abstract class RecordsRepositoryInterface {
   abstract search(params: SearchParams): Observable<SearchResults>
   abstract getMatchesCount(filters: FieldFilters): Observable<number>
   abstract getRecord(uniqueIdentifier: string): Observable<CatalogRecord | null>
-  abstract getFeatureCatalog(
+  abstract queryLinkedFeatureCatalog(
     record: CatalogRecord
   ): Observable<DatasetFeatureCatalog | null>
   abstract aggregate(params: AggregationsParams): Observable<Aggregations>

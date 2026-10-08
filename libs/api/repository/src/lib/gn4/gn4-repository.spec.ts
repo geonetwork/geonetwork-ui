@@ -327,74 +327,63 @@ describe('Gn4Repository', () => {
     })
   })
 
-  describe('getFeatureCatalog', () => {
+  describe('queryLinkedFeatureCatalog', () => {
     let catalog: DatasetFeatureCatalog
     let metadata: CatalogRecord
     const spySearch = jest.spyOn(SearchApiServiceMock.prototype, 'search')
 
-    describe('when extras feature catalog is defined ', () => {
+    describe('when the record embeds a feature catalog', () => {
       beforeEach(async () => {
         jest.clearAllMocks()
         metadata = datasetRecordsFixture()[0]
-        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+        catalog = await lastValueFrom(
+          repository.queryLinkedFeatureCatalog(metadata)
+        )
       })
 
-      it('should not call the feature catalog API (extras contain the answer) ', () => {
+      it('should not call the feature catalog API (the record contains the answer)', () => {
         expect(spySearch).not.toHaveBeenCalled()
       })
 
-      it('returns the feature catalog with mapped features', () => {
+      it('returns the embedded feature catalog', () => {
         expect(catalog).toEqual({
           featureTypes: [
             {
               name: "Catalogue d'attributs N°1",
-              definition: 'Définition du catalogue d attributs N°1',
+              description: 'Définition du catalogue d attributs N°1',
               attributes: [
                 {
                   code: 'OBJECTID',
                   name: 'OBJECTID',
-                  definition: 'Object identifier',
+                  description: 'Object identifier',
                   type: 'OID',
                 },
                 {
                   code: 'NOM',
                   name: 'Nom',
-                  definition: 'Nom de la rue',
+                  description: 'Nom de la rue',
                   type: 'String (48)',
                   values: [
-                    {
-                      code: 'Pomme',
-                      definition: undefined,
-                      label: 'Les Pommiers',
-                    },
-                    {
-                      code: 'Cotton',
-                      definition: undefined,
-                      label: 'Rue Cotton',
-                    },
-                    {
-                      code: "Passage de l'échiquier",
-                      definition: undefined,
-                      label: undefined,
-                    },
+                    { code: 'Pomme', label: 'Les Pommiers' },
+                    { code: 'Cotton', label: 'Rue Cotton' },
+                    { code: "Passage de l'échiquier" },
                   ],
                 },
                 {
                   code: 'RUE',
                   name: 'Rue',
-                  definition: '',
                   type: 'String (50)',
                 },
               ],
             },
             {
               name: "Catalogue d'attributs N°2",
-              definition: 'Définition du catalogue d attributs N°2',
+              description: 'Définition du catalogue d attributs N°2',
               attributes: [
                 {
                   code: 'UniqueObject',
                   name: 'unique object ',
-                  definition: 'this is the only object of this catalog',
+                  description: 'this is the only object of this catalog',
                   type: 'String (50)',
                 },
               ],
@@ -403,13 +392,15 @@ describe('Gn4Repository', () => {
         })
       })
     })
-    describe('when feature catalog exists, no extras defined', () => {
+    describe('when the feature catalog is linked, not embedded', () => {
       beforeEach(async () => {
         metadata = simpleDatasetRecordWithFcatsFixture()
         spySearch.mockReturnValue(
           of({ hits: { hits: datasetRecordsFixture(), total: { value: 0 } } })
         )
-        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+        catalog = await lastValueFrom(
+          repository.queryLinkedFeatureCatalog(metadata)
+        )
       })
 
       afterEach(() => {
@@ -429,53 +420,40 @@ describe('Gn4Repository', () => {
           featureTypes: [
             {
               name: "Catalogue d'attributs N°1",
-              definition: 'Définition du catalogue d attributs N°1',
+              description: 'Définition du catalogue d attributs N°1',
               attributes: [
                 {
                   code: 'OBJECTID',
                   name: 'OBJECTID',
-                  definition: 'Object identifier',
+                  description: 'Object identifier',
                   type: 'OID',
                 },
                 {
                   code: 'NOM',
                   name: 'Nom',
-                  definition: 'Nom de la rue',
+                  description: 'Nom de la rue',
                   type: 'String (48)',
                   values: [
-                    {
-                      code: 'Pomme',
-                      definition: undefined,
-                      label: 'Les Pommiers',
-                    },
-                    {
-                      code: 'Cotton',
-                      definition: undefined,
-                      label: 'Rue Cotton',
-                    },
-                    {
-                      code: "Passage de l'échiquier",
-                      definition: undefined,
-                      label: undefined,
-                    },
+                    { code: 'Pomme', label: 'Les Pommiers' },
+                    { code: 'Cotton', label: 'Rue Cotton' },
+                    { code: "Passage de l'échiquier" },
                   ],
                 },
                 {
                   code: 'RUE',
                   name: 'Rue',
-                  definition: '',
                   type: 'String (50)',
                 },
               ],
             },
             {
               name: "Catalogue d'attributs N°2",
-              definition: 'Définition du catalogue d attributs N°2',
+              description: 'Définition du catalogue d attributs N°2',
               attributes: [
                 {
                   code: 'UniqueObject',
                   name: 'unique object ',
-                  definition: 'this is the only object of this catalog',
+                  description: 'this is the only object of this catalog',
                   type: 'String (50)',
                 },
               ],
@@ -501,18 +479,22 @@ describe('Gn4Repository', () => {
           })
         )
         repository.getRecord = jest.fn().mockReturnValue(of(metadata))
-        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+        catalog = await lastValueFrom(
+          repository.queryLinkedFeatureCatalog(metadata)
+        )
         expect(catalog).toEqual(null)
       })
     })
 
-    describe('when feature catalog does not exist, nor in extras', () => {
+    describe('when the feature catalog is neither embedded nor linked', () => {
       beforeEach(async () => {
         metadata = {
           ...simpleDatasetRecordFixture(),
           extras: {},
         }
-        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+        catalog = await lastValueFrom(
+          repository.queryLinkedFeatureCatalog(metadata)
+        )
       })
       it('returns null', () => {
         expect(catalog).toEqual(null)

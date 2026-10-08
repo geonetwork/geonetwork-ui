@@ -362,6 +362,94 @@ describe('Gn4FieldMapper', () => {
           },
         })
       })
+      describe('featureTypes mapper', () => {
+        it('maps feature types, attributes and listed values to featureTypeDescriptions', () => {
+          const mappingFn = service.getMappingFn('featureTypes')
+          const output = { title: 'some title' }
+          const source = {
+            featureTypes: [
+              {
+                typeName: 'my feature type',
+                definition: 'Feature type description',
+                code: '',
+                aliases: '',
+                isAbstract: 'false',
+                attributeTable: [
+                  {
+                    name: 'OBJECTID',
+                    code: 'OBJECTID',
+                    link: '',
+                    definition: 'Object identifier',
+                    type: 'OID',
+                  },
+                  {
+                    name: 'landcover',
+                    code: '',
+                    link: '',
+                    definition: '',
+                    type: 'String (48)',
+                    values: [
+                      { code: '1', label: 'Forêt dense', description: 'Forêt' },
+                      { label: 'Prairie' },
+                      { code: '3' },
+                      { description: 'no code nor label' },
+                    ],
+                  },
+                ],
+              },
+            ],
+          }
+          const result = mappingFn(output, source)
+          expect(result).toStrictEqual({
+            title: 'some title',
+            featureTypeDescriptions: [
+              {
+                name: 'my feature type',
+                description: 'Feature type description',
+                attributes: [
+                  {
+                    name: 'OBJECTID',
+                    description: 'Object identifier',
+                    code: 'OBJECTID',
+                    type: 'OID',
+                  },
+                  {
+                    name: 'landcover',
+                    type: 'String (48)',
+                    values: [
+                      { code: '1', label: 'Forêt dense' },
+                      { label: 'Prairie' },
+                      { code: '3' },
+                    ],
+                  },
+                ],
+              },
+            ],
+          })
+        })
+        it('defaults missing names to an empty string and missing attributes to an empty array', () => {
+          const mappingFn = service.getMappingFn('featureTypes')
+          const source = {
+            featureTypes: [
+              { attributeTable: [{ type: 'OID' }] },
+              { typeName: 'no attributes' },
+            ],
+          }
+          const result = mappingFn({}, source)
+          expect(result).toStrictEqual({
+            featureTypeDescriptions: [
+              { name: '', attributes: [{ name: '', type: 'OID' }] },
+              { name: 'no attributes', attributes: [] },
+            ],
+          })
+        })
+        it('returns the output unchanged for an empty featureTypes array', () => {
+          const mappingFn = service.getMappingFn('featureTypes')
+          const output = { title: 'some title' }
+          const result = mappingFn(output, { featureTypes: [] })
+          expect(result).toBe(output)
+        })
+      })
       describe('resourceType mapper - should return a function that correctly maps the field', () => {
         it('resourceType - should return reuse for resourceType map', () => {
           const fieldName = 'resourceType'

@@ -372,7 +372,7 @@
   "favorite.starToggle.add": "Toevoegen aan favorieten",
   "favorite.starToggle.remove": "Verwijderen uit favorieten",
   "feature.catalog.attribute.code": "Code",
-  "feature.catalog.attribute.definition": "Beschrijving",
+  "feature.catalog.attribute.description": "Beschrijving",
   "feature.catalog.attribute.name": "Naam",
   "feature.catalog.attribute.type": "Type",
   "feature.catalog.attribute.values": "Waarden",
