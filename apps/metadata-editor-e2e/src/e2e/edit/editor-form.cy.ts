@@ -244,7 +244,7 @@ describe('editor form', () => {
       cy.focused().type(
         'Metadata for E2E testing purpose. (this title is very long and should take several lines, so we can test the behavior of the title field when it is very long. just keep going until it hits 4 lines, now it should be long enough)'
       )
-      cy.get('gn-ui-form-field').first().invoke('height').should('eq', 156)
+      cy.get('gn-ui-form-field').first().invoke('height').should('eq', 144)
 
       // it edits and saves the title
       cy.editor_wrapPreviousDraft(recordUuid)
