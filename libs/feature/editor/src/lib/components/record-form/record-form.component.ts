@@ -24,6 +24,7 @@ import { switchMap } from 'rxjs/operators'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { evaluate, isExpression } from '../../expressions'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -41,6 +42,7 @@ import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 export class RecordFormComponent implements OnInit, OnDestroy {
   facade = inject(EditorFacade)
   notifications = inject(NotificationsService)
+  platform = inject(PlatformServiceInterface)
   subscription = new Subscription()
 
   recordUniqueIdentifier$ = this.facade.record$.pipe(
@@ -122,6 +124,8 @@ export class RecordFormComponent implements OnInit, OnDestroy {
   }
 
   private recordSignal = toSignal(this.facade.record$, { requireSync: true })
+  private userSignal = toSignal(this.platform.getMe())
+  private isAdminSignal = toSignal(this.platform.isAdministrator())
   private expressionCache = new Map<string, Signal<EditorFieldValue>>()
 
   // only compiles the expression into an evaluator the first time;
@@ -149,7 +153,17 @@ ${errors.map((err) => `> ${err}`).join('\n')}`)
     }
     this.expressionCache.set(
       expression,
-      computed(() => evaluator({ globals: { record: this.recordSignal() } }))
+      computed(() =>
+        evaluator({
+          globals: {
+            record: this.recordSignal(),
+            user: {
+              ...this.userSignal(),
+              isAdmin: this.isAdminSignal(),
+            },
+          },
+        })
+      )
     )
     return this.expressionCache.get(expression)
   }

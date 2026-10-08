@@ -48,7 +48,7 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
                   'editor.record.form.field.hint.flags.IS_REFERENCE_DATASET'
                 ),
               },
-              hidden: '${record.kind != "dataset"}',
+              hidden: '${record.kind != "dataset" || !user.isAdmin}',
             },
             {
               model: 'abstract',
