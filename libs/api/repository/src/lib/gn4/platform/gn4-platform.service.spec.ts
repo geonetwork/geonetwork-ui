@@ -10,7 +10,14 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { TestBed } from '@angular/core/testing'
 import { DISABLE_AUTH, Gn4PlatformService } from './gn4-platform.service'
-import { firstValueFrom, lastValueFrom, of, Subject, throwError } from 'rxjs'
+import {
+  BehaviorSubject,
+  firstValueFrom,
+  lastValueFrom,
+  of,
+  Subject,
+  throwError,
+} from 'rxjs'
 import { AvatarServiceInterface } from '../auth/avatar.service.interface'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
 import {
@@ -28,10 +35,25 @@ let geonetworkVersion: string
 
 const userMock = {
   id: '21737',
-  profile: 'Administrator',
+  profile: 'Editor',
   username: 'C2C-gravin',
   name: 'Florent',
   surname: 'Gravin',
+  email: 'florent.gravin@camptocamp.com',
+  hash: 'girafe',
+  organisation: null,
+  admin: false,
+  groupsWithRegisteredUser: [],
+  groupsWithEditor: [],
+  groupsWithReviewer: [],
+  groupsWithUserAdmin: [],
+}
+const adminUserMock = {
+  id: '0',
+  profile: 'Administrator',
+  username: 'C2C-admin',
+  name: 'admin',
+  surname: 'admin',
   email: 'florent.gravin@camptocamp.com',
   hash: 'girafe',
   organisation: null,
@@ -47,7 +69,7 @@ class MeApiMock {
     return this._me$
   }
 
-  _me$ = new Subject()
+  _me$ = new BehaviorSubject()
 }
 
 class AvatarServiceInterfaceMock {
@@ -362,7 +384,7 @@ describe('Gn4PlatformService', () => {
         it('returns mapped user ', async () => {
           expect(me).toEqual({
             id: '21737',
-            profile: 'Administrator',
+            profile: 'Editor',
             username: 'C2C-gravin',
             name: 'Florent',
             surname: 'Gravin',
@@ -371,9 +393,13 @@ describe('Gn4PlatformService', () => {
             organisation: null,
           })
         })
-        it('is not anonymous ', async () => {
+        it('is not anonymous', async () => {
           const isAnonymous = await firstValueFrom(service.isAnonymous())
           expect(isAnonymous).toBe(false)
+        })
+        it('is not admin', async () => {
+          const isAdmin = await firstValueFrom(service.isAdministrator())
+          expect(isAdmin).toBe(false)
         })
       })
       describe('When no user is logged in', () => {
@@ -386,17 +412,43 @@ describe('Gn4PlatformService', () => {
             profileIcon: 'http://icon_service.com/undefined',
           })
         })
-        it('is anonymous ', async () => {
+        it('is anonymous', async () => {
           const isAnonymous = await firstValueFrom(service.isAnonymous())
           expect(isAnonymous).toBe(true)
+        })
+        it('is not admin', async () => {
+          const isAdmin = await firstValueFrom(service.isAdministrator())
+          expect(isAdmin).toBe(false)
+        })
+      })
+      describe('When user is logged in and admin', () => {
+        beforeEach(() => {
+          ;(meApiService as any)._me$.next(adminUserMock)
+        })
+        it('returns mapped user', async () => {
+          expect(me).toEqual({
+            email: 'florent.gravin@camptocamp.com',
+            id: '0',
+            name: 'admin',
+            organisation: null,
+            profile: 'Administrator',
+            profileIcon: 'http://icon_service.com/girafe',
+            surname: 'admin',
+            username: 'C2C-admin',
+          })
+        })
+        it('is not anonymous', async () => {
+          const isAnonymous = await firstValueFrom(service.isAnonymous())
+          expect(isAnonymous).toBe(false)
+        })
+        it('is admin', async () => {
+          const isAdmin = await firstValueFrom(service.isAdministrator())
+          expect(isAdmin).toBe(true)
         })
       })
     })
     describe('getUserPermissionsByGroup', () => {
       it('maps canApprove from groupsWithReviewer and canEdit from groupsWithEditor for non-admin user', async () => {
-        const permissionsPromise = firstValueFrom(
-          service.getUserPermissionsByGroup()
-        )
         ;(meApiService as any)._me$.next({
           admin: false,
           groupsWithRegisteredUser: [],
@@ -404,7 +456,9 @@ describe('Gn4PlatformService', () => {
           groupsWithReviewer: [105],
           groupsWithUserAdmin: [],
         })
-        const permissions = await permissionsPromise
+        const permissions = await firstValueFrom(
+          service.getUserPermissionsByGroup()
+        )
         expect(permissions).toEqual([
           {
             groupId: 22,
@@ -434,9 +488,6 @@ describe('Gn4PlatformService', () => {
       })
 
       it('returns all groups with all flags set to true for admin user', async () => {
-        const permissionsPromise = firstValueFrom(
-          service.getUserPermissionsByGroup()
-        )
         ;(meApiService as any)._me$.next({
           admin: true,
           groupsWithRegisteredUser: [],
@@ -444,7 +495,9 @@ describe('Gn4PlatformService', () => {
           groupsWithReviewer: [],
           groupsWithUserAdmin: [],
         })
-        const permissions = await permissionsPromise
+        const permissions = await firstValueFrom(
+          service.getUserPermissionsByGroup()
+        )
         expect(permissions).toEqual([
           {
             groupId: 22,
@@ -1148,8 +1201,11 @@ describe('Gn4PlatformService', () => {
 
     it('should return true for isAnonymous when auth is disabled', async () => {
       const isAnonymous = await firstValueFrom(service.isAnonymous())
-
       expect(isAnonymous).toBe(true)
+    })
+    it('should return false for isAdministrator when auth is disabled', async () => {
+      const isAdmin = await firstValueFrom(service.isAdministrator())
+      expect(isAdmin).toBe(false)
     })
     it('should return false for supportsAuthentication when auth is disabled', () => {
       expect(service.supportsAuthentication()).toBe(false)
