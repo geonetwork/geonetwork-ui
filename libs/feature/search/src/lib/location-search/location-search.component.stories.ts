@@ -4,14 +4,27 @@ import { importProvidersFrom } from '@angular/core'
 import { of } from 'rxjs'
 import { GeocodingResult } from '@geospatial-sdk/geocoding'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { LocationSearchComponent } from './location-search.component'
+import {
+  GEOCODING_PROVIDER_LABELS,
+  LocationSearchComponent,
+} from './location-search.component'
 import { GeocodingService } from '../geocoding/geocoding.service'
 
 const results: GeocodingResult[] = [
-  { label: 'Beaufort', geom: { type: 'Point', coordinates: [6.771, 45.72] } },
   {
-    label: 'Beaufort-en-Vallée',
-    geom: { type: 'Point', coordinates: [-0.2, 47.43] },
+    label: 'Beaufort',
+    geom: { type: 'Point', coordinates: [6.771, 45.72] },
+    properties: { category: ['poi', 'commune'], citycode: ['38150'] },
+  },
+  {
+    label: 'Beaufort',
+    geom: { type: 'Point', coordinates: [6.099, 45.72] },
+    properties: { category: ['poi', 'commune'], citycode: ['73180'] },
+  },
+  {
+    label: 'Beaufort',
+    geom: { type: 'Point', coordinates: [4.099, 44.13] },
+    properties: { category: ['poi', 'commune'], citycode: ['05202'] },
   },
 ]
 
@@ -39,6 +52,7 @@ export default {
   ],
   argTypes: {
     resultSelected: { action: 'resultSelected' },
+    bboxSelected: { action: 'bboxSelected' },
   },
 } as Meta<LocationSearchComponent>
 
@@ -46,4 +60,23 @@ export const Default: StoryObj<LocationSearchComponent> = {
   args: {
     placeholder: 'Search for a place',
   },
+}
+
+export const WithLabels: StoryObj<LocationSearchComponent> = {
+  args: {
+    placeholder: 'Search for a place',
+  },
+  decorators: [
+    applicationConfig({
+      providers: [
+        {
+          provide: GEOCODING_PROVIDER_LABELS,
+          useValue: {
+            secondary: '/properties/category/1',
+            tertiary: '/properties/citycode/0',
+          },
+        },
+      ],
+    }),
+  ],
 }

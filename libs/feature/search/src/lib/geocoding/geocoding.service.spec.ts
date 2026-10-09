@@ -59,8 +59,38 @@ describe('GeocodingService', () => {
 
     expect(queryGeoplateforme).toHaveBeenCalledWith('beaufort', {
       limit: 5,
+      returnTrueGeometry: true,
     })
     expect(response).toEqual(results)
+  })
+
+  it('wraps single values of the geoadmin list options into arrays', async () => {
+    ;(queryGeoadmin as jest.Mock).mockResolvedValue(results)
+    const service = setup(['geoadmin', { origins: 'gg25', lang: 'fr' }])
+
+    await firstValueFrom(service.query('beaufort'))
+
+    expect(queryGeoadmin).toHaveBeenCalledWith('beaufort', {
+      origins: ['gg25'],
+      lang: 'fr',
+    })
+  })
+
+  it('wraps single values of the geoplateforme list options into arrays', async () => {
+    ;(queryGeoplateforme as jest.Mock).mockResolvedValue(results)
+    const service = setup([
+      'geoplateforme',
+      { index: 'poi', category: ['administratif', 'commune'], limit: 5 },
+    ])
+
+    await firstValueFrom(service.query('beaufort'))
+
+    expect(queryGeoplateforme).toHaveBeenCalledWith('beaufort', {
+      index: ['poi'],
+      category: ['administratif', 'commune'],
+      limit: 5,
+      returnTrueGeometry: true,
+    })
   })
 
   it('errors on an unsupported provider', async () => {

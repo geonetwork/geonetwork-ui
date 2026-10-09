@@ -143,6 +143,24 @@ describe('FilterDropdownComponent', () => {
     })
   })
 
+  describe('#spatial-extent-dropdown', () => {
+    it('applies a selected location', () => {
+      component.fieldName = 'spatialExtent'
+      component.fieldType = 'spatialExtent'
+      fixture.detectChanges()
+      spatialExtentDropdown = fixture.debugElement.query(
+        By.directive(SpatialExtentDropdownComponent)
+      ).componentInstance
+
+      component.onLocationSelected({ bbox: [1, 2, 3, 4], label: 'Paris, 75' })
+
+      expect(spatialExtentDropdown.locationName).toBe('Paris, 75')
+      expect(searchService.updateFilters).toHaveBeenCalledWith({
+        'converted from values': { spatialExtent: [1, 2, 3, 4] },
+      })
+    })
+  })
+
   describe('#dropdown-multiselect', () => {
     it('provides selected values initially', () => {
       fixture.detectChanges()

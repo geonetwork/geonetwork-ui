@@ -58,7 +58,12 @@
       [class]="
         (hasSelection
           ? 'border-b-[1px] border-gray-400 pb-[20px]'
-          : 'pb-[12px]') + ' text-black'
+          : 'pb-[12px]') + ' text-black flex flex-col gap-[8px]'
+      "
+      style="
+        --gn-ui-text-input-rounded: 8px;
+        --gn-ui-text-input-border-size: 1px;
+        --gn-ui-text-input-padding: 6px;
       "
     >
       <gn-ui-drag-and-drop-file-input
@@ -74,6 +79,7 @@
         (errorChange)="handleFileError($event)"
         data-cy="importGeojson"
       ></gn-ui-drag-and-drop-file-input>
+      <ng-content></ng-content>
     </div>
 
     @if (hasSelection) {

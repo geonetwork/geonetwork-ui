@@ -32,6 +32,33 @@ export const GEOCODING_PROVIDER = new InjectionToken<GeocodingProvider>(
   }
 )
 
+// these options are arrays in the providers, but they can be configured
+// with a single value for simplicity
+const GEOCODING_PROVIDER_ARRAY_OPTIONS: {
+  geoadmin: (keyof GeoadminOptions)[]
+  geoplateforme: (keyof GeoplateformeOptions)[]
+} = {
+  geoadmin: ['origins', 'features'],
+  geoplateforme: [
+    'index',
+    'category',
+    'type',
+    'postCode',
+    'cityCode',
+    'depCode',
+  ],
+}
+
+function wrapArrayOptions<T extends object>(options: T, keys: (keyof T)[]): T {
+  const wrapped = { ...options }
+  for (const key of keys) {
+    if (typeof wrapped[key] === 'string') {
+      wrapped[key] = [wrapped[key]] as T[keyof T]
+    }
+  }
+  return wrapped
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -43,7 +70,13 @@ export class GeocodingService {
     switch (this.provider[0]) {
       case 'geoadmin':
         queryObservable = from(
-          queryGeoadmin(text, this.provider[1] as GeoadminOptions)
+          queryGeoadmin(
+            text,
+            wrapArrayOptions(
+              this.provider[1] as GeoadminOptions,
+              GEOCODING_PROVIDER_ARRAY_OPTIONS.geoadmin
+            )
+          )
         )
         break
       case 'geonames':
@@ -53,7 +86,13 @@ export class GeocodingService {
         break
       case 'geoplateforme':
         queryObservable = from(
-          queryGeoplateforme(text, this.provider[1] as GeoplateformeOptions)
+          queryGeoplateforme(text, {
+            ...wrapArrayOptions(
+              this.provider[1] as GeoplateformeOptions,
+              GEOCODING_PROVIDER_ARRAY_OPTIONS.geoplateforme
+            ),
+            returnTrueGeometry: true,
+          })
         )
         break
       default:

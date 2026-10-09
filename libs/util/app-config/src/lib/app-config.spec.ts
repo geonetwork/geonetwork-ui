@@ -219,8 +219,14 @@ describe('app config utils', () => {
           ],
           GEOCODING_PROVIDER: 'geoplateforme',
           GEOCODING_PROVIDER_OPTIONS: {
+            index: 'poi',
             category: 'administratif',
             limit: 5,
+          },
+          GEOCODING_PROVIDER_LABELS: {
+            MAIN: '/properties/name/0',
+            SECONDARY: '/properties/citycode/0',
+            TERTIARY: '/properties/category/1',
           },
         })
       })

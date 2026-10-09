@@ -29,6 +29,7 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
       'publicationYear',
       'myOrg:labelled',
       'myOrg:unlabelled',
+      'spatialExtent',
     ],
     CUSTOM_FILTERS: [
       {
@@ -79,6 +80,7 @@ class FieldsServiceMock {
       'publicationYear',
       'myOrg:labelled',
       'myOrg:unlabelled',
+      'spatialExtent',
     ]
   }
 }
@@ -297,6 +299,7 @@ describe('SearchFiltersComponent', () => {
           filter_inspireKeyword: {},
           'filter_myOrg:labelled': {},
           'filter_myOrg:unlabelled': {},
+          filter_spatialExtent: {},
         })
       })
     })

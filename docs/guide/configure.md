@@ -209,10 +209,12 @@ An entry holding a prefix (e.g. `'myOrg:myFilter'`) does not refer to a search f
 which has to be declared in a `[[custom_filter]]` section (see below); entries without a matching
 `[[custom_filter]]` section are ignored.
 
-⚠️ **WARNING**: `'resourceType'` filter has been deprecated, please use `'recordKind'` instead. Using both filters is not recommended as it may imply some inconsistencies in the page results. `'resourceType'` filter will fetch records of all type (instead of `featureCatalog`), whereas `'recordKind'` filter will fetch `datasets` (wich are `datasets`, `featureCatalog` that are `datasets`, and `series`), `services` and `reuse` (`application` and all kind of `map`).
+The `'spatialExtent'` filter offers both the import of a GeoJSON file and the search of a place through the geocoding provider (see `geocoding_provider` below).
+
+⚠️ **WARNING**: `'resourceType'` filter has been deprecated, please use `'recordKind'` instead. Using both filters is not recommended as it may imply some inconsistencies in the page results. `'resourceType'` filter will fetch records of all type (instead of `featureCatalog`), whereas `'recordKind'` filter will fetch `datasets` (which are `datasets`, `featureCatalog` that are `datasets`, and `series`), `services` and `reuse` (`application` and all kind of `map`).
 For a detailed explanation on the classification system, see [this documentation page](../guide/record-kind.md).
 
-⚠️ **Breaking change**: Record of type featureCatalog are not retrieved anymore.
+⚠️ **Breaking change**: Records of type featureCatalog are not retrieved anymore.
 
 - `do_not_use_default_search_preset` (optional)
 
@@ -238,8 +240,36 @@ For a detailed explanation on the classification system, see [this documentation
 
   ```toml
   geocoding_provider = "geoplateforme"
+  geocoding_provider_options.index = "poi"
   geocoding_provider_options.category = "administratif"
   geocoding_provider_options.limit = 5
+  ```
+
+  ::: tip
+  Some options can take arrays of values (for instance `index` and `category` for the `geoplateforme` provider). If a single value is given, it does not have to be wrapped in an array.
+  :::
+
+- `geocoding_provider_labels` (optional)
+
+  The labels used when rendering a geolocation result (e.g. in the location search dropdown) can be customized. Note that each provider comes with sensible defaults.
+
+  ![location-search-labels.png](../assets/location-search-labels.png)
+
+  The labels are:
+
+  - `main`: the name of the place, shown as the title of the result
+  - `secondary`: shown in a smaller, grey font above the main label; not shown by default
+  - `tertiary`: appended to the main label, separated by a comma; not shown by default
+
+  Each label is a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) resolved against the geocoding result, which holds a default `label` and `properties`; `properties` holds the fields returned by the provider, so they differ from one provider to another (e.g. `/properties/citycode/0` for a Géoplateforme POI). If one of these properties point to an array (e.g. `["administratif", "commune"]`), the label will be the concatenation of these values with commas.
+
+  Example configuration:
+
+  ```toml
+  geocoding_provider = "geoplateforme"
+  geocoding_provider_labels.main = "/properties/name/0"
+  geocoding_provider_labels.secondary = "/properties/category/1"
+  geocoding_provider_labels.tertiary = "/properties/citycode/0"
   ```
 
 #### `[[search_preset]]` (multiple, optional)
@@ -294,8 +324,8 @@ Every custom filter is composed of:
 
 - `name` (mandatory): name of the filter as it should appear in the `advanced_filters` setting; custom filters must have a prefix separated by a colon in their name, e.g.: "myOrg:myOrgKeywords"; case sensitive
 - `base_filter` (mandatory): the search field the filter is based on; supported values are `'format'`, `'representationType'`, `'publicationYear'`, `'topic'`, `'inspireKeyword'`, `'keyword'`, `'documentStandard'`, `'producerOrg'`, `'publisherOrg'` and `'user'`
-- `exclude_values` (optional): an array of values of the base filter which should not be offered to the user in the UI (e.g. dropdowns); the values are case-sensitive and support wildcards; it does not have any effect when cutom filter fields are used in the URL
-- `include_values` (optional): an array of values of the base filter which should be the only ones offered to the user in the UI (e.g. dropdowns); the values are case-sensitive and support wildcards; it does not have any effect when cutom filter fields are used in the URL
+- `exclude_values` (optional): an array of values of the base filter which should not be offered to the user in the UI (e.g. dropdowns); the values are case-sensitive and support wildcards; it does not have any effect when custom filter fields are used in the URL
+- `include_values` (optional): an array of values of the base filter which should be the only ones offered to the user in the UI (e.g. dropdowns); the values are case-sensitive and support wildcards; it does not have any effect when custom filter fields are used in the URL
 - `label_key` (optional): a translation key used as the label of the filter; it can be defined in the
   `[translations]` sections. Defaults to the label of the base filter.
 
@@ -508,6 +538,6 @@ If the translation key `application-banner` is available (not empty), the Geonet
 
 #### Page titles
 
-By default the datahub creates a page title for each page following the pattern `{pageTitle} | Datahub`. This pattern can be overridden by adding a translation key `datahub-page-title-pattern` in geonetwork with a new pattern as value, eg. `MyDatahubApp - {pageTitle}`. Be sure to provide values for all languages you need.
+By default the datahub creates a page title for each page following the pattern `{pageTitle} | Datahub`. This pattern can be overridden by adding a translation key `datahub-page-title-pattern` in geonetwork with a new pattern as value, e.g. `MyDatahubApp - {pageTitle}`. Be sure to provide values for all languages you need.
 
 The `pageTitle` within this pattern may be a metadata record title, an organisation title or a gn-ui translation key for one of the datahub pages (`datahub.pageTitle.home`, `datahub.pageTitle.organizations`, `datahub.pageTitle.recordSearch`). These can thus be overridden within the `default.toml` configuration like any other translation key.
