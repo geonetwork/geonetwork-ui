@@ -20,6 +20,7 @@ import {
 import {
   EXTERNAL_VIEWER_OPEN_NEW_TAB,
   EXTERNAL_VIEWER_URL_TEMPLATE,
+  MAX_FEATURE_COUNT,
   WEB_COMPONENT_EMBEDDER_URL,
 } from '@geonetwork-ui/feature/record'
 import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/elements'
@@ -54,7 +55,6 @@ import {
   DO_NOT_USE_DEFAULT_BASEMAP,
   MAP_VIEW_CONSTRAINTS,
 } from '@geonetwork-ui/ui/map'
-import { MAX_FEATURE_COUNT } from './record/record-data-preview/record-data-preview.component'
 import {
   NEW_RECORD_DEFAULT_LANGUAGE,
   REUSE_FORM_URL,

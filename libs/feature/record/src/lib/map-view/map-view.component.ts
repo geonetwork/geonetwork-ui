@@ -76,6 +76,7 @@ import {
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model'
+import { MdViewService } from '../service/mdview.service'
 
 marker('map.dropdown.placeholder')
 marker('wfs.feature.limit')
@@ -116,10 +117,8 @@ export class MapViewComponent implements AfterViewInit {
   private dataService = inject(DataService)
   private changeRef = inject(ChangeDetectorRef)
   private translateService = inject(TranslateService)
+  private mdViewService = inject(MdViewService)
 
-  @Input() set exceedsLimit(value: boolean) {
-    this.excludeWfs$.next(value)
-  }
   linkFromConfig$ = new BehaviorSubject(null)
   _selectedChoice = null
   _styleFromConfig = null
@@ -165,7 +164,6 @@ export class MapViewComponent implements AfterViewInit {
     }
   }
 
-  excludeWfs$ = new BehaviorSubject(false)
   hidePreview = false
   selection: Feature
   showLegend = true
@@ -392,7 +390,7 @@ export class MapViewComponent implements AfterViewInit {
 
   currentLayers$ = combineLatest([
     this.selectedLink$,
-    this.excludeWfs$,
+    this.mdViewService.exceedsMaxFeatureCount$(this.selectedLink$),
     this.selectedWmsStyleName$,
     this.wmsMimeType$,
   ]).pipe(

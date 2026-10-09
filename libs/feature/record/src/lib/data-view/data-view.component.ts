@@ -27,6 +27,7 @@ import {
 import { CommonModule } from '@angular/common'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
+import { MdViewService } from '../service/mdview.service'
 
 @Component({
   selector: 'gn-ui-data-view',
@@ -46,12 +47,10 @@ import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 })
 export class DataViewComponent {
   private mdViewFacade = inject(MdViewFacade)
+  private mdViewService = inject(MdViewService)
 
   @Input() mode: 'table' | 'chart'
   @Input() displaySource = true
-  @Input() set exceedsLimit(value: boolean) {
-    this.excludeWfs$.next(value)
-  }
   linkMap: Map<string, DatasetOnlineResource> = new Map()
   //_selectedView = ''
   _chartConfig = null
@@ -103,7 +102,6 @@ export class DataViewComponent {
   cacheActive$ = this.mdViewFacade.isHighUpdateFrequency$.pipe(
     map((highF) => !highF)
   )
-  excludeWfs$ = new BehaviorSubject(false)
   compatibleDataLinks$ = combineLatest([
     this.mdViewFacade.dataLinks$,
     this.mdViewFacade.geoDataLinks$,
@@ -133,9 +131,9 @@ export class DataViewComponent {
   )
   selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
-  hidePreview$ = this.excludeWfs$.pipe(
-    map((excludeWfs) => this.mode === 'chart' && excludeWfs)
-  )
+  hidePreview$ = this.mdViewService
+    .exceedsMaxFeatureCount$(this.selectedLink$)
+    .pipe(map((excludeWfs) => this.mode === 'chart' && excludeWfs))
 
   setChartConfig(event: DatavizChartConfigModel) {
     this.mdViewFacade.setChartConfig(event)

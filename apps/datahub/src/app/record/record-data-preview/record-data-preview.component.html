@@ -46,9 +46,6 @@
                 <div class="block" style="height: 573px">
                   <gn-ui-map-view
                     #mapView
-                    [exceedsLimit]="exceedsMaxFeatureCount$ | async"
-                    (linkSelected)="onSelectedLinkChange($event)"
-                    (styleSelected)="onSelectedTMSStyleChange($event)"
                     [datavizConfig]="datavizConfig"
                   ></gn-ui-map-view>
                 </div>
@@ -62,8 +59,6 @@
                 <div class="block">
                   <gn-ui-data-view
                     #tableView
-                    [exceedsLimit]="exceedsMaxFeatureCount$ | async"
-                    (linkSelected)="onSelectedLinkChange($event)"
                     [datavizConfig]="datavizConfig"
                     mode="table"
                   ></gn-ui-data-view>
@@ -82,8 +77,6 @@
                 <div class="block" style="height: 573px">
                   <gn-ui-data-view
                     #chartView
-                    [exceedsLimit]="exceedsMaxFeatureCount$ | async"
-                    (linkSelected)="onSelectedLinkChange($event)"
                     [datavizConfig]="datavizConfig"
                     mode="chart"
                   ></gn-ui-data-view>
