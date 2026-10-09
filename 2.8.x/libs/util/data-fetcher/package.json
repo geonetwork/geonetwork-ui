@@ -1,0 +1,7 @@
+{
+  "name": "@geonetwork-ui/data-fetcher",
+  "version": "0.0.1",
+  "types": "./src/index.d.ts",
+  "main": "./src/index.js",
+  "type": "commonjs"
+}

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Web Component Demo</title>
+    <base href="./" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@200;300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      html,
+      body {
+        font-family: var(--font-family-main);
+      }
+      .container {
+        max-width: 1024px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 3rem;
+      }
+      button {
+        padding: 10px 20px;
+        border: none;
+        font-size: 18px;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: var(--color-primary);
+        margin: 30px 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="gn-wc.js"></script>
+    <main class="container">
+      <div style="margin-left: 16px">
+        <p>
+          Click on Load more button to increment the <b><i>size</i></b> input of
+          the Web Component
+        </p>
+      </div>
+      <div>
+        <button id="changeSizeBtn" onclick="moreRecords()">
+          Load more ...
+        </button>
+      </div>
+      <gn-results-list
+        api-url="https://apps.titellus.net/geonetwork/srv/api"
+        size="2"
+        primary-color="#ed119d"
+        main-color="#555"
+        main-font="'Inter', sans-serif"
+        title-font="'DM Serif Display', serif"
+        layout="TITLE"
+      ></gn-results-list>
+    </main>
+  </body>
+  <script>
+    function moreRecords() {
+      const wc = document.getElementsByTagName('gn-results-list')[0]
+      wc.size = parseInt(wc.size) + 2
+    }
+  </script>
+</html>
