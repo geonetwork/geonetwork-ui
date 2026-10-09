@@ -11,29 +11,30 @@ import {
   tick,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { MapUtilsService } from '@geonetwork-ui/feature/map'
-import { MdViewFacade } from '../state/mdview.facade'
-import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
-import { of, Subject, throwError } from 'rxjs'
-import { MapViewComponent } from './map-view.component'
-import { TranslateService } from '@ngx-translate/core'
-import { delay } from 'rxjs/operators'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model'
 import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
-import { Collection } from 'ol'
-import { Interaction } from 'ol/interaction.js'
+import { FetchError } from '@geonetwork-ui/data-fetcher'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import * as geoSdkCore from '@geospatial-sdk/core'
-import { MapContext, MapContextLayer } from '@geospatial-sdk/core'
+import { MapUtilsService } from '@geonetwork-ui/feature/map'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import {
   MapContainerComponent,
   MapLegendComponent,
   prioritizePageScroll,
 } from '@geonetwork-ui/ui/map'
-import { MockBuilder, MockProvider } from 'ng-mocks'
-import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
-import { FetchError } from '@geonetwork-ui/data-fetcher'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model'
+import * as geoSdkCore from '@geospatial-sdk/core'
+import { MapContext, MapContextLayer } from '@geospatial-sdk/core'
+import { TranslateService } from '@ngx-translate/core'
+import { MockBuilder, MockProvider } from 'ng-mocks'
+import { Collection } from 'ol'
+import { Interaction } from 'ol/interaction.js'
+import { BehaviorSubject, of, Subject, throwError } from 'rxjs'
+import { delay } from 'rxjs/operators'
+import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
+import { MdViewService } from '../service/mdview.service'
+import { MdViewFacade } from '../state/mdview.facade'
+import { MapViewComponent } from './map-view.component'
 
 let mockWmsStyles = []
 let mockDescribeLayerResult: Record<string, unknown> | null = null
@@ -139,6 +140,11 @@ class DataServiceMock {
   })
 }
 
+class MdViewServiceMock {
+  exceeds$ = new BehaviorSubject(false)
+  exceedsMaxFeatureCount$ = jest.fn(() => this.exceeds$.asObservable())
+}
+
 class OpenLayersMapMock {
   _size = undefined
   updateSize() {
@@ -203,6 +209,10 @@ describe('MapViewComponent', () => {
         MockProvider(TranslateService, {
           instant: jest.fn((key: string) => key),
         }),
+        {
+          provide: MdViewService,
+          useClass: MdViewServiceMock,
+        },
       ],
     })
       .overrideComponent(MapViewComponent, {
@@ -481,9 +491,15 @@ describe('MapViewComponent', () => {
       })
     })
 
-    describe('excludeWfs = true: with links compatible with MAP_API and GEODATA usage', () => {
+    describe('exceedsMaxFeatureCount = true: with links compatible with MAP_API and GEODATA usage', () => {
+      let mdViewService: MdViewServiceMock
+
       beforeEach(fakeAsync(() => {
-        component.excludeWfs$.next(true)
+        mdViewService = TestBed.inject(
+          MdViewService
+        ) as unknown as MdViewServiceMock
+        mdViewService.exceeds$.next(true)
+
         mdViewFacade.mapApiLinks$.next([
           {
             url: new URL('http://abcd.com/'),
@@ -511,9 +527,15 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'ogcFeatures',
           },
         ])
-      }))
-      it('provides a list of links to the dropdown (including the WFS layer)', () => {
+        tick(200)
         fixture.detectChanges()
+      }))
+
+      afterEach(() => {
+        mdViewService.exceeds$.next(false)
+      })
+
+      it('provides a list of links to the dropdown (including the WFS layer)', () => {
         expect(dropdownComponent.choices).toEqual([
           {
             value: 'layer1 (WMS)-http://abcd.com/',
@@ -533,20 +555,26 @@ describe('MapViewComponent', () => {
           },
         ])
       })
-      describe('when selecting the WFS layer (excludeWfs)', () => {
+
+      describe('when selecting the WFS layer (exceedsMaxFeatureCount)', () => {
+        let latestContext: MapContext
+
         beforeEach(fakeAsync(() => {
-          component.excludeWfs$.next(true)
-          dropdownComponent.selectValue.emit(
-            'featuretype (WFS)-http://abcd.com/wfs'
-          )
-          tick()
+          component.mapContext$.subscribe((ctx) => {
+            latestContext = ctx
+          })
+
+          component.selectLinkToDisplay('featuretype (WFS)-http://abcd.com/wfs')
+          tick(200)
           fixture.detectChanges()
         }))
+
         it('set hidePreview to true', () => {
-          expect(component.hidePreview).toEqual(true)
+          expect(component.hidePreview).toBe(true)
         })
+
         it('emits a map context with no layer', () => {
-          expect(mapComponent.context).toEqual({
+          expect(latestContext).toEqual({
             layers: [],
             view: expect.any(Object),
           })
@@ -803,8 +831,9 @@ describe('MapViewComponent', () => {
     })
 
     describe('with a link using WFS which returns an error', () => {
-      beforeEach(() => {
+      beforeEach(fakeAsync(() => {
         jest.spyOn(component, 'handleError')
+        component.mapContext$.subscribe()
         mdViewFacade.mapApiLinks$.next([])
         mdViewFacade.geoDataLinksWithGeometry$.next([
           {
@@ -814,7 +843,9 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'wfs',
           },
         ])
-      })
+        tick(200)
+        fixture.detectChanges()
+      }))
       it('shows an error', () => {
         expect(component.error).toEqual('data loading error')
       })

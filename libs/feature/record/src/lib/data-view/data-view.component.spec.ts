@@ -3,10 +3,9 @@ import {
   fakeAsync,
   flushMicrotasks,
   TestBed,
-  tick,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { BehaviorSubject, Subject } from 'rxjs'
+import { BehaviorSubject, of, Subject } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { DataViewComponent } from './data-view.component'
 import {
@@ -23,6 +22,7 @@ import { hot } from 'jasmine-marbles'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { getLinkId } from '@geonetwork-ui/util/shared'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model'
+import { MdViewService } from '../service/mdview.service'
 
 class MdViewFacadeMock {
   isHighUpdateFrequency$ = new Subject()
@@ -30,6 +30,10 @@ class MdViewFacadeMock {
   geoDataLinks$ = new Subject()
   chartConfig$ = new BehaviorSubject(null)
   setChartConfig = jest.fn()
+}
+
+class MdViewServiceMock {
+  exceedsMaxFeatureCount$ = jest.fn(() => of(false))
 }
 
 const chartConfigMock = {
@@ -55,6 +59,14 @@ describe('DataViewComponent', () => {
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
+        },
+        {
+          provide: MdViewFacade,
+          useClass: MdViewFacadeMock,
+        },
+        {
+          provide: MdViewService,
+          useClass: MdViewServiceMock,
         },
         provideI18n(),
       ],
@@ -224,8 +236,17 @@ describe('DataViewComponent', () => {
 
   describe('When the WFS link has too many features', () => {
     beforeEach(fakeAsync(() => {
+      const mdViewService = TestBed.inject(
+        MdViewService
+      ) as unknown as MdViewServiceMock
+      mdViewService.exceedsMaxFeatureCount$.mockReturnValue(of(true))
+
+      fixture = TestBed.createComponent(DataViewComponent)
+      component = fixture.componentInstance
+
       component.mode = 'chart'
       fixture.detectChanges()
+
       mdViewFacade.dataLinks$.next(someDataLinksFixture())
       mdViewFacade.geoDataLinks$.next(someGeoDatalinksFixture())
       flushMicrotasks()
@@ -234,15 +255,16 @@ describe('DataViewComponent', () => {
       dropdownComponent = fixture.debugElement.query(
         By.directive(DropdownSelectorComponent)
       ).componentInstance
+
       dropdownComponent.selectValue.emit(
-        JSON.stringify(someGeoDatalinksFixture()[1])
+        getLinkId(someGeoDatalinksFixture()[1])
       )
-      component.excludeWfs$.next(true)
       flushMicrotasks()
       fixture.detectChanges()
     }))
+
     it('should set hidePreview to true', () => {
-      const expected = hot('a', { a: true })
+      const expected = hot('(a|)', { a: true })
       expect(component.hidePreview$).toBeObservable(expected)
     })
   })

@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  InjectionToken,
   Input,
   OnDestroy,
   OnInit,
@@ -35,15 +34,12 @@ import {
   startWith,
   Subscription,
   switchMap,
-  take,
 } from 'rxjs'
 
 marker('record.metadata.preview.config.idle')
 marker('record.metadata.preview.config.saving')
 marker('record.metadata.preview.config.saved')
 marker('record.metadata.preview.config.error')
-
-export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
 
 @Component({
   selector: 'datahub-record-data-preview',
@@ -66,9 +62,6 @@ export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
 export class RecordDataPreviewComponent implements OnInit, OnDestroy {
   metadataViewFacade = inject(MdViewFacade)
   private dataService = inject(DataService)
-  private maxFeatureCount = Number(
-    inject(MAX_FEATURE_COUNT, { optional: true })
-  )
   private platformServiceInterface = inject(PlatformServiceInterface)
   private cdr = inject(ChangeDetectorRef)
 
@@ -132,22 +125,6 @@ export class RecordDataPreviewComponent implements OnInit, OnDestroy {
   )
 
   isMobile$ = getIsMobile()
-
-  exceedsMaxFeatureCount$ = combineLatest([
-    this.metadataViewFacade.geoDataLinksWithGeometry$,
-    this.selectedLink$,
-  ]).pipe(
-    map(([links, selectedLink]) =>
-      selectedLink != null ? selectedLink : links[0]
-    ),
-    switchMap((link) => {
-      return link && link.accessServiceProtocol === 'wfs'
-        ? this.dataService
-            .getWfsFeatureCount(link.url.toString(), link.name)
-            .pipe(map((count) => count > this.maxFeatureCount))
-        : of(false)
-    })
-  )
 
   config$ = this.recordUuid$.pipe(
     switchMap((uuid) => {
