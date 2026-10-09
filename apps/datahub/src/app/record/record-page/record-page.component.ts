@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core'
+import { Meta } from '@angular/platform-browser'
 import {
   MdViewFacade,
   RecordMetaComponent,
@@ -39,6 +40,7 @@ export class RecordPageComponent implements OnInit, OnDestroy {
   titleService = inject(TitleService)
   subscription: Subscription
   metadataQualityDisplay: boolean
+  private meta = inject(Meta)
 
   constructor() {
     document.documentElement.classList.add('record-page-active')
@@ -57,10 +59,20 @@ export class RecordPageComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe()
+    this.subscription.add(
+      this.mdViewFacade.error$.subscribe((error) => {
+        if (error?.notFound) {
+          this.meta.updateTag({ name: 'robots', content: 'noindex' })
+        } else {
+          this.meta.removeTag('name="robots"')
+        }
+      })
+    )
   }
 
   ngOnDestroy() {
     document.documentElement.classList.remove('record-page-active')
     this.subscription.unsubscribe()
+    this.meta.removeTag('name="robots"')
   }
 }
