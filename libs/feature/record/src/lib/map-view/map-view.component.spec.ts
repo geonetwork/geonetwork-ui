@@ -7,6 +7,7 @@ import {
 import {
   ComponentFixture,
   fakeAsync,
+  flush,
   TestBed,
   tick,
 } from '@angular/core/testing'
@@ -34,6 +35,7 @@ import { ExternalViewerButtonComponent } from '../external-viewer-button/externa
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model'
+import { MdViewService } from '../service/mdview.service'
 
 let mockWmsStyles = []
 let mockDescribeLayerResult: Record<string, unknown> | null = null
@@ -139,6 +141,10 @@ class DataServiceMock {
   })
 }
 
+class MdViewServiceMock {
+  exceedsMaxFeatureCount$ = jest.fn(() => of(false))
+}
+
 class OpenLayersMapMock {
   _size = undefined
   updateSize() {
@@ -203,6 +209,10 @@ describe('MapViewComponent', () => {
         MockProvider(TranslateService, {
           instant: jest.fn((key: string) => key),
         }),
+        {
+          provide: MdViewService,
+          useClass: MdViewServiceMock,
+        },
       ],
     })
       .overrideComponent(MapViewComponent, {
@@ -481,9 +491,12 @@ describe('MapViewComponent', () => {
       })
     })
 
-    describe('excludeWfs = true: with links compatible with MAP_API and GEODATA usage', () => {
+    describe('exceedsMaxFeatureCount = true: with links compatible with MAP_API and GEODATA usage', () => {
       beforeEach(fakeAsync(() => {
-        component.excludeWfs$.next(true)
+        const mdViewService = TestBed.inject(
+          MdViewService
+        ) as unknown as MdViewServiceMock
+        mdViewService.exceedsMaxFeatureCount$.mockReturnValue(of(true))
         mdViewFacade.mapApiLinks$.next([
           {
             url: new URL('http://abcd.com/'),
@@ -533,13 +546,23 @@ describe('MapViewComponent', () => {
           },
         ])
       })
-      describe('when selecting the WFS layer (excludeWfs)', () => {
+      describe('when selecting the WFS layer (exceedsMaxFeatureCount)', () => {
         beforeEach(fakeAsync(() => {
-          component.excludeWfs$.next(true)
-          dropdownComponent.selectValue.emit(
-            'featuretype (WFS)-http://abcd.com/wfs'
+          const mdViewService = TestBed.inject(
+            MdViewService
+          ) as unknown as MdViewServiceMock
+          mdViewService.exceedsMaxFeatureCount$.mockReturnValue(of(true))
+
+          component.mapContext$.subscribe()
+          fixture.detectChanges()
+
+          const wfsOption = dropdownComponent.choices.find((c) =>
+            c.value.includes('wfs')
           )
-          tick()
+          component.selectLinkToDisplay(wfsOption.value)
+
+          // 3. Purger les tâches RxJS / async et mettre à jour le DOM
+          tick(200)
           fixture.detectChanges()
         }))
         it('set hidePreview to true', () => {
@@ -803,8 +826,9 @@ describe('MapViewComponent', () => {
     })
 
     describe('with a link using WFS which returns an error', () => {
-      beforeEach(() => {
+      beforeEach(fakeAsync(() => {
         jest.spyOn(component, 'handleError')
+        component.mapContext$.subscribe()
         mdViewFacade.mapApiLinks$.next([])
         mdViewFacade.geoDataLinksWithGeometry$.next([
           {
@@ -814,7 +838,9 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'wfs',
           },
         ])
-      })
+        tick(200)
+        fixture.detectChanges()
+      }))
       it('shows an error', () => {
         expect(component.error).toEqual('data loading error')
       })
