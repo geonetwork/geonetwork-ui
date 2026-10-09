@@ -244,7 +244,7 @@ describe('editor form', () => {
       cy.focused().type(
         'Metadata for E2E testing purpose. (this title is very long and should take several lines, so we can test the behavior of the title field when it is very long. just keep going until it hits 4 lines, now it should be long enough)'
       )
-      cy.get('gn-ui-form-field').first().invoke('height').should('eq', 156)
+      cy.get('gn-ui-form-field').first().invoke('height').should('eq', 144)
 
       // it edits and saves the title
       cy.editor_wrapPreviousDraft(recordUuid)
@@ -260,6 +260,32 @@ describe('editor form', () => {
         .find('textarea')
         .invoke('val')
         .should('eq', 'Test record modified')
+
+      // IS REFERENCE DATASET
+      // it shows the toggle (because we're admin and this is a dataset record)
+      cy.get('[data-cy=record-flag-toggle-IS_REFERENCE_DATASET]').should(
+        'exist'
+      )
+      cy.get('[data-cy=record-flag-toggle-IS_REFERENCE_DATASET]')
+        .find('input[type=checkbox]')
+        .should('not.be.checked')
+
+      // it enables the flag and persists it across a reload
+      // Note: this does not interact with the draft system yet
+      cy.intercept({ method: 'PUT', pathname: '**/records/*/tags' }).as(
+        'tagRecord'
+      )
+      cy.get('[data-cy=record-flag-toggle-IS_REFERENCE_DATASET]')
+        .find('label')
+        .click()
+      cy.get('[data-cy=record-flag-toggle-IS_REFERENCE_DATASET]')
+        .find('input[type=checkbox]')
+        .should('be.checked')
+      cy.wait('@tagRecord')
+      cy.reload()
+      cy.get('[data-cy=record-flag-toggle-IS_REFERENCE_DATASET]')
+        .find('input[type=checkbox]')
+        .should('be.checked')
 
       // ABSTRACT
       // it shows the abstract
@@ -1002,5 +1028,53 @@ describe('editor form', () => {
         'gn-ui-form-field-online-resources gn-ui-online-resource-card'
       ).should('have.length', 0)
     })
+  })
+})
+
+describe('non-admin profile, dataset record', () => {
+  beforeEach(() => {
+    cy.login('barbie', 'p4ssworD_')
+    cy.visit(`/edit/ee965118-2416-4d48-b07e-bbc696f002c2`)
+  })
+
+  it('form fields', () => {
+    // title check
+    cy.get('gn-ui-form-field')
+      .first()
+      .find('textarea')
+      .invoke('val')
+      .should(
+        'include',
+        'SCoT (Schéma de cohérence territoriale) en région Hauts-de-France'
+      )
+
+    // it does not show the toggle
+    cy.get('[data-cy=record-flag-toggle-IS_REFERENCE_DATASET]').should(
+      'not.exist'
+    )
+  })
+})
+
+describe('service record', () => {
+  beforeEach(() => {
+    cy.login('admin', 'admin', false)
+    cy.visit(`/edit/ce551730-ee1a-4de3-9b49-7e432375d08a`) // service record
+  })
+
+  it('form fields', () => {
+    // title check
+    cy.get('gn-ui-form-field')
+      .first()
+      .find('textarea')
+      .invoke('val')
+      .should(
+        'include',
+        'Copie (modifiable) de la fiche Sites de gestion des déchets miniers - Service de visualisation WMS'
+      )
+
+    // it does not show the reference dataset toggle
+    cy.get('[data-cy=record-flag-toggle-IS_REFERENCE_DATASET]').should(
+      'not.exist'
+    )
   })
 })

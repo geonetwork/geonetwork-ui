@@ -198,6 +198,8 @@
   "editor.record.form.field.contacts.placeholder": "Choose a contact",
   "editor.record.form.field.contactsForResource.noContact": "Please provide at least one point of contact responsible for the data.",
   "editor.record.form.field.contactsForResource.placeholder": "Choose a contact",
+  "editor.record.form.field.flags.IS_REFERENCE_DATASET": "Make this dataset a reference dataset.",
+  "editor.record.form.field.hint.flags.IS_REFERENCE_DATASET": "Enabling this toggle will turn this dataset into a \"reference dataset\". This will be put forward and advertised as such in the search results.",
   "editor.record.form.field.keywords": "Keywords",
   "editor.record.form.field.legalConstraints": "Legal constraint",
   "editor.record.form.field.license": "License",

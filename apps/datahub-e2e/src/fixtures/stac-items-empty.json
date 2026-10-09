@@ -1,0 +1,39 @@
+{
+  "type": "FeatureCollection",
+  "context": { "limit": 12, "returned": 0 },
+  "features": [],
+  "links": [
+    {
+      "rel": "collection",
+      "type": "application/json",
+      "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+    },
+    {
+      "rel": "parent",
+      "type": "application/json",
+      "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+    },
+    {
+      "rel": "self",
+      "type": "application/geo+json",
+      "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items"
+    },
+    {
+      "rel": "next",
+      "type": "application/geo+json",
+      "method": "GET",
+      "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10:54:42.030Z/2025-10-29T07:12:21.025Z&token=next:sentinel2-l2a-sen2cor:S2C_20251016T070211025000Z_38LQH_0511_1c96d45d1b"
+    },
+    {
+      "rel": "previous",
+      "type": "application/geo+json",
+      "method": "GET",
+      "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10:54:42.030Z/2025-10-29T07:12:21.025Z&token=prev:sentinel2-l2a-sen2cor:S2A_20251024T072221024000Z_38LNH_0511_c4fba6046c"
+    }
+  ]
+}

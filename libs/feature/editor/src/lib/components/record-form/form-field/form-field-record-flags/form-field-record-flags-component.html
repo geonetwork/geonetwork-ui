@@ -1,0 +1,18 @@
+<div class="flex-1 flex justify-between items-center">
+  <gn-ui-check-toggle
+    [label]="labelKey() | translate"
+    [value]="isInitialEnabled | async"
+    (toggled)="onToggle($event)"
+    [attr.data-cy]="'record-flag-toggle-' + flagName()"
+  ></gn-ui-check-toggle>
+
+  @if (hintKey()) {
+  <ng-icon
+    name="matHelpOutline"
+    size="16"
+    class="m-2"
+    [matTooltip]="hintKey() | translate"
+    matTooltipPosition="above"
+  ></ng-icon>
+  }
+</div>

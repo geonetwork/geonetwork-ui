@@ -1496,6 +1496,7 @@ COPY public.categories (id, name) FROM stdin;
 10	otherResources
 12	registers
 13	physicalSamples
+100	geonetwork-ui-flag:IS_REFERENCE_DATASET
 \.
 
 
