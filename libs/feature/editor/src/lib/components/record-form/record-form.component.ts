@@ -11,7 +11,7 @@ import {
   viewChildren,
 } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
-import { EditorFieldValue } from '../../models'
+import { EditorFieldValue, FormFieldModel } from '../../models'
 import { FieldFocusDirective, FormFieldComponent } from './form-field'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
@@ -92,8 +92,8 @@ export class RecordFormComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe()
   }
 
-  handleFieldValueChange(model: CatalogRecordKeys, newValue: EditorFieldValue) {
-    if (!model) {
+  handleFieldValueChange(model: FormFieldModel, newValue: EditorFieldValue) {
+    if (!model || model === 'flags') {
       return
     }
     this.facade.updateRecordField(model, newValue)
