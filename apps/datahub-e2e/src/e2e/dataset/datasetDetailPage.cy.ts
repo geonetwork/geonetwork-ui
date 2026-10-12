@@ -117,6 +117,10 @@ describe('Sections', () => {
   it('About section', () => {
     cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
 
+    //it should not display a meta tag with name="robots" and content="noindex"
+    cy.get('datahub-record-metadata').find('[id="about"]').should('exist')
+    cy.get('meta[name="robots"]').should('not.exist')
+
     // it should display the description
     cy.get('datahub-record-metadata')
       .find('[id="about"]')
@@ -797,10 +801,4 @@ it('When the metadata does not exists', () => {
   cy.screenshot({ capture: 'viewport' })
 
   cy.get('meta[name="robots"]').should('have.attr', 'content', 'noindex')
-})
-
-it('When the metadata exists, it is indexable', () => {
-  cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
-  cy.get('datahub-record-metadata').find('[id="about"]').should('exist')
-  cy.get('meta[name="robots"]').should('not.exist')
 })
