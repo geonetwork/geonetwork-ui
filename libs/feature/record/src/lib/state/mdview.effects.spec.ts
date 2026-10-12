@@ -324,11 +324,11 @@ describe('MdViewEffects', () => {
       featureTypes: [
         {
           name: 'test',
-          definition: 'Test definition',
+          description: 'Test definition',
           attributes: [
             {
               name: 'test',
-              definition: 'Test attribute',
+              description: 'Test attribute',
               type: 'string',
               code: 'test_code',
             },
@@ -339,7 +339,7 @@ describe('MdViewEffects', () => {
 
     describe('when api success and feature catalog found', () => {
       beforeEach(() => {
-        repository.getFeatureCatalog = jest.fn(() => of(featureCatalog))
+        repository.queryLinkedFeatureCatalog = jest.fn(() => of(featureCatalog))
       })
       it('should dispatch loadFeatureCatalogSuccess', () => {
         actions = hot('-a-|', {
@@ -356,7 +356,7 @@ describe('MdViewEffects', () => {
 
     describe('when api success but no feature catalog found', () => {
       beforeEach(() => {
-        repository.getFeatureCatalog = jest.fn(() => of(null))
+        repository.queryLinkedFeatureCatalog = jest.fn(() => of(null))
       })
       it('should dispatch loadFeatureCatalogSuccess', () => {
         actions = hot('-a-|', {
@@ -373,7 +373,7 @@ describe('MdViewEffects', () => {
 
     describe('when api fails', () => {
       beforeEach(() => {
-        repository.getFeatureCatalog = jest.fn(() =>
+        repository.queryLinkedFeatureCatalog = jest.fn(() =>
           throwError(() => new Error('api error'))
         )
       })

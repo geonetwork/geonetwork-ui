@@ -372,7 +372,7 @@
   "favorite.starToggle.add": "Pridať k obľúbeným",
   "favorite.starToggle.remove": "Odstrániť z obľúbených",
   "feature.catalog.attribute.code": "Kód",
-  "feature.catalog.attribute.definition": "Popis",
+  "feature.catalog.attribute.description": "Popis",
   "feature.catalog.attribute.name": "Názov",
   "feature.catalog.attribute.type": "Typ",
   "feature.catalog.attribute.values": "Hodnoty",

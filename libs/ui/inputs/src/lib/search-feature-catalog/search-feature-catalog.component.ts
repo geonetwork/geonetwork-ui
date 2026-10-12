@@ -56,7 +56,8 @@ export class SearchFeatureCatalogComponent {
               const fuzzyFilter = createFuzzyFilter(searchTerm)
               return (
                 fuzzyFilter(featureType.name) ||
-                (featureType.definition && fuzzyFilter(featureType.definition))
+                (featureType.description &&
+                  fuzzyFilter(featureType.description))
               )
             }
           )

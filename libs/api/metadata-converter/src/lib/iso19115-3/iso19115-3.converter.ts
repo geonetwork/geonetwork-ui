@@ -4,6 +4,7 @@ import { Iso19139Converter } from '../iso19139'
 import { renameElements } from '../xml-utils'
 import {
   readAssociatedRecords,
+  readFeatureTypeDescriptions,
   readContacts,
   readContactsForResource,
   readDefaultLanguage,
@@ -59,6 +60,7 @@ export class Iso191153Converter extends Iso19139Converter {
     this.readers['lineage'] = readLineage
     this.readers['sourceRecords'] = readSourceRecords
     this.readers['associatedRecords'] = readAssociatedRecords
+    this.readers['featureTypeDescriptions'] = readFeatureTypeDescriptions
     this.readers['onlineResources'] = readOnlineResources
     this.readers['defaultLanguage'] = readDefaultLanguage
     this.readers['otherLanguages'] = readOtherLanguages

@@ -470,7 +470,7 @@ describe('ChartViewComponent', () => {
         featureTypes: [
           {
             name: 'someName',
-            definition: 'definition',
+            description: 'definition',
             attributes: [
               { name: 'propNum1', code: 'Proper name', title: 'propNum1' },
             ],

@@ -22,12 +22,13 @@ import {
   AssociatedRecord,
   CatalogRecord,
   Constraint,
+  DatasetFeatureCatalog,
   DatasetSpatialExtent,
   OnlineResource,
   OnlineResourceType,
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchProtocol } from '../common/distribution.mapper'
-import { Thesaurus } from './types'
+import { FeatureType, Thesaurus } from './types'
 import {
   getResourceType,
   getReusePresentationForm,
@@ -312,13 +313,14 @@ export class Gn4FieldMapper {
         },
         output
       ),
-    featureTypes: (output, source) =>
-      this.addExtra(
-        {
-          featureTypes: selectField(source, 'featureTypes'),
-        },
-        output
-      ),
+    featureTypes: (output, source) => {
+      const featureTypes = getAsArray(selectField(source, 'featureTypes'))
+      if (!featureTypes.length) return output
+      return {
+        ...output,
+        featureTypeDescriptions: this.featureTypesField(featureTypes),
+      }
+    },
     related: (output, source) => {
       const related = <SourceWithUnknownProps>selectField(source, 'related')
       const fcatSource = selectField(
@@ -517,6 +519,31 @@ export class Gn4FieldMapper {
   }
 
   private genericField = (output) => output
+
+  private featureTypesField = (
+    featureTypes: FeatureType[]
+  ): DatasetFeatureCatalog['featureTypes'] =>
+    featureTypes.map((featureType) => ({
+      name: featureType.typeName ?? '',
+      ...(featureType.definition && {
+        description: featureType.definition,
+      }),
+      attributes: getAsArray(featureType.attributeTable ?? []).map((attr) => {
+        const values = (attr.values ?? [])
+          .filter((value) => value.code || value.label)
+          .map((value) => ({
+            ...(value.code && { code: value.code }),
+            ...(value.label && { label: value.label }),
+          }))
+        return {
+          name: attr.name ?? '',
+          ...(attr.definition && { description: attr.definition }),
+          ...(attr.code && { code: attr.code }),
+          ...(attr.type && { type: attr.type }),
+          ...(values.length > 0 && { values }),
+        }
+      }),
+    }))
 
   private constraintField = (
     type: 'license' | 'legal' | 'security' | 'other',
