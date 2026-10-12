@@ -855,7 +855,7 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                   </gfc:valueType>
                 </gfc:FC_FeatureAttribute>
               </gfc:carrierOfCharacteristics>
-              <gfc:featureCatalogue/>
+              <gfc:featureCatalogue gco:nilReason="missing"/>
             </gfc:FC_FeatureType>
           </gfc:featureType>
         </gfc:FC_FeatureCatalogue>

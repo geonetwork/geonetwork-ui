@@ -632,6 +632,7 @@ function createFeatureCatalogueShell() {
       'mrc:featureCatalogue',
       'gfc:FC_FeatureCatalogue'
     ),
+    // create mandatory elements which are not part of the model yet
     appendChildren(
       createNilElement('cat:name', 'missing'),
       createNilElement('cat:scope', 'missing'),
@@ -711,7 +712,7 @@ function createFeatureType(
         setTextContent('false')
       ),
       ...featureType.attributes.map(createFeatureAttribute),
-      createElement('gfc:featureCatalogue')
+      createNilElement('gfc:featureCatalogue', 'missing')
     )
   )
 }

@@ -1006,7 +1006,7 @@ ${indent}        <gfc:typeName>${name}</gfc:typeName>
 ${indent}        <gfc:isAbstract>
 ${indent}            <gco:Boolean>false</gco:Boolean>
 ${indent}        </gfc:isAbstract>
-${indent}        <gfc:featureCatalogue/>
+${indent}        <gfc:featureCatalogue gco:nilReason="missing"/>
 ${indent}    </gfc:FC_FeatureType>
 ${indent}</gfc:featureType>`
     }
@@ -1165,7 +1165,7 @@ ${featureTypes}
                                     <gfc:cardinality gco:nilReason="missing"/>
                                 </gfc:FC_FeatureAttribute>
                             </gfc:carrierOfCharacteristics>
-                            <gfc:featureCatalogue/>
+                            <gfc:featureCatalogue gco:nilReason="missing"/>
                         </gfc:FC_FeatureType>
                     </gfc:featureType>
                 </gfc:FC_FeatureCatalogue>
