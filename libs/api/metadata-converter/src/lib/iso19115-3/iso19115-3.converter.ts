@@ -191,17 +191,19 @@ export class Iso191153Converter extends Iso19139Converter {
     record: CatalogRecord,
     reference?: string
   ): Promise<string> {
-    let result = await super.writeRecord(record, reference)
-    // fix gco namespace definition (changes between iso19139 and iso19115-3
-    result = result.replace(
-      '"http://www.isotc211.org/2005/gco"',
-      '"http://standards.iso.org/iso/19115/-3/gco/1.0"'
+    const result = await super.writeRecord(record, reference)
+    // fix the gco and gfc namespace definitions (they change between iso19139 and iso19115-3);
+    // only on the root element, where they are declared, so that nested declarations stay untouched
+    return result.replace(/<mdb:MD_Metadata[^>]*>/, (rootTag) =>
+      rootTag
+        .replace(
+          '"http://www.isotc211.org/2005/gco"',
+          '"http://standards.iso.org/iso/19115/-3/gco/1.0"'
+        )
+        .replace(
+          '"http://www.isotc211.org/2005/gfc"',
+          '"http://standards.iso.org/iso/19110/gfc/1.1"'
+        )
     )
-    // same for the gfc namespace (changes between iso19110 in iso19139 and iso19115-3)
-    result = result.replace(
-      '"http://www.isotc211.org/2005/gfc"',
-      '"http://standards.iso.org/iso/19110/gfc/1.1"'
-    )
-    return result
   }
 }
