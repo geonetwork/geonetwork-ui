@@ -624,10 +624,6 @@ function createNilElement(name: string, nilReason: string) {
   return pipe(createElement(name), writeAttribute('gco:nilReason', nilReason))
 }
 
-function createCharacterStringElement(name: string, text: string) {
-  return pipe(createElement(name), writeCharacterString(text))
-}
-
 function createFeatureCatalogueShell() {
   return pipe(
     createNestedElement(
@@ -651,11 +647,16 @@ function createListedValue(value: DatasetFeatureAttributeValue) {
     createNestedElement('gfc:listedValue', 'gfc:FC_ListedValue'),
     appendChildren(
       value.label
-        ? createCharacterStringElement('gfc:label', value.label)
+        ? pipe(createElement('gfc:label'), writeCharacterString(value.label))
         : createNilElement('gfc:label', 'missing'),
-      value.code ? createCharacterStringElement('gfc:code', value.code) : null,
+      value.code
+        ? pipe(createElement('gfc:code'), writeCharacterString(value.code))
+        : null,
       value.description
-        ? createCharacterStringElement('gfc:definition', value.description)
+        ? pipe(
+            createElement('gfc:definition'),
+            writeCharacterString(value.description)
+          )
         : null
     )
   )
@@ -670,11 +671,14 @@ function createFeatureAttribute(attribute: DatasetFeatureAttribute) {
     appendChildren(
       pipe(createElement('gfc:memberName'), setTextContent(attribute.name)),
       attribute.description
-        ? createCharacterStringElement('gfc:definition', attribute.description)
+        ? pipe(
+            createElement('gfc:definition'),
+            writeCharacterString(attribute.description)
+          )
         : null,
       createNilElement('gfc:cardinality', 'missing'),
       attribute.code
-        ? createCharacterStringElement('gfc:code', attribute.code)
+        ? pipe(createElement('gfc:code'), writeCharacterString(attribute.code))
         : null,
       attribute.type
         ? pipe(
@@ -697,9 +701,9 @@ function createFeatureType(
     appendChildren(
       pipe(createElement('gfc:typeName'), setTextContent(featureType.name)),
       featureType.description
-        ? createCharacterStringElement(
-            'gfc:definition',
-            featureType.description
+        ? pipe(
+            createElement('gfc:definition'),
+            writeCharacterString(featureType.description)
           )
         : null,
       pipe(
