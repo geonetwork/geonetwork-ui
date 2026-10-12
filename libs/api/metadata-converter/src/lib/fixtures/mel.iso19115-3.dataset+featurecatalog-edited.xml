@@ -683,7 +683,7 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                   <gfc:definition>
                     <gco:CharacterString>Identifiant de l'objet (clé primaire)</gco:CharacterString>
                   </gfc:definition>
-                  <gfc:cardinality gco:nilReason="unknown"/>
+                  <gfc:cardinality gco:nilReason="missing"/>
                   <gfc:code>
                     <gco:CharacterString>OBJECTID</gco:CharacterString>
                   </gfc:code>
@@ -702,7 +702,7 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                   <gfc:definition>
                     <gco:CharacterString>Code INSEE de la commune</gco:CharacterString>
                   </gfc:definition>
-                  <gfc:cardinality gco:nilReason="unknown"/>
+                  <gfc:cardinality gco:nilReason="missing"/>
                   <gfc:valueType>
                     <gco:TypeName>
                       <gco:aName>
@@ -718,7 +718,7 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                   <gfc:definition>
                     <gco:CharacterString>Appartenance au réseau vélo+ : Oui / Non / Option / Variante</gco:CharacterString>
                   </gfc:definition>
-                  <gfc:cardinality gco:nilReason="unknown"/>
+                  <gfc:cardinality gco:nilReason="missing"/>
                   <gfc:valueType>
                     <gco:TypeName>
                       <gco:aName>
@@ -734,7 +734,7 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                   <gfc:definition>
                     <gco:CharacterString>Permet de savoir si l'objet décrit un tronçon faisant parti du réseau Intercommunal : Oui - le tronçon fait partie intégrante du réseau intercommunal / Non - le tronçon ne fait pas partie du réseau intercommunal / Option : le tronçon pourrait éventuellement faire partie du réseau intercommunal / Variante : le tronçon pourrait être utilisé en lieu et place d'un autre pour répondre à un trajet équivalent</gco:CharacterString>
                   </gfc:definition>
-                  <gfc:cardinality gco:nilReason="unknown"/>
+                  <gfc:cardinality gco:nilReason="missing"/>
                   <gfc:valueType>
                     <gco:TypeName>
                       <gco:aName>
@@ -750,9 +750,7 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                   <gfc:definition>
                     <gco:CharacterString>[Données pour tester valeurs de liste]: Donne une note de difficulté (1-5) du tronçon.</gco:CharacterString>
                   </gfc:definition>
-                  <gfc:cardinality>
-                    <gco:CharacterString>1..1</gco:CharacterString>
-                  </gfc:cardinality>
+                  <gfc:cardinality gco:nilReason="missing"/>
                   <gfc:valueType>
                     <gco:TypeName>
                       <gco:aName>
@@ -828,7 +826,7 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                   <gfc:definition>
                     <gco:CharacterString>Géométrie de type ligne simple</gco:CharacterString>
                   </gfc:definition>
-                  <gfc:cardinality gco:nilReason="unknown"/>
+                  <gfc:cardinality gco:nilReason="missing"/>
                   <gfc:valueType>
                     <gco:TypeName>
                       <gco:aName>
@@ -844,7 +842,7 @@ Sa compatibilité avec les nouvelles lignes de transports en site propre et le s
                   <gfc:definition>
                     <gco:CharacterString>Longueur du tronçon en mètres</gco:CharacterString>
                   </gfc:definition>
-                  <gfc:cardinality gco:nilReason="unknown"/>
+                  <gfc:cardinality gco:nilReason="missing"/>
                   <gfc:code>
                     <gco:CharacterString>LONGUEUR</gco:CharacterString>
                   </gfc:code>

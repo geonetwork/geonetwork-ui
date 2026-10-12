@@ -1076,7 +1076,6 @@ ${featureTypes}
                   {
                     name: 'id',
                     description: 'Identifier',
-                    cardinality: '1',
                     code: 'ID',
                     type: 'integer',
                     values: [
@@ -1126,9 +1125,7 @@ ${featureTypes}
                                     <gfc:definition>
                                         <gco:CharacterString>Identifier</gco:CharacterString>
                                     </gfc:definition>
-                                    <gfc:cardinality>
-                                        <gco:CharacterString>1</gco:CharacterString>
-                                    </gfc:cardinality>
+                                    <gfc:cardinality gco:nilReason="missing"/>
                                     <gfc:code>
                                         <gco:CharacterString>ID</gco:CharacterString>
                                     </gfc:code>
@@ -1165,7 +1162,7 @@ ${featureTypes}
                             <gfc:carrierOfCharacteristics>
                                 <gfc:FC_FeatureAttribute>
                                     <gfc:memberName>geom</gfc:memberName>
-                                    <gfc:cardinality gco:nilReason="unknown"/>
+                                    <gfc:cardinality gco:nilReason="missing"/>
                                 </gfc:FC_FeatureAttribute>
                             </gfc:carrierOfCharacteristics>
                             <gfc:featureCatalogue/>

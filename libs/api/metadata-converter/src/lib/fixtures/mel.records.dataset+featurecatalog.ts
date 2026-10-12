@@ -298,7 +298,6 @@ export const MEL_FEATURECATALOG_DATASET_RECORD: DatasetRecord = {
           description:
             '[Données pour tester valeurs de liste]: Donne une note de difficulté (1-5) du tronçon.',
           type: 'varchar(256)',
-          cardinality: '1..1',
           values: [
             { code: '1', label: 'Très facile' },
             { code: '2', label: 'Facile' },
@@ -352,7 +351,6 @@ export const MEL_FEATURECATALOG_DATASET_RECORD_EDITED: DatasetRecord = {
           description:
             '[Données pour tester valeurs de liste]: Donne une note de difficulté (1-5) du tronçon.',
           type: 'varchar(256)',
-          cardinality: '1..1',
           values: [
             {
               code: '1',

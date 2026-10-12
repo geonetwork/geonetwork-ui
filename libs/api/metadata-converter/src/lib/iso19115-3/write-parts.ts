@@ -672,9 +672,7 @@ function createFeatureAttribute(attribute: DatasetFeatureAttribute) {
       attribute.description
         ? createCharacterStringElement('gfc:definition', attribute.description)
         : null,
-      attribute.cardinality
-        ? createCharacterStringElement('gfc:cardinality', attribute.cardinality)
-        : createNilElement('gfc:cardinality', 'unknown'),
+      createNilElement('gfc:cardinality', 'missing'),
       attribute.code
         ? createCharacterStringElement('gfc:code', attribute.code)
         : null,

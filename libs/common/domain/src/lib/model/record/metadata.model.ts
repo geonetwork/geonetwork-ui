@@ -365,7 +365,6 @@ export interface DatasetFeatureAttribute {
   description?: string
   type?: string
   code?: string
-  cardinality?: string
   values?: Array<DatasetFeatureAttributeValue>
 }
 
