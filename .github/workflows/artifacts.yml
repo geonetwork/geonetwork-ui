@@ -13,6 +13,10 @@ on:
     types:
       - edited
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 concurrency:
   group: artifacts-${{ github.ref }}
   cancel-in-progress: true
@@ -110,17 +114,20 @@ jobs:
     if: github.event_name != 'issue_comment'
     name: Build and publish NPM package
     runs-on: ubuntu-latest
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/geonetwork-ui
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ needs.checks.outputs.ref }} # use the PR head ref if applicable; otherwise keep default behaviour
           persist-credentials: false
           fetch-depth: 0
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -141,12 +148,8 @@ jobs:
         if: github.event_name != 'release'
         working-directory: package/dist
         run: npm publish --tag dev
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Set the latest tag on the released version
         if: github.event_name == 'release'
         working-directory: package/dist
         run: npm dist-tag add '{{.Repository}}@{{.Tag}}' latest
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
