@@ -166,6 +166,8 @@
   "editor.record.error.back": "",
   "editor.record.error.explanation": "",
   "editor.record.error.message": "",
+  "editor.record.flag.saveError.body": "",
+  "editor.record.flag.saveError.title": "",
   "editor.record.form.bottomButtons.comeBackLater": "",
   "editor.record.form.bottomButtons.next": "",
   "editor.record.form.bottomButtons.previous": "",

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject, of, throwError } from 'rxjs'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { EditorFacade } from '../../../../+state/editor.facade'
@@ -21,6 +22,7 @@ describe('FormFieldRecordFlagComponent', () => {
   let component: FormFieldRecordFlagComponent
   let fixture: ComponentFixture<FormFieldRecordFlagComponent>
   let repository: RecordsRepositoryMock
+  let notificationsService: NotificationsService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -40,6 +42,7 @@ describe('FormFieldRecordFlagComponent', () => {
     repository = TestBed.inject(
       RecordsRepositoryInterface
     ) as unknown as RecordsRepositoryMock
+    notificationsService = TestBed.inject(NotificationsService)
 
     fixture = TestBed.createComponent(FormFieldRecordFlagComponent)
     component = fixture.componentInstance
@@ -81,6 +84,24 @@ describe('FormFieldRecordFlagComponent', () => {
         'IS_REFERENCE_DATASET',
         false
       )
+    })
+
+    describe('an error happens', () => {
+      beforeEach(() => {
+        repository.setRecordFlag.mockReturnValue(
+          throwError(() => new Error('boom'))
+        )
+        jest.spyOn(notificationsService, 'showNotification')
+        toggle.toggled.emit(false)
+        fixture.detectChanges()
+      })
+      it('should show an error notification', () => {
+        expect(notificationsService.showNotification).toHaveBeenCalledWith(
+          expect.objectContaining({ type: 'error' }),
+          undefined,
+          expect.any(Error)
+        )
+      })
     })
   })
 

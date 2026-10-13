@@ -166,6 +166,8 @@
   "editor.record.error.back": "Go back to the catalog",
   "editor.record.error.explanation": "You might not have access to this record,<br> Or this link might not be valid.",
   "editor.record.error.message": "Something went wrong",
+  "editor.record.flag.saveError.body": "The {recordKind, select, dataset{dataset} service{service} reuse{reuse} other{record}} could not be modified:",
+  "editor.record.flag.saveError.title": "Record modification failed",
   "editor.record.form.bottomButtons.comeBackLater": "Come back later",
   "editor.record.form.bottomButtons.next": "Next",
   "editor.record.form.bottomButtons.previous": "Previous",

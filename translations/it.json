@@ -166,6 +166,8 @@
   "editor.record.error.back": "Ritorna al catalogo",
   "editor.record.error.explanation": "Forse non ha accesso a questa pagina oppure questo collegamento potrebbe non essere valido.",
   "editor.record.error.message": "Qualcosa è andato storto",
+  "editor.record.flag.saveError.body": "",
+  "editor.record.flag.saveError.title": "",
   "editor.record.form.bottomButtons.comeBackLater": "Ritorna più tardi",
   "editor.record.form.bottomButtons.next": "Avanti",
   "editor.record.form.bottomButtons.previous": "Precedente",

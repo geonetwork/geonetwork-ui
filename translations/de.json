@@ -166,6 +166,8 @@
   "editor.record.error.back": "Zurück zum Katalog",
   "editor.record.error.explanation": "Möglicherweise haben Sie keinen Zugriff auf diese Datei,<br>oder dieser Link ist ungültig.",
   "editor.record.error.message": "Etwas ist nicht wie erwartet gelaufen.",
+  "editor.record.flag.saveError.body": "",
+  "editor.record.flag.saveError.title": "",
   "editor.record.form.bottomButtons.comeBackLater": "Später wiederkommen",
   "editor.record.form.bottomButtons.next": "Nächste",
   "editor.record.form.bottomButtons.previous": "Vorherige",

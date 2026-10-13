@@ -1,7 +1,7 @@
 <div class="flex-1 flex justify-between items-center">
   <gn-ui-check-toggle
     [label]="labelKey() | translate"
-    [value]="isInitialEnabled | async"
+    [value]="initialValue$ | async"
     (toggled)="onToggle($event)"
     [attr.data-cy]="'record-flag-toggle-' + flagName()"
   ></gn-ui-check-toggle>
