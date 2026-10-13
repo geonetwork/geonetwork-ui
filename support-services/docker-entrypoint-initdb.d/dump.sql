@@ -1589,6 +1589,13 @@ COPY public.categoriesdes (iddes, label, langid) FROM stdin;
 10	Altre risorse di informazione	ita
 12	Registri	ita
 13	campioni fisici	ita
+100	Reference dataset	por
+100	Reference dataset	dut
+100	Reference dataset	ger
+100	Reference dataset	spa
+100	Reference dataset	ita
+100	Reference dataset	fre
+100	Reference dataset	eng
 \.
 
 
