@@ -18,7 +18,7 @@ import { switchMap } from 'rxjs/operators'
 import { matHelpOutline } from '@ng-icons/material-icons/outline'
 
 @Component({
-  selector: 'gn-ui-form-field-record-flags',
+  selector: 'gn-ui-form-field-record-flag',
   standalone: true,
   imports: [AsyncPipe, CheckToggleComponent, TranslatePipe, NgIcon, MatTooltip],
   viewProviders: [
@@ -26,11 +26,11 @@ import { matHelpOutline } from '@ng-icons/material-icons/outline'
       matHelpOutline,
     }),
   ],
-  templateUrl: './form-field-record-flags-component.html',
-  styleUrls: ['./form-field-record-flags-component.css'],
+  templateUrl: './form-field-record-flag-component.html',
+  styleUrls: ['./form-field-record-flag-component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormFieldRecordFlagsComponent {
+export class FormFieldRecordFlagComponent {
   flagName = input<RecordFlag>()
   labelKey = input<string>()
   hintKey = input<string>()

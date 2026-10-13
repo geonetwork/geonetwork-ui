@@ -58,7 +58,7 @@ import { FormFieldConstraintsComponent } from './form-field-constraints/form-fie
 import { TextFieldModule } from '@angular/cdk/text-field'
 import { FormFieldSpatialToggleComponent } from './form-field-spatial-toggle/form-field-spatial-toggle.component'
 import { FormFieldTopicsComponent } from './form-field-topics/form-field-topics.component'
-import { FormFieldRecordFlagsComponent } from './form-field-record-flags/form-field-record-flags-component'
+import { FormFieldRecordFlagComponent } from './form-field-record-flags/form-field-record-flag-component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -92,7 +92,7 @@ import { FormFieldRecordFlagsComponent } from './form-field-record-flags/form-fi
     FormFieldTopicsComponent,
     TextFieldModule,
     NgIconComponent,
-    FormFieldRecordFlagsComponent,
+    FormFieldRecordFlagComponent,
   ],
   providers: [provideIcons({ matEditOutline, matHelpOutline })],
   hostDirectives: [FieldFocusDirective],
