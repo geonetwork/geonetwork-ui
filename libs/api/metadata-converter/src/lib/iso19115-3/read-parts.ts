@@ -432,7 +432,7 @@ function extractListedValue(): ChainableFunction<
       pipe(findChildElement('gfc:definition', false), extractCharacterString())
     ),
     map(([code, label, description]) => ({
-      ...(code && { code }),
+      value: code ?? '',
       ...(label && { label }),
       ...(description && { description }),
     }))
@@ -458,7 +458,7 @@ function extractFeatureAttribute(): ChainableFunction<
       pipe(
         findNestedElements('gfc:listedValue', 'gfc:FC_ListedValue'),
         mapArray(extractListedValue()),
-        filterArray((value) => !!(value.code || value.label))
+        filterArray((value) => !!(value.value || value.label))
       )
     ),
     map(([name, description, code, type, values]) => ({

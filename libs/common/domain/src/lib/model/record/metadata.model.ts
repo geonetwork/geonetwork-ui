@@ -356,9 +356,9 @@ export type DatasetFeatureCatalog = {
   }>
 }
 export interface DatasetFeatureAttributeValue {
-  code?: string
-  description?: string
+  value: string // empty string when the value has no code
   label?: string
+  description?: string
 }
 export interface DatasetFeatureAttribute {
   name: string

@@ -42,7 +42,7 @@ describe('FeatureCatalogListComponent', () => {
           name: 'OBJECTID',
           description: 'Object identifier',
           type: 'OID',
-          values: [{ code: 'Code', label: 'The Label' }],
+          values: [{ value: 'Code', label: 'The Label' }],
         },
       ]
       expect(
@@ -72,7 +72,7 @@ describe('FeatureCatalogListComponent', () => {
           name: 'OBJECTID',
           description: 'Object identifier',
           type: 'OID',
-          values: [{ code: 'Code', label: 'The Label' }],
+          values: [{ value: 'Code', label: 'The Label' }],
         },
       ]
       expect(component.getGridTemplateColumns(attributesWithValues)).toBe(

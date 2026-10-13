@@ -832,7 +832,10 @@ ${featureTypeXml}
                   </gfc:listedValue>
                 </gfc:FC_FeatureAttribute>
               </gfc:carrierOfCharacteristics>`)[0].attributes[0].values
-        ).toEqual([{ code: '1', label: 'Forêt dense' }, { label: 'Prairie' }])
+        ).toEqual([
+          { value: '1', label: 'Forêt dense' },
+          { value: '', label: 'Prairie' },
+        ])
       })
     })
     describe('attribute without listed values', () => {
@@ -871,7 +874,7 @@ ${featureTypeXml}
               </gfc:carrierOfCharacteristics>`)[0].attributes
         expect(attribute.values).toStrictEqual([
           {
-            code: '1',
+            value: '1',
             label: 'Forêt dense',
             description: 'Couvert forestier supérieur à 80%',
           },

@@ -182,9 +182,9 @@ As such, **it is not very interesting at all.**`,
             code: 'NOM',
             type: 'String (48)',
             values: [
-              { code: 'Pomme', label: 'Les Pommiers' },
-              { code: 'Cotton', label: 'Rue Cotton' },
-              { code: "Passage de l'échiquier" },
+              { value: 'Pomme', label: 'Les Pommiers' },
+              { value: 'Cotton', label: 'Rue Cotton' },
+              { value: "Passage de l'échiquier" },
             ],
           },
           {

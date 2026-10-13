@@ -1156,8 +1156,8 @@ describe('Gn4Converter', () => {
                   name: 'landcover',
                   type: 'String (48)',
                   values: [
-                    { code: '1', label: 'Forêt dense' },
-                    { label: 'Prairie' },
+                    { value: '1', label: 'Forêt dense' },
+                    { value: '', label: 'Prairie' },
                   ],
                 },
               ],

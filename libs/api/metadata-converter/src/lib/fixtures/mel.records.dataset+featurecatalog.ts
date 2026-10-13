@@ -299,11 +299,11 @@ export const MEL_FEATURECATALOG_DATASET_RECORD: DatasetRecord = {
             '[Données pour tester valeurs de liste]: Donne une note de difficulté (1-5) du tronçon.',
           type: 'varchar(256)',
           values: [
-            { code: '1', label: 'Très facile' },
-            { code: '2', label: 'Facile' },
-            { code: '3', label: 'Moyen' },
-            { code: '4', label: 'Difficile' },
-            { code: '5', label: 'Très difficile' },
+            { value: '1', label: 'Très facile' },
+            { value: '2', label: 'Facile' },
+            { value: '3', label: 'Moyen' },
+            { value: '4', label: 'Difficile' },
+            { value: '5', label: 'Très difficile' },
           ],
         },
         {
@@ -353,27 +353,27 @@ export const MEL_FEATURECATALOG_DATASET_RECORD_EDITED: DatasetRecord = {
           type: 'varchar(256)',
           values: [
             {
-              code: '1',
+              value: '1',
               label: 'Très facile',
             },
             {
-              code: '2',
+              value: '2',
               label: 'Facile',
             },
             {
-              code: '3',
+              value: '3',
               label: 'Moyen',
             },
             {
-              code: '4',
+              value: '4',
               label: 'Difficile',
             },
             {
-              code: '5',
+              value: '5',
               label: 'Très difficile',
             },
             {
-              code: '6',
+              value: '6',
               label: 'Extrême',
             },
           ],

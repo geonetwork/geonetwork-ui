@@ -1080,12 +1080,12 @@ ${featureTypes}
                     type: 'integer',
                     values: [
                       {
-                        code: '1',
+                        value: '1',
                         label: 'Highway',
                         description: 'Fast road',
                       },
-                      { code: '2' },
-                      { description: 'neither code nor label' },
+                      { value: '2' },
+                      { value: '', description: 'neither code nor label' },
                     ],
                   },
                   { name: 'geom' },

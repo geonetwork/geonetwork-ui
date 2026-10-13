@@ -532,7 +532,7 @@ export class Gn4FieldMapper {
         const values = (attr.values ?? [])
           .filter((value) => value.code || value.label)
           .map((value) => ({
-            ...(value.code && { code: value.code }),
+            value: value.code || '',
             ...(value.label && { label: value.label }),
           }))
         return {

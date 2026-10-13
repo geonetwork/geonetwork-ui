@@ -650,8 +650,8 @@ function createListedValue(value: DatasetFeatureAttributeValue) {
       value.label
         ? pipe(createElement('gfc:label'), writeCharacterString(value.label))
         : createNilElement('gfc:label', 'missing'),
-      value.code
-        ? pipe(createElement('gfc:code'), writeCharacterString(value.code))
+      value.value
+        ? pipe(createElement('gfc:code'), writeCharacterString(value.value))
         : null,
       value.description
         ? pipe(
@@ -688,7 +688,7 @@ function createFeatureAttribute(attribute: DatasetFeatureAttribute) {
           )
         : null,
       ...(attribute.values ?? [])
-        .filter((value) => value.code || value.label)
+        .filter((value) => value.value || value.label)
         .map(createListedValue)
     )
   )
