@@ -22,7 +22,7 @@ import {
   AssociatedRecord,
   CatalogRecord,
   Constraint,
-  DatasetFeatureCatalog,
+  DatasetFeatureType,
   DatasetSpatialExtent,
   OnlineResource,
   OnlineResourceType,
@@ -522,7 +522,7 @@ export class Gn4FieldMapper {
 
   private featureTypesField = (
     featureTypes: FeatureType[]
-  ): DatasetFeatureCatalog['featureTypes'] =>
+  ): Array<DatasetFeatureType> =>
     featureTypes.map((featureType) => ({
       name: featureType.typeName ?? '',
       ...(featureType.definition && {

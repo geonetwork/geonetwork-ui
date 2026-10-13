@@ -2,7 +2,7 @@ import {
   CatalogRecord,
   DatasetFeatureAttribute,
   DatasetFeatureAttributeValue,
-  DatasetFeatureCatalog,
+  DatasetFeatureType,
   DatasetRecord,
   Individual,
   LanguageCode,
@@ -678,6 +678,12 @@ function createFeatureAttribute(attribute: DatasetFeatureAttribute) {
           )
         : null,
       createNilElement('gfc:cardinality', 'missing'),
+      attribute.label
+        ? pipe(
+            createElement('gfc:designation'),
+            writeCharacterString(attribute.label)
+          )
+        : null,
       attribute.code
         ? pipe(createElement('gfc:code'), writeCharacterString(attribute.code))
         : null,
@@ -694,9 +700,7 @@ function createFeatureAttribute(attribute: DatasetFeatureAttribute) {
   )
 }
 
-function createFeatureType(
-  featureType: DatasetFeatureCatalog['featureTypes'][number]
-) {
+function createFeatureType(featureType: DatasetFeatureType) {
   return pipe(
     createNestedElement('gfc:featureType', 'gfc:FC_FeatureType'),
     appendChildren(
@@ -711,6 +715,12 @@ function createFeatureType(
         createNestedElement('gfc:isAbstract', 'gco:Boolean'),
         setTextContent('false')
       ),
+      featureType.label
+        ? pipe(
+            createElement('gfc:designation'),
+            writeCharacterString(featureType.label)
+          )
+        : null,
       ...featureType.attributes.map(createFeatureAttribute),
       createNilElement('gfc:featureCatalogue', 'missing')
     )

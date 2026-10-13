@@ -735,6 +735,35 @@ ${featureTypeXml}
         ).toEqual([{ name: 'my feature type', attributes: [] }])
       })
     })
+    describe('feature type and attribute with designation', () => {
+      it('reads designation as label', () => {
+        expect(
+          readFromFeatureType(`
+              <gfc:typeName>roads</gfc:typeName>
+              <gfc:isAbstract>
+                <gco:Boolean>false</gco:Boolean>
+              </gfc:isAbstract>
+              <gfc:designation>
+                <gco:CharacterString>Routes</gco:CharacterString>
+              </gfc:designation>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>id</gfc:memberName>
+                  <gfc:cardinality gco:nilReason="missing"/>
+                  <gfc:designation>
+                    <gco:CharacterString>Identifiant</gco:CharacterString>
+                  </gfc:designation>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>`)
+        ).toEqual([
+          {
+            name: 'roads',
+            label: 'Routes',
+            attributes: [{ name: 'id', label: 'Identifiant' }],
+          },
+        ])
+      })
+    })
     describe('attributes with plain text memberName and CharacterString valueType', () => {
       it('reads name, code, description and type', () => {
         expect(

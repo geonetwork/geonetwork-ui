@@ -36,7 +36,7 @@ import {
   AssociatedRecord,
   DatasetFeatureAttribute,
   DatasetFeatureAttributeValue,
-  DatasetFeatureCatalog,
+  DatasetFeatureType,
   Individual,
   LanguageCode,
   SourceRecord,
@@ -449,6 +449,10 @@ function extractFeatureAttribute(): ChainableFunction<
         findChildElement('gfc:memberName', false),
         extractCharacterStringOrText()
       ),
+      pipe(
+        findChildElement('gfc:designation', false),
+        extractCharacterString()
+      ),
       pipe(findChildElement('gfc:definition', false), extractCharacterString()),
       pipe(findChildElement('gfc:code', false), extractCharacterString()),
       pipe(
@@ -461,8 +465,9 @@ function extractFeatureAttribute(): ChainableFunction<
         filterArray((value) => !!(value.value || value.label))
       )
     ),
-    map(([name, description, code, type, values]) => ({
+    map(([name, label, description, code, type, values]) => ({
       name: name ?? '',
+      ...(label && { label }),
       ...(description && { description }),
       ...(code && { code }),
       ...(type && { type }),
@@ -473,7 +478,7 @@ function extractFeatureAttribute(): ChainableFunction<
 
 export function readFeatureTypeDescriptions(
   rootEl: XmlElement
-): DatasetFeatureCatalog['featureTypes'] {
+): Array<DatasetFeatureType> {
   return pipe(
     findNestedElements(
       'mdb:contentInfo',
@@ -491,6 +496,10 @@ export function readFeatureTypeDescriptions(
             extractCharacterStringOrText()
           ),
           pipe(
+            findChildElement('gfc:designation', false),
+            extractCharacterString()
+          ),
+          pipe(
             findChildElement('gfc:definition', false),
             extractCharacterString()
           ),
@@ -502,8 +511,9 @@ export function readFeatureTypeDescriptions(
             mapArray(extractFeatureAttribute())
           )
         ),
-        map(([name, description, attributes]) => ({
+        map(([name, label, description, attributes]) => ({
           name: name ?? '',
+          ...(label && { label }),
           ...(description && { description }),
           attributes,
         }))

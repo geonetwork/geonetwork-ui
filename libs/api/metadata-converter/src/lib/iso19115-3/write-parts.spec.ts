@@ -1071,10 +1071,12 @@ ${featureTypes}
             featureTypeDescriptions: [
               {
                 name: 'roads',
+                label: 'Routes',
                 description: 'Road network',
                 attributes: [
                   {
                     name: 'id',
+                    label: 'Identifiant',
                     description: 'Identifier',
                     code: 'ID',
                     type: 'integer',
@@ -1119,6 +1121,9 @@ ${featureTypes}
                             <gfc:isAbstract>
                                 <gco:Boolean>false</gco:Boolean>
                             </gfc:isAbstract>
+                            <gfc:designation>
+                                <gco:CharacterString>Routes</gco:CharacterString>
+                            </gfc:designation>
                             <gfc:carrierOfCharacteristics>
                                 <gfc:FC_FeatureAttribute>
                                     <gfc:memberName>id</gfc:memberName>
@@ -1126,6 +1131,9 @@ ${featureTypes}
                                         <gco:CharacterString>Identifier</gco:CharacterString>
                                     </gfc:definition>
                                     <gfc:cardinality gco:nilReason="missing"/>
+                                    <gfc:designation>
+                                        <gco:CharacterString>Identifiant</gco:CharacterString>
+                                    </gfc:designation>
                                     <gfc:code>
                                         <gco:CharacterString>ID</gco:CharacterString>
                                     </gfc:code>
