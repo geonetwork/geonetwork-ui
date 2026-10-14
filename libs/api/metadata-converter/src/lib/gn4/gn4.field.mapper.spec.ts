@@ -417,9 +417,9 @@ describe('Gn4FieldMapper', () => {
                     name: 'landcover',
                     type: 'String (48)',
                     values: [
-                      { code: '1', label: 'Forêt dense' },
-                      { label: 'Prairie' },
-                      { code: '3' },
+                      { value: '1', label: 'Forêt dense' },
+                      { value: '', label: 'Prairie' },
+                      { value: '3' },
                     ],
                   },
                 ],

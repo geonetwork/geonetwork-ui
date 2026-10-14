@@ -316,7 +316,7 @@ export interface DatasetRecord extends BaseRecord {
   spatialExtents: Array<DatasetSpatialExtent>
   temporalExtents: Array<DatasetTemporalExtent>
   spatialRepresentation?: SpatialRepresentationType
-  featureTypeDescriptions?: DatasetFeatureCatalog['featureTypes']
+  featureTypeDescriptions?: Array<DatasetFeatureType>
 }
 
 export interface ServiceEndpoint {
@@ -348,20 +348,23 @@ export interface ReuseRecord extends BaseRecord {
   temporalExtents: Array<DatasetTemporalExtent>
 }
 
+export interface DatasetFeatureType {
+  name: string
+  label?: string
+  description?: string
+  attributes: DatasetFeatureAttribute[]
+}
 export type DatasetFeatureCatalog = {
-  featureTypes: Array<{
-    name: string
-    description?: string
-    attributes: DatasetFeatureAttribute[]
-  }>
+  featureTypes: Array<DatasetFeatureType>
 }
 export interface DatasetFeatureAttributeValue {
-  code?: string
-  description?: string
+  value: string // empty string when the value has no code
   label?: string
+  description?: string
 }
 export interface DatasetFeatureAttribute {
   name: string
+  label?: string
   description?: string
   type?: string
   code?: string

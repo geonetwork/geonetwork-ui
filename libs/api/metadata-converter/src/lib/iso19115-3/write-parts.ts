@@ -1,5 +1,8 @@
 import {
   CatalogRecord,
+  DatasetFeatureAttribute,
+  DatasetFeatureAttributeValue,
+  DatasetFeatureType,
   DatasetRecord,
   Individual,
   LanguageCode,
@@ -615,4 +618,132 @@ export function writeAssociatedRecords(
         )
     )
   )(rootEl)
+}
+
+function createNilElement(name: string, nilReason: string) {
+  return pipe(createElement(name), writeAttribute('gco:nilReason', nilReason))
+}
+
+function createFeatureCatalogueShell() {
+  return pipe(
+    createNestedElement(
+      'mdb:contentInfo',
+      'mrc:MD_FeatureCatalogue',
+      'mrc:featureCatalogue',
+      'gfc:FC_FeatureCatalogue'
+    ),
+    // create mandatory elements which are not part of the model yet
+    appendChildren(
+      createNilElement('cat:name', 'missing'),
+      createNilElement('cat:scope', 'missing'),
+      createNilElement('cat:versionNumber', 'missing'),
+      createNilElement('cat:versionDate', 'missing'),
+      createNilElement('gfc:producer', 'missing')
+    )
+  )
+}
+
+function createListedValue(value: DatasetFeatureAttributeValue) {
+  return pipe(
+    createNestedElement('gfc:listedValue', 'gfc:FC_ListedValue'),
+    appendChildren(
+      value.label
+        ? pipe(createElement('gfc:label'), writeCharacterString(value.label))
+        : createNilElement('gfc:label', 'missing'),
+      value.value
+        ? pipe(createElement('gfc:code'), writeCharacterString(value.value))
+        : null,
+      value.description
+        ? pipe(
+            createElement('gfc:definition'),
+            writeCharacterString(value.description)
+          )
+        : null
+    )
+  )
+}
+
+function createFeatureAttribute(attribute: DatasetFeatureAttribute) {
+  return pipe(
+    createNestedElement(
+      'gfc:carrierOfCharacteristics',
+      'gfc:FC_FeatureAttribute'
+    ),
+    appendChildren(
+      pipe(createElement('gfc:memberName'), setTextContent(attribute.name)),
+      attribute.description
+        ? pipe(
+            createElement('gfc:definition'),
+            writeCharacterString(attribute.description)
+          )
+        : null,
+      createNilElement('gfc:cardinality', 'missing'),
+      attribute.label
+        ? pipe(
+            createElement('gfc:designation'),
+            writeCharacterString(attribute.label)
+          )
+        : null,
+      attribute.code
+        ? pipe(createElement('gfc:code'), writeCharacterString(attribute.code))
+        : null,
+      attribute.type
+        ? pipe(
+            createNestedElement('gfc:valueType', 'gco:TypeName', 'gco:aName'),
+            writeCharacterString(attribute.type)
+          )
+        : null,
+      ...(attribute.values ?? [])
+        .filter((value) => value.value || value.label)
+        .map(createListedValue)
+    )
+  )
+}
+
+function createFeatureType(featureType: DatasetFeatureType) {
+  return pipe(
+    createNestedElement('gfc:featureType', 'gfc:FC_FeatureType'),
+    appendChildren(
+      pipe(createElement('gfc:typeName'), setTextContent(featureType.name)),
+      featureType.description
+        ? pipe(
+            createElement('gfc:definition'),
+            writeCharacterString(featureType.description)
+          )
+        : null,
+      pipe(
+        createNestedElement('gfc:isAbstract', 'gco:Boolean'),
+        setTextContent('false')
+      ),
+      featureType.label
+        ? pipe(
+            createElement('gfc:designation'),
+            writeCharacterString(featureType.label)
+          )
+        : null,
+      ...featureType.attributes.map(createFeatureAttribute),
+      createNilElement('gfc:featureCatalogue', 'missing')
+    )
+  )
+}
+
+export function writeFeatureTypeDescriptions(
+  record: DatasetRecord,
+  rootEl: XmlElement
+) {
+  const featureTypes = record.featureTypeDescriptions ?? []
+  const catalogues = findNestedElements(
+    'mdb:contentInfo',
+    'mrc:MD_FeatureCatalogue',
+    'mrc:featureCatalogue',
+    'gfc:FC_FeatureCatalogue'
+  )(rootEl)
+  catalogues.forEach((catalogue) =>
+    removeChildrenByName('gfc:featureType')(catalogue)
+  )
+  if (!featureTypes.length) return
+
+  const catalogue =
+    catalogues[0] ?? appendChildTree(createFeatureCatalogueShell())(rootEl)
+  appendChildren(...featureTypes.map(createFeatureType))(catalogue)
 }

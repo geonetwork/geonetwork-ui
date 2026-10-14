@@ -36,7 +36,7 @@ import {
   AssociatedRecord,
   DatasetFeatureAttribute,
   DatasetFeatureAttributeValue,
-  DatasetFeatureCatalog,
+  DatasetFeatureType,
   Individual,
   LanguageCode,
   SourceRecord,
@@ -428,11 +428,13 @@ function extractListedValue(): ChainableFunction<
   return pipe(
     combine(
       pipe(findChildElement('gfc:code', false), extractCharacterString()),
-      pipe(findChildElement('gfc:label', false), extractCharacterString())
+      pipe(findChildElement('gfc:label', false), extractCharacterString()),
+      pipe(findChildElement('gfc:definition', false), extractCharacterString())
     ),
-    map(([code, label]) => ({
-      ...(code && { code }),
+    map(([code, label, description]) => ({
+      value: code ?? '',
       ...(label && { label }),
+      ...(description && { description }),
     }))
   )
 }
@@ -447,6 +449,10 @@ function extractFeatureAttribute(): ChainableFunction<
         findChildElement('gfc:memberName', false),
         extractCharacterStringOrText()
       ),
+      pipe(
+        findChildElement('gfc:designation', false),
+        extractCharacterString()
+      ),
       pipe(findChildElement('gfc:definition', false), extractCharacterString()),
       pipe(findChildElement('gfc:code', false), extractCharacterString()),
       pipe(
@@ -456,11 +462,12 @@ function extractFeatureAttribute(): ChainableFunction<
       pipe(
         findNestedElements('gfc:listedValue', 'gfc:FC_ListedValue'),
         mapArray(extractListedValue()),
-        filterArray((value) => !!(value.code || value.label))
+        filterArray((value) => !!(value.value || value.label))
       )
     ),
-    map(([name, description, code, type, values]) => ({
+    map(([name, label, description, code, type, values]) => ({
       name: name ?? '',
+      ...(label && { label }),
       ...(description && { description }),
       ...(code && { code }),
       ...(type && { type }),
@@ -471,7 +478,7 @@ function extractFeatureAttribute(): ChainableFunction<
 
 export function readFeatureTypeDescriptions(
   rootEl: XmlElement
-): DatasetFeatureCatalog['featureTypes'] {
+): Array<DatasetFeatureType> {
   return pipe(
     findNestedElements(
       'mdb:contentInfo',
@@ -489,6 +496,10 @@ export function readFeatureTypeDescriptions(
             extractCharacterStringOrText()
           ),
           pipe(
+            findChildElement('gfc:designation', false),
+            extractCharacterString()
+          ),
+          pipe(
             findChildElement('gfc:definition', false),
             extractCharacterString()
           ),
@@ -500,8 +511,9 @@ export function readFeatureTypeDescriptions(
             mapArray(extractFeatureAttribute())
           )
         ),
-        map(([name, description, attributes]) => ({
+        map(([name, label, description, attributes]) => ({
           name: name ?? '',
+          ...(label && { label }),
           ...(description && { description }),
           attributes,
         }))

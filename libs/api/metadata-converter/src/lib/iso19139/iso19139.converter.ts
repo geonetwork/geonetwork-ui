@@ -423,6 +423,8 @@ export class Iso19139Converter extends BaseConverter<string> {
 
     if (record.kind === 'dataset') {
       fieldChanged('status') && this.writers['status'](record, rootEl)
+      fieldChanged('featureTypeDescriptions') &&
+        this.writers['featureTypeDescriptions'](record, rootEl)
     }
     if (record.kind === 'dataset' || record.kind === 'reuse') {
       fieldChanged('updateFrequency') &&

@@ -21,7 +21,12 @@ import WALLONIE_REUSE_SPW from '../fixtures/wallonie.iso19115-3.reuse+spw.xml'
 import { WALLONIE_REUSE_SPW_RECORD } from '../fixtures/wallonie.records.reuse'
 // @ts-ignore
 import MEL_FEATURECATALOG_DATASET from '../fixtures/mel.iso19115-3.dataset+featurecatalog.xml'
-import { MEL_FEATURECATALOG_DATASET_RECORD } from '../fixtures/mel.records.dataset+featurecatalog'
+// @ts-ignore
+import MEL_FEATURECATALOG_DATASET_EDITED from '../fixtures/mel.iso19115-3.dataset+featurecatalog-edited.xml'
+import {
+  MEL_FEATURECATALOG_DATASET_RECORD,
+  MEL_FEATURECATALOG_DATASET_RECORD_EDITED,
+} from '../fixtures/mel.records.dataset+featurecatalog'
 
 import {
   METAWAL_DATASET_RECORD,
@@ -66,6 +71,12 @@ describe('ISO19115-3 converter', () => {
     it('produces the corresponding record (mel dataset with feature catalog)', async () => {
       const record = await converter.readRecord(MEL_FEATURECATALOG_DATASET)
       expect(record).toStrictEqual(MEL_FEATURECATALOG_DATASET_RECORD)
+    })
+    it('produces the corresponding record (edited mel dataset with feature catalog)', async () => {
+      const record = await converter.readRecord(
+        MEL_FEATURECATALOG_DATASET_EDITED
+      )
+      expect(record).toStrictEqual(MEL_FEATURECATALOG_DATASET_RECORD_EDITED)
     })
     it('produces the corresponding record (generic dataset)', async () => {
       const record = await converter.readRecord(GENERIC_DATASET)
@@ -117,6 +128,29 @@ describe('ISO19115-3 converter', () => {
       )
       expect(xml).toStrictEqual(ref)
     })
+    it('rewrites the feature types of the embedded feature catalog of a third-party XML', async () => {
+      const xml = await converter.writeRecord(
+        MEL_FEATURECATALOG_DATASET_RECORD_EDITED,
+        MEL_FEATURECATALOG_DATASET
+      )
+      expect(xml).toStrictEqual(formatXml(MEL_FEATURECATALOG_DATASET_EDITED))
+    })
+    it('writes an embedded feature catalog with the ISO19115-3 gfc namespace', async () => {
+      const featureTypeDescriptions =
+        MEL_FEATURECATALOG_DATASET_RECORD_EDITED.featureTypeDescriptions
+      const xml = await converter.writeRecord({
+        ...GENERIC_DATASET_RECORD,
+        featureTypeDescriptions,
+      })
+      expect(xml).toContain(
+        'xmlns:gfc="http://standards.iso.org/iso/19110/gfc/1.1"'
+      )
+      const record = await converter.readRecord(xml)
+      expect(record).toHaveProperty(
+        'featureTypeDescriptions',
+        featureTypeDescriptions
+      )
+    })
   })
 
   describe('idempotency', () => {
@@ -143,6 +177,15 @@ describe('ISO19115-3 converter', () => {
           )
           expect(backAndForth).toStrictEqual(
             formatXml(WALLONIE_SERVICE_NAPITSWALLONIA)
+          )
+        })
+        it('keeps the record unchanged (mel dataset with feature catalog)', async () => {
+          const backAndForth = await converter.writeRecord(
+            await converter.readRecord(MEL_FEATURECATALOG_DATASET),
+            MEL_FEATURECATALOG_DATASET
+          )
+          expect(backAndForth).toStrictEqual(
+            formatXml(MEL_FEATURECATALOG_DATASET)
           )
         })
       })

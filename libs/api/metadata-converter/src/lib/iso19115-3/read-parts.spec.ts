@@ -735,6 +735,35 @@ ${featureTypeXml}
         ).toEqual([{ name: 'my feature type', attributes: [] }])
       })
     })
+    describe('feature type and attribute with designation', () => {
+      it('reads designation as label', () => {
+        expect(
+          readFromFeatureType(`
+              <gfc:typeName>roads</gfc:typeName>
+              <gfc:isAbstract>
+                <gco:Boolean>false</gco:Boolean>
+              </gfc:isAbstract>
+              <gfc:designation>
+                <gco:CharacterString>Routes</gco:CharacterString>
+              </gfc:designation>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>id</gfc:memberName>
+                  <gfc:cardinality gco:nilReason="missing"/>
+                  <gfc:designation>
+                    <gco:CharacterString>Identifiant</gco:CharacterString>
+                  </gfc:designation>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>`)
+        ).toEqual([
+          {
+            name: 'roads',
+            label: 'Routes',
+            attributes: [{ name: 'id', label: 'Identifiant' }],
+          },
+        ])
+      })
+    })
     describe('attributes with plain text memberName and CharacterString valueType', () => {
       it('reads name, code, description and type', () => {
         expect(
@@ -832,7 +861,10 @@ ${featureTypeXml}
                   </gfc:listedValue>
                 </gfc:FC_FeatureAttribute>
               </gfc:carrierOfCharacteristics>`)[0].attributes[0].values
-        ).toEqual([{ code: '1', label: 'Forêt dense' }, { label: 'Prairie' }])
+        ).toEqual([
+          { value: '1', label: 'Forêt dense' },
+          { value: '', label: 'Prairie' },
+        ])
       })
     })
     describe('attribute without listed values', () => {
@@ -845,6 +877,37 @@ ${featureTypeXml}
                 </gfc:FC_FeatureAttribute>
               </gfc:carrierOfCharacteristics>`)[0].attributes
         expect(attribute).not.toHaveProperty('values')
+      })
+    })
+    describe('listed value with definition', () => {
+      it('reads the definition as description', () => {
+        const [attribute] = readFromFeatureType(`
+              <gfc:typeName>ft</gfc:typeName>
+              <gfc:carrierOfCharacteristics>
+                <gfc:FC_FeatureAttribute>
+                  <gfc:memberName>landcover</gfc:memberName>
+                  <gfc:listedValue>
+                    <gfc:FC_ListedValue>
+                      <gfc:label>
+                        <gco:CharacterString>Forêt dense</gco:CharacterString>
+                      </gfc:label>
+                      <gfc:code>
+                        <gco:CharacterString>1</gco:CharacterString>
+                      </gfc:code>
+                      <gfc:definition>
+                        <gco:CharacterString>Couvert forestier supérieur à 80%</gco:CharacterString>
+                      </gfc:definition>
+                    </gfc:FC_ListedValue>
+                  </gfc:listedValue>
+                </gfc:FC_FeatureAttribute>
+              </gfc:carrierOfCharacteristics>`)[0].attributes
+        expect(attribute.values).toStrictEqual([
+          {
+            value: '1',
+            label: 'Forêt dense',
+            description: 'Couvert forestier supérieur à 80%',
+          },
+        ])
       })
     })
     describe('multiple feature types', () => {
