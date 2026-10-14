@@ -195,6 +195,77 @@ const TEST_CASES: TestCase[] = [
     },
     result: true,
   },
+  {
+    name: 'boolean operators 1',
+    expression:
+      "${ user.abc && (user.hello == 'world' || user.hello == 'universe') }",
+    context: {
+      globals: {
+        user: {
+          abc: true,
+          hello: 'world',
+        },
+      },
+    },
+    result: true,
+  },
+  {
+    name: 'boolean operators 2',
+    expression:
+      "${ (user.hello == 'world' && user.hello == 'universe') || 11 == 12 }",
+    context: {
+      globals: {
+        user: {
+          abc: false,
+          hello: 'world',
+        },
+      },
+    },
+    result: false,
+  },
+  {
+    name: 'boolean operators 3',
+    expression:
+      '${ (true && false) || (true || false) && ((1 || 0) || (0 && 1)) }',
+    context: { globals: {} },
+    result: true,
+  },
+  {
+    name: 'boolean operators 4',
+    expression: "${ 'abc' == 'abc' && 'abc' =='def' }",
+    context: { globals: {} },
+    result: false,
+  },
+  {
+    name: 'true',
+    expression: '${true}',
+    context: { globals: {} },
+    result: true,
+  },
+  {
+    name: 'false',
+    expression: '${ false }',
+    context: { globals: {} },
+    result: false,
+  },
+  {
+    name: 'not operator',
+    expression: '${!user.test}',
+    context: {
+      globals: {
+        user: {
+          test: false,
+        },
+      },
+    },
+    result: true,
+  },
+  {
+    name: 'not operator 2',
+    expression: '${!(11 == 12 || true)}',
+    context: { globals: {} },
+    result: false,
+  },
 
   // ERRORS
 

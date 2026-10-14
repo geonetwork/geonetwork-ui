@@ -11,6 +11,7 @@ import {
   DatasetFeatureCatalog,
   LanguageCode,
   LinkedRecord,
+  RecordFlag,
 } from '../model/record'
 
 export abstract class RecordsRepositoryInterface {
@@ -106,4 +107,22 @@ export abstract class RecordsRepositoryInterface {
   ): Observable<{ user: string; date: Date }>
   abstract getRecordPublicationStatus(uuid: string): Observable<boolean>
   abstract getApplicationLanguages(): Observable<LanguageCode[]>
+
+  /**
+   * Sets a given flag on a record. Flags are not part of the metadata document, which is why they are
+   * not part of the Record model.
+   */
+  abstract setRecordFlag(
+    uniqueIdentifier: string,
+    flagName: RecordFlag,
+    value: boolean
+  ): Observable<void>
+
+  /**
+   * Checks whether a given flag is enabled for a record.
+   */
+  abstract getRecordFlag(
+    uniqueIdentifier: string,
+    flagName: RecordFlag
+  ): Observable<boolean>
 }

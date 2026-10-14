@@ -1,4 +1,7 @@
-import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecordKeys,
+  RecordFlag,
+} from '@geonetwork-ui/common/domain/model/record'
 
 // Expressions should be enclosed in `${}` to be recognized as such
 // eg. ${dateNow()}
@@ -15,6 +18,8 @@ export interface FormFieldConfig {
   invalidHintKey?: string
 }
 
+export type FormFieldModel = CatalogRecordKeys | 'flags'
+
 // Specifiers let us use specific components
 // This is used for instance to target only certain online resources in a field
 type OnlineLinkResourceSpecifier = `onlineResourceType:link`
@@ -25,11 +30,12 @@ type OnlineSingleLinkResourceSpecifier = `onlineResourceType:singleLink`
 // When set on the `contacts` field, contacts are rendered as editable detail
 // fields (ContactDetailsFormComponent) instead of cards (ContactCardComponent)
 type EditableContactDetailsSpecifier = `contact:editableDetails`
-export type FieldModelSpecifier =
+export type FormFieldModelSpecifier =
   | OnlineLinkResourceSpecifier
   | DatasetDistributionsSpecifier
   | OnlineSingleLinkResourceSpecifier
   | EditableContactDetailsSpecifier
+  | `flags:${RecordFlag}`
 
 export type FormFieldComponentName =
   | 'form-field-constraints-shortcuts'
@@ -37,8 +43,8 @@ export type FormFieldComponentName =
 
 export interface EditorFieldIdentification {
   // name of the target field in the record; will not change the record directly if not defined
-  model?: CatalogRecordKeys
-  modelSpecifier?: FieldModelSpecifier
+  model?: FormFieldModel
+  modelSpecifier?: FormFieldModelSpecifier
 
   // if no model is given, a component can be shown instead
   componentName?: FormFieldComponentName

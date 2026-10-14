@@ -28,6 +28,7 @@ export abstract class PlatformServiceInterface {
   abstract supportsAuthentication(): boolean
   abstract getMe(): Observable<UserModel>
   abstract isAnonymous(): Observable<boolean>
+  abstract isAdministrator(): Observable<boolean>
   abstract getUsers(): Observable<UserModel[]>
   abstract getUserPermissionsByGroup(): Observable<GroupModel[]>
   abstract getUsersByOrganization(

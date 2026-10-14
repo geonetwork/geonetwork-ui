@@ -92,6 +92,13 @@ export class Gn4PlatformService implements PlatformServiceInterface {
         switchMap((apiUser) => this.mapper.userFromMeApi(apiUser)),
         shareReplay({ bufferSize: 1, refCount: true })
       )
+  private isAdmin$ = this.disableAuth
+    ? of(false)
+    : of(true).pipe(
+        switchMap(() => this.meApi.getMe()),
+        map((apiUser) => !!apiUser?.admin),
+        shareReplay({ bufferSize: 1, refCount: true })
+      )
 
   /**
    * A map of already loaded thesauri (groups of keywords); the key is a URI
@@ -144,6 +151,10 @@ export class Gn4PlatformService implements PlatformServiceInterface {
 
   isAnonymous(): Observable<boolean> {
     return this.isUserAnonymous$
+  }
+
+  isAdministrator(): Observable<boolean> {
+    return this.isAdmin$
   }
 
   getOrganizations(): Observable<Organization[]> {

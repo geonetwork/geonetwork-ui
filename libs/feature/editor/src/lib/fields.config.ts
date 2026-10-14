@@ -38,6 +38,19 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
               },
             },
             {
+              model: 'flags',
+              modelSpecifier: 'flags:IS_REFERENCE_DATASET',
+              formFieldConfig: {
+                labelKey: marker(
+                  'editor.record.form.field.flags.IS_REFERENCE_DATASET'
+                ),
+                hintKey: marker(
+                  'editor.record.form.field.hint.flags.IS_REFERENCE_DATASET'
+                ),
+              },
+              hidden: '${record.kind != "dataset" || !user.isAdmin}',
+            },
+            {
               model: 'abstract',
               formFieldConfig: {
                 labelKey: marker('editor.record.form.field.abstract'),

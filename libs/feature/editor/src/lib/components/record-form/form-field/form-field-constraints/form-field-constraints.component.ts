@@ -9,10 +9,7 @@ import {
 
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'
 import { ConstraintCardComponent } from '../../../constraint-card/constraint-card.component'
-import {
-  CatalogRecordKeys,
-  Constraint,
-} from '@geonetwork-ui/common/domain/model/record'
+import { Constraint } from '@geonetwork-ui/common/domain/model/record'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { TranslatePipe } from '@ngx-translate/core'
@@ -22,6 +19,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirPlus } from '@ng-icons/iconoir'
+import { FormFieldModel } from '../../../../models'
 
 marker('editor.record.form.constraint.add.legalConstraints')
 marker('editor.record.form.constraint.add.securityConstraints')
@@ -53,7 +51,7 @@ marker('editor.record.form.constraint.header.otherConstraints')
 export class FormFieldConstraintsComponent implements OnInit {
   @Input() label: string
   @Input() value: Constraint[]
-  @Input() constraintType: CatalogRecordKeys
+  @Input() constraintType: FormFieldModel
   @Output() valueChange = new EventEmitter<Constraint[]>()
 
   constraintsHeader = ''

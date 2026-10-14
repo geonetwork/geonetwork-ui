@@ -7,10 +7,11 @@ import {
   datasetRecordsFixture,
   editorConfigFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { BehaviorSubject, Subject } from 'rxjs'
+import { BehaviorSubject, of, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { EditorSectionWithValues } from '../../+state/editor.models'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 class EditorFacadeMock {
   record$ = new BehaviorSubject(datasetRecordsFixture()[0])
@@ -20,6 +21,11 @@ class EditorFacadeMock {
   currentPage$ = new BehaviorSubject(0)
   setCurrentPage = jest.fn()
   updateRecordField = jest.fn()
+}
+
+class PlatformServiceMock {
+  getMe = jest.fn(() => of({}))
+  isAdministrator = jest.fn(() => of(false))
 }
 
 describe('RecordFormComponent', () => {
@@ -37,6 +43,7 @@ describe('RecordFormComponent', () => {
     await TestBed.configureTestingModule({
       providers: [
         { provide: EditorFacade, useClass: EditorFacadeMock },
+        { provide: PlatformServiceInterface, useClass: PlatformServiceMock },
         MockProvider(NotificationsService),
         provideI18n({}, false),
         { provide: EditorFacade, useClass: EditorFacadeMock },

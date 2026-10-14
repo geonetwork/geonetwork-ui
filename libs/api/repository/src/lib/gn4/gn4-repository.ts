@@ -19,6 +19,7 @@ import {
   DatasetFeatureCatalog,
   LanguageCode,
   LinkedRecord,
+  RecordFlag,
   RecordRelation,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -36,6 +37,7 @@ import {
   LanguagesApiService,
   RecordsApiService,
   SearchApiService,
+  TagsApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import {
   combineLatest,
@@ -48,7 +50,13 @@ import {
   switchMap,
   throwError,
 } from 'rxjs'
-import { catchError, map, tap } from 'rxjs/operators'
+import {
+  catchError,
+  map,
+  shareReplay,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators'
 import { lt } from 'semver'
 import { ElasticsearchService } from './elasticsearch'
 import { toLang2 } from '@geonetwork-ui/util/i18n'
@@ -80,6 +88,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   private platformService = inject(PlatformServiceInterface)
   private gn4LanguagesApi = inject(LanguagesApiService)
   private settingsService = inject(Gn4SettingsService)
+  private gn4TagsApi = inject(TagsApiService)
   private disableDraft = inject(DISABLE_DRAFT, { optional: true }) ?? false
   private defaultConverter = inject(DEFAULT_RECORD_CONVERTER)
 
@@ -674,5 +683,73 @@ export class Gn4Repository implements RecordsRepositoryInterface {
 
   private removeRecordFromLocalStorage(recordId: string): void {
     window.localStorage.removeItem(this.getLocalStorageKeyForRecord(recordId))
+  }
+
+  /*
+   * FLAGS
+   * Note: in GN4 API, categories are named "tags"
+   */
+
+  categoriesIdentifierForFlags: Observable<Record<RecordFlag, number>> =
+    this.gn4TagsApi.getTags().pipe(
+      map((categories) =>
+        categories.reduce(
+          (acc, category) => {
+            if (category.name.startsWith('geonetwork-ui-flag:')) {
+              acc[
+                category.name.replace(/^geonetwork-ui-flag:/, '') as RecordFlag
+              ] = category.id
+            }
+            return acc
+          },
+          {} as Record<RecordFlag, number>
+        )
+      ),
+      shareReplay(1)
+    )
+
+  private getCategoryIdForFlag(
+    flagName: RecordFlag
+  ): Observable<number | null> {
+    return this.categoriesIdentifierForFlags.pipe(
+      map((categories) => {
+        const categoryId = categories[flagName]
+        if (categoryId === undefined) {
+          console.warn(
+            `The record flag ${flagName} is not created on GeoNetwork backend; please create a category with the name geonetwork-ui-flag:${flagName} for this to work.`
+          )
+          return null
+        }
+        return categoryId
+      })
+    )
+  }
+
+  setRecordFlag(
+    uniqueIdentifier: string,
+    flagName: RecordFlag,
+    value: boolean
+  ): Observable<void> {
+    return this.getCategoryIdForFlag(flagName).pipe(
+      switchMap((categoryId) => {
+        if (categoryId === null) return of()
+        return value
+          ? this.gn4RecordsApi.tagRecord(uniqueIdentifier, [categoryId], false)
+          : this.gn4RecordsApi.deleteTags(uniqueIdentifier, [categoryId])
+      })
+    )
+  }
+
+  getRecordFlag(
+    uniqueIdentifier: string,
+    flagName: RecordFlag
+  ): Observable<boolean> {
+    return this.gn4RecordsApi.getRecordTags(uniqueIdentifier).pipe(
+      withLatestFrom(this.getCategoryIdForFlag(flagName)),
+      map(([tags, categoryId]) => {
+        if (categoryId === null) return false
+        return Array.from(tags).some((tag) => tag.id === categoryId)
+      })
+    )
   }
 }
