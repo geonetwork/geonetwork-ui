@@ -105,6 +105,21 @@ export type CustomTranslationsAllLanguages = {
   [lang: string]: CustomTranslations
 }
 
+export interface ConfigIssues {
+  warnings: string[]
+  errors: string[]
+}
+
+export interface AppConfig {
+  global: GlobalConfig | null
+  theme: ThemeConfig | null
+  map: MapConfig | null
+  search: SearchConfig | null
+  metadataQuality: MetadataQualityConfig | null
+  editor: EditorConfig | null
+  translations: CustomTranslationsAllLanguages
+}
+
 export interface SearchConfig {
   FILTER_GEOMETRY?: Geometry
 }
