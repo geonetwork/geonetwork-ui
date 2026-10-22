@@ -41,7 +41,7 @@ export class AddLayerFromOgcApiComponent implements OnInit {
   loading = false
   layers: any[] = []
   errorMessage: string | null = null
-  selectedLayerTypes: { [key: string]: DropdownChoice['value'] } = {}
+  selectedLayerTypes: { [key: string]: DropdownChoice<string>['value'] } = {}
 
   ngOnInit() {
     this.urlChange.pipe(debounceTime(700)).subscribe(() => {
@@ -105,13 +105,13 @@ export class AddLayerFromOgcApiComponent implements OnInit {
     )
   }
 
-  onLayerTypeSelect(layerName: string, selectedType: any) {
+  onLayerTypeSelect(layerName: string, selectedType: string) {
     this.selectedLayerTypes[layerName] = selectedType
       ? selectedType
       : this.getLayerChoices(layerName)[0]?.value
   }
 
-  async addLayer(layer: string, layerType: any) {
+  async addLayer(layer: string, layerType: string) {
     try {
       const ogcEndpoint = await new OgcApiEndpoint(this.ogcUrl)
       let layerUrl: string

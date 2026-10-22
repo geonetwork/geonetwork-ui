@@ -63,7 +63,7 @@ export class RecordApiFormComponent {
   apiFeatureType: string
   supportOffset = true
   accessServiceProtocol: ServiceProtocol | undefined
-  outputFormats: DropdownChoice[] = [
+  outputFormats: DropdownChoice<string>[] = [
     { value: 'application/json', label: 'JSON' },
   ]
   endpoint: WfsEndpoint | OgcApiEndpoint | undefined
@@ -95,7 +95,7 @@ export class RecordApiFormComponent {
     this.limit$.next(value === '' ? '-1' : value)
   }
 
-  setFormat(value: string | unknown) {
+  setFormat(value: string) {
     this.format$.next(String(value))
   }
 
@@ -120,7 +120,7 @@ export class RecordApiFormComponent {
       .sort((a, b) => a.label.localeCompare(b.label))
   }
 
-  mimeTypeToFormatName(mimeType: MimeType): DropdownChoice | null {
+  mimeTypeToFormatName(mimeType: MimeType): DropdownChoice<string> | null {
     const formatName = mimeTypeToFormat(mimeType)
     return formatName
       ? { label: formatName.toUpperCase(), value: mimeType }
