@@ -87,31 +87,6 @@ export function getCustomTranslations(langCode: string): CustomTranslations {
 
 let appConfigLoaded = false
 
-function fetchConfig(
-  configUrl = 'assets/configuration/default.toml'
-): Promise<Record<string, unknown>> {
-  console.log(
-    `[geonetwork-ui] Loading application configuration from ${configUrl}`
-  )
-  return fetch(configUrl)
-    .then((resp) => {
-      if (!resp.ok) throw new Error('Configuration file could not be loaded')
-      return resp.text()
-    })
-    .then((conf) => {
-      try {
-        return TOML.parse(conf, { joiner: '\n', bigint: false }) as Record<
-          string,
-          unknown
-        >
-      } catch (e: any) {
-        throw new Error(
-          `An error occurred when parsing the configuration file: ${e.message}`
-        )
-      }
-    })
-}
-
 function parseGlobalSection(
   parsed: Record<string, unknown>,
   { warnings, errors }: ConfigIssues
@@ -397,40 +372,6 @@ function parseEditingSection(
       } as EditorConfig)
 }
 
-function parseTranslationsSection(
-  parsed: Record<string, unknown>
-): CustomTranslationsAllLanguages {
-  return parseTranslationsConfigSection(
-    parsed,
-    'translations'
-  ) as CustomTranslationsAllLanguages
-}
-
-function reportConfigIssues({ warnings, errors }: ConfigIssues) {
-  if (errors.length) {
-    throw new Error(`One or more mandatory settings were missing from the configuration file.
-${errors.join('\n')}`)
-  } else if (warnings.length) {
-    console.warn(`One or more unexpected settings were encountered in the configuration file.
-${warnings.join('\n')}`)
-  }
-}
-
-/**
- * Stores the given configuration sections and marks the configuration as loaded;
- * omitted sections are reset (their getters will throw or return null)
- */
-function setAppConfig(config: Partial<AppConfig>) {
-  globalConfig = config.global ?? null
-  themeConfig = config.theme ?? null
-  mapConfig = config.map ?? null
-  searchConfig = config.search ?? null
-  metadataQualityConfig = config.metadataQuality ?? null
-  editorConfig = config.editor ?? null
-  customTranslations = config.translations ?? {}
-  appConfigLoaded = true
-}
-
 const SECTION_PARSERS: {
   [name in ConfigSectionName]: (
     parsed: Record<string, unknown>,
@@ -443,26 +384,62 @@ const SECTION_PARSERS: {
   search: parseSearchSection,
   metadataQuality: parseMetadataQualitySection,
   editor: parseEditingSection,
-  translations: (parsed) => parseTranslationsSection(parsed),
+  translations: (parsed) =>
+    parseTranslationsConfigSection(
+      parsed,
+      'translations'
+    ) as CustomTranslationsAllLanguages,
 }
 
 /**
  * Loads the configuration file and stores the given sections (all by default);
+ * omitted sections are reset (their getters will throw or return null);
  * resolves with the parsed configuration file, e.g. to read sections with a custom parser
  */
 export function loadAppConfig(
   configUrl = 'assets/configuration/default.toml',
   sections = Object.keys(SECTION_PARSERS) as ConfigSectionName[]
 ): Promise<Record<string, unknown>> {
-  return fetchConfig(configUrl).then((parsed) => {
-    const issues: ConfigIssues = { warnings: [], errors: [] }
-    const config = Object.fromEntries(
-      sections.map((name) => [name, SECTION_PARSERS[name](parsed, issues)])
-    ) as Partial<AppConfig>
-    reportConfigIssues(issues)
-    setAppConfig(config)
-    return parsed
-  })
+  console.log(
+    `[geonetwork-ui] Loading application configuration from ${configUrl}`
+  )
+  return fetch(configUrl)
+    .then((resp) => {
+      if (!resp.ok) throw new Error('Configuration file could not be loaded')
+      return resp.text()
+    })
+    .then((conf) => {
+      let parsed: Record<string, unknown>
+      try {
+        parsed = TOML.parse(conf, { joiner: '\n', bigint: false })
+      } catch (e: any) {
+        throw new Error(
+          `An error occurred when parsing the configuration file: ${e.message}`
+        )
+      }
+      const issues: ConfigIssues = { warnings: [], errors: [] }
+      const config = Object.fromEntries(
+        sections.map((name) => [name, SECTION_PARSERS[name](parsed, issues)])
+      ) as Partial<AppConfig>
+
+      if (issues.errors.length) {
+        throw new Error(`One or more mandatory settings were missing from the configuration file.
+${issues.errors.join('\n')}`)
+      } else if (issues.warnings.length) {
+        console.warn(`One or more unexpected settings were encountered in the configuration file.
+${issues.warnings.join('\n')}`)
+      }
+
+      globalConfig = config.global ?? null
+      themeConfig = config.theme ?? null
+      mapConfig = config.map ?? null
+      searchConfig = config.search ?? null
+      metadataQualityConfig = config.metadataQuality ?? null
+      editorConfig = config.editor ?? null
+      customTranslations = config.translations ?? {}
+      appConfigLoaded = true
+      return parsed
+    })
 }
 
 export function isConfigLoaded() {
