@@ -10,6 +10,7 @@ import {
 import {
   AppConfig,
   ConfigIssues,
+  ConfigSectionName,
   CustomTranslations,
   CustomTranslationsAllLanguages,
   EditorConfig,
@@ -430,20 +431,37 @@ export function setAppConfig(config: Partial<AppConfig>) {
   appConfigLoaded = true
 }
 
-export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
+const SECTION_PARSERS: {
+  [name in ConfigSectionName]: (
+    parsed: Record<string, unknown>,
+    issues: ConfigIssues
+  ) => AppConfig[name]
+} = {
+  global: parseGlobalSection,
+  map: parseMapSection,
+  theme: parseThemeSection,
+  search: parseSearchSection,
+  metadataQuality: parseMetadataQualitySection,
+  editor: parseEditingSection,
+  translations: (parsed) => parseTranslationsSection(parsed),
+}
+
+/**
+ * Loads the configuration file and stores the given sections (all by default);
+ * resolves with the parsed configuration file, e.g. to read sections with a custom parser
+ */
+export function loadAppConfig(
+  configUrl = 'assets/configuration/default.toml',
+  sections = Object.keys(SECTION_PARSERS) as ConfigSectionName[]
+): Promise<Record<string, unknown>> {
   return fetchConfig(configUrl).then((parsed) => {
     const issues: ConfigIssues = { warnings: [], errors: [] }
-    const config: AppConfig = {
-      global: parseGlobalSection(parsed, issues),
-      map: parseMapSection(parsed, issues),
-      theme: parseThemeSection(parsed, issues),
-      search: parseSearchSection(parsed, issues),
-      metadataQuality: parseMetadataQualitySection(parsed, issues),
-      editor: parseEditingSection(parsed, issues),
-      translations: parseTranslationsSection(parsed),
-    }
+    const config = Object.fromEntries(
+      sections.map((name) => [name, SECTION_PARSERS[name](parsed, issues)])
+    ) as Partial<AppConfig>
     reportConfigIssues(issues)
     setAppConfig(config)
+    return parsed
   })
 }
 

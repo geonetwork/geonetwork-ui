@@ -120,6 +120,8 @@ export interface AppConfig {
   translations: CustomTranslationsAllLanguages
 }
 
+export type ConfigSectionName = keyof AppConfig
+
 export interface SearchConfig {
   FILTER_GEOMETRY?: Geometry
 }
