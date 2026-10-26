@@ -188,6 +188,80 @@ In case things do not work out properly, please be so kind as to [open an issue 
 As an illustration, a working Custom Application can be found in this repository: https://github.com/jahow/geonetwork-ui-custom-app
 Note that this is not guaranteed to be maintained in the long run.
 
+## Loading GeoNetwork-UI translations alongside your own
+
+The NPM package ships the GeoNetwork-UI translations in `geonetwork-ui/translations/*.json`. A Custom Application usually has its own translations too, so the two sets need to be merged at runtime. This avoids duplicating GeoNetwork-UI keys in your own translation files, and gives you every language supported by GeoNetwork-UI for free.
+
+### Copy the translations to the assets at build time
+
+In `angular.json`, add an entry to the `assets` of the build target so that the GeoNetwork-UI translations are copied next to your own:
+
+```json
+"assets": [
+  {
+    "glob": "**/*",
+    "input": "translations",
+    "output": "assets/i18n/"
+  },
+  {
+    "glob": "*.json",
+    "input": "node_modules/geonetwork-ui/translations",
+    "output": "assets/i18n/gn-ui/"
+  }
+]
+```
+
+### Write a custom `TranslateLoader`
+
+The loader fetches both files and merges them, with the application's values taking precedence over GeoNetwork-UI's. `dropEmptyTranslations` removes keys with empty values, so that an untranslated key falls back to the other set (or to the default language) instead of showing a blank string:
+
+```ts
+import { HttpClient } from '@angular/common/http'
+import { inject, Injectable } from '@angular/core'
+import { TranslateLoader, TranslationObject } from '@ngx-translate/core'
+import { dropEmptyTranslations } from 'geonetwork-ui'
+import { forkJoin, map, Observable } from 'rxjs'
+
+@Injectable()
+export class CustomAppTranslateLoader implements TranslateLoader {
+  private http = inject(HttpClient)
+
+  getTranslation(lang: string): Observable<TranslationObject> {
+    const baseLang = lang.substring(0, 2)
+    return forkJoin([this.http.get(`./assets/i18n/gn-ui/${baseLang}.json`), this.http.get(`./assets/i18n/${baseLang}.json`)]).pipe(
+      map(([gnUi, app]) => ({
+        ...dropEmptyTranslations(gnUi),
+        ...dropEmptyTranslations(app),
+      }))
+    )
+  }
+}
+```
+
+### Provide the loader
+
+Keep the default GeoNetwork-UI translation config (which notably sets up the MessageFormat compiler) and only replace its loader:
+
+```ts
+import { TranslateLoader } from '@ngx-translate/core'
+import { provideI18n, TRANSLATE_DEFAULT_CONFIG } from 'geonetwork-ui'
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(),
+    provideI18n({
+      ...TRANSLATE_DEFAULT_CONFIG,
+      loader: { provide: TranslateLoader, useClass: CustomAppTranslateLoader },
+    }),
+    // ...
+  ],
+}
+```
+
+### Overriding GeoNetwork-UI translations
+
+Since the application's values win, overriding a GeoNetwork-UI text is just a matter of marking its key with `marker()` in your code, so that `ngx-translate-extract` adds it to your own translation files, and then setting the new value there. Note that such an override applies everywhere in the application.
+
 ## Using the NPM package in development mode
 
 When developing in parallel on GeoNetwork-UI and a Custom Application, the following guidelines should be followed:
