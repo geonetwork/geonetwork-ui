@@ -113,7 +113,7 @@ function fetchConfig(
 }
 
 function parseGlobalSection(
-  parsed: any,
+  parsed: Record<string, unknown>,
   { warnings, errors }: ConfigIssues
 ): GlobalConfig | null {
   let parsedGlobalSection = parseConfigSection(
@@ -161,7 +161,7 @@ function parseGlobalSection(
 }
 
 function parseMapSection(
-  parsed: any,
+  parsed: Record<string, unknown>,
   { warnings, errors }: ConfigIssues
 ): MapConfig | null {
   const parsedLayersSections = parseMultiConfigSection(
@@ -217,7 +217,7 @@ function parseMapSection(
 }
 
 function parseThemeSection(
-  parsed: any,
+  parsed: Record<string, unknown>,
   { warnings, errors }: ConfigIssues
 ): ThemeConfig | null {
   const parsedThemeSection = parseConfigSection(
@@ -254,7 +254,7 @@ function parseThemeSection(
 }
 
 function parseSearchSection(
-  parsed: any,
+  parsed: Record<string, unknown>,
   { warnings, errors }: ConfigIssues
 ): SearchConfig | null {
   const parsedSearchSection = parseConfigSection(
@@ -335,7 +335,7 @@ function parseSearchSection(
 }
 
 function parseMetadataQualitySection(
-  parsed: any,
+  parsed: Record<string, unknown>,
   { warnings, errors }: ConfigIssues
 ): MetadataQualityConfig | null {
   const parsedMetadataQualitySection = parseConfigSection(
@@ -355,7 +355,7 @@ function parseMetadataQualitySection(
 }
 
 function parseEditingSection(
-  parsed: any,
+  parsed: Record<string, unknown>,
   { warnings, errors }: ConfigIssues
 ): EditorConfig | null {
   let parsedEditingSection = parseConfigSection(
@@ -397,7 +397,9 @@ function parseEditingSection(
       } as EditorConfig)
 }
 
-function parseTranslationsSection(parsed: any): CustomTranslationsAllLanguages {
+function parseTranslationsSection(
+  parsed: Record<string, unknown>
+): CustomTranslationsAllLanguages {
   return parseTranslationsConfigSection(
     parsed,
     'translations'
