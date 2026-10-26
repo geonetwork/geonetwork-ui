@@ -9,13 +9,7 @@ import {
   getThemeConfig,
   isConfigLoaded,
   loadAppConfig,
-  fetchConfig,
-  parseThemeSection,
-  parseTranslationsSection,
-  reportConfigIssues,
-  setAppConfig,
 } from './app-config'
-import { ConfigIssues } from './model'
 import {
   malformedConfigFixture,
   minimalAppConfigFixture,
@@ -558,63 +552,6 @@ new_record_standard = "dcat"
     })
   })
 
-  describe('custom loading', () => {
-    beforeEach(() => {
-      jest.spyOn(global.console, 'warn').mockImplementation(() => {}) // eslint-disable-line
-      fetchMock.get(
-        'end:default.toml',
-        () => `
-[theme]
-primary_color = "#093564"
-secondary_color = "#c2e9dc"
-main_color = "#212029"
-background_color = "#fdfbff"
-
-[translations.en]
-my.key = "My value"
-`
-      )
-    })
-    describe('with only some sections stored', () => {
-      beforeEach(async () => {
-        const parsed = await fetchConfig()
-        const issues: ConfigIssues = { warnings: [], errors: [] }
-        const theme = parseThemeSection(parsed, issues)
-        reportConfigIssues(issues)
-        setAppConfig({ theme })
-      })
-      it('marks the configuration as loaded', () => {
-        expect(isConfigLoaded()).toBe(true)
-      })
-      it('returns the stored sections', () => {
-        expect(getThemeConfig()).toEqual({
-          BACKGROUND_COLOR: '#fdfbff',
-          MAIN_COLOR: '#212029',
-          PRIMARY_COLOR: '#093564',
-          SECONDARY_COLOR: '#c2e9dc',
-        })
-      })
-      it('throws for a mandatory section that was not stored', () => {
-        expect(() => getGlobalConfig()).toThrowError('not initialized')
-      })
-      it('returns null for an optional section that was not stored', () => {
-        expect(getOptionalMapConfig()).toBeNull()
-      })
-      it('returns empty translations if none were stored', () => {
-        expect(getCustomTranslations('en')).toEqual({})
-      })
-    })
-    describe('with translations stored', () => {
-      beforeEach(async () => {
-        const parsed = await fetchConfig()
-        setAppConfig({ translations: parseTranslationsSection(parsed) })
-      })
-      it('returns the custom translations', () => {
-        expect(getCustomTranslations('en')).toEqual({ 'my.key': 'My value' })
-      })
-    })
-  })
-
   describe('loadAppConfig with selected sections', () => {
     let parsed: Record<string, unknown>
     beforeEach(async () => {
@@ -652,27 +589,6 @@ my_key = "my value"
     })
     it('resolves with the parsed configuration file', () => {
       expect(parsed['my-section']).toEqual({ my_key: 'my value' })
-    })
-  })
-
-  describe('reportConfigIssues', () => {
-    beforeEach(() => {
-      jest.mocked(console.warn).mockClear()
-    })
-    it('throws if there are errors', () => {
-      expect(() =>
-        reportConfigIssues({ warnings: ['a warning'], errors: ['an error'] })
-      ).toThrowError('an error')
-    })
-    it('logs a warning if there are only warnings', () => {
-      reportConfigIssues({ warnings: ['a warning'], errors: [] })
-      expect(console.warn).toHaveBeenCalledWith(
-        expect.stringContaining('a warning')
-      )
-    })
-    it('does nothing if there are no issues', () => {
-      reportConfigIssues({ warnings: [], errors: [] })
-      expect(console.warn).not.toHaveBeenCalled()
     })
   })
 

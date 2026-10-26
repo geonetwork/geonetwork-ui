@@ -87,7 +87,7 @@ export function getCustomTranslations(langCode: string): CustomTranslations {
 
 let appConfigLoaded = false
 
-export function fetchConfig(
+function fetchConfig(
   configUrl = 'assets/configuration/default.toml'
 ): Promise<Record<string, unknown>> {
   console.log(
@@ -112,7 +112,7 @@ export function fetchConfig(
     })
 }
 
-export function parseGlobalSection(
+function parseGlobalSection(
   parsed: any,
   { warnings, errors }: ConfigIssues
 ): GlobalConfig | null {
@@ -160,7 +160,7 @@ export function parseGlobalSection(
       } as GlobalConfig)
 }
 
-export function parseMapSection(
+function parseMapSection(
   parsed: any,
   { warnings, errors }: ConfigIssues
 ): MapConfig | null {
@@ -216,7 +216,7 @@ export function parseMapSection(
       } as MapConfig)
 }
 
-export function parseThemeSection(
+function parseThemeSection(
   parsed: any,
   { warnings, errors }: ConfigIssues
 ): ThemeConfig | null {
@@ -253,7 +253,7 @@ export function parseThemeSection(
       } as ThemeConfig)
 }
 
-export function parseSearchSection(
+function parseSearchSection(
   parsed: any,
   { warnings, errors }: ConfigIssues
 ): SearchConfig | null {
@@ -334,7 +334,7 @@ export function parseSearchSection(
       } as SearchConfig)
 }
 
-export function parseMetadataQualitySection(
+function parseMetadataQualitySection(
   parsed: any,
   { warnings, errors }: ConfigIssues
 ): MetadataQualityConfig | null {
@@ -354,7 +354,7 @@ export function parseMetadataQualitySection(
       } as MetadataQualityConfig)
 }
 
-export function parseEditingSection(
+function parseEditingSection(
   parsed: any,
   { warnings, errors }: ConfigIssues
 ): EditorConfig | null {
@@ -397,16 +397,14 @@ export function parseEditingSection(
       } as EditorConfig)
 }
 
-export function parseTranslationsSection(
-  parsed: any
-): CustomTranslationsAllLanguages {
+function parseTranslationsSection(parsed: any): CustomTranslationsAllLanguages {
   return parseTranslationsConfigSection(
     parsed,
     'translations'
   ) as CustomTranslationsAllLanguages
 }
 
-export function reportConfigIssues({ warnings, errors }: ConfigIssues) {
+function reportConfigIssues({ warnings, errors }: ConfigIssues) {
   if (errors.length) {
     throw new Error(`One or more mandatory settings were missing from the configuration file.
 ${errors.join('\n')}`)
@@ -420,7 +418,7 @@ ${warnings.join('\n')}`)
  * Stores the given configuration sections and marks the configuration as loaded;
  * omitted sections are reset (their getters will throw or return null)
  */
-export function setAppConfig(config: Partial<AppConfig>) {
+function setAppConfig(config: Partial<AppConfig>) {
   globalConfig = config.global ?? null
   themeConfig = config.theme ?? null
   mapConfig = config.map ?? null
