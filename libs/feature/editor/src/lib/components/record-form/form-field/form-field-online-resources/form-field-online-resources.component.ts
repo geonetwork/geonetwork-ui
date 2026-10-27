@@ -160,8 +160,7 @@ export class FormFieldOnlineResourcesComponent {
     this.valueChange.emit([...this.allResources, service])
   }
 
-  handleResourcesChange(items: unknown[]) {
-    const notLinks = items as OnlineNotLinkResource[]
+  handleResourcesChange(notLinks: OnlineNotLinkResource[]) {
     const newResources = [
       ...this.allResources.filter((r) => r.type === 'link'),
       ...notLinks,

@@ -113,9 +113,7 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
     }, [] as Individual[])
   }
 
-  handleContactsChanged(items: unknown[]) {
-    const contacts = items as Individual[]
-
+  handleContactsChanged(contacts: Individual[]) {
     this.contacts = contacts
 
     this.valueChange.emit(contacts)

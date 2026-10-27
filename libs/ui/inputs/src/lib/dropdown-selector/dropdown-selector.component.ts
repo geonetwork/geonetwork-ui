@@ -53,17 +53,17 @@ const DEFAULT_ROW_NUMBERS = 6
     }),
   ],
 })
-export class DropdownSelectorComponent implements OnInit {
+export class DropdownSelectorComponent<T = unknown> implements OnInit {
   @Input() title: string
   @Input() showTitle = true
   @Input() ariaName: string
-  @Input() choices: Array<DropdownChoice>
-  @Input() selected: DropdownChoice['value']
+  @Input() choices: Array<DropdownChoice<T>>
+  @Input() selected: T
   @Input() maxRows: number
   @Input() extraBtnClass = ''
   @Input() minWidth = ''
   @Input() disabled: boolean
-  @Output() selectValue = new EventEmitter<DropdownChoice['value']>()
+  @Output() selectValue = new EventEmitter<T>()
   @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
   @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay
   overlayOpen = false
@@ -88,7 +88,7 @@ export class DropdownSelectorComponent implements OnInit {
   @ViewChildren('choiceInputs', { read: ElementRef })
   choiceInputs: QueryList<ElementRef>
 
-  get selectedChoice(): DropdownChoice {
+  get selectedChoice(): DropdownChoice<T> {
     return (
       this.choices.find(
         (choice) =>
@@ -112,11 +112,11 @@ export class DropdownSelectorComponent implements OnInit {
     }
   }
 
-  isSelected(choice: DropdownChoice) {
+  isSelected(choice: DropdownChoice<T>) {
     return choice === this.selectedChoice
   }
 
-  onSelectValue(choice: DropdownChoice) {
+  onSelectValue(choice: DropdownChoice<T>) {
     this.closeOverlay()
     this.selected = choice.value
     this.selectValue.emit(this.selected)
@@ -202,7 +202,7 @@ export class DropdownSelectorComponent implements OnInit {
     )
   }
 
-  selectIfEnter(event: KeyboardEvent, choice: DropdownChoice) {
+  selectIfEnter(event: KeyboardEvent, choice: DropdownChoice<T>) {
     if (event.code === 'Enter') {
       event.preventDefault()
       this.onSelectValue(choice)

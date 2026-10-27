@@ -36,8 +36,10 @@
       class="contents text-gray-900 cursor-pointer group"
       (click)="handleRowClick(item)"
       data-cy="table-row"
-      [attr.data-cy-title]="item.title"
-      [title]="getItemTitle(item) | translate: { recordKind: item['kind'] }"
+      [attr.data-cy-title]="getItemDisplayTitle(item)"
+      [title]="
+        getItemTitle(item) | translate: { recordKind: getItemKind(item) }
+      "
     >
       <div
         class="relative h-0"

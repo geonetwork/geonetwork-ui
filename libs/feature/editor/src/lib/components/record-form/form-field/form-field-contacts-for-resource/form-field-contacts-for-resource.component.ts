@@ -153,9 +153,7 @@ export class FormFieldContactsForResourceComponent
     this.valueChange.emit(newContactsforRessource)
   }
 
-  handleContactsChanged(items: unknown[], role: Role) {
-    const contacts = items as Individual[]
-
+  handleContactsChanged(contacts: Individual[], role: Role) {
     this.contactsForRessourceByRole.set(role, contacts)
 
     const newControlValue = Array.from(
@@ -193,8 +191,7 @@ export class FormFieldContactsForResourceComponent
   /**
    * gn-ui-autocomplete
    */
-  addContact(contact: unknown, role: string) {
-    const newContact = contact as UserModel
+  addContact(newContact: UserModel, role: string) {
     const newContactsForRessource = {
       firstName: newContact.name ?? '',
       lastName: newContact.surname ?? '',
