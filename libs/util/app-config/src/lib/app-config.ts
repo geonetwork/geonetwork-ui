@@ -8,6 +8,9 @@ import {
   parseTranslationsConfigSection,
 } from './parse-utils'
 import {
+  AppConfig,
+  ConfigIssues,
+  ConfigSectionName,
   CustomTranslations,
   CustomTranslationsAllLanguages,
   EditorConfig,
@@ -84,7 +87,319 @@ export function getCustomTranslations(langCode: string): CustomTranslations {
 
 let appConfigLoaded = false
 
-export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
+function parseGlobalSection(
+  parsed: Record<string, unknown>,
+  { warnings, errors }: ConfigIssues
+): GlobalConfig | null {
+  let parsedGlobalSection = parseConfigSection(
+    parsed,
+    'global',
+    ['geonetwork4_api_url'],
+    [
+      'datahub_url',
+      'edit_url_template',
+      'proxy_path',
+      'metadata_language',
+      'login_url',
+      'logout_url',
+      'settings_url',
+      'web_component_embedder_url',
+      'languages',
+      'contact_email',
+      'reuse_form_url',
+    ],
+    warnings,
+    errors
+  )
+  if (parsedGlobalSection?.metadata_language) {
+    parsedGlobalSection = checkMetadataLanguage(parsedGlobalSection, warnings)
+  }
+  return parsedGlobalSection === null
+    ? null
+    : ({
+        GN4_API_URL: parsedGlobalSection.geonetwork4_api_url,
+        DATAHUB_URL: parsedGlobalSection.datahub_url,
+        EDIT_URL_TEMPLATE: parsedGlobalSection.edit_url_template,
+        PROXY_PATH: parsedGlobalSection.proxy_path,
+        METADATA_LANGUAGE: parsedGlobalSection.metadata_language
+          ? (parsedGlobalSection.metadata_language as string).toLowerCase()
+          : undefined,
+        LOGIN_URL: parsedGlobalSection.login_url,
+        LOGOUT_URL: parsedGlobalSection.logout_url,
+        SETTINGS_URL: parsedGlobalSection.settings_url,
+        WEB_COMPONENT_EMBEDDER_URL:
+          parsedGlobalSection.web_component_embedder_url,
+        LANGUAGES: parsedGlobalSection.languages,
+        CONTACT_EMAIL: parsedGlobalSection.contact_email,
+        REUSE_FORM_URL: parsedGlobalSection.reuse_form_url,
+      } as GlobalConfig)
+}
+
+function parseMapSection(
+  parsed: Record<string, unknown>,
+  { warnings, errors }: ConfigIssues
+): MapConfig | null {
+  const parsedLayersSections = parseMultiConfigSection(
+    parsed,
+    'map_layer',
+    ['type'],
+    ['name', 'url', 'data', 'styleUrl', 'accessToken'],
+    warnings,
+    errors
+  )
+  const parsedMapSection = parseConfigSection(
+    parsed,
+    'map',
+    [],
+    [
+      'max_zoom',
+      'do_not_tile_wms',
+      'max_extent',
+      'max_feature_count',
+      'baselayer',
+      'do_not_use_default_basemap',
+      'external_viewer_url_template',
+      'external_viewer_open_new_tab',
+    ],
+    warnings,
+    errors
+  )
+  return parsedMapSection === null || parsedLayersSections === null
+    ? null
+    : ({
+        MAX_ZOOM: parsedMapSection.max_zoom,
+        DO_NOT_TILE_WMS: parsedMapSection.do_not_tile_wms,
+        MAX_EXTENT: parsedMapSection.max_extent,
+        MAX_FEATURE_COUNT: parsedMapSection.max_feature_count,
+        EXTERNAL_VIEWER_URL_TEMPLATE:
+          parsedMapSection.external_viewer_url_template,
+        EXTERNAL_VIEWER_OPEN_NEW_TAB:
+          parsedMapSection.external_viewer_open_new_tab,
+        DO_NOT_USE_DEFAULT_BASEMAP:
+          !!parsedMapSection.do_not_use_default_basemap,
+        MAP_LAYERS: parsedLayersSections.map(
+          (map_layer) =>
+            ({
+              TYPE: map_layer.type,
+              URL: map_layer.url,
+              NAME: map_layer.name,
+              DATA: map_layer.data,
+              STYLE_URL: map_layer.styleUrl,
+              ACCESS_TOKEN: map_layer.accessToken,
+            }) as LayerConfig
+        ),
+      } as MapConfig)
+}
+
+function parseThemeSection(
+  parsed: Record<string, unknown>,
+  { warnings, errors }: ConfigIssues
+): ThemeConfig | null {
+  const parsedThemeSection = parseConfigSection(
+    parsed,
+    'theme',
+    ['primary_color', 'secondary_color', 'main_color', 'background_color'],
+    [
+      'header_foreground_color',
+      'main_font',
+      'title_font',
+      'fonts_stylesheet_url',
+      'thumbnail_placeholder',
+      'header_background',
+      'favicon',
+    ],
+    warnings,
+    errors
+  )
+  return parsedThemeSection === null
+    ? null
+    : ({
+        PRIMARY_COLOR: parsedThemeSection.primary_color,
+        SECONDARY_COLOR: parsedThemeSection.secondary_color,
+        MAIN_COLOR: parsedThemeSection.main_color,
+        BACKGROUND_COLOR: parsedThemeSection.background_color,
+        HEADER_FOREGROUND_COLOR: parsedThemeSection.header_foreground_color,
+        THUMBNAIL_PLACEHOLDER: parsedThemeSection.thumbnail_placeholder,
+        HEADER_BACKGROUND: parsedThemeSection.header_background,
+        TITLE_FONT: parsedThemeSection.title_font,
+        MAIN_FONT: parsedThemeSection.main_font,
+        FONTS_STYLESHEET_URL: parsedThemeSection.fonts_stylesheet_url,
+        FAVICON: parsedThemeSection.favicon,
+      } as ThemeConfig)
+}
+
+function parseSearchSection(
+  parsed: Record<string, unknown>,
+  { warnings, errors }: ConfigIssues
+): SearchConfig | null {
+  const parsedSearchSection = parseConfigSection(
+    parsed,
+    'search',
+    [],
+    [
+      'record_kind_quick_filter',
+      'filter_geometry_data',
+      'filter_geometry_url',
+      'do_not_use_default_search_preset',
+      'search_preset',
+      'advanced_filters',
+      'limit',
+      'spatial_extent_max_file_size',
+      'geocoding_provider',
+      'geocoding_provider_options',
+      'geocoding_provider_labels',
+    ],
+    warnings,
+    errors
+  )
+  const parsedSearchParams = parseMultiConfigSection(
+    parsed,
+    'search_preset',
+    ['name'],
+    ['sort', 'filters'],
+    warnings,
+    errors
+  )
+  const parsedCustomFilters = parseMultiConfigSection(
+    parsed,
+    'custom_filter',
+    ['name', 'base_filter'],
+    ['exclude_values', 'include_values', 'label_key'],
+    warnings,
+    errors
+  )
+  const parsedGeocodingProviderLabels =
+    parsedSearchSection?.geocoding_provider_labels as
+      | Record<string, string>
+      | undefined
+  return parsedSearchSection === null
+    ? null
+    : ({
+        RECORD_KIND_QUICK_FILTER: parsedSearchSection.record_kind_quick_filter,
+        FILTER_GEOMETRY_DATA: parsedSearchSection.filter_geometry_data,
+        FILTER_GEOMETRY_URL: parsedSearchSection.filter_geometry_url,
+        DO_NOT_USE_DEFAULT_SEARCH_PRESET:
+          !!parsedSearchSection.do_not_use_default_search_preset,
+        SEARCH_PRESET: parsedSearchParams.map((param) => ({
+          sort: param.sort,
+          name: param.name,
+          filters: param.filters,
+        })),
+        ADVANCED_FILTERS: parsedSearchSection.advanced_filters,
+        CUSTOM_FILTERS: (parsedCustomFilters ?? []).map((customFilter) => ({
+          name: customFilter.name,
+          baseFilter: customFilter.base_filter,
+          excludeValues: customFilter.exclude_values,
+          includeValues: customFilter.include_values,
+          labelKey: customFilter.label_key,
+        })),
+        LIMIT: parsedSearchSection.limit,
+        SPATIAL_EXTENT_MAX_FILE_SIZE:
+          parsedSearchSection.spatial_extent_max_file_size,
+        GEOCODING_PROVIDER: parsedSearchSection.geocoding_provider,
+        GEOCODING_PROVIDER_OPTIONS:
+          parsedSearchSection.geocoding_provider_options,
+        GEOCODING_PROVIDER_LABELS: parsedGeocodingProviderLabels
+          ? {
+              MAIN: parsedGeocodingProviderLabels.main,
+              SECONDARY: parsedGeocodingProviderLabels.secondary,
+              TERTIARY: parsedGeocodingProviderLabels.tertiary,
+            }
+          : undefined,
+      } as SearchConfig)
+}
+
+function parseMetadataQualitySection(
+  parsed: Record<string, unknown>,
+  { warnings, errors }: ConfigIssues
+): MetadataQualityConfig | null {
+  const parsedMetadataQualitySection = parseConfigSection(
+    parsed,
+    'metadata-quality',
+    [],
+    ['enabled'],
+    warnings,
+    errors
+  )
+  return parsedMetadataQualitySection === null
+    ? null
+    : ({
+        ENABLED: parsedMetadataQualitySection.enabled,
+        SORTABLE: parsedMetadataQualitySection.sortable,
+      } as MetadataQualityConfig)
+}
+
+function parseEditingSection(
+  parsed: Record<string, unknown>,
+  { warnings, errors }: ConfigIssues
+): EditorConfig | null {
+  let parsedEditingSection = parseConfigSection(
+    parsed,
+    'editing',
+    [],
+    ['new_record_default_language', 'new_record_standard'],
+    warnings,
+    errors
+  )
+  if (
+    parsedEditingSection !== null &&
+    parsedEditingSection.new_record_default_language !== undefined
+  ) {
+    parsedEditingSection = checkNewRecordDefaultLanguage(
+      parsedEditingSection,
+      warnings
+    )
+  }
+  if (
+    parsedEditingSection !== null &&
+    parsedEditingSection.new_record_standard !== undefined
+  ) {
+    parsedEditingSection = checkNewRecordStandard(
+      parsedEditingSection,
+      warnings
+    )
+  }
+  return parsedEditingSection === null
+    ? null
+    : ({
+        NEW_RECORD_DEFAULT_LANGUAGE:
+          parsedEditingSection.new_record_default_language as
+            | string
+            | undefined,
+        NEW_RECORD_STANDARD: parsedEditingSection.new_record_standard as
+          | EditorConfig['NEW_RECORD_STANDARD']
+          | undefined,
+      } as EditorConfig)
+}
+
+const SECTION_PARSERS: {
+  [name in ConfigSectionName]: (
+    parsed: Record<string, unknown>,
+    issues: ConfigIssues
+  ) => AppConfig[name]
+} = {
+  global: parseGlobalSection,
+  map: parseMapSection,
+  theme: parseThemeSection,
+  search: parseSearchSection,
+  metadataQuality: parseMetadataQualitySection,
+  editor: parseEditingSection,
+  translations: (parsed) =>
+    parseTranslationsConfigSection(
+      parsed,
+      'translations'
+    ) as CustomTranslationsAllLanguages,
+}
+
+/**
+ * Loads the configuration file and stores the given sections (all by default);
+ * omitted sections are reset (their getters will throw or return null);
+ * resolves with the parsed configuration file, e.g. to read sections with a custom parser
+ */
+export function loadAppConfig(
+  configUrl = 'assets/configuration/default.toml',
+  sections = Object.keys(SECTION_PARSERS) as ConfigSectionName[]
+): Promise<Record<string, unknown>> {
   console.log(
     `[geonetwork-ui] Loading application configuration from ${configUrl}`
   )
@@ -94,301 +409,36 @@ export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
       return resp.text()
     })
     .then((conf) => {
-      let parsed
+      let parsed: Record<string, unknown>
       try {
-        parsed = TOML.parse(conf, { joiner: '\n', bigint: false }) as any
+        parsed = TOML.parse(conf, { joiner: '\n', bigint: false })
       } catch (e: any) {
         throw new Error(
           `An error occurred when parsing the configuration file: ${e.message}`
         )
       }
-      const errors = []
-      const warnings = []
+      const issues: ConfigIssues = { warnings: [], errors: [] }
+      const config = Object.fromEntries(
+        sections.map((name) => [name, SECTION_PARSERS[name](parsed, issues)])
+      ) as Partial<AppConfig>
 
-      let parsedGlobalSection = parseConfigSection(
-        parsed,
-        'global',
-        ['geonetwork4_api_url'],
-        [
-          'datahub_url',
-          'edit_url_template',
-          'proxy_path',
-          'metadata_language',
-          'login_url',
-          'logout_url',
-          'settings_url',
-          'web_component_embedder_url',
-          'languages',
-          'contact_email',
-          'reuse_form_url',
-        ],
-        warnings,
-        errors
-      )
-      if (parsedGlobalSection?.metadata_language) {
-        parsedGlobalSection = checkMetadataLanguage(
-          parsedGlobalSection,
-          warnings
-        )
-      }
-      globalConfig =
-        parsedGlobalSection === null
-          ? null
-          : ({
-              GN4_API_URL: parsedGlobalSection.geonetwork4_api_url,
-              DATAHUB_URL: parsedGlobalSection.datahub_url,
-              EDIT_URL_TEMPLATE: parsedGlobalSection.edit_url_template,
-              PROXY_PATH: parsedGlobalSection.proxy_path,
-              METADATA_LANGUAGE: parsedGlobalSection.metadata_language
-                ? (
-                    parsedGlobalSection.metadata_language as string
-                  ).toLowerCase()
-                : undefined,
-              LOGIN_URL: parsedGlobalSection.login_url,
-              LOGOUT_URL: parsedGlobalSection.logout_url,
-              SETTINGS_URL: parsedGlobalSection.settings_url,
-              WEB_COMPONENT_EMBEDDER_URL:
-                parsedGlobalSection.web_component_embedder_url,
-              LANGUAGES: parsedGlobalSection.languages,
-              CONTACT_EMAIL: parsedGlobalSection.contact_email,
-              REUSE_FORM_URL: parsedGlobalSection.reuse_form_url,
-            } as GlobalConfig)
-
-      const parsedLayersSections = parseMultiConfigSection(
-        parsed,
-        'map_layer',
-        ['type'],
-        ['name', 'url', 'data', 'styleUrl', 'accessToken'],
-        warnings,
-        errors
-      )
-      const parsedMapSection = parseConfigSection(
-        parsed,
-        'map',
-        [],
-        [
-          'max_zoom',
-          'do_not_tile_wms',
-          'max_extent',
-          'max_feature_count',
-          'baselayer',
-          'do_not_use_default_basemap',
-          'external_viewer_url_template',
-          'external_viewer_open_new_tab',
-        ],
-        warnings,
-        errors
-      )
-      mapConfig =
-        parsedMapSection === null || parsedLayersSections === null
-          ? null
-          : ({
-              MAX_ZOOM: parsedMapSection.max_zoom,
-              DO_NOT_TILE_WMS: parsedMapSection.do_not_tile_wms,
-              MAX_EXTENT: parsedMapSection.max_extent,
-              MAX_FEATURE_COUNT: parsedMapSection.max_feature_count,
-              EXTERNAL_VIEWER_URL_TEMPLATE:
-                parsedMapSection.external_viewer_url_template,
-              EXTERNAL_VIEWER_OPEN_NEW_TAB:
-                parsedMapSection.external_viewer_open_new_tab,
-              DO_NOT_USE_DEFAULT_BASEMAP:
-                !!parsedMapSection.do_not_use_default_basemap,
-              MAP_LAYERS: parsedLayersSections.map(
-                (map_layer) =>
-                  ({
-                    TYPE: map_layer.type,
-                    URL: map_layer.url,
-                    NAME: map_layer.name,
-                    DATA: map_layer.data,
-                    STYLE_URL: map_layer.styleUrl,
-                    ACCESS_TOKEN: map_layer.accessToken,
-                  }) as LayerConfig
-              ),
-            } as MapConfig)
-
-      const parsedThemeSection = parseConfigSection(
-        parsed,
-        'theme',
-        ['primary_color', 'secondary_color', 'main_color', 'background_color'],
-        [
-          'header_foreground_color',
-          'main_font',
-          'title_font',
-          'fonts_stylesheet_url',
-          'thumbnail_placeholder',
-          'header_background',
-          'favicon',
-        ],
-        warnings,
-        errors
-      )
-      themeConfig =
-        parsedThemeSection === null
-          ? null
-          : ({
-              PRIMARY_COLOR: parsedThemeSection.primary_color,
-              SECONDARY_COLOR: parsedThemeSection.secondary_color,
-              MAIN_COLOR: parsedThemeSection.main_color,
-              BACKGROUND_COLOR: parsedThemeSection.background_color,
-              HEADER_FOREGROUND_COLOR:
-                parsedThemeSection.header_foreground_color,
-              THUMBNAIL_PLACEHOLDER: parsedThemeSection.thumbnail_placeholder,
-              HEADER_BACKGROUND: parsedThemeSection.header_background,
-              TITLE_FONT: parsedThemeSection.title_font,
-              MAIN_FONT: parsedThemeSection.main_font,
-              FONTS_STYLESHEET_URL: parsedThemeSection.fonts_stylesheet_url,
-              FAVICON: parsedThemeSection.favicon,
-            } as ThemeConfig)
-
-      const parsedSearchSection = parseConfigSection(
-        parsed,
-        'search',
-        [],
-        [
-          'record_kind_quick_filter',
-          'filter_geometry_data',
-          'filter_geometry_url',
-          'do_not_use_default_search_preset',
-          'search_preset',
-          'advanced_filters',
-          'limit',
-          'spatial_extent_max_file_size',
-          'geocoding_provider',
-          'geocoding_provider_options',
-          'geocoding_provider_labels',
-        ],
-        warnings,
-        errors
-      )
-      const parsedSearchParams = parseMultiConfigSection(
-        parsed,
-        'search_preset',
-        ['name'],
-        ['sort', 'filters'],
-        warnings,
-        errors
-      )
-      const parsedCustomFilters = parseMultiConfigSection(
-        parsed,
-        'custom_filter',
-        ['name', 'base_filter'],
-        ['exclude_values', 'include_values', 'label_key'],
-        warnings,
-        errors
-      )
-      const parsedGeocodingProviderLabels =
-        parsedSearchSection?.geocoding_provider_labels as
-          | Record<string, string>
-          | undefined
-      searchConfig =
-        parsedSearchSection === null
-          ? null
-          : ({
-              RECORD_KIND_QUICK_FILTER:
-                parsedSearchSection.record_kind_quick_filter,
-              FILTER_GEOMETRY_DATA: parsedSearchSection.filter_geometry_data,
-              FILTER_GEOMETRY_URL: parsedSearchSection.filter_geometry_url,
-              DO_NOT_USE_DEFAULT_SEARCH_PRESET:
-                !!parsedSearchSection.do_not_use_default_search_preset,
-              SEARCH_PRESET: parsedSearchParams.map((param) => ({
-                sort: param.sort,
-                name: param.name,
-                filters: param.filters,
-              })),
-              ADVANCED_FILTERS: parsedSearchSection.advanced_filters,
-              CUSTOM_FILTERS: (parsedCustomFilters ?? []).map(
-                (customFilter) => ({
-                  name: customFilter.name,
-                  baseFilter: customFilter.base_filter,
-                  excludeValues: customFilter.exclude_values,
-                  includeValues: customFilter.include_values,
-                  labelKey: customFilter.label_key,
-                })
-              ),
-              LIMIT: parsedSearchSection.limit,
-              SPATIAL_EXTENT_MAX_FILE_SIZE:
-                parsedSearchSection.spatial_extent_max_file_size,
-              GEOCODING_PROVIDER: parsedSearchSection.geocoding_provider,
-              GEOCODING_PROVIDER_OPTIONS:
-                parsedSearchSection.geocoding_provider_options,
-              GEOCODING_PROVIDER_LABELS: parsedGeocodingProviderLabels
-                ? {
-                    MAIN: parsedGeocodingProviderLabels.main,
-                    SECONDARY: parsedGeocodingProviderLabels.secondary,
-                    TERTIARY: parsedGeocodingProviderLabels.tertiary,
-                  }
-                : undefined,
-            } as SearchConfig)
-
-      const parsedMetadataQualitySection = parseConfigSection(
-        parsed,
-        'metadata-quality',
-        [],
-        ['enabled'],
-        warnings,
-        errors
-      )
-      metadataQualityConfig =
-        parsedMetadataQualitySection === null
-          ? null
-          : ({
-              ENABLED: parsedMetadataQualitySection.enabled,
-              SORTABLE: parsedMetadataQualitySection.sortable,
-            } as MetadataQualityConfig)
-
-      let parsedEditingSection = parseConfigSection(
-        parsed,
-        'editing',
-        [],
-        ['new_record_default_language', 'new_record_standard'],
-        warnings,
-        errors
-      )
-      if (
-        parsedEditingSection !== null &&
-        parsedEditingSection.new_record_default_language !== undefined
-      ) {
-        parsedEditingSection = checkNewRecordDefaultLanguage(
-          parsedEditingSection,
-          warnings
-        )
-      }
-      if (
-        parsedEditingSection !== null &&
-        parsedEditingSection.new_record_standard !== undefined
-      ) {
-        parsedEditingSection = checkNewRecordStandard(
-          parsedEditingSection,
-          warnings
-        )
-      }
-      editorConfig =
-        parsedEditingSection === null
-          ? null
-          : ({
-              NEW_RECORD_DEFAULT_LANGUAGE:
-                parsedEditingSection.new_record_default_language as
-                  | string
-                  | undefined,
-              NEW_RECORD_STANDARD: parsedEditingSection.new_record_standard as
-                | EditorConfig['NEW_RECORD_STANDARD']
-                | undefined,
-            } as EditorConfig)
-
-      customTranslations = parseTranslationsConfigSection(
-        parsed,
-        'translations'
-      ) as CustomTranslationsAllLanguages
-
-      if (errors.length) {
+      if (issues.errors.length) {
         throw new Error(`One or more mandatory settings were missing from the configuration file.
-${errors.join('\n')}`)
-      } else if (warnings.length) {
+${issues.errors.join('\n')}`)
+      } else if (issues.warnings.length) {
         console.warn(`One or more unexpected settings were encountered in the configuration file.
-${warnings.join('\n')}`)
+${issues.warnings.join('\n')}`)
       }
 
+      globalConfig = config.global ?? null
+      themeConfig = config.theme ?? null
+      mapConfig = config.map ?? null
+      searchConfig = config.search ?? null
+      metadataQualityConfig = config.metadataQuality ?? null
+      editorConfig = config.editor ?? null
+      customTranslations = config.translations ?? {}
       appConfigLoaded = true
+      return parsed
     })
 }
 
@@ -399,8 +449,12 @@ export function isConfigLoaded() {
 export function _reset() {
   globalConfig = null
   themeConfig = null
+  mapConfig = null
+  searchConfig = null
+  metadataQualityConfig = null
   editorConfig = null
   customTranslations = null
+  appConfigLoaded = false
 }
 
 export const TRANSLATE_WITH_OVERRIDES_CONFIG: TranslateModuleConfig = {

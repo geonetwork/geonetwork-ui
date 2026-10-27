@@ -7,6 +7,7 @@ import {
   getOptionalMapConfig,
   getOptionalSearchConfig,
   getThemeConfig,
+  isConfigLoaded,
   loadAppConfig,
 } from './app-config'
 import {
@@ -548,6 +549,63 @@ new_record_standard = "dcat"
           MAP_LAYERS: [],
         })
       })
+    })
+  })
+
+  describe('loadAppConfig with selected sections', () => {
+    let parsed: Record<string, unknown>
+    beforeEach(async () => {
+      fetchMock.get(
+        'end:default.toml',
+        () => `
+[theme]
+primary_color = "#093564"
+secondary_color = "#c2e9dc"
+main_color = "#212029"
+background_color = "#fdfbff"
+
+[translations.en]
+my.key = "My value"
+
+[my-section]
+my_key = "my value"
+`
+      )
+      parsed = await loadAppConfig(undefined, ['theme', 'translations'])
+    })
+    it('does not require the sections which were not selected', () => {
+      expect(isConfigLoaded()).toBe(true)
+      expect(() => getGlobalConfig()).toThrowError('not initialized')
+      expect(getOptionalMapConfig()).toBeNull()
+    })
+    it('stores the selected sections', () => {
+      expect(getThemeConfig()).toEqual({
+        BACKGROUND_COLOR: '#fdfbff',
+        MAIN_COLOR: '#212029',
+        PRIMARY_COLOR: '#093564',
+        SECONDARY_COLOR: '#c2e9dc',
+      })
+      expect(getCustomTranslations('en')).toEqual({ 'my.key': 'My value' })
+    })
+    it('resolves with the parsed configuration file', () => {
+      expect(parsed['my-section']).toEqual({ my_key: 'my value' })
+    })
+  })
+
+  describe('_reset', () => {
+    beforeEach(async () => {
+      fetchMock.get('end:default.toml', () => okAppConfigFixture())
+      await loadAppConfig()
+      _reset()
+    })
+    it('clears all sections', () => {
+      expect(isConfigLoaded()).toBe(false)
+      expect(() => getGlobalConfig()).toThrowError('not initialized')
+      expect(() => getThemeConfig()).toThrowError('not initialized')
+      expect(() => getCustomTranslations('en')).toThrowError('not initialized')
+      expect(getOptionalMapConfig()).toBeNull()
+      expect(getOptionalSearchConfig()).toBeNull()
+      expect(getOptionalEditorConfig()).toBeNull()
     })
   })
 })

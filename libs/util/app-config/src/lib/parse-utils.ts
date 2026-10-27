@@ -41,7 +41,7 @@ const checkKeys = (
  * pushes warnings and errors to the given arrays; returns null in case of error
  */
 export function parseConfigSection(
-  fullConfigObj: Record<string, Record<string, unknown>>,
+  fullConfigObj: Record<string, unknown>,
   sectionName: string,
   mandatoryKeys: string[],
   optionalKeys: string[],
@@ -79,13 +79,17 @@ export function parseConfigSection(
  * This is optional
  */
 export function parseTranslationsConfigSection(
-  fullConfigObj: Record<string, Record<string, unknown>>,
+  fullConfigObj: Record<string, unknown>,
   sectionName: string
 ): Record<string, unknown> {
   if (typeof fullConfigObj[sectionName] !== 'object') {
     return {}
   }
-  return flatten('', fullConfigObj[sectionName], true)
+  return flatten(
+    '',
+    fullConfigObj[sectionName] as Record<string, unknown>,
+    true
+  )
 }
 
 /**
@@ -94,7 +98,7 @@ export function parseTranslationsConfigSection(
  * the sections
  */
 export function parseMultiConfigSection(
-  fullConfigObj: Record<string, Record<string, unknown>[]>,
+  fullConfigObj: Record<string, unknown>,
   sectionName: string,
   mandatoryKeys: string[],
   optionalKeys: string[],
