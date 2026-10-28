@@ -257,6 +257,7 @@ describe('link utils', () => {
         'xlsx',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       ],
+      ['excel', 'xls', 'application/vnd.ms-excel'],
       ['csv', 'csv', 'application/csv'],
       ['svg', 'svg', 'image/svg+xml'],
       ['xml', 'xml', 'application/xml'],
@@ -390,6 +391,7 @@ describe('link utils', () => {
       expect(getBadgeColor('csv')).toEqual('#F6A924')
     })
   })
+
   describe('#sortPriority from formats object', () => {
     const nFormats = Object.keys(FORMATS).length
     it(`returns ${nFormats - 1}`, () => {
@@ -413,6 +415,7 @@ describe('link utils', () => {
       ).toEqual(nFormats - 6)
     })
   })
+
   describe('#checkFileFormat', () => {
     describe('in link name and url', () => {
       it('returns true for file format', () => {
@@ -445,6 +448,7 @@ describe('link utils', () => {
       })
     })
   })
+
   describe('#mimeTypeToFormat', () => {
     it('returns json for mimetype', () => {
       expect(mimeTypeToFormat('application/json')).toEqual('json')
