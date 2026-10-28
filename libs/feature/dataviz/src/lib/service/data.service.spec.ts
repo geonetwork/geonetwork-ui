@@ -78,8 +78,8 @@ jest.mock('@camptocamp/ogc-client', () => ({
             otherCrs: ['EPSG:4326'],
             outputFormats:
               name.indexOf('nojson') > -1
-                ? ['csv', 'xls', 'gml']
-                : ['csv', 'xls', 'json', 'gml'],
+                ? ['csv', 'application/msexcel', 'gml']
+                : ['csv', 'xlsx', 'json', 'gml'],
           }
     }
     getFeatureTypeFull(name) {
@@ -326,11 +326,12 @@ describe('DataService', () => {
             },
             {
               description: 'Lieu de surveillance (ligne)',
-              mimeType: 'application/vnd.ms-excel',
+              mimeType:
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
               name: 'surval_parametre_ligne',
-              url: new URL(
-                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=xls&SRSNAME=EPSG:2154'
-              ),
+              url: expect.objectContaining({
+                href: 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=xlsx&SRSNAME=EPSG:2154',
+              }),
               type: 'download',
               accessServiceProtocol: 'wfs',
             },
@@ -367,7 +368,7 @@ describe('DataService', () => {
           ])
         })
       })
-      describe('WFS without GeoJSON support', () => {
+      describe('WFS without GeoJSON support, and explicit known application/msexcel mime type', () => {
         it('returns a list of links (without geojson)', async () => {
           const urls = await lastValueFrom(
             service.getDownloadLinksFromWfs({
@@ -389,11 +390,11 @@ describe('DataService', () => {
             },
             {
               description: 'Lieu de surveillance (ligne)',
-              mimeType: 'application/vnd.ms-excel',
+              mimeType: 'application/msexcel',
               name: 'nojson_type',
-              url: new URL(
-                'http://local/wfs?GetFeature&FeatureType=nojson_type&format=xls&SRSNAME=EPSG:2154'
-              ),
+              url: expect.objectContaining({
+                href: 'http://local/wfs?GetFeature&FeatureType=nojson_type&format=application/msexcel&SRSNAME=EPSG:2154',
+              }),
               type: 'download',
               accessServiceProtocol: 'wfs',
             },
@@ -432,11 +433,12 @@ describe('DataService', () => {
             },
             {
               description: 'Lieu de surveillance (ligne)',
-              mimeType: 'application/vnd.ms-excel',
+              mimeType:
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
               name: '',
-              url: new URL(
-                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=xls&SRSNAME=EPSG:2154'
-              ),
+              url: expect.objectContaining({
+                href: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=xlsx&SRSNAME=EPSG:2154',
+              }),
               type: 'download',
               accessServiceProtocol: 'wfs',
             },
