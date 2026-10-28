@@ -22,6 +22,7 @@ import {
   getFileFormat,
   getFileFormatFromServiceOutput,
   getMimeTypeForFormat,
+  isMimeTypeKnown,
   ProxyService,
 } from '@geonetwork-ui/util/shared'
 import type { FeatureCollection } from 'geojson'
@@ -195,9 +196,9 @@ export class DataService {
             name: wfsLink.name,
             type: 'download' as const,
             url: new URL(urls.all[format]),
-            mimeType: getMimeTypeForFormat(
-              getFileFormatFromServiceOutput(format)
-            ),
+            mimeType: isMimeTypeKnown(format)
+              ? format
+              : getMimeTypeForFormat(getFileFormatFromServiceOutput(format)),
           })
         )
         return resources
@@ -223,9 +224,9 @@ export class DataService {
         name: collectionInfo.id,
         type: 'download',
         url: urlWithoutLimit,
-        mimeType: getMimeTypeForFormat(
-          getFileFormatFromServiceOutput(mimeType)
-        ),
+        mimeType: isMimeTypeKnown(mimeType)
+          ? mimeType
+          : getMimeTypeForFormat(getFileFormatFromServiceOutput(mimeType)),
       }
     })
   }
@@ -326,7 +327,9 @@ export class DataService {
       url: new URL(
         this.getDownloadUrlFromEsriRest(esriRestLink.url.toString(), format)
       ),
-      mimeType: getMimeTypeForFormat(getFileFormatFromServiceOutput(format)),
+      mimeType: isMimeTypeKnown(format)
+        ? format
+        : getMimeTypeForFormat(getFileFormatFromServiceOutput(format)),
     }))
   }
 

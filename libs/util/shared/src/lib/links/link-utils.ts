@@ -31,8 +31,9 @@ export const FORMATS = {
     priority: 2,
     color: '#FFDE10',
     mimeTypes: [
-      'application/vnd.ms-excel',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'application/vnd.ms-excel',
+      'application/msexcel',
     ],
   },
   geojson: {
@@ -207,10 +208,33 @@ export function getFormatPriority(linkFormat: FileFormat): number {
   return 0
 }
 
+export function getMimeTypePriority(
+  link: DatasetOnlineResource | ServiceOnlineResource
+): number {
+  const format = getFileFormat(link)
+  if (!format || !FORMATS[format]) return -1
+
+  if ('mimeType' in link && link.mimeType) {
+    const mimeTypes: readonly string[] = FORMATS[format].mimeTypes
+    const index = mimeTypes.indexOf(link.mimeType)
+    return index !== -1 ? index : FORMATS[format].mimeTypes.length
+  }
+  return 0
+}
+
 export function getLinkPriority(
   link: DatasetOnlineResource | ServiceOnlineResource
 ): number {
   return getFormatPriority(getFileFormat(link))
+}
+
+export function isMimeTypeKnown(mimeType: string): boolean {
+  for (const format in FORMATS) {
+    for (const mt of FORMATS[format].mimeTypes) {
+      if (mimeType === mt) return true
+    }
+  }
+  return false
 }
 
 export function getFileFormatFromServiceOutput(
