@@ -6,12 +6,10 @@ import {
 } from '@angular/core/testing'
 import { BehaviorSubject, of, throwError } from 'rxjs'
 import { RecordDownloadsComponent } from './record-downloads.component'
-import { By } from '@angular/platform-browser'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { MockBuilder } from 'ng-mocks'
-import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 
 // This is used to work around this issue with URL in JSDom:
 // https://github.com/jestjs/jest/issues/14012
@@ -63,13 +61,24 @@ class DataServiceMock {
       : Promise.resolve([
           {
             ...link,
-            title: 'collection1',
+            title: 'airports',
             mimeType: 'application/geo+json',
           },
           {
             ...link,
-            title: 'collection2',
+            title: 'airports',
             mimeType: 'application/json',
+          },
+          {
+            ...link,
+            title: 'airports',
+            mimeType: 'application/msexcel',
+          },
+          {
+            ...link,
+            title: 'airports',
+            mimeType:
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
           },
         ])
   )
@@ -152,9 +161,21 @@ describe('RecordDownloadsComponent', () => {
           },
           {
             description: 'OGC API service',
+            mimeType:
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            name: 'Surveillance littorale OGC',
+            title: 'airports',
+            url: newUrl(
+              'https://demo.ldproxy.net/zoomstack/collections/airports/items'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          },
+          {
+            description: 'OGC API service',
             mimeType: 'application/geo+json',
             name: 'Surveillance littorale OGC',
-            title: 'collection1',
+            title: 'airports',
             url: newUrl(
               'https://demo.ldproxy.net/zoomstack/collections/airports/items'
             ),
@@ -165,7 +186,7 @@ describe('RecordDownloadsComponent', () => {
             description: 'OGC API service',
             mimeType: 'application/json',
             name: 'Surveillance littorale OGC',
-            title: 'collection2',
+            title: 'airports',
             url: newUrl(
               'https://demo.ldproxy.net/zoomstack/collections/airports/items'
             ),
@@ -350,6 +371,18 @@ describe('RecordDownloadsComponent', () => {
             accessServiceProtocol: 'wfs',
           },
           {
+            description: 'OGC API service',
+            mimeType:
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            name: 'Surveillance littorale OGC',
+            title: 'airports',
+            url: newUrl(
+              'https://demo.ldproxy.net/zoomstack/collections/airports/items'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          },
+          {
             description: 'Lieu de surveillance (polygone)',
             name: 'surval_parametre_polygone.geojson',
             url: newUrl(
@@ -381,7 +414,7 @@ describe('RecordDownloadsComponent', () => {
             description: 'OGC API service',
             mimeType: 'application/geo+json',
             name: 'Surveillance littorale OGC',
-            title: 'collection1',
+            title: 'airports',
             url: newUrl(
               'https://demo.ldproxy.net/zoomstack/collections/airports/items'
             ),
@@ -392,7 +425,7 @@ describe('RecordDownloadsComponent', () => {
             description: 'OGC API service',
             mimeType: 'application/json',
             name: 'Surveillance littorale OGC',
-            title: 'collection2',
+            title: 'airports',
             url: newUrl(
               'https://demo.ldproxy.net/zoomstack/collections/airports/items'
             ),
