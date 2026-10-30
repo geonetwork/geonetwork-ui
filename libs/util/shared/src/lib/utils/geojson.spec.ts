@@ -1,4 +1,5 @@
 import {
+  bboxToMinPoint,
   bboxToPolygon,
   getGeometryBoundingBox,
   getGeometryFromGeoJSON,
@@ -221,6 +222,15 @@ describe('geojson utils', () => {
             [-10, -5],
           ],
         ],
+      })
+    })
+  })
+
+  describe('bboxToMinPoint', () => {
+    it('builds a point from the first and second coordinates of a bounding box', () => {
+      expect(bboxToMinPoint([0, 0, 1, 1])).toEqual({
+        type: 'Point',
+        coordinates: [0, 0],
       })
     })
   })

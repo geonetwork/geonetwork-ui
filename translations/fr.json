@@ -66,7 +66,7 @@
   "dataset.error.unknown": "Les données ne peuvent être affichées: \"{ info }\"",
   "dataset.error.unsupportedType": "Le type de contenu suivant n'est pas pris en charge: \"{ info }\"",
   "daterange.filter.datePlaceholder": "jj/mm/aaaa",
-  "daterange.filter.from": "A partir du",
+  "daterange.filter.from": "À partir du",
   "daterange.filter.period": "Choix de la période",
   "daterange.filter.to": "Jusqu'au",
   "domain.contact.role.author": "Auteur",

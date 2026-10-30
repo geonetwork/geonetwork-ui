@@ -7,7 +7,7 @@ import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
 import { TestBed } from '@angular/core/testing'
 import { METADATA_LANGUAGE } from '../../metadata-language.token'
 import { TranslateService } from '@ngx-translate/core'
-import { bboxToPolygon } from '@geonetwork-ui/util/shared'
+import { bboxToMinPoint, bboxToPolygon } from '@geonetwork-ui/util/shared'
 
 class TranslateServiceMock {
   getCurrentLang = () => 'en'
@@ -827,6 +827,47 @@ describe('ElasticsearchService', () => {
             field: 'location',
             origin: [2, 3],
             pivot: expect.any(String),
+          },
+        },
+      ])
+    })
+    it("supports single point spatial filter geometry but doesn't boost on distance", () => {
+      const geojsonPolygon = {
+        coordinates: [
+          [
+            [3.017921158755172, 50.65759907920972],
+            [3.017921158755172, 50.613483610573155],
+            [3.1098886148436122, 50.613483610573155],
+            [3.017921158755172, 50.65759907920972],
+          ],
+        ],
+        type: 'Polygon' as const,
+      }
+      const query = service['buildPayloadQuery'](
+        {
+          spatialExtent: [1, 1, 1, 1],
+        },
+        {},
+        undefined,
+        geojsonPolygon
+      )
+      expect(query.bool.should).toEqual([
+        {
+          geo_shape: {
+            geom: {
+              shape: bboxToMinPoint([1, 1, 1, 1]),
+              relation: 'within',
+            },
+            boost: 5.0,
+          },
+        },
+        {
+          geo_shape: {
+            geom: {
+              shape: bboxToMinPoint([1, 1, 1, 1]),
+              relation: 'intersects',
+            },
+            boost: 2.0,
           },
         },
       ])
