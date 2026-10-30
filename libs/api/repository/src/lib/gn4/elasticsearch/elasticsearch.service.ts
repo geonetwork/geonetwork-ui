@@ -35,6 +35,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
 import {
+  bboxToMinPoint,
   bboxToPolygon,
   BoundingBox,
   getGeometryBoundingBox,
@@ -470,7 +471,10 @@ export class ElasticsearchService {
       })
     }
     const boostGeometry = spatialFilterExtent
-      ? bboxToPolygon(spatialFilterExtent)
+      ? spatialFilterExtent[0] === spatialFilterExtent[2] &&
+        spatialFilterExtent[1] === spatialFilterExtent[3]
+        ? bboxToMinPoint(spatialFilterExtent)
+        : bboxToPolygon(spatialFilterExtent)
       : geometry
     if (boostGeometry) {
       // boosts applied using the filter geometry:
@@ -528,15 +532,18 @@ export class ElasticsearchService {
           getGeodesicLength(westToCenter) +
           getGeodesicLength(eastToCenter)) /
         4
+      const pivot = Math.round(cutoffDistance)
 
-      should.push({
-        distance_feature: {
-          field: 'location',
-          pivot: `${Math.round(cutoffDistance).toFixed(0)}m`,
-          origin: center,
-          boost: 5.0,
-        },
-      })
+      if (pivot > 0) {
+        should.push({
+          distance_feature: {
+            field: 'location',
+            pivot: `${pivot.toFixed(0)}m`,
+            origin: center,
+            boost: 5.0,
+          },
+        })
+      }
     }
 
     return {

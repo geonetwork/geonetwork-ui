@@ -1,11 +1,12 @@
+import type { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
 import type {
   Feature,
   FeatureCollection,
   Geometry,
+  Point,
   Polygon,
   Position,
 } from 'geojson'
-import type { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
 
 /**
  * @returns The geometry if available, otherwise null.
@@ -142,6 +143,17 @@ export function bboxToPolygon(bbox: BoundingBox): Polygon {
         [minX, minY],
       ],
     ],
+  }
+}
+
+/**
+ * Builds the GeoJSON Point from the minx miny point of the given bounding box.
+ */
+export function bboxToMinPoint(bbox: BoundingBox): Point {
+  const [minX, minY, maxX, maxY] = bbox
+  return {
+    type: 'Point',
+    coordinates: [minX, minY],
   }
 }
 
