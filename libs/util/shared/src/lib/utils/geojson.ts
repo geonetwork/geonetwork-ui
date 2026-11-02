@@ -35,6 +35,38 @@ export function getGeometryFromGeoJSON(
   return null
 }
 
+function getAllGeometriesFromGeoJSON(
+  data: FeatureCollection | Feature | Geometry
+): Geometry[] {
+  if (data.type === 'FeatureCollection') {
+    return (data.features ?? []).flatMap(getAllGeometriesFromGeoJSON)
+  }
+  if (data.type === 'GeometryCollection') {
+    return data.geometries ?? []
+  }
+  const geometry = getGeometryFromGeoJSON(data)
+  return geometry ? [geometry] : []
+}
+
+/**
+ * @returns The bounding box covering every geometry of the GeoJSON object,
+ * or null if it holds no coordinates.
+ */
+export function getGeoJSONBoundingBox(
+  data: FeatureCollection | Feature | Geometry
+): BoundingBox | null {
+  const geometries = getAllGeometriesFromGeoJSON(data)
+  if (!geometries.length) {
+    return null
+  }
+  const bbox = getGeometryBoundingBox({
+    type: 'GeometryCollection',
+    geometries,
+  })
+  // geometries without coordinates leave an infinite or NaN bounding box
+  return bbox.every(Number.isFinite) ? bbox : null
+}
+
 // FIXME: this type should be more generic across the project
 export type BoundingBox = [number, number, number, number]
 

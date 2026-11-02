@@ -217,6 +217,35 @@ describe('SpatialExtentDropdownComponent', () => {
       expect(component.hasSelection).toBe(true)
       expect(emittedBbox).toEqual([[0, 0, 1, 1]])
     })
+
+    it('emits the bounding box of all the features of a file mixing geometry types', async () => {
+      const content = JSON.stringify({
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            properties: {},
+            geometry: { type: 'Point', coordinates: [2, 3] },
+          },
+          {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'LineString',
+              coordinates: [
+                [-4, 42],
+                [10, 50],
+              ],
+            },
+          },
+        ],
+      })
+
+      await component.handleFileSelected(createFile(content, 'area.geojson'))
+
+      expect(component.errorKey).toBeNull()
+      expect(emittedBbox).toEqual([[-4, 3, 10, 50]])
+    })
   })
 
   describe('setLocationBbox', () => {
