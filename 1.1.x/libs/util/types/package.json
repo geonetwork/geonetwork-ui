@@ -1,0 +1,10 @@
+{
+  "name": "@geonetwork-ui/util/types",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "peerDependencies": {
+    "tslib": "2.5.0"
+  },
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts"
+}
