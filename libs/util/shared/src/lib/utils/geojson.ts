@@ -1,12 +1,5 @@
 import type { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
-import type {
-  Feature,
-  FeatureCollection,
-  Geometry,
-  Point,
-  Polygon,
-  Position,
-} from 'geojson'
+import type { Feature, FeatureCollection, Geometry, Position } from 'geojson'
 
 /**
  * @returns The geometry if available, otherwise null.
@@ -128,10 +121,27 @@ export function getGeometryBoundingBox(geometry: Geometry): BoundingBox {
 }
 
 /**
- * Builds the closed GeoJSON Polygon matching the given bounding box.
+ * Builds the GeoJSON Geometry matching the given bounding box.
  */
-export function bboxToPolygon(bbox: BoundingBox): Polygon {
+export function bboxToGeometry(bbox: BoundingBox): Geometry {
   const [minX, minY, maxX, maxY] = bbox
+  if (minX === maxX && minY === maxY) {
+    return {
+      type: 'Point',
+      coordinates: [minX, minY],
+    }
+  }
+
+  if (minX === maxX || minY === maxY) {
+    return {
+      type: 'LineString',
+      coordinates: [
+        [minX, minY],
+        [maxX, maxY],
+      ],
+    }
+  }
+
   return {
     type: 'Polygon',
     coordinates: [
@@ -147,17 +157,6 @@ export function bboxToPolygon(bbox: BoundingBox): Polygon {
 }
 
 /**
- * Builds the GeoJSON Point from the minx miny point of the given bounding box.
- */
-export function bboxToMinPoint(bbox: BoundingBox): Point {
-  const [minX, minY, maxX, maxY] = bbox
-  return {
-    type: 'Point',
-    coordinates: [minX, minY],
-  }
-}
-
-/**
  * Returns the geometry carried by a spatial extent, falling back to the polygon
  * derived from its bounding box. Returns null when the extent has neither.
  */
@@ -165,7 +164,7 @@ export function spatialExtentToGeometry(
   extent: DatasetSpatialExtent
 ): Geometry | null {
   if (extent.geometry) return extent.geometry
-  if (extent.bbox) return bboxToPolygon(extent.bbox)
+  if (extent.bbox) return bboxToGeometry(extent.bbox)
   return null
 }
 
