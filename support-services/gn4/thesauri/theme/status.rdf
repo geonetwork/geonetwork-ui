@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/owl/owlapi/turtle#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:wdrs="http://www.w3.org/2007/05/powder-s#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:vann="http://purl.org/vocab/vann/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:schema="http://schema.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:xhv="http://www.w3.org/1999/xhtml/vocab#" xmlns:cc="http://creativecommons.org/ns#" xml:base="http://www.semanticweb.org/owl/owlapi/turtle">
+  <skos:ConceptScheme rdf:about="http://purl.org/adms/status/1.0">
+    <dc:title>Status</dc:title>
+    <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2012-04-13</dcterms:modified>
+    <dcterms:rights xml:lang="en">Copyright (c) 2012 European Union.</dcterms:rights>
+    <dcterms:description xml:lang="en">This file specifies the controlled vocabularies defined by ADMS v1.0 as SKOS concept schemes and SKOS concepts.
+    </dcterms:description>
+    <dcterms:abstract xml:lang="en">This file specifies the controlled vocabularies defined by ADMS v1.0 as SKOS concept schemes and SKOS concepts.
+    </dcterms:abstract>
+    <dcterms:creator rdf:resource="http://stijngoedertier.org"/>
+    <dcterms:license rdf:resource="https://joinup.ec.europa.eu/category/licence/isa-open-metadata-licence-v11"/>
+    <dcterms:conformsTo rdf:resource="https://joinup.ec.europa.eu/elibrary/document/isa-deliverable-process-and-methodology-developing-core-vocabularies"/>
+  </skos:ConceptScheme>
+  <skos:Concept rdf:about="http://purl.org/adms/status/Completed">
+    <skos:notation>Completed</skos:notation>
+    <skos:prefLabel xml:lang="en">Completed</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/adms/status/1.0"/>
+    <skos:prefLabel xml:lang="nl">Completed</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Completed</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Completed</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://purl.org/adms/status/Deprecated">
+    <skos:notation>Deprecated</skos:notation>
+    <skos:prefLabel xml:lang="en">Deprecated</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/adms/status/1.0"/>
+    <skos:prefLabel xml:lang="nl">Deprecated</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Deprecated</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Deprecated</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://purl.org/adms/status/UnderDevelopment">
+    <skos:notation>UnderDevelopment</skos:notation>
+    <skos:prefLabel xml:lang="en">Under development</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/adms/status/1.0"/>
+    <skos:prefLabel xml:lang="nl">Under development</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Under development</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Under development</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://purl.org/adms/status/Withdrawn">
+    <skos:notation>Withdrawn</skos:notation>
+    <skos:prefLabel xml:lang="en">Withdrawn</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/adms/status/1.0"/>
+    <skos:prefLabel xml:lang="nl">Withdrawn</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Withdrawn</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Withdrawn</skos:prefLabel>
+  </skos:Concept>
+</rdf:RDF>

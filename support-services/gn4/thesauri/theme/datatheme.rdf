@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:dc="http://purl.org/dc/terms/"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xmlns:void="http://rdfs.org/ns/void#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/">
+
+  <skos:ConceptScheme rdf:about="http://vocab.belgif.be/auth/datatheme">
+    <dc:description xml:lang="nl">Thema's voor open data catalogi in België</dc:description>
+    <dc:description xml:lang="de">Themen für offene Datenkataloge in Belgien</dc:description>
+    <dc:description xml:lang="en">Themes for open data catalogi in Belgium</dc:description>
+    <dc:description xml:lang="fr">Thèmes pour les catalogues de données ouvertes en Belgique</dc:description>
+    <dc:license rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/"/>
+    <dc:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2019-01-31</dc:modified>
+    <dc:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2019-01-31</dc:modified>
+    <dc:title xml:lang="de">Data.gov.be themes</dc:title>
+    <dc:title xml:lang="en">Data.gov.be themes</dc:title>
+    <dc:title xml:lang="fr">Data.gov.be themes</dc:title>
+    <dc:title xml:lang="nl">Data.gov.be themes</dc:title>
+    <owl:versionInfo>Production 2019-01-31</owl:versionInfo>
+  </skos:ConceptScheme>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/AGRI">
+    <skos:exactMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/AGRI"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>AGRI</skos:notation>
+    <skos:prefLabel xml:lang="en">Agriculture, fisheries, forestry and food</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Agriculture, pêche, sylviculture et alimentation</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Landbouw, visserij, bosbouw en voeding</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Landwirtschaft, Fischerei, Forstwirtschaft und Nahrungsmittel</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/ECON">
+    <skos:exactMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/ECON"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>ECON</skos:notation>
+    <skos:prefLabel xml:lang="nl">Economie en financiën</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Economy and finance</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Wirtschaft und Finanzen</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Économie et finances</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/CULT">
+    <skos:broadMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/EDUC"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>CULT</skos:notation>
+    <skos:prefLabel xml:lang="en">Culture and sport</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Culture et sport</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Cultuur en sport</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Kultur und Sport</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/EDUC">
+    <skos:broadMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/EDUC"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>EDUC</skos:notation>
+    <skos:prefLabel xml:lang="de">Bildung</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Education</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Onderwijs</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Éducation</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/ENER">
+    <skos:exactMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/ENER"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>ENER</skos:notation>
+    <skos:prefLabel xml:lang="de">Energie</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Energie</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Energy</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Énergie</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/ENVI">
+    <skos:exactMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>ENVI</skos:notation>
+    <skos:prefLabel xml:lang="en">Environment</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Environnement</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Milieu</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Umwelt</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/GOVE">
+    <skos:exactMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/GOVE"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>GOVE</skos:notation>
+    <skos:prefLabel xml:lang="fr">Gouvernement et secteur public</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Government and public sector</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Overheid en publieke sector</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Regierung und öffentlicher Sektor</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/HEAL">
+    <skos:exactMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/HEAL"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>HEAL</skos:notation>
+    <skos:prefLabel xml:lang="de">Gesundheit</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Gezondheid</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Health</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Santé</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/INTR">
+    <skos:exactMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/INTR"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>INTR</skos:notation>
+    <skos:prefLabel xml:lang="en">International issues</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Internationale Themen</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Internationale vraagstukken</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Questions internationales</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/JUST">
+    <skos:exactMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/JUST"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>JUST</skos:notation>
+    <skos:prefLabel xml:lang="en">Justice, legal system and public safety</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Justice, système juridique et sécurité publique</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Justitie, rechtsstelsel en openbare veiligheid</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Justiz, Rechtssystem und öffentliche Sicherheit</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/REGI">
+    <skos:exactMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>REGI</skos:notation>
+    <skos:prefLabel xml:lang="nl">Regio's en steden</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Regionen und Städte</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Regions and cities</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Régions et villes</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/SOCI">
+    <skos:exactMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/SOCI"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>SOCI</skos:notation>
+    <skos:prefLabel xml:lang="nl">Bevolking en samenleving</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Bevölkerung und Gesellschaft</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Population and society</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Population et société</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/TECH">
+    <skos:exactMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/TECH"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>TECH</skos:notation>
+    <skos:prefLabel xml:lang="en">Science and technology</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Science et technologie</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Wetenschap en technologie</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Wissenschaft und Technologie</skos:prefLabel>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/TRAN">
+    <skos:exactMatch rdf:resource="http://publications.europa.eu/resource/authority/data-theme/TRAN"/>
+    <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <skos:notation>TRAN</skos:notation>
+    <skos:prefLabel xml:lang="en">Transport</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Transports</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Verkehr</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Vervoer</skos:prefLabel>
+  </skos:Concept>
+
+  <void:Dataset rdf:about="http://vocab.belgif.be/void#datatheme">
+    <dc:description xml:lang="nl">Thema's voor open data catalogi in België</dc:description>
+    <dc:description xml:lang="de">Themen für offene Datenkataloge in Belgien</dc:description>
+    <dc:description xml:lang="en">Themes for open data catalogi in Belgium</dc:description>
+    <dc:description xml:lang="fr">Thèmes pour les catalogues de données ouvertes en Belgique</dc:description>
+    <dc:license rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/"/>
+    <dc:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2020-07-06T12:47:26.992Z</dc:modified>
+    <dc:title xml:lang="de">Data.gov.be themes</dc:title>
+    <dc:title xml:lang="en">Data.gov.be themes</dc:title>
+    <dc:title xml:lang="fr">Data.gov.be themes</dc:title>
+    <dc:title xml:lang="nl">Data.gov.be themes</dc:title>
+    <void:dataDump rdf:resource="http://vocab.belgif.be/dataset/datatheme"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/AGRI"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/CULT"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/ECON"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/EDUC"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/ENER"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/ENVI"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/GOVE"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/HEAL"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/INTR"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/JUST"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/REGI"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/SOCI"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/TECH"/>
+    <void:exampleResource rdf:resource="http://vocab.belgif.be/auth/datatheme/TRAN"/>
+    <void:feature rdf:resource="http://www.w3.org/ns/formats/JSON-LD"/>
+    <void:feature rdf:resource="http://www.w3.org/ns/formats/N-Triples"/>
+    <void:feature rdf:resource="http://www.w3.org/ns/formats/Turtle"/>
+    <void:rootResource rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+    <void:triples rdf:datatype="http://www.w3.org/2001/XMLSchema#long">153</void:triples>
+    <void:uriLookupEndpoint rdf:resource="http://vocab.belgif.be/_ldf"/>
+    <void:uriLookupEndpoint rdf:resource="http://vocab.belgif.be/_ldf/datatheme"/>
+    <void:uriSpace>http://vocab.belgif.be/auth/datatheme</void:uriSpace>
+    <void:vocabulary rdf:resource="http://www.w3.org/2004/02/skos/core#"/>
+    <foaf:homepage rdf:resource="http://vocab.belgif.be/"/>
+  </void:Dataset>
+
+</rdf:RDF>
