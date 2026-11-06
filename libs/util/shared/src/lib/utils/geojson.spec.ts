@@ -1,5 +1,5 @@
 import {
-  bboxToPolygon,
+  bboxToGeometry,
   getGeometryBoundingBox,
   getGeometryFromGeoJSON,
   isBoundingBox,
@@ -194,9 +194,9 @@ describe('geojson utils', () => {
     })
   })
 
-  describe('bboxToPolygon', () => {
+  describe('bboxToGeometry', () => {
     it('builds a closed polygon ring from a bounding box', () => {
-      expect(bboxToPolygon([0, 0, 1, 1])).toEqual({
+      expect(bboxToGeometry([0, 0, 1, 1])).toEqual({
         type: 'Polygon',
         coordinates: [
           [
@@ -210,7 +210,7 @@ describe('geojson utils', () => {
       })
     })
     it('handles negative coordinates', () => {
-      expect(bboxToPolygon([-10, -5, 10, 5])).toEqual({
+      expect(bboxToGeometry([-10, -5, 10, 5])).toEqual({
         type: 'Polygon',
         coordinates: [
           [
@@ -221,6 +221,12 @@ describe('geojson utils', () => {
             [-10, -5],
           ],
         ],
+      })
+    })
+    it('builds a point from the first and second coordinates of a bounding box', () => {
+      expect(bboxToGeometry([0, 1, 0, 1])).toEqual({
+        type: 'Point',
+        coordinates: [0, 1],
       })
     })
   })
@@ -248,7 +254,7 @@ describe('geojson utils', () => {
     })
     it('derives a polygon from the bounding box when no geometry', () => {
       expect(spatialExtentToGeometry({ bbox: [0, 0, 1, 1] })).toEqual(
-        bboxToPolygon([0, 0, 1, 1])
+        bboxToGeometry([0, 0, 1, 1])
       )
     })
     it('returns null when neither geometry nor bbox is set', () => {
@@ -288,7 +294,7 @@ describe('geojson utils', () => {
           {
             type: 'Feature',
             properties: {},
-            geometry: bboxToPolygon([0, 0, 1, 1]),
+            geometry: bboxToGeometry([0, 0, 1, 1]),
           },
         ],
       })
@@ -299,7 +305,7 @@ describe('geojson utils', () => {
         { bbox: [0, 0, 1, 1] },
       ])
       expect(fc.features).toHaveLength(1)
-      expect(fc.features[0].geometry).toEqual(bboxToPolygon([0, 0, 1, 1]))
+      expect(fc.features[0].geometry).toEqual(bboxToGeometry([0, 0, 1, 1]))
     })
   })
 })

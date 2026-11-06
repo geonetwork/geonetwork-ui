@@ -35,7 +35,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
 import {
-  bboxToPolygon,
+  bboxToGeometry,
   BoundingBox,
   getGeometryBoundingBox,
   isBoundingBox,
@@ -470,7 +470,7 @@ export class ElasticsearchService {
       })
     }
     const boostGeometry = spatialFilterExtent
-      ? bboxToPolygon(spatialFilterExtent)
+      ? bboxToGeometry(spatialFilterExtent)
       : geometry
     if (boostGeometry) {
       // boosts applied using the filter geometry:
@@ -478,8 +478,11 @@ export class ElasticsearchService {
       // * records intersecting the geometry receive a boost of 2
       // * records close to the geometry center receive a boost of 5 (based on the `location` field)
       // * records on the outskirt of the geometry receive a boost of 2.5
-      should.push(
-        {
+      if (
+        boostGeometry.type === 'Polygon' ||
+        boostGeometry.type === 'MultiPolygon'
+      ) {
+        should.push({
           geo_shape: {
             geom: {
               shape: boostGeometry,
@@ -487,17 +490,17 @@ export class ElasticsearchService {
             },
             boost: 5.0,
           },
-        },
-        {
-          geo_shape: {
-            geom: {
-              shape: boostGeometry,
-              relation: 'intersects',
-            },
-            boost: 2.0,
+        })
+      }
+      should.push({
+        geo_shape: {
+          geom: {
+            shape: boostGeometry,
+            relation: 'intersects',
           },
-        }
-      )
+          boost: 2.0,
+        },
+      })
 
       // this will boost the results variably depending on their distance from the given geometry
       // note: this takes into account the `location` field of a record; this is generally the center of all spatial extents
@@ -528,15 +531,18 @@ export class ElasticsearchService {
           getGeodesicLength(westToCenter) +
           getGeodesicLength(eastToCenter)) /
         4
+      const pivot = Math.round(cutoffDistance)
 
-      should.push({
-        distance_feature: {
-          field: 'location',
-          pivot: `${Math.round(cutoffDistance).toFixed(0)}m`,
-          origin: center,
-          boost: 5.0,
-        },
-      })
+      if (pivot > 0) {
+        should.push({
+          distance_feature: {
+            field: 'location',
+            pivot: `${pivot.toFixed(0)}m`,
+            origin: center,
+            boost: 5.0,
+          },
+        })
+      }
     }
 
     return {
