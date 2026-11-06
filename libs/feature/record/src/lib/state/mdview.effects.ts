@@ -5,13 +5,11 @@ import { catchError, filter, map, switchMap } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { Router } from '@angular/router'
 @Injectable()
 export class MdViewEffects {
   private actions$ = inject(Actions)
   private recordsRepository = inject(RecordsRepositoryInterface)
   private platformServiceInterface = inject(PlatformServiceInterface)
-  private router = inject(Router)
 
   /*
     Metadata effects
@@ -21,11 +19,7 @@ export class MdViewEffects {
       ofType(MdViewActions.loadFullMetadata),
       switchMap(({ uuid }) => this.recordsRepository.getRecord(uuid)),
       map((record) => {
-        if (
-          record === null ||
-          (this.router.url !== '/' && // FIXME: special case for WC, find a better way
-            !this.router.url.includes(record.kind))
-        ) {
+        if (record === null) {
           return MdViewActions.loadFullMetadataFailure({ notFound: true })
         }
         return MdViewActions.loadFullMetadataSuccess({ full: record })
