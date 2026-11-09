@@ -7,7 +7,7 @@ import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
 import { TestBed } from '@angular/core/testing'
 import { METADATA_LANGUAGE } from '../../metadata-language.token'
 import { TranslateService } from '@ngx-translate/core'
-import { bboxToPolygon } from '@geonetwork-ui/util/shared'
+import { bboxToGeometry } from '@geonetwork-ui/util/shared'
 
 class TranslateServiceMock {
   getCurrentLang = () => 'en'
@@ -806,7 +806,7 @@ describe('ElasticsearchService', () => {
         {
           geo_shape: {
             geom: {
-              shape: bboxToPolygon([1, 2, 3, 4]),
+              shape: bboxToGeometry([1, 2, 3, 4]),
               relation: 'within',
             },
             boost: 5.0,
@@ -815,7 +815,7 @@ describe('ElasticsearchService', () => {
         {
           geo_shape: {
             geom: {
-              shape: bboxToPolygon([1, 2, 3, 4]),
+              shape: bboxToGeometry([1, 2, 3, 4]),
               relation: 'intersects',
             },
             boost: 2.0,
@@ -826,6 +826,118 @@ describe('ElasticsearchService', () => {
             boost: 5,
             field: 'location',
             origin: [2, 3],
+            pivot: expect.any(String),
+          },
+        },
+      ])
+    })
+    it("supports single point spatial filter geometry but doesn't boost on within nor distance", () => {
+      const geojsonPolygon = {
+        coordinates: [
+          [
+            [3.017921158755172, 50.65759907920972],
+            [3.017921158755172, 50.613483610573155],
+            [3.1098886148436122, 50.613483610573155],
+            [3.017921158755172, 50.65759907920972],
+          ],
+        ],
+        type: 'Polygon' as const,
+      }
+      const query = service['buildPayloadQuery'](
+        {
+          spatialExtent: [1, 1, 1, 1],
+        },
+        {},
+        undefined,
+        geojsonPolygon
+      )
+      expect(query.bool.should).toEqual([
+        {
+          geo_shape: {
+            geom: {
+              shape: bboxToGeometry([1, 1, 1, 1]),
+              relation: 'intersects',
+            },
+            boost: 2.0,
+          },
+        },
+      ])
+    })
+    it("supports horizontal line spatial filter geometry but doesn't boost on within", () => {
+      const geojsonPolygon = {
+        coordinates: [
+          [
+            [3.017921158755172, 50.65759907920972],
+            [3.017921158755172, 50.613483610573155],
+            [3.1098886148436122, 50.613483610573155],
+            [3.017921158755172, 50.65759907920972],
+          ],
+        ],
+        type: 'Polygon' as const,
+      }
+      const query = service['buildPayloadQuery'](
+        {
+          spatialExtent: [0, 1, 0, 2],
+        },
+        {},
+        undefined,
+        geojsonPolygon
+      )
+      expect(query.bool.should).toEqual([
+        {
+          geo_shape: {
+            geom: {
+              shape: bboxToGeometry([0, 1, 0, 2]),
+              relation: 'intersects',
+            },
+            boost: 2.0,
+          },
+        },
+        {
+          distance_feature: {
+            boost: 5,
+            field: 'location',
+            origin: [0, 1.5],
+            pivot: expect.any(String),
+          },
+        },
+      ])
+    })
+    it("supports vertical line spatial filter geometry but doesn't boost on within", () => {
+      const geojsonPolygon = {
+        coordinates: [
+          [
+            [3.017921158755172, 50.65759907920972],
+            [3.017921158755172, 50.613483610573155],
+            [3.1098886148436122, 50.613483610573155],
+            [3.017921158755172, 50.65759907920972],
+          ],
+        ],
+        type: 'Polygon' as const,
+      }
+      const query = service['buildPayloadQuery'](
+        {
+          spatialExtent: [0, 1, 2, 1],
+        },
+        {},
+        undefined,
+        geojsonPolygon
+      )
+      expect(query.bool.should).toEqual([
+        {
+          geo_shape: {
+            geom: {
+              shape: bboxToGeometry([0, 1, 2, 1]),
+              relation: 'intersects',
+            },
+            boost: 2.0,
+          },
+        },
+        {
+          distance_feature: {
+            boost: 5,
+            field: 'location',
+            origin: [1, 1],
             pivot: expect.any(String),
           },
         },
