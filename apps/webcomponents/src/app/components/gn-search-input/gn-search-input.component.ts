@@ -39,10 +39,9 @@ export class GnSearchInputComponent extends BaseComponent {
 
   select(record: CatalogRecord) {
     if (this.openOnSelect) {
-      const landingPage = this.openOnSelect.replace(
-        /\$\{uuid}/,
-        record.uniqueIdentifier
-      )
+      const landingPage = this.openOnSelect
+        .replace(/\$\{uuid}/, record.uniqueIdentifier)
+        .replace(/\$\{kind}/, record.kind)
       window.open(landingPage, '_self').focus()
     }
   }
