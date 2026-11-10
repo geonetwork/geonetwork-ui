@@ -1,0 +1,39 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Rhône valley point" },
+      "geometry": {
+        "type": "MultiPoint",
+        "coordinates": [[7.65, 46.2]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Rhône valley line" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [7.5, 46.15],
+          [7.6, 46.1]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Rhône valley area" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [7.6, 46.2],
+            [7.7, 46.3],
+            [7.8, 46.2],
+            [7.6, 46.2]
+          ]
+        ]
+      }
+    }
+  ]
+}

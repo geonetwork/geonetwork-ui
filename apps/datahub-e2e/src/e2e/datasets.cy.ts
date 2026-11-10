@@ -373,6 +373,9 @@ describe('datasets', () => {
     const geojsonFile = 'src/fixtures/spatial-extent-rhone-valley.geojson'
     // bbox of the polygon held by the fixture above
     const bboxSearchParam = 'spatialExtent=7.5,46.1,7.8,46.3'
+    // a multipoint, a line and a polygon whose features together cover the same bbox
+    const mixedGeometriesGeojsonFile =
+      'src/fixtures/spatial-extent-rhone-valley-mixed-geometries.geojson'
     // record whose spatial extent intersects the bbox of the fixture
     const rhoneRecordUuid = 'a8b5e6c0-c21d-4c32-b8f9-10830215890a'
 
@@ -436,6 +439,20 @@ describe('datasets', () => {
     cy.get('[data-test="spatial-extent-selected-item"]').should('not.exist')
     expectNoSpatialExtentInUrl()
     cy.get('@hits').should('contain.text', '33 ')
+
+    // it filters on the bbox of all the features of a file mixing geometry types
+    // (the dropdown stays open after removing the previous selection)
+    importFile(mixedGeometriesGeojsonFile)
+    cy.location('search').should((search) =>
+      expect(decodeURIComponent(search)).to.contain(bboxSearchParam)
+    )
+    cy.get('@hits').should('contain.text', '7 ')
+    cy.get('[data-test="spatial-extent-selected-item"]').should(
+      'contain.text',
+      'Extent from spatial-extent-rhone-valley-mixed-geometries.geojson'
+    )
+    cy.get('[data-test="spatial-extent-selected-item"]').click()
+    expectNoSpatialExtentInUrl()
 
     // it restores the filter from the URL and labels it as pre-selected
     cy.visit(`/search?${bboxSearchParam}`)

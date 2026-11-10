@@ -2,6 +2,7 @@ import {
   bboxToGeometry,
   getGeometryBoundingBox,
   getGeometryFromGeoJSON,
+  getGeoJSONBoundingBox,
   isBoundingBox,
   isBoundingBoxWithinWorldExtent,
   spatialExtentsToFeatureCollection,
@@ -179,6 +180,90 @@ describe('geojson utils', () => {
     })
     it('returns false for a non-array value', () => {
       expect(isBoundingBox({ start: 0, end: 1 })).toBe(false)
+    })
+  })
+
+  describe('getGeoJSONBoundingBox', () => {
+    const point: Point = { type: 'Point', coordinates: [2, 3] }
+    const polygon: Polygon = {
+      type: 'Polygon',
+      coordinates: [
+        [
+          [5, 40],
+          [5, 45],
+          [10, 45],
+          [10, 40],
+          [5, 40],
+        ],
+      ],
+    }
+    const lineString: LineString = {
+      type: 'LineString',
+      coordinates: [
+        [-4, 42],
+        [1, 50],
+      ],
+    }
+
+    it('covers every feature of a feature collection, whatever its geometry type', () => {
+      expect(
+        getGeoJSONBoundingBox({
+          type: 'FeatureCollection',
+          features: [point, polygon, lineString].map((geometry) => ({
+            type: 'Feature',
+            properties: {},
+            geometry,
+          })),
+        })
+      ).toEqual([-4, 3, 10, 50])
+    })
+    it('skips the features without a geometry', () => {
+      expect(
+        getGeoJSONBoundingBox({
+          type: 'FeatureCollection',
+          features: [
+            { type: 'Feature', properties: {}, geometry: null },
+            { type: 'Feature', properties: {}, geometry: polygon },
+          ],
+        })
+      ).toEqual([5, 40, 10, 45])
+    })
+    it('covers every geometry of a geometry collection', () => {
+      expect(
+        getGeoJSONBoundingBox({
+          type: 'GeometryCollection',
+          geometries: [point, polygon],
+        })
+      ).toEqual([2, 3, 10, 45])
+    })
+    it('covers the geometry of a feature', () => {
+      expect(
+        getGeoJSONBoundingBox({
+          type: 'Feature',
+          properties: {},
+          geometry: lineString,
+        })
+      ).toEqual([-4, 42, 1, 50])
+    })
+    it('covers a single geometry', () => {
+      expect(getGeoJSONBoundingBox(point)).toEqual([2, 3, 2, 3])
+    })
+    it('returns null for a feature collection without geometries', () => {
+      expect(
+        getGeoJSONBoundingBox({ type: 'FeatureCollection', features: [] })
+      ).toBe(null)
+    })
+    it('returns null for a feature holding an empty geometry collection', () => {
+      expect(
+        getGeoJSONBoundingBox({
+          type: 'Feature',
+          properties: {},
+          geometry: { type: 'GeometryCollection', geometries: [] },
+        })
+      ).toBe(null)
+    })
+    it('returns null for anything else', () => {
+      expect(getGeoJSONBoundingBox({ type: 'Something' } as never)).toBe(null)
     })
   })
 
