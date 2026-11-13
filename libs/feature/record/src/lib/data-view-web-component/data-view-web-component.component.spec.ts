@@ -71,7 +71,7 @@ describe('DataViewWebComponentComponent', () => {
           const html = await firstValueFrom(component.webComponentHtml$)
           expect(html).toBe(
             `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v1.2.3/gn-wc.js"></script>
-  <gn-dataset-view-chart
+<gn-dataset-view-chart
           api-url="http://gn-api.url/"
           dataset-id="${metadata.uniqueIdentifier}"
           aggregation="${chartConfig1.aggregation}"
@@ -84,7 +84,7 @@ describe('DataViewWebComponentComponent', () => {
           background-color="#fdfbff"
           main-font="'Inter', sans-serif"
           title-font="'DM Serif Display', serif"
-  ></gn-dataset-view-chart>`
+></gn-dataset-view-chart>`
           )
         })
       })
@@ -96,7 +96,7 @@ describe('DataViewWebComponentComponent', () => {
           const html = await firstValueFrom(component.webComponentHtml$)
           expect(html).toBe(
             `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v1.2.3/gn-wc.js"></script>
-  <gn-dataset-view-chart
+<gn-dataset-view-chart
           api-url="http://gn-api.url/"
           dataset-id="${metadata.uniqueIdentifier}"
           aggregation="${chartConfig2.aggregation}"
@@ -109,7 +109,7 @@ describe('DataViewWebComponentComponent', () => {
           background-color="#fdfbff"
           main-font="'Inter', sans-serif"
           title-font="'DM Serif Display', serif"
-  ></gn-dataset-view-chart>`
+></gn-dataset-view-chart>`
           )
         })
       })
@@ -124,14 +124,14 @@ describe('DataViewWebComponentComponent', () => {
           expect(html).toBe(
             `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v1.2.3/gn-wc.js"></script>
 <gn-dataset-view-map
-        api-url="http://gn-api.url/"
-        dataset-id="${metadata.uniqueIdentifier}"
-        primary-color="#0f4395"
-        secondary-color="#8bc832"
-        main-color="#555"
-        background-color="#fdfbff"
-        main-font="'Inter', sans-serif"
-        title-font="'DM Serif Display', serif"
+          api-url="http://gn-api.url/"
+          dataset-id="${metadata.uniqueIdentifier}"
+          primary-color="#0f4395"
+          secondary-color="#8bc832"
+          main-color="#555"
+          background-color="#fdfbff"
+          main-font="'Inter', sans-serif"
+          title-font="'DM Serif Display', serif"
 ></gn-dataset-view-map>`
           )
         })
@@ -146,7 +146,7 @@ describe('DataViewWebComponentComponent', () => {
           const html = await firstValueFrom(component.webComponentHtml$)
           expect(html).toBe(
             `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v1.2.3/gn-wc.js"></script>
-  <gn-dataset-view-table
+<gn-dataset-view-table
           api-url="http://gn-api.url/"
           dataset-id="${metadata.uniqueIdentifier}"
           primary-color="#0f4395"
@@ -155,7 +155,7 @@ describe('DataViewWebComponentComponent', () => {
           background-color="#fdfbff"
           main-font="'Inter', sans-serif"
           title-font="'DM Serif Display', serif"
-  ></gn-dataset-view-table>`
+></gn-dataset-view-table>`
           )
         })
       })
@@ -193,7 +193,7 @@ describe('DataViewWebComponentComponent', () => {
           const html = await firstValueFrom(component.webComponentHtml$)
           expect(html).toBe(
             `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v1.2.3/gn-wc.js"></script>
-  <gn-dataset-view-chart
+<gn-dataset-view-chart
           api-url="http://gn-api.url/"
           proxy-path="/mapstore/proxy/?url="
           dataset-id="${metadata.uniqueIdentifier}"
@@ -207,7 +207,7 @@ describe('DataViewWebComponentComponent', () => {
           background-color="#fdfbff"
           main-font="'Inter', sans-serif"
           title-font="'DM Serif Display', serif"
-  ></gn-dataset-view-chart>`
+></gn-dataset-view-chart>`
           )
         })
       })
@@ -220,15 +220,15 @@ describe('DataViewWebComponentComponent', () => {
           expect(html).toBe(
             `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v1.2.3/gn-wc.js"></script>
 <gn-dataset-view-map
-        api-url="http://gn-api.url/"
-        proxy-path="/mapstore/proxy/?url="
-        dataset-id="${metadata.uniqueIdentifier}"
-        primary-color="#0f4395"
-        secondary-color="#8bc832"
-        main-color="#555"
-        background-color="#fdfbff"
-        main-font="'Inter', sans-serif"
-        title-font="'DM Serif Display', serif"
+          api-url="http://gn-api.url/"
+          proxy-path="/mapstore/proxy/?url="
+          dataset-id="${metadata.uniqueIdentifier}"
+          primary-color="#0f4395"
+          secondary-color="#8bc832"
+          main-color="#555"
+          background-color="#fdfbff"
+          main-font="'Inter', sans-serif"
+          title-font="'DM Serif Display', serif"
 ></gn-dataset-view-map>`
           )
         })
@@ -241,7 +241,7 @@ describe('DataViewWebComponentComponent', () => {
           const html = await firstValueFrom(component.webComponentHtml$)
           expect(html).toBe(
             `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v1.2.3/gn-wc.js"></script>
-  <gn-dataset-view-table
+<gn-dataset-view-table
           api-url="http://gn-api.url/"
           proxy-path="/mapstore/proxy/?url="
           dataset-id="${metadata.uniqueIdentifier}"
@@ -251,7 +251,7 @@ describe('DataViewWebComponentComponent', () => {
           background-color="#fdfbff"
           main-font="'Inter', sans-serif"
           title-font="'DM Serif Display', serif"
-  ></gn-dataset-view-table>`
+></gn-dataset-view-table>`
           )
         })
       })

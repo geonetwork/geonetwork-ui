@@ -3,11 +3,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  InjectionToken,
   Input,
   OnDestroy,
   OnInit,
   inject,
+  viewChild,
 } from '@angular/core'
 import { MatTabsModule } from '@angular/material/tabs'
 import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
@@ -34,15 +34,12 @@ import {
   startWith,
   Subscription,
   switchMap,
-  take,
 } from 'rxjs'
 
 marker('record.metadata.preview.config.idle')
 marker('record.metadata.preview.config.saving')
 marker('record.metadata.preview.config.saved')
 marker('record.metadata.preview.config.error')
-
-export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
 
 @Component({
   selector: 'datahub-record-data-preview',
@@ -65,11 +62,12 @@ export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
 export class RecordDataPreviewComponent implements OnInit, OnDestroy {
   metadataViewFacade = inject(MdViewFacade)
   private dataService = inject(DataService)
-  private maxFeatureCount = Number(
-    inject(MAX_FEATURE_COUNT, { optional: true })
-  )
   private platformServiceInterface = inject(PlatformServiceInterface)
   private cdr = inject(ChangeDetectorRef)
+
+  mapView = viewChild<MapViewComponent>('mapView')
+  tableView = viewChild<DataViewComponent>('tableView')
+  chartView = viewChild<DataViewComponent>('chartView')
 
   @Input()
   set recordUuid(value: string) {
@@ -128,22 +126,6 @@ export class RecordDataPreviewComponent implements OnInit, OnDestroy {
 
   isMobile$ = getIsMobile()
 
-  exceedsMaxFeatureCount$ = combineLatest([
-    this.metadataViewFacade.geoDataLinksWithGeometry$,
-    this.selectedLink$,
-  ]).pipe(
-    map(([links, selectedLink]) =>
-      selectedLink != null ? selectedLink : links[0]
-    ),
-    switchMap((link) => {
-      return link && link.accessServiceProtocol === 'wfs'
-        ? this.dataService
-            .getWfsFeatureCount(link.url.toString(), link.name)
-            .pipe(map((count) => count > this.maxFeatureCount))
-        : of(false)
-    })
-  )
-
   config$ = this.recordUuid$.pipe(
     switchMap((uuid) => {
       if (!uuid) return of(null)
@@ -169,19 +151,6 @@ export class RecordDataPreviewComponent implements OnInit, OnDestroy {
         : (config as DatavizConfigModel)
     }),
     catchError(() => of(null))
-  )
-
-  displayViewShare$ = combineLatest([
-    this.displayMap$,
-    this.displayData$,
-    this.selectedView$,
-    this.exceedsMaxFeatureCount$,
-  ]).pipe(
-    map(
-      ([displayMap, displayData, selectedView, exceedsMaxFeatureCount]) =>
-        (displayData || displayMap) &&
-        !(selectedView === 'chart' && exceedsMaxFeatureCount)
-    )
   )
 
   displayDatavizConfig$ = combineLatest([
@@ -287,30 +256,21 @@ export class RecordDataPreviewComponent implements OnInit, OnDestroy {
 
   saveDatavizConfig() {
     this.savingStatus = 'saving'
-    combineLatest([
-      this.selectedView$,
-      this.selectedLink$,
-      this.metadataViewFacade.chartConfig$,
-      this.selectedTMSStyle$,
-    ])
-      .pipe(
-        take(1),
-        map(([selectedView, selectedLink, chartConfig, selectedTMSStyle]) => {
-          return this.dataService.writeConfigAsJSON({
-            view: selectedView,
-            source: selectedLink,
-            chartConfig: selectedView === 'chart' ? chartConfig : null,
-            styleTMSIndex: selectedView === 'map' ? selectedTMSStyle : null,
-          })
-        }),
-        switchMap((config) =>
-          this.platformServiceInterface.attachFileToRecord(
-            this.recordUuid,
-            config,
-            true
-          )
-        )
-      )
+    const config = (() => {
+      switch (this.selectedView$.value) {
+        case 'map':
+          return this.mapView().getDatavizConfig()
+        case 'table':
+          return this.tableView().getDatavizConfig()
+        case 'chart':
+          return this.chartView().getDatavizConfig()
+        default:
+          return null
+      }
+    })()
+    const fileConfig = this.dataService.writeConfigAsJSON(config)
+    this.platformServiceInterface
+      .attachFileToRecord(this.recordUuid, fileConfig, true)
       .subscribe({
         next: () => {
           this.savingStatus = 'saved'
