@@ -14,6 +14,19 @@ it('gn-search-input', () => {
     .first()
     .should('have.attr', 'name', 'iconoirSearch')
     .and('be.visible')
+  cy.get('gn-ui-autocomplete')
+    .find('input')
+    .should('have.attr', 'placeholder', 'Search in the catalog ...')
+
+  // should follow the language given in the attribute, then the browser language
+  cy.get('gn-search-input').invoke('attr', 'text-language', 'fr')
+  cy.get('gn-ui-autocomplete')
+    .find('input')
+    .should('have.attr', 'placeholder', 'Rechercher dans le catalogue...')
+  cy.get('gn-search-input').invoke('removeAttr', 'text-language')
+  cy.get('gn-ui-autocomplete')
+    .find('input')
+    .should('have.attr', 'placeholder', 'Search in the catalog ...')
 
   // should display the search with autocomplete result
   cy.get('gn-ui-fuzzy-search').type('velo')
