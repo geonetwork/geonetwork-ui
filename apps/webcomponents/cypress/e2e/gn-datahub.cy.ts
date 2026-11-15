@@ -98,3 +98,18 @@ it('gn-datahub', () => {
       expect(currentTitle).to.equal(this.recordTitle)
     })
 })
+
+it('gn-datahub keyword filter', () => {
+  cy.intercept('GET', '**/datahub-webcomponent-config.toml', {
+    fixture: 'config-with-keyword-filter.toml',
+  })
+  cy.visit('/webcomponents/gn-datahub.html')
+  cy.get('datahub-navigation-menu', { timeout: 6000 })
+    .find('button')
+    .eq(1)
+    .click({ force: true })
+
+  // should list the keywords in the filter
+  cy.get('gn-ui-dropdown-multiselect[data-cy-field="keyword"]').click()
+  cy.get('[role=listbox] input[type=checkbox]').should('have.length.gt', 0)
+})

@@ -221,7 +221,7 @@ describe('search fields implementations', () => {
   let repository: RecordsRepositoryInterface
   let platformService: PlatformServiceInterface
   let injector: Injector
-  let currentMetadataLanguage: string
+  let currentMetadataLanguage: string | (() => string)
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -647,6 +647,28 @@ describe('search fields implementations', () => {
         await lastValueFrom(searchField.getAvailableValues())
       })
       it('appends the field name with the given language', () => {
+        expect(repository.aggregate).toHaveBeenCalledWith({
+          'myField.langswe': {
+            type: 'terms',
+            limit: 1000,
+            field: 'myField.langswe',
+            sort: ['desc', 'count'],
+          },
+        })
+      })
+    })
+    describe('METADATA_LANGUAGE set to a function', () => {
+      beforeEach(async () => {
+        currentMetadataLanguage = () => 'swe'
+        searchField = new MultilingualSearchField(
+          'myField',
+          injector,
+          'desc',
+          'count'
+        )
+        await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('appends the field name with the language returned by the function', () => {
         expect(repository.aggregate).toHaveBeenCalledWith({
           'myField.langswe': {
             type: 'terms',

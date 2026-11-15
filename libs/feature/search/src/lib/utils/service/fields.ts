@@ -199,7 +199,8 @@ export class TranslatedSearchField extends SimpleSearchField {
 export class MultilingualSearchField extends SimpleSearchField {
   // we're using a getter in case the token value changes over time
   private get searchLanguage() {
-    return this.injector.get(METADATA_LANGUAGE, null)
+    const language = this.injector.get(METADATA_LANGUAGE, null)
+    return typeof language === 'function' ? language() : language
   }
 
   constructor(
