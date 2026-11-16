@@ -47,9 +47,7 @@ The **record kind** is treated as one of these standard filters, following speci
 
 Routes are determined based on the Elasticsearch results, specifically utilizing the `resourceType` and `cl_presentationForm` indexed fields.
 
-DataHub accepts `/dataset/{uuid}`, `/service/{uuid}` and `/reuse/{uuid}` links even when the path does not match the record's actual kind. After loading the record, the application corrects the URL to use its kind, preserving query parameters and fragments and replacing the current browser history entry.
-
-This allows external applications and GeoNetwork-generated sitemaps to use a single `/dataset/{uuid}` URL template for all record kinds. The URL correction happens in the browser; it is not an HTTP redirect.
+Note that if a route to a record does not contain the right kind (e.g. `/dataset/1234` for a service record), the routing will still work but the URL will be fixed right away in the browser.
 
 ## DataHub Sections and Fields
 
