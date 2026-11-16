@@ -50,13 +50,7 @@ import {
   switchMap,
   throwError,
 } from 'rxjs'
-import {
-  catchError,
-  map,
-  shareReplay,
-  tap,
-  withLatestFrom,
-} from 'rxjs/operators'
+import { catchError, map, shareReplay, tap } from 'rxjs/operators'
 import { lt } from 'semver'
 import { ElasticsearchService } from './elasticsearch'
 import { toLang2 } from '@geonetwork-ui/util/i18n'
@@ -744,9 +738,11 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     uniqueIdentifier: string,
     flagName: RecordFlag
   ): Observable<boolean> {
-    return this.gn4RecordsApi.getRecordTags(uniqueIdentifier).pipe(
-      withLatestFrom(this.getCategoryIdForFlag(flagName)),
-      map(([tags, categoryId]) => {
+    return combineLatest([
+      this.getCategoryIdForFlag(flagName),
+      this.gn4RecordsApi.getRecordTags(uniqueIdentifier),
+    ]).pipe(
+      map(([categoryId, tags]) => {
         if (categoryId === null) return false
         return Array.from(tags).some((tag) => tag.id === categoryId)
       })
