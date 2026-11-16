@@ -7,7 +7,6 @@ import {
   OnInit,
 } from '@angular/core'
 import { Meta } from '@angular/platform-browser'
-import { ActivatedRoute, Router } from '@angular/router'
 import {
   MdViewFacade,
   RecordMetaComponent,
@@ -42,8 +41,6 @@ export class RecordPageComponent implements OnInit, OnDestroy {
   subscription: Subscription
   metadataQualityDisplay: boolean
   private meta = inject(Meta)
-  private router = inject(Router)
-  private route = inject(ActivatedRoute)
 
   constructor() {
     document.documentElement.classList.add('record-page-active')
@@ -58,21 +55,6 @@ export class RecordPageComponent implements OnInit, OnDestroy {
         tap((metadata) => {
           if (metadata) {
             this.titleService.setTitle(metadata.title)
-            if (
-              metadata.kind &&
-              metadata.uniqueIdentifier ===
-                this.route.snapshot.params.metadataUuid &&
-              this.route.snapshot.url[0]?.path !== metadata.kind
-            ) {
-              this.router.navigate(
-                ['/', metadata.kind, metadata.uniqueIdentifier],
-                {
-                  queryParamsHandling: 'preserve',
-                  preserveFragment: true,
-                  replaceUrl: true,
-                }
-              )
-            }
           }
         })
       )
