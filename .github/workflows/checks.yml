@@ -124,6 +124,7 @@ jobs:
       - run: npx nx affected -t build --parallel=3
 
   compute-affected:
+    if: github.event.pull_request.draft == false
     name: Compute affected apps and libs
     runs-on: ubuntu-latest
     outputs:
@@ -177,7 +178,7 @@ jobs:
           echo "skip_all_e2e=$( [[ -z $AFFECTED_APPS ]] && echo "true" || echo "false" )" >> "$GITHUB_OUTPUT"
 
   affected-recap:
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
+    if: github.event.pull_request.draft == false && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
     name: Print affected libs and apps
     runs-on: ubuntu-latest
     needs:
@@ -203,7 +204,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - compute-affected
-    if: ${{ needs.compute-affected.outputs.skip_all_e2e == 'false' }}
+    if: ${{ github.event.pull_request.draft == false && needs.compute-affected.outputs.skip_all_e2e == 'false' }}
     strategy:
       fail-fast: false
       matrix:
@@ -316,7 +317,7 @@ jobs:
           comment-tag: screenshots-url
 
   build-npm-package:
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
+    if: github.event.pull_request.draft == false && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
     name: Attempt to build the NPM package
     runs-on: ubuntu-latest
 
