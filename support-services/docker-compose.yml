@@ -21,7 +21,7 @@ services:
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION}
+    image: elasticsearch:${ELASTICSEARCH_VERSION}
     ulimits:
       memlock:
         soft: -1
