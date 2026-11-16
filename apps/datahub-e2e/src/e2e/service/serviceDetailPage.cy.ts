@@ -72,16 +72,14 @@ describe('service pages', () => {
     cy.get('datahub-record-apis').should('not.exist')
 
     // Routing
-    // it should display the service and correct legacy dataset URLs
+    // when the record kind in the URL is wrong, it should correctly show the record and fix the URL right away
     cy.visit(
       '/dataset/01ec6ec7-6454-4504-ac95-befb16bacb0e?test=value#capabilities'
     )
-    cy.location('pathname').should(
-      'eq',
-      '/service/01ec6ec7-6454-4504-ac95-befb16bacb0e'
+    cy.url().should(
+      'include',
+      '/service/01ec6ec7-6454-4504-ac95-befb16bacb0e?test=value#capabilities'
     )
-    cy.location('search').should('eq', '?test=value')
-    cy.location('hash').should('eq', '#capabilities')
     cy.get('gn-ui-service-capabilities').should('be.visible')
     cy.get('gn-ui-error').should('not.exist')
 

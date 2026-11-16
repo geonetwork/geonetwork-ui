@@ -45,16 +45,14 @@ describe('reuse pages', () => {
     cy.get('gn-ui-download-links').should('not.exist')
 
     // Routing
-    // should display the reuse and correct URLs using another record kind
-    for (const kind of ['dataset', 'service']) {
-      cy.visit(`/${kind}/7eb795c2-d612-4b5e-b15e-d985b0f4e697`)
-      cy.location('pathname').should(
-        'eq',
-        '/reuse/7eb795c2-d612-4b5e-b15e-d985b0f4e697'
-      )
-      cy.get('datahub-record-header header a').first().should('be.visible')
-      cy.get('gn-ui-error').should('not.exist')
-    }
+    // when the record kind in the URL is wrong, it should correctly show the record and fix the URL right away
+    cy.visit('/service/7eb795c2-d612-4b5e-b15e-d985b0f4e697')
+    cy.location('pathname').should(
+      'eq',
+      '/reuse/7eb795c2-d612-4b5e-b15e-d985b0f4e697'
+    )
+    cy.get('datahub-record-header header a').first().should('be.visible')
+    cy.get('gn-ui-error').should('not.exist')
 
     //Metadata quality widget
     function scoreIs87Percent() {

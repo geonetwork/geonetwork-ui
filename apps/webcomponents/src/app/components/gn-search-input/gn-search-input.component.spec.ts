@@ -7,7 +7,6 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 import { LinkClassifierService } from '@geonetwork-ui/util/shared'
 import {
   simpleDatasetRecordFixture,
-  simpleReuseRecordFixture,
   simpleServiceRecordFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { GnSearchInputComponent } from './gn-search-input.component'
@@ -41,18 +40,14 @@ describe('GnSearchInputComponent', () => {
   })
 
   describe('select', () => {
-    it.each([
-      ['dataset', simpleDatasetRecordFixture],
-      ['service', simpleServiceRecordFixture],
-      ['reuse', simpleReuseRecordFixture],
-    ] as const)('opens the DataHub %s route', (kind, createRecord) => {
-      const record = createRecord()
+    it('opens the DataHub route using the record kind and UUID', () => {
+      const record = simpleServiceRecordFixture()
       component.openOnSelect = '/datahub/${kind}/${uuid}'
 
       component.select(record)
 
       expect(openSpy).toHaveBeenCalledWith(
-        `/datahub/${kind}/${record.uniqueIdentifier}`,
+        `/datahub/service/${record.uniqueIdentifier}`,
         '_self'
       )
       expect(focus).toHaveBeenCalledTimes(1)

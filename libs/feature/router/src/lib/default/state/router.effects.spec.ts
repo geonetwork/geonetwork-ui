@@ -1,7 +1,12 @@
 import { Location } from '@angular/common'
 import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
-import { Params, Router } from '@angular/router'
+import {
+  ActivatedRouteSnapshot,
+  Params,
+  Router,
+  UrlSegment,
+} from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
 import {
   FieldsService,
@@ -13,7 +18,7 @@ import { provideMockActions } from '@ngrx/effects/testing'
 import { routerNavigationAction } from '@ngrx/router-store'
 import { Action } from '@ngrx/store'
 import { hot } from 'jasmine-marbles'
-import { Observable, of, Subject } from 'rxjs'
+import { BehaviorSubject, Observable, of, Subject, Subscription } from 'rxjs'
 import * as fromActions from './router.actions'
 import { RouterGoActionPayload } from './router.actions'
 import * as fromEffects from './router.effects'
@@ -23,6 +28,7 @@ import { ROUTE_PARAMS } from '../constants'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { RouterService } from '../router.service'
 import { MockProvider } from 'ng-mocks'
+import { simpleServiceRecordFixture } from '@geonetwork-ui/common/fixtures'
 
 class SearchRouteComponent extends Component {}
 class MetadataRouteComponent extends Component {}
@@ -38,6 +44,8 @@ const routerConfigMock = {
 }
 
 class RouterFacadeMock {
+  currentRoute$ = new BehaviorSubject<ActivatedRouteSnapshot>(null)
+  routeMap = { dataset: 'dataset', service: 'service', reuse: 'reuse' }
   searchParams$ = new Subject<Params>()
   updateSearch = jest.fn()
 }
@@ -153,6 +161,73 @@ describe('RouterEffects', () => {
         }),
       })
       expect(effects.navigateToMetadata$).toBeObservable(expected)
+    })
+  })
+
+  describe('correctRecordUrl$', () => {
+    let actions$: Subject<Action>
+    let currentRoute$: BehaviorSubject<ActivatedRouteSnapshot>
+    let subscription: Subscription
+    let record: ReturnType<typeof simpleServiceRecordFixture>
+
+    beforeEach(() => {
+      record = simpleServiceRecordFixture()
+      actions$ = new Subject<Action>()
+      actions = actions$
+      currentRoute$ = (routerFacade as unknown as RouterFacadeMock)
+        .currentRoute$
+      currentRoute$.next({
+        params: { metadataUuid: record.uniqueIdentifier },
+        url: [new UrlSegment('dataset', {})],
+      } as ActivatedRouteSnapshot)
+      effects = TestBed.inject(fromEffects.RouterEffects)
+      subscription = effects.correctRecordUrl$.subscribe()
+    })
+
+    afterEach(() => subscription.unsubscribe())
+
+    it('corrects the record kind and preserves query, fragment and history', () => {
+      actions$.next(MdViewActions.loadFullMetadataSuccess({ full: record }))
+
+      expect(router.navigate).toHaveBeenCalledTimes(1)
+      expect(router.navigate).toHaveBeenCalledWith(
+        ['/', 'service', record.uniqueIdentifier],
+        {
+          queryParamsHandling: 'preserve',
+          preserveFragment: true,
+          replaceUrl: true,
+        }
+      )
+    })
+
+    it('does not navigate when the record kind already matches', () => {
+      currentRoute$.next({
+        ...currentRoute$.value,
+        url: [new UrlSegment('service', {})],
+      } as ActivatedRouteSnapshot)
+
+      actions$.next(MdViewActions.loadFullMetadataSuccess({ full: record }))
+
+      expect(router.navigate).not.toHaveBeenCalled()
+    })
+
+    it('ignores metadata loaded for a previous record', () => {
+      currentRoute$.next({
+        ...currentRoute$.value,
+        params: { metadataUuid: 'another-record' },
+      } as ActivatedRouteSnapshot)
+
+      actions$.next(MdViewActions.loadFullMetadataSuccess({ full: record }))
+
+      expect(router.navigate).not.toHaveBeenCalled()
+    })
+
+    it('does not navigate outside a record page', () => {
+      currentRoute$.next({ params: {}, url: [] } as ActivatedRouteSnapshot)
+
+      actions$.next(MdViewActions.loadFullMetadataSuccess({ full: record }))
+
+      expect(router.navigate).not.toHaveBeenCalled()
     })
   })
 
