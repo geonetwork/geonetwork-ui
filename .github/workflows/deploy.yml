@@ -47,27 +47,25 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
         with:
           ref: ${{ needs.checks.outputs.ref }}
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
       - name: add initial comment
-        uses: thollander/actions-comment-pull-request@v2
+        uses: thollander/actions-comment-pull-request@v3
         if: github.event_name == 'issue_comment'
         with:
           message: 'GitHub Pages links:
 
 
             🚧 building in progress... 🚧'
-          comment_tag: github-links
-          pr_number: ${{ github.event.issue.number }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          comment-tag: github-links
 
       - name: Install
         run: npm ci
@@ -102,7 +100,7 @@ jobs:
           npx gh-pages --dist dist/ --dest ${{env.BRANCH_NAME}} --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: update PR comment
-        uses: thollander/actions-comment-pull-request@v2
+        uses: thollander/actions-comment-pull-request@v3
         if: github.event_name == 'issue_comment'
         with:
           message: 'GitHub Pages links:
@@ -112,6 +110,4 @@ jobs:
             * (Web components demo)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/docs/webcomponents/]
 
             * (UI components storybook)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/]'
-          comment_tag: github-links
-          pr_number: ${{ github.event.issue.number }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          comment-tag: github-links

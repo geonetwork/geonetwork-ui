@@ -13,6 +13,7 @@ import {
   firstValueFrom,
   lastValueFrom,
   of,
+  Subject,
   throwError,
 } from 'rxjs'
 import { ElasticsearchService } from './elasticsearch'
@@ -1530,6 +1531,57 @@ describe('Gn4Repository', () => {
 
       expect(result).toBe(false)
       expect(gn4RecordsApi.getRecordTags).toHaveBeenCalledWith('my-dataset-001')
+    })
+
+    describe('ensure no race condition between the /tags and /record/{uuid}/tags calls', () => {
+      const flagTag = {
+        name: 'geonetwork-ui-flag:IS_REFERENCE_DATASET',
+        id: 100,
+        label: { eng: 'Reference datasets' },
+      }
+      let allTags$: Subject<any[]>
+      let recordTags$: Subject<Set<any>>
+      let emitted: boolean[]
+
+      beforeEach(() => {
+        allTags$ = new Subject()
+        recordTags$ = new Subject()
+        emitted = []
+
+        TestBed.resetTestingModule()
+        TestBed.configureTestingModule({
+          providers: [
+            ...baseProviders,
+            {
+              provide: TagsApiService,
+              useValue: { getTags: jest.fn(() => allTags$) },
+            },
+            {
+              provide: RecordsApiService,
+              useValue: { getRecordTags: jest.fn(() => recordTags$) },
+            },
+          ],
+        })
+        TestBed.inject(Gn4Repository)
+          .getRecordFlag('my-dataset-001', 'IS_REFERENCE_DATASET')
+          .subscribe((value) => emitted.push(value))
+      })
+
+      it('returns true when /tags responds before /record/uuid/tags', () => {
+        allTags$.next([flagTag])
+        expect(emitted).toEqual([])
+
+        recordTags$.next(new Set([flagTag]))
+        expect(emitted).toEqual([true])
+      })
+
+      it('returns true when /record/uuid/tags responds before /tags', () => {
+        recordTags$.next(new Set([flagTag]))
+        expect(emitted).toEqual([])
+
+        allTags$.next([flagTag])
+        expect(emitted).toEqual([true])
+      })
     })
   })
 
