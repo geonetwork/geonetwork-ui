@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { getFileFormat, getLinkPriority } from '@geonetwork-ui/util/shared'
+import {
+  getFileFormat,
+  getLinkPriority,
+  getMimeTypePriority,
+} from '@geonetwork-ui/util/shared'
 import { forkJoin, of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import {
@@ -86,15 +90,15 @@ export class RecordDownloadsComponent {
       ]).pipe(
         map(flattenArray),
         map(removeLinksWithUnknownFormat),
-        map(removeDuplicateLinks),
         map((downloadLinks) => {
           return [...otherLinks, ...downloadLinks, ...esriRestLinks]
         }),
+        map(sortLinks),
+        map(removeDuplicateLinks),
         catchError((e) => {
           this.error = e.message
           return of([...otherLinks, ...esriRestLinks])
-        }),
-        map(sortLinks)
+        })
       )
     })
   )
@@ -120,6 +124,10 @@ const removeDuplicateLinks = (downloadLinks) =>
 const sortLinks = (allLinks) =>
   allLinks.sort(
     (a: DatasetOnlineResource, b: DatasetOnlineResource): number => {
-      return getLinkPriority(b) - getLinkPriority(a)
+      const diffPriority = getLinkPriority(b) - getLinkPriority(a)
+      if (diffPriority !== 0) {
+        return diffPriority
+      }
+      return getMimeTypePriority(a) - getMimeTypePriority(b)
     }
   )
