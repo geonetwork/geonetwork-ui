@@ -5,7 +5,12 @@ beforeEach(() => {
 })
 
 it('gn-datahub', () => {
-  cy.visit('/webcomponents/gn-datahub.html')
+  // the browser language is forced so that the test does not depend on it
+  cy.visit('/webcomponents/gn-datahub.html', {
+    onBeforeLoad(win) {
+      Object.defineProperty(win.navigator, 'languages', { value: ['en-US'] })
+    },
+  })
 
   // store page title for later
   cy.title().should('not.be.empty')
@@ -15,6 +20,22 @@ it('gn-datahub', () => {
   cy.get('gn-ui-fuzzy-search', { timeout: 6000 }) // we use a higher timeout because the web component takes a while to boot in dev mode
     .should('be.visible')
   cy.get('datahub-navigation-menu').find('button').should('have.length', 3)
+
+  // should use the language given in the attribute
+  cy.get('gn-datahub').invoke('attr', 'text-language', 'fr')
+  cy.get('datahub-navigation-menu')
+    .find('button')
+    .eq(1)
+    .should('contain', 'Catalogue')
+
+  // should fall back to the browser language when the attribute is removed
+  cy.get('gn-datahub').invoke('removeAttr', 'text-language')
+  cy.get('datahub-navigation-menu')
+    .find('button')
+    .eq(1)
+    .invoke('text')
+    .invoke('trim')
+    .should('equal', 'Catalog')
 
   // should display news page
   cy.get('datahub-last-created').should('be.visible')

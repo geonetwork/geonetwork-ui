@@ -5,6 +5,7 @@ import {
   inject,
   Injector,
   Input,
+  OnChanges,
   OnInit,
   ViewEncapsulation,
 } from '@angular/core'
@@ -14,8 +15,11 @@ import { Router } from '@angular/router'
 import { Overlay, OverlayContainer } from '@angular/cdk/overlay'
 import { WebcomponentOverlayContainer } from '../../webcomponent-overlay-container'
 import { provideGn4 } from '@geonetwork-ui/api/repository'
-import { copyFontFacesToDocument } from '../base.component'
-import { standaloneConfigurationObject } from '../../configuration'
+import { copyFontFacesToDocument, useTextLanguage } from '../base.component'
+import {
+  standaloneConfigurationObject,
+  TextLanguage,
+} from '../../configuration'
 import { TranslateService } from '@ngx-translate/core'
 
 // We need only the providers and app component from the Datahub so we work around this linting rule
@@ -81,12 +85,17 @@ import {
   standalone: true,
   imports: [AppComponent, AsyncPipe],
 })
-export class GnDatahubComponent implements OnInit {
+export class GnDatahubComponent implements OnInit, OnChanges {
   @Input() configUrl: string
+  @Input() textLanguage: TextLanguage = 'browser'
   configReady$: Promise<boolean>
   router = inject(Router)
   injector = inject(Injector)
   translate = inject(TranslateService)
+
+  ngOnChanges() {
+    useTextLanguage(this.translate, this.textLanguage)
+  }
 
   ngOnInit() {
     const elementRef = this.injector.get(ElementRef)
@@ -97,7 +106,7 @@ export class GnDatahubComponent implements OnInit {
 
     copyFontFacesToDocument(this.injector.get(ElementRef).nativeElement)
 
-    this.translate.use(this.translate.getBrowserLang())
+    useTextLanguage(this.translate, this.textLanguage)
 
     // once the config is loaded, do initial navigation
     this.configReady$ = loadAppConfig(this.configUrl).then(() => {

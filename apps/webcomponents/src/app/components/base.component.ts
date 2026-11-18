@@ -96,11 +96,7 @@ export class BaseComponent implements OnChanges, OnInit {
     standaloneConfigurationObject.metadataLanguage ??= this.metadataLanguage
     standaloneConfigurationObject.textLanguage ??= this.textLanguage
 
-    if (this.textLanguage === 'browser') {
-      this.translate.use(this.translate.getBrowserLang())
-    } else {
-      this.translate.use(this.textLanguage)
-    }
+    useTextLanguage(this.translate, this.textLanguage)
 
     this.translate.reloadLang(this.translate.getCurrentLang())
     ThemeService.applyCssVariables(
@@ -117,7 +113,7 @@ export class BaseComponent implements OnChanges, OnInit {
   }
 
   changes() {
-    // to override
+    useTextLanguage(this.translate, this.textLanguage)
   }
 
   async getRecordLink(
@@ -133,6 +129,17 @@ export class BaseComponent implements OnChanges, OnInit {
     )
     return dataLinks[0]
   }
+}
+
+export function useTextLanguage(
+  translate: TranslateService,
+  textLanguage: TextLanguage
+) {
+  translate.use(
+    textLanguage && textLanguage !== 'browser'
+      ? textLanguage
+      : translate.getBrowserLang()
+  )
 }
 
 export function copyFontFacesToDocument(rootElement: HTMLElement) {
