@@ -5,6 +5,9 @@ import {
   searchResultsFixture,
   someUserFeedbacksFixture,
   userFeedbackFixture,
+  simpleDatasetRecordFixture,
+  simpleServiceRecordFixture,
+  simpleReuseRecordFixture,
 } from '@geonetwork-ui/common/fixtures'
 
 import { provideMockActions } from '@ngrx/effects/testing'
@@ -22,7 +25,6 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { Router } from '@angular/router'
 
 const full = {
   uniqueIdentifier: '1231321321',
@@ -51,16 +53,11 @@ class PlatformServiceInterfaceMock {
   postUserFeedbacks = jest.fn(() => of(undefined))
 }
 
-const RouterMock = {
-  url: 'dataset/1231321321',
-}
-
 describe('MdViewEffects', () => {
   let actions: Observable<Action>
   let effects: MdViewEffects
   let repository: RecordsRepositoryInterface
   let platform: PlatformServiceInterface
-  let router: Router
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -77,19 +74,32 @@ describe('MdViewEffects', () => {
           provide: PlatformServiceInterface,
           useClass: PlatformServiceInterfaceMock,
         },
-        {
-          provide: Router,
-          useValue: RouterMock,
-        },
       ],
     })
-    router = TestBed.inject(Router)
     repository = TestBed.inject(RecordsRepositoryInterface)
     effects = TestBed.inject(MdViewEffects)
     platform = TestBed.inject(PlatformServiceInterface)
   })
 
   describe('loadFullMetadata$', () => {
+    it.each([
+      ['dataset', simpleDatasetRecordFixture],
+      ['service', simpleServiceRecordFixture],
+      ['reuse', simpleReuseRecordFixture],
+    ] as const)(
+      'loads a %s without depending on the application router',
+      (_, createRecord) => {
+        const record = createRecord()
+        repository.getRecord = jest.fn(() => of(record))
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadata({ uuid: record.uniqueIdentifier }),
+        })
+        const expected = hot('-a-|', {
+          a: MdViewActions.loadFullMetadataSuccess({ full: record }),
+        })
+        expect(effects.loadFullMetadata$).toBeObservable(expected)
+      }
+    )
     describe('when api success and at least one record found', () => {
       it('dispatch loadFullSuccess', () => {
         actions = hot('-a-|', {

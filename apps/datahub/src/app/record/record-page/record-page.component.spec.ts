@@ -4,29 +4,35 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { RecordPageComponent } from './record-page.component'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { SAMPLE_RECORD } from '@geonetwork-ui/common/fixtures'
-import { of } from 'rxjs'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { BehaviorSubject } from 'rxjs'
 import { TitleService } from '../../router/datahub-title.service'
+
+class MdViewFacadeMock {
+  metadata$ = new BehaviorSubject<Partial<CatalogRecord>>(SAMPLE_RECORD)
+  error$ = new BehaviorSubject<{ notFound?: boolean; otherError?: string }>(
+    null
+  )
+}
 
 describe('RecordPageComponent', () => {
   let component: RecordPageComponent
   let fixture: ComponentFixture<RecordPageComponent>
-  let error$: BehaviorSubject<{ notFound?: boolean; otherError?: string }>
+  let facade: MdViewFacadeMock
 
   beforeEach(() => MockBuilder(RecordPageComponent))
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        MockProvider(MdViewFacade, {
-          metadata$: of(SAMPLE_RECORD),
-          error$: of(null),
-        }),
+        MockProvider(MdViewFacade, MdViewFacadeMock, 'useClass'),
         MockProvider(TitleService),
       ],
     }).compileComponents()
   })
 
   beforeEach(() => {
+    facade = TestBed.inject(MdViewFacade) as unknown as MdViewFacadeMock
     fixture = TestBed.createComponent(RecordPageComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -42,22 +48,19 @@ describe('RecordPageComponent', () => {
     const titleService = TestBed.inject(TitleService)
 
     jest.spyOn(titleService, 'setTitle')
-    component.ngOnInit()
+    facade.metadata$.next({ ...SAMPLE_RECORD })
 
     expect(titleService.setTitle).toHaveBeenCalledWith(SAMPLE_RECORD.title)
   })
   describe('robots meta tag', () => {
     let meta: Meta
-    let facade: MdViewFacade
     beforeEach(() => {
       meta = TestBed.inject(Meta)
-      facade = TestBed.inject(MdViewFacade)
       jest.spyOn(meta, 'updateTag')
       jest.spyOn(meta, 'removeTag')
     })
     it('adds noindex when the record is not found', () => {
-      facade.error$ = of({ notFound: true })
-      component.ngOnInit()
+      facade.error$.next({ notFound: true })
       expect(meta.updateTag).toHaveBeenCalledWith({
         name: 'robots',
         content: 'noindex',

@@ -72,9 +72,16 @@ describe('service pages', () => {
     cy.get('datahub-record-apis').should('not.exist')
 
     // Routing
-    // it should display an error message if a service is accessed through the dataset path
-    cy.visit('/dataset/01ec6ec7-6454-4504-ac95-befb16bacb0e')
-    cy.get('gn-ui-error').should('be.visible')
+    // when the record kind in the URL is wrong, it should correctly show the record and fix the URL right away
+    cy.visit(
+      '/dataset/01ec6ec7-6454-4504-ac95-befb16bacb0e?test=value#capabilities'
+    )
+    cy.url().should(
+      'include',
+      '/service/01ec6ec7-6454-4504-ac95-befb16bacb0e?test=value#capabilities'
+    )
+    cy.get('gn-ui-service-capabilities').should('be.visible')
+    cy.get('gn-ui-error').should('not.exist')
 
     //Metadata quality widget
     cy.intercept('GET', '/assets/configuration/default.toml', {
