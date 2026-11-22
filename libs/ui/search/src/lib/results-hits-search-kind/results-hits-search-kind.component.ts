@@ -24,10 +24,10 @@ import { TranslatePipe } from '@ngx-translate/core'
 })
 export class ResultsHitsSearchKindComponent implements OnChanges {
   @Input() selected: string[] = []
-  @Input() choices: Choice[] = []
+  @Input() choices: Choice<string>[] = []
   @Output() selectionChanged = new EventEmitter<string[]>()
 
-  availableChoices: Choice[] = []
+  availableChoices: Choice<string>[] = []
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.choices && changes.choices.currentValue) {
@@ -35,7 +35,7 @@ export class ResultsHitsSearchKindComponent implements OnChanges {
     }
   }
 
-  buildFilterChoices(availableValues: Choice[]) {
+  buildFilterChoices(availableValues: Choice<string>[]) {
     return [
       ...[
         {

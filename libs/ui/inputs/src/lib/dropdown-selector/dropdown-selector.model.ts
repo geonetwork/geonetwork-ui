@@ -1,5 +1,4 @@
-// FIXME: this should support more than string values, and match the multiselect choice model
-export interface DropdownChoice {
-  value: unknown
+export interface DropdownChoice<T = unknown> {
+  value: T
   label: string
 }

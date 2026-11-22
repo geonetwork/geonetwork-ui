@@ -15,22 +15,22 @@ import { CommonModule } from '@angular/common'
   standalone: true,
   imports: [CommonModule],
 })
-export class InlineFilterComponent {
-  @Input() choices: Choice[]
-  @Input() selected: unknown[] = []
+export class InlineFilterComponent<T = unknown> {
+  @Input() choices: Choice<T>[]
+  @Input() selected: T[] = []
 
-  @Output() selectValues = new EventEmitter<unknown[]>()
+  @Output() selectValues = new EventEmitter<T[]>()
 
   @ContentChild(TemplateRef) itemTemplate: TemplateRef<any>
 
-  isSelected(choice: Choice) {
+  isSelected(choice: Choice<T>) {
     return (
       this.selected.indexOf(choice.value) > -1 ||
       (this.selected.length === 0 && choice.value === 'all')
     )
   }
 
-  select(choice: Choice, selected: boolean) {
+  select(choice: Choice<T>, selected: boolean) {
     if (choice.value === 'all' && selected) {
       this.selected = [choice.value]
     } else {

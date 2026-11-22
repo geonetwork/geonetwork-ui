@@ -118,8 +118,7 @@ export class FormFieldOnlineLinkResourcesComponent {
     }
   }
 
-  handleResourcesChange(items: unknown[]) {
-    const links = items as OnlineResource[]
+  handleResourcesChange(links: OnlineResource[]) {
     const newResources = [
       ...this.allResources.filter((r) => r.type !== 'link'),
       ...links,

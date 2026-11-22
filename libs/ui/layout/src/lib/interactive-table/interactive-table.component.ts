@@ -25,14 +25,14 @@ import { Observable, of } from 'rxjs'
   imports: [CommonModule, NgIconComponent, TranslatePipe],
   providers: [provideIcons({ iconoirNavArrowDown, iconoirNavArrowUp })],
 })
-export class InteractiveTableComponent {
+export class InteractiveTableComponent<T = unknown> {
   @ContentChildren(InteractiveTableColumnComponent)
   columns: QueryList<InteractiveTableColumnComponent>
 
-  @Input() items: unknown[] = []
-  @Input() canEditItem: (item: unknown) => Observable<boolean> = () => of(true)
+  @Input() items: T[] = []
+  @Input() canEditItem: (item: T) => Observable<boolean> = () => of(true)
   @Input() isDraftPage = false
-  @Output() itemClick = new EventEmitter<unknown>()
+  @Output() itemClick = new EventEmitter<T>()
 
   get gridStyle() {
     return {
@@ -48,18 +48,27 @@ export class InteractiveTableComponent {
     }
   }
 
-  getItemTitle(item: CatalogRecord) {
+  getItemTitle(item: T) {
+    const record = item as CatalogRecord
     if (!this.isDraftPage) {
-      if (item.extras?.isHarvested) {
+      if (record.extras?.isHarvested) {
         return marker('editor.record.lock.harvested')
-      } else if (!item.extras?.edit) {
+      } else if (!record.extras?.edit) {
         return marker('editor.record.lock.owner')
       }
     }
     return ''
   }
 
-  handleRowClick(item: unknown) {
+  handleRowClick(item: T) {
     this.itemClick.emit(item)
+  }
+
+  getItemDisplayTitle(item: T): string {
+    return (item as CatalogRecord).title
+  }
+
+  getItemKind(item: T): string {
+    return (item as CatalogRecord).kind
   }
 }

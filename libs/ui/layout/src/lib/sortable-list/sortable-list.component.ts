@@ -37,10 +37,10 @@ import {
   ],
   providers: [provideIcons({ matDragHandleOutline, matCloseOutline })],
 })
-export class SortableListComponent {
+export class SortableListComponent<T = unknown> {
   @Input() elementTemplate: TemplateRef<unknown>
-  @Input() items: unknown[]
-  @Output() itemsOrderChange = new EventEmitter<unknown[]>()
+  @Input() items: T[]
+  @Output() itemsOrderChange = new EventEmitter<T[]>()
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.items, event.previousIndex, event.currentIndex)
