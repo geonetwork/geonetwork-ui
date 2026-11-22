@@ -33,8 +33,7 @@ import { TranslatePipe } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   BoundingBox,
-  getGeometryBoundingBox,
-  getGeometryFromGeoJSON,
+  getGeoJSONBoundingBox,
   isBoundingBoxWithinWorldExtent,
   propagateToDocumentOnly,
   readFileAsText,
@@ -185,12 +184,11 @@ export class SpatialExtentDropdownComponent {
     try {
       content = await readFileAsText(file)
       const parsed = JSON.parse(content)
-      const geometry = getGeometryFromGeoJSON(parsed)
-      if (!geometry) {
+      const bbox = getGeoJSONBoundingBox(parsed)
+      if (!bbox) {
         this.setError(marker('search.filters.spatialExtent.error.noGeometry'))
         return
       }
-      const bbox = getGeometryBoundingBox(geometry)
       if (!isBoundingBoxWithinWorldExtent(bbox)) {
         this.setError(marker('search.filters.spatialExtent.error.outOfBounds'))
         return
