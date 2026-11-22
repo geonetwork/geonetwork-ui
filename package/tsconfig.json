@@ -4,8 +4,7 @@
     "../tsconfig.base.json"
   ],
   "compilerOptions": {
-    "useDefineForClassFields": false,
-    "declarationMap": true
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
