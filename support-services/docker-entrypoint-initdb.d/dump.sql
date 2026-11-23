@@ -6484,6 +6484,7 @@ system/site/name	0	y	n	n	110	Test GeoNetwork-UI instance
 system/users/identicon	0	y	n	n	9110	gravatar:monsterid
 system/feedback/mailServer/host	0	y	n	y	630	this.will.not.work.smtp
 system/userFeedback/lastNotificationDate	0	n	n	y	1912	2026-02-01T10:12:46.751Z
+system/metadata/edit/supportedFileMimetypes	0	y	n	n	9107	*/*
 \.
 
 
