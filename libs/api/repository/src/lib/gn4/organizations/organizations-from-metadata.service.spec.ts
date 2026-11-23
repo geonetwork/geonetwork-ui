@@ -16,6 +16,7 @@ import {
 } from '@geonetwork-ui/common/fixtures'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { TranslateService } from '@ngx-translate/core'
+import { REFERENCE_DATASET_BOOST } from '../elasticsearch/elasticsearch.service'
 
 const sampleOrgA: Organization = {
   description: 'A description for ARE',
@@ -279,7 +280,19 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
                       },
                     },
                   ],
-                  should: [],
+                  should: [
+                    {
+                      constant_score: {
+                        filter: {
+                          term: {
+                            'cat.keyword':
+                              'geonetwork-ui-flag:IS_REFERENCE_DATASET',
+                          },
+                        },
+                        boost: REFERENCE_DATASET_BOOST,
+                      },
+                    },
+                  ],
                   filter: [{ terms: { isTemplate: ['n'] } }],
                 },
               },

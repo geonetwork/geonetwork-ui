@@ -1,4 +1,7 @@
-import { ElasticsearchService } from './elasticsearch.service'
+import {
+  ElasticsearchService,
+  REFERENCE_DATASET_BOOST,
+} from './elasticsearch.service'
 import {
   datasetRecordsFixture,
   elasticAggsResponseFixture,
@@ -14,6 +17,15 @@ class TranslateServiceMock {
 }
 
 let currentMetadataLang: string | (() => string)
+
+const referenceDatasetBoost = {
+  constant_score: {
+    filter: {
+      term: { 'cat.keyword': 'geonetwork-ui-flag:IS_REFERENCE_DATASET' },
+    },
+    boost: REFERENCE_DATASET_BOOST,
+  },
+}
 
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
@@ -190,6 +202,11 @@ describe('ElasticsearchService', () => {
     })
   })
   describe('#buildPayloadQuery', () => {
+    it('adds a constant score boost for reference datasets', () => {
+      const query = service['buildPayloadQuery']({}, {})
+      expect(query.bool.should).toEqual([referenceDatasetBoost])
+      expect(query.bool.filter).toEqual([{ terms: { isTemplate: ['n'] } }])
+    })
     it('should not add fields query_strings if fieldsSearchFilters Object is empty', () => {
       const query = service['buildPayloadQuery'](
         {
@@ -213,7 +230,7 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          should: [],
+          should: [referenceDatasetBoost],
           must: [
             {
               query_string: {
@@ -284,7 +301,7 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          should: [],
+          should: [referenceDatasetBoost],
           must: [
             {
               query_string: {
@@ -353,7 +370,7 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          should: [],
+          should: [referenceDatasetBoost],
           must: [
             {
               query_string: {
@@ -513,7 +530,7 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          should: [],
+          should: [referenceDatasetBoost],
           must: [
             {
               query_string: {
@@ -572,7 +589,7 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          should: [],
+          should: [referenceDatasetBoost],
           must: [],
           must_not: [
             {
@@ -613,7 +630,7 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          should: [],
+          should: [referenceDatasetBoost],
           must: [
             {
               query_string: {
@@ -803,6 +820,7 @@ describe('ElasticsearchService', () => {
         geojsonPolygon
       )
       expect(query.bool.should).toEqual([
+        referenceDatasetBoost,
         {
           geo_shape: {
             geom: {
@@ -852,6 +870,7 @@ describe('ElasticsearchService', () => {
         geojsonPolygon
       )
       expect(query.bool.should).toEqual([
+        referenceDatasetBoost,
         {
           geo_shape: {
             geom: {
@@ -884,6 +903,7 @@ describe('ElasticsearchService', () => {
         geojsonPolygon
       )
       expect(query.bool.should).toEqual([
+        referenceDatasetBoost,
         {
           geo_shape: {
             geom: {
@@ -924,6 +944,7 @@ describe('ElasticsearchService', () => {
         geojsonPolygon
       )
       expect(query.bool.should).toEqual([
+        referenceDatasetBoost,
         {
           geo_shape: {
             geom: {
@@ -1024,6 +1045,7 @@ describe('ElasticsearchService', () => {
               },
             ],
             should: [
+              referenceDatasetBoost,
               {
                 geo_shape: {
                   geom: {
@@ -1714,7 +1736,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
               },
             },
           ],
-          should: [],
+          should: [referenceDatasetBoost],
           must: [
             {
               query_string: {
@@ -1768,7 +1790,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
               },
             },
           ],
-          should: [],
+          should: [referenceDatasetBoost],
           must: [
             {
               query_string: {
@@ -1814,7 +1836,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
               },
             },
           ],
-          should: [],
+          should: [referenceDatasetBoost],
           must: [
             {
               query_string: {

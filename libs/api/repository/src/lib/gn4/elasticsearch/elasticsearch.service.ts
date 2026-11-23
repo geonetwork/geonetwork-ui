@@ -4,6 +4,7 @@ import {
   ES_QUERY_FIELDS_PRIORITY,
   ES_SOURCE_SUMMARY,
   EsQueryFieldsPriorityType,
+  RECORD_FLAG_CATEGORY_PREFIX,
 } from './constant'
 import {
   Aggregation,
@@ -44,6 +45,8 @@ import { getLength as getGeodesicLength } from 'ol/sphere.js'
 import { LineString } from 'ol/geom.js'
 
 export type DateRange = { start?: Date; end?: Date }
+
+export const REFERENCE_DATASET_BOOST = 5
 
 @Injectable({
   providedIn: 'root',
@@ -438,7 +441,18 @@ export class ElasticsearchService {
   ) {
     const must = [] as Record<string, unknown>[]
     const must_not = this.mustNotFilters()
-    const should = [] as Record<string, unknown>[]
+    const should = [
+      {
+        constant_score: {
+          filter: {
+            term: {
+              'cat.keyword': `${RECORD_FLAG_CATEGORY_PREFIX}IS_REFERENCE_DATASET`,
+            },
+          },
+          boost: REFERENCE_DATASET_BOOST,
+        },
+      },
+    ] as Record<string, unknown>[]
     const filter = [this.queryFilterOnValues('isTemplate', 'n')] as Record<
       string,
       unknown
