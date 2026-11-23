@@ -170,12 +170,13 @@ jobs:
         run: |
           AFFECTED_APPS=$(npx nx show projects --affected --type=app | tr '\n' ',' | sed 's/,$//')
           AFFECTED_LIBS=$(npx nx show projects --affected --type=lib | tr '\n' ',' | sed 's/,$//')
+          AFFECTED_E2E=$(npx nx show projects --affected --type=e2e | tr '\n' ',' | sed 's/,$//')
           echo "affected_apps=${AFFECTED_APPS}" >> "$GITHUB_OUTPUT"
           echo "affected_libs=${AFFECTED_LIBS}" >> "$GITHUB_OUTPUT"
-          echo "skip_datahub=[\"$([[ $AFFECTED_APPS =~ "datahub" ]] && echo "false" || echo "true")\"]" >> "$GITHUB_OUTPUT"
-          echo "skip_editor=[\"$([[ $AFFECTED_APPS =~ "metadata-editor" ]] && echo "false" || echo "true")\"]" >> "$GITHUB_OUTPUT"
+          echo "skip_datahub=[\"$([[ $AFFECTED_E2E =~ "datahub-e2e" ]] && echo "false" || echo "true")\"]" >> "$GITHUB_OUTPUT"
+          echo "skip_editor=[\"$([[ $AFFECTED_E2E =~ "metadata-editor-e2e" ]] && echo "false" || echo "true")\"]" >> "$GITHUB_OUTPUT"
           echo "skip_webcomponents=[\"$([[ $AFFECTED_APPS =~ "webcomponents" ]] && echo "false" || echo "true")\"]" >> "$GITHUB_OUTPUT"
-          echo "skip_all_e2e=$( [[ -z $AFFECTED_APPS ]] && echo "true" || echo "false" )" >> "$GITHUB_OUTPUT"
+          echo "skip_all_e2e=$( [[ -z $AFFECTED_E2E ]] && echo "true" || echo "false" )" >> "$GITHUB_OUTPUT"
 
   affected-recap:
     if: github.event.pull_request.draft == false && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
