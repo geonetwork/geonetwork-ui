@@ -84,9 +84,12 @@ services:
       DATA_DIR: /catalogue-data
       VIRTUAL_HOST: localhost
       JAVA_OPTS: >
+        -Dcom.sun.management.jmxremote=false
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.ssl=false
         -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
         -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true
-        -Xms512M -Xss512M -Xmx2G -XX:+UseConcMarkSweepGC
+        -Xms512M -Xss512M -Xmx2G -XX:+UseConcMarkSweepGC -XX:-UseContainerSupport
         -Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005
         -Dgeonetwork.resources.dir=/catalogue-data/data/resources
         -Dgeonetwork.data.dir=/catalogue-data/data
