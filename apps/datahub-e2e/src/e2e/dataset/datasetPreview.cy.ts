@@ -103,7 +103,7 @@ beforeEach(() => {
   )
   cy.intercept(
     'GET',
-    'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10%3A54%3A42.030Z%2F2020-01-01T00%3A00%3A00.000Z',
+    'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10%3A54%3A42.030Z%2F{2019-12-31T23,2020-01-01T00}%3A00%3A00.000Z',
     {
       fixture: 'stac-items-date-modified.json',
     }
@@ -113,6 +113,13 @@ beforeEach(() => {
     'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12',
     {
       fixture: 'stac-items-no-date.json',
+    }
+  )
+  cy.intercept(
+    'GET',
+    'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime={1989-12-31T23,1990-01-01T00}%3A00%3A00.000Z%2F{1994-12-31T23,1995-01-01T00}%3A00%3A00.000Z',
+    {
+      fixture: 'stac-items-empty.json',
     }
   )
 })
@@ -525,6 +532,29 @@ describe('Preview section', () => {
       beforeEach(() => {
         cy.login()
         cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+      })
+      afterEach(() => {
+        // delete existing dataviz config
+        cy.getCookie('XSRF-TOKEN')
+          .its('value')
+          .then(function (token) {
+            cy.request({
+              url: `/geonetwork/srv/api/records/zzz_nl_test_wfs_syth_la_ciotat/attachments/datavizConfig.json`,
+              method: 'DELETE',
+              headers: {
+                'X-XSRF-TOKEN': token,
+              },
+              failOnStatusCode: false, // the request will return a 404 if no dataviz config saved; simply ignore it
+            })
+            cy.request({
+              url: `/geonetwork/srv/api/records/04bcec79-5b25-4b16-b635-73115f7456e4/attachments/datavizConfig.json`,
+              method: 'DELETE',
+              headers: {
+                'X-XSRF-TOKEN': token,
+              },
+              failOnStatusCode: false,
+            })
+          })
       })
       it('should show the config saving btn', () => {
         cy.get('@configTab')
