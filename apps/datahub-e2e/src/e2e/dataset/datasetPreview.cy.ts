@@ -576,8 +576,14 @@ describe('Preview section', () => {
           .should('not.have.attr', 'ng-reflect-disabled', 'true')
           .as('styleDropdown')
         cy.get('@styleDropdown').selectDropdownOption('4')
+        cy.intercept({
+          method: 'POST',
+          pathname: '**/records/*/attachments',
+        }).as('saveConfig')
         cy.get('@configTab').find('gn-ui-button').click()
-        cy.visit('/dataset/zzz_nl_test_wfs_syth_la_ciotat')
+        cy.wait('@saveConfig')
+        cy.reload()
+
         cy.get('@mapTab').invoke('attr', 'aria-selected').should('eq', 'true')
         cy.get('@previewSection')
           .find('gn-ui-dropdown-selector')

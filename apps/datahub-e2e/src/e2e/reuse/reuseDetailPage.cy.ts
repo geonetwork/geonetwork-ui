@@ -122,9 +122,10 @@ describe('reuse pages', () => {
 
     // clicking on the edit button should open the editor
     cy.get('[data-cy="editReuseButton"]').find('button').click()
+    const currentPort = new URL(window.location.toString()).port
     cy.get('@windowOpen').should(
       'be.calledWith',
-      'http://my-metadata-editor/light-edit/7eb795c2-d612-4b5e-b15e-d985b0f4e697?redirect_on_leave=http%3A%2F%2Flocalhost%3A4200%2Freuse%2F7eb795c2-d612-4b5e-b15e-d985b0f4e697',
+      `http://my-metadata-editor/light-edit/7eb795c2-d612-4b5e-b15e-d985b0f4e697?redirect_on_leave=http%3A%2F%2Flocalhost%3A${currentPort}%2Freuse%2F7eb795c2-d612-4b5e-b15e-d985b0f4e697`,
       '_self'
     )
 

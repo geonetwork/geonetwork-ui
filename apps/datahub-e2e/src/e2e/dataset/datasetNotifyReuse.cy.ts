@@ -153,9 +153,10 @@ describe('Declare a reuse', () => {
         'not.contain.text',
         'Declare a reuse'
       )
+      const currentPort = new URL(window.location.toString()).port
       cy.get('@windowOpen').should(
         'have.been.calledWith',
-        'http://my-metadata-editor/light-edit/new-reuse-uuid?redirect_on_leave=http%3A%2F%2Flocalhost%3A4200%2Freuse%2Fnew-reuse-uuid',
+        `http://my-metadata-editor/light-edit/new-reuse-uuid?redirect_on_leave=http%3A%2F%2Flocalhost%3A${currentPort}%2Freuse%2Fnew-reuse-uuid`,
         '_self'
       )
     })
