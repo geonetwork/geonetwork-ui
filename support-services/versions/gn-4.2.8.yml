@@ -1,0 +1,6 @@
+services:
+  geonetwork:
+    image: geonetwork:4.2.8
+
+  elasticsearch:
+    image: elasticsearch:7.17.15

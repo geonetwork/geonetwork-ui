@@ -1,0 +1,23 @@
+services:
+  geonetwork:
+    image: geonetwork:4.2.18
+    environment:
+      JAVA_OPTS: >-
+        -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true
+        -Xms512M -Xss512M -Xmx2G -XX:+UseConcMarkSweepGC -XX:-UseContainerSupport
+        -Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005
+        -Dgeonetwork.resources.dir=/catalogue-data/data/resources
+        -Dgeonetwork.data.dir=/catalogue-data/data
+        -Dgeonetwork.codeList.dir=/catalogue-data/config/codelist
+        -Dgeonetwork.schema.dir=/catalogue-data/config/schema_plugins
+        -Dgeonetwork.config.dir=/catalogue-data/config
+        -Dgeonetwork.indexConfig.dir=/catalogue-data/config/index
+        -Des.host=elasticsearch
+        -Des.protocol=http
+        -Des.port=9200
+        -Des.url=http://elasticsearch:9200
+        -Des.username=
+        -Des.password=
+
+  elasticsearch:
+    image: elasticsearch:7.17.15

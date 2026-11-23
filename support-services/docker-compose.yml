@@ -21,7 +21,7 @@ services:
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 
   elasticsearch:
-    image: elasticsearch:${ELASTICSEARCH_VERSION}
+    image: elasticsearch:7.17.15
     ulimits:
       memlock:
         soft: -1
@@ -32,10 +32,6 @@ services:
     environment:
       - discovery.type=single-node
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
-      - ${ES_XPACK_PARAMETER_PREFIX}xpack.security.enabled=false
-      - ${ES_XPACK_PARAMETER_PREFIX}xpack.security.enrollment.enabled=false
-      - ${ES_XPACK_PARAMETER_PREFIX}xpack.security.http.ssl.enabled=false
-      - ${ES_XPACK_PARAMETER_PREFIX}xpack.security.transport.ssl.enabled=false
     healthcheck:
       test:
         [
@@ -50,29 +46,30 @@ services:
     ports:
       - '9200:9200'
 
-  kibana:
-    image: kibana:7.11.1
-    environment:
-      SERVER_NAME: 'kibana'
-      ELASTICSEARCH_URL: http://elasticsearch:9200/
-      XPACK_MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED: 'true'
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-    healthcheck:
-      test:
-        [
-          'CMD-SHELL',
-          'curl -s -f http://localhost:5601/api/status >/dev/null || exit 1',
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 10
-    ports:
-      - '5601:5601'
+  # Kibana can be used for debug and diagnostics when using ElasticSearch; it is not an essential component though
+  #  kibana:
+  #    image: kibana:7.11.1
+  #    environment:
+  #      SERVER_NAME: 'kibana'
+  #      ELASTICSEARCH_URL: http://elasticsearch:9200/
+  #      XPACK_MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED: 'true'
+  #    depends_on:
+  #      elasticsearch:
+  #        condition: service_healthy
+  #    healthcheck:
+  #      test:
+  #        [
+  #          'CMD-SHELL',
+  #          'curl -s -f http://localhost:5601/api/status >/dev/null || exit 1',
+  #        ]
+  #      interval: 30s
+  #      timeout: 10s
+  #      retries: 10
+  #    ports:
+  #      - '5601:5601'
 
   geonetwork:
-    image: geonetwork:${GEONETWORK_VERSION}
+    image: geonetwork:4.2.5
     environment:
       ES_HOST: elasticsearch
       ES_PROTOCOL: http
@@ -86,7 +83,6 @@ services:
       GEONETWORK_DB_PASSWORD: geonetwork
       DATA_DIR: /catalogue-data
       VIRTUAL_HOST: localhost
-
       JAVA_OPTS: >
         -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
         -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true
@@ -140,7 +136,7 @@ services:
     # only run init if volumes were cleared
     command: sh -c -e "if [ ! -f /done ]; then run-parts /docker-entrypoint.d --exit-on-error; else echo 'Nothing to do.'; exit 0; fi"
     environment:
-      GEONETWORK_VERSION: ${GEONETWORK_VERSION}
+      FIX_GN_422: false
     depends_on:
       geonetwork:
         condition: service_healthy
@@ -156,25 +152,3 @@ services:
     volumes:
       - ./docker-entrypoint.d:/docker-entrypoint.d
       - geonetwork_data:/mnt/geonetwork_data/
-
-  ogc-api-records-service:
-    image: geonetwork/gn-cloud-ogc-api-records-service:4.2.2
-    environment:
-      SPRING_PROFILES_ACTIVE: standalone
-      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/geonetwork
-      SPRING_DATASOURCE_USERNAME: geonetwork
-      SPRING_DATASOURCE_PASSWORD: geonetwork
-      GN_BASEURL: http://geonetwork:8080/geonetwork/api
-      GN_LEGACY_URL: http://geonetwork:8080/geonetwork
-      GN_INDEX_URL: http://elasticsearch:9200
-      SERVER_FORWARDHEADERSSTRATEGY: FRAMEWORK
-      JAVA_OPTS: -Dfile.encoding=UTF-8
-    depends_on:
-      geonetwork:
-        condition: service_healthy
-      database:
-        condition: service_healthy
-      elasticsearch:
-        condition: service_healthy
-    ports:
-      - '8081:8080'

@@ -1,0 +1,10 @@
+services:
+  geonetwork:
+    image: geonetwork:4.2.2
+
+  elasticsearch:
+    image: elasticsearch:7.17.15
+
+  init:
+    environment:
+      FIX_GN_422: true
