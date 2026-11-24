@@ -124,6 +124,32 @@ beforeEach(() => {
   )
 })
 
+before(() => {
+  // delete existing dataviz config
+  cy.login()
+  cy.getCookie('XSRF-TOKEN')
+    .its('value')
+    .then(function (token) {
+      cy.request({
+        url: `/geonetwork/srv/api/records/zzz_nl_test_wfs_syth_la_ciotat/attachments/datavizConfig.json`,
+        method: 'DELETE',
+        headers: {
+          'X-XSRF-TOKEN': token,
+        },
+        failOnStatusCode: false, // the request will return a 404 if no dataviz config saved; simply ignore it
+      })
+      cy.request({
+        url: `/geonetwork/srv/api/records/04bcec79-5b25-4b16-b635-73115f7456e4/attachments/datavizConfig.json`,
+        method: 'DELETE',
+        headers: {
+          'X-XSRF-TOKEN': token,
+        },
+        failOnStatusCode: false,
+      })
+    })
+  cy.signOut()
+})
+
 describe('Preview section', () => {
   it('display & functions', () => {
     // Testing a dataset with TMS endpoint in error
@@ -497,174 +523,147 @@ describe('Preview section', () => {
       .should('be.visible')
       .should('have.text', 'Access to this resource is restricted')
   })
-  describe('Dataviz configuration', () => {
-    beforeEach(() => {
-      cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
-      cy.get('datahub-record-metadata')
-        .find('[id="preview"]')
-        .first()
-        .as('previewSection')
-      cy.get('@previewSection')
-        .find('.mat-mdc-tab-labels')
-        .children('div')
-        .eq(0)
-        .as('configTab')
-      cy.get('@previewSection')
-        .find('.mat-mdc-tab-labels')
-        .children('div')
-        .eq(1)
-        .as('mapTab')
-      cy.get('@previewSection')
-        .find('.mat-mdc-tab-labels')
-        .children('div')
-        .eq(2)
-        .as('tableTab')
-      cy.get('@previewSection')
-        .find('.mat-mdc-tab-labels')
-        .children('div')
-        .eq(3)
-        .as('chartTab')
-    })
-    it('should NOT show the config saving btn when logged out', () => {
-      cy.get('@configTab').find('gn-ui-button').should('not.exist')
-    })
-    describe('Logged in as admin', () => {
-      it('allow saving a dataviz config', () => {
-        // saving+reading a JSON attachment fails on 4.2.14 and above
-        cy.geonetworkVersionMatches('>=4.2.14 <4.2.99').then(
-          function (jsonAttachmentBug) {
-            if (jsonAttachmentBug) {
-              this.skip()
-            }
-          }
-        )
+  it('Dataviz configuration', () => {
+    cy.visit('/dataset/zzz_nl_test_wfs_syth_la_ciotat')
 
-        cy.login()
-        cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+    cy.get('datahub-record-metadata')
+      .find('[id="preview"]')
+      .first()
+      .as('previewSection')
+    cy.get('@previewSection')
+      .find('.mat-mdc-tab-labels')
+      .children('div')
+      .eq(0)
+      .as('configTab')
+    cy.get('@previewSection')
+      .find('.mat-mdc-tab-labels')
+      .children('div')
+      .eq(1)
+      .as('mapTab')
+    cy.get('@previewSection')
+      .find('.mat-mdc-tab-labels')
+      .children('div')
+      .eq(2)
+      .as('tableTab')
+    cy.get('@previewSection')
+      .find('.mat-mdc-tab-labels')
+      .children('div')
+      .eq(3)
+      .as('chartTab')
 
-        // delete existing dataviz config
-        cy.getCookie('XSRF-TOKEN')
-          .its('value')
-          .then(function (token) {
-            cy.request({
-              url: `/geonetwork/srv/api/records/zzz_nl_test_wfs_syth_la_ciotat/attachments/datavizConfig.json`,
-              method: 'DELETE',
-              headers: {
-                'X-XSRF-TOKEN': token,
-              },
-              failOnStatusCode: false, // the request will return a 404 if no dataviz config saved; simply ignore it
-            })
-            cy.request({
-              url: `/geonetwork/srv/api/records/04bcec79-5b25-4b16-b635-73115f7456e4/attachments/datavizConfig.json`,
-              method: 'DELETE',
-              headers: {
-                'X-XSRF-TOKEN': token,
-              },
-              failOnStatusCode: false,
-            })
-          })
+    // it should NOT show the config saving btn when logged out
+    cy.get('@configTab').find('gn-ui-button').should('not.exist')
 
-        // it should show the config saving btn
-        cy.get('@configTab')
-          .find('gn-ui-button')
-          .should('have.text', 'Set as default preview')
+    // it allows saving a dataviz config when logged in as admin
 
-        // it should save and use a map config with TMS styles
-        cy.visit('/dataset/zzz_nl_test_wfs_syth_la_ciotat')
-        cy.get('@previewSection')
-          .find('gn-ui-dropdown-selector')
-          .eq(0)
-          .as('layerDropdown')
-        cy.get('@layerDropdown').selectDropdownOption(
-          'Plan IGN Tuiles vectorielles (TMS)-https://data.geopf.fr/tms/1.0.0'
-        )
-        cy.get('@previewSection')
-          .find('gn-ui-dropdown-selector')
-          .eq(1)
-          .as('styleDropdown')
-        cy.get('@styleDropdown').should(
-          'not.have.attr',
-          'ng-reflect-disabled',
-          'true'
-        )
-        cy.get('@styleDropdown').selectDropdownOption('4')
-        cy.intercept({
-          method: 'POST',
-          pathname: '**/records/*/attachments',
-        }).as('saveConfig')
-        cy.get('@configTab').find('gn-ui-button').click()
-        cy.wait('@saveConfig')
-        cy.reload()
+    // saving+reading a JSON attachment fails on 4.2.14 and above
+    cy.geonetworkVersionMatches('>=4.2.14 <4.2.99').then(
+      function (jsonAttachmentBug) {
+        if (jsonAttachmentBug) {
+          this.skip()
+        }
+      }
+    )
 
-        cy.get('@mapTab').invoke('attr', 'aria-selected').should('eq', 'true')
-        cy.get('@previewSection')
-          .find('gn-ui-dropdown-selector')
-          .eq(0)
-          .invoke('attr', 'ng-reflect-selected')
-          .should('include', 'Plan IGN Tuiles vectorielles')
-        cy.get('@previewSection')
-          .find('gn-ui-dropdown-selector')
-          .eq(1)
-          .invoke('attr', 'ng-reflect-selected')
-          .should('eq', '4')
+    cy.login()
+    cy.visit('/dataset/zzz_nl_test_wfs_syth_la_ciotat')
 
-        // it should save and use a table config
-        cy.get('@tableTab').click()
-        cy.get('@configTab').find('gn-ui-button').click()
-        cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
-        cy.get('@tableTab').invoke('attr', 'aria-selected').should('eq', 'true')
+    // it should show the config saving btn
+    cy.get('@configTab')
+      .find('gn-ui-button')
+      .should('have.text', 'Set as default preview')
 
-        // it should save and use a chart config with custom props
-        cy.get('@chartTab').click()
-        // everytime a dropdown option is selected the tab goes back to table view in e2e tests
-        cy.get('@chartTab').click()
-        cy.get('@previewSection')
-          .find('gn-ui-chart-view')
-          .find('gn-ui-dropdown-selector')
-          .filter(':visible')
-          .as('drop')
-        cy.get('@drop').eq(0).as('chartTypeDropdown')
-        cy.get('@chartTypeDropdown').selectDropdownOption('pie')
-        cy.get('@drop').eq(2).as('chartXDropdown')
-        cy.get('@chartXDropdown').selectDropdownOption('men')
-        cy.get('@drop').eq(3).as('chartAggDropdown')
-        cy.get('@chartAggDropdown').selectDropdownOption('average')
-        cy.get('@configTab').find('gn-ui-button').click()
-        cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
-        cy.get('@chartTab').invoke('attr', 'aria-selected').should('eq', 'true')
-        cy.get('@previewSection')
-          .find('gn-ui-chart')
-          .invoke('attr', 'ng-reflect-type')
-          .should('include', 'pie')
-        cy.get('@previewSection')
-          .find('gn-ui-chart')
-          .invoke('attr', 'ng-reflect-value-property')
-          .should('include', 'average(men)')
-      })
-      describe('When config points to map layer but layer has been removed', () => {
-        beforeEach(() => {
-          cy.intercept(
-            'POST',
-            '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats&relatedType=hassources&relatedType=siblings&relatedType=associated',
-            {
-              fixture: 'tms-record-source-removed.json',
-            }
-          )
-          cy.visit('/dataset/zzz_nl_test_wfs_syth_la_ciotat')
-        })
-        it('should ignore the config and select the first link of view', () => {
-          cy.get('@previewSection')
-            .find('gn-ui-dropdown-selector')
-            .eq(0)
-            .invoke('text')
-            .should('include', 'la_ciotat')
-          cy.get('@previewSection')
-            .find('gn-ui-dropdown-selector')
-            .eq(1)
-            .should('exist')
-            .should('have.attr', 'ng-reflect-disabled', 'true')
-        })
-      })
-    })
+    // it should save and use a map config with TMS styles
+    cy.get('@previewSection')
+      .find('gn-ui-dropdown-selector')
+      .eq(0)
+      .as('layerDropdown')
+    cy.get('@layerDropdown').selectDropdownOption(
+      'Plan IGN Tuiles vectorielles (TMS)-https://data.geopf.fr/tms/1.0.0'
+    )
+    cy.get('@previewSection')
+      .find('gn-ui-dropdown-selector')
+      .eq(1)
+      .as('styleDropdown')
+    cy.get('@styleDropdown').should(
+      'not.have.attr',
+      'ng-reflect-disabled',
+      'true'
+    )
+    cy.get('@styleDropdown').selectDropdownOption('4')
+    cy.intercept({
+      method: 'POST',
+      pathname: '**/records/*/attachments',
+    }).as('saveConfig')
+    cy.get('@configTab').find('gn-ui-button').click()
+    cy.wait('@saveConfig')
+    cy.reload()
+
+    cy.get('@mapTab').invoke('attr', 'aria-selected').should('eq', 'true')
+    cy.get('@previewSection')
+      .find('gn-ui-dropdown-selector')
+      .eq(0)
+      .invoke('attr', 'ng-reflect-selected')
+      .should('include', 'Plan IGN Tuiles vectorielles')
+    cy.get('@previewSection')
+      .find('gn-ui-dropdown-selector')
+      .eq(1)
+      .invoke('attr', 'ng-reflect-selected')
+      .should('eq', '4')
+
+    // it should save and use a table config
+    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+    cy.get('@tableTab').click()
+    cy.get('@configTab').find('gn-ui-button').click()
+    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+    cy.get('@tableTab').invoke('attr', 'aria-selected').should('eq', 'true')
+
+    // it should save and use a chart config with custom props
+    cy.get('@chartTab').click()
+    // everytime a dropdown option is selected the tab goes back to table view in e2e tests
+    cy.get('@chartTab').click()
+    cy.get('@previewSection')
+      .find('gn-ui-chart-view')
+      .find('gn-ui-dropdown-selector')
+      .filter(':visible')
+      .as('drop')
+    cy.get('@drop').eq(0).as('chartTypeDropdown')
+    cy.get('@chartTypeDropdown').selectDropdownOption('pie')
+    cy.get('@drop').eq(2).as('chartXDropdown')
+    cy.get('@chartXDropdown').selectDropdownOption('men')
+    cy.get('@drop').eq(3).as('chartAggDropdown')
+    cy.get('@chartAggDropdown').selectDropdownOption('average')
+    cy.get('@configTab').find('gn-ui-button').click()
+    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+    cy.get('@chartTab').invoke('attr', 'aria-selected').should('eq', 'true')
+    cy.get('@previewSection')
+      .find('gn-ui-chart')
+      .invoke('attr', 'ng-reflect-type')
+      .should('include', 'pie')
+    cy.get('@previewSection')
+      .find('gn-ui-chart')
+      .invoke('attr', 'ng-reflect-value-property')
+      .should('include', 'average(men)')
+
+    // it should ignore the config and select the first link of view when config points to map layer but layer has been removed
+    cy.intercept(
+      'POST',
+      '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats&relatedType=hassources&relatedType=siblings&relatedType=associated',
+      {
+        fixture: 'tms-record-source-removed.json',
+      }
+    )
+    cy.visit('/dataset/zzz_nl_test_wfs_syth_la_ciotat')
+
+    cy.get('@previewSection')
+      .find('gn-ui-dropdown-selector')
+      .eq(0)
+      .invoke('text')
+      .should('include', 'la_ciotat')
+    cy.get('@previewSection')
+      .find('gn-ui-dropdown-selector')
+      .eq(1)
+      .should('exist')
+      .should('have.attr', 'ng-reflect-disabled', 'true')
   })
 })
