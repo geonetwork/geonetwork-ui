@@ -529,11 +529,19 @@ describe('Preview section', () => {
       cy.get('@configTab').find('gn-ui-button').should('not.exist')
     })
     describe('Logged in as admin', () => {
-      beforeEach(() => {
+      it('allow saving a dataviz config', () => {
+        // saving+reading a JSON attachment fails on 4.2.14 and above
+        cy.geonetworkVersionMatches('>=4.2.14 <4.2.99').then(
+          function (jsonAttachmentBug) {
+            if (jsonAttachmentBug) {
+              this.skip()
+            }
+          }
+        )
+
         cy.login()
         cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
-      })
-      afterEach(() => {
+
         // delete existing dataviz config
         cy.getCookie('XSRF-TOKEN')
           .its('value')
@@ -555,13 +563,13 @@ describe('Preview section', () => {
               failOnStatusCode: false,
             })
           })
-      })
-      it('should show the config saving btn', () => {
+
+        // it should show the config saving btn
         cy.get('@configTab')
           .find('gn-ui-button')
           .should('have.text', 'Set as default preview')
-      })
-      it('should save and use a map config with TMS styles', () => {
+
+        // it should save and use a map config with TMS styles
         cy.visit('/dataset/zzz_nl_test_wfs_syth_la_ciotat')
         cy.get('@previewSection')
           .find('gn-ui-dropdown-selector')
@@ -573,8 +581,12 @@ describe('Preview section', () => {
         cy.get('@previewSection')
           .find('gn-ui-dropdown-selector')
           .eq(1)
-          .should('not.have.attr', 'ng-reflect-disabled', 'true')
           .as('styleDropdown')
+        cy.get('@styleDropdown').should(
+          'not.have.attr',
+          'ng-reflect-disabled',
+          'true'
+        )
         cy.get('@styleDropdown').selectDropdownOption('4')
         cy.intercept({
           method: 'POST',
@@ -595,14 +607,14 @@ describe('Preview section', () => {
           .eq(1)
           .invoke('attr', 'ng-reflect-selected')
           .should('eq', '4')
-      })
-      it('should save and use a table config', () => {
+
+        // it should save and use a table config
         cy.get('@tableTab').click()
         cy.get('@configTab').find('gn-ui-button').click()
         cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
         cy.get('@tableTab').invoke('attr', 'aria-selected').should('eq', 'true')
-      })
-      it('should save and use a chart config with custom props', () => {
+
+        // it should save and use a chart config with custom props
         cy.get('@chartTab').click()
         // everytime a dropdown option is selected the tab goes back to table view in e2e tests
         cy.get('@chartTab').click()
