@@ -1,25 +1,20 @@
 <ul class="flex flex-wrap list-none gap-2">
   @for (choice of choices; track choice) {
     <li>
-      <label
-        class=""
+      <button
+        type="button"
         [ngClass]="{
           selected: isSelected(choice),
         }"
+        [attr.aria-pressed]="isSelected(choice)"
+        [attr.data-cy]="'inlineFilter-' + choice.value"
+        (click)="select(choice, !isSelected(choice))"
       >
-        <input
-          class="hidden"
-          type="checkbox"
-          #checkBox
-          [checked]="isSelected(choice)"
-          (change)="select(choice, checkBox.checked)"
-          [attr.data-cy]="'inlineFilter-' + choice.value"
-        />
         <ng-container
           *ngTemplateOutlet="itemTemplate; context: { $implicit: choice }"
         >
         </ng-container>
-      </label>
+      </button>
     </li>
   }
 </ul>
