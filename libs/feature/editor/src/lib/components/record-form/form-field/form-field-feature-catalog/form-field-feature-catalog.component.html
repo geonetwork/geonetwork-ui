@@ -1,0 +1,50 @@
+@if (featureType) {
+  <div
+    class="flex flex-col gap-5 border border-gray-300 rounded-lg p-5 pb-8"
+    data-test="feature-catalog-table"
+  >
+    <gn-ui-form-field-wrapper
+      [label]="'editor.record.form.featureCatalog.name' | translate"
+    >
+      <gn-ui-button
+        form-field-interaction
+        type="light"
+        extraClass="!py-1.5 !pl-2 !pr-3 gap-1 font-bold text-sm text-black"
+        (buttonClick)="confirmDeleteFeatureCatalog()"
+        data-test="feature-catalog-delete"
+      >
+        <ng-icon name="iconoirBin" size="16" class="text-primary"></ng-icon>
+        {{ 'editor.record.form.featureCatalog.deleteTable' | translate }}
+      </gn-ui-button>
+      <gn-ui-text-input
+        [value]="featureType.name"
+        (valueChange)="updateFeatureType({ name: $event })"
+        data-test="feature-catalog-name"
+      ></gn-ui-text-input>
+    </gn-ui-form-field-wrapper>
+    <gn-ui-form-field-wrapper
+      [label]="'editor.record.form.featureCatalog.description' | translate"
+    >
+      <gn-ui-text-area
+        [value]="featureType.description"
+        (valueChange)="updateFeatureType({ description: $event })"
+        extraClass="min-h-[100px]"
+        data-test="feature-catalog-description"
+      ></gn-ui-text-area>
+    </gn-ui-form-field-wrapper>
+  </div>
+} @else {
+  <div
+    class="flex justify-center py-4 bg-gray-50 border border-gray-600 rounded-lg"
+  >
+    <gn-ui-button
+      type="gray"
+      extraClass="gap-2 font-bold text-sm"
+      (buttonClick)="createFeatureType()"
+      data-test="feature-catalog-create"
+    >
+      <ng-icon name="iconoirNewTab" size="20" class="text-primary"></ng-icon>
+      {{ 'editor.record.form.featureCatalog.createTable' | translate }}
+    </gn-ui-button>
+  </div>
+}

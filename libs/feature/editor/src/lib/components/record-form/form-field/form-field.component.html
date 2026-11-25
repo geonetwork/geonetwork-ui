@@ -110,6 +110,12 @@
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-temporal-extents>
     }
+    @case ('featureTypeDescriptions') {
+      <gn-ui-form-field-feature-catalog
+        [value]="valueAsFeatureTypes"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-feature-catalog>
+    }
     @case ('spatialExtents') {
       <gn-ui-form-field-spatial-extent></gn-ui-form-field-spatial-extent>
     }
