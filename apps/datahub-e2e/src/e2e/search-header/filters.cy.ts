@@ -23,7 +23,7 @@ describe('filters and sorts', () => {
       .getActiveDropdownOption()
       .invoke('attr', 'data-cy-value')
       .should('equal', 'desc,resourceDate.date')
-    cy.get('@inlineFilter-dataset').check({ force: true }) // To get same result local and CI
+    cy.get('@inlineFilter-dataset').click({ force: true }) // To get same result local and CI
     cy.get('gn-ui-results-list-item')
       .first()
       .should('have.attr', 'data-cy', '85fb799c-aa0e-4d3a-8d6c-a574fde607e0')
@@ -46,10 +46,22 @@ describe('filters and sorts', () => {
   describe('Filter on type', () => {
     describe('When there is no filter on recordKinds', () => {
       it('should select "All" value only', () => {
-        cy.get('@inlineFilter-all').should('be.checked')
-        cy.get('@inlineFilter-dataset').should('not.be.checked')
-        cy.get('@inlineFilter-service').should('not.be.checked')
-        cy.get('@inlineFilter-reuse').should('not.be.checked')
+        cy.get('@inlineFilter-all').should('have.attr', 'aria-pressed', 'true')
+        cy.get('@inlineFilter-dataset').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-service').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-reuse').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
         cy.url().should('not.contain', 'recordKind=')
         cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '33 ')
       })
@@ -57,35 +69,95 @@ describe('filters and sorts', () => {
 
     describe('When filtering on recordKinds from the UI', () => {
       it('should select the value, update the url, and update the search results', () => {
-        cy.get('@inlineFilter-dataset').check({ force: true })
-        cy.get('@inlineFilter-all').should('not.be.checked')
-        cy.get('@inlineFilter-dataset').should('be.checked')
-        cy.get('@inlineFilter-service').should('not.be.checked')
-        cy.get('@inlineFilter-reuse').should('not.be.checked')
+        cy.get('@inlineFilter-dataset').click({ force: true })
+        cy.get('@inlineFilter-all').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-dataset').should(
+          'have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-service').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-reuse').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
         cy.url().should('contain', 'recordKind=dataset')
         cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '19 ')
 
-        cy.get('@inlineFilter-service').check({ force: true })
-        cy.get('@inlineFilter-all').should('not.be.checked')
-        cy.get('@inlineFilter-dataset').should('not.be.checked')
-        cy.get('@inlineFilter-service').should('be.checked')
-        cy.get('@inlineFilter-reuse').should('not.be.checked')
+        cy.get('@inlineFilter-service').click({ force: true })
+        cy.get('@inlineFilter-all').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-dataset').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-service').should(
+          'have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-reuse').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
         cy.url().should('contain', 'recordKind=service')
         cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '10 ')
 
-        cy.get('@inlineFilter-reuse').check({ force: true })
-        cy.get('@inlineFilter-all').should('not.be.checked')
-        cy.get('@inlineFilter-dataset').should('not.be.checked')
-        cy.get('@inlineFilter-service').should('not.be.checked')
-        cy.get('@inlineFilter-reuse').should('be.checked')
+        cy.get('@inlineFilter-reuse').click({ force: true })
+        cy.get('@inlineFilter-all').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-dataset').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-service').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-reuse').should(
+          'have.attr',
+          'aria-pressed',
+          'true'
+        )
         cy.url().should('contain', 'recordKind=reuse')
         cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '4 ')
 
-        cy.get('@inlineFilter-all').check({ force: true })
-        cy.get('@inlineFilter-all').should('be.checked')
-        cy.get('@inlineFilter-dataset').should('not.be.checked')
-        cy.get('@inlineFilter-service').should('not.be.checked')
-        cy.get('@inlineFilter-reuse').should('not.be.checked')
+        cy.get('@inlineFilter-all').click({ force: true })
+        cy.get('@inlineFilter-all').should('have.attr', 'aria-pressed', 'true')
+        cy.get('@inlineFilter-dataset').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-service').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-reuse').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
         cy.url().should('not.contain', 'recordKind=')
         cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '33 ')
       })
@@ -93,17 +165,45 @@ describe('filters and sorts', () => {
 
     describe('When toggling on recordKinds from the UI', () => {
       it('should select and then deselect the value', () => {
-        cy.get('@inlineFilter-dataset').check({ force: true })
-        cy.get('@inlineFilter-all').should('not.be.checked')
-        cy.get('@inlineFilter-dataset').should('be.checked')
-        cy.get('@inlineFilter-service').should('not.be.checked')
-        cy.get('@inlineFilter-reuse').should('not.be.checked')
+        cy.get('@inlineFilter-dataset').click({ force: true })
+        cy.get('@inlineFilter-all').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-dataset').should(
+          'have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-service').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-reuse').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
 
-        cy.get('@inlineFilter-dataset').uncheck({ force: true })
-        cy.get('@inlineFilter-all').should('be.checked')
-        cy.get('@inlineFilter-dataset').should('not.be.checked')
-        cy.get('@inlineFilter-service').should('not.be.checked')
-        cy.get('@inlineFilter-reuse').should('not.be.checked')
+        cy.get('@inlineFilter-dataset').click({ force: true })
+        cy.get('@inlineFilter-all').should('have.attr', 'aria-pressed', 'true')
+        cy.get('@inlineFilter-dataset').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-service').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-reuse').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
         cy.url().should('not.contain', 'recordKind=')
       })
     })
@@ -111,31 +211,95 @@ describe('filters and sorts', () => {
     describe('When filtering on recordKinds from the URL query params', () => {
       it('should select the values and update the search results', () => {
         cy.visit('/search?recordKind=dataset')
-        cy.get('@inlineFilter-all').should('not.be.checked')
-        cy.get('@inlineFilter-dataset').should('be.checked')
-        cy.get('@inlineFilter-service').should('not.be.checked')
-        cy.get('@inlineFilter-reuse').should('not.be.checked')
+        cy.get('@inlineFilter-all').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-dataset').should(
+          'have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-service').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-reuse').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
         cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '19 ')
 
         cy.visit('/search?recordKind=service')
-        cy.get('@inlineFilter-all').should('not.be.checked')
-        cy.get('@inlineFilter-dataset').should('not.be.checked')
-        cy.get('@inlineFilter-service').should('be.checked')
-        cy.get('@inlineFilter-reuse').should('not.be.checked')
+        cy.get('@inlineFilter-all').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-dataset').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-service').should(
+          'have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-reuse').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
         cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '10 ')
 
         cy.visit('/search?recordKind=reuse')
-        cy.get('@inlineFilter-all').should('not.be.checked')
-        cy.get('@inlineFilter-dataset').should('not.be.checked')
-        cy.get('@inlineFilter-service').should('not.be.checked')
-        cy.get('@inlineFilter-reuse').should('be.checked')
+        cy.get('@inlineFilter-all').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-dataset').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-service').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-reuse').should(
+          'have.attr',
+          'aria-pressed',
+          'true'
+        )
         cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '4 ')
 
         cy.visit('/search?recordKind=dataset,service')
-        cy.get('@inlineFilter-all').should('not.be.checked')
-        cy.get('@inlineFilter-dataset').should('be.checked')
-        cy.get('@inlineFilter-service').should('be.checked')
-        cy.get('@inlineFilter-reuse').should('not.be.checked')
+        cy.get('@inlineFilter-all').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-dataset').should(
+          'have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-service').should(
+          'have.attr',
+          'aria-pressed',
+          'true'
+        )
+        cy.get('@inlineFilter-reuse').should(
+          'not.have.attr',
+          'aria-pressed',
+          'true'
+        )
         cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '29 ')
       })
     })

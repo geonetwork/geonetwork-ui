@@ -9,7 +9,7 @@
     class="relative w-full object-center"
     [ngClass]="imgFit === 'contain' ? 'h-4/5 w-4/5' : 'h-full'"
     [ngStyle]="{ objectFit: imgFit }"
-    alt="thumbnail"
+    alt=""
     loading="lazy"
     (load)="setObjectFit()"
     [src]="imgUrl"
