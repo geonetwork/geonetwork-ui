@@ -11,6 +11,7 @@ import {
   Gn4Converter,
   Gn4SearchResults,
   Iso19139Converter,
+  RECORD_FLAG_CATEGORY_PREFIX,
 } from '@geonetwork-ui/api/metadata-converter'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import {
@@ -53,7 +54,6 @@ import {
 import { catchError, map, shareReplay, tap } from 'rxjs/operators'
 import { lt } from 'semver'
 import { ElasticsearchService } from './elasticsearch'
-import { RECORD_FLAG_CATEGORY_PREFIX } from './elasticsearch/constant'
 import { toLang2 } from '@geonetwork-ui/util/i18n'
 import { Gn4SettingsService } from './settings/gn4-settings.service'
 

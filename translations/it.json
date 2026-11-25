@@ -491,6 +491,7 @@
   "record.feature.catalog.number.total.object": "Quantità totale di attributi",
   "record.feature.limit": "La visualizzazione è stata disabilitata a causa di troppi elementi ",
   "record.kind.dataset": "dataset",
+  "record.kind.referenceDataset": "dataset di riferimento",
   "record.kind.reuse": "riutilizzato",
   "record.kind.service": "servizio",
   "record.metadata.about": "Descrizione",

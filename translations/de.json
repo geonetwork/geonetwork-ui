@@ -491,6 +491,7 @@
   "record.feature.catalog.number.total.object": "Gesamtzahl der Objekte",
   "record.feature.limit": "Die Vorschau wurde aufgrund zu vieler Elemente deaktiviert",
   "record.kind.dataset": "Daten",
+  "record.kind.referenceDataset": "Referenzdaten",
   "record.kind.reuse": "Wiederverwendung",
   "record.kind.service": "Webdienste",
   "record.metadata.about": "Beschreibung",

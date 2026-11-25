@@ -3613,6 +3613,7 @@ describe('Gn4Converter', () => {
               isOpenData: false,
               ownerInfo: 'sritzenthaler|Ritzenthaler|Stéphane|Administrator',
               isPublishedToAll: true,
+              isReferenceDataset: false,
               id: '8705',
               favoriteCount: 0,
               catalogUuid: 'ce008f24-8e0d-45a8-97f8-9f10399f0190',

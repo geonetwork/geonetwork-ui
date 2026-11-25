@@ -28,7 +28,7 @@ import {
   OnlineResourceType,
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchProtocol } from '../common/distribution.mapper'
-import { FeatureType, Thesaurus } from './types'
+import { FeatureType, REFERENCE_DATASET_CATEGORY, Thesaurus } from './types'
 import {
   getResourceType,
   getReusePresentationForm,
@@ -425,6 +425,15 @@ export class Gn4FieldMapper {
       this.addExtra(
         {
           edit: selectField(source, 'edit'),
+        },
+        output
+      ),
+    cat: (output, source) =>
+      this.addExtra(
+        {
+          isReferenceDataset: getAsArray(selectField(source, 'cat')).includes(
+            REFERENCE_DATASET_CATEGORY
+          ),
         },
         output
       ),

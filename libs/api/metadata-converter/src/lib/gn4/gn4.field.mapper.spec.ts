@@ -221,6 +221,18 @@ describe('Gn4FieldMapper', () => {
           const result = mappingFn(output, source)
           expect(result).toEqual({ extras: { edit: true } })
         })
+        it('cat - should flag reference datasets', () => {
+          const mappingFn = service.getMappingFn('cat')
+          expect(
+            mappingFn(
+              {},
+              { cat: ['other', 'geonetwork-ui-flag:IS_REFERENCE_DATASET'] }
+            )
+          ).toEqual({ extras: { isReferenceDataset: true } })
+          expect(mappingFn({}, { cat: ['other'] })).toEqual({
+            extras: { isReferenceDataset: false },
+          })
+        })
         it('languages - should return a list of languages even with unsupported ones and without defaultLang', () => {
           const fieldName = 'otherLanguage'
           const mappingFn = service.getMappingFn(fieldName)

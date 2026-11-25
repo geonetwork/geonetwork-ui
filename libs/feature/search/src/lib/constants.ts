@@ -24,6 +24,7 @@ export const FIELDS_SUMMARY: FieldName[] = [
   'qualityScore',
   'allKeywords',
   'recordLink',
+  'cat',
 ]
 
 export const FIELDS_BRIEF: FieldName[] = [

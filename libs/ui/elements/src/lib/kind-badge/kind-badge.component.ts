@@ -12,6 +12,7 @@ import {
 } from '@ng-icons/core'
 import {
   iconoirDatabase,
+  iconoirBadgeCheck,
   iconoirAppleWallet,
   iconoirCode,
   iconoirAppWindow,
@@ -22,12 +23,14 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 marker('record.kind.dataset')
 marker('record.kind.reuse')
 marker('record.kind.service')
+marker('record.kind.referenceDataset')
 
 enum KindConfig {
   all = 'iconoirAppleWallet', // (this one is for filter)
   dataset = 'iconoirDatabase',
   service = 'iconoirCode',
   reuse = 'iconoirAppWindow',
+  referenceDataset = 'iconoirBadgeCheck',
 }
 
 @Component({
@@ -38,6 +41,7 @@ enum KindConfig {
     provideIcons({
       iconoirAppleWallet,
       iconoirDatabase,
+      iconoirBadgeCheck,
       iconoirCode,
       iconoirAppWindow,
     }),
@@ -53,12 +57,19 @@ export class KindBadgeComponent {
   @Input() styling = 'primary'
   @Input() contentTemplate: TemplateRef<unknown>
   @Input() kind: string
+  @Input() isReference = false
   @Input() extraClass = 'text-[0.85em]'
 
   hasProjectedContent = false
 
+  get displayKind() {
+    return this.isReference && this.kind === 'dataset'
+      ? 'referenceDataset'
+      : this.kind
+  }
+
   get iconKind() {
-    return KindConfig[this.kind] || KindConfig.dataset
+    return KindConfig[this.displayKind] || KindConfig.dataset
   }
 
   get badgeClasses(): string {
