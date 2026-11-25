@@ -284,6 +284,7 @@
   "editor.record.form.section.classification.label": "Stichwörter",
   "editor.record.form.section.dataManagers.description": "Diese Information betrifft die Daten.",
   "editor.record.form.section.dataManagers.label": "Verantwortliche für die Daten",
+  "editor.record.form.section.featureCatalog.label": "",
   "editor.record.form.section.geographicalCoverage.label": "Geografische Ausdehnung",
   "editor.record.form.section.lightPointOfContact.label": "Kontaktstelle",
   "editor.record.form.section.metadataPointOfContact.description": "Diese Information betrifft die Metadaten.",

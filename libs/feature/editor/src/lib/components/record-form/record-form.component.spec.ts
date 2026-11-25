@@ -13,6 +13,7 @@ import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { EditorSectionWithValues } from '../../+state/editor.models'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { DEFAULT_CONFIGURATION } from '../../fields.config'
 
 class EditorFacadeMock {
   record$ = new BehaviorSubject(datasetRecordsFixture()[0])
@@ -252,6 +253,45 @@ describe('RecordFormComponent', () => {
       expect(
         TestBed.inject(RecordsRepositoryInterface).getRecordStandard
       ).toHaveBeenLastCalledWith('<xml/>')
+    })
+  })
+
+  describe('feature catalog section', () => {
+    let hidden: () => unknown
+    let repository: RecordsRepositoryMock
+
+    function openRecordWithStandard(standard: string) {
+      repository.getRecordStandard.mockReturnValue(standard)
+      facade.recordSource$.next(`<xml standard="${standard}"/>`)
+    }
+
+    beforeEach(() => {
+      repository = TestBed.inject(
+        RecordsRepositoryInterface
+      ) as unknown as RecordsRepositoryMock
+      const section = DEFAULT_CONFIGURATION.pages
+        .flatMap((page) => page.sections)
+        .find(
+          (s) =>
+            s.labelKey === 'editor.record.form.section.featureCatalog.label'
+        )
+      hidden = component.evaluateExpression(section.hidden)
+    })
+
+    it('is shown for an ISO19115-3 dataset', () => {
+      openRecordWithStandard('iso19115-3')
+      expect(hidden()).toBe(false)
+    })
+
+    it('is hidden for an ISO19139 dataset', () => {
+      openRecordWithStandard('iso19139')
+      expect(hidden()).toBe(true)
+    })
+
+    it('is hidden for a service', () => {
+      openRecordWithStandard('iso19115-3')
+      facade.record$.next({ ...datasetRecordsFixture()[0], kind: 'service' })
+      expect(hidden()).toBe(true)
     })
   })
 })

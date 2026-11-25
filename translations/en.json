@@ -284,6 +284,7 @@
   "editor.record.form.section.classification.label": "Keywords",
   "editor.record.form.section.dataManagers.description": "The data managers are responsible for the data",
   "editor.record.form.section.dataManagers.label": "Data managers",
+  "editor.record.form.section.featureCatalog.label": "Feature catalog",
   "editor.record.form.section.geographicalCoverage.label": "Geographical coverage",
   "editor.record.form.section.lightPointOfContact.label": "Point of contact",
   "editor.record.form.section.metadataPointOfContact.description": "This information concerns the metadata",

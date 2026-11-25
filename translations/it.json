@@ -284,6 +284,7 @@
   "editor.record.form.section.classification.label": "Parole chiave",
   "editor.record.form.section.dataManagers.description": "Queste informazioni riguardano i dati",
   "editor.record.form.section.dataManagers.label": "Gestori dei dati",
+  "editor.record.form.section.featureCatalog.label": "",
   "editor.record.form.section.geographicalCoverage.label": "Copertura geografica",
   "editor.record.form.section.lightPointOfContact.label": "Punto di contatto",
   "editor.record.form.section.metadataPointOfContact.description": "Queste informazioni riguardano i metadati",
