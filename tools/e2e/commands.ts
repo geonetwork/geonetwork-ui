@@ -105,9 +105,12 @@ Cypress.Commands.add(
 )
 
 Cypress.Commands.add('signOut', () => {
-  cy.visit('/geonetwork/srv/eng/catalog.search#/home')
-  cy.get('a[title="User details"]').click()
-  cy.get('a[title="Sign out"]').click()
+  cy.clearCookie('XSRF-TOKEN', {
+    domain: 'http://localhost:8080/', // we're also clearing the cookie on the geonetwork domain, to make sure it doesn't persist there
+  })
+  cy.clearCookie('JSESSIONID', {
+    domain: 'http://localhost:8080/',
+  })
 })
 
 Cypress.Commands.add('addUser', (username, password, email, name, surname) => {
