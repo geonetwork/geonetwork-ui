@@ -7,6 +7,7 @@ import {
 export const PossibleResourceTypes = {
   application: 'reuse',
   dataset: 'dataset',
+  document: 'dataset',
   interactiveMap: 'reuse',
   map: 'reuse',
   'map/static': 'reuse', // old index field

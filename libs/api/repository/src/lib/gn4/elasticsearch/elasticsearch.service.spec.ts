@@ -234,7 +234,7 @@ describe('ElasticsearchService', () => {
             {
               query_string: {
                 query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                  'resourceType:featureCatalog AND !resourceType:(dataset OR document OR series) AND !cl_level.key:dataset',
               },
             },
           ],
@@ -305,7 +305,7 @@ describe('ElasticsearchService', () => {
             {
               query_string: {
                 query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                  'resourceType:featureCatalog AND !resourceType:(dataset OR document OR series) AND !cl_level.key:dataset',
               },
             },
           ],
@@ -374,7 +374,7 @@ describe('ElasticsearchService', () => {
             {
               query_string: {
                 query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                  'resourceType:featureCatalog AND !resourceType:(dataset OR document OR series) AND !cl_level.key:dataset',
               },
             },
           ],
@@ -534,7 +534,7 @@ describe('ElasticsearchService', () => {
             {
               query_string: {
                 query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                  'resourceType:featureCatalog AND !resourceType:(dataset OR document OR series) AND !cl_level.key:dataset',
               },
             },
           ],
@@ -578,7 +578,7 @@ describe('ElasticsearchService', () => {
             {
               query_string: {
                 query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                  'resourceType:featureCatalog AND !resourceType:(dataset OR document OR series) AND !cl_level.key:dataset',
               },
             },
           ],
@@ -634,7 +634,7 @@ describe('ElasticsearchService', () => {
             {
               query_string: {
                 query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                  'resourceType:featureCatalog AND !resourceType:(dataset OR document OR series) AND !cl_level.key:dataset',
               },
             },
           ],
@@ -1019,7 +1019,7 @@ describe('ElasticsearchService', () => {
               {
                 query_string: {
                   query:
-                    'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                    'resourceType:featureCatalog AND !resourceType:(dataset OR document OR series) AND !cl_level.key:dataset',
                 },
               },
             ],
@@ -1161,7 +1161,7 @@ describe('ElasticsearchService', () => {
                 {
                   query_string: {
                     query:
-                      'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                      'resourceType:featureCatalog AND !resourceType:(dataset OR document OR series) AND !cl_level.key:dataset',
                   },
                 },
               ],
@@ -1735,7 +1735,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
             {
               query_string: {
                 query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                  'resourceType:featureCatalog AND !resourceType:(dataset OR document OR series) AND !cl_level.key:dataset',
               },
             },
           ],
@@ -1789,7 +1789,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
             {
               query_string: {
                 query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                  'resourceType:featureCatalog AND !resourceType:(dataset OR document OR series) AND !cl_level.key:dataset',
               },
             },
           ],
@@ -1835,7 +1835,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
             {
               query_string: {
                 query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                  'resourceType:featureCatalog AND !resourceType:(dataset OR document OR series) AND !cl_level.key:dataset',
               },
             },
           ],
