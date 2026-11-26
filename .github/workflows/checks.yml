@@ -231,6 +231,13 @@ jobs:
             app: webcomponents
 
     steps:
+      # FIXME: remove this once cypress is upgraded to v15+
+      # E2E tests will fail with Chrome v158+, see https://github.com/cypress-io/cypress/issues/35195
+      - uses: browser-actions/setup-chrome@v2
+        id: setup-chrome
+        with:
+          chrome-version: 157
+
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
@@ -252,6 +259,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
             ${{ runner.os }}-npm-nx-cypress-
+
+      - id: chrome-cache
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.setup-chrome.outputs.chrome-path }}
+          key: ${{ runner.os }}-chrome-157
+          restore-keys: ${{ runner.os }}-chrome-157
 
       - run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
