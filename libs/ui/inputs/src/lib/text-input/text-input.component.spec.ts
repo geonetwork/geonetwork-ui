@@ -24,6 +24,14 @@ describe('TextInputComponent', () => {
     expect(component).toBeTruthy()
   })
 
+  it('shows no placeholder when none is given', () => {
+    const noPlaceholderFixture = TestBed.createComponent(TextInputComponent)
+    noPlaceholderFixture.detectChanges()
+    expect(
+      noPlaceholderFixture.nativeElement.querySelector('input').placeholder
+    ).toBe('')
+  })
+
   describe('text input', () => {
     let inputEl
     beforeEach(() => {
