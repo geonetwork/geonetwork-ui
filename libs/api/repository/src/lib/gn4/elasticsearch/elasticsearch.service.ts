@@ -22,6 +22,7 @@ import {
   EsSearchParams,
   FiltersAggregationResult,
   HistogramAggregationResult,
+  PossibleResourceTypesDefinition,
   RequestFields,
   SearchFilters,
   SortParams,
@@ -423,8 +424,9 @@ export class ElasticsearchService {
     return [
       {
         query_string: {
-          query:
-            'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+          query: `resourceType:featureCatalog AND !resourceType:(${PossibleResourceTypesDefinition.dataset.join(
+            ' OR '
+          )}) AND !cl_level.key:dataset`,
         },
       },
     ]

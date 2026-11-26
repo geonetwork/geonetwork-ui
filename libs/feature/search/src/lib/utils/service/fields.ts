@@ -25,7 +25,10 @@ import {
   formatUserInfo,
   isBoundingBox,
 } from '@geonetwork-ui/util/shared'
-import { PossibleResourceTypes } from '@geonetwork-ui/api/metadata-converter'
+import {
+  PossibleResourceTypes,
+  PossibleResourceTypesDefinition,
+} from '@geonetwork-ui/api/metadata-converter'
 
 export type FieldType = 'values' | 'dateRange' | 'spatialExtent'
 
@@ -589,7 +592,7 @@ export class ResourceTypeLegacyField extends TranslatedSearchField {
 
 export class RecordKindField extends SimpleSearchField {
   TYPE_MAPPING = {
-    dataset: ['dataset', 'series', 'featureCatalog', 'document'],
+    dataset: [...PossibleResourceTypesDefinition.dataset, 'featureCatalog'],
     service: ['service'],
     reuse: [
       ...Object.entries(PossibleResourceTypes)

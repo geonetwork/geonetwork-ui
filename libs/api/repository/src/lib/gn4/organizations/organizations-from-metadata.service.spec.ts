@@ -275,7 +275,7 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
                     {
                       query_string: {
                         query:
-                          'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                          'resourceType:featureCatalog AND !resourceType:(dataset OR document OR series) AND !cl_level.key:dataset',
                       },
                     },
                   ],
