@@ -31,3 +31,7 @@ export const ES_QUERY_FIELDS_PRIORITY = {
   'any.${searchLang}': 1,
   uuid: 1,
 }
+
+// This prefix is part of the category names stored in GeoNetwork: changing it
+// would silently drop the flags already set on existing catalogs.
+export const RECORD_FLAG_CATEGORY_PREFIX = 'geonetwork-ui-flag:'

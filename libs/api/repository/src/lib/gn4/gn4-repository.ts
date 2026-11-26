@@ -53,6 +53,7 @@ import {
 import { catchError, map, shareReplay, tap } from 'rxjs/operators'
 import { lt } from 'semver'
 import { ElasticsearchService } from './elasticsearch'
+import { RECORD_FLAG_CATEGORY_PREFIX } from './elasticsearch/constant'
 import { toLang2 } from '@geonetwork-ui/util/i18n'
 import { Gn4SettingsService } from './settings/gn4-settings.service'
 
@@ -689,9 +690,11 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       map((categories) =>
         categories.reduce(
           (acc, category) => {
-            if (category.name.startsWith('geonetwork-ui-flag:')) {
+            if (category.name.startsWith(RECORD_FLAG_CATEGORY_PREFIX)) {
               acc[
-                category.name.replace(/^geonetwork-ui-flag:/, '') as RecordFlag
+                category.name.slice(
+                  RECORD_FLAG_CATEGORY_PREFIX.length
+                ) as RecordFlag
               ] = category.id
             }
             return acc
@@ -710,7 +713,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         const categoryId = categories[flagName]
         if (categoryId === undefined) {
           console.warn(
-            `The record flag ${flagName} is not created on GeoNetwork backend; please create a category with the name geonetwork-ui-flag:${flagName} for this to work.`
+            `The record flag ${flagName} is not created on GeoNetwork backend; please create a category with the name ${RECORD_FLAG_CATEGORY_PREFIX}${flagName} for this to work.`
           )
           return null
         }
