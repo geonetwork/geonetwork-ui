@@ -30,6 +30,7 @@ export abstract class RecordsRepositoryInterface {
   abstract canDuplicate(record: CatalogRecord): boolean
   abstract canDelete(record: CatalogRecord): Observable<boolean>
   abstract canEditRecord(uniqueIdentifier: string): Observable<boolean>
+  abstract getRecordStandard(recordSource: string | null): string | undefined
   abstract canEditIndexedRecord(record: CatalogRecord): Observable<boolean>
   /**
    * This emits once:

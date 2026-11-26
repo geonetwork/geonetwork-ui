@@ -625,15 +625,29 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
+  getRecordStandard(recordSource: string | null): string | undefined {
+    return this.getConverterForRecordSource(recordSource).standard
+  }
+
+  // records are saved in the standard of their source; new records use the configured default
+  private getConverterForRecordSource(
+    recordSource: string | null
+  ): BaseConverter<string> {
+    return recordSource
+      ? findConverterForDocument(recordSource)
+      : this.defaultConverter
+  }
+
   private serializeRecordToXml(
     record: CatalogRecord,
     referenceRecordSource?: string
   ): Observable<string> {
-    // if there's a reference record, use that standard; otherwise, use standard based on configuration or default
-    const converter = referenceRecordSource
-      ? findConverterForDocument(referenceRecordSource)
-      : this.defaultConverter
-    return from(converter.writeRecord(record, referenceRecordSource))
+    return from(
+      this.getConverterForRecordSource(referenceRecordSource).writeRecord(
+        record,
+        referenceRecordSource
+      )
+    )
   }
 
   private getExternalRecordAsXml(

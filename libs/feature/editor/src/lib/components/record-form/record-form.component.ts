@@ -25,6 +25,7 @@ import { toSignal } from '@angular/core/rxjs-interop'
 import { evaluate, isExpression } from '../../expressions'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -43,6 +44,7 @@ export class RecordFormComponent implements OnInit, OnDestroy {
   facade = inject(EditorFacade)
   notifications = inject(NotificationsService)
   platform = inject(PlatformServiceInterface)
+  recordsRepository = inject(RecordsRepositoryInterface)
   subscription = new Subscription()
 
   recordUniqueIdentifier$ = this.facade.record$.pipe(
@@ -126,6 +128,10 @@ export class RecordFormComponent implements OnInit, OnDestroy {
   private recordSignal = toSignal(this.facade.record$, { requireSync: true })
   private userSignal = toSignal(this.platform.getMe())
   private isAdminSignal = toSignal(this.platform.isAdministrator())
+  private recordSourceSignal = toSignal(this.facade.recordSource$)
+  private standardSignal = computed(() =>
+    this.recordsRepository.getRecordStandard(this.recordSourceSignal())
+  )
   private expressionCache = new Map<string, Signal<EditorFieldValue>>()
 
   // only compiles the expression into an evaluator the first time;
@@ -160,6 +166,9 @@ ${errors.map((err) => `> ${err}`).join('\n')}`)
             user: {
               ...this.userSignal(),
               isAdmin: this.isAdminSignal(),
+            },
+            source: {
+              standard: this.standardSignal(),
             },
           },
         })

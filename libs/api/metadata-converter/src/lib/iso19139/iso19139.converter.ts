@@ -86,6 +86,8 @@ import {
 } from './write-parts'
 
 export class Iso19139Converter extends BaseConverter<string> {
+  readonly standard: string = 'iso19139'
+
   protected readers: Record<
     CatalogRecordKeys,
     (rootEl: XmlElement, translations: RecordTranslations) => unknown

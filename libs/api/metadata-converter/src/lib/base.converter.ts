@@ -5,6 +5,8 @@ export class MetadataMapperContext {
 }
 
 export abstract class BaseConverter<F> {
+  readonly standard?: string
+
   constructor(
     protected ctx: MetadataMapperContext = new MetadataMapperContext()
   ) {}

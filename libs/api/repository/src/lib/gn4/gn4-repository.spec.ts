@@ -889,6 +889,21 @@ describe('Gn4Repository', () => {
     })
   })
   // note: we're using a simple record here otherwise there might be loss of information when converting
+  describe('getRecordStandard', () => {
+    it('returns the standard of the record source', () => {
+      expect(
+        repository.getRecordStandard('<?xml version="1.0"?><gmd:MD_Metadata/>')
+      ).toBe('iso19139')
+      expect(
+        repository.getRecordStandard('<?xml version="1.0"?><mdb:MD_Metadata/>')
+      ).toBe('iso19115-3')
+    })
+
+    it('returns the standard of the default converter when there is no source', () => {
+      expect(repository.getRecordStandard(null)).toBe('iso19139')
+    })
+  })
+
   describe('saveRecord', () => {
     let recordSource: string
     describe('version error', () => {
@@ -1777,6 +1792,12 @@ describe('Gn4Repository with DEFAULT_RECORD_CONVERTER', () => {
     })
     repository = TestBed.inject(Gn4Repository)
     gn4RecordsApi = TestBed.inject(RecordsApiService)
+  })
+
+  describe('getRecordStandard', () => {
+    it('returns the standard of the configured converter when there is no source', () => {
+      expect(repository.getRecordStandard(null)).toBe('iso19115-3')
+    })
   })
 
   describe('saveRecord', () => {

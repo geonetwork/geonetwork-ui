@@ -46,6 +46,8 @@ import {
 } from './write-parts'
 
 export class Iso191153Converter extends Iso19139Converter {
+  readonly standard: string = 'iso19115-3'
+
   constructor() {
     super()
 

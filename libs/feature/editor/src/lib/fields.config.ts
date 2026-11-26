@@ -200,6 +200,19 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
           ],
         },
 
+        // Section: Feature catalog
+        {
+          hidden:
+            '${record.kind != "dataset" || source.standard == "iso19139"}',
+          labelKey: marker('editor.record.form.section.featureCatalog.label'),
+          fields: [
+            {
+              model: 'featureTypeDescriptions',
+              formFieldConfig: {},
+            },
+          ],
+        },
+
         // Section: Annexes (links)
         {
           labelKey: marker('editor.record.form.section.annexes.label'),

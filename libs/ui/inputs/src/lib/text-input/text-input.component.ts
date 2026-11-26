@@ -32,7 +32,7 @@ export class TextInputComponent {
     },
   })
   extraClass = input('')
-  placeholder = input<string>()
+  placeholder = input('')
   required = input(false)
   disabled = input<boolean>()
   type = input('text', {

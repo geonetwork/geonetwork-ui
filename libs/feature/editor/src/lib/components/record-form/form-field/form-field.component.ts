@@ -13,6 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import {
   AssociatedRecord,
   Constraint,
+  DatasetFeatureType,
   DatasetTemporalExtent,
   GraphicOverview,
   Individual,
@@ -59,6 +60,7 @@ import { TextFieldModule } from '@angular/cdk/text-field'
 import { FormFieldSpatialToggleComponent } from './form-field-spatial-toggle/form-field-spatial-toggle.component'
 import { FormFieldTopicsComponent } from './form-field-topics/form-field-topics.component'
 import { FormFieldRecordFlagComponent } from './form-field-record-flags/form-field-record-flag-component'
+import { FormFieldFeatureCatalogComponent } from './form-field-feature-catalog/form-field-feature-catalog.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -93,6 +95,7 @@ import { FormFieldRecordFlagComponent } from './form-field-record-flags/form-fie
     TextFieldModule,
     NgIconComponent,
     FormFieldRecordFlagComponent,
+    FormFieldFeatureCatalogComponent,
   ],
   providers: [provideIcons({ matEditOutline, matHelpOutline })],
   hostDirectives: [FieldFocusDirective],
@@ -152,6 +155,9 @@ export class FormFieldComponent {
   }
   get valueAsTemporalExtents() {
     return this.value as Array<DatasetTemporalExtent>
+  }
+  get valueAsFeatureTypes() {
+    return this.value as Array<DatasetFeatureType>
   }
   get valueAsKeywords() {
     return this.value as Array<Keyword>
