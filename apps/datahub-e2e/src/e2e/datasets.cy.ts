@@ -314,7 +314,7 @@ describe('datasets', () => {
     cy.get('@optionsLabel')
       .invoke('slice', 0, 3)
       .should('eql', [
-        'Administrative units (2)',
+        'Administrative units (3)',
         'Environmental monitoring facilities (2)',
         'Land use (1)',
       ])

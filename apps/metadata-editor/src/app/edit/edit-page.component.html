@@ -20,22 +20,19 @@
       <div class="flex flex-row flex-1 min-h-0">
         <div class="grow overflow-auto p-[32px]" #scrollContainer>
           <div class="container-lg mx-auto flex flex-col gap-[32px]">
-            @if (hasRecordChanged$ | async; as hasChanged) {
-              <div>
-                @if (hasChanged.user && hasChanged.date) {
-                  <div
-                    class="p-4 border border-primary bg-primary-lightest rounded-lg text-center"
-                    translate
-                    [translateParams]="{
-                      date: formatDate(hasChanged.date),
-                      user: hasChanged.user,
-                      recordKind: recordKind$ | async,
-                    }"
-                    data-test="draft-alert"
-                  >
-                    editor.record.form.draft.updateAlert
-                  </div>
-                }
+            @let hasChanged = hasRecordChanged$ | async;
+            @if (hasChanged && hasChanged.user && hasChanged.date) {
+              <div
+                class="p-4 border border-primary bg-primary-lightest rounded-lg text-center"
+                translate
+                [translateParams]="{
+                  date: formatDate(hasChanged.date),
+                  user: hasChanged.user,
+                  recordKind: recordKind$ | async,
+                }"
+                data-test="draft-alert"
+              >
+                editor.record.form.draft.updateAlert
               </div>
             }
             <md-editor-page-selector></md-editor-page-selector>

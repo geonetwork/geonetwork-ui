@@ -393,9 +393,9 @@ describe('record-actions', () => {
     cy.wait('@publishDefault')
       .its('request.body')
       .should('include', 'codeListValue="eng"')
-    cy.get<string>('@defaultLangRecordUuid').then((uuid) =>
-      cy.deleteRecord(uuid)
-    )
+    cy.wrap(function () {
+      cy.deleteRecord(this.defaultLangRecordUuid)
+    })
 
     // with new_record_default_language = "fr"
     cy.intercept('GET', '/assets/configuration/default.toml', {
@@ -409,9 +409,9 @@ describe('record-actions', () => {
     cy.wait('@publishFrench')
       .its('request.body')
       .should('include', 'codeListValue="fre"')
-    cy.get<string>('@frenchLangRecordUuid').then((uuid) =>
-      cy.deleteRecord(uuid)
-    )
+    cy.wrap(function () {
+      cy.deleteRecord(this.frenchLangRecordUuid)
+    })
   })
 
   it('new record metadata standard should follow configuration', () => {
@@ -423,9 +423,9 @@ describe('record-actions', () => {
     cy.wait('@publishDefault')
       .its('request.body')
       .should('include', '<gmd:MD_Metadata')
-    cy.get<string>('@defaultStandardRecordUuid').then((uuid) =>
-      cy.deleteRecord(uuid)
-    )
+    cy.wrap(function () {
+      cy.deleteRecord(this.defaultStandardRecordUuid)
+    })
 
     // with new_record_standard = "iso19115-3"
     cy.intercept('GET', '/assets/configuration/default.toml', {
@@ -439,6 +439,8 @@ describe('record-actions', () => {
     cy.wait('@publishIso3')
       .its('request.body')
       .should('include', '<mdb:MD_Metadata')
-    cy.get<string>('@iso191153RecordUuid').then((uuid) => cy.deleteRecord(uuid))
+    cy.wrap(function () {
+      cy.deleteRecord(this.iso191153RecordUuid)
+    })
   })
 })

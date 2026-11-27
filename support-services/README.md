@@ -31,18 +31,12 @@ $ docker compose down -v
 
 ## Specifying a different GeoNetwork version
 
-By default, the version of GeoNetwork used as a backend is 4.2.5. You can specify another version like so:
+By default, the version of GeoNetwork used as a backend is 4.2.5. Other versions are available as compose files in the `versions/` folder; each one sets the matching GeoNetwork and ElasticSearch images and any version-specific settings.
+Add one on top of the base composition with an extra `-f`:
 
 ```shell
-$ GEONETWORK_VERSION=4.2.2 docker compose up -d
+$ docker compose -f docker-compose.yml -f versions/gn-4.4.8.yml up -d
 ```
-
-Note: If you want to run GN 4.2 on a recent ubuntu kernel or similar and you run into `main ERROR Could not reconfigure JMX java.lang.NullPointerException"` you may want to add some JAVA_OPTS to the GN service of the docker composition to bypass the issue during dev:
-
-    -Dcom.sun.management.jmxremote=false
-    -Dcom.sun.management.jmxremote.authenticate=false
-    -Dcom.sun.management.jmxremote.ssl=false
-    -XX:-UseContainerSupport
 
 ## Access services
 

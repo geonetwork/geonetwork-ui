@@ -1,0 +1,30 @@
+services:
+  geonetwork:
+    image: geonetwork:4.4.12
+    environment:
+      JAVA_OPTS: >-
+        --add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED
+        -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true
+        -Xms512M -Xss512M -Xmx2G -XX:+UseConcMarkSweepGC -XX:-UseContainerSupport
+      GN_CONFIG_PROPERTIES: >-
+        -Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005
+        -Dgeonetwork.resources.dir=/catalogue-data/data/resources
+        -Dgeonetwork.data.dir=/catalogue-data/data
+        -Dgeonetwork.codeList.dir=/catalogue-data/config/codelist
+        -Dgeonetwork.schema.dir=/catalogue-data/config/schema_plugins
+        -Dgeonetwork.config.dir=/catalogue-data/config
+        -Dgeonetwork.indexConfig.dir=/catalogue-data/config/index
+        -Des.host=elasticsearch
+        -Des.protocol=http
+        -Des.port=9200
+        -Des.url=http://elasticsearch:9200
+        -Des.username=
+        -Des.password=
+
+  elasticsearch:
+    image: elasticsearch:8.19.13
+    environment:
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false

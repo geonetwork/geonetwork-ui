@@ -37,10 +37,10 @@ Alternatively, you can also adjust the GeoNetwork instance used as a backend in 
 
 ### Specifying a different GeoNetwork version
 
-By default, the version of GeoNetwork used as a backend is 4.2.5. You can specify another version like so:
+By default, the version of GeoNetwork used as a backend is 4.2.2. You can specify another one by adding the matching file from the `versions/` folder:
 
 ```shell
-$ GEONETWORK_VERSION=4.2.2 docker compose up -d
+$ docker compose -f docker-compose.yml -f versions/gn-4.4.8.yml up -d
 ```
 
 Find more details on the support services in their [readme.md](https://github.com/geonetwork/geonetwork-ui/blob/main/support-services/README.md).

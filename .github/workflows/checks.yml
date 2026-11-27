@@ -170,12 +170,13 @@ jobs:
         run: |
           AFFECTED_APPS=$(npx nx show projects --affected --type=app | tr '\n' ',' | sed 's/,$//')
           AFFECTED_LIBS=$(npx nx show projects --affected --type=lib | tr '\n' ',' | sed 's/,$//')
+          AFFECTED_E2E=$(npx nx show projects --affected --type=e2e | tr '\n' ',' | sed 's/,$//')
           echo "affected_apps=${AFFECTED_APPS}" >> "$GITHUB_OUTPUT"
           echo "affected_libs=${AFFECTED_LIBS}" >> "$GITHUB_OUTPUT"
-          echo "skip_datahub=[\"$([[ $AFFECTED_APPS =~ "datahub" ]] && echo "false" || echo "true")\"]" >> "$GITHUB_OUTPUT"
-          echo "skip_editor=[\"$([[ $AFFECTED_APPS =~ "metadata-editor" ]] && echo "false" || echo "true")\"]" >> "$GITHUB_OUTPUT"
+          echo "skip_datahub=[\"$([[ $AFFECTED_E2E =~ "datahub-e2e" ]] && echo "false" || echo "true")\"]" >> "$GITHUB_OUTPUT"
+          echo "skip_editor=[\"$([[ $AFFECTED_E2E =~ "metadata-editor-e2e" ]] && echo "false" || echo "true")\"]" >> "$GITHUB_OUTPUT"
           echo "skip_webcomponents=[\"$([[ $AFFECTED_APPS =~ "webcomponents" ]] && echo "false" || echo "true")\"]" >> "$GITHUB_OUTPUT"
-          echo "skip_all_e2e=$( [[ -z $AFFECTED_APPS ]] && echo "true" || echo "false" )" >> "$GITHUB_OUTPUT"
+          echo "skip_all_e2e=$( [[ -z $AFFECTED_E2E ]] && echo "true" || echo "false" )" >> "$GITHUB_OUTPUT"
 
   affected-recap:
     if: github.event.pull_request.draft == false && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
@@ -200,7 +201,7 @@ jobs:
           comment-tag: build-options
 
   e2e-run:
-    name: E2E tests / ${{ matrix.app }} / GN v${{ matrix.geonetwork_versions.gn }}
+    name: E2E tests / ${{ matrix.app }} / GN v${{ matrix.geonetwork_version }}
     runs-on: ubuntu-latest
     needs:
       - compute-affected
@@ -208,25 +209,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        geonetwork_versions:
-          - gn: 4.2.2
-            es: 7.17.15
-          - gn: 4.2.8
-            es: 7.17.15
-          - gn: 4.2.14
-            es: 7.17.15
-          - gn: 4.4.0
-            es: 7.17.15
-          - gn: 4.4.8
-            es: 8.14.3
-            es_above_8: true
+        geonetwork_version:
+          # note: these versions are chosen to cover both the oldest and most recent in a certain range (4.2.x and 4.4.x)
+          - 4.2.2
+          - 4.2.5
+          - 4.2.18
+          - 4.4.0
+          - 4.4.13
         app: [datahub, metadata-editor, webcomponents]
         skip_datahub: ${{ fromJSON(needs.compute-affected.outputs.skip_datahub) }}
         skip_editor: ${{ fromJSON(needs.compute-affected.outputs.skip_editor) }}
         skip_webcomponents: ${{ fromJSON(needs.compute-affected.outputs.skip_webcomponents) }}
         exclude:
-          - geonetwork_versions: # metadata-editor requires v4.2.5+
-              gn: 4.2.2
+          - geonetwork_version: 4.2.2 # metadata-editor requires v4.2.5+
             app: metadata-editor
           - skip_datahub: 'true' # skip datahub if not affected
             app: datahub
@@ -235,21 +230,14 @@ jobs:
           - skip_webcomponents: 'true' # skip webcomponents if not affected
             app: webcomponents
 
-          # FIXME: the datahub tests do not passe on these version; this might be a sign of actual bugs
-          - geonetwork_versions:
-              gn: 4.2.14
-            app: datahub
-          - geonetwork_versions:
-              gn: 4.4.8
-            app: datahub
-          - geonetwork_versions:
-              gn: 4.2.14
-            app: webcomponents
-          - geonetwork_versions:
-              gn: 4.4.8
-            app: webcomponents
-
     steps:
+      # FIXME: remove this once cypress is upgraded to v15+
+      # E2E tests will fail with Chrome v158+, see https://github.com/cypress-io/cypress/issues/35195
+      - uses: browser-actions/setup-chrome@v2
+        id: setup-chrome
+        with:
+          chrome-version: 157
+
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
@@ -272,6 +260,13 @@ jobs:
             ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
             ${{ runner.os }}-npm-nx-cypress-
 
+      - id: chrome-cache
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.setup-chrome.outputs.chrome-path }}
+          key: ${{ runner.os }}-chrome-157
+          restore-keys: ${{ runner.os }}-chrome-157
+
       - run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
 
@@ -281,12 +276,9 @@ jobs:
 
       - name: Start up backend support services
         env:
-          GEONETWORK_VERSION: ${{ matrix.geonetwork_versions.gn }}
-          ELASTICSEARCH_VERSION: ${{ matrix.geonetwork_versions.es }}
-          # this is because the xpack.security. params should only be applied to ES v8 and above; using an uppercase prefix makes the params ignored
-          ES_XPACK_PARAMETER_PREFIX: ${{ !matrix.geonetwork_versions.es_above_8 && 'IGNORE_' || '' }}
+          GN_VERSION: ${{ matrix.geonetwork_version }}
         working-directory: support-services
-        run: docker compose up --quiet-pull init
+        run: docker compose -f docker-compose.yml -f "versions/gn-$GN_VERSION.yml" up --quiet-pull init
 
       - name: Run e2e tests for ${{ matrix.app }}
         if: ${{ (matrix.app != 'webcomponents') }}
@@ -305,7 +297,7 @@ jobs:
         if: always()
         id: upload-screenshots
         with:
-          name: cypress-screenshots-app-${{ matrix.app }}-gn-${{ matrix.geonetwork_versions.gn }}
+          name: cypress-screenshots-app-${{ matrix.app }}-gn-${{ matrix.geonetwork_version }}
           path: |
             apps/datahub-e2e/cypress/screenshots/**/*
             apps/metadata-editor-e2e/cypress/screenshots/**/*

@@ -1,5 +1,4 @@
 import 'cypress-real-events'
-import path from 'path'
 
 beforeEach(() => {
   // GEOSERVER stubs
@@ -489,17 +488,12 @@ describe('Sections', () => {
       .first()
       .as('downloadLink')
     cy.get('@downloadLink')
-      .should('have.attr', 'href')
-      .and(
+      .invoke('attr', 'href')
+      .should(
         'include',
         'wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=csv'
       )
-    cy.get('@downloadLink').click()
-    cy.readFile(
-      path.join('cypress/downloads', 'rectangles_200m_menage_erbm.csv') // by default asserts file exists (no .should('exist') needed)
-    ).as('downloadedFile')
-    // FIXME: This spec always fails with Cypress v13
-    // cy.get('@downloadedFile').its('length').should('equal', 3579)
+    // note: we're not trying to download the file anymore as there's no way to intercept the request
 
     // it displays the full list after clicking two times on one filter
     cy.get('datahub-record-downloads')

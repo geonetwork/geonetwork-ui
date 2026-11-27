@@ -8,48 +8,54 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
-declare namespace Cypress {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface Chainable<Subject> {
-    login(username?: string, password?: string, redirect?: boolean): void
-    signOut(): void
-    addUser(
-      username: string,
-      password: string,
-      email: string,
-      name: string,
-      surname: string
-    ): void
-    clearFavorites(): void
-    clearRecordDrafts(): void
-    deleteRecord(uuid: string): void
-    editor_createRecordCopy(
-      uuidToCopy?: string,
-      titleToCopy?: string,
-      username?: string,
-      password?: string
-    ): Chainable<string | number | string[]>
-    editor_readFormUniqueIdentifier(): Chainable<string | number | string[]>
-    editor_wrapPreviousDraft(uuid: string): void
-    editor_wrapFirstDraft(uuid: string): void
-    editor_publishAndReload(uuid: string): void
-    editor_findDraftInLocalStorage(): Chainable<string | number | string[]>
-    addTranslationKey(): void
-    removeTranslationKey(): void
-    editor_addLanguages(uuid: string): void
-    disableUserFeedbacks(): void
+import { satisfies } from 'semver'
 
-    // interaction with gn-ui-dropdown-selector
-    openDropdown(): Chainable<JQuery<HTMLElement>>
-    selectDropdownOption(value: string): void
-    getActiveDropdownOption(): Chainable<JQuery<HTMLButtonElement>>
-    uploadFile(
-      file: Cypress.FileReference,
-      options?: Partial<Cypress.SelectFileOptions>
-    ): Chainable<JQuery<HTMLElement>>
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Cypress {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    interface Chainable<Subject> {
+      login(username?: string, password?: string, redirect?: boolean): void
+      signOut(): void
+      addUser(
+        username: string,
+        password: string,
+        email: string,
+        name: string,
+        surname: string
+      ): void
+      clearFavorites(): void
+      clearRecordDrafts(): void
+      deleteRecord(uuid: string): void
+      editor_createRecordCopy(
+        uuidToCopy?: string,
+        titleToCopy?: string,
+        username?: string,
+        password?: string
+      ): Chainable<string | number | string[]>
+      editor_readFormUniqueIdentifier(): Chainable<string | number | string[]>
+      editor_wrapPreviousDraft(uuid: string): void
+      editor_wrapFirstDraft(uuid: string): void
+      editor_publishAndReload(uuid: string): void
+      editor_findDraftInLocalStorage(): Chainable<string | number | string[]>
+      addTranslationKey(): void
+      removeTranslationKey(): void
+      editor_addLanguages(uuid: string): void
+      disableUserFeedbacks(): void
 
-    clickOnBody(): void
+      // interaction with gn-ui-dropdown-selector
+      openDropdown(): Chainable<JQuery<HTMLElement>>
+      selectDropdownOption(value: string): void
+      getActiveDropdownOption(): Chainable<JQuery<HTMLButtonElement>>
+      uploadFile(
+        file: Cypress.FileReference,
+        options?: Partial<Cypress.SelectFileOptions>
+      ): Chainable<JQuery<HTMLElement>>
+
+      clickOnBody(): void
+
+      geonetworkVersionMatches(versionDescriptor: string): Chainable<boolean>
+    }
   }
 }
 
@@ -99,9 +105,12 @@ Cypress.Commands.add(
 )
 
 Cypress.Commands.add('signOut', () => {
-  cy.visit('/geonetwork/srv/eng/catalog.search#/home')
-  cy.get('a[title="User details"]').click()
-  cy.get('a[title="Sign out"]').click()
+  cy.clearCookie('XSRF-TOKEN', {
+    domain: 'http://localhost:8080/', // we're also clearing the cookie on the geonetwork domain, to make sure it doesn't persist there
+  })
+  cy.clearCookie('JSESSIONID', {
+    domain: 'http://localhost:8080/',
+  })
 })
 
 Cypress.Commands.add('addUser', (username, password, email, name, surname) => {
@@ -432,6 +441,21 @@ Cypress.Commands.add('disableUserFeedbacks', () => {
   cy.get('[id="system/userFeedback/enable"]').click()
   cy.get('[id="gn-btn-settings-save"]').click()
 })
+
+Cypress.Commands.add(
+  'geonetworkVersionMatches',
+  (versionDescriptor: string) => {
+    cy.request({
+      url: '/geonetwork/srv/api/site/settings?key=system/platform/version',
+      headers: { accept: 'application/json' },
+    })
+      .its('body')
+      .then((body) => {
+        const version = body['system/platform/version']
+        return satisfies(version, versionDescriptor)
+      })
+  }
+)
 
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
