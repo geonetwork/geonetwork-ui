@@ -16,7 +16,14 @@ import {
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@ngrx/router-store/data-persistence'
 import { of, pairwise, startWith } from 'rxjs'
-import { map, mergeMap, take, tap } from 'rxjs/operators'
+import {
+  filter,
+  map,
+  mergeMap,
+  take,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators'
 import * as RouterActions from './router.actions'
 import { RouterFacade } from './router.facade'
 import { ROUTE_PARAMS } from '../constants'
@@ -159,6 +166,35 @@ export class RouterEffects {
         },
       })
     )
+  )
+
+  /**
+   * This effect will correct the record kind in the URL when
+   * the loaded metadata does not match the current route
+   */
+  correctRecordUrl$ = createEffect(
+    () =>
+      this._actions$.pipe(
+        ofType(MdViewActions.loadFullMetadataSuccess),
+        withLatestFrom(this.facade.currentRoute$),
+        filter(
+          ([{ full }, route]) =>
+            !!full.kind &&
+            full.uniqueIdentifier === route?.params.metadataUuid &&
+            route.url[0]?.path !== this.facade.routeMap[full.kind]
+        ),
+        tap(([{ full }]) => {
+          this._router.navigate(
+            ['/', this.facade.routeMap[full.kind], full.uniqueIdentifier],
+            {
+              queryParamsHandling: 'preserve',
+              preserveFragment: true,
+              replaceUrl: true,
+            }
+          )
+        })
+      ),
+    { dispatch: false }
   )
 
   /**

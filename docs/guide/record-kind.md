@@ -47,6 +47,8 @@ The **record kind** is treated as one of these standard filters, following speci
 
 Routes are determined based on the Elasticsearch results, specifically utilizing the `resourceType` and `cl_presentationForm` indexed fields.
 
+Note that if a route to a record does not contain the right kind (e.g. `/dataset/1234` for a service record), the routing will still work but the URL will be fixed right away in the browser.
+
 ## DataHub Sections and Fields
 
 The distinction between sections and available fields is derived directly from the active route.
