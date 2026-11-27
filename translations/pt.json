@@ -491,6 +491,7 @@
   "record.feature.catalog.number.total.object": "",
   "record.feature.limit": "",
   "record.kind.dataset": "",
+  "record.kind.referenceDataset": "",
   "record.kind.reuse": "",
   "record.kind.service": "",
   "record.metadata.about": "",

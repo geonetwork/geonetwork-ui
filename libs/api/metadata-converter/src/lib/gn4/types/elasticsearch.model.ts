@@ -1,3 +1,5 @@
+import { RecordFlag } from '@geonetwork-ui/common/domain/model/record'
+
 export type SortOrder = 'asc' | 'desc'
 interface SortParam {
   [key: string]: SortOrder
@@ -64,3 +66,8 @@ export const ES_RESOURCES_VALUES = [
 
 export type EsResourceTypeValues = (typeof ES_RESOURCES_VALUES)[number]
 export type EsResourceType = EsResourceTypeValues | EsResourceTypeValues[]
+
+// This prefix is part of the category names stored in GeoNetwork: changing it
+// would silently drop the flags already set on existing catalogs.
+export const RECORD_FLAG_CATEGORY_PREFIX = 'geonetwork-ui-flag:'
+export const REFERENCE_DATASET_CATEGORY = `${RECORD_FLAG_CATEGORY_PREFIX}${'IS_REFERENCE_DATASET' satisfies RecordFlag}`

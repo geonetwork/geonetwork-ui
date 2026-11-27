@@ -1245,6 +1245,7 @@ describe('ElasticsearchService', () => {
           'qualityScore',
           'allKeywords',
           'recordLink',
+          'cat',
           'createDate',
         ],
         query: {

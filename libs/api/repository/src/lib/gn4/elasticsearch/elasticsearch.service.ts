@@ -4,7 +4,6 @@ import {
   ES_QUERY_FIELDS_PRIORITY,
   ES_SOURCE_SUMMARY,
   EsQueryFieldsPriorityType,
-  RECORD_FLAG_CATEGORY_PREFIX,
 } from './constant'
 import {
   Aggregation,
@@ -23,6 +22,7 @@ import {
   EsSearchParams,
   FiltersAggregationResult,
   HistogramAggregationResult,
+  REFERENCE_DATASET_CATEGORY,
   RequestFields,
   SearchFilters,
   SortParams,
@@ -446,7 +446,7 @@ export class ElasticsearchService {
         constant_score: {
           filter: {
             term: {
-              'cat.keyword': `${RECORD_FLAG_CATEGORY_PREFIX}IS_REFERENCE_DATASET`,
+              'cat.keyword': REFERENCE_DATASET_CATEGORY,
             },
           },
           boost: REFERENCE_DATASET_BOOST,

@@ -71,6 +71,7 @@
           [extraClass]="'text-[1.2em]'"
           [styling]="'gray'"
           [kind]="record?.kind"
+          [isReference]="!!record?.extras?.['isReferenceDataset']"
           [contentTemplate]="customTemplate"
           class="pt-1"
         >

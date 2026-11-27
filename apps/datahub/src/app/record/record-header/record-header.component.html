@@ -77,6 +77,7 @@
                   <gn-ui-kind-badge
                     styling="outline"
                     [kind]="metadata.kind"
+                    [isReference]="!!metadata.extras?.['isReferenceDataset']"
                   ></gn-ui-kind-badge>
                   <gn-ui-geo-data-badge
                     styling="default"

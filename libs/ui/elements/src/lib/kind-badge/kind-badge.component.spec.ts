@@ -31,4 +31,14 @@ describe('KindBadgeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
+  it('shows the reference dataset state only for flagged datasets', () => {
+    component.kind = 'dataset'
+    expect(component.displayKind).toBe('dataset')
+    component.isReference = true
+    expect(component.displayKind).toBe('referenceDataset')
+    expect(component.iconKind).toBe('iconoirBadgeCheck')
+    component.kind = 'service'
+    expect(component.displayKind).toBe('service')
+  })
 })
